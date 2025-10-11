@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="端口占用问题 【一】问题引�?  重启服务端是会出�?    这个是由于你的服务端仍然存在四次挥手的time_wait状态在占用地址  【二】解决方�? �?）方案一（windows&#x2F;macos�?  加入一条socket配置文件，重用ip和端�? 例子  123phone&#x3D;socket(AF_INET,SOCK_STREAM)phone.setsockopt(SOL_SOCKET,SO_REUS">
+  <meta name="description" content="title: 2.1�˿�ռ������ date: 2023-01-01 categories: Blog tags: [Blog] 端口占用问题 【一】问题引�?  重启服务端是会出�?    这个是由于你的服务端仍然存在四次挥手的time_wait状态在占用地址  【二】解决方�? �?）方案一（windows&#x2F;macos�?  加入一条socket配置文件，重用ip和端�? 例子  12">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2.1�˿�ռ������">
+<meta property="og:title" content="坤博客">
 <meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/2.1%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="坤博客">
-<meta property="og:description" content="端口占用问题 【一】问题引�?  重启服务端是会出�?    这个是由于你的服务端仍然存在四次挥手的time_wait状态在占用地址  【二】解决方�? �?）方案一（windows&#x2F;macos�?  加入一条socket配置文件，重用ip和端�? 例子  123phone&#x3D;socket(AF_INET,SOCK_STREAM)phone.setsockopt(SOL_SOCKET,SO_REUS">
+<meta property="og:description" content="title: 2.1�˿�ռ������ date: 2023-01-01 categories: Blog tags: [Blog] 端口占用问题 【一】问题引�?  重启服务端是会出�?    这个是由于你的服务端仍然存在四次挥手的time_wait状态在占用地址  【二】解决方�? �?）方案一（windows&#x2F;macos�?  加入一条socket配置文件，重用ip和端�? 例子  12">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240516212310925.png">
 <meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-11T09:47:38.377Z">
+<meta property="article:modified_time" content="2025-10-11T09:56:29.988Z">
 <meta property="article:author" content="坤">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>2.1�˿�ռ������ | 坤博客</title>
+  <title> | 坤博客</title>
   
 
 
@@ -166,7 +166,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          2.1�˿�ռ������
+          
         </h1>
 
         <div class="post-meta">
@@ -183,7 +183,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-10-11 17:47:38" itemprop="dateModified" datetime="2025-10-11T17:47:38+08:00">2025-10-11</time>
+                <time title="修改时间：2025-10-11 17:56:29" itemprop="dateModified" datetime="2025-10-11T17:56:29+08:00">2025-10-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -206,7 +206,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1>端口占用问题</h1>
+        <hr>
+<h2 id="title-2-1�˿�ռ������date-2023-01-01categories-Blogtags-Blog">title: 2.1�˿�ռ������<br>
+date: 2023-01-01<br>
+categories: Blog<br>
+tags: [Blog]</h2>
+<h1>端口占用问题</h1>
 <h2 id="【一】问题引�">【一】问题引�?</h2>
 <ul>
 <li>重启服务端是会出�?</li>
@@ -322,12 +327,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/01/01/2.1%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" rel="prev" title="2.1�ļ�����">
-      <i class="fa fa-chevron-left"></i> 2.1�ļ�����
+    <a href="/2023/01/01/2.2vue%E4%B9%8B%E7%9B%91%E5%90%AC%E3%80%81%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/01/01/2.0%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95/" rel="next" title="2.0�������͵����÷���">
-      2.0�������͵����÷��� <i class="fa fa-chevron-right"></i>
+    <a href="/2023/01/01/2.2UDP%E5%A5%97%E6%8E%A5%E5%AD%97/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -387,7 +392,10 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">端口占用问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E9%97%AE%E9%A2%98%E5%BC%95%EF%BF%BD"><span class="nav-number">1.1.</span> <span class="nav-text">【一】问题引�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E8%A7%A3%E5%86%B3%E6%96%B9%EF%BF%BD"><span class="nav-number">1.2.</span> <span class="nav-text">【二】解决方�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%88windows-macos%EF%BF%BD"><span class="nav-number">1.2.1.</span> <span class="nav-text">�?）方案一（windows&#x2F;macos�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-linux-%E6%96%B9%E6%A1%88%EF%BF%BD"><span class="nav-number">1.2.2.</span> <span class="nav-text">(2)linux(方案�?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">端口冲突问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E9%97%AE%E9%A2%98%E5%BC%95%EF%BF%BD-2"><span class="nav-number">2.1.</span> <span class="nav-text">【一】问题引�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E8%A7%A3%E5%86%B3%E6%96%B9%EF%BF%BD-2"><span class="nav-number">2.2.</span> <span class="nav-text">【二】解决方�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91win%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.2.1.</span> <span class="nav-text">�?】win系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89cmd%E5%91%BD%E4%BB%A4%E7%AA%97%E5%8F%A3"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">�?）cmd命令窗口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E8%BF%87%E6%BB%A4%E5%BD%93%E5%89%8D%E7%AB%AF%E5%8F%A3%E5%8F%B7%E8%BF%9B%E7%A8%8B"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">�?）过滤当前端口号进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%9D%80%E6%AD%BB%E5%BD%93%E5%89%8D%E8%BF%9B%EF%BF%BD"><span class="nav-number">2.2.1.3.</span> <span class="nav-text">(3)杀死当前进�?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91MacOS%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.2.2.</span> <span class="nav-text">�?】MacOS系统</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#title-2-1%EF%BF%BD%CB%BF%EF%BF%BD%D5%BC%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDdate-2023-01-01categories-Blogtags-Blog"><span class="nav-number">1.</span> <span class="nav-text">title: 2.1�˿�ռ������
+date: 2023-01-01
+categories: Blog
+tags: [Blog]</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">端口占用问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E9%97%AE%E9%A2%98%E5%BC%95%EF%BF%BD"><span class="nav-number">1.</span> <span class="nav-text">【一】问题引�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E8%A7%A3%E5%86%B3%E6%96%B9%EF%BF%BD"><span class="nav-number">2.</span> <span class="nav-text">【二】解决方�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%88windows-macos%EF%BF%BD"><span class="nav-number">2.1.</span> <span class="nav-text">�?）方案一（windows&#x2F;macos�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-linux-%E6%96%B9%E6%A1%88%EF%BF%BD"><span class="nav-number">2.2.</span> <span class="nav-text">(2)linux(方案�?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">端口冲突问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E9%97%AE%E9%A2%98%E5%BC%95%EF%BF%BD-2"><span class="nav-number">1.</span> <span class="nav-text">【一】问题引�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E8%A7%A3%E5%86%B3%E6%96%B9%EF%BF%BD-2"><span class="nav-number">2.</span> <span class="nav-text">【二】解决方�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91win%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.1.</span> <span class="nav-text">�?】win系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89cmd%E5%91%BD%E4%BB%A4%E7%AA%97%E5%8F%A3"><span class="nav-number">2.1.1.</span> <span class="nav-text">�?）cmd命令窗口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E8%BF%87%E6%BB%A4%E5%BD%93%E5%89%8D%E7%AB%AF%E5%8F%A3%E5%8F%B7%E8%BF%9B%E7%A8%8B"><span class="nav-number">2.1.2.</span> <span class="nav-text">�?）过滤当前端口号进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%9D%80%E6%AD%BB%E5%BD%93%E5%89%8D%E8%BF%9B%EF%BF%BD"><span class="nav-number">2.1.3.</span> <span class="nav-text">(3)杀死当前进�?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91MacOS%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.2.</span> <span class="nav-text">�?】MacOS系统</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -406,11 +414,11 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">1</span>
         <span class="site-state-item-name">分类</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">1</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>

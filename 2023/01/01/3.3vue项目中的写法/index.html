@@ -20,17 +20,17 @@
     var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="【vue项目中的写法�? �?】let、const 1234567891011121314151617181920212223242526272829303132333435363738# let :定义变量# const ：定义常�?------块级作用�?---# var 以后尽量少用，用它声明的都是全局作用�?# 在ES6之前，我们都是用var来声明变量，而且JS只有函数作用域和全局作用域，">
+  <meta name="description" content="title: 3.3vue��Ŀ�е�д�� date: 2023-01-01 categories: Blog tags: [Blog] 【vue项目中的写法�? �?】let、const 1234567891011121314151617181920212223242526272829303132333435363738# let :定义变量# const ：定义常�?------块级作用�">
 <meta property="og:type" content="article">
-<meta property="og:title" content="3.3vue��Ŀ�е�д��">
+<meta property="og:title" content="坤博客">
 <meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/3.3vue%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E5%86%99%E6%B3%95/index.html">
 <meta property="og:site_name" content="坤博客">
-<meta property="og:description" content="【vue项目中的写法�? �?】let、const 1234567891011121314151617181920212223242526272829303132333435363738# let :定义变量# const ：定义常�?------块级作用�?---# var 以后尽量少用，用它声明的都是全局作用�?# 在ES6之前，我们都是用var来声明变量，而且JS只有函数作用域和全局作用域，">
+<meta property="og:description" content="title: 3.3vue��Ŀ�е�д�� date: 2023-01-01 categories: Blog tags: [Blog] 【vue项目中的写法�? �?】let、const 1234567891011121314151617181920212223242526272829303132333435363738# let :定义变量# const ：定义常�?------块级作用�">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812184134918.png">
 <meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812184332118.png">
 <meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-11T09:47:38.577Z">
+<meta property="article:modified_time" content="2025-10-11T09:56:30.124Z">
 <meta property="article:author" content="坤">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -49,7 +49,7 @@
   };
 </script>
 
-  <title>3.3vue��Ŀ�е�д�� | 坤博客</title>
+  <title> | 坤博客</title>
   
 
 
@@ -167,7 +167,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          3.3vue��Ŀ�е�д��
+          
         </h1>
 
         <div class="post-meta">
@@ -184,7 +184,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-10-11 17:47:38" itemprop="dateModified" datetime="2025-10-11T17:47:38+08:00">2025-10-11</time>
+                <time title="修改时间：2025-10-11 17:56:30" itemprop="dateModified" datetime="2025-10-11T17:56:30+08:00">2025-10-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -207,7 +207,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1>【vue项目中的写法�?</h1>
+        <hr>
+<h2 id="title-3-3vue��L�е�д��date-2023-01-01categories-Blogtags-Blog">title: 3.3vue��Ŀ�е�д��<br>
+date: 2023-01-01<br>
+categories: Blog<br>
+tags: [Blog]</h2>
+<h1>【vue项目中的写法�?</h1>
 <h2 id="�-】let、const">�?】let、const</h2>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># let :定义变量</span></span><br><span class="line"><span class="comment"># const ：定义常�?</span></span><br><span class="line">------块级作用�?---</span><br><span class="line"><span class="comment"># var 以后尽量少用，用它声明的都是全局作用�?</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在ES6之前，我们都是用var来声明变量，而且JS只有函数作用域和全局作用域，没有块级作用域，所以&#123;&#125;限定不了var声明变量的访问范围�?</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ES6 新增了let命令，用来声明局部变量。它的用法类似于var，但是所声明的变量，只在let命令所在的代码块内有效，而且有暂时性死区的约束</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># &quot;暂时性死�?（Temporal Dead Zone，简�?TDZ）是指在 ES6 中使�?let �?const 声明变量时，变量存在但无法访问的区域。这种行为是为了�?JavaScript 中引入块级作用域而设计的�?</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># �?JavaScript 中，使用 var 声明的变量在其声明语句之前就可以被访问，这种行为称为&quot;变量提升&quot;。而在使用 let �?const 声明变量时，变量虽然存在于作用域中，但是在声明语句之前访问这些变量会导致引发 ReferenceError 异常�?</span></span><br><span class="line">	<span class="comment"># 下面是例�?</span></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=<span class="string">&quot;./js2/vue.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    function one()&#123;</span><br><span class="line">        console.log(two)</span><br><span class="line">         var two=<span class="number">76</span> // 得到的是undefined</span><br><span class="line">         let two=<span class="number">76</span> // 会报�?</span><br><span class="line">    &#125;</span><br><span class="line">    one()</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 暂时性死区的产生原因是，let �?const 声明的变量在进入作用域时就已经被创建，并且被绑定到了该作用域中，但是在变量的声明语句之前，访问这些变量会进入暂时性死区，因为此时变量尚未初始�?</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># python的LEGB---》查找顺�?</span></span><br></pre></td></tr></table></figure>
 <h2 id="�-】箭头函�">�?】箭头函�?</h2>
@@ -307,12 +312,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/01/01/3.3%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4/" rel="prev" title="3.3���ƿռ�">
-      <i class="fa fa-chevron-left"></i> 3.3���ƿռ�
+    <a href="/2023/01/01/3.1vue%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/01/01/3.2%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E6%B3%A8%E8%A7%A3/" rel="next" title="3.2��������ע��">
-      3.2��������ע�� <i class="fa fa-chevron-right"></i>
+    <a href="/2023/01/01/3.2%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E6%B3%A8%E8%A7%A3/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -372,7 +377,10 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">【vue项目中的写法�?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91let%E3%80%81const"><span class="nav-number">1.1.</span> <span class="nav-text">�?】let、const</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E7%AE%AD%E5%A4%B4%E5%87%BD%EF%BF%BD"><span class="nav-number">1.2.</span> <span class="nav-text">�?】箭头函�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91this%E6%8C%87%E5%90%91%E7%9A%84%E9%97%AE%EF%BF%BD"><span class="nav-number">1.3.</span> <span class="nav-text">�?】this指向的问�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%B1%95%E5%BC%80%E7%AE%97%E6%B3%95"><span class="nav-number">1.4.</span> <span class="nav-text">�?】展开算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="nav-number">1.5.</span> <span class="nav-text">�?】模块化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E9%BB%98%E8%AE%A4%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA"><span class="nav-number">1.5.1.</span> <span class="nav-text">�?）默认导入和导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%91%BD%E5%90%8D%E5%AF%BC%E5%85%A5%E5%AF%BC%EF%BF%BD"><span class="nav-number">1.5.2.</span> <span class="nav-text">�?）命名导入导�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%AF%BC%E5%85%A5%E8%B7%AF%EF%BF%BD"><span class="nav-number">1.5.3.</span> <span class="nav-text">�?）导入路�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89module%E4%BD%BF%E7%94%A8"><span class="nav-number">1.5.4.</span> <span class="nav-text">�?）module使用</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#title-3-3vue%EF%BF%BD%EF%BF%BDL%EF%BF%BD%D0%B5%EF%BF%BD%D0%B4%EF%BF%BD%EF%BF%BDdate-2023-01-01categories-Blogtags-Blog"><span class="nav-number">1.</span> <span class="nav-text">title: 3.3vue��Ŀ�е�д��
+date: 2023-01-01
+categories: Blog
+tags: [Blog]</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">【vue项目中的写法�?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91let%E3%80%81const"><span class="nav-number">1.</span> <span class="nav-text">�?】let、const</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E7%AE%AD%E5%A4%B4%E5%87%BD%EF%BF%BD"><span class="nav-number">2.</span> <span class="nav-text">�?】箭头函�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91this%E6%8C%87%E5%90%91%E7%9A%84%E9%97%AE%EF%BF%BD"><span class="nav-number">3.</span> <span class="nav-text">�?】this指向的问�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%B1%95%E5%BC%80%E7%AE%97%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">�?】展开算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="nav-number">5.</span> <span class="nav-text">�?】模块化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E9%BB%98%E8%AE%A4%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA"><span class="nav-number">5.1.</span> <span class="nav-text">�?）默认导入和导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%91%BD%E5%90%8D%E5%AF%BC%E5%85%A5%E5%AF%BC%EF%BF%BD"><span class="nav-number">5.2.</span> <span class="nav-text">�?）命名导入导�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%AF%BC%E5%85%A5%E8%B7%AF%EF%BF%BD"><span class="nav-number">5.3.</span> <span class="nav-text">�?）导入路�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89module%E4%BD%BF%E7%94%A8"><span class="nav-number">5.4.</span> <span class="nav-text">�?）module使用</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -391,11 +399,11 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">1</span>
         <span class="site-state-item-name">分类</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">1</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
