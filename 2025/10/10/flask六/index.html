@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="【一】scoped线程安全 【1】分析 1234567891011121314151617181920212223# scoped（范围）通常指的是某种资源或对象的生命周期被限制在特定的作用域内# 我们把session做成全局的，单例的	- 每个视图函数，用同一session，会有问题，会导致数据的错乱等    # 我们对每个视图函数都对session实例化一次，代码会很麻烦# 如何保证线程安全-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask六">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/10/flask%E5%85%AD/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="【一】scoped线程安全 【1】分析 1234567891011121314151617181920212223# scoped（范围）通常指的是某种资源或对象的生命周期被限制在特定的作用域内# 我们把session做成全局的，单例的	- 每个视图函数，用同一session，会有问题，会导致数据的错乱等    # 我们对每个视图函数都对session实例化一次，代码会很麻烦# 如何保证线程安全-">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-10T07:54:29.610Z">
+<meta property="article:modified_time" content="2025-10-11T09:47:39.096Z">
+<meta property="article:author" content="坤">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/10/flask%E5%85%AD/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Flask六 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/10/flask%E5%85%AD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Flask六
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-10-10 15:54:29" itemprop="dateCreated datePublished" datetime="2025-10-10T15:54:29+08:00">2025-10-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 17:47:39" itemprop="dateModified" datetime="2025-10-11T17:47:39+08:00">2025-10-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>【一】scoped线程安全</h1>
+<h2 id="【1】分析">【1】分析</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># scoped（范围）通常指的是某种资源或对象的生命周期被限制在特定的作用域内</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 我们把session做成全局的，单例的</span></span><br><span class="line">	- 每个视图函数，用同一session，会有问题，会导致数据的错乱等</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 我们对每个视图函数都对session实例化一次，代码会很麻烦</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如何保证线程安全---python中提供了threading模块下的local对象</span></span><br><span class="line">	- threading模块下的local对象----就是线程安全对象</span><br><span class="line">    - local.session <span class="comment">#  在不同的线程中，用的是自己的</span></span><br><span class="line">    	-线程<span class="number">1</span>中：local.session=<span class="string">&#x27;lqz&#x27;</span></span><br><span class="line">        -线程<span class="number">2</span>中：local.session=<span class="string">&#x27;qqq&#x27;</span></span><br><span class="line">        -后续，只要是在线程<span class="number">1</span>中，取local.session 值 ，永远是 lqz</span><br><span class="line">        -后续，只要是在线程<span class="number">2</span>中，取local.session 值 ，永远是 qqq</span><br><span class="line">	- 本质原理</span><br><span class="line">        -local--》实际上是通过字典，key是线程<span class="built_in">id</span>号，区分</span><br><span class="line">            -线程<span class="number">1</span>中：local.session=<span class="string">&#x27;lqz&#x27;</span>--&gt;本质是--》local[<span class="string">&#x27;线程1id号&#x27;</span>].session=<span class="string">&#x27;lqz&#x27;</span></span><br><span class="line">            -线程<span class="number">2</span>中：local.session=<span class="string">&#x27;qqq&#x27;</span>--&gt;本质是--》local[<span class="string">&#x27;线程2id号&#x27;</span>].session=<span class="string">&#x27;qqq&#x27;</span></span><br><span class="line">            </span><br><span class="line"><span class="comment"># threading.local() 是 Python 标准库 threading 模块中的一个函数，它用于为每个线程创建一个独立的变量空间。这意味着，每个线程都可以有自己的数据副本，而不会影响到其他线程中的数据。这对于编写多线程程序时避免数据竞争和共享状态问题非常有用。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用场景</span></span><br><span class="line">当你需要在多线程环境中存储和访问与线程相关的数据时，threading.local() 就非常有用。例如，你可能需要为每个线程存储数据库连接、用户会话信息、日志记录器实例等</span><br></pre></td></tr></table></figure>
+<h2 id="【2】使用">【2】使用</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine</span><br><span class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> sessionmaker, scoped_session</span><br><span class="line"></span><br><span class="line">engine = create_engine(</span><br><span class="line">    <span class="string">&quot;mysql+pymysql://root:710912@127.0.0.1:3308/demo_1?charset=utf8mb4&quot;</span>,</span><br><span class="line">    max_overflow=<span class="number">0</span>,  <span class="comment"># 超出连接池大小外最多创建的连接</span></span><br><span class="line">    pool_size=<span class="number">5</span>,  <span class="comment"># 连接池大小</span></span><br><span class="line">    pool_timeout=<span class="number">30</span>,  <span class="comment"># 池中没有线程最多等待的时间，否则报错</span></span><br><span class="line">    pool_recycle=-<span class="number">1</span>,  <span class="comment"># 多久之后对线程池中的线程进行一次连接的回收（重置）</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">#####线程安全的session对象</span></span><br><span class="line">Session = sessionmaker(bind=engine)</span><br><span class="line"><span class="comment">######虽然是全局的，但是每次都会新建一个session，每个视图函数用的都是自己的</span></span><br><span class="line">session = scoped_session(Session)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> common <span class="keyword">import</span> session</span><br><span class="line"><span class="keyword">from</span> models <span class="keyword">import</span> User</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index&#x27;</span>, endpoint=<span class="string">&#x27;index&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="comment"># 查数据</span></span><br><span class="line">    res = session.query(User).filter_by(<span class="built_in">id</span>=<span class="number">2</span>).first()</span><br><span class="line">    <span class="built_in">print</span>(res)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;index&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/login&#x27;</span>, endpoint=<span class="string">&#x27;login&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="comment"># 查数据</span></span><br><span class="line">    res = session.query(User).filter_by(<span class="built_in">id</span>=<span class="number">3</span>).first()</span><br><span class="line">    <span class="built_in">print</span>(res)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;index&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<h1>【二】多对多关系</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> Column, Integer, String, Text, DateTime, ForeignKey</span><br><span class="line"><span class="comment"># 先版本创建基类</span></span><br><span class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> DeclarativeBase, relationship</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> common <span class="keyword">import</span> engine</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Base</span>(<span class="title class_ inherited__">DeclarativeBase</span>):</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Girl2Boy</span>(<span class="title class_ inherited__">Base</span>):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;girl2boy&#x27;</span></span><br><span class="line">    <span class="built_in">id</span> = Column(Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    girl_id = Column(Integer, ForeignKey(<span class="string">&#x27;girl.id&#x27;</span>))</span><br><span class="line">    boy_id = Column(Integer, ForeignKey(<span class="string">&#x27;boy.id&#x27;</span>))</span><br><span class="line">    ctime = Column(DateTime, default=datetime.datetime.now)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Girl</span>(<span class="title class_ inherited__">Base</span>):</span><br><span class="line">    __tablename__ = <span class="string">&quot;girl&quot;</span></span><br><span class="line">    <span class="comment"># 这里设置了主键，不设置自增他也会自增的</span></span><br><span class="line">    <span class="built_in">id</span> = Column(Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = Column(String(<span class="number">32</span>), index=<span class="literal">True</span>, nullable=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Boy</span>(<span class="title class_ inherited__">Base</span>):</span><br><span class="line">    __tablename__ = <span class="string">&quot;boy&quot;</span></span><br><span class="line">    <span class="built_in">id</span> = Column(Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = Column(String(<span class="number">32</span>), unique=<span class="literal">True</span>, nullable=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 与生成表结构无关，仅用于查询方便,放在哪个单表中都可以</span></span><br><span class="line">    girls = relationship(<span class="string">&#x27;Girl&#x27;</span>, secondary=<span class="string">&#x27;girl2boy&#x27;</span>, backref=<span class="string">&#x27;boys&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.name</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># 创建表</span></span><br><span class="line">    Base.metadata.create_all(engine)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> common <span class="keyword">import</span> session</span><br><span class="line"><span class="keyword">from</span> models <span class="keyword">import</span> Girl, Boy</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment">#######增</span></span><br><span class="line">    <span class="comment"># boy = Boy(name=&#x27;小明&#x27;)</span></span><br><span class="line">    <span class="comment"># girl = Girl(name=&#x27;小红&#x27;)</span></span><br><span class="line">    <span class="comment"># session.add_all([boy, girl])</span></span><br><span class="line">    <span class="comment"># session.commit()</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># #######小明和小红约会一次---传统方案</span></span><br><span class="line">    <span class="comment"># res = Girl2Boy(girl_id=1, boy_id=1)</span></span><br><span class="line">    <span class="comment"># session.add(res)</span></span><br><span class="line">    <span class="comment"># session.commit()</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">###########简单方案--&gt;小明和小红和小李约会一次</span></span><br><span class="line">    <span class="comment"># boy = session.query(Boy).filter_by(name=&#x27;小明&#x27;).first()</span></span><br><span class="line">    <span class="comment"># girl1 = session.query(Girl).filter_by(name=&#x27;小红&#x27;).first()</span></span><br><span class="line">    <span class="comment"># girl2 = session.query(Girl).filter_by(name=&#x27;小李&#x27;).first()</span></span><br><span class="line">    <span class="comment"># boy.girls = [girl1, girl2]</span></span><br><span class="line">    <span class="comment"># session.add(boy)</span></span><br><span class="line">    <span class="comment"># session.commit()</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#########基于对象的夸表查询---正向</span></span><br><span class="line">    boy = session.query(Boy).filter_by(<span class="built_in">id</span>=<span class="number">1</span>).first()</span><br><span class="line">    <span class="built_in">print</span>(boy.girls)   <span class="comment"># [&lt;models.Girl object at 0x0000021745455570&gt;, &lt;models.Girl object at 0x0000021745455510&gt;]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#########基于对象的夸表查询---反向</span></span><br><span class="line">    girl = session.query(Girl).filter_by(<span class="built_in">id</span>=<span class="number">2</span>).first()</span><br><span class="line">    <span class="built_in">print</span>(girl.boys)</span><br></pre></td></tr></table></figure>
+<h1>【三】常用查询</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> common <span class="keyword">import</span> session</span><br><span class="line"><span class="keyword">from</span> models <span class="keyword">import</span> User, Person</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># filter_by查询，写参数</span></span><br><span class="line">    <span class="comment"># res = session.query(User).filter_by(id=2).first()  # 返回单条，但是不能all() 在用first，因为all后是列表</span></span><br><span class="line">    <span class="comment"># res= session.query(User).filter_by(id=2).all()  # 返回一个列表</span></span><br><span class="line">    <span class="comment"># res = session.query(User).filter_by(id=2, name=&#x27;pop&#x27;).all()  # 返回一个列表</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># filter/where 查询，写条件</span></span><br><span class="line">    <span class="comment"># res = session.query(User).filter(User.id == 2).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(User).filter(User.id &gt;= 1).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(User).filter(User.id &lt;= 2).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.id == 3).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.id &gt;= 1)  ########得到的是原生的sql语句</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">##between-----在...之间</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.id.between(1, 4)).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.id.between(1, 4), User.name==&#x27;opp&#x27;).all()</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">##in----在...中，因为in是关键字需要加_使用</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.id.in_([1,2,3,4])).all()</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">## ~非---除....之外-----可以理解为相反的查结果,~n你可以理解为not</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(~User.id.in_([1, 2])).all()</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 二次筛选</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.id.in_(session.query(Person.nid).filter_by(name=&#x27;小明&#x27;)))  # 可以查看原声的sql语句</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.id.in_(session.query(Person.nid).filter_by(name=&#x27;小明&#x27;))).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(Person.nid).filter_by(name=&#x27;小明&#x27;).all()  # 查到的是id：[(1,)]</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># and,or条件----因为and是关键字，需要加_使用</span></span><br><span class="line">    <span class="comment"># 引入使用</span></span><br><span class="line">    <span class="comment"># from sqlalchemy import and_, or_</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(and_(User.id &gt; 1, User.name == &#x27;opp&#x27;)) # 原生的sql</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(and_(User.id &gt; 1, User.name == &#x27;opp&#x27;)).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(or_(User.id&gt;1, User.name==&#x27;opp&#x27;)).all()</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 通配符，以e开头，不异e开头</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.name.like(&#x27;p%&#x27;)).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.name.like(&#x27;%p%&#x27;)).all()</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 限制， 用分页，区间</span></span><br><span class="line">    <span class="comment"># res = session.query(User)[0:2]  # 每页显示三条</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 排序， 如果name降序排列(从大到小)  desc和asc</span></span><br><span class="line">    <span class="comment"># res = session.query(User).order_by(User.name.desc()).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(User).order_by(User.name.asc()).all()</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># User.name.desc() 表示按 name 列的降序（从 Z 到 A）排序</span></span><br><span class="line">    <span class="comment"># User.id.asc() 表示按 id 列的升序（从小到大）排序</span></span><br><span class="line">    <span class="comment"># 这意味着在 name 列相同的情况下，会根据 id 列进行排序</span></span><br><span class="line">    res = ses+sion.query(User).order_by(User.name.desc(),User.<span class="built_in">id</span>.asc()).<span class="built_in">all</span>()</span><br><span class="line">    <span class="built_in">print</span>(res)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">from</span> sqlalchemy.sql <span class="keyword">import</span> func</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> common <span class="keyword">import</span> session</span><br><span class="line"><span class="keyword">from</span> models <span class="keyword">import</span> User, Person, Hobby</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># filter_by查询，写参数</span></span><br><span class="line">    <span class="comment"># res = session.query(User).filter_by(id=2).first()  # 返回单条，但是不能all() 在用first，因为all后是列表</span></span><br><span class="line">    <span class="comment"># res= session.query(User).filter_by(id=2).all()  # 返回一个列表</span></span><br><span class="line">    <span class="comment"># res = session.query(User).filter_by(id=2, name=&#x27;pop&#x27;).all()  # 返回一个列表</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># filter/where 查询，写条件</span></span><br><span class="line">    <span class="comment"># res = session.query(User).filter(User.id == 2).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(User).filter(User.id &gt;= 1).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(User).filter(User.id &lt;= 2).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.id == 3).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.id &gt;= 1)  ########得到的是原生的sql语句</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">##between-----在...之间</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.id.between(1, 4)).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.id.between(1, 4), User.name==&#x27;opp&#x27;).all()</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">##in----在...中，因为in是关键字需要加_使用</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.id.in_([1,2,3,4])).all()</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">## ~非---除....之外-----可以理解为相反的查结果,~n你可以理解为not</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(~User.id.in_([1, 2])).all()</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 二次筛选</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.id.in_(session.query(Person.nid).filter_by(name=&#x27;小明&#x27;)))  # 可以查看原声的sql语句</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.id.in_(session.query(Person.nid).filter_by(name=&#x27;小明&#x27;))).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(Person.nid).filter_by(name=&#x27;小明&#x27;).all()  # 查到的是id：[(1,)]</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># and,or条件----因为and是关键字，需要加_使用</span></span><br><span class="line">    <span class="comment"># 引入使用</span></span><br><span class="line">    <span class="comment"># from sqlalchemy import and_, or_</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(and_(User.id &gt; 1, User.name == &#x27;opp&#x27;)) # 原生的sql</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(and_(User.id &gt; 1, User.name == &#x27;opp&#x27;)).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(or_(User.id&gt;1, User.name==&#x27;opp&#x27;)).all()</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 通配符，以e开头，不异e开头</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.name.like(&#x27;p%&#x27;)).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(User).where(User.name.like(&#x27;%p%&#x27;)).all()</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 限制， 用分页，区间</span></span><br><span class="line">    <span class="comment"># res = session.query(User)[0:2]  # 每页显示三条</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 排序， 如果name降序排列(从大到小)  desc和asc</span></span><br><span class="line">    <span class="comment"># res = session.query(User).order_by(User.name.desc()).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(User).order_by(User.name.asc()).all()</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># User.name.desc() 表示按 name 列的降序（从 Z 到 A）排序</span></span><br><span class="line">    <span class="comment"># User.id.asc() 表示按 id 列的升序（从小到大）排序</span></span><br><span class="line">    <span class="comment"># 这意味着在 name 列相同的情况下，会根据 id 列进行排序</span></span><br><span class="line">    <span class="comment"># res = session.query(User).order_by(User.name.desc(),User.id.asc()).all()</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 分组擦寻</span></span><br><span class="line">    <span class="comment"># res = session.query(User).group_by(User.name).all()  # 分组了就要统计</span></span><br><span class="line">    <span class="comment"># res = session.query(func.max(Person.nid), func.count(Person.nid), func.sum(Person.nid),</span></span><br><span class="line">    <span class="comment">#                     func.min(Person.nid)).group_by(Person.name).all()</span></span><br><span class="line">    <span class="comment"># print(res)  # [(2, 1, Decimal(&#x27;2&#x27;), 2), (1, 1, Decimal(&#x27;1&#x27;), 1), (3, 1, Decimal(&#x27;3&#x27;), 3)]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 筛选having</span></span><br><span class="line">    <span class="comment"># res = session.query(func.max(User.id), func.sum(User.id), func.min(User.id)).filter(User.id &gt; 1).group_by(</span></span><br><span class="line">    <span class="comment">#     User.name).having(func.sum(User.id) &gt; 1).all()</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    过滤（filter）：首先应用 filter(User.id &gt;1)，筛选出满足条件的记录。</span></span><br><span class="line"><span class="string">    分组（group_by）：然后对结果进行 group_by(User.name)，按用户名称分组。</span></span><br><span class="line"><span class="string">    聚合计算：接着计算 max(User.id)、sum(User.id) 和 min(User.id)。</span></span><br><span class="line"><span class="string">    条件筛选（having）：最后应用 having(func.sum(User.id) &gt; 1)，筛选出满足条件的分组。</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 这个语法的执行过程</span></span><br><span class="line">    <span class="comment"># print(res)  # [(5, Decimal(&#x27;7&#x27;), 2), (3, Decimal(&#x27;3&#x27;), 3)]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 连表</span></span><br><span class="line">    <span class="comment"># d笛卡尔积连表</span></span><br><span class="line">    <span class="comment"># select * from person,hobby where person.hobby_id=hobby.id;</span></span><br><span class="line">    <span class="comment"># res = session.query(Person, Hobby).filter(Person.hobby_id == Hobby.id).all()</span></span><br><span class="line">    <span class="comment"># print(res)  # [(小明, 足球), (小李, 足球), (小红, 篮球), (六六, 羽毛球)]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># join内连接，默认是inner join没有指定 on 条件时，默认是外键关系存在</span></span><br><span class="line">    <span class="comment"># select * from person INNER join hobby on person.hobby_id=hobby.id;</span></span><br><span class="line">    <span class="comment"># res = session.query(Person, Hobby).join(Hobby).all()  # 通常意味着在 Person 表和 Hobby 表之间应该存在外键关系。</span></span><br><span class="line">    <span class="comment"># print(res)  # [(小明, 足球), (小李, 足球), (小红, 篮球), (六六, 羽毛球)]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># isouter=Ture 表示外连接-------没有右连接，反过来即可</span></span><br><span class="line">    <span class="comment"># select * from person left join hobby on person.hobby_id=hobby.id;</span></span><br><span class="line">    <span class="comment"># select * from hobby left join person on person.hobby_id=hobby.id;</span></span><br><span class="line">    <span class="comment"># res = session.query(Person).join(Hobby, isouter=True).all()</span></span><br><span class="line">    <span class="comment"># res = session.query(Hobby).join(Person, isouter=True).all()</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 自己指定on条件（连表条件）,第二个参数，支持on多个条件，用and_,同上   因为我们可以没有强外键关联</span></span><br><span class="line">    <span class="comment"># res = session.query(Person).join(Hobby, Person.nid == Hobby.id, isouter=True).all()</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">########了解###########</span></span><br><span class="line">    <span class="comment"># union和union all的区别？</span></span><br><span class="line">        <span class="comment"># 去重：</span></span><br><span class="line">            <span class="comment"># UNION 会自动去除重复的行，只返回唯一的结果。</span></span><br><span class="line">            <span class="comment"># UNION ALL 会返回所有结果，包括重复的行。</span></span><br><span class="line">    <span class="comment"># union和union all都是用于合并两个或多个查询的结果集。</span></span><br><span class="line">    <span class="comment"># 但是，union只返回唯一的行，而union all返回所有行。</span></span><br><span class="line">    res = session.query(Person.name).<span class="built_in">filter</span>(Person.nid &gt; <span class="number">1</span>)</span><br><span class="line">    res1 = session.query(User.name).<span class="built_in">filter</span>(User.<span class="built_in">id</span>&gt;<span class="number">1</span>)</span><br><span class="line">    res = res.union(res1).<span class="built_in">all</span>()</span><br><span class="line">    <span class="built_in">print</span>(res)  <span class="comment"># [(&#x27;六六&#x27;,), (&#x27;小红&#x27;,), (&#x27;小李&#x27;,), (&#x27;pop&#x27;,), (&#x27;opp&#x27;,)]</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/10/flask%E4%B8%80/" rel="prev" title="Flask一">
+      <i class="fa fa-chevron-left"></i> Flask一
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/10/flask%E4%BA%8C/" rel="next" title="Flask�?">
+      Flask�? <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">【一】scoped线程安全</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">【1】分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">【2】使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">【二】多对多关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">【三】常用查询</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">201</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="MySQL练习�? 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798991">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL��ϰ��">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/MySQL%E7%BB%83%E4%B9%A0%E9%A2%98/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="MySQL练习�? 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798991">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602160916554.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602162212269.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602162220962.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602162127751.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602162151131.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602185100790.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602185035160.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602190110610.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602190806551.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602195857862.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610163756856.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610165636832.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610165652634.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610183420229.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610183434059.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610184604647.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610184515562.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610184619913.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610190027169.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610190011686.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610190522485.png">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T09:47:39.144Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602160916554.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/MySQL%E7%BB%83%E4%B9%A0%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>MySQL��ϰ�� | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/MySQL%E7%BB%83%E4%B9%A0%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL��ϰ��
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 17:47:39" itemprop="dateModified" datetime="2025-10-11T17:47:39+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>MySQL练习�?</h1>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Navicat Premium Data Transfer</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Source Server         : localhost</span></span><br><span class="line"><span class="comment">Source Server Type    : MySQL</span></span><br><span class="line"><span class="comment">Source Server Version : 50624</span></span><br><span class="line"><span class="comment">Source Host           : localhost</span></span><br><span class="line"><span class="comment">Source Database       : sqlexam</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Target Server Type    : MySQL</span></span><br><span class="line"><span class="comment">Target Server Version : 50624</span></span><br><span class="line"><span class="comment">File Encoding         : utf-8</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Date: 10/21/2016 06:46:46 AM</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> NAMES utf8;</span><br><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">--  Table structure for `class`</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> `class`;</span><br><span class="line"><span class="keyword">CREATE TABLE</span> `class` (</span><br><span class="line">  `cid` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `caption` <span class="type">varchar</span>(<span class="number">32</span>) <span class="keyword">NOT NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY KEY</span> (`cid`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB AUTO_INCREMENT<span class="operator">=</span><span class="number">5</span> <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">--  Records of `class`</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">INSERT INTO</span> `class` <span class="keyword">VALUES</span> (<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;三年二班&#x27;</span>), (<span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;三年三班&#x27;</span>), (<span class="string">&#x27;3&#x27;</span>, <span class="string">&#x27;一年二�?), (&#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span>二年九班<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">COMMIT;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-- ----------------------------</span></span><br><span class="line"><span class="string">--  Table structure for `course`</span></span><br><span class="line"><span class="string">-- ----------------------------</span></span><br><span class="line"><span class="string">DROP TABLE IF EXISTS `course`;</span></span><br><span class="line"><span class="string">CREATE TABLE `course` (</span></span><br><span class="line"><span class="string">  `cid` int(11) NOT NULL AUTO_INCREMENT,</span></span><br><span class="line"><span class="string">  `cname` varchar(32) NOT NULL,</span></span><br><span class="line"><span class="string">  `teacher_id` int(11) NOT NULL,</span></span><br><span class="line"><span class="string">  PRIMARY KEY (`cid`),</span></span><br><span class="line"><span class="string">  KEY `fk_course_teacher` (`teacher_id`),</span></span><br><span class="line"><span class="string">  CONSTRAINT `fk_course_teacher` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`tid`)</span></span><br><span class="line"><span class="string">) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-- ----------------------------</span></span><br><span class="line"><span class="string">--  Records of `course`</span></span><br><span class="line"><span class="string">-- ----------------------------</span></span><br><span class="line"><span class="string">BEGIN;</span></span><br><span class="line"><span class="string">INSERT INTO `course` VALUES (&#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span>生物<span class="string">&#x27;, &#x27;</span><span class="number">1</span><span class="string">&#x27;), (&#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span>物理<span class="string">&#x27;, &#x27;</span><span class="number">2</span><span class="string">&#x27;), (&#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span>体育<span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;), (&#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span>美术<span class="string">&#x27;, &#x27;</span><span class="number">2</span><span class="string">&#x27;);</span></span><br><span class="line"><span class="string">COMMIT;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-- ----------------------------</span></span><br><span class="line"><span class="string">--  Table structure for `score`</span></span><br><span class="line"><span class="string">-- ----------------------------</span></span><br><span class="line"><span class="string">DROP TABLE IF EXISTS `score`;</span></span><br><span class="line"><span class="string">CREATE TABLE `score` (</span></span><br><span class="line"><span class="string">  `sid` int(11) NOT NULL AUTO_INCREMENT,</span></span><br><span class="line"><span class="string">  `student_id` int(11) NOT NULL,</span></span><br><span class="line"><span class="string">  `course_id` int(11) NOT NULL,</span></span><br><span class="line"><span class="string">  `num` int(11) NOT NULL,</span></span><br><span class="line"><span class="string">  PRIMARY KEY (`sid`),</span></span><br><span class="line"><span class="string">  KEY `fk_score_student` (`student_id`),</span></span><br><span class="line"><span class="string">  KEY `fk_score_course` (`course_id`),</span></span><br><span class="line"><span class="string">  CONSTRAINT `fk_score_course` FOREIGN KEY (`course_id`) REFERENCES `course` (`cid`),</span></span><br><span class="line"><span class="string">  CONSTRAINT `fk_score_student` FOREIGN KEY (`student_id`) REFERENCES `student` (`sid`)</span></span><br><span class="line"><span class="string">) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-- ----------------------------</span></span><br><span class="line"><span class="string">--  Records of `score`</span></span><br><span class="line"><span class="string">-- ----------------------------</span></span><br><span class="line"><span class="string">BEGIN;</span></span><br><span class="line"><span class="string">INSERT INTO `score` VALUES (&#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span><span class="number">10</span><span class="string">&#x27;), (&#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span><span class="number">9</span><span class="string">&#x27;), (&#x27;</span><span class="number">5</span><span class="string">&#x27;, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span><span class="number">66</span><span class="string">&#x27;), (&#x27;</span><span class="number">6</span><span class="string">&#x27;, &#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span><span class="number">8</span><span class="string">&#x27;), (&#x27;</span><span class="number">8</span><span class="string">&#x27;, &#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span><span class="number">68</span><span class="string">&#x27;), (&#x27;</span><span class="number">9</span><span class="string">&#x27;, &#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span><span class="number">99</span><span class="string">&#x27;), (&#x27;</span><span class="number">10</span><span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span><span class="number">77</span><span class="string">&#x27;), (&#x27;</span><span class="number">11</span><span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span><span class="number">66</span><span class="string">&#x27;), (&#x27;</span><span class="number">12</span><span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span><span class="number">87</span><span class="string">&#x27;), (&#x27;</span><span class="number">13</span><span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span><span class="number">99</span><span class="string">&#x27;), (&#x27;</span><span class="number">14</span><span class="string">&#x27;, &#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span><span class="number">79</span><span class="string">&#x27;), (&#x27;</span><span class="number">15</span><span class="string">&#x27;, &#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span><span class="number">11</span><span class="string">&#x27;), (&#x27;</span><span class="number">16</span><span class="string">&#x27;, &#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span><span class="number">67</span><span class="string">&#x27;), (&#x27;</span><span class="number">17</span><span class="string">&#x27;, &#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span><span class="number">100</span><span class="string">&#x27;), (&#x27;</span><span class="number">18</span><span class="string">&#x27;, &#x27;</span><span class="number">5</span><span class="string">&#x27;, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span><span class="number">79</span><span class="string">&#x27;), (&#x27;</span><span class="number">19</span><span class="string">&#x27;, &#x27;</span><span class="number">5</span><span class="string">&#x27;, &#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span><span class="number">11</span><span class="string">&#x27;), (&#x27;</span><span class="number">20</span><span class="string">&#x27;, &#x27;</span><span class="number">5</span><span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span><span class="number">67</span><span class="string">&#x27;), (&#x27;</span><span class="number">21</span><span class="string">&#x27;, &#x27;</span><span class="number">5</span><span class="string">&#x27;, &#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span><span class="number">100</span><span class="string">&#x27;), (&#x27;</span><span class="number">22</span><span class="string">&#x27;, &#x27;</span><span class="number">6</span><span class="string">&#x27;, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span><span class="number">9</span><span class="string">&#x27;), (&#x27;</span><span class="number">23</span><span class="string">&#x27;, &#x27;</span><span class="number">6</span><span class="string">&#x27;, &#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span><span class="number">100</span><span class="string">&#x27;), (&#x27;</span><span class="number">24</span><span class="string">&#x27;, &#x27;</span><span class="number">6</span><span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span><span class="number">67</span><span class="string">&#x27;), (&#x27;</span><span class="number">25</span><span class="string">&#x27;, &#x27;</span><span class="number">6</span><span class="string">&#x27;, &#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span><span class="number">100</span><span class="string">&#x27;), (&#x27;</span><span class="number">26</span><span class="string">&#x27;, &#x27;</span><span class="number">7</span><span class="string">&#x27;, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span><span class="number">9</span><span class="string">&#x27;), (&#x27;</span><span class="number">27</span><span class="string">&#x27;, &#x27;</span><span class="number">7</span><span class="string">&#x27;, &#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span><span class="number">100</span><span class="string">&#x27;), (&#x27;</span><span class="number">28</span><span class="string">&#x27;, &#x27;</span><span class="number">7</span><span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span><span class="number">67</span><span class="string">&#x27;), (&#x27;</span><span class="number">29</span><span class="string">&#x27;, &#x27;</span><span class="number">7</span><span class="string">&#x27;, &#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span><span class="number">88</span><span class="string">&#x27;), (&#x27;</span><span class="number">30</span><span class="string">&#x27;, &#x27;</span><span class="number">8</span><span class="string">&#x27;, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span><span class="number">9</span><span class="string">&#x27;), (&#x27;</span><span class="number">31</span><span class="string">&#x27;, &#x27;</span><span class="number">8</span><span class="string">&#x27;, &#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span><span class="number">100</span><span class="string">&#x27;), (&#x27;</span><span class="number">32</span><span class="string">&#x27;, &#x27;</span><span class="number">8</span><span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span><span class="number">67</span><span class="string">&#x27;), (&#x27;</span><span class="number">33</span><span class="string">&#x27;, &#x27;</span><span class="number">8</span><span class="string">&#x27;, &#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span><span class="number">88</span><span class="string">&#x27;), (&#x27;</span><span class="number">34</span><span class="string">&#x27;, &#x27;</span><span class="number">9</span><span class="string">&#x27;, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span><span class="number">91</span><span class="string">&#x27;), (&#x27;</span><span class="number">35</span><span class="string">&#x27;, &#x27;</span><span class="number">9</span><span class="string">&#x27;, &#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span><span class="number">88</span><span class="string">&#x27;), (&#x27;</span><span class="number">36</span><span class="string">&#x27;, &#x27;</span><span class="number">9</span><span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span><span class="number">67</span><span class="string">&#x27;), (&#x27;</span><span class="number">37</span><span class="string">&#x27;, &#x27;</span><span class="number">9</span><span class="string">&#x27;, &#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span><span class="number">22</span><span class="string">&#x27;), (&#x27;</span><span class="number">38</span><span class="string">&#x27;, &#x27;</span><span class="number">10</span><span class="string">&#x27;, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span><span class="number">90</span><span class="string">&#x27;), (&#x27;</span><span class="number">39</span><span class="string">&#x27;, &#x27;</span><span class="number">10</span><span class="string">&#x27;, &#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span><span class="number">77</span><span class="string">&#x27;), (&#x27;</span><span class="number">40</span><span class="string">&#x27;, &#x27;</span><span class="number">10</span><span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span><span class="number">43</span><span class="string">&#x27;), (&#x27;</span><span class="number">41</span><span class="string">&#x27;, &#x27;</span><span class="number">10</span><span class="string">&#x27;, &#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span><span class="number">87</span><span class="string">&#x27;), (&#x27;</span><span class="number">42</span><span class="string">&#x27;, &#x27;</span><span class="number">11</span><span class="string">&#x27;, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span><span class="number">90</span><span class="string">&#x27;), (&#x27;</span><span class="number">43</span><span class="string">&#x27;, &#x27;</span><span class="number">11</span><span class="string">&#x27;, &#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span><span class="number">77</span><span class="string">&#x27;), (&#x27;</span><span class="number">44</span><span class="string">&#x27;, &#x27;</span><span class="number">11</span><span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span><span class="number">43</span><span class="string">&#x27;), (&#x27;</span><span class="number">45</span><span class="string">&#x27;, &#x27;</span><span class="number">11</span><span class="string">&#x27;, &#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span><span class="number">87</span><span class="string">&#x27;), (&#x27;</span><span class="number">46</span><span class="string">&#x27;, &#x27;</span><span class="number">12</span><span class="string">&#x27;, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span><span class="number">90</span><span class="string">&#x27;), (&#x27;</span><span class="number">47</span><span class="string">&#x27;, &#x27;</span><span class="number">12</span><span class="string">&#x27;, &#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span><span class="number">77</span><span class="string">&#x27;), (&#x27;</span><span class="number">48</span><span class="string">&#x27;, &#x27;</span><span class="number">12</span><span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span><span class="number">43</span><span class="string">&#x27;), (&#x27;</span><span class="number">49</span><span class="string">&#x27;, &#x27;</span><span class="number">12</span><span class="string">&#x27;, &#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span><span class="number">87</span><span class="string">&#x27;), (&#x27;</span><span class="number">52</span><span class="string">&#x27;, &#x27;</span><span class="number">13</span><span class="string">&#x27;, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span><span class="number">87</span><span class="string">&#x27;);</span></span><br><span class="line"><span class="string">COMMIT;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-- ----------------------------</span></span><br><span class="line"><span class="string">--  Table structure for `student`</span></span><br><span class="line"><span class="string">-- ----------------------------</span></span><br><span class="line"><span class="string">DROP TABLE IF EXISTS `student`;</span></span><br><span class="line"><span class="string">CREATE TABLE `student` (</span></span><br><span class="line"><span class="string">  `sid` int(11) NOT NULL AUTO_INCREMENT,</span></span><br><span class="line"><span class="string">  `gender` char(1) NOT NULL,</span></span><br><span class="line"><span class="string">  `class_id` int(11) NOT NULL,</span></span><br><span class="line"><span class="string">  `sname` varchar(32) NOT NULL,</span></span><br><span class="line"><span class="string">  PRIMARY KEY (`sid`),</span></span><br><span class="line"><span class="string">  KEY `fk_class` (`class_id`),</span></span><br><span class="line"><span class="string">  CONSTRAINT `fk_class` FOREIGN KEY (`class_id`) REFERENCES `class` (`cid`)</span></span><br><span class="line"><span class="string">) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-- ----------------------------</span></span><br><span class="line"><span class="string">--  Records of `student`</span></span><br><span class="line"><span class="string">-- ----------------------------</span></span><br><span class="line"><span class="string">BEGIN;</span></span><br><span class="line"><span class="string">INSERT INTO `student` VALUES (&#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span>�?, <span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;理解&#x27;</span>), (<span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;�?, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span>钢蛋<span class="string">&#x27;), (&#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span>�?, <span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;张三&#x27;</span>), (<span class="string">&#x27;4&#x27;</span>, <span class="string">&#x27;�?, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span>张一<span class="string">&#x27;), (&#x27;</span><span class="number">5</span><span class="string">&#x27;, &#x27;</span>�?, <span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;张二&#x27;</span>), (<span class="string">&#x27;6&#x27;</span>, <span class="string">&#x27;�?, &#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span>张四<span class="string">&#x27;), (&#x27;</span><span class="number">7</span><span class="string">&#x27;, &#x27;</span>�?, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;铁锤&#x27;</span>), (<span class="string">&#x27;8&#x27;</span>, <span class="string">&#x27;�?, &#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span>李三<span class="string">&#x27;), (&#x27;</span><span class="number">9</span><span class="string">&#x27;, &#x27;</span>�?, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;李一&#x27;</span>), (<span class="string">&#x27;10&#x27;</span>, <span class="string">&#x27;�?, &#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span>李二<span class="string">&#x27;), (&#x27;</span><span class="number">11</span><span class="string">&#x27;, &#x27;</span>�?, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;李四&#x27;</span>), (<span class="string">&#x27;12&#x27;</span>, <span class="string">&#x27;�?, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span>如花<span class="string">&#x27;), (&#x27;</span><span class="number">13</span><span class="string">&#x27;, &#x27;</span>�?, <span class="string">&#x27;3&#x27;</span>, <span class="string">&#x27;刘三&#x27;</span>), (<span class="string">&#x27;14&#x27;</span>, <span class="string">&#x27;�?, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span>刘一<span class="string">&#x27;), (&#x27;</span><span class="number">15</span><span class="string">&#x27;, &#x27;</span>�?, <span class="string">&#x27;3&#x27;</span>, <span class="string">&#x27;刘二&#x27;</span>), (<span class="string">&#x27;16&#x27;</span>, <span class="string">&#x27;�?, &#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span>刘四<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">COMMIT;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-- ----------------------------</span></span><br><span class="line"><span class="string">--  Table structure for `teacher`</span></span><br><span class="line"><span class="string">-- ----------------------------</span></span><br><span class="line"><span class="string">DROP TABLE IF EXISTS `teacher`;</span></span><br><span class="line"><span class="string">CREATE TABLE `teacher` (</span></span><br><span class="line"><span class="string">  `tid` int(11) NOT NULL AUTO_INCREMENT,</span></span><br><span class="line"><span class="string">  `tname` varchar(32) NOT NULL,</span></span><br><span class="line"><span class="string">  PRIMARY KEY (`tid`)</span></span><br><span class="line"><span class="string">) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-- ----------------------------</span></span><br><span class="line"><span class="string">--  Records of `teacher`</span></span><br><span class="line"><span class="string">-- ----------------------------</span></span><br><span class="line"><span class="string">BEGIN;</span></span><br><span class="line"><span class="string">INSERT INTO `teacher` VALUES (&#x27;</span><span class="number">1</span><span class="string">&#x27;, &#x27;</span>张磊老师<span class="string">&#x27;), (&#x27;</span><span class="number">2</span><span class="string">&#x27;, &#x27;</span>李平老师<span class="string">&#x27;), (&#x27;</span><span class="number">3</span><span class="string">&#x27;, &#x27;</span>刘海燕老师<span class="string">&#x27;), (&#x27;</span><span class="number">4</span><span class="string">&#x27;, &#x27;</span>朱云海老师<span class="string">&#x27;), (&#x27;</span><span class="number">5</span><span class="string">&#x27;, &#x27;</span>李杰老师<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">COMMIT;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">SET FOREIGN_KEY_CHECKS = 1;</span></span><br></pre></td></tr></table></figure>
+<h2 id="1、查询所有的课程的名称以及对应的任课老师姓名">1、查询所有的课程的名称以及对应的任课老师姓名</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> course <span class="keyword">left</span> <span class="keyword">join</span> teacher <span class="keyword">on</span> course.teacher_id <span class="operator">=</span> teacher.tid </span><br><span class="line"><span class="keyword">union</span> </span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> course <span class="keyword">right</span> <span class="keyword">join</span>  teacher <span class="keyword">on</span> course.teacher_id <span class="operator">=</span> teacher.tid;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602160916554.png" alt="image-20240602160916554"><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602162212269.png" alt="image-20240602162212269"><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602162220962.png" alt="image-20240602162220962"></p>
+<h2 id="2、查询学生表中男女生各有多少�">2、查询学生表中男女生各有多少�?</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> gender <span class="keyword">as</span> &quot;女生和男生总人�?,count(sname) as &#x27;总人�? from student group by gender;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602162127751.png" alt="image-20240602162127751"><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602162151131.png" alt="image-20240602162151131"></p>
+<h2 id="3、查询物理成绩等�-00的学生的姓名">3、查询物理成绩等�?00的学生的姓名</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> student_id <span class="keyword">from</span> score <span class="keyword">inner</span> <span class="keyword">join</span> course <span class="keyword">on</span> score.course_id<span class="operator">=</span>course.cid <span class="keyword">where</span> course.cname<span class="operator">=</span><span class="string">&#x27;物理&#x27;</span> <span class="keyword">and</span> score.num<span class="operator">=</span><span class="number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> sname <span class="keyword">from</span> student <span class="keyword">where</span> sid <span class="keyword">in</span> (<span class="keyword">select</span> student_id <span class="keyword">from</span> score <span class="keyword">inner</span> <span class="keyword">join</span> course <span class="keyword">on</span> score.course_id<span class="operator">=</span>course.cid <span class="keyword">where</span> course.cname<span class="operator">=</span><span class="string">&#x27;物理&#x27;</span> <span class="keyword">and</span> score.num<span class="operator">=</span><span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602185100790.png" alt="image-20240602185100790"></p>
+<h2 id="4、查询平均成绩大于八十分的同学的姓名和平均成�">4、查询平均成绩大于八十分的同学的姓名和平均成�?</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sname <span class="keyword">as</span> <span class="string">&#x27;名字&#x27;</span>,<span class="built_in">avg</span>(num) <span class="keyword">as</span> <span class="string">&#x27;平均成绩&#x27;</span>  <span class="keyword">from</span> student <span class="keyword">inner</span> <span class="keyword">join</span> score <span class="keyword">on</span> student.sid<span class="operator">=</span>score.student_id <span class="keyword">group</span> <span class="keyword">by</span> sname <span class="keyword">having</span> <span class="built_in">avg</span>(num)<span class="operator">&gt;</span><span class="number">80</span>;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602185035160.png" alt="image-20240602185035160"></p>
+<h2 id="5、查询所有学生的学号，姓名，选课数，总成�">5、查询所有学生的学号，姓名，选课数，总成�?</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">select</span> student.sid <span class="keyword">as</span> <span class="string">&#x27;学号&#x27;</span>,student.sname <span class="keyword">as</span> <span class="string">&#x27;名字&#x27;</span>,student.class_id <span class="keyword">as</span> <span class="string">&#x27;选课�?,sum(num) as &#x27;</span>总成�? <span class="keyword">from</span> student <span class="keyword">inner</span> <span class="keyword">join</span> score <span class="keyword">on</span> student.sid<span class="operator">=</span>score.student_id <span class="keyword">group</span> <span class="keyword">by</span> student_id;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602190110610.png" alt="image-20240602190110610"></p>
+<h2 id="6�-查询姓李老师的个�">6�?查询姓李老师的个�?</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(tid) <span class="keyword">as</span> <span class="string">&#x27;个数&#x27;</span> <span class="keyword">from</span> teacher <span class="keyword">where</span> tname <span class="keyword">like</span><span class="string">&#x27;%�?&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602190806551.png" alt="image-20240602190806551"></p>
+<h2 id="7�-查询没有报李平老师课的学生姓名">7�?查询没有报李平老师课的学生姓名</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="keyword">select</span> course.cid <span class="keyword">from</span> </span><br><span class="line">course <span class="keyword">inner</span> <span class="keyword">join</span> teacher <span class="keyword">on</span> course.teacher_id <span class="operator">=</span> teacher.tid </span><br><span class="line"><span class="keyword">where</span> teacher.tname<span class="operator">=</span><span class="string">&#x27;李平老师&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">distinct</span> student_id <span class="keyword">from</span> score <span class="keyword">where</span> course_id <span class="keyword">in</span> (<span class="keyword">select</span> course.cid <span class="keyword">from</span> </span><br><span class="line">course <span class="keyword">inner</span> <span class="keyword">join</span> teacher <span class="keyword">on</span> course.teacher_id <span class="operator">=</span> teacher.tid </span><br><span class="line"><span class="keyword">where</span> teacher.tname<span class="operator">=</span><span class="string">&#x27;李平老师&#x27;</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> student.sname <span class="keyword">from</span> student <span class="keyword">where</span> sid <span class="keyword">not</span> <span class="keyword">in</span> (<span class="keyword">select</span> <span class="keyword">distinct</span> student_id <span class="keyword">from</span> score <span class="keyword">where</span> course_id <span class="keyword">in</span> (<span class="keyword">select</span> course.cid <span class="keyword">from</span> </span><br><span class="line">course <span class="keyword">inner</span> <span class="keyword">join</span> teacher <span class="keyword">on</span> course.teacher_id <span class="operator">=</span> teacher.tid </span><br><span class="line"><span class="keyword">where</span> teacher.tname<span class="operator">=</span><span class="string">&#x27;李平老师&#x27;</span></span><br><span class="line">));</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240602195857862.png" alt="image-20240602195857862"></p>
+<h2 id="8�-查询物理课程比生物课程高的学生的学号">8�?查询物理课程比生物课程高的学生的学号</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="9�-查询没有同时选修物理课程和体育课程的学生姓名">9�?查询没有同时选修物理课程和体育课程的学生姓名</h2>
+<ul>
+<li>查询没有同时选修物理课程和体育课程的学生姓名(没有同时选修指的是选修了一门的，思路是得到物�?体育课程的学生信息表，然后基于学生分组，统计count(课程)=1)</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> cid <span class="keyword">from</span> course <span class="keyword">where</span> cname<span class="operator">=</span><span class="string">&#x27;物理&#x27;</span> <span class="keyword">or</span> cname<span class="operator">=</span><span class="string">&#x27;体育&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> student_id <span class="keyword">from</span> score <span class="keyword">where</span> course_id <span class="keyword">in</span> (<span class="keyword">select</span> cid <span class="keyword">from</span> course <span class="keyword">where</span> cname<span class="operator">=</span><span class="string">&#x27;物理&#x27;</span> <span class="keyword">or</span> cname<span class="operator">=</span><span class="string">&#x27;体育&#x27;</span>) <span class="keyword">group</span> <span class="keyword">by</span> student_id <span class="keyword">having</span> <span class="built_in">count</span>(course_id)<span class="operator">=</span><span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> sname <span class="keyword">from</span> student <span class="keyword">where</span> sid <span class="keyword">in</span> (<span class="keyword">select</span> student_id <span class="keyword">from</span> score <span class="keyword">where</span> course_id <span class="keyword">in</span> (<span class="keyword">select</span> cid <span class="keyword">from</span> course <span class="keyword">where</span> cname<span class="operator">=</span><span class="string">&#x27;物理&#x27;</span> <span class="keyword">or</span> cname<span class="operator">=</span><span class="string">&#x27;体育&#x27;</span>) <span class="keyword">group</span> <span class="keyword">by</span> student_id <span class="keyword">having</span> <span class="built_in">count</span>(course_id)<span class="operator">=</span><span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610163756856.png" alt="image-20240610163756856"></p>
+<h2 id="10、查询挂科超过两�-包括两门-的学生姓名和班级">10、查询挂科超过两�?包括两门)的学生姓名和班级</h2>
+<ul>
+<li>查询挂科超过两门(包括两门)的学生姓名和班级(求出&lt;60的表，然后对学生进行分组，统计课程数�?=2)</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> student_id <span class="keyword">from</span> score <span class="keyword">where</span> num<span class="operator">&lt;</span><span class="number">60</span> <span class="keyword">group</span> <span class="keyword">by</span> student_id <span class="keyword">having</span> <span class="built_in">count</span>(student_id)<span class="operator">&gt;=</span><span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> sname,caption <span class="keyword">from</span> student <span class="keyword">inner</span> <span class="keyword">join</span> class <span class="keyword">on</span> student.class_id<span class="operator">=</span>class.cid <span class="keyword">where</span> sid<span class="operator">=</span>(<span class="keyword">select</span> student_id <span class="keyword">from</span> score <span class="keyword">where</span> num<span class="operator">&lt;</span><span class="number">60</span> <span class="keyword">group</span> <span class="keyword">by</span> student_id <span class="keyword">having</span> <span class="built_in">count</span>(student_id)<span class="operator">&gt;=</span><span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610165636832.png" alt="image-20240610165636832"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610165652634.png" alt="image-20240610165652634"></p>
+<h2 id="11、查询选修了所有课程的学生姓名">11、查询选修了所有课程的学生姓名</h2>
+<ul>
+<li>查询选修了所有课程的学生姓名(先从course表统计课程的总数，然后基于score表按照student_id分组，统计课程数据等于课程总数即可)</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(cid) <span class="keyword">from</span> course;</span><br><span class="line"></span><br><span class="line"># 看的比较清除</span><br><span class="line"><span class="keyword">select</span> student_id,<span class="built_in">count</span>(course_id) <span class="keyword">from</span> score <span class="keyword">group</span> <span class="keyword">by</span> student_id <span class="keyword">having</span> <span class="built_in">count</span>(course_id)<span class="operator">=</span>(<span class="keyword">select</span> <span class="built_in">count</span>(cid) <span class="keyword">from</span> course);</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> student_id <span class="keyword">from</span> score <span class="keyword">group</span> <span class="keyword">by</span> student_id <span class="keyword">having</span> <span class="built_in">count</span>(course_id)<span class="operator">=</span>(<span class="keyword">select</span> <span class="built_in">count</span>(cid) <span class="keyword">from</span> course);</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> sname <span class="keyword">from</span> student <span class="keyword">where</span> sid <span class="keyword">in</span> (<span class="keyword">select</span> student_id <span class="keyword">from</span> score <span class="keyword">group</span> <span class="keyword">by</span> student_id <span class="keyword">having</span> <span class="built_in">count</span>(course_id)<span class="operator">=</span>(<span class="keyword">select</span> <span class="built_in">count</span>(cid) <span class="keyword">from</span> course));</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610183420229.png" alt="image-20240610183420229"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610183434059.png" alt="image-20240610183434059"></p>
+<h2 id="12、查询李平老师教的课程的所有成绩记�">12、查询李平老师教的课程的所有成绩记�?</h2>
+<ul>
+<li>查询李平老师教的课程的所有成绩记�?</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> tid <span class="keyword">from</span> teacher <span class="keyword">where</span> tname<span class="operator">=</span><span class="string">&#x27;李平老师&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> cid <span class="keyword">from</span> course <span class="keyword">where</span> teacher_id<span class="operator">=</span>(<span class="keyword">select</span> tid <span class="keyword">from</span> teacher <span class="keyword">where</span> tname<span class="operator">=</span><span class="string">&#x27;李平老师&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> num <span class="keyword">from</span> score <span class="keyword">where</span> course_id <span class="keyword">in</span> (<span class="keyword">select</span> cid <span class="keyword">from</span> course <span class="keyword">where</span> teacher_id<span class="operator">=</span>(<span class="keyword">select</span> tid <span class="keyword">from</span> teacher <span class="keyword">where</span> tname<span class="operator">=</span><span class="string">&#x27;李平老师&#x27;</span>));</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610184604647.png" alt="image-20240610184604647"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610184515562.png" alt="image-20240610184515562"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610184619913.png" alt="image-20240610184619913"></p>
+<h2 id="13、查询全部学生都选修了的课程号和课程�">13、查询全部学生都选修了的课程号和课程�?</h2>
+<ul>
+<li>查询全部学生都选修了的课程号和课程�?取所有学生数，然后基于score表的课程分组，找出count(student_id)等于学生数即�?</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(sid) <span class="keyword">from</span> student;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> course_id <span class="keyword">from</span> score <span class="keyword">group</span> <span class="keyword">by</span> course_id <span class="keyword">having</span> <span class="built_in">count</span>(student_id)<span class="operator">=</span>(<span class="keyword">select</span> <span class="built_in">count</span>(sid) <span class="keyword">from</span> student);</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> cid,cname <span class="keyword">from</span> course <span class="keyword">where</span> cid<span class="operator">=</span>(<span class="keyword">select</span> course_id <span class="keyword">from</span> score <span class="keyword">group</span> <span class="keyword">by</span> course_id <span class="keyword">having</span> <span class="built_in">count</span>(student_id)<span class="operator">=</span>(<span class="keyword">select</span> <span class="built_in">count</span>(sid) <span class="keyword">from</span> student));</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610190027169.png" alt="image-20240610190027169"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610190011686.png" alt="image-20240610190011686"></p>
+<h2 id="14、查询每门课程被选修的次�">14、查询每门课程被选修的次�?</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> course_id,<span class="built_in">count</span>(student_id) <span class="keyword">from</span> score <span class="keyword">group</span> <span class="keyword">by</span> course_id;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240610190522485.png" alt="image-20240610190522485"></p>
+<p>15、查询之选修了一门课程的学生姓名和学�?</p>
+<p>16、查询所有学生考出的成绩并按从高到低排序（成绩去重�?</p>
+<p>17、查询平均成绩大�?5的学生姓名和平均成绩</p>
+<p>18、查询生物成绩不及格的学生姓名和对应生物分数</p>
+<p>19、查询在所有选修了李平老师课程的学生中，这些课�?李平老师的课程，不是所有课�?平均成绩最高的学生姓名</p>
+<p>20、查询每门课程成绩最好的前两名学生姓�?</p>
+<p>21、查询不同课程但成绩相同的学号，课程号，成绩</p>
+<p>22、查询没学过“叶平”老师课程的学生姓名以及选修的课程名称；</p>
+<p>23、查询所有选修了学号为1的同学选修过的一门或者多门课程的同学学号和姓名；</p>
+<p>24、任课最多的老师中学生单科成绩最高的学生姓名</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/Flex%E5%B8%83%E5%B1%80/" rel="prev" title="Flex����">
+      <i class="fa fa-chevron-left"></i> Flex����
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/JavaScript%E4%B9%8B%E5%AF%B9%E8%B1%A1/" rel="next" title="JavaScript֮����">
+      JavaScript֮���� <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">MySQL练习�?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E7%9A%84%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%90%8D%E7%A7%B0%E4%BB%A5%E5%8F%8A%E5%AF%B9%E5%BA%94%E7%9A%84%E4%BB%BB%E8%AF%BE%E8%80%81%E5%B8%88%E5%A7%93%E5%90%8D"><span class="nav-number">1.1.</span> <span class="nav-text">1、查询所有的课程的名称以及对应的任课老师姓名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E6%9F%A5%E8%AF%A2%E5%AD%A6%E7%94%9F%E8%A1%A8%E4%B8%AD%E7%94%B7%E5%A5%B3%E7%94%9F%E5%90%84%E6%9C%89%E5%A4%9A%E5%B0%91%EF%BF%BD"><span class="nav-number">1.2.</span> <span class="nav-text">2、查询学生表中男女生各有多少�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E6%9F%A5%E8%AF%A2%E7%89%A9%E7%90%86%E6%88%90%E7%BB%A9%E7%AD%89%EF%BF%BD-00%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E5%A7%93%E5%90%8D"><span class="nav-number">1.3.</span> <span class="nav-text">3、查询物理成绩等�?00的学生的姓名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E6%9F%A5%E8%AF%A2%E5%B9%B3%E5%9D%87%E6%88%90%E7%BB%A9%E5%A4%A7%E4%BA%8E%E5%85%AB%E5%8D%81%E5%88%86%E7%9A%84%E5%90%8C%E5%AD%A6%E7%9A%84%E5%A7%93%E5%90%8D%E5%92%8C%E5%B9%B3%E5%9D%87%E6%88%90%EF%BF%BD"><span class="nav-number">1.4.</span> <span class="nav-text">4、查询平均成绩大于八十分的同学的姓名和平均成�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E5%AD%A6%E7%94%9F%E7%9A%84%E5%AD%A6%E5%8F%B7%EF%BC%8C%E5%A7%93%E5%90%8D%EF%BC%8C%E9%80%89%E8%AF%BE%E6%95%B0%EF%BC%8C%E6%80%BB%E6%88%90%EF%BF%BD"><span class="nav-number">1.5.</span> <span class="nav-text">5、查询所有学生的学号，姓名，选课数，总成�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%EF%BF%BD-%E6%9F%A5%E8%AF%A2%E5%A7%93%E6%9D%8E%E8%80%81%E5%B8%88%E7%9A%84%E4%B8%AA%EF%BF%BD"><span class="nav-number">1.6.</span> <span class="nav-text">6�?查询姓李老师的个�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7%EF%BF%BD-%E6%9F%A5%E8%AF%A2%E6%B2%A1%E6%9C%89%E6%8A%A5%E6%9D%8E%E5%B9%B3%E8%80%81%E5%B8%88%E8%AF%BE%E7%9A%84%E5%AD%A6%E7%94%9F%E5%A7%93%E5%90%8D"><span class="nav-number">1.7.</span> <span class="nav-text">7�?查询没有报李平老师课的学生姓名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8%EF%BF%BD-%E6%9F%A5%E8%AF%A2%E7%89%A9%E7%90%86%E8%AF%BE%E7%A8%8B%E6%AF%94%E7%94%9F%E7%89%A9%E8%AF%BE%E7%A8%8B%E9%AB%98%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E5%AD%A6%E5%8F%B7"><span class="nav-number">1.8.</span> <span class="nav-text">8�?查询物理课程比生物课程高的学生的学号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9%EF%BF%BD-%E6%9F%A5%E8%AF%A2%E6%B2%A1%E6%9C%89%E5%90%8C%E6%97%B6%E9%80%89%E4%BF%AE%E7%89%A9%E7%90%86%E8%AF%BE%E7%A8%8B%E5%92%8C%E4%BD%93%E8%82%B2%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%A7%93%E5%90%8D"><span class="nav-number">1.9.</span> <span class="nav-text">9�?查询没有同时选修物理课程和体育课程的学生姓名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10%E3%80%81%E6%9F%A5%E8%AF%A2%E6%8C%82%E7%A7%91%E8%B6%85%E8%BF%87%E4%B8%A4%EF%BF%BD-%E5%8C%85%E6%8B%AC%E4%B8%A4%E9%97%A8-%E7%9A%84%E5%AD%A6%E7%94%9F%E5%A7%93%E5%90%8D%E5%92%8C%E7%8F%AD%E7%BA%A7"><span class="nav-number">1.10.</span> <span class="nav-text">10、查询挂科超过两�?包括两门)的学生姓名和班级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11%E3%80%81%E6%9F%A5%E8%AF%A2%E9%80%89%E4%BF%AE%E4%BA%86%E6%89%80%E6%9C%89%E8%AF%BE%E7%A8%8B%E7%9A%84%E5%AD%A6%E7%94%9F%E5%A7%93%E5%90%8D"><span class="nav-number">1.11.</span> <span class="nav-text">11、查询选修了所有课程的学生姓名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12%E3%80%81%E6%9F%A5%E8%AF%A2%E6%9D%8E%E5%B9%B3%E8%80%81%E5%B8%88%E6%95%99%E7%9A%84%E8%AF%BE%E7%A8%8B%E7%9A%84%E6%89%80%E6%9C%89%E6%88%90%E7%BB%A9%E8%AE%B0%EF%BF%BD"><span class="nav-number">1.12.</span> <span class="nav-text">12、查询李平老师教的课程的所有成绩记�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13%E3%80%81%E6%9F%A5%E8%AF%A2%E5%85%A8%E9%83%A8%E5%AD%A6%E7%94%9F%E9%83%BD%E9%80%89%E4%BF%AE%E4%BA%86%E7%9A%84%E8%AF%BE%E7%A8%8B%E5%8F%B7%E5%92%8C%E8%AF%BE%E7%A8%8B%EF%BF%BD"><span class="nav-number">1.13.</span> <span class="nav-text">13、查询全部学生都选修了的课程号和课程�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14%E3%80%81%E6%9F%A5%E8%AF%A2%E6%AF%8F%E9%97%A8%E8%AF%BE%E7%A8%8B%E8%A2%AB%E9%80%89%E4%BF%AE%E7%9A%84%E6%AC%A1%EF%BF%BD"><span class="nav-number">1.14.</span> <span class="nav-text">14、查询每门课程被选修的次�?</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">201</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

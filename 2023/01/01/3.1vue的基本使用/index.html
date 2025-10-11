@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="【一】动态组�? �?】基本使�?  比如�?  1&lt;one :is&#x3D;&quot;type&quot;&gt;&lt;&#x2F;one&gt; 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657&lt;!DOCTYPE html&gt;&amp;lt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3.1vue�Ļ���ʹ��">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/3.1vue%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="【一】动态组�? �?】基本使�?  比如�?  1&lt;one :is&#x3D;&quot;type&quot;&gt;&lt;&#x2F;one&gt; 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657&lt;!DOCTYPE html&gt;&amp;lt">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812161748349.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812162348912.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812162451356.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812162531852.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812162555274.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812162621736.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812162659362.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812163859226.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812163940475.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812184134918.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812184332118.png">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T09:47:38.538Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812161748349.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/3.1vue%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>3.1vue�Ļ���ʹ�� | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/3.1vue%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          3.1vue�Ļ���ʹ��
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 17:47:38" itemprop="dateModified" datetime="2025-10-11T17:47:38+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>【一】动态组�?</h1>
+<h2 id="�-】基本使�">�?】基本使�?</h2>
+<ul>
+<li>比如�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;one :<span class="keyword">is</span>=<span class="string">&quot;type&quot;</span>&gt;&lt;/one&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./js2/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--        三个按钮--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;type=&#x27;home&#x27;&quot;</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;type=&#x27;goods&#x27;&quot;</span>&gt;</span>商品�?/button&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;type=&#x27;order&#x27;&quot;</span>&gt;</span>订单�?/button&gt;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--    方法一：判�?-&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    这里的为什么要�?=应为是比较，不可以用=--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;home v-if=&quot;type==&#x27;home&#x27;&quot;&gt;&lt;/home&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;goods v-else-if=&quot;type==&#x27;goods&#x27;&quot;&gt;&lt;/goods&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;order v-else&gt;&lt;/order&gt;--&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">&lt;!--    方法�?-&gt;</span></span><br><span class="line"><span class="comment">    &lt;!--    这个标签随便起名字，因为is绑定了属�?-&gt;</span></span><br><span class="line"><span class="comment">    &lt;one :is=&quot;type&quot;&gt;&lt;/one&gt;</span></span><br><span class="line"><span class="comment">&lt;/div&gt;</span></span><br><span class="line"><span class="comment">&lt;/body&gt;</span></span><br><span class="line"><span class="comment">&lt;script&gt;</span></span><br><span class="line"><span class="comment">    // 全局组件</span></span><br><span class="line"><span class="comment">    Vue.component(&quot;home&quot;, &#123;</span></span><br><span class="line"><span class="comment">        template: `&lt;div&gt;</span></span><br><span class="line"><span class="comment">                    &lt;h1&gt;首页&lt;/h1&gt;</span></span><br><span class="line"><span class="comment">                   &lt;/div&gt;`,</span></span><br><span class="line"><span class="comment">    &#125;)</span></span><br><span class="line"><span class="comment">    // 全局组件</span></span><br><span class="line"><span class="comment">    Vue.component(&quot;goods&quot;, &#123;</span></span><br><span class="line"><span class="comment">        template: `&lt;div&gt;</span></span><br><span class="line"><span class="comment">                    &lt;h1&gt;商品�?/h1&gt;</span></span><br><span class="line"><span class="comment">                   &lt;/div&gt;`,</span></span><br><span class="line"><span class="comment">    &#125;)</span></span><br><span class="line"><span class="comment">    // 全局组件</span></span><br><span class="line"><span class="comment">    Vue.component(&quot;order&quot;, &#123;</span></span><br><span class="line"><span class="comment">        template: `&lt;div&gt;</span></span><br><span class="line"><span class="comment">                    &lt;h1&gt;订单�?/h1&gt;</span></span><br><span class="line"><span class="comment">                   &lt;/div&gt;`,</span></span><br><span class="line"><span class="comment">    &#125;)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    var vm = new Vue(&#123;</span></span><br><span class="line"><span class="comment">        el: &quot;#app&quot;,</span></span><br><span class="line"><span class="comment">        data: &#123;</span></span><br><span class="line"><span class="comment">            type: &quot;home&quot;</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">    &#125;)</span></span><br><span class="line"><span class="comment">&lt;/script&gt;</span></span><br><span class="line"><span class="comment">&lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="�-】keep-alive">�?】keep-alive</h2>
+<ul>
+<li><code>keep-alive</code>可以让输入框内有的内容一致保持，不会因为切换而重�?</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./js2/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--        三个按钮--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;type=&#x27;home&#x27;&quot;</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;type=&#x27;goods&#x27;&quot;</span>&gt;</span>商品�?/button&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;type=&#x27;order&#x27;&quot;</span>&gt;</span>订单�?/button&gt;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--    方法一：判�?-&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    这里的为什么要�?=应为是比较，不可以用=--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">keep-alive</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">home</span> <span class="attr">v-if</span>=<span class="string">&quot;type==&#x27;home&#x27;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">home</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">goods</span> <span class="attr">v-else-if</span>=<span class="string">&quot;type==&#x27;goods&#x27;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">goods</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">order</span> <span class="attr">v-else</span>&gt;</span><span class="tag">&lt;/<span class="name">order</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">keep-alive</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--    方法�?-&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;keep-alive&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &lt;component :is=&quot;type&quot;&gt;&lt;/component&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;/keep-alive&gt;--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-handlebars"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">    // 全局组件</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">    Vue.component(&quot;home&quot;, &#123;</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">        template: `<span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">                    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">                   <span class="tag">&lt;/<span class="name">div</span>&gt;</span>`,</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">    &#125;)</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">    Vue.component(&quot;goods&quot;, &#123;</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">        template: `<span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">                    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>商品�?/h1&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">                   <span class="tag">&lt;/<span class="name">div</span>&gt;</span>`,</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">    &#125;)</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">    Vue.component(&quot;order&quot;, &#123;</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">        template: `<span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">                    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>订单�?/h1&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">                    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">                   <span class="tag">&lt;/<span class="name">div</span>&gt;</span>`,</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">    &#125;)</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">    var vm = new Vue(&#123;</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">        el: &quot;#app&quot;,</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">        data: &#123;</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">            type: &quot;home&quot;</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">        &#125;</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">    &#125;)</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"></span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1>【二】插�?</h1>
+<h2 id="�-】基本插�">�?】基本插�?</h2>
+<ul>
+<li>
+<p>插槽：你写的全局组件，在body里面使用，然后你又在里面添加了标�?</p>
+<ul>
+<li>
+<pre><code class="language-html">&lt;home&gt;
+    &lt;div&gt;
+        &lt;img src=&quot;./img/1.png&quot; alt=&quot;&quot;&gt;
+        &lt;img src=&quot;./img/2.png&quot; alt=&quot;&quot;&gt;
+    &lt;/div&gt;
+&lt;/home&gt;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- `&lt;slot&gt;&lt;/slot&gt;`:写在组件中的数据，都会被赋值并替换掉组件中�?slot&gt;&lt;/slot&gt; </span><br><span class="line"></span><br><span class="line">````html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;./js2/vue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">&lt;home&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;img src=&quot;./img/1.png&quot; alt=&quot;&quot;&gt;</span><br><span class="line">        &lt;img src=&quot;./img/2.png&quot; alt=&quot;&quot;&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/home&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    Vue.component(&quot;home&quot;, &#123;</span><br><span class="line">        template: `&lt;div&gt;</span><br><span class="line">                    &lt;h1&gt;首页&lt;/h1&gt;</span><br><span class="line">                    &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">                   &lt;/div&gt;</span><br><span class="line">                   `,</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    var vm=new Vue(&#123;</span><br><span class="line">        el:&quot;#app&quot;,</span><br><span class="line">        data:&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="�-】具名卡�">�?】具名卡�?</h2>
+<ul>
+<li>就是有名的卡槽，指定使用的卡槽的位置</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./js2/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">home</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">slot</span>=<span class="string">&quot;two&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;./img/3.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;./img/4.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">slot</span>=<span class="string">&quot;one&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;./img/1.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;./img/2.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">home</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-handlebars"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">    Vue.component(&quot;home&quot;, &#123;</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">        template: `<span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">                     <span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;one&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">                    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">                    <span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;two&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">                   <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">                   `,</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">    &#125;)</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">    </span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">    var vm=new Vue(&#123;</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">        el:&quot;#app&quot;,</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">        data:&#123;</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">        &#125;</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">    &#125;)</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"></span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1>【三】<code>Vue</code>的项目创建和运行</h1>
+<h2 id="�-】前言">�?】前言</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- 版本</span><br><span class="line">  - `vue2`：只能用`vue-cli`创建</span><br><span class="line">  - `vue3`：即可用`vue-cli`创建又可以用`vite`</span><br><span class="line"></span><br><span class="line">- `vue-cli`：又称之为vue的脚手架。`vue-cli` 是一个官方提供的命令行工具，用于简�?`Vue.js` 项目的创建和管理。它提供了一些便捷的命令来生成新项目、配置开发环境、运行开发服务器、构建生产版本等。`vue-cli` 能够帮助你快速启动一个` Vue.js `项目，自动配置所需的工具和插件，使得开发过程更加高�?</span><br><span class="line">	<span class="comment"># 安装必须依赖于：nodejs的环�?--》就好比django-admin</span></span><br></pre></td></tr></table></figure>
+<h2 id="�-】安装nodejs">�?】安装<code>nodejs</code></h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 搭建node环境</span></span><br><span class="line">-我们需要nodejs�?<span class="number">0.16</span>版本</span><br><span class="line">- 下载安装�?</span><br><span class="line">- 下一部安装就可以</span><br><span class="line"><span class="comment"># 在cmd命令中检�?</span></span><br><span class="line">- 有两个命�?</span><br><span class="line">	node:就是python</span><br><span class="line">    npm:就是pip</span><br></pre></td></tr></table></figure>
+<ul>
+<li>npm换源</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-npm 下载第三方包时，去国外下，速度很慢</span><br><span class="line">-替换一下国内镜像站：阿里云�?</span><br><span class="line">	-npm config <span class="built_in">set</span> registry http://registry.npmmirror.com </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">-使用阿里云提供的cnpm替代npm：提示和显示更友�?</span><br><span class="line">	-npm install -g cnpm --registry=https://registry.npmmirror.com</span><br><span class="line">    -以后用cnpm替代npm即可</span><br></pre></td></tr></table></figure>
+<ul>
+<li>nodejs的包管理工具</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm、yarn、cnpm</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code> 安装 vue-cli--就能创建vue项目</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 去官网下载：npm install -g @vue/cli</span></span><br><span class="line">	-------我们要换成cnpm install -g @vue/cli</span><br><span class="line"><span class="comment"># 安装成功过后会释放出一个命令：vue命令</span></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812161748349.png" alt="image-20240812161748349"></p>
+<ul>
+<li>创建vue的项�?</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">你需要将路径切换到你存储vue项目的路�?</span></span><br><span class="line">vue create 项目�?</span><br></pre></td></tr></table></figure>
+<ul>
+<li>上下选择自定义设�?</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812162348912.png" alt="image-20240812162348912"></p>
+<ul>
+<li>上下选择自定义设�?</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812162451356.png" alt="image-20240812162451356"></p>
+<ul>
+<li>选择版本</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812162531852.png" alt="image-20240812162531852"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812162555274.png" alt="image-20240812162555274"></p>
+<ul>
+<li>选则下面那个即可</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812162621736.png" alt="image-20240812162621736"></p>
+<ul>
+<li>是否保存（保存到的话，下次你可以直接使用这个配置�?</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812162659362.png" alt="image-20240812162659362"></p>
+<h2 id="�-】运行vue项目">�?】运行vue项目</h2>
+<ul>
+<li>在terminal�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一：切换到你的vue项目：cd 项目名字</span></span><br><span class="line"><span class="comment"># 第二：运行：npm run serve</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>在pycharm�?找到你创建的vue项目直接打开</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 上面运行的绿色按钮：</span></span><br><span class="line">	- 添加一个npm命令，脚本的地方写：serve</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812163859226.png" alt="image-20240812163859226"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812163940475.png" alt="image-20240812163940475"></p>
+<h1>【四】vue项目目录的结�?</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vue_demo001 项目�?</span></span><br><span class="line">	-node_modules：黄色是被git管理了表示忽略文�?-》当前项目的所有依�?-》如果没有项目运行不�?</span><br><span class="line">    			  相当于python项目中有个文件夹 .venv</span><br><span class="line">        		   特别多小文件--》把项目发送给别人，这个文件夹删除</span><br><span class="line">                    cnpm install  <span class="comment">#项目根路径下执行，就会重新创建出来，根据package.json安装</span></span><br><span class="line">                </span><br><span class="line">    -public <span class="comment"># 文件�?</span></span><br><span class="line">    	-favicon.ico  <span class="comment"># 网页小图�?</span></span><br><span class="line">        -index.html   <span class="comment"># vue：spa 单页面应�?-》只有一个html页面--》不要动�?</span></span><br><span class="line">        </span><br><span class="line">    -src             <span class="comment">#文件�?，vue的核心代码，后期我们都在这里面写代码</span></span><br><span class="line">        -assets      <span class="comment"># 文件夹，放公共静态资源，js，css，图�?</span></span><br><span class="line">        	-logo.png  <span class="comment"># 静态图�?</span></span><br><span class="line">	   -components   <span class="comment">#文件�?组件，以后小组件放在这个文件夹内【页面组件和小组件�?</span></span><br><span class="line">    		-HelloWorld.vue <span class="comment"># 默认提供的小组件</span></span><br><span class="line">       		-后期我们写的小组件放这里</span><br><span class="line">       -router      <span class="comment">#文件夹，第三方包，vue-routr的东西，后面会详细学   路由</span></span><br><span class="line">			-index.js <span class="comment"># vue-router的代�?</span></span><br><span class="line">       -store       <span class="comment">#文件夹，第三方包，vuex的东西，后面会详细学   状态管理器</span></span><br><span class="line">    		-index.js <span class="comment"># vuex的代�?</span></span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">   	  -views      <span class="comment"># #文件�?组件，以后页面组件放在这个文件夹内【页面组件和小组件�?</span></span><br><span class="line">        	-AboutView.vue  <span class="comment"># 关于页面</span></span><br><span class="line">        	-HomeView.vue   <span class="comment"># 首页</span></span><br><span class="line">        </span><br><span class="line">      -App.vue   <span class="comment"># 根组�?</span></span><br><span class="line">      -main.js   <span class="comment"># vue项目的核心js文件，项目运行从他开�?</span></span><br><span class="line">        </span><br><span class="line">   -.gitignore       <span class="comment"># git管理软件的忽略文�?-》后面会学git</span></span><br><span class="line">   -babel.config.js  <span class="comment"># babel的配置文件，不用动，vue支持最新es语法--》把新版本语�?-转成es5语法</span></span><br><span class="line">   -jsconfig.json    <span class="comment"># 不用�?</span></span><br><span class="line">   -package.json     <span class="comment"># 配置信息，项目依�?后面会用axios，装完后，在里面就有</span></span><br><span class="line">   -package-lock.json<span class="comment"># package锁定文件，锁定版�?</span></span><br><span class="line">   -README.md        <span class="comment"># 项目描述文件</span></span><br><span class="line">   -vue.config.js    <span class="comment"># vue项目配置文件--》settings.py</span></span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"><span class="comment"># 补充�?</span></span><br><span class="line">	svg图片：可以无限放大缩�?</span><br><span class="line">    ico，png，jpg：图片文件，放大后看不清</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment"># pycharm中删除的文件找回</span></span><br><span class="line">	-项目上点右键--》show history--——》revert回来即可</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">dist: 打包的项目目�?打包后会生成)</span><br><span class="line">node_modules: 项目依赖(删掉，不上传git，使用npm install重新安装)</span><br><span class="line">public: 共用资源</span><br><span class="line">	--favicon.ico</span><br><span class="line">	--index.html:项目入口页面，单页面</span><br><span class="line">src: 项目目标,书写代码的地�?</span><br><span class="line">	-- assets:资源</span><br><span class="line">	-- components:组件</span><br><span class="line">	-- views:视图组件</span><br><span class="line">	-- App.vue:根组�?</span><br><span class="line">	-- main.js: 入口js</span><br><span class="line">	-- router.js: 路由文件</span><br><span class="line">	-- store.js: 状态库文件</span><br><span class="line">vue.config.js: 项目配置文件(没有可以自己新建)</span><br><span class="line">package.json：项目配置依赖（等同于python项目的reqirement.txt�?</span><br></pre></td></tr></table></figure>
+<h1>【五】vue的开发规�?</h1>
+<h2 id="�-】vue项目的执行流�">�?】vue项目的执行流�?</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 我们运行：npm run serve  --》编译并运行项目</span></span><br><span class="line">	-xx.vue---&gt;浏览器识别不�?-》浏览器只能识别 html，css，js</span><br><span class="line">    -把vue项目--》编�?-》编译成功纯粹的  html，css，js--》运行起�?-》浏览器中访问xxxxxxxxxx <span class="comment"># # 1 我们运行：npm run serve  --》编译并运行项目    -xx.vue---&gt;浏览器识别不�?-》浏览器只能识别 html，css，js    -把vue项目--》编�?-》编译成功纯粹的  html，css，js--》运行起�?-》浏览器中访�?</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment"># 2：重�?</span></span><br><span class="line">- index.html---&gt;div--&gt;<span class="built_in">id</span>叫app</span><br><span class="line">-  App.vue ---&gt; 组件--》在固定的位置写固定的代码即�?</span><br><span class="line">    	-&lt;template&gt;   html内容</span><br><span class="line">        -&lt;style&gt;       css内容</span><br><span class="line">        -&lt;script&gt;       js内容</span><br><span class="line">-  main.js--》js代码</span><br><span class="line">    	<span class="comment"># 找到 index.html--&gt;app这个div--》把App.vue组件中写的东西，放到index.html�?</span></span><br><span class="line">    	new Vue(&#123;</span><br><span class="line">              render: h =&gt; h(App.vue)</span><br><span class="line">           &#125;).$mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="�-】vue的开�">�?】vue的开�?</h2>
+<ul>
+<li>访问根路径，显示<code>HomeView.vue</code>这个组件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">- 通过vue-router来控制：在router--&gt;index.js�?</span><br><span class="line">		<span class="comment"># 这个就好比我们的路由</span></span><br><span class="line">	- 找打：const routes = [</span><br><span class="line">                  &#123;</span><br><span class="line">                    <span class="comment"># 这个就是根路径的意�?</span></span><br><span class="line">                    path: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">                    name: <span class="string">&#x27;home&#x27;</span>,</span><br><span class="line">                    component: HomeView</span><br><span class="line">                  &#125;,</span><br><span class="line">                  &#123;</span><br><span class="line">                      <span class="comment"># 这个是about的路�?</span></span><br><span class="line">                    path: <span class="string">&#x27;/about&#x27;</span>,</span><br><span class="line">                    name: <span class="string">&#x27;about&#x27;</span>,</span><br><span class="line">                    component: () =&gt; <span class="keyword">import</span>(/* webpackChunkName: <span class="string">&quot;about&quot;</span> */ <span class="string">&#x27;../views/AboutView.vue&#x27;</span>)</span><br><span class="line">                  &#125;</span><br><span class="line">                ]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>vue-routeru用来控制访问的路�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- 访问这个路径：http://<span class="number">192.168</span><span class="number">.1</span><span class="number">.252</span>:<span class="number">8081</span>/  ---》显�?HomeView 组件</span><br><span class="line">- 访问这个路径：http://<span class="number">192.168</span><span class="number">.1</span><span class="number">.252</span>:<span class="number">8081</span>/about---》显�?AboutView 组件</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>App.vue</code>：根组件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果没有vue-router，访�?根路径会显示 App.vue中写的东�?</span></span><br><span class="line"><span class="comment"># 我们想每次访问的都只我们写的组件内容：方�?</span></span><br><span class="line">		- 将App.vue里面只保留：</span><br><span class="line">                &lt;template&gt;</span><br><span class="line">                  &lt;div <span class="built_in">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">                    &lt;router-view/&gt;</span><br><span class="line">                  &lt;/div&gt;</span><br><span class="line">                &lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>总结</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 在view文件夹下创建  xx.vue--- &gt;页面组件</span><br><span class="line">- 在router---》index.js  注册路由</span><br><span class="line">- 浏览器中访问路径，就会显�?刚刚创建的组�?</span><br></pre></td></tr></table></figure>
+<ul>
+<li>页面组件编写规范：三部分</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &lt;template&gt;   html内容</span></span><br><span class="line"><span class="comment"># &lt;style&gt;       css内容</span></span><br><span class="line"><span class="comment"># &lt;script&gt;       js内容</span></span><br><span class="line">	<span class="comment"># 必须加下面的内容 </span></span><br><span class="line">    export default &#123;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>引入组件使用</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> 导入</span><br><span class="line">   <span class="number">2</span> 注册成局部组�?</span><br><span class="line">   <span class="number">3</span> 在template 写即�?</span><br><span class="line">   	-自定义属�?-》父传子</span><br><span class="line">       -自定义事�?-》子传父</span><br></pre></td></tr></table></figure>
+<h1>【六】es6语法</h1>
+<h2 id="�-】let、const">�?】let、const</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># let :定义变量</span></span><br><span class="line"><span class="comment"># const ：定义常�?</span></span><br><span class="line">------块级作用�?---</span><br><span class="line"><span class="comment"># var 以后尽量少用，用它声明的都是全局作用�?</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在ES6之前，我们都是用var来声明变量，而且JS只有函数作用域和全局作用域，没有块级作用域，所以&#123;&#125;限定不了var声明变量的访问范围�?</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ES6 新增了let命令，用来声明局部变量。它的用法类似于var，但是所声明的变量，只在let命令所在的代码块内有效，而且有暂时性死区的约束</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># &quot;暂时性死�?（Temporal Dead Zone，简�?TDZ）是指在 ES6 中使�?let �?const 声明变量时，变量存在但无法访问的区域。这种行为是为了�?JavaScript 中引入块级作用域而设计的�?</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># �?JavaScript 中，使用 var 声明的变量在其声明语句之前就可以被访问，这种行为称为&quot;变量提升&quot;。而在使用 let �?const 声明变量时，变量虽然存在于作用域中，但是在声明语句之前访问这些变量会导致引发 ReferenceError 异常�?</span></span><br><span class="line">	<span class="comment"># 下面是例�?</span></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=<span class="string">&quot;./js2/vue.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    function one()&#123;</span><br><span class="line">        console.log(two)</span><br><span class="line">         var two=<span class="number">76</span> // 得到的是undefined</span><br><span class="line">         let two=<span class="number">76</span> // 会报�?</span><br><span class="line">    &#125;</span><br><span class="line">    one()</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 暂时性死区的产生原因是，let �?const 声明的变量在进入作用域时就已经被创建，并且被绑定到了该作用域中，但是在变量的声明语句之前，访问这些变量会进入暂时性死区，因为此时变量尚未初始�?</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># python的LEGB---》查找顺�?</span></span><br></pre></td></tr></table></figure>
+<h2 id="�-】箭头函�">�?】箭头函�?</h2>
+<ul>
+<li>简化了代码</li>
+<li><strong>想了解细节的话，笔记里面写了</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 记住一句话：箭头函数内部没有自己的this---使用上一�?</span></span><br></pre></td></tr></table></figure>
+<h2 id="�-】this指向的问�">�?】this指向的问�?</h2>
+<ul>
+<li>
+<p>在全局上下文中，this之现象全局对象[可以放值取值]</p>
+<ul>
+<li>放值取值：<img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812184134918.png" alt="image-20240812184134918"></li>
+</ul>
+</li>
+<li>
+<p>在浏览器环境中通常是window对象，在<code>Node.js</code>中是global对象</p>
+</li>
+<li>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240812184332118.png" alt="image-20240812184332118"></p>
+</li>
+<li>
+<p>函数调用�?</p>
+<ul>
+<li>
+<p>如果函数作为普通函数调用，this指向全局对象（在严格模式下为undefined�?</p>
+<ul>
+<li>
+<p>什么是严格模式：是 JavaScript 中的一种运行模式，它通过对语言的某些特性进行限制或改进来帮助开发者写出更安全、更规范的代�?</p>
+</li>
+<li>
+<pre><code class="language-vue">&lt;script&gt;
+    function one(){
+        console.log(this)
+        // window对象
+    }
+    one()
+&lt;/script&gt;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  - 如果函数作为对象的方法调用，this指向该方法的对象</span><br><span class="line"></span><br><span class="line">    - 尽头函数内部没有this，会往上找</span><br><span class="line"></span><br><span class="line">  ```vue</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">      let this_one = &#123;</span><br><span class="line">              name: &quot;jack&quot;,</span><br><span class="line">              age: 18,</span><br><span class="line">              one: () =&gt; &#123;</span><br><span class="line">                  // 这里的this就是window对象</span><br><span class="line">                  console.log(this)</span><br><span class="line">              &#125;,</span><br><span class="line">          two: function()&#123;</span><br><span class="line">                  // 这里的this是one的对�?</span><br><span class="line">              console.log(this)</span><br><span class="line">          &#125;</span><br><span class="line">          &#125;</span><br><span class="line">  </span><br><span class="line">      this_one.one()</span><br><span class="line">      this_one.two()</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">  ```</span><br><span class="line"></span><br><span class="line">- 只要记住：箭头函数没有this，会往上找，找不到就是window（在严格模式下为undefined�?</span><br><span class="line">- 箭头函数�?this 指向定义时所在的作用域的 this 值，而不是调用时�?this 值。换句话说，箭头函数�?this 是词法作用域，而不是动态作用域</span><br><span class="line">- �?ES6 类方法中，this 指向调用该方法的对象实例</span><br><span class="line"></span><br><span class="line">## �?】模板字符串</span><br><span class="line"></span><br><span class="line">- 插值表达式</span><br><span class="line"></span><br><span class="line">```html</span><br><span class="line">const name = &quot;Alice&quot;;</span><br><span class="line">const age = 25;</span><br><span class="line">const message = `Hello, my name is $&#123;name&#125; and I am $&#123;age&#125; years old.`;</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">## �?】解构赋�?</span><br><span class="line"></span><br><span class="line">-  解构赋值允许从数组或对象中提取数据，并将其赋值给变量</span><br><span class="line">- 如果结构的值在对象中没有，就会的到`undefind`，可以赋初�?</span><br><span class="line">- 解构赋值可以方便地交换变量的值，同时还支持默认�?</span><br><span class="line"></span><br><span class="line">```html</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    // 解对�?</span><br><span class="line">    let resume=&#123;name:&quot;lsk&quot;,age:18,hobby:[&quot;dance&quot;,&quot;sing&quot;]&#125;</span><br><span class="line">    // 这里必须是个大括�?</span><br><span class="line">    // 可以赋初�?</span><br><span class="line">    let &#123;name,age,one=666,hobby,two&#125;=resume</span><br><span class="line">    console.log(name) // lsk</span><br><span class="line">    console.log(age) // 18</span><br><span class="line">    // 也可以用作赋�?</span><br><span class="line">    console.log(one) // 666</span><br><span class="line">    hobby.pop()</span><br><span class="line">    // 就会将最后一个给pop�?</span><br><span class="line">    console.log(hobby)// [[&quot;dance&quot;]</span><br><span class="line">    console.log(two) // undefined</span><br><span class="line">    </span><br><span class="line">    // 解数�?</span><br><span class="line">        let data=[67,11,99]</span><br><span class="line">        let [a,b]=data</span><br><span class="line">        console.log(a) //67</span><br><span class="line">    	console.log(b) //11</span><br><span class="line">    // 结构函数返回�?</span><br><span class="line">    	function l()&#123;</span><br><span class="line">        return &#123;name:&quot;lsk&quot;,age:18,hobby:[&quot;dance&quot;,&quot;sing&quot;]&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        let &#123;name,age,hobby&#125;=l()</span><br><span class="line">        console.log(name) // lsk</span><br><span class="line">        console.log(age) // 18</span><br><span class="line">        console.log(hobby) // [&quot;dance&quot;,&quot;sing&quot;]</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## �?】默认参�?</span><br><span class="line"></span><br><span class="line">- `ES6` 允许在函数参数中设置默认值，当调用函数时未提供参数时，将使用默认�?</span><br><span class="line"></span><br><span class="line">````html</span><br><span class="line">function dom(name,age=22)&#123;</span><br><span class="line">        console.log(name)</span><br><span class="line">        console.log(age)</span><br><span class="line">    &#125;</span><br><span class="line">// 没有传age，使用默认的</span><br><span class="line">dom(&#x27;lsk&#x27;)</span><br></pre></td></tr></table></figure>
+
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="�-】展开算法">�?】展开算法</h2>
+<ul>
+<li>记住展开算法的符号<code>...</code></li>
+<li>可以将可迭代对象（如数组，字符串，对象）展开为多个参数或元素，也可以用作函数的参�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 对象</span><br><span class="line">let l = &#123;name: <span class="string">&quot;lsk&quot;</span>, age: <span class="number">18</span>&#125;</span><br><span class="line">let i = &#123;hobby: [<span class="string">&quot;dance&quot;</span>, <span class="string">&quot;sing&quot;</span>],...l&#125;</span><br><span class="line">console.log(i) //&#123;hobby:[<span class="string">&quot;dance&quot;</span>,<span class="string">&quot;sing&quot;</span>],name:<span class="string">&quot;lsk&quot;</span>,age:<span class="number">18</span>&#125;</span><br><span class="line">// 列表</span><br><span class="line">let l = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">let i = [<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,...l]</span><br><span class="line">console.log(i) // [<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">// 函数</span><br><span class="line">function l(a,...b)&#123;</span><br><span class="line">    console.log(a) // 接受一个�?</span><br><span class="line">    console.log(b) // 接收剩下的所�?</span><br><span class="line">&#125;</span><br><span class="line">// 方法一</span><br><span class="line">// l(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>)</span><br><span class="line">//方法�?</span><br><span class="line">let i=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>]</span><br><span class="line">l(...i)</span><br></pre></td></tr></table></figure>
+<h2 id="�-】模块化">�?】模块化</h2>
+<h3 id="�-）默认导入和导出">�?）默认导入和导出</h3>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个one.js文件 导出</span></span><br><span class="line"><span class="comment">// 定义一个常�?</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">NAME</span>=<span class="string">&#x27;lsk&#x27;</span></span><br><span class="line"><span class="comment">// 又名函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">a,b</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 默认的导出对象只能有一�?</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;<span class="variable constant_">NAME</span>,add,<span class="title function_">dmo</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;lsk&quot;</span>)</span><br><span class="line">    &#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 在其他的vue的js里面使用</span></span><br><span class="line"><span class="keyword">import</span> one <span class="keyword">from</span> <span class="string">&quot;@/lsk/one&quot;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(one.<span class="title function_">add</span>(<span class="number">1</span>,<span class="number">2</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(one.<span class="property">NAME</span>)</span><br><span class="line">one.<span class="title function_">dmo</span>()</span><br></pre></td></tr></table></figure>
+<h3 id="�-）命名导入导�">�?）命名导入导�?</h3>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 命名导出</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">dom1</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;dom1&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">dom2</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;dom1&#x27;</span>)</span><br><span class="line">    <span class="title function_">dom1</span>()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> f=dom2</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="variable constant_">NAME</span>=<span class="string">&#x27;lsk&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 导入</span></span><br><span class="line"><span class="comment">// 方式一</span></span><br><span class="line"><span class="comment">// import &#123;f,NAME&#125; from &quot;@/lsk/one&quot;;</span></span><br><span class="line"><span class="comment">// 方式�?</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> a <span class="keyword">from</span> <span class="string">&quot;@/lsk/one&quot;</span>;</span><br><span class="line"><span class="comment">// 这个a是一个对�?</span></span><br><span class="line">a.<span class="title function_">f</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a.<span class="property">NAME</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="�-）导入路�">�?）导入路�?</h3>
+<ul>
+<li>如果在一个文件夹下，js的名字为index.js，你只需要导入到这一层的文件就可�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> index <span class="keyword">from</span> <span class="string">&quot;@/lsk&quot;</span>;</span><br><span class="line"></span><br><span class="line">console.log(index.add(<span class="number">1</span>,<span class="number">2</span>))</span><br><span class="line">console.log(index.NAME)</span><br><span class="line">index.dmo()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>@的意思就是当前的是src文件路径</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># import index from &quot;@/lsk&quot;; �?import index from &quot;./lsk/index.js&quot;; 一�?</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>定制别名</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> one <span class="keyword">from</span> <span class="string">&quot;@/lsk/one&quot;</span>;</span><br><span class="line">// 这个<span class="keyword">import</span>后面的one只是一个你别名，可以自定义定制</span><br></pre></td></tr></table></figure>
+<ul>
+<li>起别�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;f,NAME <span class="keyword">as</span> a&#125; <span class="keyword">from</span> <span class="string">&quot;@/lsk/one&quot;</span>;</span><br><span class="line">// 给NAME起别名叫a</span><br></pre></td></tr></table></figure>
+<h3 id="�-）module使用">�?）module使用</h3>
+<ul>
+<li>这个方法是在html中是使用�?</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个js文件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">dom1</span>(<span class="params">a,b</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b</span><br><span class="line">	&#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 在html中使�?</span></span><br><span class="line"><span class="comment">// 如果不加上type=&quot;module&quot;就会就会报错，加上就不会</span></span><br><span class="line">&lt;script type=<span class="string">&quot;module&quot;</span>&gt;</span><br><span class="line">    <span class="keyword">import</span> lsk <span class="keyword">from</span> <span class="string">&#x27;./lsk&#x27;</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(lqz.<span class="title function_">dom1</span>(<span class="number">4</span>,<span class="number">5</span>))</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h1>【七】登录的跳转案例</h1>
+<ul>
+<li>前后端分�?</li>
+</ul>
+<h2 id="�-】解决跨越问�">�?】解决跨越问�?</h2>
+<ul>
+<li>在django的settings里面配置</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 统一按如下方式解决跨�?</span></span><br><span class="line">	-<span class="number">1</span> 安装</span><br><span class="line">    	pip3 install django-cors-headers</span><br><span class="line">    -<span class="number">2</span> app中注�?</span><br><span class="line">        INSTALLED_APPS = [</span><br><span class="line">            。。�?</span><br><span class="line">            <span class="string">&#x27;corsheaders&#x27;</span>,</span><br><span class="line">        ]</span><br><span class="line">    -<span class="number">3</span> 中间件中注册</span><br><span class="line">        MIDDLEWARE = [</span><br><span class="line"></span><br><span class="line">            <span class="string">&#x27;corsheaders.middleware.CorsMiddleware&#x27;</span>,</span><br><span class="line">        ]</span><br><span class="line">    -<span class="number">4</span> 配置文件中配�?</span><br><span class="line">    <span class="comment"># 允许跨域�?</span></span><br><span class="line">    CORS_ORIGIN_ALLOW_ALL = <span class="literal">True</span></span><br><span class="line">    <span class="comment"># 允许的请求头</span></span><br><span class="line">    CORS_ALLOW_HEADERS = (</span><br><span class="line">        <span class="string">&quot;accept&quot;</span>,</span><br><span class="line">        <span class="string">&quot;accept-encoding&quot;</span>,</span><br><span class="line">        <span class="string">&quot;authorization&quot;</span>,</span><br><span class="line">        <span class="string">&quot;content-type&quot;</span>,</span><br><span class="line">        <span class="string">&quot;dnt&quot;</span>,</span><br><span class="line">        <span class="string">&quot;origin&quot;</span>,</span><br><span class="line">        <span class="string">&quot;user-agent&quot;</span>,</span><br><span class="line">        <span class="string">&quot;x-csrftoken&quot;</span>,</span><br><span class="line">        <span class="string">&quot;x-requested-with&quot;</span>,</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 额外允许的请求头</span></span><br><span class="line">        <span class="string">&#x27;token&#x27;</span>,</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<h2 id="�-】前�">�?】前�?</h2>
+<ul>
+<li>路由</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/login&#x27;</span>,</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;login&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="title class_">LoginView</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/film&#x27;</span>,</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;film&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="title class_">FilmView</span></span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>登录</p>
+<ul>
+<li>
+<p>这里面有一个新的知识，跳转页面</p>
+<ul>
+<li>
+<pre><code class="language-python">this.$router.push('/film')
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```vue</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;p&gt;用户名：&lt;input type=&quot;text&quot; v-model=&quot;username&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;密码�?input type=&quot;password&quot; v-model=&quot;password&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">      &lt;button @click=&quot;handleLogin&quot;&gt;点击登录&lt;/button&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">&lt;!--      签发的token--&gt;</span><br><span class="line">      `&#123;&#123; token &#125;&#125;`</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">import axios from &quot;axios&quot;;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  // 格式</span><br><span class="line">  name: &#x27;LoginView&#x27;,</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      username: &#x27;&#x27;,</span><br><span class="line">      password: &#x27;&#x27;,</span><br><span class="line">      token: &#x27;&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    handleLogin() &#123;</span><br><span class="line">      // 发送ajax请求到后�?</span><br><span class="line">      axios.post(&#x27;http://localhost:8000/login/&#x27;, &#123;</span><br><span class="line">        // 验证的数�?</span><br><span class="line">        username: this.username,</span><br><span class="line">        password: this.password</span><br><span class="line">      &#125;).then(res =&gt; &#123;</span><br><span class="line">        // 判罚</span><br><span class="line">        if (res.data.code == 100) &#123;</span><br><span class="line">          // 正确的请求，跳转到电影页�?</span><br><span class="line">          this.$router.push(&#x27;/film&#x27;)</span><br><span class="line">          // 得到登录成功的token</span><br><span class="line">          this.token = res.data.token</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">          alert(res.data.msg)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;).catch(err =&gt; &#123;</span><br><span class="line">        alert(err)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>展示电影</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h1&gt;最新的电影&lt;/h1&gt;</span><br><span class="line">    &lt;div v-for=&quot;film in film_list&quot;&gt;</span><br><span class="line">      &lt;h2&gt;电影的名字：`&#123;&#123; film.name &#125;&#125;`&lt;/h2&gt;</span><br><span class="line">      &lt;h2&gt;电影的简介：`&#123;&#123; film.name &#125;&#125;`&lt;/h2&gt;</span><br><span class="line">      &lt;div&gt;&lt;img :src=&quot;film.poster&quot; alt=&quot;&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import axios from &quot;axios&quot;;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;FilmView&#x27;,</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      film_list: []</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  created() &#123;</span><br><span class="line">    axios.get(&#x27;http://localhost:8000/api/v1/film/film/&#x27;).then(res =&gt; &#123;</span><br><span class="line">      this.film_list = res.data.result.films</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="�-】后�">�?】后�?</h2>
+<ul>
+<li>登录：配一个签发有token的路由和定制返回格式，记得配置全局</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全局配置</span></span><br><span class="line">SIMPLE_JWT = &#123;</span><br><span class="line">    <span class="string">&quot;TOKEN_OBTAIN_SERIALIZER&quot;</span>: <span class="string">&quot;app1.common.TokenCommon.CommonToken&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="string">&#x27;EXCEPTION_HANDLER&#x27;</span>: <span class="string">&#x27;app1.common.exception.common_exception_handler&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定制返回的格�?</span></span><br><span class="line"><span class="keyword">from</span> rest_framework_simplejwt.serializers <span class="keyword">import</span> TokenObtainPairSerializer</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CommonToken</span>(<span class="title class_ inherited__">TokenObtainPairSerializer</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validate</span>(<span class="params">self, attrs</span>):</span><br><span class="line">        res = <span class="built_in">super</span>().validate(attrs)</span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">&quot;code&quot;</span>: <span class="number">100</span>,</span><br><span class="line">            <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;登录成功�?,</span></span><br><span class="line"><span class="string">            &quot;</span>token<span class="string">&quot;: res[&quot;</span>access<span class="string">&quot;]</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">        return data</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 全局异常</span></span><br><span class="line"><span class="string">from rest_framework.response import Response</span></span><br><span class="line"><span class="string">from rest_framework.views import exception_handler</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">def common_exception_handler(exc, context):</span></span><br><span class="line"><span class="string">    res = exception_handler(exc, context)</span></span><br><span class="line"><span class="string">    if res:</span></span><br><span class="line"><span class="string">        response = Response(&#123;&#x27;code&#x27;: 101, &quot;</span>msg<span class="string">&quot;: res.data.get(&#x27;detail&#x27;)&#125;)</span></span><br><span class="line"><span class="string">    else:</span></span><br><span class="line"><span class="string">        response = Response(&#123;&#x27;code&#x27;: 000, &quot;</span>msg<span class="string">&quot;: &#x27;错误�?&#125;)</span></span><br><span class="line"><span class="string">    return response</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>视图�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> rest_framework.decorators <span class="keyword">import</span> action</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.viewsets <span class="keyword">import</span> ViewSet</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FilmViewSet</span>(<span class="title class_ inherited__">ViewSet</span>):</span><br><span class="line"><span class="meta">    @action(<span class="params">methods=[<span class="string">&quot;get&quot;</span>], detail=<span class="literal">False</span></span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">film</span>(<span class="params">self, request</span>):</span><br><span class="line">        <span class="comment"># 以运行的py文件所在目录为�?</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;./app1/package.json&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">            data = json.load(fp)</span><br><span class="line">        <span class="keyword">return</span> Response(&#123;</span><br><span class="line">            <span class="string">&#x27;code&#x27;</span>: <span class="number">100</span>,</span><br><span class="line">            <span class="string">&#x27;msg&#x27;</span>: <span class="string">&#x27;查看成功�?,</span></span><br><span class="line"><span class="string">            &#x27;</span>result<span class="string">&#x27;: data</span></span><br><span class="line"><span class="string">        &#125;)</span></span><br></pre></td></tr></table></figure>
+<h1>【八】scoped的使�?</h1>
+<ul>
+<li>在你的style标签上添加scoped属性，表示当前style中的所有样式只对当前样式有�?</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css"><span class="selector-tag">h1</span>&#123;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">color</span>: darkmagenta;</span></span><br><span class="line"><span class="language-css">&#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span> </span><br></pre></td></tr></table></figure>
+<h1>【九】开源的样式库地址</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 开源的样式库，方便在vue中使�?</span></span><br><span class="line">	-elementui：饿了么团队开源的  web�?</span><br><span class="line">    	https://element.eleme.cn/<span class="comment">#/zh-CN</span></span><br><span class="line">    -vant：有赞团队，移动�?微信小程�?</span><br><span class="line">    	https://vant-ui.github.io/vant/v2/<span class="comment">#/zh-CN/grid</span></span><br><span class="line">    -ant design:阿里团队</span><br><span class="line">    	https://1x.antdv.com/docs/vue/introduce-cn/</span><br><span class="line">    -iView</span><br><span class="line">    	https://v2.iviewui.com/components/grid</span><br><span class="line">    -nutui：京东团�?</span><br><span class="line">    	https://nutui.jd.com/2x/<span class="comment">#/dialog 移动�?</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用            </span></span><br><span class="line"><span class="comment"># elementui</span></span><br><span class="line"><span class="comment"># 2 项目中集�?</span></span><br><span class="line">	<span class="number">1</span> 安装：cnpm install element-ui -S</span><br><span class="line">    <span class="number">2</span> 集成到项目：main.js 中加�?</span><br><span class="line">    <span class="keyword">import</span> ElementUI <span class="keyword">from</span> <span class="string">&#x27;element-ui&#x27;</span>;</span><br><span class="line">    <span class="keyword">import</span> <span class="string">&#x27;element-ui/lib/theme-chalk/index.css&#x27;</span>;</span><br><span class="line">    Vue.use(ElementUI); // 使用插件</span><br><span class="line">    <span class="number">3</span> 去官网，找样式，复制，粘�?</span><br></pre></td></tr></table></figure>
+<h1>【作业�?</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">0</span> 今天讲的代码都敲一�?</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">1</span> 之前点击切换美女案例--》写在vue项目�?-》创建页面组�?</span><br><span class="line"><span class="number">2</span> 显示电影案例--》写在vue项目�?-》创建页面组�?</span><br><span class="line"><span class="number">3</span> 聊天案例--》写在vue项目�?-》创建页面组�?</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div <span class="keyword">class</span>=<span class="string">&quot;about&quot;</span>&gt;</span><br><span class="line">    &lt;h1&gt;This <span class="keyword">is</span> an about page&lt;/h1&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line">export default &#123;</span><br><span class="line">  data()&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      name:<span class="string">&#x27;&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  created() &#123;</span><br><span class="line">    axios.get().then(res=&gt;&#123;</span><br><span class="line">      this.name=res.data.name</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1 登录跳转电影案例--》使用elementui美化</span></span><br><span class="line">	登录页面</span><br><span class="line">    电影页面</span><br><span class="line">    </span><br><span class="line"> <span class="comment"># 2 我讲的练习一�?</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3  聊天web</span></span><br><span class="line">	-登陆，注�?</span><br><span class="line">    -登陆--》显示所有用�?-表格</span><br><span class="line">    -每条用户有一个按�?--》申�?</span><br><span class="line">    -对方同意--》是好友</span><br><span class="line">    </span><br><span class="line">    -进入好友列表</span><br><span class="line">    -点用名字---》页�?-》聊�?</span><br><span class="line">    	定时�?</span><br><span class="line">    -群聊</span><br><span class="line">    <span class="comment"># 思路</span></span><br><span class="line">    - 你需要创建好用户，存到数据库�?</span><br><span class="line">    - 创建一个登录的vue组件</span><br><span class="line">    - 点击登录，发送ajax请求，到后端</span><br><span class="line">    - 后端，你需要判断用户名密码是否在正确，你也可以签发token</span><br><span class="line">    - 登入成功，返回所有的用户信息</span><br><span class="line">    - 前端接收后端返回的数据，渲染到页面，进行<span class="keyword">for</span>循环，挨个显示用户信�?</span><br><span class="line">    - 给每个用户后面都加一个按钮，添加好友的按钮（这个你可以在建立一个多对多的表，来存放关系�?</span><br><span class="line">    - 点击按钮发送添加好友的请求（也就是建立关系），你点击添加好友的请求是发送给好友的当请求，而不是直接建立了关系</span><br><span class="line">    </span><br><span class="line">    - 注册的话，你可以在等率的页面上添加一个按钮，点击按钮进入到注册页�?前提是拟建立好了注册的vue组件)</span><br><span class="line">    - 点击注册-将你的username和password发给后端，后端接收进行储�?</span><br><span class="line">    </span><br><span class="line">    - 点击好友头像或名字，进行如到聊天页面（新的vue的组件），可以进行聊天，你可以给你发送的信息，添加定时器</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/3.0Scrapy%E6%A1%86%E6%9E%B6%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E9%A1%B9%E7%9B%AE/" rel="prev" title="3.0Scrapy��ܴ�����Ŀ�����Ŀ">
+      <i class="fa fa-chevron-left"></i> 3.0Scrapy��ܴ�����Ŀ�����Ŀ
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/3.0%E5%87%BD%E6%95%B0/" rel="next" title="3.0����">
+      3.0���� <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">【一】动态组�?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%9F%BA%E6%9C%AC%E4%BD%BF%EF%BF%BD"><span class="nav-number">1.1.</span> <span class="nav-text">�?】基本使�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91keep-alive"><span class="nav-number">1.2.</span> <span class="nav-text">�?】keep-alive</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">【二】插�?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%9F%BA%E6%9C%AC%E6%8F%92%EF%BF%BD"><span class="nav-number">2.1.</span> <span class="nav-text">�?】基本插�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%85%B7%E5%90%8D%E5%8D%A1%EF%BF%BD"><span class="nav-number">2.2.</span> <span class="nav-text">�?】具名卡�?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">【三】Vue的项目创建和运行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%89%8D%E8%A8%80"><span class="nav-number">3.1.</span> <span class="nav-text">�?】前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%AE%89%E8%A3%85nodejs"><span class="nav-number">3.2.</span> <span class="nav-text">�?】安装nodejs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E8%BF%90%E8%A1%8Cvue%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.3.</span> <span class="nav-text">�?】运行vue项目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">【四】vue项目目录的结�?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">【五】vue的开发规�?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91vue%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%EF%BF%BD"><span class="nav-number">5.1.</span> <span class="nav-text">�?】vue项目的执行流�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91vue%E7%9A%84%E5%BC%80%EF%BF%BD"><span class="nav-number">5.2.</span> <span class="nav-text">�?】vue的开�?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">【六】es6语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91let%E3%80%81const"><span class="nav-number">6.1.</span> <span class="nav-text">�?】let、const</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E7%AE%AD%E5%A4%B4%E5%87%BD%EF%BF%BD"><span class="nav-number">6.2.</span> <span class="nav-text">�?】箭头函�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91this%E6%8C%87%E5%90%91%E7%9A%84%E9%97%AE%EF%BF%BD"><span class="nav-number">6.3.</span> <span class="nav-text">�?】this指向的问�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%B1%95%E5%BC%80%E7%AE%97%E6%B3%95"><span class="nav-number">6.4.</span> <span class="nav-text">�?】展开算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="nav-number">6.5.</span> <span class="nav-text">�?】模块化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E9%BB%98%E8%AE%A4%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA"><span class="nav-number">6.5.1.</span> <span class="nav-text">�?）默认导入和导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%91%BD%E5%90%8D%E5%AF%BC%E5%85%A5%E5%AF%BC%EF%BF%BD"><span class="nav-number">6.5.2.</span> <span class="nav-text">�?）命名导入导�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%AF%BC%E5%85%A5%E8%B7%AF%EF%BF%BD"><span class="nav-number">6.5.3.</span> <span class="nav-text">�?）导入路�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89module%E4%BD%BF%E7%94%A8"><span class="nav-number">6.5.4.</span> <span class="nav-text">�?）module使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">【七】登录的跳转案例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E8%A7%A3%E5%86%B3%E8%B7%A8%E8%B6%8A%E9%97%AE%EF%BF%BD"><span class="nav-number">7.1.</span> <span class="nav-text">�?】解决跨越问�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%89%8D%EF%BF%BD"><span class="nav-number">7.2.</span> <span class="nav-text">�?】前�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%90%8E%EF%BF%BD"><span class="nav-number">7.3.</span> <span class="nav-text">�?】后�?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">【八】scoped的使�?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">9.</span> <span class="nav-text">【九】开源的样式库地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">10.</span> <span class="nav-text">【作业�?</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">201</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

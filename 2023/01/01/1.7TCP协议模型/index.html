@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="TCP协议模型 【一】一�?  client.py  123456789101112131415161718192021222324252627from conf import settingimport socket# 创建一个server对象：server:服务�?# AF_INET:当前连接是基于网络的套接�?# SOCK_STREAM:连接模式是TCP协议的流式模�?# SOCK_STRE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.7TCPЭ��ģ��">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/1.7TCP%E5%8D%8F%E8%AE%AE%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="TCP协议模型 【一】一�?  client.py  123456789101112131415161718192021222324252627from conf import settingimport socket# 创建一个server对象：server:服务�?# AF_INET:当前连接是基于网络的套接�?# SOCK_STREAM:连接模式是TCP协议的流式模�?# SOCK_STRE">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T09:47:38.234Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/1.7TCP%E5%8D%8F%E8%AE%AE%E6%A8%A1%E5%9E%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>1.7TCPЭ��ģ�� | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/1.7TCP%E5%8D%8F%E8%AE%AE%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          1.7TCPЭ��ģ��
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 17:47:38" itemprop="dateModified" datetime="2025-10-11T17:47:38+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>TCP协议模型</h1>
+<h2 id="【一】一�">【一】一�?</h2>
+<ul>
+<li><code>client.py</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> conf <span class="keyword">import</span> setting</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个server对象：server:服务�?</span></span><br><span class="line"><span class="comment"># AF_INET:当前连接是基于网络的套接�?</span></span><br><span class="line"><span class="comment"># SOCK_STREAM:连接模式是TCP协议的流式模�?</span></span><br><span class="line"><span class="comment"># SOCK_STREAM表示创建一个面向连接的、基于TCP协议的socket类型。它是一种可靠的、双向的、点对点的通信协议，提供面向连接的、可靠的数据传输服务�?</span></span><br><span class="line">client = socket.socket(family=socket.AF_INET, <span class="built_in">type</span>=socket.SOCK_STREAM)</span><br><span class="line"><span class="comment"># 绑定IP和PORT</span></span><br><span class="line"><span class="comment"># connect:连接</span></span><br><span class="line">client.connect(setting.ADDR)</span><br><span class="line"><span class="comment"># 直接发送数�?</span></span><br><span class="line">to_server_send_data = <span class="string">f&quot;这是来自客户端的一条数据！&quot;</span></span><br><span class="line"><span class="comment">#转码</span></span><br><span class="line">to_server_send_data = to_server_send_data.encode()</span><br><span class="line"><span class="comment">#发�?</span></span><br><span class="line"><span class="comment">#send：将数据to_server_send_data传给客户�?</span></span><br><span class="line"><span class="comment"># 当你发送的数据较大时，可以做一个循环，分批发�?</span></span><br><span class="line">client.send(to_server_send_data)</span><br><span class="line"><span class="comment">#接收到服务端回的消息</span></span><br><span class="line">from_server_recv_data = client.recv(<span class="number">1024</span>)</span><br><span class="line"><span class="comment">#接收到信息记得解�?</span></span><br><span class="line">from_server_recv_data = from_server_recv_data.decode()</span><br><span class="line"><span class="built_in">print</span>(from_server_recv_data)</span><br><span class="line"><span class="comment">#关闭连接对象</span></span><br><span class="line">client.close()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>server.py</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> conf <span class="keyword">import</span> setting</span><br><span class="line"><span class="comment"># 引入socket模块</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个server对象：server:服务�?</span></span><br><span class="line"><span class="comment"># AF_INET:当前连接是基于网络的套接�?</span></span><br><span class="line"><span class="comment"># SOCK_STREAM:连接模式是TCP协议的流式模�?</span></span><br><span class="line"><span class="comment"># SOCK_STREAM表示创建一个面向连接的、基于TCP协议的socket类型。它是一种可靠的、双向的、点对点的通信协议，提供面向连接的、可靠的数据传输服务�?</span></span><br><span class="line">server = socket.socket(family=socket.AF_INET, <span class="built_in">type</span>=socket.SOCK_STREAM)</span><br><span class="line"><span class="comment"># 绑定IP和PORT</span></span><br><span class="line"><span class="comment"># 导入---settings</span></span><br><span class="line"><span class="comment"># bind：将套接字绑定到一个地址</span></span><br><span class="line"><span class="comment"># 必须在listen()或connect()之前调用bind()</span></span><br><span class="line">server.bind(setting.ADDR)</span><br><span class="line"><span class="comment"># 监听连接的对�?</span></span><br><span class="line"><span class="comment"># 5：代表一个端口号</span></span><br><span class="line">server.listen(<span class="number">5</span>)</span><br><span class="line"><span class="comment">#建立连接对象</span></span><br><span class="line"><span class="comment">#server.accept()阻塞，等来客户端发出请求</span></span><br><span class="line"><span class="comment"># server.accept() 会返回一个元�?</span></span><br><span class="line"><span class="comment">#conn：一个新的socket对象</span></span><br><span class="line"><span class="comment"># addr：客户端的地址信息</span></span><br><span class="line">conn,addr = server.accept()</span><br><span class="line"><span class="built_in">print</span>(conn)</span><br><span class="line"><span class="comment">#&lt;socket.socket fd=332, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=(&#x27;127.0.0.1&#x27;, 8002), raddr=(&#x27;127.0.0.1&#x27;, 50724)&gt;</span></span><br><span class="line"><span class="built_in">print</span>(addr)<span class="comment">#(&#x27;127.0.0.1&#x27;, 50724)</span></span><br><span class="line"><span class="comment">#接收到客户端的数�?</span></span><br><span class="line"><span class="comment">#1024：表示能接收1024个字节的数据</span></span><br><span class="line"><span class="comment">#接收到的是一个字节组（bytes�?</span></span><br><span class="line">from_client_rect_data = conn.recv(<span class="number">1024</span>)</span><br><span class="line"><span class="comment">#将二进制数据进行转码</span></span><br><span class="line">from_client_rect_data = from_client_rect_data.decode()</span><br><span class="line"><span class="built_in">print</span>(from_client_rect_data)<span class="comment">#这是来自客户端的一条数据！</span></span><br><span class="line"><span class="comment">#返回给客户端数据</span></span><br><span class="line">to_client_send_data = <span class="string">&quot;这是来自服务端的一条数据！&quot;</span></span><br><span class="line"><span class="comment">#记得转码--转成二进制数�?</span></span><br><span class="line">to_client_send_data = to_client_send_data.encode()</span><br><span class="line"><span class="comment">#发�?</span></span><br><span class="line"><span class="comment">#send：将数据to_client_send_data传给客户�?</span></span><br><span class="line"><span class="comment"># 当你发送的数据较大时，可以做一个循环，分批发�?</span></span><br><span class="line">conn.send(to_client_send_data)</span><br><span class="line"><span class="comment">#关不连接和关闭服�?</span></span><br><span class="line">conn.close()</span><br><span class="line">server.close()</span><br></pre></td></tr></table></figure>
+<h2 id="【二】二�-–空值的时�">【二】二�?–空值的时�?</h2>
+<ul>
+<li><code>client.py</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> conf <span class="keyword">import</span> setting</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">client = socket.socket(family=socket.AF_INET, <span class="built_in">type</span>=socket.SOCK_STREAM)</span><br><span class="line">client.connect(setting.ADDR)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    to_server_send_data = <span class="built_in">input</span>(<span class="string">&quot;回应服务端：=--&quot;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> to_server_send_data:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;数据不能为空�?)</span></span><br><span class="line"><span class="string">        continue</span></span><br><span class="line"><span class="string">    if to_server_send_data == &quot;</span>q<span class="string">&quot;:</span></span><br><span class="line"><span class="string">        print(&quot;</span>当前连接已退出！<span class="string">&quot;)</span></span><br><span class="line"><span class="string">        break</span></span><br><span class="line"><span class="string">    to_server_send_data = to_server_send_data.encode()</span></span><br><span class="line"><span class="string">    client.send(to_server_send_data)</span></span><br><span class="line"><span class="string">    from_server_recv_data = client.recv(1024)</span></span><br><span class="line"><span class="string">    from_server_recv_data = from_server_recv_data.decode()</span></span><br><span class="line"><span class="string">    print(f&quot;</span>接收服务端的信息--&#123;from_server_recv_data&#125;<span class="string">&quot;)</span></span><br><span class="line"><span class="string">#关闭连接对象</span></span><br><span class="line"><span class="string">client.close()</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>server.py</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Current username：socket </span></span><br><span class="line"><span class="comment"># current date�?024/5/15</span></span><br><span class="line"><span class="comment"># current time �?6:54</span></span><br><span class="line"><span class="keyword">from</span> conf <span class="keyword">import</span> setting</span><br><span class="line"><span class="comment"># 引入socket模块</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">server = socket.socket(family=socket.AF_INET, <span class="built_in">type</span>=socket.SOCK_STREAM)</span><br><span class="line">server.bind(setting.ADDR)</span><br><span class="line">server.listen(<span class="number">5</span>)</span><br><span class="line"><span class="comment">#放在这进入while循环中的哪个连接对象会一致不变，永远会是同一�?</span></span><br><span class="line">conn, addr = server.accept()</span><br><span class="line"><span class="comment"># if conn == &quot;q&quot;:</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="comment">#conn, addr = server.accept()，在while循环外面的话每次接收的就是一个新的对�?</span></span><br><span class="line">    <span class="comment">#while里面交流的对象永远是conn收到�?</span></span><br><span class="line">    from_client_rect_data = conn.recv(<span class="number">1024</span>)</span><br><span class="line">    from_client_rect_data = from_client_rect_data.decode()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;接收客服端的消息--<span class="subst">&#123;from_client_rect_data&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        to_client_send_data = <span class="built_in">input</span>(<span class="string">&quot;回应客户�?---&quot;</span>).strip()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> to_client_send_data:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;服务端传数据不能为空�?)</span></span><br><span class="line"><span class="string">            continue</span></span><br><span class="line"><span class="string">        if to_client_send_data == &quot;</span>q<span class="string">&quot;:</span></span><br><span class="line"><span class="string">            print(&quot;</span>已退出！<span class="string">&quot;)</span></span><br><span class="line"><span class="string">            break</span></span><br><span class="line"><span class="string">        to_client_send_data = to_client_send_data.encode()</span></span><br><span class="line"><span class="string">        conn.send(to_client_send_data)</span></span><br><span class="line"><span class="string">        break</span></span><br><span class="line"><span class="string">conn.close()</span></span><br><span class="line"><span class="string">server.close()</span></span><br></pre></td></tr></table></figure>
+<h2 id="【三】三�-–优化">【三】三�?–优化</h2>
+<ul>
+<li><code>client.py</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> conf <span class="keyword">import</span> setting</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">client = socket.socket(family=socket.AF_INET, <span class="built_in">type</span>=socket.SOCK_STREAM)</span><br><span class="line">client.connect(setting.ADDR)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    to_server_send_data = <span class="built_in">input</span>(<span class="string">&quot;回应服务端：=--&quot;</span>).strip()</span><br><span class="line">    to_server_send_data = to_server_send_data.encode()</span><br><span class="line">    client.send(to_server_send_data)</span><br><span class="line">    from_server_recv_data = client.recv(<span class="number">1024</span>)</span><br><span class="line">    from_server_recv_data = from_server_recv_data.decode()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;接收服务端的信息--<span class="subst">&#123;from_server_recv_data&#125;</span>&quot;</span>)</span><br><span class="line"><span class="comment">#关闭连接对象</span></span><br><span class="line">client.close()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>server.py</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> conf <span class="keyword">import</span> setting</span><br><span class="line"><span class="comment"># 引入socket模块</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">server = socket.socket(family=socket.AF_INET, <span class="built_in">type</span>=socket.SOCK_STREAM)</span><br><span class="line">server.bind(setting.ADDR)</span><br><span class="line">server.listen(<span class="number">5</span>)</span><br><span class="line"><span class="comment">#放在这进入while循环中的哪个连接对象会一致不变，永远会是同一�?</span></span><br><span class="line">conn, addr = server.accept()</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="comment">#conn, addr = server.accept()，在while循环外面的话每次接收的就是一个新的对�?</span></span><br><span class="line">    <span class="comment">#while里面交流的对象永远是conn收到�?</span></span><br><span class="line">    from_client_rect_data = conn.recv(<span class="number">1024</span>)</span><br><span class="line">    from_client_rect_data = from_client_rect_data.decode()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;接收客服端的消息--<span class="subst">&#123;from_client_rect_data&#125;</span>&quot;</span>)</span><br><span class="line">    to_client_send_data = <span class="built_in">input</span>(<span class="string">&quot;回应客户�?---&quot;</span>).strip()</span><br><span class="line">    to_client_send_data = to_client_send_data.encode()</span><br><span class="line">    conn.send(to_client_send_data)</span><br><span class="line">conn.close()</span><br><span class="line">server.close()</span><br></pre></td></tr></table></figure>
+<h2 id="【四】四�-–while">【四】四�?–while</h2>
+<ul>
+<li><code>client.py</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> conf <span class="keyword">import</span> setting</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个server对象：server:服务�?</span></span><br><span class="line"><span class="comment"># AF_INET:当前连接是基于网络的套接�?</span></span><br><span class="line"><span class="comment"># SOCK_STREAM:连接模式是TCP协议的流式模�?</span></span><br><span class="line"><span class="comment"># SOCK_STREAM表示创建一个面向连接的、基于TCP协议的socket类型。它是一种可靠的、双向的、点对点的通信协议，提供面向连接的、可靠的数据传输服务�?</span></span><br><span class="line">client = socket.socket(family=socket.AF_INET, <span class="built_in">type</span>=socket.SOCK_STREAM)</span><br><span class="line"><span class="comment"># 绑定IP和PORT</span></span><br><span class="line"><span class="comment"># connect:连接</span></span><br><span class="line">client.connect(setting.ADDR)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="comment"># 直接发送数�?</span></span><br><span class="line">    to_server_send_data = <span class="built_in">input</span>(<span class="string">&quot;回应服务端：=--&quot;</span>).strip()</span><br><span class="line">    <span class="comment"># 转码</span></span><br><span class="line">    to_server_send_data = to_server_send_data.encode()</span><br><span class="line">    <span class="comment"># 发�?</span></span><br><span class="line">    <span class="comment"># send：将数据to_server_send_data传给客户�?</span></span><br><span class="line">    <span class="comment"># 当你发送的数据较大时，可以做一个循环，分批发�?</span></span><br><span class="line">    client.send(to_server_send_data)</span><br><span class="line">    <span class="comment"># 接收到服务端回的消息</span></span><br><span class="line">    from_server_recv_data = client.recv(<span class="number">1024</span>)</span><br><span class="line">    <span class="comment"># 接收到信息记得解�?</span></span><br><span class="line">    from_server_recv_data = from_server_recv_data.decode()</span><br><span class="line">    <span class="built_in">print</span>(from_server_recv_data)</span><br><span class="line"><span class="comment">#关闭连接对象</span></span><br><span class="line">client.close()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>server.py</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> conf <span class="keyword">import</span> setting</span><br><span class="line"><span class="comment"># 引入socket模块</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个server对象：server:服务�?</span></span><br><span class="line"><span class="comment"># AF_INET:当前连接是基于网络的套接�?</span></span><br><span class="line"><span class="comment"># SOCK_STREAM:连接模式是TCP协议的流式模�?</span></span><br><span class="line"><span class="comment"># SOCK_STREAM表示创建一个面向连接的、基于TCP协议的socket类型。它是一种可靠的、双向的、点对点的通信协议，提供面向连接的、可靠的数据传输服务�?</span></span><br><span class="line">server = socket.socket(family=socket.AF_INET, <span class="built_in">type</span>=socket.SOCK_STREAM)</span><br><span class="line"><span class="comment"># 绑定IP和PORT</span></span><br><span class="line"><span class="comment"># 导入---settings</span></span><br><span class="line"><span class="comment"># bind：将套接字绑定到一个地址</span></span><br><span class="line"><span class="comment"># 必须在listen()或connect()之前调用bind()</span></span><br><span class="line">server.bind(setting.ADDR)</span><br><span class="line"><span class="comment"># 监听连接的对�?</span></span><br><span class="line"><span class="comment"># 5：代表一个端口号</span></span><br><span class="line">server.listen(<span class="number">5</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="comment"># 建立连接对象</span></span><br><span class="line">    <span class="comment"># server.accept()阻塞，等来客户端发出请求</span></span><br><span class="line">    <span class="comment"># server.accept() 会返回一个元�?</span></span><br><span class="line">    <span class="comment"># conn：一个新的socket对象</span></span><br><span class="line">    <span class="comment"># addr：客户端的地址信息</span></span><br><span class="line">    conn, addr = server.accept()</span><br><span class="line">    <span class="built_in">print</span>(conn)</span><br><span class="line">    <span class="comment"># &lt;socket.socket fd=332, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=(&#x27;127.0.0.1&#x27;, 8002), raddr=(&#x27;127.0.0.1&#x27;, 50724)&gt;</span></span><br><span class="line">    <span class="built_in">print</span>(addr)  <span class="comment"># (&#x27;127.0.0.1&#x27;, 50724)</span></span><br><span class="line">    <span class="comment"># 接收到客户端的数�?</span></span><br><span class="line">    <span class="comment"># 1024：表示能接收1024个字节的数据</span></span><br><span class="line">    <span class="comment"># 接收到的是一个字节组（bytes�?</span></span><br><span class="line">    from_client_rect_data = conn.recv(<span class="number">1024</span>)</span><br><span class="line">    <span class="comment"># 将二进制数据进行转码</span></span><br><span class="line">    from_client_rect_data = from_client_rect_data.decode()</span><br><span class="line">    <span class="built_in">print</span>(from_client_rect_data)  <span class="comment"># 这是来自客户端的一条数据！</span></span><br><span class="line">    <span class="comment"># 返回给客户端数据</span></span><br><span class="line">    to_client_send_data = <span class="built_in">input</span>(<span class="string">&quot;回应客户�?---&quot;</span>).strip()</span><br><span class="line">    <span class="comment"># 记得转码--转成二进制数�?</span></span><br><span class="line">    to_client_send_data = to_client_send_data.encode()</span><br><span class="line">    <span class="comment"># 发�?</span></span><br><span class="line">    <span class="comment"># send：将数据to_client_send_data传给客户�?</span></span><br><span class="line">    <span class="comment"># 当你发送的数据较大时，可以做一个循环，分批发�?</span></span><br><span class="line">    conn.send(to_client_send_data)</span><br><span class="line">    <span class="comment"># 关不连接和关闭服�?</span></span><br><span class="line">conn.close()</span><br><span class="line">server.close()</span><br></pre></td></tr></table></figure>
+<h2 id="【五】第五代–try">【五】第五代–try</h2>
+<ul>
+<li><code>client.py</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> conf <span class="keyword">import</span> setting</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">client = socket.socket(family=socket.AF_INET, <span class="built_in">type</span>=socket.SOCK_STREAM)</span><br><span class="line">client.connect(setting.ADDR)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    to_server_send_data = <span class="built_in">input</span>(<span class="string">&quot;回应服务端：=--&quot;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> to_server_send_data:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;数据不能为空�?)</span></span><br><span class="line"><span class="string">        continue</span></span><br><span class="line"><span class="string">    if to_server_send_data == &quot;</span>q<span class="string">&quot;:</span></span><br><span class="line"><span class="string">        print(&quot;</span>当前连接已退出！<span class="string">&quot;)</span></span><br><span class="line"><span class="string">        break</span></span><br><span class="line"><span class="string">    to_server_send_data = to_server_send_data.encode()</span></span><br><span class="line"><span class="string">    client.send(to_server_send_data)</span></span><br><span class="line"><span class="string">    from_server_recv_data = client.recv(1024)</span></span><br><span class="line"><span class="string">    from_server_recv_data = from_server_recv_data.decode()</span></span><br><span class="line"><span class="string">    if from_server_recv_data == &quot;</span>q<span class="string">&quot;:</span></span><br><span class="line"><span class="string">        print(&quot;</span>收到服务端的退出信息！<span class="string">&quot;)</span></span><br><span class="line"><span class="string">        break</span></span><br><span class="line"><span class="string">    print(f&quot;</span>接收服务端的信息--&#123;from_server_recv_data&#125;<span class="string">&quot;)</span></span><br><span class="line"><span class="string">#关闭连接对象</span></span><br><span class="line"><span class="string">client.close()</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>server.py</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> conf <span class="keyword">import</span> setting</span><br><span class="line"><span class="comment"># 引入socket模块</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">server = socket.socket(family=socket.AF_INET, <span class="built_in">type</span>=socket.SOCK_STREAM)</span><br><span class="line"></span><br><span class="line">server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">server.bind(setting.ADDR)</span><br><span class="line">server.listen(<span class="number">5</span>)</span><br><span class="line"><span class="comment">#放在这进入while循环中的哪个连接对象会一致不变，永远会是同一�?</span></span><br><span class="line">conn, addr = server.accept()</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># conn, addr = server.accept()，在while循环外面的话每次接收的就是一个新的对�?</span></span><br><span class="line">        <span class="comment"># while里面交流的对象永远是conn收到�?</span></span><br><span class="line">        from_client_rect_data = conn.recv(<span class="number">1024</span>)</span><br><span class="line">        from_client_rect_data = from_client_rect_data.decode()</span><br><span class="line">        <span class="comment">#这里接受的数据为空的时�?</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> from_client_rect_data:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;客户端已退出！&quot;</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;接收客服端的消息--<span class="subst">&#123;from_client_rect_data&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            to_client_send_data = <span class="built_in">input</span>(<span class="string">&quot;回应客户�?---&quot;</span>).strip()</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> to_client_send_data:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;服务端传数据不能为空�?)</span></span><br><span class="line"><span class="string">                continue</span></span><br><span class="line"><span class="string">            if to_client_send_data == &quot;</span>q<span class="string">&quot;:</span></span><br><span class="line"><span class="string">                print(&quot;</span>已退出！<span class="string">&quot;)</span></span><br><span class="line"><span class="string">                # break不能停止，因为客户端还在等在结束信息</span></span><br><span class="line"><span class="string">            to_client_send_data = to_client_send_data.encode()</span></span><br><span class="line"><span class="string">            conn.send(to_client_send_data)</span></span><br><span class="line"><span class="string">            break</span></span><br><span class="line"><span class="string">    except Exception as e:</span></span><br><span class="line"><span class="string">        break</span></span><br><span class="line"><span class="string">conn.close()</span></span><br><span class="line"><span class="string">server.close()</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/1.6%E7%B2%98%E5%8C%85%E9%97%AE%E9%A2%98/" rel="prev" title="1.6ճ������">
+      <i class="fa fa-chevron-left"></i> 1.6ճ������
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/1.5socket%E5%A5%97%E6%8E%A5%E5%AD%97/" rel="next" title="1.5socket�׽���">
+      1.5socket�׽��� <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">TCP协议模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E4%B8%80%EF%BF%BD"><span class="nav-number">1.1.</span> <span class="nav-text">【一】一�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E4%BA%8C%EF%BF%BD-%E2%80%93%E7%A9%BA%E5%80%BC%E7%9A%84%E6%97%B6%EF%BF%BD"><span class="nav-number">1.2.</span> <span class="nav-text">【二】二�?–空值的时�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%89%E3%80%91%E4%B8%89%EF%BF%BD-%E2%80%93%E4%BC%98%E5%8C%96"><span class="nav-number">1.3.</span> <span class="nav-text">【三】三�?–优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%9B%9B%E3%80%91%E5%9B%9B%EF%BF%BD-%E2%80%93while"><span class="nav-number">1.4.</span> <span class="nav-text">【四】四�?–while</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%94%E3%80%91%E7%AC%AC%E4%BA%94%E4%BB%A3%E2%80%93try"><span class="nav-number">1.5.</span> <span class="nav-text">【五】第五代–try</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">201</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="【一】docker-compose �?】介�? 12345# docker-compose是一个用于定义和运行多容器Docker应用程序的工具。通过 docker-compose.yml 文件，可以轻松配置多个服务、网络和卷，简化了多容器环境的管理	- 容器编排   是一个软�?----单机使用	- k8s   是一个软�?----多机容器编排# 几乎所有的开源软件都支持docker-compo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.0reids">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/1.0reids/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="【一】docker-compose �?】介�? 12345# docker-compose是一个用于定义和运行多容器Docker应用程序的工具。通过 docker-compose.yml 文件，可以轻松配置多个服务、网络和卷，简化了多容器环境的管理	- 容器编排   是一个软�?----单机使用	- k8s   是一个软�?----多机容器编排# 几乎所有的开源软件都支持docker-compo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T09:47:38.093Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/1.0reids/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>1.0reids | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/1.0reids/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          1.0reids
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 17:47:38" itemprop="dateModified" datetime="2025-10-11T17:47:38+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>【一】docker-compose</h1>
+<h2 id="�-】介�">�?】介�?</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker-compose是一个用于定义和运行多容器Docker应用程序的工具。通过 docker-compose.yml 文件，可以轻松配置多个服务、网络和卷，简化了多容器环境的管理</span></span><br><span class="line">	- 容器编排   是一个软�?----单机使用</span><br><span class="line">	- k8s   是一个软�?----多机容器编排</span><br><span class="line"></span><br><span class="line"><span class="comment"># 几乎所有的开源软件都支持docker-compose部署</span></span><br></pre></td></tr></table></figure>
+<h2 id="�-】某项目">�?】某项目</h2>
+<ul>
+<li>docker-compose.yml</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">dvadmin3-web:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dvadmin3-web</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8080:8080&quot;</span></span><br><span class="line">    <span class="attr">build:</span></span><br><span class="line">      <span class="attr">context:</span> <span class="string">./</span></span><br><span class="line">      <span class="attr">dockerfile:</span> <span class="string">./docker_env/web/Dockerfile</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">TZ:</span> <span class="string">Asia/Shanghai</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./docker_env/nginx/my.conf:/etc/nginx/conf.d/my.conf</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./backend/media:/backend/media</span></span><br><span class="line">    <span class="attr">expose:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8080&quot;</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="attr">network:</span></span><br><span class="line">        <span class="attr">ipv4_address:</span> <span class="number">177.10</span><span class="number">.0</span><span class="number">.11</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">dvadmin3-django:</span></span><br><span class="line">    <span class="attr">build:</span></span><br><span class="line">      <span class="attr">context:</span> <span class="string">.</span></span><br><span class="line">      <span class="attr">dockerfile:</span> <span class="string">./docker_env/django/Dockerfile</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dvadmin3-django</span></span><br><span class="line">    <span class="attr">working_dir:</span> <span class="string">/backend</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">dvadmin3-mysql</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">PYTHONUNBUFFERED:</span> <span class="number">1</span></span><br><span class="line">      <span class="attr">DATABASE_HOST:</span> <span class="string">dvadmin3-mysql</span></span><br><span class="line">      <span class="attr">TZ:</span> <span class="string">Asia/Shanghai</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./backend:/backend</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./logs/log:/var/log</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8000:8000&quot;</span></span><br><span class="line">    <span class="attr">expose:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8000&quot;</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="attr">network:</span></span><br><span class="line">        <span class="attr">ipv4_address:</span> <span class="number">177.10</span><span class="number">.0</span><span class="number">.12</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">dvadmin3-mysql:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mysql:8.0</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dvadmin3-mysql</span></span><br><span class="line">    <span class="attr">privileged:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;3306:3306&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">$&#123;MYSQL_PASSWORD&#125;</span></span><br><span class="line">      <span class="attr">MYSQL_DATABASE:</span> <span class="string">&quot;django-vue3-admin&quot;</span></span><br><span class="line">      <span class="attr">TZ:</span> <span class="string">Asia/Shanghai</span></span><br><span class="line">    <span class="attr">command:</span></span><br><span class="line">      <span class="string">--wait_timeout=31536000</span></span><br><span class="line">      <span class="string">--interactive_timeout=31536000</span></span><br><span class="line">      <span class="string">--max_connections=1000</span></span><br><span class="line">      <span class="string">--default-authentication-plugin=mysql_native_password</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;./docker_env/mysql/data:/var/lib/mysql&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;./docker_env/mysql/conf.d:/etc/mysql/conf.d&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;./docker_env/mysql/logs:/logs&quot;</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="attr">network:</span></span><br><span class="line">        <span class="attr">ipv4_address:</span> <span class="number">177.10</span><span class="number">.0</span><span class="number">.13</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="attr">dvadmin3-celery:</span></span><br><span class="line">    <span class="attr">build:</span></span><br><span class="line">      <span class="attr">context:</span> <span class="string">.</span></span><br><span class="line">      <span class="attr">dockerfile:</span> <span class="string">./docker_env/celery/Dockerfile</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dvadmin3-celery</span></span><br><span class="line">    <span class="attr">working_dir:</span> <span class="string">/backend</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">dvadmin3-mysql</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">PYTHONUNBUFFERED:</span> <span class="number">1</span></span><br><span class="line">      <span class="attr">DATABASE_HOST:</span> <span class="string">dvadmin3-mysql</span></span><br><span class="line">      <span class="attr">TZ:</span> <span class="string">Asia/Shanghai</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./backend:/backend</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./logs/log:/var/log</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="attr">network:</span></span><br><span class="line">        <span class="attr">ipv4_address:</span> <span class="number">177.10</span><span class="number">.0</span><span class="number">.14</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="attr">dvadmin3-redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis:6.2.6-alpine</span> <span class="comment"># 指定服务镜像，最好是与之前下载的redis配置文件保持一�?</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dvadmin3-redis</span> <span class="comment"># 容器名称</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Shanghai</span> <span class="comment"># 设置时区</span></span><br><span class="line">    <span class="attr">volumes:</span> <span class="comment"># 配置数据�?</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./docker_env/redis/data:/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./docker_env/redis/redis.conf:/etc/redis/redis.conf</span></span><br><span class="line">    <span class="attr">ports:</span> <span class="comment"># 映射端口</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;6379:6379&quot;</span></span><br><span class="line">    <span class="attr">sysctls:</span> <span class="comment"># 设置容器中的内核参数</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">net.core.somaxconn=1024</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">/bin/sh</span> <span class="string">-c</span> <span class="string">&quot;echo &#x27;vm.overcommit_memory = 1&#x27; &gt;&gt; /etc/sysctl.conf &amp;&amp; redis-server /etc/redis/redis.conf --appendonly yes --requirepass $&#123;REDIS_PASSWORD&#125;&quot;</span> <span class="comment"># 指定配置文件并开启持久化</span></span><br><span class="line">    <span class="attr">privileged:</span> <span class="literal">true</span> <span class="comment"># 使用该参数，container内的root拥有真正的root权限。否则，container内的root只是外部的一个普通用户权�?</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="attr">network:</span></span><br><span class="line">        <span class="attr">ipv4_address:</span> <span class="number">177.10</span><span class="number">.0</span><span class="number">.15</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">network:</span></span><br><span class="line">    <span class="attr">ipam:</span></span><br><span class="line">      <span class="attr">driver:</span> <span class="string">default</span></span><br><span class="line">      <span class="attr">config:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">subnet:</span> <span class="string">&#x27;177.10.0.0/16&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">redis</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;63799:6379&quot;</span></span><br><span class="line">  <span class="attr">mysql:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mysql</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">mysql</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="number">123456</span></span><br><span class="line">      <span class="attr">LANG:</span> <span class="string">C.UTF-8</span></span><br><span class="line">      <span class="attr">TZ:</span> <span class="string">Asia/Shanghai</span>  </span><br><span class="line">      <span class="attr">MYSQL_CHARSET:</span> <span class="string">utf8mb4</span></span><br><span class="line">      <span class="attr">MYSQL_COLLATION:</span> <span class="string">utf8mb4_unicode_ci</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;3306:3306&quot;</span></span><br><span class="line">  <span class="attr">flask:</span></span><br><span class="line">    <span class="attr">build:</span></span><br><span class="line">      <span class="attr">context:</span> <span class="string">.</span></span><br><span class="line">      <span class="attr">dockerfile:</span> <span class="string">Dockerfile</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">flask</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8000:8000&quot;</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">redis</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mysql</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">sh</span> <span class="string">-c</span>  <span class="string">&quot;./start.sh&quot;</span> </span><br></pre></td></tr></table></figure>
+<h2 id="�-】django支持异步的dockerfile写法">�?】django支持异步的dockerfile写法</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最后的 CMD uvicorn application.asgi:application --port 8000 --host 0.0.0.0 --workers 4</span></span><br></pre></td></tr></table></figure>
+<h1>【二】redis安装和配�?</h1>
+<h2 id="�-】介�-2">�?】介�?</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># redis是什�?</span></span><br><span class="line">开源：基于c编写的，早起版本2w3千行</span><br><span class="line">基于键值对的存储系统：字典形式</span><br><span class="line">多种数据结构：字符串，<span class="built_in">hash</span>，列表，集合，有序集�?</span><br><span class="line">高性能，功能丰�?</span><br><span class="line"></span><br><span class="line"><span class="comment"># redis特性（7个）</span></span><br><span class="line"><span class="number">1</span>-速度快：每秒可以处理10w个操作，数据存在内存中，使用c语言实现的，数据操作是线程模�?</span><br><span class="line">	- 没有�?</span><br><span class="line">    </span><br><span class="line"><span class="number">2</span>-数据持久化机制：rdb和aof和混合持久化</span><br><span class="line">	- 将内存数据持久化存储到硬盘上</span><br><span class="line">    </span><br><span class="line"><span class="number">3</span>-多种数据结构：字符串、<span class="built_in">hash</span>、列表、集合、有序集�?</span><br><span class="line"></span><br><span class="line"><span class="number">4</span>-五大数据结构</span><br><span class="line">	- BitMaps位图：布隆过滤器 。本质是-字符�?</span><br><span class="line">    - HyperLogLog：超小内存唯一值计数，12kb HyperLogLog 。本质是-字符�?</span><br><span class="line">    - GEO：地理信息定�?。本质是-有序集合</span><br><span class="line">    </span><br><span class="line"><span class="number">5</span>-支持多种编程语言：基于tcp通信协议，各大编程语言都支�?</span><br><span class="line"></span><br><span class="line"><span class="number">6</span>-功能丰富：发布订阅（消息）消息队�?事务（pipeline�?</span><br><span class="line">	- 简单：源代码几万行，不依赖外部�?</span><br><span class="line">    </span><br><span class="line"><span class="number">7</span>-主从复制、哨兵、集�?----实现：数据高可用性和分布式框�?</span><br><span class="line">    - 主从复制：适用于需要读写分离和数据备份的场景�?</span><br><span class="line">	- 哨兵：为主从复制环境提供高可用性，自动监控和故障转移�?</span><br><span class="line"> 	- 集群：适用于大规模数据存储和分布式架构，支持自动分片和高可用�?</span><br></pre></td></tr></table></figure>
+<h2 id="�-】redis安装（linux-centos�">�?】redis安装（linux-centos�?</h2>
+<h3 id="�-）源码安�">�?）源码安�?</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用源码包，源码编译安装</span></span><br><span class="line">	- 源码编译安装：源码通过gcc编译</span><br><span class="line">    - resdis-stack：编译好的，直接运行</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 1 官方提供的地址</span></span><br><span class="line">	- wget https://download.redis.io/redis-stable.tar.gz</span><br><span class="line">       </span><br><span class="line"><span class="comment"># 1.1 github开源地址：https://github.com/redis/redis/releases</span></span><br><span class="line">	- wget https://github.com/redis/redis/archive/refs/tags/<span class="number">7.4</span><span class="number">.1</span>.tar.gz</span><br><span class="line">        </span><br><span class="line"><span class="comment"># 2 解压</span></span><br><span class="line">tar -xzvf redis-stable.tar.gz</span><br><span class="line">tar -xzvf <span class="number">7.4</span><span class="number">.1</span>.tar.gz</span><br><span class="line"><span class="comment"># 3 改名</span></span><br><span class="line">mv redis-<span class="number">7.4</span><span class="number">.1</span>/ redis</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4 没有可执行文�?--》编译安�?</span></span><br><span class="line">cd redis</span><br><span class="line"><span class="comment"># make--》只是编�?--》编译后的可执行文件会放在src目录�?</span></span><br><span class="line"><span class="comment"># make install--》安�?--》指定安装目�?</span></span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"><span class="comment">#  cd /usr/local/bin/ 路径下会有可执行文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5 src目录下，就会有几个可执行文件</span></span><br><span class="line">	<span class="comment">#redis-server---&gt;redis服务�?</span></span><br><span class="line">    <span class="comment">#redis-cli---》redis命令行客户端</span></span><br><span class="line">    <span class="comment">#redis-sentinel---》sentinel服务器，哨兵</span></span><br><span class="line">    <span class="comment">#redis-benchmark---》redis性能测试工具</span></span><br><span class="line">    <span class="comment">#redis-check-aof---&gt;aof文件修复工具</span></span><br><span class="line">    <span class="comment">#redis-check-dump---》rdb文件检查工�?</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 6 /usr/local/bin/  已经在环境变量了，再任意路径�?</span></span><br><span class="line">redis-server <span class="comment"># 都能执行</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 7 修改配置文件启动 vi redis.conf</span></span><br><span class="line">daemonize yes</span><br><span class="line">pidfile /var/run/redis.pid</span><br><span class="line">port <span class="number">6379</span></span><br><span class="line"><span class="built_in">dir</span> ./data</span><br><span class="line">logfile <span class="number">6379.</span>log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 8 创建文件�?</span></span><br><span class="line">mkdir data</span><br><span class="line"></span><br><span class="line"><span class="comment"># 9 启动</span></span><br><span class="line">./<span class="built_in">bin</span>/redis-server ./etc/redis.conf  <span class="comment"># 数据目录data在当前目录下</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 10 查看redis版本</span></span><br><span class="line">redis-cli -v</span><br><span class="line">redis-cli <span class="number">7.2</span><span class="number">.5</span></span><br></pre></td></tr></table></figure>
+<h3 id="�-）redis-stack">�?）redis-stack</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这个是编译过后的可执行文�?</span></span><br><span class="line">	- 分平台：mac、linux、ubuntu、centos</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 1 下载地址：https://redis.io/downloads/  # centos�?</span></span><br><span class="line">	wget https://packages.redis.io/redis-stack/redis-stack-server-<span class="number">7.2</span><span class="number">.0</span>-v11.rhel7.x86_64.tar.gz</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 2 解压即用</span></span><br><span class="line">tar -xzvf redis-stack-server-<span class="number">7.2</span><span class="number">.0</span>-v11.rhel7.x86_64.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3  文件夹重命名</span></span><br><span class="line">mv redis-stack-server-<span class="number">7.2</span><span class="number">.0</span>-v11 redis-stack-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4 配置环境变量</span></span><br><span class="line">	-mac �?linux，win 环境变量，是一堆key-value，在操作系统整个运行过程中拿�?</span><br><span class="line">    -特殊：PATH: �?;    :  分割，放了很多路径，这些路径下的可执行文件，可以在任意路径下执行</span><br><span class="line">    -用户变量，系统变�?</span><br><span class="line">    	-用户环境变量---》只有当前用户能�?</span><br><span class="line">        -系统环境变量--》所有用户都�?</span><br><span class="line">    </span><br><span class="line">	-win�?</span><br><span class="line">    	<span class="comment">#输出环境变量  需要使�?% % 包裹起来</span></span><br><span class="line">    	echo %PATH%</span><br><span class="line">        <span class="comment"># 配置环境变量--图形化界�?</span></span><br><span class="line">        </span><br><span class="line">    -mac，linux</span><br><span class="line">    	<span class="comment"># 输出环境变量</span></span><br><span class="line">        	 echo $PATH</span><br><span class="line">    	-用户环境变量（每个用户家路径里）</span><br><span class="line">        	cd  <span class="comment"># 回家  /root    /home/名字</span></span><br><span class="line">            ls -al <span class="comment"># 查看当前文件夹下所有文件和文件�?包含隐藏�?</span></span><br><span class="line">            .bash_profile <span class="comment">#配置用户环境变量</span></span><br><span class="line">            vi .bash_profile <span class="comment"># 编辑环境变量---》等同于</span></span><br><span class="line">            PATH=$PATH:/root/redis-stack/<span class="built_in">bin</span>:写个绝对路径</span><br><span class="line">            PATH=$PATH:写个绝对路径</span><br><span class="line">		   export PATH</span><br><span class="line">		   </span><br><span class="line">            source .bash_profile  <span class="comment"># 让配置生�?</span></span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">        -系统环境变量</span><br><span class="line">        	/etc/profile</span><br><span class="line">        </span><br><span class="line"> <span class="comment"># 5 任意路径下敲</span></span><br><span class="line">	redis-server   <span class="comment"># 启动redis</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment"># 6 查看redis版本</span></span><br><span class="line">./<span class="built_in">bin</span>/redis-cli -v</span><br></pre></td></tr></table></figure>
+<h2 id="�-】redis启动">�?】redis启动</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">####### 1 最简启动 :以默认启动：6379端口，监听本地。。�?######</span></span><br><span class="line">redis-server</span><br><span class="line">ps -ef|grep redis  <span class="comment">#查看进程</span></span><br><span class="line"><span class="comment"># root      99143      1  0 14:40 ?        00:00:00 redis-server *:6379</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看本机端口占用情况</span></span><br><span class="line"><span class="comment"># yum install net-tools -y</span></span><br><span class="line">netstat -antpl|grep redis  <span class="comment">#查看端口</span></span><br><span class="line">redis-cli -h ip -p port ping <span class="comment">#命令查看</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#######3  配置文件启动#######</span></span><br><span class="line"><span class="comment">#配置文件启动�?379对应手机按键MERZ，意大利女歌手Alessia Merz的名字）</span></span><br><span class="line"><span class="comment">#####通过redis-cli连接，输入config get * 可以获得默认配置</span></span><br><span class="line"><span class="comment">#在redis目录下创建config目录，copy一个redis.conf文件</span></span><br><span class="line"><span class="comment">#daemonize--》是否是守护进程启动（no|yes�?</span></span><br><span class="line"><span class="comment">#port---》端口号</span></span><br><span class="line"><span class="comment">#logfile--》redis系统日志</span></span><br><span class="line"><span class="comment">#dir--》redis工作目录</span></span><br><span class="line"></span><br><span class="line"><span class="number">1</span> cd redis  <span class="comment">#  进入到目�?</span></span><br><span class="line"><span class="number">2</span> mv redis.conf redis.conf.bak <span class="comment"># 备份一下原来的配置文件</span></span><br><span class="line"><span class="number">3</span> vi redis.conf <span class="comment"># 在文件中写入</span></span><br><span class="line">daemonize yes</span><br><span class="line">pidfile /var/run/redis.pid</span><br><span class="line">port <span class="number">6379</span></span><br><span class="line"><span class="built_in">dir</span> ./data</span><br><span class="line">logfile <span class="number">6379.</span>log</span><br><span class="line"></span><br><span class="line"><span class="number">4</span> redis-server ./redis.conf <span class="comment"># 后台运行</span></span><br></pre></td></tr></table></figure>
+<h1>【三】redis客户端操�?</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">####配置允许远程链接###########</span></span><br><span class="line"><span class="comment"># 1 使用配置文件启动redis</span></span><br><span class="line">daemonize yes</span><br><span class="line"></span><br><span class="line">bind <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line">protected-mode no</span><br><span class="line">requirepass <span class="number">123456</span></span><br><span class="line"></span><br><span class="line">pidfile /var/run/redis.pid</span><br><span class="line">port <span class="number">6379</span></span><br><span class="line"><span class="built_in">dir</span> <span class="string">&quot;/root/redis-7.2.4/data&quot;</span></span><br><span class="line">logfile <span class="number">6379.</span>log</span><br><span class="line"><span class="comment">###注意防火墙，一旦是公司的，必须加密码，并且密码复杂一�?</span></span><br><span class="line"><span class="comment"># 2 redis-server ./redis-conf</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3 允许远程链接</span></span><br><span class="line">	-方式一�?win ：redis-cli -h <span class="number">10.0</span><span class="number">.0</span><span class="number">.111</span> -p <span class="number">6379</span></span><br><span class="line">	-方式�? resp 远程链接</span><br><span class="line"><span class="comment"># 4 如果连不上：关防火墙</span></span><br><span class="line">	systemctl stop firewalld</span><br><span class="line">    systemctl status firewalld</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="comment">### 客户端连接，常用操作###</span></span><br><span class="line">redis-cli -h <span class="number">10.0</span><span class="number">.0</span><span class="number">.100</span> -p <span class="number">6379</span></span><br><span class="line">redis-cli -h <span class="number">10.0</span><span class="number">.0</span><span class="number">.100</span> -p <span class="number">6379</span> -a <span class="number">123456</span></span><br><span class="line">ping   <span class="comment">#返回PONG，说明联通的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 有密码的情况可以两种登陆方式</span></span><br><span class="line"><span class="comment"># 方式一</span></span><br><span class="line">redis-cli -h <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>    -p <span class="number">6370</span> -a <span class="number">123456</span></span><br><span class="line"><span class="comment"># 方式�?</span></span><br><span class="line">先登陆，再通过auth输入密码</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#### redis配置文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## redis-cli进入</span></span><br><span class="line">config get 名字  <span class="comment"># 从客户端可以拿到服务端的配置</span></span><br><span class="line"></span><br><span class="line">CONFIG GET *   <span class="comment"># 390�?-�?95多键�?-》配置信�?</span></span><br><span class="line">	-bind</span><br><span class="line">    -port</span><br><span class="line">CONFIG SET maxmemory 128M  <span class="comment"># 设置最大使用的内存</span></span><br><span class="line">CONFIG <span class="built_in">set</span> requirepass <span class="number">654321</span>  <span class="comment"># 设置密码 ---》客户端可以改服务端密码</span></span><br><span class="line"><span class="comment"># 永久生效</span></span><br><span class="line">CONFIG REWRITE  <span class="comment"># 保存到配置文�?</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### redis 入侵�?linux操作系统</span></span><br><span class="line">https://cloud.tencent.com/developer/article/<span class="number">1440296</span></span><br><span class="line"><span class="comment"># 避免�?</span></span><br><span class="line">	-运行redis进程的用户不要用root</span><br><span class="line">    -运行redis的用户不允许登录</span><br></pre></td></tr></table></figure>
+<h1>【四】通用命令</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">####1-keys </span></span><br><span class="line"><span class="comment">#打印出所有key</span></span><br><span class="line">keys * </span><br><span class="line"><span class="comment">#打印出所有以he开头的key</span></span><br><span class="line">keys he*</span><br><span class="line"><span class="comment">#打印出所有以he开头，第三个字母是h到l的范�?</span></span><br><span class="line">keys he[h-l]</span><br><span class="line"><span class="comment">#三位长度，以he开头，？表示任意一�?</span></span><br><span class="line">keys he�?</span><br><span class="line"><span class="comment">#keys命令一般不在生产环境中使用，生产环境key很多，时间复杂度为o(n),用scan命令</span></span><br><span class="line"></span><br><span class="line"><span class="comment">####2-dbsize   计算key的总数</span></span><br><span class="line">dbsize <span class="comment">#redis内置了计数器，插入删除值该计数器会更改，所以可以在生产环境使用，时间复杂度是o(1)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">###3-exists key 时间复杂度o(1)</span></span><br><span class="line"><span class="comment">#设置a</span></span><br><span class="line"><span class="built_in">set</span> age <span class="number">18</span></span><br><span class="line"><span class="comment">#查看age是否存在</span></span><br><span class="line">exists age</span><br><span class="line">(integer) <span class="number">1</span></span><br><span class="line"><span class="comment">#存在返回1 不存在返�?</span></span><br><span class="line"></span><br><span class="line"><span class="comment">###4-del key  时间复杂度o(1)</span></span><br><span class="line">删除成功返回<span class="number">1</span>，key不存在返�?</span><br><span class="line"></span><br><span class="line"><span class="comment">###5-expire key seconds  时间复杂度o(1)</span></span><br><span class="line">expire name <span class="number">3</span> <span class="comment">#3s 过期</span></span><br><span class="line">ttl name  <span class="comment">#查看name还有多长时间过期</span></span><br><span class="line">persist name <span class="comment">#去掉name的过期时�?</span></span><br><span class="line"></span><br><span class="line"><span class="comment">###6-type key  时间复杂度o(1)</span></span><br><span class="line"><span class="built_in">type</span> name <span class="comment">#查看name类型，返回string</span></span><br><span class="line"></span><br><span class="line"><span class="comment">###7-其他</span></span><br><span class="line">info命令：内存，cpu，主从相�?-&gt;通过它来写redis服务监控</span><br><span class="line">client <span class="built_in">list</span>  正在连接的会�?</span><br><span class="line">client kill ip:端口</span><br><span class="line">dbsize  总共有多少个key</span><br><span class="line">flushall  清空所�?</span><br><span class="line">flushdb  只清空当前库</span><br><span class="line">select 数字  选择某个�? 总共<span class="number">16</span>个库</span><br><span class="line">monitor  记录操作日志，夯�?</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/1.0web%E6%A1%86%E6%9E%B6%E6%9C%AC%E8%B4%A8/" rel="prev" title="1.0web��ܱ���">
+      <i class="fa fa-chevron-left"></i> 1.0web��ܱ���
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/1.0vue%E7%9A%84%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95%EF%BC%8C%E6%8C%87%E4%BB%A4/" rel="next" title="1.0vue��ģ���﷨��ָ��">
+      1.0vue��ģ���﷨��ָ�� <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">【一】docker-compose</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E4%BB%8B%EF%BF%BD"><span class="nav-number">1.1.</span> <span class="nav-text">�?】介�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E6%9F%90%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.2.</span> <span class="nav-text">�?】某项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91django%E6%94%AF%E6%8C%81%E5%BC%82%E6%AD%A5%E7%9A%84dockerfile%E5%86%99%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">�?】django支持异步的dockerfile写法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">【二】redis安装和配�?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E4%BB%8B%EF%BF%BD-2"><span class="nav-number">2.1.</span> <span class="nav-text">�?】介�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91redis%E5%AE%89%E8%A3%85%EF%BC%88linux-centos%EF%BF%BD"><span class="nav-number">2.2.</span> <span class="nav-text">�?】redis安装（linux-centos�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E6%BA%90%E7%A0%81%E5%AE%89%EF%BF%BD"><span class="nav-number">2.2.1.</span> <span class="nav-text">�?）源码安�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89redis-stack"><span class="nav-number">2.2.2.</span> <span class="nav-text">�?）redis-stack</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91redis%E5%90%AF%E5%8A%A8"><span class="nav-number">2.3.</span> <span class="nav-text">�?】redis启动</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">【三】redis客户端操�?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">【四】通用命令</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">201</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

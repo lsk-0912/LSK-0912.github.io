@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="【一】进�? �?】什么是进程  进程就是一个正在运行的程序  �?】什么是程序  你自己编写的代码就是程序  �?】单任务和多任务 �?）单任务  一个单独的任务  一个时间段只能进行一个程序的运行    �?）多任务  很多个任�?  一个时间段可以运行多个任务，同时运�?    �?】进程间的调度算�? �?）先来先服务算法  谁先来的就先运行�? 优点就是：任务按照顺序一次执�? 缺点就是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2.3����">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/2.3%E8%BF%9B%E7%A8%8B/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="【一】进�? �?】什么是进程  进程就是一个正在运行的程序  �?】什么是程序  你自己编写的代码就是程序  �?】单任务和多任务 �?）单任务  一个单独的任务  一个时间段只能进行一个程序的运行    �?）多任务  很多个任�?  一个时间段可以运行多个任务，同时运�?    �?】进程间的调度算�? �?）先来先服务算法  谁先来的就先运行�? 优点就是：任务按照顺序一次执�? 缺点就是">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T09:47:38.413Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/2.3%E8%BF%9B%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2.3���� | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/2.3%E8%BF%9B%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2.3����
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 17:47:38" itemprop="dateModified" datetime="2025-10-11T17:47:38+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>【一】进�?</h1>
+<h2 id="�-】什么是进程">�?】什么是进程</h2>
+<ul>
+<li>进程就是一个正在运行的程序</li>
+</ul>
+<h2 id="�-】什么是程序">�?】什么是程序</h2>
+<ul>
+<li>你自己编写的代码就是程序</li>
+</ul>
+<h2 id="�-】单任务和多任务">�?】单任务和多任务</h2>
+<h3 id="�-）单任务">�?）单任务</h3>
+<ul>
+<li>一个单独的任务
+<ul>
+<li>一个时间段只能进行一个程序的运行</li>
+</ul>
+</li>
+</ul>
+<h3 id="�-）多任务">�?）多任务</h3>
+<ul>
+<li>很多个任�?
+<ul>
+<li>一个时间段可以运行多个任务，同时运�?</li>
+</ul>
+</li>
+</ul>
+<h2 id="�-】进程间的调度算�">�?】进程间的调度算�?</h2>
+<h3 id="�-）先来先服务算法">�?）先来先服务算法</h3>
+<ul>
+<li>谁先来的就先运行�?</li>
+<li>优点就是：任务按照顺序一次执�?</li>
+<li>缺点就是第一个程序不运行完不会进行下一�?</li>
+<li>有利于长作业不利于短作业</li>
+</ul>
+<h3 id="�-）短时间优先调度">�?）短时间优先调度</h3>
+<ul>
+<li>谁时间段就执行谁</li>
+<li>利于短时间不利用长时�?</li>
+</ul>
+<h3 id="�-）时间片轮转�">�?）时间片轮转�?</h3>
+<ul>
+<li>合理利用分配时间和空间资�?</li>
+<li>将一块时间切割成很多小的小部�?</li>
+<li>轮转法：日志轮转</li>
+</ul>
+<h3 id="�-）多级反馈队�">�?）多级反馈队�?</h3>
+<ul>
+<li>
+<p>前面介绍的各种用作进程调度的算法都有一定的局限性�?</p>
+<ul>
+<li>
+<p>如短进程优先的调度算法，仅照顾了短进程而忽略了长进程，</p>
+<p>而且如果并未指明进程的长度，则短进程优先和基于进程长度的抢占式调度算法都将无法使用�?</p>
+</li>
+</ul>
+</li>
+<li>
+<p>而多级反馈队列调度算法则不必事先知道各种进程所需的执行时间，</p>
+<p>而且还可以满足各种类型进程的需要，因而它是目前被公认的一种较好的进程调度算法�?</p>
+</li>
+</ul>
+<h2 id="�-】并发和并行">�?】并发和并行</h2>
+<h3 id="�-）什么是并发">�?）什么是并发</h3>
+<ul>
+<li>也叫伪并发，看起来向是在同时运行</li>
+<li>一个cpu在不断的切换（多道技术：时间上的复用和空间上的复用）</li>
+</ul>
+<h3 id="�-）什么是并行">�?）什么是并行</h3>
+<ul>
+<li>多个任务同时在运�?</li>
+</ul>
+<h3 id="�-）多道技�">�?）多道技�?</h3>
+<ul>
+<li>
+<p>内存中存入多道（多个）程�?</p>
+</li>
+<li>
+<p>cpu从一个进程快速切换到另一�?</p>
+</li>
+<li>
+<p>是每个进程各自运行几十秒</p>
+</li>
+<li>
+<p>虽然存在于某个瞬�?</p>
+</li>
+<li>
+<p>一个cpu只能执行一个程�?</p>
+</li>
+<li>
+<p>但在一秒钟，cpu可以同时运行多个程序</p>
+</li>
+<li>
+<p>这就给人产生了并行的错觉，即伪并�?</p>
+</li>
+<li>
+<p>以此来区分多处理器操作系统的真正硬件并行（多个cpu共享同一个物理内存）</p>
+</li>
+</ul>
+<h2 id="�-】同�-异步-阻塞-非阻�">�?】同�?异步/阻塞/非阻�?</h2>
+<h3 id="�-）同�">�?）同�?</h3>
+<ul>
+<li>在进行一个程序执行之后，必须等待当前程序执行完后才能执行下一个程�?</li>
+</ul>
+<h3 id="�-）异�">�?）异�?</h3>
+<ul>
+<li>于同步相�?</li>
+<li>在一个程序执行之后，不用等待当前程序完成，直接可以继续下一个任�?</li>
+</ul>
+<h3 id="�-）阻�">�?）阻�?</h3>
+<ul>
+<li>调用结果返回之前，当前程序会一直被挂起（夯住），IO阻塞</li>
+</ul>
+<h3 id="�-）非阻塞">�?）非阻塞</h3>
+<ul>
+<li>于阻塞相�?</li>
+<li>不会阻塞当前程序</li>
+<li>没有IO阻塞</li>
+</ul>
+<h3 id="5-同步调用">(5)同步调用</h3>
+<ul>
+<li>执行很多任务，任务的调度，会一次执行程序，第一个程序不执完，就不会执行下一�?</li>
+</ul>
+<h3 id="�-）阻塞调�">�?）阻塞调�?</h3>
+<ul>
+<li>当前程序在执行过程中。只有获取到结果才会继续执行，否则会一直被挂起</li>
+<li>跟服务端接收客户端的数据很像</li>
+</ul>
+<h3 id="�-）总结">�?）总结</h3>
+<ul>
+<li>同步与异步针对的是函�?任务的调用方�?</li>
+<li>同步就是当一个进程发起一个函数（任务）调用的时候，一直等到函数（任务）完成，而进程继续处于激活状态�?</li>
+<li>而异步情况下是当一个进程发起一个函数（任务）调用的时候，不会等函数返回，而是继续往下执行，函数返回的时候通过状态、通知、事件等方式通知进程任务完成�?</li>
+<li>阻塞与非阻塞针对的是进程或线�?</li>
+<li>阻塞是当请求不能满足的时候就将进程挂�?</li>
+<li>而非阻塞则不会阻塞当前进�?</li>
+</ul>
+<h2 id="�-】进程的创建">�?】进程的创建</h2>
+<ul>
+<li>创建和销毁进程的能力</li>
+<li>创建进程是指启动某一个应用程�?</li>
+<li>撤销进程是指杀死指定的应用程序</li>
+</ul>
+<h3 id="�-）系统初始化">�?）系统初始化</h3>
+<ul>
+<li>windows里面用的任务管理�?</li>
+<li>随着开自带的程序也会随着启动</li>
+</ul>
+<h3 id="�-）在进程中开设子进程">�?）在进程中开设子进程</h3>
+<ul>
+<li>一个比�?
+<ul>
+<li>你双击腾讯视频，然后打开你喜欢开的电视，开了电视窗口子进程</li>
+</ul>
+</li>
+</ul>
+<h3 id="�-）交互式请求">�?）交互式请求</h3>
+<ul>
+<li>双击桌面上的应用程序，创建一个新的进�?</li>
+</ul>
+<h3 id="�-）批处理作业的初始化">�?）批处理作业的初始化</h3>
+<ul>
+<li>只会在大型的工厂�?</li>
+</ul>
+<h2 id="�-】不同系统的新进程的创建方式">�?】不同系统的新进程的创建方式</h2>
+<ul>
+<li>
+<p>无论哪一�?</p>
+</li>
+<li>
+<ul>
+<li>新进程的创建都是由一个已经存在的进程执行了一个用于创建进程的系统调用而创建的</li>
+</ul>
+</li>
+</ul>
+<h3 id="�-）windows�">�?）windows�?</h3>
+<ul>
+<li>在windows中该系统调用是：<code>CreateProcess</code>，<code>CreateProcess</code>既处理进程的创建，在负责把正确的程序装入新进�?</li>
+</ul>
+<h3 id="�-）UNIX">�?）UNIX</h3>
+<ul>
+<li>
+<p>在UNIX中该系统调用是：fork，fork会创建一个与父进程一模一样的副本</p>
+</li>
+<li>
+<p>二者有相同的存储映像、同样的环境字符串和同样的打开文件（在shell解释器进程中，执行一个命令就会创建一个子进程�?</p>
+</li>
+</ul>
+<h2 id="�-】进程的终止">�?】进程的终止</h2>
+<h3 id="�-）正常的退�">�?）正常的退�?</h3>
+<ul>
+<li>正常的退出也算是进程终止</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正常退出示�?</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">sys.exit()</span><br></pre></td></tr></table></figure>
+<h3 id="�-）出错退�">�?）出错退�?</h3>
+<ul>
+<li>自愿执行：在执行程序过程中遇到某个错误，报了一个错，导致程序关�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 出错退出示�?</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    result = <span class="number">1</span> / <span class="number">0</span></span><br><span class="line"><span class="keyword">except</span> ZeroDivisionError:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Error: Division by zero&quot;</span>)</span><br><span class="line">    sys.exit(<span class="number">1</span>)  <span class="comment"># 退出并返回错误�?1</span></span><br></pre></td></tr></table></figure>
+<h3 id="�-）严重错�">�?）严重错�?</h3>
+<ul>
+<li>非自愿退出的</li>
+<li>遇到了很严重的程序错�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 严重错误示例</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    result = <span class="number">1</span> / <span class="number">0</span></span><br><span class="line"><span class="keyword">except</span> ZeroDivisionError:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Error: Division by zero&quot;</span>)</span><br><span class="line">    <span class="comment"># 这里可以进行一些处理，但无法完全修复严重错�?</span></span><br><span class="line">    <span class="keyword">raise</span>  <span class="comment"># 重新抛出异常，程序终�?</span></span><br></pre></td></tr></table></figure>
+<h3 id="�-）被其他进程杀�">�?）被其他进程杀�?</h3>
+<ul>
+<li>linux系统上：kill / pkill 杀死进�?</li>
+<li>windows系统上：任务管理器强制结束进�?–&gt; 通过进程号杀死进�?</li>
+</ul>
+<h2 id="�-0】进程的状�">�?0】进程的状�?</h2>
+<ul>
+<li>无论在那个程序：进程只有一个父程序</li>
+</ul>
+<h3 id="�-）三态模�">�?）三态模�?</h3>
+<ul>
+<li>运行态：已经在使用过程中的状�?</li>
+<li>就绪态：双击应用程序启动的过程中</li>
+<li>阻塞态：上传文件需要读取文件数据的过程</li>
+</ul>
+<h3 id="�-）五态模�">�?）五态模�?</h3>
+<ul>
+<li>创建态：双击应用程序启动的过程中—》双击腾讯视�?</li>
+<li>就绪态：应用程序已经准备就绪—》就如到腾讯视频客户�?</li>
+<li>执行态：应用程序正在执行—》在追剧</li>
+<li>阻塞态：应用处于等待状�?–》正在缓存，等待�?</li>
+<li>终止态：应用程序结束—》退出腾讯视�?</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/2.4%E5%8F%AF%E5%8F%98%E4%B8%8E%E4%B8%8D%E5%8F%AF%E5%8F%98%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="prev" title="2.4�ɱ��벻�ɱ���������">
+      <i class="fa fa-chevron-left"></i> 2.4�ɱ��벻�ɱ���������
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/2.4%E7%BB%84%E4%BB%B6/" rel="next" title="2.4���">
+      2.4��� <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">【一】进�?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">�?】什么是进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AF%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.2.</span> <span class="nav-text">�?】什么是程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%8D%95%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%A4%9A%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.3.</span> <span class="nav-text">�?】单任务和多任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%8D%95%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.3.1.</span> <span class="nav-text">�?）单任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%A4%9A%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.3.2.</span> <span class="nav-text">�?）多任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E8%BF%9B%E7%A8%8B%E9%97%B4%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%EF%BF%BD"><span class="nav-number">1.4.</span> <span class="nav-text">�?】进程间的调度算�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%85%88%E6%9D%A5%E5%85%88%E6%9C%8D%E5%8A%A1%E7%AE%97%E6%B3%95"><span class="nav-number">1.4.1.</span> <span class="nav-text">�?）先来先服务算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E7%9F%AD%E6%97%B6%E9%97%B4%E4%BC%98%E5%85%88%E8%B0%83%E5%BA%A6"><span class="nav-number">1.4.2.</span> <span class="nav-text">�?）短时间优先调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E6%97%B6%E9%97%B4%E7%89%87%E8%BD%AE%E8%BD%AC%EF%BF%BD"><span class="nav-number">1.4.3.</span> <span class="nav-text">�?）时间片轮转�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%A4%9A%E7%BA%A7%E5%8F%8D%E9%A6%88%E9%98%9F%EF%BF%BD"><span class="nav-number">1.4.4.</span> <span class="nav-text">�?）多级反馈队�?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%B9%B6%E5%8F%91%E5%92%8C%E5%B9%B6%E8%A1%8C"><span class="nav-number">1.5.</span> <span class="nav-text">�?】并发和并行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E4%BB%80%E4%B9%88%E6%98%AF%E5%B9%B6%E5%8F%91"><span class="nav-number">1.5.1.</span> <span class="nav-text">�?）什么是并发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E4%BB%80%E4%B9%88%E6%98%AF%E5%B9%B6%E8%A1%8C"><span class="nav-number">1.5.2.</span> <span class="nav-text">�?）什么是并行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%A4%9A%E9%81%93%E6%8A%80%EF%BF%BD"><span class="nav-number">1.5.3.</span> <span class="nav-text">�?）多道技�?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%90%8C%EF%BF%BD-%E5%BC%82%E6%AD%A5-%E9%98%BB%E5%A1%9E-%E9%9D%9E%E9%98%BB%EF%BF%BD"><span class="nav-number">1.6.</span> <span class="nav-text">�?】同�?异步&#x2F;阻塞&#x2F;非阻�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%90%8C%EF%BF%BD"><span class="nav-number">1.6.1.</span> <span class="nav-text">�?）同�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%BC%82%EF%BF%BD"><span class="nav-number">1.6.2.</span> <span class="nav-text">�?）异�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E9%98%BB%EF%BF%BD"><span class="nav-number">1.6.3.</span> <span class="nav-text">�?）阻�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E9%9D%9E%E9%98%BB%E5%A1%9E"><span class="nav-number">1.6.4.</span> <span class="nav-text">�?）非阻塞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%90%8C%E6%AD%A5%E8%B0%83%E7%94%A8"><span class="nav-number">1.6.5.</span> <span class="nav-text">(5)同步调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E9%98%BB%E5%A1%9E%E8%B0%83%EF%BF%BD"><span class="nav-number">1.6.6.</span> <span class="nav-text">�?）阻塞调�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E6%80%BB%E7%BB%93"><span class="nav-number">1.6.7.</span> <span class="nav-text">�?）总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">1.7.</span> <span class="nav-text">�?】进程的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E7%B3%BB%E7%BB%9F%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.7.1.</span> <span class="nav-text">�?）系统初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%9C%A8%E8%BF%9B%E7%A8%8B%E4%B8%AD%E5%BC%80%E8%AE%BE%E5%AD%90%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.7.2.</span> <span class="nav-text">�?）在进程中开设子进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E4%BA%A4%E4%BA%92%E5%BC%8F%E8%AF%B7%E6%B1%82"><span class="nav-number">1.7.3.</span> <span class="nav-text">�?）交互式请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E6%89%B9%E5%A4%84%E7%90%86%E4%BD%9C%E4%B8%9A%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.7.4.</span> <span class="nav-text">�?）批处理作业的初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E4%B8%8D%E5%90%8C%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%96%B0%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F"><span class="nav-number">1.8.</span> <span class="nav-text">�?】不同系统的新进程的创建方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89windows%EF%BF%BD"><span class="nav-number">1.8.1.</span> <span class="nav-text">�?）windows�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89UNIX"><span class="nav-number">1.8.2.</span> <span class="nav-text">�?）UNIX</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%BB%88%E6%AD%A2"><span class="nav-number">1.9.</span> <span class="nav-text">�?】进程的终止</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E6%AD%A3%E5%B8%B8%E7%9A%84%E9%80%80%EF%BF%BD"><span class="nav-number">1.9.1.</span> <span class="nav-text">�?）正常的退�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%87%BA%E9%94%99%E9%80%80%EF%BF%BD"><span class="nav-number">1.9.2.</span> <span class="nav-text">�?）出错退�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E4%B8%A5%E9%87%8D%E9%94%99%EF%BF%BD"><span class="nav-number">1.9.3.</span> <span class="nav-text">�?）严重错�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E8%A2%AB%E5%85%B6%E4%BB%96%E8%BF%9B%E7%A8%8B%E6%9D%80%EF%BF%BD"><span class="nav-number">1.9.4.</span> <span class="nav-text">�?）被其他进程杀�?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-0%E3%80%91%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%8A%B6%EF%BF%BD"><span class="nav-number">1.10.</span> <span class="nav-text">�?0】进程的状�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E4%B8%89%E6%80%81%E6%A8%A1%EF%BF%BD"><span class="nav-number">1.10.1.</span> <span class="nav-text">�?）三态模�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E4%BA%94%E6%80%81%E6%A8%A1%EF%BF%BD"><span class="nav-number">1.10.2.</span> <span class="nav-text">�?）五态模�?</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">201</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="数据库初�? 【一】存储数据的演变过程 �?】文件储�?  在早期，随意地存放到一个文件中、数据格式也是千差万别的，完全取决于个人  �?】软件开发目录规�? �?）概�?  限制了存储数据的具体位置 建立专门的文件夹存储数据  �?）软件开发目录规�?  bin：主要存放主程序文件，例如main.py�? conf：主要存放配置文件，例如settings.py�? lib：主要存放公用函数或类库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.0MySQL��װ�̳�,���ݿ�����">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/1.0MySQL%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B,%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="数据库初�? 【一】存储数据的演变过程 �?】文件储�?  在早期，随意地存放到一个文件中、数据格式也是千差万别的，完全取决于个人  �?】软件开发目录规�? �?）概�?  限制了存储数据的具体位置 建立专门的文件夹存储数据  �?）软件开发目录规�?  bin：主要存放主程序文件，例如main.py�? conf：主要存放配置文件，例如settings.py�? lib：主要存放公用函数或类库">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhaochunze.dream521.site/2322215-20230402201944811-1991410752.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527110418727.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527110503302.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527110633760.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527110656825.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527110729477.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527110832193.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527111016688.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527111119294-17167794803561.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527111355844.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527112403265.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527112826830.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527130018132.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527130601184.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527130151397.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527130328184.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527131358783.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527131932666.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527132602150.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527141037132.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527141926434.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527142302514.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527143210007.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527144436229.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527144601986.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527151044039.png">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T09:47:38.087Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhaochunze.dream521.site/2322215-20230402201944811-1991410752.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/1.0MySQL%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B,%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>1.0MySQL��װ�̳�,���ݿ����� | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/1.0MySQL%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B,%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          1.0MySQL��װ�̳�,���ݿ�����
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 17:47:38" itemprop="dateModified" datetime="2025-10-11T17:47:38+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>数据库初�?</h1>
+<h2 id="【一】存储数据的演变过程">【一】存储数据的演变过程</h2>
+<h3 id="�-】文件储�">�?】文件储�?</h3>
+<ul>
+<li>在早期，随意地存放到一个文件中、数据格式也是千差万别的，完全取决于个人</li>
+</ul>
+<h3 id="�-】软件开发目录规�">�?】软件开发目录规�?</h3>
+<h4 id="�-）概�">�?）概�?</h4>
+<ul>
+<li>限制了存储数据的具体位置</li>
+<li>建立专门的文件夹存储数据</li>
+</ul>
+<h3 id="�-）软件开发目录规�">�?）软件开发目录规�?</h3>
+<ul>
+<li>bin：主要存放主程序文件，例如main.py�?</li>
+<li>conf：主要存放配置文件，例如settings.py�?</li>
+<li>lib：主要存放公用函数或类库，例如common.py�?</li>
+<li>core：主要存放核心模块代码，例如src.py�?</li>
+<li>interface：主要存放用户界面代码，例如interface.py�?</li>
+<li>db：主要存放数据库模块和操作脚本，例如moduls.py和db_hander.py�?</li>
+<li>log：主要存放日志文件，例如logs.log�?</li>
+<li><a target="_blank" rel="noopener" href="http://README.md">README.md</a>：主要存放项目说明文档�?</li>
+</ul>
+<h4 id="�-）数据存储在本地">�?）数据存储在本地</h4>
+<ul>
+<li>假设上面是一个游�?</li>
+<li>每一个人的游戏数据只会保存在本地</li>
+<li>注册登录账号也只能在本地有效</li>
+</ul>
+<h3 id="�-）单机变成联�">�?）单机变成联�?</h3>
+<ul>
+<li>然而，在现代互联网环境下，单机模式已经不能满足需求，需要将数据库服务端建立起来，将数据库保存部分统一到一个位置�?</li>
+<li>所有的数据操作都会经过这个总的数据库�?</li>
+<li>这样不仅可以实现数据共享，还可以保证数据的安全性和稳定性�?</li>
+<li>同时，也可以通过增加服务器集群等方式，提高系统的性能和可扩展性�?</li>
+</ul>
+<h2 id="【二】数据库的本�">【二】数据库的本�?</h2>
+<ul>
+<li>数据库就是一块基于网络通信的应用程�?</li>
+<li>每个人都有开发一块数据库的能�?</li>
+</ul>
+<h2 id="【三】数据库介绍">【三】数据库介绍</h2>
+<h3 id="�-】关系型数据�">�?】关系型数据�?</h3>
+<ul>
+<li>MySQL</li>
+<li>Oracle</li>
+<li>db2</li>
+<li>access</li>
+<li>sql server</li>
+<li>这些数据库都是采用关系模型来组织数据，并且支持SQL查询语言</li>
+</ul>
+<h3 id="�-】非关系型数据库">�?】非关系型数据库</h3>
+<ul>
+<li>Redis</li>
+<li>MongoDB</li>
+<li>Memcached</li>
+</ul>
+<p>这些数据库不采用关系模型来组织数据，而是采用了其他的模型，例如键值对模型、文档模型、图形模型等�?</p>
+<h3 id="�-】关系型（存储数据）">�?】关系型（存储数据）</h3>
+<ul>
+<li>彼此之间有关�?</li>
+<li>储存数据的表型形式通常以表格形式存�?</li>
+<li>每个字段限制每个字段下的存储数据的格式例如字符串、数字、日期等�?</li>
+<li>同时，关系型数据库还支持各种数据操作，例如插入、删除、更新和查询等�?</li>
+</ul>
+<h3 id="�-】非关系型（缓存数据�">�?】非关系型（缓存数据�?</h3>
+<ul>
+<li>存储数据通常是K:V形式存储数据</li>
+<li>非关系型数据库通常用于存储临时性的、高速访问的数据，这些数据通常以键值对的形式存储，其中“键”表示数据的唯一标识，“值”表示实际的数据内容�?</li>
+<li>由于非关系型数据库通常不提供事务支持和复杂的查询功能，因此不适合存储长期保存的历史数据�?</li>
+</ul>
+<h2 id="【四】数据库的应用场�">【四】数据库的应用场�?</h2>
+<h3 id="�-】需�">�?】需�?</h3>
+<ul>
+<li>假设现在你已经是某大型互联网公司的高级程序员，让你写一个火车票购票系统，来hold住十一期间全国的购票需求，你怎么写？</li>
+<li>在同一时段抢票的人数如果太多，那么你的程序不可能运行在一台机器上，应该是多台机器一起分担用户的购票请求�?</li>
+</ul>
+<p><img src="http://zhaochunze.dream521.site/2322215-20230402201944811-1991410752.png" alt="img"></p>
+<h2 id="�-】实现需�">�?】实现需�?</h2>
+<ul>
+<li>
+<p>那么问题就来了，票务信息的数据存在哪里？存在文件里么�?</p>
+</li>
+<li>
+<p>如果存储在文件里，那么存储在哪一台机器上呢？是每台机器上都存储一份么�?</p>
+</li>
+<li>
+<ul>
+<li>首先，如果其中一台机器上卖出的票另外两台机器是感知不到的�?</li>
+<li>其次，如果我们将数据和程序放在同一个机器上，如果程序和数据有一个出了问题都会导致整个服务不可用�?</li>
+<li>最后，操作或修改文件中的内容对python代码来说是一件很麻烦的事�?</li>
+</ul>
+</li>
+<li>
+<p>基于上面这些问题，单纯的将数据存储在和程序同一台机器上的文件中是非常不明智的�?</p>
+</li>
+<li>
+<p>根据上面的例子，我们可以知道，将文件和程序存在一台机器上是很不合理的，同时，操作文件是一件很麻烦的事，所以我们可以使用数据库来存储数据�?</p>
+</li>
+</ul>
+<h1>MySQL安装教程</h1>
+<h2 id="�-】下载路�">�?】下载路�?</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.mysql.com/">https://www.mysql.com/</a></li>
+</ul>
+<h2 id="�-】下载安装包，解压文�">�?】下载安装包，解压文�?</h2>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527110418727.png" alt="image-20240527110418727"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527110503302.png" alt="image-20240527110503302"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527110633760.png" alt="image-20240527110633760"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527110656825.png" alt="image-20240527110656825"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527110729477.png" alt="image-20240527110729477"></p>
+<ul>
+<li>填好下载的路�?</li>
+<li>进行解压�?</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527110832193.png" alt="image-20240527110832193"></p>
+<h2 id="�-】添加环境变�">�?】添加环境变�?</h2>
+<ul>
+<li>设置搜索</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527111016688.png" alt="image-20240527111016688"></p>
+<ul>
+<li>把你解压的mysql的包里面的bin目录的路径添加到环境变量�?</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527111119294-17167794803561.png" alt="image-20240527111119294"></p>
+<ul>
+<li>解压包里面创建一个data文件，创建一个mysqm.ini</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527111355844.png" alt="image-20240527111355844"></p>
+<ul>
+<li>MySQL在windows下的配置文件，叫my.ini，默认是没有的需要自己创�?</li>
+<li>配置的文件内容如�?
+<ul>
+<li>注意下面的配置内�?
+<ul>
+<li>*<em>basedir和datadir的路径要根据自己的路径如实填�?</em></li>
+</ul>
+</li>
+<li>把下面额信息粘贴到你的配置文件里�?</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line"><span class="comment"># 设置3306端口</span></span><br><span class="line">port=<span class="number">3306</span></span><br><span class="line"><span class="comment"># 设置mysql的安装目�?</span></span><br><span class="line">basedir=<span class="string">&quot;C:\WinApps\MySQL&quot;</span></span><br><span class="line"><span class="comment"># 设置mysql数据库的数据的存放目录，就是前面手动创建的data目录</span></span><br><span class="line">datadir=<span class="string">&quot;C:\WinApps\MySQL\data&quot;</span></span><br><span class="line"><span class="comment"># 允许最大连接数</span></span><br><span class="line">max_connections=<span class="number">200</span></span><br><span class="line"><span class="comment"># 允许连接失败的次数�?</span></span><br><span class="line">max_connect_errors=<span class="number">10</span></span><br><span class="line"><span class="comment"># 服务端使用的字符集默认为utf8mb4</span></span><br><span class="line">character-<span class="built_in">set</span>-server=utf8mb4</span><br><span class="line"><span class="comment"># 创建新表时将使用的默认存储引�?</span></span><br><span class="line">default-storage-engine=INNODB</span><br><span class="line"><span class="comment"># 默认使用“mysql_native_password”插件认�? mysql_native_password</span></span><br><span class="line">default_authentication_plugin=mysql_native_password</span><br><span class="line">[mysql]</span><br><span class="line"><span class="comment"># 设置mysql网络通信的默认字符集</span></span><br><span class="line">default-character-<span class="built_in">set</span>=utf8mb4</span><br><span class="line">[client]</span><br><span class="line"><span class="comment"># 设置mysql客户端连接服务端时默认使用的端口</span></span><br><span class="line">port=<span class="number">3306</span></span><br><span class="line"><span class="comment"># 设置mysql客户端的默认字符�?</span></span><br><span class="line">default-character-<span class="built_in">set</span>=utf8mb4</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527112403265.png" alt="image-20240527112403265"></p>
+<h2 id="�-】初始化数据�">�?】初始化数据�?</h2>
+<h3 id="�-）打开cmd命令窗口">�?）打开cmd命令窗口</h3>
+<p>win+r</p>
+<h3 id="�-）执行初始化">�?）执行初始化</h3>
+<ul>
+<li>输入命令，让数据库完成初始化</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld --initialize --console</span><br></pre></td></tr></table></figure>
+<ul>
+<li>初始化成功结果如�?</li>
+<li>初始化自动生成一串随机的MySQL秘钥，保存下来，后面要用</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527112826830.png" alt="image-20240527112826830"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\86177&gt;mysqld --initialize --console</span><br><span class="line">mysqld: Could not create or access the registry key needed for the MySQL application</span><br><span class="line">to log to the Windows EventLog. Run the application with sufficient</span><br><span class="line">privileges once to create the key, add the key manually, or turn off</span><br><span class="line">logging for that application.</span><br><span class="line">2024-05-27T03:27:01.422633Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).</span><br><span class="line">2024-05-27T03:27:01.424069Z 0 [ERROR] Cannot open Windows EventLog; check privileges, or start server with --log_syslog=0</span><br><span class="line">2024-05-27T03:27:01.575732Z 0 [Warning] InnoDB: New log files created, LSN=45790</span><br><span class="line">2024-05-27T03:27:01.598272Z 0 [Warning] InnoDB: Creating foreign key constraint system tables.</span><br><span class="line">2024-05-27T03:27:01.677040Z 0 [Warning] No existing UUID has been found, so we assume that this is the first time that this server has been started. Generating a new UUID: fb6b2245-1bd8-11ef-94b8-84a938bfaa23.</span><br><span class="line">2024-05-27T03:27:01.680349Z 0 [Warning] Gtid table is not ready to be used. Table &#x27;mysql.gtid_executed&#x27; cannot be opened.</span><br><span class="line">2024-05-27T03:27:02.275399Z 0 [Warning] A deprecated TLS version TLSv1 is enabled. Please use TLSv1.2 or higher.</span><br><span class="line">2024-05-27T03:27:02.275453Z 0 [Warning] A deprecated TLS version TLSv1.1 is enabled. Please use TLSv1.2 or higher.</span><br><span class="line">2024-05-27T03:27:02.279583Z 0 [Warning] CA certificate ca.pem is self signed.</span><br><span class="line">2024-05-27T03:27:02.388705Z 1 [Note] A temporary password is generated for root@localhost: S*#mL=bw2v5!</span><br></pre></td></tr></table></figure>
+<h2 id="�-】注册系统服�">�?】注册系统服�?</h2>
+<h3 id="�-）注册服务系�">�?）注册服务系�?</h3>
+<ul>
+<li>
+<p>把mysql注册到操作系统作为服务系统，保证将来电脑重启了就可以开机自启了</p>
+</li>
+<li>
+<p>以管理员身份运行cmd命令窗口</p>
+</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527130018132.png" alt="image-20240527130018132"></p>
+<ul>
+<li>输入下面代码注册MySQL</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld --install</span><br></pre></td></tr></table></figure>
+<ul>
+<li>打开计算机管�?或者cmd输入<code>services.msc</code>打开计算机管理服�?</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527130601184.png" alt="image-20240527130601184"></p>
+<ul>
+<li>注册是看不到MySQL系统服务�?</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527130151397.png" alt="image-20240527130151397"></p>
+<ul>
+<li>
+<p>输入<code>mysqld --install</code></p>
+</li>
+<li>
+<p>注册成功</p>
+</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527130328184.png" alt="image-20240527130328184"></p>
+<ul>
+<li>注册成功后在系统服务里面多了一个MySQL服务</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527131358783.png" alt="image-20240527131358783"></p>
+<h3 id="�-）注销系统服务">�?）注销系统服务</h3>
+<ul>
+<li>注销服务用于卸载MySQL的不要乱�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld --remove</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527131932666.png" alt="image-20240527131932666"></p>
+<h2 id="�-】启动MySQL服务">�?】启动MySQL服务</h2>
+<h3 id="�-）启动方式一">�?）启动方式一</h3>
+<ul>
+<li>直接在计算机服务里面打开–》点击启�?</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527132602150.png" alt="image-20240527132602150"></p>
+<h3 id="�-）启动方式二">�?）启动方式二</h3>
+<ul>
+<li>在cmd命令里面输入</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net start MySQL</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527141037132.png" alt="image-20240527141037132"></p>
+<h3 id="3-关闭">(3)关闭</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net stop MySQL</span><br></pre></td></tr></table></figure>
+<h3 id="4-重启">(4)重启</h3>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net restart MySQL</span><br></pre></td></tr></table></figure>
+<h1>MySQL数据库配�?</h1>
+<h2 id="�-】登入和退�">�?】登入和退�?</h2>
+<h3 id="�-）登�">�?）登�?</h3>
+<ul>
+<li>通过下面命令</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br></pre></td></tr></table></figure>
+<ul>
+<li>u:username</li>
+<li>p:passowrd</li>
+<li>root:安装成功后默认存在一个用�?</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527141926434.png" alt="image-20240527141926434"></p>
+<ul>
+<li>连接远程服务登入</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -h 127.0.0.1 -P 3306 -uroot -p</span><br></pre></td></tr></table></figure>
+<h3 id="�-）退�">�?）退�?</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exit/quit</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527142302514.png" alt="image-20240527142302514"></p>
+<h2 id="�-】修改用户名和密�">�?】修改用户名和密�?</h2>
+<ul>
+<li>修改密码的前提是进入到客户端内部</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alter user &#x27;root&#x27;@&#x27;localhost&#x27; identified by &#x27;123456&#x27;;</span><br><span class="line"></span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参数介绍
+<ul>
+<li>“root”:就是修改密码的用户名</li>
+<li>“localhost”：表示允许用户在什么地址下可以使用密码登陆到数据库服务器，localhost表示本地登陆
+<ul>
+<li>localhost：本地主�?</li>
+</ul>
+</li>
+<li>“123456”:就是新的密码了，注意，不要设置空密码！以后公司里面的密码一定要非常难记的才最好�?</li>
+</ul>
+</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527143210007.png" alt="image-20240527143210007"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">修改成功</span></span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br></pre></td></tr></table></figure>
+<h2 id="�-】跳过授权表重置密码">�?】跳过授权表重置密码</h2>
+<ul>
+<li>原理就是：将登入验证装饰器的校验功能取消</li>
+</ul>
+<h3 id="�-）先关闭MySQL服务">�?）先关闭MySQL服务</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net stop MySQL</span><br></pre></td></tr></table></figure>
+<h3 id="2-执行跳表命令">(2)执行跳表命令</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld --skip-grant-tables</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527144436229.png" alt="image-20240527144436229"></p>
+<ul>
+<li>
+<p>光标一直再闪，是对�?</p>
+</li>
+<li>
+<p>再开一个cmd命令窗口</p>
+</li>
+<li>
+<p>登入，不用输入密码直接回车（enter�?</p>
+</li>
+<li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527144601986.png" alt="image-20240527144601986"></p>
+<ul>
+<li>输入刷新权限</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在输入修改的密码</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter user <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> identified by <span class="string">&#x27;1234567&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在输入刷新权�?</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527151044039.png" alt="image-20240527151044039"></p>
+<ul>
+<li>无密码修改成�?</li>
+</ul>
+<h2 id="�-】跳过密码直接登�">�?】跳过密码直接登�?</h2>
+<ul>
+<li>在配置文件增加下述配�?</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[mysql]</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">不需要每次输入验证码即可登陆</span></span><br><span class="line">user=&quot;root&quot;</span><br><span class="line">password=你的密码</span><br><span class="line">default-character-set=utf8mb4</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/1.0Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E4%BB%8B%E7%BB%8D/" rel="prev" title="1.0Scrapy���֮����">
+      <i class="fa fa-chevron-left"></i> 1.0Scrapy���֮����
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/1.0%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" rel="next" title="1.0 ���������">
+      1.0 ��������� <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">数据库初�?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE%E7%9A%84%E6%BC%94%E5%8F%98%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">【一】存储数据的演变过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E6%96%87%E4%BB%B6%E5%82%A8%EF%BF%BD"><span class="nav-number">1.1.1.</span> <span class="nav-text">�?】文件储�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E7%9B%AE%E5%BD%95%E8%A7%84%EF%BF%BD"><span class="nav-number">1.1.2.</span> <span class="nav-text">�?】软件开发目录规�?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E6%A6%82%EF%BF%BD"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">�?）概�?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E7%9B%AE%E5%BD%95%E8%A7%84%EF%BF%BD"><span class="nav-number">1.1.3.</span> <span class="nav-text">�?）软件开发目录规�?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E5%9C%A8%E6%9C%AC%E5%9C%B0"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">�?）数据存储在本地</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%8D%95%E6%9C%BA%E5%8F%98%E6%88%90%E8%81%94%EF%BF%BD"><span class="nav-number">1.1.4.</span> <span class="nav-text">�?）单机变成联�?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%9C%AC%EF%BF%BD"><span class="nav-number">1.2.</span> <span class="nav-text">【二】数据库的本�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%89%E3%80%91%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.3.</span> <span class="nav-text">【三】数据库介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%EF%BF%BD"><span class="nav-number">1.3.1.</span> <span class="nav-text">�?】关系型数据�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E9%9D%9E%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.3.2.</span> <span class="nav-text">�?】非关系型数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%85%B3%E7%B3%BB%E5%9E%8B%EF%BC%88%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE%EF%BC%89"><span class="nav-number">1.3.3.</span> <span class="nav-text">�?】关系型（存储数据）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E9%9D%9E%E5%85%B3%E7%B3%BB%E5%9E%8B%EF%BC%88%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%EF%BF%BD"><span class="nav-number">1.3.4.</span> <span class="nav-text">�?】非关系型（缓存数据�?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%9B%9B%E3%80%91%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%EF%BF%BD"><span class="nav-number">1.4.</span> <span class="nav-text">【四】数据库的应用场�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E9%9C%80%EF%BF%BD"><span class="nav-number">1.4.1.</span> <span class="nav-text">�?】需�?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%AE%9E%E7%8E%B0%E9%9C%80%EF%BF%BD"><span class="nav-number">1.5.</span> <span class="nav-text">�?】实现需�?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">MySQL安装教程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E4%B8%8B%E8%BD%BD%E8%B7%AF%EF%BF%BD"><span class="nav-number">2.1.</span> <span class="nav-text">�?】下载路�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E5%8C%85%EF%BC%8C%E8%A7%A3%E5%8E%8B%E6%96%87%EF%BF%BD"><span class="nav-number">2.2.</span> <span class="nav-text">�?】下载安装包，解压文�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E6%B7%BB%E5%8A%A0%E7%8E%AF%E5%A2%83%E5%8F%98%EF%BF%BD"><span class="nav-number">2.3.</span> <span class="nav-text">�?】添加环境变�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE%EF%BF%BD"><span class="nav-number">2.4.</span> <span class="nav-text">�?】初始化数据�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E6%89%93%E5%BC%80cmd%E5%91%BD%E4%BB%A4%E7%AA%97%E5%8F%A3"><span class="nav-number">2.4.1.</span> <span class="nav-text">�?）打开cmd命令窗口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E6%89%A7%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.4.2.</span> <span class="nav-text">�?）执行初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E6%B3%A8%E5%86%8C%E7%B3%BB%E7%BB%9F%E6%9C%8D%EF%BF%BD"><span class="nav-number">2.5.</span> <span class="nav-text">�?】注册系统服�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1%E7%B3%BB%EF%BF%BD"><span class="nav-number">2.5.1.</span> <span class="nav-text">�?）注册服务系�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E6%B3%A8%E9%94%80%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.5.2.</span> <span class="nav-text">�?）注销系统服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%90%AF%E5%8A%A8MySQL%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.6.</span> <span class="nav-text">�?】启动MySQL服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%90%AF%E5%8A%A8%E6%96%B9%E5%BC%8F%E4%B8%80"><span class="nav-number">2.6.1.</span> <span class="nav-text">�?）启动方式一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%90%AF%E5%8A%A8%E6%96%B9%E5%BC%8F%E4%BA%8C"><span class="nav-number">2.6.2.</span> <span class="nav-text">�?）启动方式二</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%85%B3%E9%97%AD"><span class="nav-number">2.6.3.</span> <span class="nav-text">(3)关闭</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%87%8D%E5%90%AF"><span class="nav-number">2.6.4.</span> <span class="nav-text">(4)重启</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">MySQL数据库配�?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E7%99%BB%E5%85%A5%E5%92%8C%E9%80%80%EF%BF%BD"><span class="nav-number">3.1.</span> <span class="nav-text">�?】登入和退�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E7%99%BB%EF%BF%BD"><span class="nav-number">3.1.1.</span> <span class="nav-text">�?）登�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E9%80%80%EF%BF%BD"><span class="nav-number">3.1.2.</span> <span class="nav-text">�?）退�?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E5%AF%86%EF%BF%BD"><span class="nav-number">3.2.</span> <span class="nav-text">�?】修改用户名和密�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E8%B7%B3%E8%BF%87%E6%8E%88%E6%9D%83%E8%A1%A8%E9%87%8D%E7%BD%AE%E5%AF%86%E7%A0%81"><span class="nav-number">3.3.</span> <span class="nav-text">�?】跳过授权表重置密码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%85%88%E5%85%B3%E9%97%ADMySQL%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.3.1.</span> <span class="nav-text">�?）先关闭MySQL服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%89%A7%E8%A1%8C%E8%B7%B3%E8%A1%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">3.3.2.</span> <span class="nav-text">(2)执行跳表命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E8%B7%B3%E8%BF%87%E5%AF%86%E7%A0%81%E7%9B%B4%E6%8E%A5%E7%99%BB%EF%BF%BD"><span class="nav-number">3.4.</span> <span class="nav-text">�?】跳过密码直接登�?</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">201</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

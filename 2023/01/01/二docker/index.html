@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="【一】在doker中应用部署 【1】mysql部署 1234567891011121314151617181920212223242526272829303132333435363738394041424344# docker中部署mysql，以后不用再宿主机上装mysql# 1：记住了有状态的容器一定要做目录映射，不然容器一旦被删除，所有的数据永久的消失	- 不做目录映射	- docker ru">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在docker中应用部署">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/%E4%BA%8Cdocker/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="【一】在doker中应用部署 【1】mysql部署 1234567891011121314151617181920212223242526272829303132333435363738394041424344# docker中部署mysql，以后不用再宿主机上装mysql# 1：记住了有状态的容器一定要做目录映射，不然容器一旦被删除，所有的数据永久的消失	- 不做目录映射	- docker ru">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240928104042279.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240314104157821.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240314104516220.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240314104543575.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240314105513191.png">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T09:47:39.265Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240928104042279.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/%E4%BA%8Cdocker/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>在docker中应用部署 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/%E4%BA%8Cdocker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在docker中应用部署
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 17:47:39" itemprop="dateModified" datetime="2025-10-11T17:47:39+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>【一】在doker中应用部署</h1>
+<h2 id="【1】mysql部署">【1】mysql部署</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker中部署mysql，以后不用再宿主机上装mysql</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1：记住了有状态的容器一定要做目录映射，不然容器一旦被删除，所有的数据永久的消失</span></span><br><span class="line">	- 不做目录映射</span><br><span class="line">	- docker run -di --name=mysql -p <span class="number">3308</span>:<span class="number">3306</span> -e MYSQL_ROOT_PASSWORD=<span class="number">123456</span> mysql:<span class="number">5.7</span></span><br><span class="line">            </span><br><span class="line"><span class="comment"># 2 做目录映射（配置文件和数据文件）和端口映射</span></span><br><span class="line">	- 做目录映射：data文件，配置文件</span><br><span class="line">    - 创建文件</span><br><span class="line">    mkdir /mysql  <span class="comment"># 宿主机根目录创建mysql文件夹</span></span><br><span class="line">    mkdir /mysql/conf.d  <span class="comment"># 配置文件</span></span><br><span class="line">    mkdir /mysql/data/  <span class="comment"># 存放数据</span></span><br><span class="line">    vi /mysql/my.cnf  <span class="comment"># mysql数据库的主配置文件</span></span><br><span class="line">    <span class="comment"># 将下面的配置添加到my.cnf中</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    [client]</span></span><br><span class="line"><span class="string">    default-character-set=utf8</span></span><br><span class="line"><span class="string">    [mysqld]</span></span><br><span class="line"><span class="string">    user=mysql</span></span><br><span class="line"><span class="string">    character-set-server=utf8</span></span><br><span class="line"><span class="string">    default_authentication_plugin=mysql_native_password</span></span><br><span class="line"><span class="string">    secure_file_priv=/var/lib/mysql</span></span><br><span class="line"><span class="string">    expire_logs_days=7</span></span><br><span class="line"><span class="string">    sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION</span></span><br><span class="line"><span class="string">    max_connections=1000</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 做目录和端口的映射</span></span><br><span class="line">    docker run  -di -v /mysql/data/:/var/lib/mysql -v /mysql/conf.d:/etc/mysql/conf.d -v /mysql/my.cnf:/etc/mysql/my.cnf -p <span class="number">3306</span>:<span class="number">3306</span> --name mysql5<span class="number">.7</span> -e MYSQL_ROOT_PASSWORD=<span class="number">123456</span> mysql:<span class="number">5.7</span> </span><br><span class="line">	</span><br><span class="line">    <span class="comment"># 创建库，创建表，插入数据</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 关闭容器，删除容器，mysql的容器没了，但是书籍还在宿主机上放着</span></span><br><span class="line">    docker stop mysql5<span class="number">.7</span>  <span class="comment"># 停止mysql5.7的容器</span></span><br><span class="line">    docker rm mysql5<span class="number">.7</span>  <span class="comment"># 删除mysql5.7的容器</span></span><br><span class="line">    <span class="comment"># docker rm mysql5.7 -f # 强制删除容器（不要使用，很危险）</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 在运行起一个容器，做好目录的映射，数据都回来了</span></span><br><span class="line">    docker run  -di -v /mysql/data/:/var/lib/mysql -v /mysql/conf.d:/etc/mysql/conf.d -v /mysql/my.cnf:/etc/mysql/my.cnf -p <span class="number">3307</span>:<span class="number">3306</span> --name mysql2 -e MYSQL_ROOT_PASSWORD=<span class="number">123456</span> mysql:<span class="number">5.7</span> </span><br><span class="line">                        </span><br><span class="line">    <span class="comment"># 补充：-e参数--&gt;设置环境变量</span></span><br><span class="line">    	- 不同容器提供不同的参数</span><br><span class="line">        - 传入后放环境变量---&gt;mysql镜像从环境变量中取出MYSQL_ROOT_PASSWORD作为root用户的密码</span><br><span class="line">        进入到mysql容器中</span><br><span class="line">        查看：echo $MYSQL_ROOT_PASSWORD</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240928104042279.png" alt="image-20240928104042279"></p>
+<h2 id="【2】redis部署">【2】redis部署</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拉取redis镜像</span></span><br><span class="line">docker pull redis  <span class="comment"># 最新</span></span><br><span class="line">mkdir /redis</span><br><span class="line">mkdir /redis/data</span><br><span class="line">vim /redis/redis.conf</span><br><span class="line">	<span class="comment"># 里面放配置文件</span></span><br><span class="line">    bind <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line">    daemonize NO</span><br><span class="line">    protected-mode yes</span><br><span class="line">    requirepass <span class="number">123456</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动redis容器</span></span><br><span class="line">docker run -<span class="built_in">id</span>  -p <span class="number">6379</span>:<span class="number">6379</span> --name redis -v /redis/redis.conf:/etc/redis/redis.conf -v /redis/data:/data redis:<span class="number">7</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入到redis中</span></span><br><span class="line">	- 输入命令：redils-cli <span class="comment"># 进入到redis中</span></span><br><span class="line">    - 你存数据会让你存数据 命令：auth <span class="number">123456</span></span><br><span class="line">    - 再存就可以了：<span class="built_in">set</span> name lsk</span><br><span class="line">    - 用RESP软件连接就可以了看到你存的数据了</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 远程连接redis操作</span></span><br></pre></td></tr></table></figure>
+<h2 id="【3】nginx部署">【3】nginx部署</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拉取镜像</span></span><br><span class="line">	docker pull nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># run启动容器</span></span><br><span class="line">	docker run -<span class="built_in">id</span> --name nginx -p <span class="number">80</span>:<span class="number">80</span> nginx <span class="comment"># 访问80端口就可以访问到nginx</span></span><br><span class="line">        <span class="comment"># 修改html就要去容器的内部 /usr/share/nginx/html</span></span><br><span class="line">        <span class="comment"># vim 打开会报错  # 没有vim命令</span></span><br><span class="line">        <span class="comment"># apt-get update---会很慢，换个源最好</span></span><br><span class="line">        <span class="comment"># 然后：apt-get update</span></span><br><span class="line">        <span class="comment"># apt-get install -y vim</span></span><br><span class="line">        </span><br><span class="line"><span class="comment"># 目录映射</span></span><br><span class="line">	<span class="comment"># 这个是容器的目录：/usr/share/nginx/html  ----不做映射的话就要去容器的内部改这个html</span></span><br><span class="line">    <span class="comment"># 意味着你可以在主机上更新 /root/html 中的文件，这些更改会立即反映在 Nginx 提供的内容</span></span><br><span class="line">	docker run -<span class="built_in">id</span> --name nginx1 -p <span class="number">8008</span>:<span class="number">80</span> -v /root/html:/usr/share/nginx/html nginx</span><br><span class="line">    <span class="comment"># 你访问：10.0.0.100:8008   会报错：403</span></span><br><span class="line">    <span class="comment"># 因为范围的是index.hyml,你的html目录下没有，创建一个</span></span><br></pre></td></tr></table></figure>
+<h1>【二】迁移与备份</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先我们要直到镜像是从哪里来的</span></span><br><span class="line">	- docker pull 国内镜像  <span class="comment"># 从远程仓库拉来的，国内镜像站，公司自己做私有仓库</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 通过容器打包成镜像</span></span><br><span class="line">    - centos镜像运行成容器----在里面装一个vim命令</span><br><span class="line">    - 把装了vim的容器----打包成镜像</span><br><span class="line">    - 以后拿到这个镜像----再运行成容器，都会带vim命令</span><br><span class="line">        </span><br><span class="line"><span class="comment"># 使用Dockerfile构建</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 容器保存为镜像----并运行成容器</span></span><br><span class="line">	<span class="comment"># 运行一个centos容器</span></span><br><span class="line">    docker run -<span class="built_in">id</span> --name cenros cnetos:<span class="number">7</span></span><br><span class="line">    <span class="comment"># 在容器中装vim</span></span><br><span class="line">    docker <span class="built_in">exec</span> -it centos /<span class="built_in">bin</span>/bash</span><br><span class="line">    <span class="comment"># 安装vim</span></span><br><span class="line">    yum install vim -y</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 把容器换成镜像（centos+vim）</span></span><br><span class="line">    docker commit centos centos_vim_image</span><br><span class="line">    <span class="comment"># 查看---你就会发现有一个进行镜像：centos_vim_image:latest</span></span><br><span class="line">    docker images </span><br><span class="line">    <span class="comment"># 把centos_vim 容器删除</span></span><br><span class="line">    docker rm centos -f</span><br><span class="line">    <span class="comment"># 基于新构建的镜像，运行成容器</span></span><br><span class="line">    docker run -<span class="built_in">id</span> --name centos_vim centos_vim_image:latest</span><br><span class="line">    <span class="comment"># 进入容器中，查看，发现安装的vim都在</span></span><br><span class="line">    docker <span class="built_in">exec</span> -it centos_vim /<span class="built_in">bin</span>/bash</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 本地镜像----推从到远端docker仓库---私有的仓库</span></span><br><span class="line">	<span class="comment"># </span></span><br></pre></td></tr></table></figure>
+<h1>【三】Dockerfile</h1>
+<h2 id="【1】dockerfile介绍和常用命令">【1】dockerfile介绍和常用命令</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 镜像从哪里来？？？</span></span><br><span class="line">	- 远程仓库拉取的 docker pull </span><br><span class="line">    - 用容器做成的镜像  docker commit</span><br><span class="line">    - 把备份的恢复 docker load</span><br><span class="line">    - 使用Dockerfile来构建---------这个方式使用的最多</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 什么是Dockerfile</span></span><br><span class="line">	- Dockerfile是由一系列命令和参数构成的脚本文件，这些命令应用于基础镜像并最终创建一个新的镜像</span><br><span class="line">    </span><br><span class="line"><span class="comment"># Dockerfile的命令</span></span><br><span class="line">	FROM 基础镜像 	       <span class="comment">#基于哪个基础镜像来构建</span></span><br><span class="line">    MAINTAINER lqz 	     <span class="comment"># 声明镜像的创建者</span></span><br><span class="line">    ENV key value 	     <span class="comment"># 设置环境变量 (可以写多条)</span></span><br><span class="line">    ENV key value 	     <span class="comment"># 设置环境变量 (可以写多条)</span></span><br><span class="line">    RUN command 	     <span class="comment">#是Dockerfile的核心部分(可以写多条)</span></span><br><span class="line">    ADD source_dir/file dest_dir/file 	<span class="comment">#将宿主机的文件复制到镜像内，如果是一个压缩文件，将会在复制后自动解压</span></span><br><span class="line">    COPY source_dir/file dest_dir/file 	<span class="comment"># 和ADD相似，但是如果有压缩文件并不能解压</span></span><br><span class="line">    WORKDIR lqz 	<span class="comment"># 设置工作目录，运行起这个容器，来到的路径就是这个路径</span></span><br><span class="line">    </span><br><span class="line">    CMD   <span class="comment"># 启动并运行容器执行的命令</span></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240314104157821.png" alt="image-20240314104157821"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240314104516220.png" alt="image-20240314104516220"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240314104543575.png" alt="image-20240314104543575"></p>
+<h2 id="【案例一】">【案例一】</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建一个带vim的centos:7镜像,根路径下有/lqz/ss.py--&gt;ss.py中写 print(1)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建，名字不许叫这个Dockerfile</span></span><br><span class="line">vim Dockerfile</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将下面的信息添加进去</span></span><br><span class="line">FROM centos:<span class="number">7</span></span><br><span class="line">MAINTAINER lqz</span><br><span class="line">ENV name lqz</span><br><span class="line">ARG age <span class="number">19</span></span><br><span class="line">RUN curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-<span class="number">7.</span>repo</span><br><span class="line">RUN yum install vim -y</span><br><span class="line">RUN mkdir /lqz</span><br><span class="line">RUN touch /lqz/ss.py</span><br><span class="line">RUN echo <span class="string">&#x27;print(1)&#x27;</span> &gt; /lqz/ss.py</span><br><span class="line">RUN echo $name</span><br><span class="line">RUN echo $age</span><br><span class="line">WORKDIR /lqz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 基于dockerfile构建镜像,不要忘了 .   基于当前路径下的Dockerfile 构建镜像</span></span><br><span class="line">docker build -t=<span class="string">&#x27;centos_lqz_vim&#x27;</span> . </span><br><span class="line">docker images  <span class="comment"># 查看镜像</span></span><br><span class="line"><span class="comment"># 基于这个镜像运行容器</span></span><br><span class="line"> docker run -<span class="built_in">id</span> --name xx centos_lqz_vim</span><br><span class="line"><span class="comment"># 进入到容器</span></span><br><span class="line">docker <span class="built_in">exec</span> -it xx /<span class="built_in">bin</span>/bash</span><br><span class="line"><span class="comment"># 验证vim，和文件夹，文件是否存在</span></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240314105513191.png" alt="image-20240314105513191"></p>
+<h2 id="【案例二】">【案例二】</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">FROM centos:<span class="number">7</span></span><br><span class="line">MAINTAINER lqz</span><br><span class="line">ENV name lqz</span><br><span class="line">RUN mkdir /lqz</span><br><span class="line">RUN touch /lqz/ss.py</span><br><span class="line">RUN echo <span class="string">&#x27;input()&#x27;</span> &gt; /lqz/ss.py</span><br><span class="line">WORKDIR /lqz</span><br><span class="line">CMD [<span class="string">&#x27;python&#x27;</span>] <span class="comment"># 运行容器时会默认加上 /bin/sh -c python</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 基于dockerfile构建镜像,不要忘了 .   基于当前路径下的Dockerfile 构建镜像</span></span><br><span class="line">docker build -t=<span class="string">&#x27;centos_py&#x27;</span> . </span><br><span class="line">docker images</span><br><span class="line"><span class="comment"># 基于这个镜像运行容器</span></span><br><span class="line"> docker run -<span class="built_in">id</span> --name yy centos_py python /lqz/ss.py</span><br><span class="line"><span class="comment"># 进入到容器</span></span><br><span class="line">docker <span class="built_in">exec</span> -it yy /<span class="built_in">bin</span>/bash</span><br><span class="line"><span class="comment"># 查看环境变量</span></span><br><span class="line"><span class="comment"># python看</span></span><br><span class="line">os.environ.get(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line"><span class="comment"># shell看</span></span><br><span class="line">echo $name</span><br></pre></td></tr></table></figure>
+<h2 id="【2】常用和不常用命令">【2】常用和不常用命令</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 所有命令</span></span><br><span class="line">https://zhuanlan.zhihu.com/p/<span class="number">419175543</span>?utm_id=<span class="number">0</span></span><br><span class="line"></span><br><span class="line">FROM: 指定基础镜像</span><br><span class="line">RUN： 构建镜像过程中需要执行的命令。可以有多条。docker build</span><br><span class="line">CMD：添加启动容器时需要执行的命令。多条只有最后一条生效。可以在启动容器时被覆盖和修改</span><br><span class="line">ENTRYPOINT：同CMD，但这个一定会被执行，不会被覆盖修改。</span><br><span class="line">LABEL：表明镜像的作者。将被遗弃，被LABEL代替。</span><br><span class="line">EXPOSE：设置对外暴露的端口。</span><br><span class="line">ENV：设置执行命令时的环境变量，并且在构建完成后，仍然生效</span><br><span class="line">ARG：设置只在构建过程中使用的环境变量，构建完成后，将消失</span><br><span class="line">ADD：将本地文件或目录拷贝到镜像的文件系统中。能解压特定格式文件，能将URL作为要拷贝的文件</span><br><span class="line">COPY：将本地文件或目录拷贝到镜像的文件系统中。</span><br><span class="line">VOLUME：添加数据卷</span><br><span class="line">USER：指定以哪个用户的名义执行RUN, CMD 和ENTRYPOINT等命令</span><br><span class="line">WORKDIR：设置工作目录</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2 docker logs 容器名字/id号  查看镜像运行成容器时，错误日志</span></span><br><span class="line">	-如果容器没起来，看日志排查错误</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3 CMD  ENTRYPOINT  --https://zhuanlan.zhihu.com/p/548188679</span></span><br><span class="line"><span class="comment">#相同点：</span></span><br><span class="line">只能写一条，如果写了多条，那么只有最后一条生效。</span><br><span class="line">容器启动时才运行，运行时机相同。</span><br><span class="line"><span class="comment"># 不同点：</span></span><br><span class="line">ENTRYPOINT不会被运行的command覆盖，而CMD则会被覆盖。</span><br><span class="line">如果我们在Dockerfile中同时写了ENTRYPOINT和CMD，并且CMD指令不是一个完整的可执行命令，那么CMD指定的内容将会作为ENTRYPOINT的参数</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4 ARG 和 ENV</span></span><br><span class="line">ENV：设置执行命令时的环境变量，并且在构建完成后，仍然生效</span><br><span class="line">ARG：设置只在构建过程中使用的环境变量，构建完成后，将消失</span><br></pre></td></tr></table></figure>
+<h2 id="【3】ARG-演示">【3】ARG 演示</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 案例Dockerfile</span></span><br><span class="line"></span><br><span class="line">FROM centos:centos7</span><br><span class="line">MAINTAINER lqz</span><br><span class="line">ENV name lqz</span><br><span class="line">ARG age=<span class="number">19</span></span><br><span class="line">RUN mkdir /lqz</span><br><span class="line">RUN touch /lqz/ss.py</span><br><span class="line">RUN echo <span class="string">&#x27;input()&#x27;</span> &gt; /lqz/ss.py</span><br><span class="line">RUN echo $age</span><br><span class="line"></span><br><span class="line">WORKDIR /lqz</span><br><span class="line">CMD python ./ss.py</span><br><span class="line"></span><br><span class="line"><span class="comment"># docker build -t=&#x27;xxxx&#x27; . </span></span><br></pre></td></tr></table></figure>
+<h2 id="【4】dockerfile构建一个djagno项目（books图书管理系统）">【4】dockerfile构建一个djagno项目（books图书管理系统）</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 以图书管理系统为例---》公司使用docker流程</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 公司中，使用Docker开发的工作流程</span></span><br><span class="line">第一步：有一个项目，pycharm开发着，开发完后</span><br><span class="line">第二步：在项目路径下新建Dockerfile，写入</span><br><span class="line">FROM python</span><br><span class="line">MAINTAINER lqz</span><br><span class="line">WORKDIR /soft</span><br><span class="line">COPY ./requirements.txt /soft/requirements.txt</span><br><span class="line">RUN pip install -r requirements.txt -i https://pypi.doubanio.com/simple</span><br><span class="line">CMD [<span class="string">&quot;python&quot;</span>,<span class="string">&quot;manage.py&quot;</span>,<span class="string">&quot;runserver&quot;</span>,<span class="string">&quot;0.0.0.0:8080&quot;</span>]</span><br><span class="line">第三步：把代码提交到git</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------------------</span><br><span class="line">第四步：上线人员：在上线机器上，把代码啦下来</span><br><span class="line">git clone https://gitee.com/liuqingzheng/books.git</span><br><span class="line">第五步：构建镜像</span><br><span class="line">docker build -t=<span class="string">&#x27;books&#x27;</span> .</span><br><span class="line">第六步：运行容器</span><br><span class="line">docker run -<span class="built_in">id</span> --name=books -v /root/books:/soft -p <span class="number">8080</span>:<span class="number">8080</span> books:latest</span><br><span class="line">第七步：其它人访问宿主机的<span class="number">8080</span>端口就能看到项目了</span><br><span class="line"></span><br><span class="line">---------</span><br><span class="line">第八步：开发人员继续提交代码</span><br><span class="line">第九步：运维人员pull代码，重启容器，用户就可以看到最新的了</span><br><span class="line"></span><br><span class="line">重启docker容器即可(第三方依赖变了)--》重写构建镜像，运行容器</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="【5】乌班图构建redis（跟底层宿主机无关）">【5】乌班图构建redis（跟底层宿主机无关）</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://zhuanlan.zhihu.com/p/<span class="number">623811065</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/%E4%BA%BA%E8%84%B8%E5%92%8C%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%96%B9%E6%A1%88/" rel="prev" title="����������ʶ�𷽰�">
+      <i class="fa fa-chevron-left"></i> ����������ʶ�𷽰�
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/%E3%80%901.1%E3%80%91MySQL8.4.2%E5%85%B1%E5%AD%98%E5%AE%89%E8%A3%85/" rel="next" title="��1.1��MySQL8.4.2���氲װ">
+      ��1.1��MySQL8.4.2���氲װ <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">【一】在doker中应用部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91mysql%E9%83%A8%E7%BD%B2"><span class="nav-number">1.1.</span> <span class="nav-text">【1】mysql部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91redis%E9%83%A8%E7%BD%B2"><span class="nav-number">1.2.</span> <span class="nav-text">【2】redis部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%903%E3%80%91nginx%E9%83%A8%E7%BD%B2"><span class="nav-number">1.3.</span> <span class="nav-text">【3】nginx部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">【二】迁移与备份</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">【三】Dockerfile</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91dockerfile%E4%BB%8B%E7%BB%8D%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">3.1.</span> <span class="nav-text">【1】dockerfile介绍和常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E6%A1%88%E4%BE%8B%E4%B8%80%E3%80%91"><span class="nav-number">3.2.</span> <span class="nav-text">【案例一】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E6%A1%88%E4%BE%8B%E4%BA%8C%E3%80%91"><span class="nav-number">3.3.</span> <span class="nav-text">【案例二】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%B8%B8%E7%94%A8%E5%92%8C%E4%B8%8D%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">3.4.</span> <span class="nav-text">【2】常用和不常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%903%E3%80%91ARG-%E6%BC%94%E7%A4%BA"><span class="nav-number">3.5.</span> <span class="nav-text">【3】ARG 演示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%904%E3%80%91dockerfile%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AAdjagno%E9%A1%B9%E7%9B%AE%EF%BC%88books%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%EF%BC%89"><span class="nav-number">3.6.</span> <span class="nav-text">【4】dockerfile构建一个djagno项目（books图书管理系统）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%905%E3%80%91%E4%B9%8C%E7%8F%AD%E5%9B%BE%E6%9E%84%E5%BB%BAredis%EF%BC%88%E8%B7%9F%E5%BA%95%E5%B1%82%E5%AE%BF%E4%B8%BB%E6%9C%BA%E6%97%A0%E5%85%B3%EF%BC%89"><span class="nav-number">3.7.</span> <span class="nav-text">【5】乌班图构建redis（跟底层宿主机无关）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">201</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Django框架之Form组件 【一】Django的表单系�? �?】原始的form表单 12345678910&#123;#action路径：代表你要提交数据的目的地，不填默认本地#&#125;&lt;form action&#x3D;&quot;&quot; method&#x3D;&quot;post&quot;&gt;    &#123;#说明标签&lt;label&gt;#&#125;    &lt;p&amp;g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="12.0Django���֮Form���">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/12.0Django%E6%A1%86%E6%9E%B6%E4%B9%8BForm%E7%BB%84%E4%BB%B6/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="Django框架之Form组件 【一】Django的表单系�? �?】原始的form表单 12345678910&#123;#action路径：代表你要提交数据的目的地，不填默认本地#&#125;&lt;form action&#x3D;&quot;&quot; method&#x3D;&quot;post&quot;&gt;    &#123;#说明标签&lt;label&gt;#&#125;    &lt;p&amp;g">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240701220913512.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240701220830767.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240701220838816.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240701220855178.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240701220932862.png">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T09:47:38.278Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240701220913512.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/12.0Django%E6%A1%86%E6%9E%B6%E4%B9%8BForm%E7%BB%84%E4%BB%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>12.0Django���֮Form��� | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/12.0Django%E6%A1%86%E6%9E%B6%E4%B9%8BForm%E7%BB%84%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          12.0Django���֮Form���
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 17:47:38" itemprop="dateModified" datetime="2025-10-11T17:47:38+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>Django框架之Form组件</h1>
+<h2 id="【一】Django的表单系�">【一】Django的表单系�?</h2>
+<h3 id="�-】原始的form表单">�?】原始的form表单</h3>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;#action路径：代表你要提交数据的目的地，不填默认本地#&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    &#123;#说明标签<span class="tag">&lt;<span class="name">label</span>&gt;</span>#&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;username&quot;</span>&gt;</span>username:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;username&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;password&quot;</span>&gt;</span>password:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    &#123;#按钮#&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>同时我们在好多场景下都需要对用户的输入做校验</p>
+</li>
+<li>
+<ul>
+<li>比如校验用户是否输入</li>
+<li>输入的长度和格式等正不正确�?</li>
+</ul>
+</li>
+<li>
+<p>如果用户输入的内容有错误就需要在页面上相应的位置显示对应的错误信�?�?</p>
+</li>
+</ul>
+<h3 id="�-】Django的表单系�">�?】Django的表单系�?</h3>
+<ul>
+<li>
+<p>Django的Form表单类与Django模型描述对象的逻辑结构、行为以及它呈现给我们内容的形式的方式大致相�?</p>
+</li>
+<li>
+<p>为什么还要创建表单类</p>
+</li>
+<li>
+<p>原因之一是模型中有一些字段你不需要用户从前端输入数据，或者需要用户额外输入一些非模型字段的数�?</p>
+</li>
+<li>
+<p>Form表单精确控制了这些行为，相当于你在用户HTML表单输入框和Django模型之间的中间件</p>
+</li>
+</ul>
+<h3 id="�-】form表单的主要功�">�?】form表单的主要功�?</h3>
+<ul>
+<li>生成页面主要的HTML标签</li>
+<li>对用户提交的数据进行校验</li>
+<li>保留上次输入的内�?</li>
+</ul>
+<h2 id="【二】需求介�">【二】需求介�?</h2>
+<ul>
+<li>写一个注册功�?
+<ul>
+<li>获取用户名和密码，利用form表单提交数据</li>
+<li>在后端判断用户名和密码是否符合一定的条件
+<ul>
+<li>用户名中不能包含nb_</li>
+<li>密码不能少于三位</li>
+</ul>
+</li>
+<li>如果符合条件需要你将提示信息展示到前端页面</li>
+</ul>
+</li>
+</ul>
+<h2 id="【三】form表单实现">【三】form表单实现</h2>
+<h3 id="�-】点击按钮返回比对信�">�?】点击按钮返回比对信�?</h3>
+<h4 id="�-）前端页�">�?）前端页�?</h4>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;username&quot;</span>&gt;</span>username:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;username&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color: red&quot;</span>&gt;</span>`&#123;&#123; back_dict.username &#125;&#125;`<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    &#123;#   这是一个动态内容展示区�?#&#125;</span><br><span class="line">    &#123;#  `&#123;&#123; back_dict.username &#125;&#125;`会被解析为从后台返回的错误提示信�?&#125;</span><br><span class="line">    &#123;#  如果用户名有误，这里会显示红色的错误提示#&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;password&quot;</span>&gt;</span>password:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">id</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color: red&quot;</span>&gt;</span>`&#123;&#123; back_dict.password &#125;&#125;`<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">         &#123;#   这是一个动态内容展示区�?#&#125;</span><br><span class="line">    &#123;#  `&#123;&#123; back_dict.password &#125;&#125;`会被解析为从后台返回的错误提示信�?&#125;</span><br><span class="line">    &#123;#  如果用户名有误，这里会显示红色的错误提示#&#125;</span><br><span class="line">     <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-danger&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>下面是对表格的解�?</p>
+<ul>
+<li>
+<p><code>&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;</code>�?</p>
+</li>
+<li>
+<ul>
+<li>定义一个表单，其中action属性为空字符串，这意味着表单默认提交到当前页面（或者在后端路由处理时会指定一个具体URL）�?</li>
+<li>method属性设置为&quot;post&quot;，表示表单数据将以POST方式发送，这种方式可以更好地保护敏感信息，如密码，因为它不会在URL中显示�?</li>
+</ul>
+</li>
+<li>
+<p><code>&lt;p&gt;username: &lt;input type=&quot;text&quot; class=&quot;form-control&quot; name=&quot;username&quot;&gt;&lt;/p&gt;</code>�?</p>
+</li>
+<li>
+<ul>
+<li>这部分创建了一个文本输入框，用户在此输入其用户名�?</li>
+<li>class属性值为&quot;form-control&quot;，这是Bootstrap框架提供的CSS类，用来设定输入框的样式�?</li>
+<li>name属性值为&quot;username&quot;，这个名称在服务器端接收表单数据时作为键名使用�?</li>
+</ul>
+</li>
+<li>
+<p><code>&lt;span style=&quot;color: red&quot;&gt;</code><code>&lt;/span&gt;</code>�?</p>
+</li>
+<li>
+<ul>
+<li>这是一个动态内容展示区�?</li>
+<li>根据所使用的模板引擎（如Jinja2、Vue.js等），<code>&#123;&#123; back_dict.username &#125;&#125;</code>会被解析为从后台返回的错误提示信�?</li>
+<li>如果用户名有误，这里会显示红色的错误提示�?</li>
+</ul>
+</li>
+<li>
+<p><code>&lt;p&gt;password: &lt;input type=&quot;password&quot; class=&quot;form-control&quot; name=&quot;password&quot;&gt;&lt;/p&gt;</code>�?</p>
+</li>
+<li>
+<ul>
+<li>这部分创建了一个密码输入框，用户在此输入其密码�?</li>
+<li>type属性值为&quot;password&quot;，这样输入的内容会以星号或其他符号代替显示，保护用户密码不被他人窥视�?</li>
+<li>同样具有form-control样式和name属性�?</li>
+</ul>
+</li>
+<li>
+<p><code>&lt;span style=&quot;color: red&quot;&gt;</code><code>&lt;/span&gt;</code>�?</p>
+</li>
+<li>
+<ul>
+<li>与用户名输入框下方的span元素类似</li>
+<li>此处用于显示密码输入的错误提示信息�?</li>
+</ul>
+</li>
+<li>
+<p><code>&lt;input type=&quot;submit&quot; class=&quot;btn btn-danger&quot;&gt;</code>�?</p>
+</li>
+<li>
+<ul>
+<li>定义一个提交按钮，点击该按钮时，表单数据将会被发送至服务器�?</li>
+<li>class属性值为&quot;btn btn-danger&quot;，这是Bootstrap中用于创建危险主题样式的按钮</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-后端">(2)后端</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">form_one</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="comment"># 存储错误信息</span></span><br><span class="line">    back_dict = &#123;&#125;</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        username = request.POST.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(username)</span><br><span class="line">        password = request.POST.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(password)</span><br><span class="line">        <span class="comment"># 判断用户�?</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;nb_&quot;</span> <span class="keyword">in</span> username:</span><br><span class="line">            <span class="comment"># 保存错误信息</span></span><br><span class="line">            back_dict[<span class="string">&quot;username&quot;</span>] = <span class="string">&#x27;用户名不符合格式�?</span></span><br><span class="line"><span class="string">        # 判断密码</span></span><br><span class="line"><span class="string">        if len(password) &lt; 3:</span></span><br><span class="line"><span class="string">            # 保存错误信息</span></span><br><span class="line"><span class="string">            back_dict[&#x27;</span>password<span class="string">&#x27;] = &#x27;</span>密码长度不可以低�?<span class="string">&#x27;</span></span><br><span class="line"><span class="string">        &#x27;</span><span class="string">&#x27;&#x27;</span></span><br><span class="line">        无论�?get 请求 还是 post 请求，页面都能获取到字典</span><br><span class="line">            get 请求时，字典是空的，没有�?</span><br><span class="line">            post 请求�?，字典可能是非空�?</span><br><span class="line">        <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    return render(request, &#x27;form_one.html&#x27;, locals())</span></span><br></pre></td></tr></table></figure>
+<h4 id="�-）用到了什�">�?）用到了什�?</h4>
+<ul>
+<li>
+<p>手动书写前端HTML页面代码</p>
+</li>
+<li>
+<ul>
+<li>渲染HTML页面</li>
+</ul>
+</li>
+<li>
+<p>后端对用户数据进行校�?</p>
+</li>
+<li>
+<ul>
+<li>校验数据</li>
+</ul>
+</li>
+<li>
+<p>对不符合要求的数据进行前端提�?</p>
+</li>
+<li>
+<ul>
+<li>展示提示信息</li>
+</ul>
+</li>
+</ul>
+<h3 id="�-】Form组件校验数据">�?】Form组件校验数据</h3>
+<ul>
+<li>
+<p>form组件可以帮我们完�?</p>
+</li>
+<li>
+<ul>
+<li>渲染HTML页面</li>
+<li>校验数据</li>
+<li>展示提示信息</li>
+</ul>
+</li>
+<li>
+<p>为什么数据校验要在后端执行，而不是前端在JS完成�?</p>
+</li>
+<li>
+<ul>
+<li>数据校验前端可有可无</li>
+<li>但是后端必须有！</li>
+</ul>
+</li>
+<li>
+<p>原因</p>
+</li>
+<li>
+<ul>
+<li>前端的校验存在实时被修改的风险，可以在前端直接修改输入的数据</li>
+<li>利用爬虫程序可以绕过前端页面直接向后端提交数�?</li>
+</ul>
+</li>
+</ul>
+<h2 id="【四】Form组件如何校验数据">【四】Form组件如何校验数据</h2>
+<h3 id="�-】编写表达类">�?】编写表达类</h3>
+<ul>
+<li>我们可以通过Django提供的Form类来自用生成上面的表单，不再需要手动在HTML中编�?</li>
+</ul>
+<h4 id="�-）创建文�">�?）创建文�?</h4>
+<ul>
+<li>在APP内新建一�?py文件（这个套路是Django的惯用手法，<a target="_blank" rel="noopener" href="http://xn--views-oy4h139d.py">就像views.py</a>，models.py等等�?</li>
+</ul>
+<h4 id="�-）书写form表单�">�?）书写form表单�?</h4>
+<ul>
+<li>在App内创建一个userForms.py文件，文件内容如�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 引入Django的forms组件</span></span><br><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个form的组件类</span></span><br><span class="line"><span class="comment"># 继承form组件�?form.Form</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LoginForm</span>(forms.Form):</span><br><span class="line">    <span class="comment"># 定义组件类属�?</span></span><br><span class="line">    <span class="comment"># 用户名：名字不能以nb_开�?</span></span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        <span class="comment"># 最大长�?</span></span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        <span class="comment"># 最小长�?</span></span><br><span class="line">        min_length=<span class="number">3</span></span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># 密码</span></span><br><span class="line">    password = forms.CharField(</span><br><span class="line">        <span class="comment"># 长度不能小于3</span></span><br><span class="line">        min_length=<span class="number">3</span></span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># 邮箱</span></span><br><span class="line">    email = forms.EmailField()</span><br></pre></td></tr></table></figure>
+<h4 id="�-）书写后端数�">�?）书写后端数�?</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入自定义组件类（自己写的）</span></span><br><span class="line"><span class="keyword">from</span> user.userForms <span class="keyword">import</span> LoginForm</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="comment"># 实例化组件类得到一个组件类</span></span><br><span class="line">    login_form = LoginForm()</span><br><span class="line">    <span class="comment"># 在前端渲染上面的form对象</span></span><br><span class="line">    <span class="comment"># ```&#123;&#123; login_form &#125;&#125;```</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        <span class="comment"># form组件帮我们校验数�?</span></span><br><span class="line">        data = request.POST</span><br><span class="line">        <span class="comment"># 给一个错误的数据，用来校�?</span></span><br><span class="line">        data = &#123;<span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;dream&#x27;</span>, <span class="string">&#x27;password&#x27;</span>: <span class="string">&#x27;1&#x27;</span>, <span class="string">&quot;email&quot;</span>: <span class="string">&quot;123@qq.com&quot;</span>&#125;</span><br><span class="line">        form_obj = LoginForm(data=data)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 触发校验</span></span><br><span class="line">        <span class="comment"># 返回的值是bool值，收的数据不合规就是False，True</span></span><br><span class="line">        <span class="comment"># 必须有这个步骤，不然不校�?</span></span><br><span class="line">        <span class="comment"># print(form_obj.is_valid())  # False</span></span><br><span class="line">        <span class="comment"># 校验步骤</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> form_obj.is_valid():</span><br><span class="line">            <span class="comment"># 信息不合规进�?</span></span><br><span class="line">            <span class="comment"># 查看错误的信�?</span></span><br><span class="line">            <span class="built_in">print</span>(form_obj.errors)</span><br><span class="line">            <span class="comment"># 错误信息的格�?</span></span><br><span class="line">            <span class="comment"># &lt;ul class=&quot;errorlist&quot;&gt;&lt;li&gt;password&lt;ul class=&quot;errorlist&quot;&gt;&lt;li&gt;Ensure this value has at least 3 characters (it has 1).&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 查看通过的信�?</span></span><br><span class="line">            <span class="built_in">print</span>(form_obj.cleaned_data)</span><br><span class="line">            <span class="comment"># &#123;&#x27;username&#x27;: &#x27;dream&#x27;, &#x27;email&#x27;: &#x27;123@qq.com&#x27;&#125;</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 查看当前那些字段进行过校�?</span></span><br><span class="line">            <span class="built_in">print</span>(form_obj.changed_data)</span><br><span class="line">            <span class="comment"># [&#x27;username&#x27;, &#x27;password&#x27;, &#x27;email&#x27;]</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 传入的参数没有：定义了但是没有传，就会报错，提示了参数必须穿</span></span><br><span class="line">            <span class="comment"># 传入的参数多了：没定义但是传了，就会不管，没被定义的参数不会被校�?</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;form_one.html&#x27;</span>, <span class="built_in">locals</span>())</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="4-书写前端数据">(4)书写前端数据</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=<span class="string">&quot;&quot;</span> method=<span class="string">&quot;post&quot;</span>&gt;</span><br><span class="line">    `&#123;&#123; login_form &#125;&#125;`</span><br><span class="line">    &lt;p&gt;&lt;<span class="built_in">input</span> <span class="built_in">type</span>=<span class="string">&quot;submit&quot;</span> <span class="keyword">class</span>=<span class="string">&quot;btn btn-danger&quot;</span>&gt;&lt;/p&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="【五】Form组件的字段参�">【五】Form组件的字段参�?</h2>
+<h3 id="�-】总的参数案例">�?】总的参数案例</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login_one</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="comment"># 定义form表单�?</span></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">UserForm</span>(forms.Form):</span><br><span class="line">        username = forms.CharField(</span><br><span class="line">            <span class="comment"># 定义初始�?</span></span><br><span class="line">            initial=<span class="string">&#x27;tom&#x27;</span></span><br><span class="line">            <span class="comment"># 最大长�?</span></span><br><span class="line">            max_length=<span class="number">8</span>,</span><br><span class="line">            <span class="comment"># 最小长�?</span></span><br><span class="line">            min_length=<span class="number">3</span>,</span><br><span class="line">            <span class="comment"># 非必须为空字�?</span></span><br><span class="line">            <span class="comment"># required=False,</span></span><br><span class="line">            <span class="comment"># label是显示在输入框之前的提示文本</span></span><br><span class="line">            label=<span class="string">&#x27;用户�?,</span></span><br><span class="line"><span class="string">            # input框内的提示信�?</span></span><br><span class="line"><span class="string">            # initial=&#x27;</span>请输入用户名<span class="string">&#x27;,</span></span><br><span class="line"><span class="string">            # 提示文本与input框之间的提示文本�?</span></span><br><span class="line"><span class="string">            label_suffix=&quot;�?,</span></span><br><span class="line"><span class="string">            # 控制前端的样�?</span></span><br><span class="line"><span class="string">            widget=forms.widgets.TextInput(</span></span><br><span class="line"><span class="string">                # 可以放前端的键值属�?</span></span><br><span class="line"><span class="string">                attrs=&#123;</span></span><br><span class="line"><span class="string">                    &#x27;</span><span class="keyword">class</span><span class="string">&#x27;: &#x27;</span>form-control<span class="string">&#x27;,</span></span><br><span class="line"><span class="string">                    # 如果不写id的话，浏览器检查给默认的id=id_username</span></span><br><span class="line"><span class="string">                    &#x27;</span><span class="built_in">id</span><span class="string">&#x27;: &#x27;</span>username<span class="string">&#x27;,</span></span><br><span class="line"><span class="string">                    # input框提示符</span></span><br><span class="line"><span class="string">                    &#x27;</span>placeholde<span class="string">r&#x27;: &#x27;</span>请输入用户名<span class="string">&#x27;</span></span><br><span class="line"><span class="string">                &#125;</span></span><br><span class="line"><span class="string">            ),</span></span><br><span class="line"><span class="string">            # input框下面的文本</span></span><br><span class="line"><span class="string">            help_text=&#x27;</span>用户名注解文本信�?,</span><br><span class="line">            <span class="comment"># 存放错误信息</span></span><br><span class="line">            error_messages=&#123;</span><br><span class="line">                <span class="string">&quot;required&quot;</span>: <span class="string">&#x27;用户名必须传&#x27;</span>,</span><br><span class="line">                <span class="string">&quot;min_length&quot;</span>: <span class="string">&quot;你传的数据太短了&quot;</span>,</span><br><span class="line">                <span class="string">&quot;max_length&quot;</span>: <span class="string">&quot;你传的数据太长了&quot;</span>,</span><br><span class="line"></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="comment"># input不可选中的状�?</span></span><br><span class="line">            disabled=<span class="literal">True</span></span><br><span class="line">        )</span><br><span class="line">        password = forms.CharField(</span><br><span class="line">            <span class="comment"># 输入的额信息是保密的</span></span><br><span class="line">            widget=forms.PasswordInput(</span><br><span class="line"></span><br><span class="line">            )</span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># Select单选框</span></span><br><span class="line">        hobby = forms.ChoiceField(</span><br><span class="line">            choices=((<span class="number">1</span>, <span class="string">&#x27;旅游&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;爬山&#x27;</span>)),</span><br><span class="line">            <span class="comment"># 提示信息</span></span><br><span class="line">            label=<span class="string">&#x27;爱好&#x27;</span>,</span><br><span class="line">            <span class="comment"># 默认�?</span></span><br><span class="line">            initial=<span class="string">&#x27;2&#x27;</span>,</span><br><span class="line">            <span class="comment"># Select单选框</span></span><br><span class="line">            widget=forms.widgets.Select()</span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># 多选框SelectMultiple</span></span><br><span class="line">        hobby_one = forms.MultipleChoiceField(</span><br><span class="line">            choices=((<span class="number">1</span>, <span class="string">&#x27;羽毛�?), (2, &#x27;</span>乒乓�?), (<span class="number">3</span>, <span class="string">&#x27;排球&#x27;</span>)),</span><br><span class="line">            <span class="comment"># 提示信息</span></span><br><span class="line">            label=<span class="string">&#x27;爱好&#x27;</span>,</span><br><span class="line">            <span class="comment"># 默认�?</span></span><br><span class="line">            initial=[<span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">            <span class="comment"># SelectMultiple多选框</span></span><br><span class="line">            widget=forms.widgets.SelectMultiple()</span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># 单选框CheckboxInput</span></span><br><span class="line">        keep = forms.ChoiceField(</span><br><span class="line">            label=<span class="string">&quot;是否记住密码&quot;</span>,</span><br><span class="line">            initial=<span class="string">&quot;checked&quot;</span>,</span><br><span class="line">            widget=forms.widgets.CheckboxInput()</span><br><span class="line">        )</span><br><span class="line">        <span class="comment">#多选框</span></span><br><span class="line">        hobby_two = forms.MultipleChoiceField(</span><br><span class="line">            choices=((<span class="number">1</span>, <span class="string">&quot;篮球&quot;</span>), (<span class="number">2</span>, <span class="string">&quot;足球&quot;</span>), (<span class="number">3</span>, <span class="string">&quot;双色�?),),</span></span><br><span class="line"><span class="string">            label=&quot;</span>爱好<span class="string">&quot;,</span></span><br><span class="line"><span class="string">            initial=[1, 3],</span></span><br><span class="line"><span class="string">            widget=forms.widgets.CheckboxSelectMultiple()</span></span><br><span class="line"><span class="string">        )</span></span><br><span class="line"><span class="string">        # 选择框RadioSelect</span></span><br><span class="line"><span class="string">        gender = forms.ChoiceField(</span></span><br><span class="line"><span class="string">            choices=((1, &quot;</span>�?), (<span class="number">2</span>, <span class="string">&quot;�?), (3, &quot;</span>保密<span class="string">&quot;)),</span></span><br><span class="line"><span class="string">            label=&quot;</span>性别<span class="string">&quot;,</span></span><br><span class="line"><span class="string">            initial=3,</span></span><br><span class="line"><span class="string">            widget=forms.widgets.RadioSelect()</span></span><br><span class="line"><span class="string">        )</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    form_obj = UserForm(&#123;</span></span><br><span class="line"><span class="string">        &#x27;username&#x27;: &#x27;1222&#x27;</span></span><br><span class="line"><span class="string">    &#125;)</span></span><br><span class="line"><span class="string">    form_obj.is_valid()</span></span><br><span class="line"><span class="string">    # 打印错误信息</span></span><br><span class="line"><span class="string">    print(form_obj.errors)</span></span><br><span class="line"><span class="string">    # 获取校验成功的数�?</span></span><br><span class="line"><span class="string">    print(form_obj.cleaned_data)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    return render(request, &#x27;form_one.html&#x27;, locals())</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+<h3 id="�-】参数max-length">�?】参数max_length</h3>
+<ul>
+<li>字段的最大长�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最大长�?</span></span><br><span class="line">           max_length=<span class="number">8</span>,</span><br></pre></td></tr></table></figure>
+<h3 id="�-】参数min-length">�?】参数min_length</h3>
+<ul>
+<li>字段的最小长�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最小长�?</span></span><br><span class="line">            min_length=<span class="number">3</span>,</span><br></pre></td></tr></table></figure>
+<h3 id="�-】参数label">�?】参数label</h3>
+<ul>
+<li>输入框之前的提示文本</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># label是显示在输入框之前的提示文本</span></span><br><span class="line">           label=<span class="string">&#x27;用户�?,</span></span><br></pre></td></tr></table></figure>
+<h3 id="�-】参数label-suffix">�?】参数label_suffix</h3>
+<ul>
+<li>提示文本与input框之间的提示文本�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 提示文本与input框之间的提示文本�?</span></span><br><span class="line">            label_suffix=<span class="string">&quot;�?,</span></span><br></pre></td></tr></table></figure>
+<h3 id="�-】参数widget">�?】参数widget</h3>
+<ul>
+<li>控制前端的样�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 控制前端的样�?</span></span><br><span class="line">            widget=forms.widgets.TextInput(</span><br><span class="line">                <span class="comment"># 可以放前端的键值属�?</span></span><br><span class="line">                attrs=&#123;</span><br><span class="line">                    <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;form-control&#x27;</span>,</span><br><span class="line">                    <span class="comment"># 如果不写id的话，浏览器检查给默认的id=id_username</span></span><br><span class="line">                    <span class="string">&#x27;id&#x27;</span>: <span class="string">&#x27;username&#x27;</span>,</span><br><span class="line">                    <span class="comment"># input框提示符</span></span><br><span class="line">                    <span class="string">&#x27;placeholder&#x27;</span>: <span class="string">&#x27;请输入用户名&#x27;</span></span><br><span class="line">                &#125;</span><br><span class="line">            ),</span><br></pre></td></tr></table></figure>
+<h3 id="�-】参数help-text">�?】参数help_text</h3>
+<ul>
+<li>input框下面的文本</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># input框下面的文本</span></span><br><span class="line"> help_text=<span class="string">&#x27;用户名注解文本信�?,</span></span><br></pre></td></tr></table></figure>
+<h3 id="�-】参数error-messages">�?】参数error_messages</h3>
+<ul>
+<li>存放错误信息</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 存放错误信息</span></span><br><span class="line">error_messages=&#123;</span><br><span class="line">   <span class="string">&quot;required&quot;</span>: <span class="string">&#x27;用户名必须传&#x27;</span>,</span><br><span class="line">   <span class="string">&quot;min_length&quot;</span>: <span class="string">&quot;你传的数据太短了&quot;</span>,</span><br><span class="line">   <span class="string">&quot;max_length&quot;</span>: <span class="string">&quot;你传的数据太长了&quot;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以说是改变错�?</span></span><br></pre></td></tr></table></figure>
+<h3 id="�-】参数disabled">�?】参数disabled</h3>
+<ul>
+<li>input框不可选中的状�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># input不可选中的状�?</span></span><br><span class="line">disabled=<span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h3 id="�-0】参数required">�?0】参数required</h3>
+<ul>
+<li>非必须为空字�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 非必须为空字�?</span></span><br><span class="line"> required=<span class="literal">False</span>,</span><br></pre></td></tr></table></figure>
+<h3 id="�-1】参数initial">�?1】参数initial</h3>
+<ul>
+<li>定义初始�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义初始�?</span></span><br><span class="line"> initial=<span class="string">&#x27;tom&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="�-2】参数validators">�?2】参数validators</h3>
+<ul>
+<li>指定一个列表，其中包含了为字段进行验证的函数�?</li>
+<li>也就是说，如果你自定义了验证方法，不用Django内置的验证功能，那么要通过这个参数，将字段和自定义的验证方法链接起来�?</li>
+<li>参考前面的章节，学习如何编写验证器</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms  </span><br><span class="line"><span class="keyword">from</span> django.core.exceptions <span class="keyword">import</span> ValidationError  </span><br><span class="line"><span class="keyword">import</span> re  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">validate_email</span>(<span class="params">value</span>):  </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> re.<span class="keyword">match</span>(<span class="string">r&#x27;[^@]+@[^@]+\.[^@]+&#x27;</span>, value):  </span><br><span class="line">        <span class="keyword">raise</span> ValidationError(<span class="string">&quot;请输入一个有效的电子邮件地址&quot;</span>)  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EmailForm</span>(forms.Form):  </span><br><span class="line">    email = forms.EmailField(validators=[validate_email])</span><br></pre></td></tr></table></figure>
+<h3 id="�-3】localize">�?3】localize</h3>
+<ul>
+<li>localize参数帮助实现表单数据输入的本地化�?</li>
+<li><code>localize</code> 参数用于控制表单字段的本地化，特别是日期和时间字段。当设置为<code>True</code>时，Django会根据用户的地区设置来格式化输入和输�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DateForm</span>(forms.Form):  </span><br><span class="line">    my_date = forms.DateField(localize=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="�-4】has-changed-方法">�?4】has_changed()方法</h3>
+<ul>
+<li><code>has_changed()</code> 方法用于检查表单字段的值是否自表单实例化以来已被更改。这对于在表单提交时决定是否需要重新验证或更新数据非常有用</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">form = UserProfileForm(request.POST, instance=user)  </span><br><span class="line"><span class="keyword">if</span> form.is_valid():  </span><br><span class="line">    <span class="keyword">if</span> form.fields[<span class="string">&#x27;email&#x27;</span>].has_changed():  </span><br><span class="line">        <span class="comment"># 执行与电子邮件更改相关的操作  </span></span><br><span class="line">        <span class="keyword">pass</span>  </span><br><span class="line">    form.save()</span><br></pre></td></tr></table></figure>
+<h3 id="�-5】输入框password">�?5】输入框password</h3>
+<ul>
+<li>PasswordInput：输入的密码保密</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">password = forms.CharField(</span><br><span class="line">   			min_length=<span class="number">6</span>,</span><br><span class="line">        	label=<span class="string">&quot;密码&quot;</span>,</span><br><span class="line">            <span class="comment"># 输入的额信息是保密的</span></span><br><span class="line">            widget=forms.PasswordInput(</span><br><span class="line">				attrs=&#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;c1&#x27;</span>&#125;,</span><br><span class="line">                render_value=<span class="literal">True</span></span><br><span class="line">            )</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<h3 id="�-6】选择框radioSelect">�?6】选择框radioSelect</h3>
+<ul>
+<li></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 选择框RadioSelect</span></span><br><span class="line">        gender = forms.ChoiceField(</span><br><span class="line">            choices=((<span class="number">1</span>, <span class="string">&quot;�?), (2, &quot;</span>�?), (<span class="number">3</span>, <span class="string">&quot;保密&quot;</span>)),</span><br><span class="line">            label=<span class="string">&quot;性别&quot;</span>,</span><br><span class="line">            initial=<span class="number">3</span>,</span><br><span class="line">            widget=forms.widgets.RadioSelect()</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240701220913512.png" alt="image-20240701220913512"></p>
+<h3 id="�-7】单选框Select">�?7】单选框Select</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Select单选框</span></span><br><span class="line">        hobby = forms.ChoiceField(</span><br><span class="line">            choices=((<span class="number">1</span>, <span class="string">&#x27;旅游&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;爬山&#x27;</span>)),</span><br><span class="line">            <span class="comment"># 提示信息</span></span><br><span class="line">            label=<span class="string">&#x27;爱好&#x27;</span>,</span><br><span class="line">            <span class="comment"># 默认�?</span></span><br><span class="line">            initial=<span class="string">&#x27;2&#x27;</span>,</span><br><span class="line">            <span class="comment"># Select单选框</span></span><br><span class="line">            widget=forms.widgets.Select()</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240701220830767.png" alt="image-20240701220830767"></p>
+<h3 id="�-8】多选框SelectMultiple">�?8】多选框SelectMultiple</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 多选框SelectMultiple</span></span><br><span class="line">        hobby_one = forms.MultipleChoiceField(</span><br><span class="line">            choices=((<span class="number">1</span>, <span class="string">&#x27;羽毛�?), (2, &#x27;</span>乒乓�?), (<span class="number">3</span>, <span class="string">&#x27;排球&#x27;</span>)),</span><br><span class="line">            <span class="comment"># 提示信息</span></span><br><span class="line">            label=<span class="string">&#x27;爱好&#x27;</span>,</span><br><span class="line">            <span class="comment"># 默认�?</span></span><br><span class="line">            initial=[<span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">            <span class="comment"># SelectMultiple多选框</span></span><br><span class="line">            widget=forms.widgets.SelectMultiple()</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240701220838816.png" alt="image-20240701220838816"></p>
+<h3 id="�-9】单选框CheckboxInput">�?9】单选框CheckboxInput</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单选框CheckboxInput</span></span><br><span class="line">        keep = forms.ChoiceField(</span><br><span class="line">            label=<span class="string">&quot;是否记住密码&quot;</span>,</span><br><span class="line">            initial=<span class="string">&quot;checked&quot;</span>,</span><br><span class="line">            widget=forms.widgets.CheckboxInput()</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240701220855178.png" alt="image-20240701220855178"></p>
+<h3 id="�-0】多选框CheckboxSelectMultiple">�?0】多选框CheckboxSelectMultiple</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#多选框</span></span><br><span class="line">        hobby_two = forms.MultipleChoiceField(</span><br><span class="line">            choices=((<span class="number">1</span>, <span class="string">&quot;篮球&quot;</span>), (<span class="number">2</span>, <span class="string">&quot;足球&quot;</span>), (<span class="number">3</span>, <span class="string">&quot;双色�?),),</span></span><br><span class="line"><span class="string">            label=&quot;</span>爱好<span class="string">&quot;,</span></span><br><span class="line"><span class="string">            initial=[1, 3],</span></span><br><span class="line"><span class="string">            widget=forms.widgets.CheckboxSelectMultiple()</span></span><br><span class="line"><span class="string">        )</span></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240701220932862.png" alt="image-20240701220932862"></p>
+<h2 id="【六】choice字段的注意事�">【六】choice字段的注意事�?</h2>
+<ul>
+<li>
+<p>在使用选择标签�?</p>
+</li>
+<li>
+<ul>
+<li>需要注意choices的选项可以配置从数据库中获�?</li>
+</ul>
+</li>
+<li>
+<p>但是由于是静态字�?</p>
+</li>
+<li>
+<ul>
+<li>获取的值无法实时更�?</li>
+<li>需要重写构造方法从而实现choice实时更新�?</li>
+</ul>
+</li>
+</ul>
+<h3 id="�-】方法一">�?】方法一</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.forms <span class="keyword">import</span> Form</span><br><span class="line"><span class="keyword">from</span> django.forms <span class="keyword">import</span> widgets</span><br><span class="line"><span class="keyword">from</span> django.forms <span class="keyword">import</span> fields</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(<span class="title class_ inherited__">Form</span>):</span><br><span class="line"> </span><br><span class="line">    user = fields.ChoiceField(</span><br><span class="line">        <span class="comment"># choices=((1, &#x27;上海&#x27;), (2, &#x27;北京&#x27;),),</span></span><br><span class="line">        initial=<span class="number">2</span>,</span><br><span class="line">        widget=widgets.Select</span><br><span class="line">    )</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, *args, **kwargs</span>):</span><br><span class="line">        <span class="built_in">super</span>(MyForm,<span class="variable language_">self</span>).__init__(*args, **kwargs)</span><br><span class="line">        <span class="comment"># self.fields[&#x27;user&#x27;].choices = ((1, &#x27;上海&#x27;), (2, &#x27;北京&#x27;),)</span></span><br><span class="line">        <span class="comment"># �?</span></span><br><span class="line">        <span class="variable language_">self</span>.fields[<span class="string">&#x27;user&#x27;</span>].choices = models.Classes.objects.<span class="built_in">all</span>().values_list(<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;caption&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="�-】方法二">�?】方法二</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"><span class="keyword">from</span> django.forms <span class="keyword">import</span> fields</span><br><span class="line"><span class="keyword">from</span> django.forms <span class="keyword">import</span> models <span class="keyword">as</span> form_model</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FInfo</span>(forms.Form):</span><br><span class="line">    authors = form_model.ModelMultipleChoiceField(queryset=models.NNewType.objects.<span class="built_in">all</span>())  <span class="comment"># 多�?</span></span><br><span class="line">    <span class="comment"># authors = form_model.ModelChoiceField(queryset=models.NNewType.objects.all())  # 单�?</span></span><br></pre></td></tr></table></figure>
+<h2 id="【七】自定义字段校验">【七】自定义字段校验</h2>
+<h3 id="�-】自定义验函�">�?】自定义验函�?</h3>
+<ul>
+<li>在内部创建了一个验证器函数</li>
+<li>并把这个函数给你的form表单里面需要创建的字段</li>
+<li><code>validators=[phone_validators]</code></li>
+<li>抛出异常后被 forms_obj = UserInfo接收�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"><span class="keyword">from</span> django.core.exceptions <span class="keyword">import</span> ValidationError</span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login_one</span>(<span class="params">request, *args, **kwargs</span>):</span><br><span class="line">    <span class="comment"># 创建一个验证器函数</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">phone_validators</span>(<span class="params">value</span>):</span><br><span class="line">        <span class="built_in">print</span>(value)</span><br><span class="line">        <span class="comment"># 在这里面校验</span></span><br><span class="line">        <span class="comment"># 用正则校�?</span></span><br><span class="line">        mobile_re = re.<span class="built_in">compile</span>(<span class="string">r&#x27;^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]&#123;8&#125;$&#x27;</span>)</span><br><span class="line">        <span class="comment"># 通过正则表达式对象匹配输入的内容</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> mobile_re.<span class="keyword">match</span>(value):</span><br><span class="line">            <span class="comment"># 主动抛出异常</span></span><br><span class="line">            <span class="keyword">raise</span> ValidationError(<span class="string">&#x27;手机号的格式输入错误&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">UserInfo</span>(forms.Form):</span><br><span class="line">        phone = forms.CharField(</span><br><span class="line">            <span class="comment"># max_length=11,</span></span><br><span class="line">            <span class="comment"># min_length=11,</span></span><br><span class="line">            validators=[phone_validators]</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    forms_obj = UserInfo(&#123;</span><br><span class="line">        <span class="string">&#x27;phone&#x27;</span>: <span class="string">&#x27;145745625&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">    forms_obj.is_valid()</span><br><span class="line">    <span class="comment"># 打印错误信息</span></span><br><span class="line">    <span class="built_in">print</span>(forms_obj.errors)</span><br><span class="line">    <span class="comment"># &lt;ul class=&quot;errorlist&quot;&gt;&lt;li&gt;phone&lt;ul class=&quot;errorlist&quot;&gt;&lt;li&gt;手机号的格式输入错误&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</span></span><br><span class="line">    <span class="comment"># 获取校验成功的数�?</span></span><br><span class="line">    <span class="built_in">print</span>(forms_obj.cleaned_data)</span><br><span class="line">    <span class="comment"># &#123;&#125;</span></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;form_one.html&#x27;</span>, <span class="built_in">locals</span>())</span><br></pre></td></tr></table></figure>
+<h3 id="�-】总的说一下步�">�?】总的说一下步�?</h3>
+<ul>
+<li>
+<p>首先定义一个form组件�?</p>
+</li>
+<li>
+<p>form组件继承forms.Form</p>
+</li>
+<li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UserInfo</span>(forms.Form):</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>定义字段的验证规则<code>forms.CharField()</code></p>
+</li>
+<li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UserInfo</span>(forms.Form):</span><br><span class="line">        phone = forms.CharField(</span><br><span class="line">            <span class="comment"># max_length=11,</span></span><br><span class="line">            <span class="comment"># min_length=11,</span></span><br><span class="line">            validators=[phone_validators]</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>定义一个验证字段的函数</p>
+</li>
+<li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">phone_validators</span>(<span class="params">value</span>):</span><br><span class="line">        <span class="built_in">print</span>(value)</span><br><span class="line">        <span class="comment"># 在这里面校验</span></span><br><span class="line">        <span class="comment"># 用正则校�?</span></span><br><span class="line">        mobile_re = re.<span class="built_in">compile</span>(<span class="string">r&#x27;^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]&#123;8&#125;$&#x27;</span>)</span><br><span class="line">        <span class="comment"># 通过正则表达式对象匹配输入的内容</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> mobile_re.<span class="keyword">match</span>(value):</span><br><span class="line">            <span class="comment"># 主动抛出异常</span></span><br><span class="line">            <span class="keyword">raise</span> ValidationError(<span class="string">&#x27;手机号的格式输入错误&#x27;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>将验证函数添加到验证的规则里�?</p>
+</li>
+<li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">phone.CharField(</span><br><span class="line">    validators=[phone_validators]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="【八】Form组件字段参数">【八】Form组件字段参数</h2>
+<h3 id="�-】内置字�">�?】内置字�?</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br></pre></td><td class="code"><pre><span class="line">Field</span><br><span class="line">    required=<span class="literal">True</span>,               是否允许为空</span><br><span class="line">    widget=<span class="literal">None</span>,                 HTML插件</span><br><span class="line">    label=<span class="literal">None</span>,                  用于生成Label标签或显示内�?</span><br><span class="line">    initial=<span class="literal">None</span>,                初始�?</span><br><span class="line">    help_text=<span class="string">&#x27;&#x27;</span>,                帮助信息(在标签旁边显�?</span><br><span class="line">    error_messages=<span class="literal">None</span>,         错误信息 &#123;<span class="string">&#x27;required&#x27;</span>: <span class="string">&#x27;不能为空&#x27;</span>, <span class="string">&#x27;invalid&#x27;</span>: <span class="string">&#x27;格式错误&#x27;</span>&#125;</span><br><span class="line">    validators=[],               自定义验证规�?</span><br><span class="line">    localize=<span class="literal">False</span>,              是否支持本地�?</span><br><span class="line">    disabled=<span class="literal">False</span>,              是否可以编辑</span><br><span class="line">    label_suffix=<span class="literal">None</span>            Label内容后缀</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">CharField(Field)</span><br><span class="line">    max_length=<span class="literal">None</span>,             最大长�?</span><br><span class="line">    min_length=<span class="literal">None</span>,             最小长�?</span><br><span class="line">    strip=<span class="literal">True</span>                   是否移除用户输入空白</span><br><span class="line"> </span><br><span class="line">IntegerField(Field)</span><br><span class="line">    max_value=<span class="literal">None</span>,              最大�?</span><br><span class="line">    min_value=<span class="literal">None</span>,              最小�?</span><br><span class="line"> </span><br><span class="line">FloatField(IntegerField)</span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">DecimalField(IntegerField)</span><br><span class="line">    max_value=<span class="literal">None</span>,              最大�?</span><br><span class="line">    min_value=<span class="literal">None</span>,              最小�?</span><br><span class="line">    max_digits=<span class="literal">None</span>,             总长�?</span><br><span class="line">    decimal_places=<span class="literal">None</span>,         小数位长�?</span><br><span class="line"> </span><br><span class="line">BaseTemporalField(Field)</span><br><span class="line">    input_formats=<span class="literal">None</span>          时间格式�?  </span><br><span class="line"> </span><br><span class="line">DateField(BaseTemporalField)    格式�?015-09-01</span><br><span class="line">TimeField(BaseTemporalField)    格式�?<span class="number">1</span>:<span class="number">12</span></span><br><span class="line">DateTimeField(BaseTemporalField)格式�?015-09-01 <span class="number">11</span>:<span class="number">12</span></span><br><span class="line"> </span><br><span class="line">DurationField(Field)            时间间隔�?d %H:%M:%S.%f</span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">RegexField(CharField)</span><br><span class="line">    regex,                      自定制正则表达式</span><br><span class="line">    max_length=<span class="literal">None</span>,            最大长�?</span><br><span class="line">    min_length=<span class="literal">None</span>,            最小长�?</span><br><span class="line">    error_message=<span class="literal">None</span>,         忽略，错误信息使�?error_messages=&#123;<span class="string">&#x27;invalid&#x27;</span>: <span class="string">&#x27;...&#x27;</span>&#125;</span><br><span class="line"> </span><br><span class="line">EmailField(CharField)      </span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">FileField(Field)</span><br><span class="line">    allow_empty_file=<span class="literal">False</span>     是否允许空文�?</span><br><span class="line"> </span><br><span class="line">ImageField(FileField)      </span><br><span class="line">    ...</span><br><span class="line">    注：需要PIL模块，pip3 install Pillow</span><br><span class="line">    以上两个字典使用时，需要注意两点：</span><br><span class="line">        - form表单�?enctype=<span class="string">&quot;multipart/form-data&quot;</span></span><br><span class="line">        - view函数�?obj = MyForm(request.POST, request.FILES)</span><br><span class="line"> </span><br><span class="line">URLField(Field)</span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">BooleanField(Field)  </span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">NullBooleanField(BooleanField)</span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">ChoiceField(Field)</span><br><span class="line">    ...</span><br><span class="line">    choices=(),                选项，如：choices = ((<span class="number">0</span>,<span class="string">&#x27;上海&#x27;</span>),(<span class="number">1</span>,<span class="string">&#x27;北京&#x27;</span>),)</span><br><span class="line">    required=<span class="literal">True</span>,             是否必填</span><br><span class="line">    widget=<span class="literal">None</span>,               插件，默认select插件</span><br><span class="line">    label=<span class="literal">None</span>,                Label内容</span><br><span class="line">    initial=<span class="literal">None</span>,              初始�?</span><br><span class="line">    help_text=<span class="string">&#x27;&#x27;</span>,              帮助提示</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">ModelChoiceField(ChoiceField)</span><br><span class="line">    ...                        django.forms.models.ModelChoiceField</span><br><span class="line">    queryset,                  <span class="comment"># 查询数据库中的数�?</span></span><br><span class="line">    empty_label=<span class="string">&quot;---------&quot;</span>,   <span class="comment"># 默认空显示内�?</span></span><br><span class="line">    to_field_name=<span class="literal">None</span>,        <span class="comment"># HTML中value的值对应的字段</span></span><br><span class="line">    limit_choices_to=<span class="literal">None</span>      <span class="comment"># ModelForm中对queryset二次筛�?</span></span><br><span class="line">     </span><br><span class="line">ModelMultipleChoiceField(ModelChoiceField)</span><br><span class="line">    ...                        django.forms.models.ModelMultipleChoiceField</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">     </span><br><span class="line">TypedChoiceField(ChoiceField)</span><br><span class="line">    coerce = <span class="keyword">lambda</span> val: val   对选中的值进行一次转�?</span><br><span class="line">    empty_value= <span class="string">&#x27;&#x27;</span>            空值的默认�?</span><br><span class="line"> </span><br><span class="line">MultipleChoiceField(ChoiceField)</span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">TypedMultipleChoiceField(MultipleChoiceField)</span><br><span class="line">    coerce = <span class="keyword">lambda</span> val: val   对选中的每一个值进行一次转�?</span><br><span class="line">    empty_value= <span class="string">&#x27;&#x27;</span>            空值的默认�?</span><br><span class="line"> </span><br><span class="line">ComboField(Field)</span><br><span class="line">    fields=()                  使用多个验证，如下：即验证最大长�?<span class="number">0</span>，又验证邮箱格式</span><br><span class="line">                               fields.ComboField(fields=[fields.CharField(max_length=<span class="number">20</span>), fields.EmailField(),])</span><br><span class="line"> </span><br><span class="line">MultiValueField(Field)</span><br><span class="line">    PS: 抽象类，子类中可以实现聚合多个字典去匹配一个值，要配合MultiWidget使用</span><br><span class="line"> </span><br><span class="line">SplitDateTimeField(MultiValueField)</span><br><span class="line">    input_date_formats=<span class="literal">None</span>,   格式列表：[<span class="string">&#x27;%Y--%m--%d&#x27;</span>, <span class="string">&#x27;%m%d/%Y&#x27;</span>, <span class="string">&#x27;%m/%d/%y&#x27;</span>]</span><br><span class="line">    input_time_formats=<span class="literal">None</span>    格式列表：[<span class="string">&#x27;%H:%M:%S&#x27;</span>, <span class="string">&#x27;%H:%M:%S.%f&#x27;</span>, <span class="string">&#x27;%H:%M&#x27;</span>]</span><br><span class="line"> </span><br><span class="line">FilePathField(ChoiceField)     文件选项，目录下文件显示在页面中</span><br><span class="line">    path,                      文件夹路�?</span><br><span class="line">    <span class="keyword">match</span>=<span class="literal">None</span>,                正则匹配</span><br><span class="line">    recursive=<span class="literal">False</span>,           递归下面的文件夹</span><br><span class="line">    allow_files=<span class="literal">True</span>,          允许文件</span><br><span class="line">    allow_folders=<span class="literal">False</span>,       允许文件�?</span><br><span class="line">    required=<span class="literal">True</span>,</span><br><span class="line">    widget=<span class="literal">None</span>,</span><br><span class="line">    label=<span class="literal">None</span>,</span><br><span class="line">    initial=<span class="literal">None</span>,</span><br><span class="line">    help_text=<span class="string">&#x27;&#x27;</span></span><br><span class="line"> </span><br><span class="line">GenericIPAddressField</span><br><span class="line">    protocol=<span class="string">&#x27;both&#x27;</span>,           both,ipv4,ipv6支持的IP格式</span><br><span class="line">    unpack_ipv4=<span class="literal">False</span>          解析ipv4地址，如果是::ffff:<span class="number">192.0</span><span class="number">.2</span><span class="number">.1</span>时候，可解析为<span class="number">192.0</span><span class="number">.2</span><span class="number">.1</span>�?PS：protocol必须为both才能启用</span><br><span class="line"> </span><br><span class="line">SlugField(CharField)           数字，字母，下划线，减号（连字符�?</span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">UUIDField(CharField)           uuid类型</span><br></pre></td></tr></table></figure>
+<h3 id="�-】概�">�?】概�?</h3>
+<h4 id="�-）BooleanField">�?）BooleanField</h4>
+<ul>
+<li>默认的Widget：CheckboxInput</li>
+<li>空值：False</li>
+<li>规范化为：Python的True或者False</li>
+<li>可用的错误信息键：required</li>
+</ul>
+<h4 id="�-）CharField">�?）CharField</h4>
+<ul>
+<li>默认的Widget：TextInput</li>
+<li>空值：与empty_value给出的任何值�?</li>
+<li>规范化为：一个Unicode 对象�?</li>
+<li>验证max_length或min_length，如果设置了这两个参数�?否则，所有的输入都是合法的�?</li>
+<li>可用的错误信息键：min_length, max_length, required</li>
+</ul>
+<p>有四个可选参数：</p>
+<ul>
+<li>max_length，min_length：设置字符串的最大和最小长度�?</li>
+<li>strip：如果True（默认），去除输入的前导和尾随空格�?</li>
+<li>empty_value：用来表示“空”的值�?默认为空字符串�?</li>
+</ul>
+<h4 id="�-）ChoiceField">�?）ChoiceField</h4>
+<ul>
+<li>默认的Widget：Select</li>
+<li>空值：‘’（一个空字符串）</li>
+<li>规范化为：一个Unicode 对象�?</li>
+<li>验证给定的值是否在选项列表中�?</li>
+<li>可用的错误信息键：required, invalid_choice</li>
+</ul>
+<p>参数choices�?</p>
+<p>用来作为该字段选项的一个二元组组成的可迭代对象（例如，列表或元组）或者一个可调用对象�?</p>
+<p>格式与用于和ORM模型字段的choices参数相同�?</p>
+<h4 id="�-）TypedChoiceField">�?）TypedChoiceField</h4>
+<p>像ChoiceField一样，只是还有两个额外的参数：coerce和empty_value�?</p>
+<ul>
+<li>默认的Widget：Select</li>
+<li>空值：empty_value参数设置的值�?</li>
+<li>规范化为：coerce参数类型的值�?</li>
+<li>验证给定的值在选项列表中存在并且可以被强制转换�?</li>
+<li>可用的错误信息的键：required, invalid_choice</li>
+</ul>
+<h4 id="�-）DateField">�?）DateField</h4>
+<ul>
+<li>默认的Widget：DateInput</li>
+<li>空值：None</li>
+<li>规范化为：datetime.date对象�?</li>
+<li>验证给出的值是一个datetime.date、datetime.datetime 或指定日期格式的字符串�?</li>
+<li>错误信息的键：required, invalid</li>
+</ul>
+<p>接收一个可选的参数：input_formats�?</p>
+<p>一个格式的列表，用于转换字符串为datetime.date对象�?</p>
+<p>如果没有提供input_formats，默认的输入格式为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;%Y-%m-%d&#x27;,      # &#x27;2006-10-25&#x27;</span><br><span class="line"> &#x27;%m/%d/%Y&#x27;,      # &#x27;10/25/2006&#x27;</span><br><span class="line"> &#x27;%m/%d/%y&#x27;]      # &#x27;10/25/06&#x27;</span><br></pre></td></tr></table></figure>
+<p>另外，如果你在设置中指定USE_L10N=False，以下的格式也将包含在默认的输入格式中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;%b %d %Y&#x27;,      # &#x27;Oct 25 2006&#x27;</span><br><span class="line"> &#x27;%b %d, %Y&#x27;,     # &#x27;Oct 25, 2006&#x27;</span><br><span class="line"> &#x27;%d %b %Y&#x27;,      # &#x27;25 Oct 2006&#x27;</span><br><span class="line"> &#x27;%d %b, %Y&#x27;,     # &#x27;25 Oct, 2006&#x27;</span><br><span class="line"> &#x27;%B %d %Y&#x27;,      # &#x27;October 25 2006&#x27;</span><br><span class="line"> &#x27;%B %d, %Y&#x27;,     # &#x27;October 25, 2006&#x27;</span><br><span class="line"> &#x27;%d %B %Y&#x27;,      # &#x27;25 October 2006&#x27;</span><br><span class="line"> &#x27;%d %B, %Y&#x27;]     # &#x27;25 October, 2006&#x27;</span><br></pre></td></tr></table></figure>
+<h4 id="�-）DateTimeField">�?）DateTimeField</h4>
+<ul>
+<li>默认的Widget：DateTimeInput</li>
+<li>空值：None</li>
+<li>规范化为：Python的datetime.datetime对象�?</li>
+<li>验证给出的值是一个datetime.datetime、datetime.date或指定日期格式的字符串�?</li>
+<li>错误信息的键：required, invalid</li>
+</ul>
+<p>接收一个可选的参数：input_formats</p>
+<p>如果没有提供input_formats，默认的输入格式为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;%Y-%m-%d %H:%M:%S&#x27;,    # &#x27;2006-10-25 14:30:59&#x27;</span><br><span class="line"> &#x27;%Y-%m-%d %H:%M&#x27;,       # &#x27;2006-10-25 14:30&#x27;</span><br><span class="line"> &#x27;%Y-%m-%d&#x27;,             # &#x27;2006-10-25&#x27;</span><br><span class="line"> &#x27;%m/%d/%Y %H:%M:%S&#x27;,    # &#x27;10/25/2006 14:30:59&#x27;</span><br><span class="line"> &#x27;%m/%d/%Y %H:%M&#x27;,       # &#x27;10/25/2006 14:30&#x27;</span><br><span class="line"> &#x27;%m/%d/%Y&#x27;,             # &#x27;10/25/2006&#x27;</span><br><span class="line"> &#x27;%m/%d/%y %H:%M:%S&#x27;,    # &#x27;10/25/06 14:30:59&#x27;</span><br><span class="line"> &#x27;%m/%d/%y %H:%M&#x27;,       # &#x27;10/25/06 14:30&#x27;</span><br><span class="line"> &#x27;%m/%d/%y&#x27;]             # &#x27;10/25/06&#x27;</span><br></pre></td></tr></table></figure>
+<h4 id="�-）DecimalField">�?）DecimalField</h4>
+<ul>
+<li>默认的Widget：当Field.localize是False时为NumberInput，否则为TextInput�?</li>
+<li>空值：None</li>
+<li>规范化为：Python decimal对象�?</li>
+<li>验证给定的值为一个十进制数�?忽略前导和尾随的空白�?</li>
+<li>错误信息的键：max_whole_digits, max_digits, max_decimal_places,max_value, invalid, required,min_value</li>
+</ul>
+<p>接收四个可选的参数�?</p>
+<p>max_value,min_value:允许的值的范围，需要赋值decimal.Decimal对象，不能直接给个整数类型�?</p>
+<p>max_digits：值允许的最大位数（小数点之前和之后的数字总共的位数，前导的零将被删除）�?</p>
+<p>decimal_places：允许的最大小数位�?</p>
+<h4 id="�-）DurationField">�?）DurationField</h4>
+<ul>
+<li>默认的Widget：TextInput</li>
+<li>空值：None</li>
+<li>规范化为：Python timedelta�?</li>
+<li>验证给出的值是一个字符串，而且可以转换为timedelta对象�?</li>
+<li>错误信息的键：required, invalid.</li>
+</ul>
+<h4 id="�-）EmailField">�?）EmailField</h4>
+<ul>
+<li>默认的Widget：EmailInput</li>
+<li>空值：‘’（一个空字符串）</li>
+<li>规范化为：Unicode 对象�?</li>
+<li>使用正则表达式验证给出的值是一个合法的邮件地址�?</li>
+<li>错误信息的键：required, invalid</li>
+</ul>
+<p>两个可选的参数用于验证，max_length 和min_length�?</p>
+<h4 id="�-0）FileField">�?0）FileField</h4>
+<ul>
+<li>默认的Widget：ClearableFileInput</li>
+<li>空值：None</li>
+<li>规范化为：一个UploadedFile对象，它封装文件内容和文件名到一个对象内�?</li>
+<li>验证非空的文件数据已经绑定到表单�?</li>
+<li>错误信息的键：missing, invalid, required, empty, max_length</li>
+</ul>
+<p>具有两个可选的参数用于验证：max_length �?allow_empty_file�?</p>
+<h4 id="�-1）FilePathField">�?1）FilePathField</h4>
+<ul>
+<li>默认的Widget：Select</li>
+<li>空值：None</li>
+<li>规范化为：Unicode 对象�?</li>
+<li>验证选择的选项在选项列表中存在�?</li>
+<li>错误信息的键：required, invalid_choice</li>
+</ul>
+<p>这个字段允许从一个特定的目录选择文件�?它有五个额外的参数，其中的path是必须的�?</p>
+<p>path：要列出的目录的绝对路径�?这个目录必须存在�?</p>
+<p>recursive：如果为False（默认值），只用直接位于path下的文件或目录作为选项。如果为True，将递归访问这个目录，其内所有的子目录和文件都将作为选项�?</p>
+<p>match：正则表达模式；只有具有与此表达式匹配的文件名称才被允许作为选项�?</p>
+<p>allow_files：可选。默认为True。表示是否应该包含指定位置的文件。它和allow_folders必须有一个为True�?</p>
+<p>allow_folders可选。默认为False。表示是否应该包含指定位置的目录�?</p>
+<h4 id="�-2）FloatField">�?2）FloatField</h4>
+<ul>
+<li>默认的Widget：当Field.localize是False时为NumberInput，否则为TextInput�?</li>
+<li>空值：None</li>
+<li>规范化为：Float 对象�?</li>
+<li>验证给定的值是一个浮点数�?</li>
+<li>错误信息的键：max_value, invalid, required, min_value</li>
+</ul>
+<p>接收两个可选的参数用于验证，max_value和min_value，控制允许的值的范围�?</p>
+<h4 id="�-3）ImageField">�?3）ImageField</h4>
+<ul>
+<li>默认的Widget：ClearableFileInput</li>
+<li>空值：None</li>
+<li>规范化为：一个UploadedFile 象，它封装文件内容和文件名为一个单独的对象�?</li>
+<li>验证文件数据已绑定到表单，并且该文件是Pillow可以解析的图像格式�?</li>
+<li>错误信息的键：missing, invalid, required, empty, invalid_image</li>
+</ul>
+<p>使用ImageField需要安装Pillow（pip install pillow）。如果在上传图片时遇到图像损坏错误，通常意味着使用了Pillow不支持的格式�?</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> django.core.files.uploadedfile <span class="keyword">import</span> SimpleUploadedFile</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">class</span> <span class="title class_">ImageForm</span>(forms.Form):</span><br><span class="line"><span class="meta">... </span>    img = forms.ImageField()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>file_data = &#123;<span class="string">&#x27;img&#x27;</span>: SimpleUploadedFile(<span class="string">&#x27;test.png&#x27;</span>, &lt;file data&gt;)&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>form = ImageForm(&#123;&#125;, file_data)</span><br><span class="line"><span class="comment"># Pillow closes the underlying file descriptor.</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>form.is_valid()</span><br><span class="line"><span class="literal">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image_field = form.cleaned_data[<span class="string">&#x27;img&#x27;</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image_field.image</span><br><span class="line">&lt;PIL.PngImagePlugin.PngImageFile image mode=RGBA size=191x287 at <span class="number">0x7F5985045C18</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image_field.image.width</span><br><span class="line"><span class="number">191</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image_field.image.height</span><br><span class="line"><span class="number">287</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image_field.image.<span class="built_in">format</span></span><br><span class="line"><span class="string">&#x27;PNG&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image_field.image.getdata()</span><br><span class="line"><span class="comment"># Raises AttributeError: &#x27;NoneType&#x27; object has no attribute &#x27;seek&#x27;.</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image = Image.<span class="built_in">open</span>(image_field)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image.getdata()</span><br><span class="line">&lt;ImagingCore <span class="built_in">object</span> at <span class="number">0x7f5984f874b0</span>&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="�-4）IntegerField">�?4）IntegerField</h4>
+<ul>
+<li>默认的Widget：当Field.localize是False时为NumberInput，否则为TextInput�?</li>
+<li>空值：None</li>
+<li>规范化为：Python 整数或长整数�?</li>
+<li>验证给定值是一个整数�?允许前导和尾随空格，类似Python的int()函数�?</li>
+<li>错误信息的键：max_value, invalid, required, min_value</li>
+</ul>
+<p>两个可选参数：max_value和min_value，控制允许的值的范围�?</p>
+<h4 id="�-5）JSONField">�?5）JSONField</h4>
+<p>Django3.1新增�?</p>
+<p>接收JSON编码的字段�?</p>
+<ul>
+<li>默认的Widget：Textarea</li>
+<li>空值：None</li>
+<li>规范化为：一个JSON对象�?</li>
+<li>验证给定值是否合法的JSON�?</li>
+<li>错误信息的键：required, invalid</li>
+<li>可接受两个参数：encoder和decoder，编码器和解码器</li>
+</ul>
+<h4 id="�-6）GenericIPAddressField">�?6）GenericIPAddressField</h4>
+<p>包含IPv4或IPv6地址的字段�?</p>
+<ul>
+<li>默认的Widget：TextInput</li>
+<li>空值：‘’（一个空字符串）</li>
+<li>规范化为：一个Unicode对象�?</li>
+<li>验证给定值是有效的IP地址�?</li>
+<li>错误信息的键：required, invalid</li>
+</ul>
+<p>有两个可选参数：protocol和unpack_ipv4</p>
+<h4 id="�-7）MultipleChoiceField">�?7）MultipleChoiceField</h4>
+<ul>
+<li>默认的Widget：SelectMultiple</li>
+<li>空值：[]（一个空列表�?</li>
+<li>规范化为：一个Unicode 对象列表�?</li>
+<li>验证给定值列表中的每个值都存在于选择列表中�?</li>
+<li>错误信息的键：invalid_list, invalid_choice, required</li>
+</ul>
+<h4 id="�-8）TypedMultipleChoiceField">�?8）TypedMultipleChoiceField</h4>
+<p>类似MultipleChoiceField，除了需要两个额外的参数，coerce和empty_value�?</p>
+<ul>
+<li>默认的Widget：SelectMultiple</li>
+<li>空值：empty_value</li>
+<li>规范化为：coerce参数提供的类型值列表�?</li>
+<li>验证给定值存在于选项列表中并且可以强制�?</li>
+<li>错误信息的键：required, invalid_choice</li>
+</ul>
+<h4 id="�-9）NullBooleanField">�?9）NullBooleanField</h4>
+<ul>
+<li>默认的Widget：NullBooleanSelect</li>
+<li>空值：None</li>
+<li>规范化为：Python None, False 或True 值�?</li>
+<li>不验证任何内容（即，它从不引发ValidationError）�?</li>
+</ul>
+<h4 id="�-0）RegexField">�?0）RegexField</h4>
+<ul>
+<li>默认的Widget：TextInput</li>
+<li>空值：‘’（一个空字符串）</li>
+<li>规范化为：一个Unicode 对象�?</li>
+<li>验证给定值与某个正则表达式匹配�?</li>
+<li>错误信息的键：required, invalid</li>
+</ul>
+<p>需要一个必需的参数：regex，需要匹配的正则表达式�?</p>
+<p>还可以接收max_length，min_length和strip参数，类似CharField�?</p>
+<h4 id="�-1）SlugField">�?1）SlugField</h4>
+<ul>
+<li>默认的Widget：TextInput</li>
+<li>空值：‘’（一个空字符串）</li>
+<li>规范化为：一个Unicode 对象�?</li>
+<li>验证给定的字符串只包括字母、数字、下划线及连字符�?</li>
+<li>错误信息的键：required, invalid</li>
+</ul>
+<p>此字段用于在表单中表示模型的SlugField�?</p>
+<h4 id="�-2）TimeField">�?2）TimeField</h4>
+<ul>
+<li>默认的Widget：TextInput</li>
+<li>空值：None</li>
+<li>规范化为：一个Python 的datetime.time 对象�?</li>
+<li>验证给定值是datetime.time或以特定时间格式格式化的字符串�?</li>
+<li>错误信息的键：required, invalid</li>
+</ul>
+<p>接收一个可选的参数：input_formats，用于尝试将字符串转换为有效的datetime.time对象的格式列表�?</p>
+<p>如果没有提供input_formats，默认的输入格式为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x27;%H:%M:%S&#x27;,     # &#x27;14:30:59&#x27;</span><br><span class="line">&#x27;%H:%M&#x27;,        # &#x27;14:30&#x27;</span><br></pre></td></tr></table></figure>
+<h4 id="�-3）URLField">�?3）URLField</h4>
+<ul>
+<li>默认的Widget：URLInput</li>
+<li>空值：‘’（一个空字符串）</li>
+<li>规范化为：一个Unicode 对象�?</li>
+<li>验证给定值是个有效的URL�?</li>
+<li>错误信息的键：required, invalid</li>
+</ul>
+<p>可选参数：max_length和min_length</p>
+<h4 id="�-4）UUIDField">�?4）UUIDField</h4>
+<ul>
+<li>默认的Widget：TextInput</li>
+<li>空值：‘’（一个空字符串）</li>
+<li>规范化为：UUID对象�?</li>
+<li>错误信息的键：required, invalid</li>
+</ul>
+<h4 id="�-5�-ComboField">�?5�?ComboField</h4>
+<ul>
+<li>默认的Widget：TextInput</li>
+<li>空值：‘’（一个空字符串）</li>
+<li>规范化为：Unicode 对象�?</li>
+<li>根据指定为ComboField的参数的每个字段验证给定值�?</li>
+<li>错误信息的键：required, invalid</li>
+</ul>
+<p>接收一个额外的必选参数：fields，用于验证字段值的字段列表（按提供它们的顺序）�?</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from django.forms import ComboField</span><br><span class="line">&gt;&gt;&gt; f = ComboField(fields=[CharField(max_length=20), EmailField()])</span><br><span class="line">&gt;&gt;&gt; f.clean(&#x27;test@example.com&#x27;)</span><br><span class="line">&#x27;test@example.com&#x27;</span><br><span class="line">&gt;&gt;&gt; f.clean(&#x27;longemailaddress@example.com&#x27;)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">...</span><br><span class="line">ValidationError: [&#x27;Ensure this value has at most 20 characters (it has 28).&#x27;]</span><br></pre></td></tr></table></figure>
+<h4 id="�-6）MultiValueField">�?6）MultiValueField</h4>
+<ul>
+<li>默认的Widget：TextInput</li>
+<li>空值：‘’（一个空字符串）</li>
+<li>规范化为：子类的compress方法返回的类型�?</li>
+<li>根据指定为MultiValueField的参数的每个字段验证给定值�?</li>
+<li>错误信息的键：incomplete, invalid, required</li>
+</ul>
+<h4 id="�-7）SplitDateTimeField">�?7）SplitDateTimeField</h4>
+<ul>
+<li>默认的Widget：SplitDateTimeWidget</li>
+<li>空值：None</li>
+<li>规范化为：Python datetime.datetime 对象�?</li>
+<li>验证给定的值是datetime.datetime或以特定日期时间格式格式化的字符串�?</li>
+<li>错误信息的键：invalid_date, invalid, required, invalid_time</li>
+</ul>
+<h3 id="�-】创建自定义字段">�?】创建自定义字段</h3>
+<ul>
+<li>如果内置的Field真的不能满足你的需求，还可以自定义Field�?</li>
+<li>只需要创建一个django.forms.Field的子类，并实现clean()和__init__()构造方法。<code>__init__</code>()构造方法需要接收前面提过的那些核心参数，比如widget、required,、label、help_text、initial�?</li>
+<li>还可以通过覆盖get_bound_field()方法来自定义访问字段的方�?</li>
+</ul>
+<h2 id="【九】forms组件参数总结，补�">【九】forms组件参数总结，补�?</h2>
+<h3 id="�-】基本参�">�?】基本参�?</h3>
+<h4 id="�-】autocomplete">�?】autocomplete</h4>
+<ul>
+<li>设置是否启用自动填充功能，可以使用以下值：</li>
+<li>on：浏览器自动填充表单项�?</li>
+<li>off：禁用浏览器自动填充�?</li>
+</ul>
+<h4 id="�-】disabled">�?】disabled</h4>
+<ul>
+<li>设置表单项是否禁用，禁用后用户无法编辑或选择该项的值�?</li>
+</ul>
+<h4 id="�-】readonly">�?】readonly</h4>
+<ul>
+<li>设置表单项是否只读，只读的表单项可以显示但不允许用户修改�?</li>
+</ul>
+<h4 id="�-】max-�-min">�?】max �?min</h4>
+<ul>
+<li>用于限制数字或日期类型的输入值的最大和最小值�?</li>
+</ul>
+<h4 id="�-�-maxlength-�-minlength">�?�?**maxlength �?minlength</h4>
+<ul>
+<li>设置输入值的最大长度和最小长度，超过或低于长度限制时将触发验证错误�?</li>
+</ul>
+<h4 id="�-】pattern">�?】pattern</h4>
+<ul>
+<li>使用正则表达式指定输入值的格式验证规则�?</li>
+</ul>
+<h4 id="�-】required">�?】required</h4>
+<ul>
+<li>设置表单项是否为必填项，如果未填写必填项，提交表单时将触发验证错误�?</li>
+</ul>
+<h4 id="�-】step">�?】step</h4>
+<ul>
+<li>用于数字类型的输入值，指定允许的增量或减量范围�?</li>
+</ul>
+<h4 id="�-】aria-describedby">�?】aria-describedby</h4>
+<ul>
+<li>指定与表单项关联的描述性文本的id，辅助技术可以使用此信息提供更好的可访问性�?</li>
+</ul>
+<h4 id="�-0】aria-invalid">�?0】aria-invalid</h4>
+<ul>
+<li>设置是否将表单项标记为无效，如果表单项的值不符合验证规则，可以将其设置为&quot;true&quot;�?</li>
+</ul>
+<h3 id="�-】参数详�">�?】参数详�?</h3>
+<h4 id="�-�-widget：添加标签属�">�?�?**widget：添加标签属�?</h4>
+<ul>
+<li>指定字段的控件显示方式�?</li>
+<li>可以使用各种预定义的小部件（widgets）或自定义的小部件类�?</li>
+<li>例如，可以使�?forms.TextInput 将字段以文本框的形式显示出来�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&quot;用户�?,</span></span><br><span class="line"><span class="string">        widget=forms.TextInput(attrs=&#123;&quot;</span><span class="keyword">class</span><span class="string">&quot;: &quot;</span>form-control<span class="string">&quot;&#125;)</span></span><br><span class="line"><span class="string">    )</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>在Django的表单中</p>
+</li>
+<li>
+<ul>
+<li>widget参数用于设置表单字段的展示方式或使用自定义的HTML元素来呈现字段�?</li>
+</ul>
+</li>
+<li>
+<p>widget参数</p>
+</li>
+<li>
+<ul>
+<li>可以接受一个Django提供的内置的小部件类（widget class�?</li>
+<li>也可以使用自定义的小部件类�?</li>
+</ul>
+</li>
+<li>
+<p>以下是几个常用的小部件类及其作用�?</p>
+</li>
+</ul>
+<ol>
+<li>forms.TextInput：默认的文本输入框小部件�?</li>
+<li>forms.Textarea：多行文本输入框小部件�?</li>
+<li>forms.CheckboxInput：复选框小部件�?</li>
+<li>forms.Select：下拉选择框小部件�?</li>
+<li>forms.RadioSelect：单选按钮小部件�?</li>
+<li>forms.FileInput：文件上传小部件�?</li>
+<li>forms.HiddenInput：隐藏输入框小部件�?</li>
+</ol>
+<ul>
+<li>
+<p>下面是一个示例代码片�?</p>
+</li>
+<li>
+<ul>
+<li>演示如何使用widget参数定义一个表单字段的小部件：</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">100</span>,</span><br><span class="line">        widget=forms.TextInput(attrs=&#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;my-custom-class&#x27;</span>&#125;)</span><br><span class="line">    )</span><br><span class="line">    password = forms.CharField(</span><br><span class="line">        max_length=<span class="number">100</span>,</span><br><span class="line">        widget=forms.PasswordInput()</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>上述代码�?</p>
+</li>
+<li>
+<ul>
+<li>username 字段使用自定义的CSS类样式，并将其应用到一个文本输入框小部件中�?</li>
+<li>password 字段则使用了密码输入框小部件�?</li>
+</ul>
+</li>
+<li>
+<p>需要注意的�?</p>
+</li>
+<li>
+<ul>
+<li>可以通过attrs参数传递其他的HTML属性给小部件�?</li>
+<li>例如，在上面的示例中，我们为username字段定义了class属性�?</li>
+</ul>
+</li>
+<li>
+<p>另外</p>
+</li>
+<li>
+<ul>
+<li>如果想要使用自定义的小部件类</li>
+<li>可以定义一个继承自Django小部件类的类，并将其传递给widget参数。例�?</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyCustomWidget</span>(forms.widgets.TextInput):</span><br><span class="line">    <span class="comment"># 自定义的小部件类</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    my_field = forms.CharField(</span><br><span class="line">        widget=MyCustomWidget()</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>上述代码�?</p>
+</li>
+<li>
+<ul>
+<li>我们创建了一个名为MyCustomWidget的自定义小部件类�?</li>
+<li>并将其用于my_field字段�?</li>
+</ul>
+</li>
+<li>
+<p>通过使用widget参数</p>
+</li>
+<li>
+<ul>
+<li>我们可以对Django表单字段的展示方式进行灵活的定制</li>
+<li>以满足具体项目的需求�?</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-required：是否为必填字段">(2)***required：是否为必填字段</h4>
+<ul>
+<li>设置字段是否为必填项，默认为 True�?</li>
+<li>如果设置�?False，则允许用户提交空值。例如：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&quot;用户�?,</span></span><br><span class="line"><span class="string">        required=False</span></span><br><span class="line"><span class="string">    )</span></span><br></pre></td></tr></table></figure>
+<h4 id="�-�-label：自定义标签文本">�?�?**label：自定义标签文本</h4>
+<ul>
+<li>指定字段的标签显示文本�?</li>
+<li>可以使用该参数自定义字段在表单中的标签文本。例如：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&quot;Your Username&quot;</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<h4 id="�-�-error-messages：标签不合法的提示信�">�?�?**error_messages：标签不合法的提示信�?</h4>
+<ul>
+<li>用于自定义错误消息�?</li>
+<li>可以通过该参数自定义字段验证失败时显示的错误消息。例如：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&quot;用户�?,</span></span><br><span class="line"><span class="string">        error_messages=&#123;</span></span><br><span class="line"><span class="string">            &quot;</span>max_length<span class="string">&quot;: &quot;</span>用户名最多为<span class="number">8</span>个字�?,</span><br><span class="line">            <span class="string">&quot;min_length&quot;</span>: <span class="string">&quot;用户名至少为3个字�?,</span></span><br><span class="line"><span class="string">            &quot;</span>required<span class="string">&quot;: &quot;</span>请填写用户名<span class="string">&quot;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    )</span></span><br></pre></td></tr></table></figure>
+<h4 id="�-）help-text：描述提醒信�">�?）help_text：描述提醒信�?</h4>
+<ul>
+<li>为字段提供帮助文本�?</li>
+<li>可以使用该参数为字段添加描述性的帮助文本，以向用户解释该字段的用途或提供输入建议。例如：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&quot;用户�?,</span></span><br><span class="line"><span class="string">        help_text=&quot;</span>请输�?-<span class="number">8</span>个字符的用户�?</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<h3 id="�-�-validators：正则表达式">�?�?**validators：正则表达式</h3>
+<ul>
+<li>用于自定义字段验证器�?</li>
+<li>可以使用该参数添加额外的验证函数来对字段进行更复杂的验证。例如：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.core.validators <span class="keyword">import</span> RegexValidator</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&quot;用户�?,</span></span><br><span class="line"><span class="string">        validators=[</span></span><br><span class="line"><span class="string">            RegexValidator(</span></span><br><span class="line"><span class="string">                regex=r&quot;</span>^[a-zA-Z]+$<span class="string">&quot;,</span></span><br><span class="line"><span class="string">                message=&quot;</span>只允许字母字�?</span><br><span class="line">            )</span><br><span class="line">        ]</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<h3 id="�-�-initial：默认�">�?�?**initial：默认�?</h3>
+<ul>
+<li>可以通过 initial 参数为表单字段设置默认值�?</li>
+<li>该参数指定了在表单加载时显示的初始值。以下是示例代码�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&quot;用户�?,</span></span><br><span class="line"><span class="string">        initial=&quot;</span>JohnDoe<span class="string">&quot;</span></span><br><span class="line"><span class="string">    )</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>在上述示例中</p>
+</li>
+<li>
+<ul>
+<li>username 字段将显示一个文本框</li>
+<li>并且默认值为 &quot;JohnDoe&quot;�?</li>
+</ul>
+</li>
+<li>
+<p>另外</p>
+</li>
+<li>
+<ul>
+<li>如果要为多个字段设置默认�?</li>
+<li>可以通过使用 initial 字典来一次性设置多个字段的初始值。例如：</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&quot;用户�?</span></span><br><span class="line"><span class="string">    )</span></span><br><span class="line"><span class="string">    email = forms.EmailField(</span></span><br><span class="line"><span class="string">        label=&quot;</span>邮箱<span class="string">&quot;</span></span><br><span class="line"><span class="string">    )</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    initial = &#123;</span></span><br><span class="line"><span class="string">        &#x27;username&#x27;: &#x27;JohnDoe&#x27;,</span></span><br><span class="line"><span class="string">        &#x27;email&#x27;: &#x27;johndoe@example.com&#x27;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以在实例化表单对象时传�?initial 字典来设置这两个字段的默认值：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">form = MyForm(initial=&#123;</span><br><span class="line">    <span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;JohnSmith&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;email&#x27;</span>: <span class="string">&#x27;johnsmith@example.com&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>当表单加载时</p>
+</li>
+<li>
+<ul>
+<li>username 字段将显示为 “JohnSmith”</li>
+<li>email 字段将显示为 &quot;<a href="mailto:johnsmith@example.com">johnsmith@example.com</a>&quot;�?</li>
+</ul>
+</li>
+<li>
+<p>这样</p>
+</li>
+<li>
+<ul>
+<li>通过使用 initial 参数</li>
+<li>可以方便地为表单字段设置默认值，提供更好的用户体验�?</li>
+</ul>
+</li>
+</ul>
+<h3 id="�-】其他字段渲�">�?】其他字段渲�?</h3>
+<h4 id="�-）radioSelect（单选）">�?）radioSelect（单选）</h4>
+<ul>
+<li>您可以在表单类中使用forms.RadioSelect字段来渲染radioSelect字段。下面是一个案例演示：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GenderForm</span>(forms.Form):</span><br><span class="line">    gender_choices = [</span><br><span class="line">        (<span class="string">&#x27;male&#x27;</span>, <span class="string">&#x27;Male&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;female&#x27;</span>, <span class="string">&#x27;Female&#x27;</span>),</span><br><span class="line">    ]</span><br><span class="line">    gender = forms.ChoiceField(choices=gender_choices, widget=forms.RadioSelect)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在这个案例中，我们定义了一个名为GenderForm的表单类，其中包含了一个gender字段用于选择性别�?</li>
+<li>通过设置widget=forms.RadioSelect，我们将该字段渲染为单选按钮�?</li>
+</ul>
+<h4 id="�-）单选Select">�?）单选Select</h4>
+<ul>
+<li>您可以使用forms.Select字段来呈现下拉菜单形式的单选选项。以下是一个案例演示：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CityForm</span>(forms.Form):</span><br><span class="line">    city_choices = [</span><br><span class="line">        (<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;New York&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;London&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;3&#x27;</span>, <span class="string">&#x27;Tokyo&#x27;</span>),</span><br><span class="line">    ]</span><br><span class="line">    city = forms.ChoiceField(choices=city_choices, widget=forms.Select)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在这个案例中，我们定义了一个名为CityForm的表单类，其中包含了一个city字段用于选择城市。通过设置widget=forms.Select，我们将该字段渲染为下拉菜单�?</li>
+</ul>
+<h4 id="�-）多选Select">�?）多选Select</h4>
+<ul>
+<li>使用forms.SelectMultiple字段可以渲染多选Select组件。以下是一个案例演示：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">InterestsForm</span>(forms.Form):</span><br><span class="line">    interest_choices = [</span><br><span class="line">        (<span class="string">&#x27;coding&#x27;</span>, <span class="string">&#x27;Coding&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;gaming&#x27;</span>, <span class="string">&#x27;Gaming&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;reading&#x27;</span>, <span class="string">&#x27;Reading&#x27;</span>),</span><br><span class="line">    ]</span><br><span class="line">    interests = forms.MultipleChoiceField(choices=interest_choices, widget=forms.SelectMultiple)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在这个案例中，我们定义了一个名为InterestsForm的表单类</li>
+<li>其中包含了一个interests字段用于选择兴趣�?</li>
+<li>通过设置widget=forms.SelectMultiple，我们将该字段渲染为支持多选的下拉菜单�?</li>
+</ul>
+<h4 id="�-）单选checkbox">�?）单选checkbox</h4>
+<ul>
+<li>要渲染单选checkbox字段，您可以使用forms.CheckboxInput字段�?</li>
+<li>以下是一个案例演示：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AgreeForm</span>(forms.Form):</span><br><span class="line">    agree = forms.BooleanField(widget=forms.CheckboxInput)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在这个案例中，我们定义了一个名为AgreeForm的表单类</li>
+<li>其中包含了一个agree字段用于接受条款�?</li>
+<li>通过设置widget=forms.CheckboxInput，我们将该字段渲染为单选复选框�?</li>
+</ul>
+<h4 id="�-）多选checkbox">�?）多选checkbox</h4>
+<ul>
+<li>要渲染多选checkbox字段</li>
+<li>可以使用forms.CheckboxSelectMultiple字段�?</li>
+<li>以下是一个案例演�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ColorsForm</span>(forms.Form):</span><br><span class="line">    color_choices = [</span><br><span class="line">        (<span class="string">&#x27;red&#x27;</span>, <span class="string">&#x27;Red&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;green&#x27;</span>, <span class="string">&#x27;Green&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;blue&#x27;</span>, <span class="string">&#x27;Blue&#x27;</span>),</span><br><span class="line">    ]</span><br><span class="line">    colors = forms.MultipleChoiceField(choices=color_choices, widget=forms.CheckboxSelectMultiple)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在这个案例中，我们定义了一个名为ColorsForm的表单类，其中包含了一个colors字段用于选择颜色�?</li>
+<li>通过设置widget=forms.CheckboxSelectMultiple，我们将该字段渲染为多个复选框供用户选择�?</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/2.0Scrapy%E6%A1%86%E6%9E%B6%E5%AE%89%E8%A3%85/" rel="prev" title="2.0Scrapy��ܰ�װ">
+      <i class="fa fa-chevron-left"></i> 2.0Scrapy��ܰ�װ
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/2.0HTML%E5%9F%BA%E7%A1%80%EF%BC%8CHTML%E6%A0%87%E7%AD%BE/" rel="next" title="2.0HTML������HTML��ǩ">
+      2.0HTML������HTML��ǩ <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Django框架之Form组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91Django%E7%9A%84%E8%A1%A8%E5%8D%95%E7%B3%BB%EF%BF%BD"><span class="nav-number">1.1.</span> <span class="nav-text">【一】Django的表单系�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%8E%9F%E5%A7%8B%E7%9A%84form%E8%A1%A8%E5%8D%95"><span class="nav-number">1.1.1.</span> <span class="nav-text">�?】原始的form表单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91Django%E7%9A%84%E8%A1%A8%E5%8D%95%E7%B3%BB%EF%BF%BD"><span class="nav-number">1.1.2.</span> <span class="nav-text">�?】Django的表单系�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91form%E8%A1%A8%E5%8D%95%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8A%9F%EF%BF%BD"><span class="nav-number">1.1.3.</span> <span class="nav-text">�?】form表单的主要功�?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E9%9C%80%E6%B1%82%E4%BB%8B%EF%BF%BD"><span class="nav-number">1.2.</span> <span class="nav-text">【二】需求介�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%89%E3%80%91form%E8%A1%A8%E5%8D%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.</span> <span class="nav-text">【三】form表单实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E7%82%B9%E5%87%BB%E6%8C%89%E9%92%AE%E8%BF%94%E5%9B%9E%E6%AF%94%E5%AF%B9%E4%BF%A1%EF%BF%BD"><span class="nav-number">1.3.1.</span> <span class="nav-text">�?】点击按钮返回比对信�?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%89%8D%E7%AB%AF%E9%A1%B5%EF%BF%BD"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">�?）前端页�?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%90%8E%E7%AB%AF"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">(2)后端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E7%94%A8%E5%88%B0%E4%BA%86%E4%BB%80%EF%BF%BD"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">�?）用到了什�?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91Form%E7%BB%84%E4%BB%B6%E6%A0%A1%E9%AA%8C%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.2.</span> <span class="nav-text">�?】Form组件校验数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%9B%9B%E3%80%91Form%E7%BB%84%E4%BB%B6%E5%A6%82%E4%BD%95%E6%A0%A1%E9%AA%8C%E6%95%B0%E6%8D%AE"><span class="nav-number">1.4.</span> <span class="nav-text">【四】Form组件如何校验数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E7%BC%96%E5%86%99%E8%A1%A8%E8%BE%BE%E7%B1%BB"><span class="nav-number">1.4.1.</span> <span class="nav-text">�?】编写表达类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%88%9B%E5%BB%BA%E6%96%87%EF%BF%BD"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">�?）创建文�?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E4%B9%A6%E5%86%99form%E8%A1%A8%E5%8D%95%EF%BF%BD"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">�?）书写form表单�?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E4%B9%A6%E5%86%99%E5%90%8E%E7%AB%AF%E6%95%B0%EF%BF%BD"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">�?）书写后端数�?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%B9%A6%E5%86%99%E5%89%8D%E7%AB%AF%E6%95%B0%E6%8D%AE"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">(4)书写前端数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%94%E3%80%91Form%E7%BB%84%E4%BB%B6%E7%9A%84%E5%AD%97%E6%AE%B5%E5%8F%82%EF%BF%BD"><span class="nav-number">1.5.</span> <span class="nav-text">【五】Form组件的字段参�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E6%80%BB%E7%9A%84%E5%8F%82%E6%95%B0%E6%A1%88%E4%BE%8B"><span class="nav-number">1.5.1.</span> <span class="nav-text">�?】总的参数案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%8F%82%E6%95%B0max-length"><span class="nav-number">1.5.2.</span> <span class="nav-text">�?】参数max_length</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%8F%82%E6%95%B0min-length"><span class="nav-number">1.5.3.</span> <span class="nav-text">�?】参数min_length</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%8F%82%E6%95%B0label"><span class="nav-number">1.5.4.</span> <span class="nav-text">�?】参数label</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%8F%82%E6%95%B0label-suffix"><span class="nav-number">1.5.5.</span> <span class="nav-text">�?】参数label_suffix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%8F%82%E6%95%B0widget"><span class="nav-number">1.5.6.</span> <span class="nav-text">�?】参数widget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%8F%82%E6%95%B0help-text"><span class="nav-number">1.5.7.</span> <span class="nav-text">�?】参数help_text</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%8F%82%E6%95%B0error-messages"><span class="nav-number">1.5.8.</span> <span class="nav-text">�?】参数error_messages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%8F%82%E6%95%B0disabled"><span class="nav-number">1.5.9.</span> <span class="nav-text">�?】参数disabled</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-0%E3%80%91%E5%8F%82%E6%95%B0required"><span class="nav-number">1.5.10.</span> <span class="nav-text">�?0】参数required</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-1%E3%80%91%E5%8F%82%E6%95%B0initial"><span class="nav-number">1.5.11.</span> <span class="nav-text">�?1】参数initial</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-2%E3%80%91%E5%8F%82%E6%95%B0validators"><span class="nav-number">1.5.12.</span> <span class="nav-text">�?2】参数validators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-3%E3%80%91localize"><span class="nav-number">1.5.13.</span> <span class="nav-text">�?3】localize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-4%E3%80%91has-changed-%E6%96%B9%E6%B3%95"><span class="nav-number">1.5.14.</span> <span class="nav-text">�?4】has_changed()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-5%E3%80%91%E8%BE%93%E5%85%A5%E6%A1%86password"><span class="nav-number">1.5.15.</span> <span class="nav-text">�?5】输入框password</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-6%E3%80%91%E9%80%89%E6%8B%A9%E6%A1%86radioSelect"><span class="nav-number">1.5.16.</span> <span class="nav-text">�?6】选择框radioSelect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-7%E3%80%91%E5%8D%95%E9%80%89%E6%A1%86Select"><span class="nav-number">1.5.17.</span> <span class="nav-text">�?7】单选框Select</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-8%E3%80%91%E5%A4%9A%E9%80%89%E6%A1%86SelectMultiple"><span class="nav-number">1.5.18.</span> <span class="nav-text">�?8】多选框SelectMultiple</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-9%E3%80%91%E5%8D%95%E9%80%89%E6%A1%86CheckboxInput"><span class="nav-number">1.5.19.</span> <span class="nav-text">�?9】单选框CheckboxInput</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-0%E3%80%91%E5%A4%9A%E9%80%89%E6%A1%86CheckboxSelectMultiple"><span class="nav-number">1.5.20.</span> <span class="nav-text">�?0】多选框CheckboxSelectMultiple</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%85%AD%E3%80%91choice%E5%AD%97%E6%AE%B5%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%EF%BF%BD"><span class="nav-number">1.6.</span> <span class="nav-text">【六】choice字段的注意事�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E6%96%B9%E6%B3%95%E4%B8%80"><span class="nav-number">1.6.1.</span> <span class="nav-text">�?】方法一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="nav-number">1.6.2.</span> <span class="nav-text">�?】方法二</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%83%E3%80%91%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E6%AE%B5%E6%A0%A1%E9%AA%8C"><span class="nav-number">1.7.</span> <span class="nav-text">【七】自定义字段校验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E8%87%AA%E5%AE%9A%E4%B9%89%E9%AA%8C%E5%87%BD%EF%BF%BD"><span class="nav-number">1.7.1.</span> <span class="nav-text">�?】自定义验函�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E6%80%BB%E7%9A%84%E8%AF%B4%E4%B8%80%E4%B8%8B%E6%AD%A5%EF%BF%BD"><span class="nav-number">1.7.2.</span> <span class="nav-text">�?】总的说一下步�?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%85%AB%E3%80%91Form%E7%BB%84%E4%BB%B6%E5%AD%97%E6%AE%B5%E5%8F%82%E6%95%B0"><span class="nav-number">1.8.</span> <span class="nav-text">【八】Form组件字段参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%86%85%E7%BD%AE%E5%AD%97%EF%BF%BD"><span class="nav-number">1.8.1.</span> <span class="nav-text">�?】内置字�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E6%A6%82%EF%BF%BD"><span class="nav-number">1.8.2.</span> <span class="nav-text">�?】概�?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89BooleanField"><span class="nav-number">1.8.2.1.</span> <span class="nav-text">�?）BooleanField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89CharField"><span class="nav-number">1.8.2.2.</span> <span class="nav-text">�?）CharField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89ChoiceField"><span class="nav-number">1.8.2.3.</span> <span class="nav-text">�?）ChoiceField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89TypedChoiceField"><span class="nav-number">1.8.2.4.</span> <span class="nav-text">�?）TypedChoiceField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89DateField"><span class="nav-number">1.8.2.5.</span> <span class="nav-text">�?）DateField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89DateTimeField"><span class="nav-number">1.8.2.6.</span> <span class="nav-text">�?）DateTimeField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89DecimalField"><span class="nav-number">1.8.2.7.</span> <span class="nav-text">�?）DecimalField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89DurationField"><span class="nav-number">1.8.2.8.</span> <span class="nav-text">�?）DurationField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89EmailField"><span class="nav-number">1.8.2.9.</span> <span class="nav-text">�?）EmailField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-0%EF%BC%89FileField"><span class="nav-number">1.8.2.10.</span> <span class="nav-text">�?0）FileField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-1%EF%BC%89FilePathField"><span class="nav-number">1.8.2.11.</span> <span class="nav-text">�?1）FilePathField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-2%EF%BC%89FloatField"><span class="nav-number">1.8.2.12.</span> <span class="nav-text">�?2）FloatField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-3%EF%BC%89ImageField"><span class="nav-number">1.8.2.13.</span> <span class="nav-text">�?3）ImageField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-4%EF%BC%89IntegerField"><span class="nav-number">1.8.2.14.</span> <span class="nav-text">�?4）IntegerField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-5%EF%BC%89JSONField"><span class="nav-number">1.8.2.15.</span> <span class="nav-text">�?5）JSONField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-6%EF%BC%89GenericIPAddressField"><span class="nav-number">1.8.2.16.</span> <span class="nav-text">�?6）GenericIPAddressField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-7%EF%BC%89MultipleChoiceField"><span class="nav-number">1.8.2.17.</span> <span class="nav-text">�?7）MultipleChoiceField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-8%EF%BC%89TypedMultipleChoiceField"><span class="nav-number">1.8.2.18.</span> <span class="nav-text">�?8）TypedMultipleChoiceField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-9%EF%BC%89NullBooleanField"><span class="nav-number">1.8.2.19.</span> <span class="nav-text">�?9）NullBooleanField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-0%EF%BC%89RegexField"><span class="nav-number">1.8.2.20.</span> <span class="nav-text">�?0）RegexField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-1%EF%BC%89SlugField"><span class="nav-number">1.8.2.21.</span> <span class="nav-text">�?1）SlugField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-2%EF%BC%89TimeField"><span class="nav-number">1.8.2.22.</span> <span class="nav-text">�?2）TimeField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-3%EF%BC%89URLField"><span class="nav-number">1.8.2.23.</span> <span class="nav-text">�?3）URLField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-4%EF%BC%89UUIDField"><span class="nav-number">1.8.2.24.</span> <span class="nav-text">�?4）UUIDField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-5%EF%BF%BD-ComboField"><span class="nav-number">1.8.2.25.</span> <span class="nav-text">�?5�?ComboField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-6%EF%BC%89MultiValueField"><span class="nav-number">1.8.2.26.</span> <span class="nav-text">�?6）MultiValueField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-7%EF%BC%89SplitDateTimeField"><span class="nav-number">1.8.2.27.</span> <span class="nav-text">�?7）SplitDateTimeField</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E6%AE%B5"><span class="nav-number">1.8.3.</span> <span class="nav-text">�?】创建自定义字段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B9%9D%E3%80%91forms%E7%BB%84%E4%BB%B6%E5%8F%82%E6%95%B0%E6%80%BB%E7%BB%93%EF%BC%8C%E8%A1%A5%EF%BF%BD"><span class="nav-number">1.9.</span> <span class="nav-text">【九】forms组件参数总结，补�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%9F%BA%E6%9C%AC%E5%8F%82%EF%BF%BD"><span class="nav-number">1.9.1.</span> <span class="nav-text">�?】基本参�?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91autocomplete"><span class="nav-number">1.9.1.1.</span> <span class="nav-text">�?】autocomplete</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91disabled"><span class="nav-number">1.9.1.2.</span> <span class="nav-text">�?】disabled</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91readonly"><span class="nav-number">1.9.1.3.</span> <span class="nav-text">�?】readonly</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91max-%EF%BF%BD-min"><span class="nav-number">1.9.1.4.</span> <span class="nav-text">�?】max �?min</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BF%BD-maxlength-%EF%BF%BD-minlength"><span class="nav-number">1.9.1.5.</span> <span class="nav-text">�?�?**maxlength �?minlength</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91pattern"><span class="nav-number">1.9.1.6.</span> <span class="nav-text">�?】pattern</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91required"><span class="nav-number">1.9.1.7.</span> <span class="nav-text">�?】required</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91step"><span class="nav-number">1.9.1.8.</span> <span class="nav-text">�?】step</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91aria-describedby"><span class="nav-number">1.9.1.9.</span> <span class="nav-text">�?】aria-describedby</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-0%E3%80%91aria-invalid"><span class="nav-number">1.9.1.10.</span> <span class="nav-text">�?0】aria-invalid</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%8F%82%E6%95%B0%E8%AF%A6%EF%BF%BD"><span class="nav-number">1.9.2.</span> <span class="nav-text">�?】参数详�?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BF%BD-widget%EF%BC%9A%E6%B7%BB%E5%8A%A0%E6%A0%87%E7%AD%BE%E5%B1%9E%EF%BF%BD"><span class="nav-number">1.9.2.1.</span> <span class="nav-text">�?�?**widget：添加标签属�?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-required%EF%BC%9A%E6%98%AF%E5%90%A6%E4%B8%BA%E5%BF%85%E5%A1%AB%E5%AD%97%E6%AE%B5"><span class="nav-number">1.9.2.2.</span> <span class="nav-text">(2)***required：是否为必填字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BF%BD-label%EF%BC%9A%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE%E6%96%87%E6%9C%AC"><span class="nav-number">1.9.2.3.</span> <span class="nav-text">�?�?**label：自定义标签文本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BF%BD-error-messages%EF%BC%9A%E6%A0%87%E7%AD%BE%E4%B8%8D%E5%90%88%E6%B3%95%E7%9A%84%E6%8F%90%E7%A4%BA%E4%BF%A1%EF%BF%BD"><span class="nav-number">1.9.2.4.</span> <span class="nav-text">�?�?**error_messages：标签不合法的提示信�?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89help-text%EF%BC%9A%E6%8F%8F%E8%BF%B0%E6%8F%90%E9%86%92%E4%BF%A1%EF%BF%BD"><span class="nav-number">1.9.2.5.</span> <span class="nav-text">�?）help_text：描述提醒信�?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BF%BD-validators%EF%BC%9A%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.9.3.</span> <span class="nav-text">�?�?**validators：正则表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%EF%BF%BD-initial%EF%BC%9A%E9%BB%98%E8%AE%A4%EF%BF%BD"><span class="nav-number">1.9.4.</span> <span class="nav-text">�?�?**initial：默认�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%85%B6%E4%BB%96%E5%AD%97%E6%AE%B5%E6%B8%B2%EF%BF%BD"><span class="nav-number">1.9.5.</span> <span class="nav-text">�?】其他字段渲�?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89radioSelect%EF%BC%88%E5%8D%95%E9%80%89%EF%BC%89"><span class="nav-number">1.9.5.1.</span> <span class="nav-text">�?）radioSelect（单选）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%8D%95%E9%80%89Select"><span class="nav-number">1.9.5.2.</span> <span class="nav-text">�?）单选Select</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%A4%9A%E9%80%89Select"><span class="nav-number">1.9.5.3.</span> <span class="nav-text">�?）多选Select</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%8D%95%E9%80%89checkbox"><span class="nav-number">1.9.5.4.</span> <span class="nav-text">�?）单选checkbox</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD-%EF%BC%89%E5%A4%9A%E9%80%89checkbox"><span class="nav-number">1.9.5.5.</span> <span class="nav-text">�?）多选checkbox</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">201</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

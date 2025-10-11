@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="web框架本质 【一】web框架的本�?   TCP服务端与浏览器交互的过程   web框架的本质就是一个强大的TCP服务�?   【二】纯手撸web框架 �?】原始版本的服务�?   与浏览器的不能进行交互，会出错误   原因是我们没有遵循HTTP协议   无法访问此网�?27.0.0.1 拒绝了我们的连接请求�? 1234567891011121314151617181920212223242">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.0web��ܱ���">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/1.0web%E6%A1%86%E6%9E%B6%E6%9C%AC%E8%B4%A8/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="web框架本质 【一】web框架的本�?   TCP服务端与浏览器交互的过程   web框架的本质就是一个强大的TCP服务�?   【二】纯手撸web框架 �?】原始版本的服务�?   与浏览器的不能进行交互，会出错误   原因是我们没有遵循HTTP协议   无法访问此网�?27.0.0.1 拒绝了我们的连接请求�? 1234567891011121314151617181920212223242">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240617192245357.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240617193825523.png">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T09:47:38.120Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240617192245357.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/1.0web%E6%A1%86%E6%9E%B6%E6%9C%AC%E8%B4%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>1.0web��ܱ��� | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/1.0web%E6%A1%86%E6%9E%B6%E6%9C%AC%E8%B4%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          1.0web��ܱ���
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 17:47:38" itemprop="dateModified" datetime="2025-10-11T17:47:38+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>web框架本质</h1>
+<h2 id="【一】web框架的本�">【一】web框架的本�?</h2>
+<ul>
+<li>
+<p>TCP服务端与浏览器交互的过程</p>
+</li>
+<li>
+<p>web框架的本质就是一个强大的TCP服务�?</p>
+</li>
+</ul>
+<h2 id="【二】纯手撸web框架">【二】纯手撸web框架</h2>
+<h3 id="�-】原始版本的服务�">�?】原始版本的服务�?</h3>
+<ul>
+<li>
+<p>与浏览器的不能进行交互，会出错误</p>
+<ul>
+<li>
+<p>原因是我们没有遵循HTTP协议</p>
+</li>
+<li>
+<pre><code class="language-python">无法访问此网�?27.0.0.1 拒绝了我们的连接请求�?
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```python</span><br><span class="line">import socket</span><br><span class="line"></span><br><span class="line"># 创建服务器对�?</span><br><span class="line">server = socket.socket()</span><br><span class="line"></span><br><span class="line"># ip</span><br><span class="line">ip = &quot;127.0.0.1&quot;</span><br><span class="line"># 端口</span><br><span class="line">port = 8008</span><br><span class="line">#</span><br><span class="line">addr = (ip, port)</span><br><span class="line"># 绑定IP和port</span><br><span class="line">server.bind(addr)</span><br><span class="line"># 监听</span><br><span class="line">server.listen(5)</span><br><span class="line"># 得到套接字对象和客户端地址</span><br><span class="line">conn, addr = server.accept()</span><br><span class="line"># 接收数据</span><br><span class="line">client_data = conn.recv(1024)</span><br><span class="line"># 将数据解�?</span><br><span class="line">client_data = client_data.decode(&#x27;utf-8&#x27;)</span><br><span class="line">print(client_data)</span><br><span class="line"></span><br><span class="line"># 响应数据</span><br><span class="line">reply_client_data = &quot;这是服务端响应的数据&quot;</span><br><span class="line"># 编码</span><br><span class="line">reply_client_data = reply_client_data.encode(&#x27;utf-8&#x27;)</span><br><span class="line"># 发�?</span><br><span class="line">conn.send(reply_client_data)</span><br></pre></td></tr></table></figure>
+
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="�-】遵循HTTP协议的server">�?】遵循HTTP协议的server</h3>
+<ul>
+<li>HTTP协议：响应头 协议版本 + 状态码 + 换行 + 响应数据</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建服务器对�?</span></span><br><span class="line">server = socket.socket()</span><br><span class="line"></span><br><span class="line"><span class="comment"># ip</span></span><br><span class="line">ip = <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line"><span class="comment"># 端口</span></span><br><span class="line">port = <span class="number">8008</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">addr = (ip, port)</span><br><span class="line"><span class="comment"># 绑定IP和port</span></span><br><span class="line">server.bind(addr)</span><br><span class="line"><span class="comment"># 监听</span></span><br><span class="line">server.listen(<span class="number">5</span>)</span><br><span class="line"><span class="comment"># 得到套接字对象和客户端地址</span></span><br><span class="line">conn, addr = server.accept()</span><br><span class="line"><span class="comment"># 接收数据</span></span><br><span class="line">client_data = conn.recv(<span class="number">1024</span>)</span><br><span class="line"><span class="comment"># 将数据解�?</span></span><br><span class="line">client_data = client_data.decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(client_data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 响应首行 协议版本+状态码+换行</span></span><br><span class="line">back_statue = <span class="string">&quot;HTTP/1.1&quot;</span> + <span class="string">&quot;200 OK&quot;</span> + <span class="string">&quot;\r\n\r\n&quot;</span></span><br><span class="line"><span class="comment"># 响应数据</span></span><br><span class="line">client_data = <span class="string">&quot;this is a message&quot;</span></span><br><span class="line"><span class="comment"># 响应首行+响应数据</span></span><br><span class="line">reply_client_data = back_statue + client_data</span><br><span class="line"><span class="comment"># 编码</span></span><br><span class="line">reply_client_data = reply_client_data.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"><span class="comment"># 发送数�?</span></span><br><span class="line">conn.send(reply_client_data)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>接收到的数据</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">GET / HTTP/<span class="number">1.1</span></span><br><span class="line">Host: <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8008</span></span><br><span class="line">Connection: keep-alive</span><br><span class="line">Cache-Control: <span class="built_in">max</span>-age=<span class="number">0</span></span><br><span class="line">sec-ch-ua: <span class="string">&quot;Google Chrome&quot;</span>;v=<span class="string">&quot;125&quot;</span>, <span class="string">&quot;Chromium&quot;</span>;v=<span class="string">&quot;125&quot;</span>, <span class="string">&quot;Not.A/Brand&quot;</span>;v=<span class="string">&quot;24&quot;</span></span><br><span class="line">sec-ch-ua-mobile: ?<span class="number">0</span></span><br><span class="line">sec-ch-ua-platform: <span class="string">&quot;Windows&quot;</span></span><br><span class="line">Upgrade-Insecure-Requests: <span class="number">1</span></span><br><span class="line">User-Agent: Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">10.0</span>; Win64; x64) AppleWebKit/<span class="number">537.36</span> (KHTML, like Gecko) Chrome/<span class="number">125.0</span><span class="number">.0</span><span class="number">.0</span> Safari/<span class="number">537.36</span></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=<span class="number">0.9</span>,image/avif,image/webp,image/apng,*/*;q=<span class="number">0.8</span>,application/signed-exchange;v=b3;q=<span class="number">0.7</span></span><br><span class="line">Sec-Fetch-Site: none</span><br><span class="line">Sec-Fetch-Mode: navigate</span><br><span class="line">Sec-Fetch-User: ?<span class="number">1</span></span><br><span class="line">Sec-Fetch-Dest: document</span><br><span class="line">Accept-Encoding: gzip, deflate, br, zstd</span><br><span class="line">Accept-Language: zh-CN,zh;q=<span class="number">0.9</span></span><br></pre></td></tr></table></figure>
+<h3 id="�-】对浏览器的路径进行分配">�?】对浏览器的路径进行分配</h3>
+<ul>
+<li>用于登入功能路径
+<ul>
+<li>127.0.0.1:8009/login</li>
+</ul>
+</li>
+<li>用于验证用户身份路径
+<ul>
+<li>127.0.0.1:8009/register</li>
+</ul>
+</li>
+<li>这里的路径是根路�?
+<ul>
+<li>127.0.0.1:8809/</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-获得单个浏览器的路径，用split">(1)获得单个浏览器的路径，用split</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建服务器对�?</span></span><br><span class="line">server = socket.socket()</span><br><span class="line"></span><br><span class="line"><span class="comment"># ip</span></span><br><span class="line">ip = <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line"><span class="comment"># 端口</span></span><br><span class="line">port = <span class="number">8008</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">addr = (ip, port)</span><br><span class="line"><span class="comment"># 绑定IP和port</span></span><br><span class="line">server.bind(addr)</span><br><span class="line"><span class="comment"># 监听</span></span><br><span class="line">server.listen(<span class="number">5</span>)</span><br><span class="line"><span class="comment"># 得到套接字对象和客户端地址</span></span><br><span class="line">conn, addr = server.accept()</span><br><span class="line"><span class="comment"># 接收数据</span></span><br><span class="line">client_data = conn.recv(<span class="number">1024</span>)</span><br><span class="line"><span class="comment"># 将数据解�?</span></span><br><span class="line">client_data = client_data.decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"><span class="comment">#    这一步就是split切分</span></span><br><span class="line"><span class="built_in">print</span>(client_data.split(<span class="string">&quot; &quot;</span>))</span><br><span class="line"><span class="comment"># 输出# [&#x27;GET&#x27;, &#x27;/login&#x27;, &#x27;HTTP/1.1\r\nHost:&#x27;, &#x27;127.0.0.1:8008\r\nConnection:&#x27;。。。。。。。]</span></span><br><span class="line"><span class="built_in">print</span>(client_data)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(client_data)</span><br><span class="line"><span class="comment"># 响应首行 协议版本+状态码+换行</span></span><br><span class="line">back_statue = <span class="string">&quot;HTTP/1.1&quot;</span> + <span class="string">&quot;200 OK&quot;</span> + <span class="string">&quot;\r\n\r\n&quot;</span></span><br><span class="line"><span class="comment"># 响应数据</span></span><br><span class="line">client_data = <span class="string">&quot;this is a message&quot;</span></span><br><span class="line"><span class="comment"># 响应首行+响应数据</span></span><br><span class="line">reply_client_data = back_statue + client_data</span><br><span class="line"><span class="comment"># 编码</span></span><br><span class="line">reply_client_data = reply_client_data.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"><span class="comment"># 发送数�?</span></span><br><span class="line">conn.send(reply_client_data)</span><br></pre></td></tr></table></figure>
+<h4 id="2-浏览器路径进行分�">(2)浏览器路径进行分�?</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">server = socket.socket()</span><br><span class="line">ip = <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line">port = <span class="number">8008</span></span><br><span class="line">addr = (ip, port)</span><br><span class="line">server.bind(addr)</span><br><span class="line">server.listen(<span class="number">5</span>)</span><br><span class="line">conn, addr = server.accept()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">response</span>(<span class="params">path</span>):</span><br><span class="line">    <span class="comment"># 响应首行 协议版本+状态码+换行</span></span><br><span class="line">    back_statue = <span class="string">&quot;HTTP/1.1&quot;</span> + <span class="string">&quot;200 OK&quot;</span> + <span class="string">&quot;\r\n\r\n&quot;</span></span><br><span class="line">    <span class="comment"># 判断传过来的路径</span></span><br><span class="line">    <span class="keyword">if</span> path == <span class="string">&quot;/&quot;</span>:</span><br><span class="line">        client_data = <span class="string">&quot;main Hello World!&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> path == <span class="string">&quot;/login&quot;</span>:</span><br><span class="line">        client_data = <span class="string">&quot;login Hello World!&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> path == <span class="string">&quot;/register&quot;</span>:</span><br><span class="line">        client_data = <span class="string">&quot;register Hello World!&quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        client_data = <span class="string">&quot;404&quot;</span></span><br><span class="line">    <span class="comment"># 拼接HTTP协议</span></span><br><span class="line">    reply_client_data = back_statue + client_data</span><br><span class="line">    reply_client_data = reply_client_data.encode()</span><br><span class="line">    <span class="keyword">return</span> reply_client_data</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接收数据</span></span><br><span class="line">conn_client = conn.recv(<span class="number">1024</span>)</span><br><span class="line"><span class="comment"># 将数据编�?</span></span><br><span class="line">conn_client_data = conn_client.decode()</span><br><span class="line"><span class="comment"># 将编码的数据split取索引为1的字符串</span></span><br><span class="line">visit_path = conn_client_data.split(<span class="string">&#x27; &#x27;</span>)[<span class="number">1</span>]</span><br><span class="line"><span class="comment"># 拆分出来的路径传给函数进行判断，并返回给浏览�?</span></span><br><span class="line">conn.send(response(visit_path))</span><br></pre></td></tr></table></figure>
+<h2 id="【三】分层web框架">【三】分层web框架</h2>
+<ul>
+<li>
+<p>想新增功�?只需要在urls.py中添加对应关�?view.py中编写函�?</p>
+</li>
+<li>
+<p>将一个服务端进行拆分</p>
+</li>
+</ul>
+<h3 id="�-】命令行工具�-mansge-py">�?】命令行工具�?<a target="_blank" rel="noopener" href="http://mansge.py">mansge.py</a></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">from</span> response <span class="keyword">import</span> response</span><br><span class="line"><span class="keyword">from</span> urle <span class="keyword">import</span> urlpatterns</span><br><span class="line"></span><br><span class="line">server = socket.socket()</span><br><span class="line">ip = <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line">port = <span class="number">8008</span></span><br><span class="line">addr = (ip, port)</span><br><span class="line">server.bind(addr)</span><br><span class="line">server.listen(<span class="number">5</span>)</span><br><span class="line">conn, addr = server.accept()</span><br><span class="line">client_data = conn.recv(<span class="number">1024</span>)</span><br><span class="line">client_data_decoded = client_data.decode()</span><br><span class="line">visit_path = client_data_decoded.split(<span class="string">&#x27; &#x27;</span>)[<span class="number">1</span>]</span><br><span class="line"><span class="comment"># 遍历urlpatterns</span></span><br><span class="line"><span class="keyword">for</span> path_view <span class="keyword">in</span> urlpatterns:</span><br><span class="line">    <span class="comment"># 把元组解�?</span></span><br><span class="line">    path, view = path_view</span><br><span class="line">    <span class="comment"># 判断是哪个路�?</span></span><br><span class="line">    <span class="keyword">if</span> path == visit_path:</span><br><span class="line">        <span class="comment">#调用函数</span></span><br><span class="line">        data = view()</span><br><span class="line">        </span><br><span class="line"><span class="comment">#将数据发�?</span></span><br><span class="line">conn.send(response(data))</span><br></pre></td></tr></table></figure>
+<h3 id="�-】视图层-view-py">�?】视图层 <a target="_blank" rel="noopener" href="http://view.py">view.py</a></h3>
+<ul>
+<li>存储路由与函数对应关�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#视图�?</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    client_data = <span class="string">&quot;index Hello world!&quot;</span></span><br><span class="line">    <span class="keyword">return</span> client_data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    client_data = <span class="string">&quot;login Hello world!&quot;</span></span><br><span class="line">    <span class="keyword">return</span> client_data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>():</span><br><span class="line">    client_data = <span class="string">&quot;register Hello world!&quot;</span></span><br><span class="line">    <span class="keyword">return</span> client_data</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="�-】配置映射层-urls-py">�?】配置映射层 <a target="_blank" rel="noopener" href="http://urls.py">urls.py</a></h3>
+<ul>
+<li>存储函数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#配置映射�?</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> view <span class="keyword">import</span> index, login, register</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    (<span class="string">&quot;/&quot;</span>, index),</span><br><span class="line">    (<span class="string">&quot;/login&quot;</span>, login),</span><br><span class="line">    (<span class="string">&quot;/register&quot;</span>, register)</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="�-】响应数据层-response-py">�?】响应数据层 <a target="_blank" rel="noopener" href="http://response.py">response.py</a></h3>
+<ul>
+<li>存储启动及分配代�?</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 这里是响应的数据</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">response</span>(<span class="params">client_data</span>):</span><br><span class="line">    <span class="comment"># # 响应首行 协议版本+状态码+换行</span></span><br><span class="line">    back_statue = <span class="string">&quot;HTTP/1.1&quot;</span> + <span class="string">&quot;200 ok&quot;</span> + <span class="string">&quot;\r\n\r\n&quot;</span></span><br><span class="line">    <span class="comment"># 拼接</span></span><br><span class="line">    response_data = back_statue + client_data</span><br><span class="line">    <span class="comment"># 编码</span></span><br><span class="line">    response_data = response_data.encode(<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> response_data</span><br></pre></td></tr></table></figure>
+<h2 id="【四】基于wsgiref模块搭建web框架">【四】基于wsgiref模块搭建web框架</h2>
+<h3 id="�-】模块封装功�">�?】模块封装功�?</h3>
+<ul>
+<li>导入模块<code>from wsgiref import simple_server</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">fro<span class="comment"># 导入函数</span></span><br><span class="line"><span class="keyword">from</span> wsgiref <span class="keyword">import</span> simple_server</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">request, response</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    :param request: 请求响应的数�?</span></span><br><span class="line"><span class="string">    :param response: 相应相关的数�?</span></span><br><span class="line"><span class="string">    :return: 返回给可客户端展示的数据</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    response(<span class="string">&quot;200 ok&quot;</span>, [])  <span class="comment"># 固定格式</span></span><br><span class="line">	<span class="comment"># 返回的是二级制数�?   </span></span><br><span class="line">    <span class="keyword">return</span> [<span class="string">b&quot;Hello World&quot;</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    ip = <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line">    port = <span class="number">8008</span></span><br><span class="line">    server = simple_server.make_server(ip, port, run)</span><br><span class="line">    server.serve_forever()</span><br></pre></td></tr></table></figure>
+<h2 id="【五】静态网页和动态网�">【五】静态网页和动态网�?</h2>
+<h3 id="�-】静态网�">�?】静态网�?</h3>
+<ul>
+<li>网页上的数据都是提前写好的不会生改变的网�?</li>
+<li>特点：不需要服务器额外的处理，架子速度很快</li>
+</ul>
+<h3 id="�-】动态网�">�?】动态网�?</h3>
+<ul>
+<li>网页上只有数据框架没有真实的数据</li>
+<li>想得到真实的数据就要配合js动作进行渲染</li>
+<li>特点：内用实时更新，需要服务器额外的处理，数据交互性很�?</li>
+</ul>
+<h3 id="�-】时间案例展�">�?】时间案例展�?</h3>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>这是login页面<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>实时展示当前时间<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;d1_time&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;refresh&quot;</span>&gt;</span>刷新数据<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    &lt;!--添加按钮，刷新页面，更新时间--&gt;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> pEle = $(<span class="string">&quot;#d1_time&quot;</span>)</span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 获得当前的时�?</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> timer = <span class="keyword">new</span> <span class="title class_">Date</span>()</span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 弊端，不能事实更新数�?</span></span></span><br><span class="line"><span class="language-javascript">    pEle.<span class="title function_">text</span>(timer)</span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 刷新的是这个页面</span></span></span><br><span class="line"><span class="language-javascript">    $(<span class="string">&quot;#refresh&quot;</span>).<span class="title function_">click</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">window</span>.<span class="property">location</span>.<span class="title function_">reload</span>()</span></span><br><span class="line"><span class="language-javascript">    &#125;)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// // 增加定时�?</span></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// window.setInterval(function ()&#123;</span></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">//     let pEle = $(&quot;#d1_time&quot;)</span></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">//     let timer = new Date()</span></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">//     pEle.text(timer)</span></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// &#125;,1000)</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--添加按钮，刷新页面，更新时间--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--添加计时器，设置时间,随时更新数据--&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="【六】基于jinjia2渲染前端">【六】基于jinjia2渲染前端</h2>
+<h3 id="�-】jinjia2是一个第三方的模�">�?】jinjia2是一个第三方的模�?</h3>
+<ul>
+<li>下载</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install jinjia2</span><br></pre></td></tr></table></figure>
+<h3 id="�-】功�">�?】功�?</h3>
+<ul>
+<li>支持将数据传递到html页面并提供近似于后端的处理方式简单快捷的操作数据</li>
+</ul>
+<h3 id="�-】案�">�?】案�?</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> wsgiref <span class="keyword">import</span> simple_server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入函数</span></span><br><span class="line"><span class="keyword">from</span> jinja2 <span class="keyword">import</span> Template</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_dict</span>():</span><br><span class="line">    user_dict = &#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;dream&#x27;</span>, <span class="string">&#x27;pwd&#x27;</span>: <span class="number">123</span>, <span class="string">&#x27;hobby&#x27;</span>: <span class="string">&#x27;read&#x27;</span>&#125;</span><br><span class="line">    new_list = [<span class="number">11</span>, <span class="number">22</span>, <span class="number">33</span>, <span class="number">44</span>, <span class="number">55</span>, <span class="number">66</span>]</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;templates/get_dict.html&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        data = f.read()</span><br><span class="line">    <span class="comment"># 得到一个实例化后的模板对象</span></span><br><span class="line">    temp_obj = Template(data)</span><br><span class="line">    <span class="comment"># 模板对象的render渲染方法</span></span><br><span class="line">    res = temp_obj.render(&#123;<span class="string">&#x27;user&#x27;</span>: user_dict, <span class="string">&#x27;new_list&#x27;</span>: new_list&#125;)</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">request, response</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    :param request: 请求响应的数�?</span></span><br><span class="line"><span class="string">    :param response: 相应相关的数�?</span></span><br><span class="line"><span class="string">    :return: 返回给可客户端展示的数据</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    response(<span class="string">&quot;200 ok&quot;</span>, [])  <span class="comment"># 固定格式</span></span><br><span class="line">    <span class="keyword">return</span> [get_dict().encode(<span class="string">&quot;utf-8&quot;</span>)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    ip = <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line">    port = <span class="number">8009</span></span><br><span class="line">    server = simple_server.make_server(ip, port, run)</span><br><span class="line">    server.serve_forever()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>展示字典数据<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`&#123;&#123; user &#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`&#123;&#123; user.name &#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`&#123;&#123; user[&quot;pwd&quot;] &#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`&#123;&#123; user.get(&quot;hobby&quot;) &#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    (妯℃澘鏍囩)</span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>元素：`&#123;&#123; i &#125;&#125;`<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    `(妯℃澘鏍囩)`</span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240617192245357.png" alt="image-20240617192245357"></p>
+<h2 id="【七】框架的请求流程">【七】框架的请求流程</h2>
+<ol>
+<li>浏览器发起请�?</li>
+<li>服务端是由wsgiref模块启动起来
+<ul>
+<li>浏览器的请求会打�?wsgiref �?request 对象身上</li>
+<li>比如可以获取�?请求路径 PATH_INFO</li>
+</ul>
+</li>
+<li>有了请求路径以后调用 <a target="_blank" rel="noopener" href="http://urls.py">urls.py</a> 模块
+<ul>
+<li>对请求路径进行映�?根据请求路径获取到指定的 函数 地址</li>
+<li>交给 wsgiref 模块去启动访�?</li>
+</ul>
+</li>
+<li>到了视图函数 view 内部
+<ul>
+<li>访问你的数据库读取响应的数据 读取到了小说的标题和内容</li>
+<li>借助jinjia2模块 模拟语法</li>
+<li>创建模版对象 将读取到了小说的标题和内�?渲染到前端页面上</li>
+<li>模版语法进行渲染 <code>&#123;&#123;  &#125;&#125;</code> / <code>(妯℃澘鏍囩)</code></li>
+</ul>
+</li>
+<li>返回浏览器数�?
+<ul>
+<li>遵循 HTTP 协议  —&gt; 到了 wsgiref 模块�?response 对象�?</li>
+<li>response(“200 OK”, [])</li>
+<li>return 前端页面的二进制数据</li>
+</ul>
+</li>
+<li>被浏览器接收�?
+<ul>
+<li>直接对响应数据进行渲�?</li>
+</ul>
+</li>
+</ol>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240617193825523.png" alt="image-20240617193825523"></p>
+<h2 id="【八】关键字">【八】关键字</h2>
+<h2 id="�-】urls-py">�?】<a target="_blank" rel="noopener" href="http://urls.py">urls.py</a></h2>
+<ul>
+<li>
+<p>后缀与函数名对应关系</p>
+</li>
+<li>
+<ul>
+<li>(‘/index’,register)</li>
+<li>后缀专业名词称之�?路由’</li>
+<li>函数名专业名词称之为’视图函数’</li>
+<li>urls.py专业名词称之�?路由�?</li>
+</ul>
+</li>
+</ul>
+<h2 id="�-】views-py">�?】<a target="_blank" rel="noopener" href="http://views.py">views.py</a></h2>
+<ul>
+<li>
+<p>专门编写业务逻辑代码</p>
+</li>
+<li>
+<ul>
+<li>可以是函�?也可以是�?</li>
+<li>函数专业名词称之�?视图函数’</li>
+<li>类专业名词称之为’视图�?</li>
+<li>views.py专业名词称之�?视图�?</li>
+</ul>
+</li>
+</ul>
+<h2 id="�-】templates文件�">�?】templates文件�?</h2>
+<ul>
+<li>专门存储html文件</li>
+<li>html文件专业名词称之�?模板文件’</li>
+<li>templates文件夹专业名词称之为’模板�?</li>
+</ul>
+<h2 id="�-】static文件�">�?】static文件�?</h2>
+<ul>
+<li>
+<p>专门存储静态文件资�?</p>
+</li>
+<li>
+<ul>
+<li>页面所需css文件、js文件、图片文件、第三方文件可统称为’静态资�?</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/1.0%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8%E3%80%81%E5%AE%89%E8%A3%85%E3%80%81%E5%88%9B%E5%BB%BA%E3%80%81%E9%85%8D%E7%BD%AE/" rel="prev" title="1.0С����ʹ�á���װ������������">
+      <i class="fa fa-chevron-left"></i> 1.0С����ʹ�á���װ������������
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/1.0reids/" rel="next" title="1.0reids">
+      1.0reids <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">web框架本质</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91web%E6%A1%86%E6%9E%B6%E7%9A%84%E6%9C%AC%EF%BF%BD"><span class="nav-number">1.1.</span> <span class="nav-text">【一】web框架的本�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E7%BA%AF%E6%89%8B%E6%92%B8web%E6%A1%86%E6%9E%B6"><span class="nav-number">1.2.</span> <span class="nav-text">【二】纯手撸web框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%8E%9F%E5%A7%8B%E7%89%88%E6%9C%AC%E7%9A%84%E6%9C%8D%E5%8A%A1%EF%BF%BD"><span class="nav-number">1.2.1.</span> <span class="nav-text">�?】原始版本的服务�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E9%81%B5%E5%BE%AAHTTP%E5%8D%8F%E8%AE%AE%E7%9A%84server"><span class="nav-number">1.2.2.</span> <span class="nav-text">�?】遵循HTTP协议的server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%AF%B9%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E8%B7%AF%E5%BE%84%E8%BF%9B%E8%A1%8C%E5%88%86%E9%85%8D"><span class="nav-number">1.2.3.</span> <span class="nav-text">�?】对浏览器的路径进行分配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%8E%B7%E5%BE%97%E5%8D%95%E4%B8%AA%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E8%B7%AF%E5%BE%84%EF%BC%8C%E7%94%A8split"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">(1)获得单个浏览器的路径，用split</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%B5%8F%E8%A7%88%E5%99%A8%E8%B7%AF%E5%BE%84%E8%BF%9B%E8%A1%8C%E5%88%86%EF%BF%BD"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">(2)浏览器路径进行分�?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%89%E3%80%91%E5%88%86%E5%B1%82web%E6%A1%86%E6%9E%B6"><span class="nav-number">1.3.</span> <span class="nav-text">【三】分层web框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%EF%BF%BD-mansge-py"><span class="nav-number">1.3.1.</span> <span class="nav-text">�?】命令行工具�?mansge.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E8%A7%86%E5%9B%BE%E5%B1%82-view-py"><span class="nav-number">1.3.2.</span> <span class="nav-text">�?】视图层 view.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E9%85%8D%E7%BD%AE%E6%98%A0%E5%B0%84%E5%B1%82-urls-py"><span class="nav-number">1.3.3.</span> <span class="nav-text">�?】配置映射层 urls.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%93%8D%E5%BA%94%E6%95%B0%E6%8D%AE%E5%B1%82-response-py"><span class="nav-number">1.3.4.</span> <span class="nav-text">�?】响应数据层 response.py</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%9B%9B%E3%80%91%E5%9F%BA%E4%BA%8Ewsgiref%E6%A8%A1%E5%9D%97%E6%90%AD%E5%BB%BAweb%E6%A1%86%E6%9E%B6"><span class="nav-number">1.4.</span> <span class="nav-text">【四】基于wsgiref模块搭建web框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E6%A8%A1%E5%9D%97%E5%B0%81%E8%A3%85%E5%8A%9F%EF%BF%BD"><span class="nav-number">1.4.1.</span> <span class="nav-text">�?】模块封装功�?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%94%E3%80%91%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E5%92%8C%E5%8A%A8%E6%80%81%E7%BD%91%EF%BF%BD"><span class="nav-number">1.5.</span> <span class="nav-text">【五】静态网页和动态网�?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E9%9D%99%E6%80%81%E7%BD%91%EF%BF%BD"><span class="nav-number">1.5.1.</span> <span class="nav-text">�?】静态网�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%8A%A8%E6%80%81%E7%BD%91%EF%BF%BD"><span class="nav-number">1.5.2.</span> <span class="nav-text">�?】动态网�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E6%97%B6%E9%97%B4%E6%A1%88%E4%BE%8B%E5%B1%95%EF%BF%BD"><span class="nav-number">1.5.3.</span> <span class="nav-text">�?】时间案例展�?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%85%AD%E3%80%91%E5%9F%BA%E4%BA%8Ejinjia2%E6%B8%B2%E6%9F%93%E5%89%8D%E7%AB%AF"><span class="nav-number">1.6.</span> <span class="nav-text">【六】基于jinjia2渲染前端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91jinjia2%E6%98%AF%E4%B8%80%E4%B8%AA%E7%AC%AC%E4%B8%89%E6%96%B9%E7%9A%84%E6%A8%A1%EF%BF%BD"><span class="nav-number">1.6.1.</span> <span class="nav-text">�?】jinjia2是一个第三方的模�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E5%8A%9F%EF%BF%BD"><span class="nav-number">1.6.2.</span> <span class="nav-text">�?】功�?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91%E6%A1%88%EF%BF%BD"><span class="nav-number">1.6.3.</span> <span class="nav-text">�?】案�?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%83%E3%80%91%E6%A1%86%E6%9E%B6%E7%9A%84%E8%AF%B7%E6%B1%82%E6%B5%81%E7%A8%8B"><span class="nav-number">1.7.</span> <span class="nav-text">【七】框架的请求流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%85%AB%E3%80%91%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.8.</span> <span class="nav-text">【八】关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91urls-py"><span class="nav-number">1.9.</span> <span class="nav-text">�?】urls.py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91views-py"><span class="nav-number">1.10.</span> <span class="nav-text">�?】views.py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91templates%E6%96%87%E4%BB%B6%EF%BF%BD"><span class="nav-number">1.11.</span> <span class="nav-text">�?】templates文件�?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD-%E3%80%91static%E6%96%87%E4%BB%B6%EF%BF%BD"><span class="nav-number">1.12.</span> <span class="nav-text">�?】static文件�?</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">201</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
