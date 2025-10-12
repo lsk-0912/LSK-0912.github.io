@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="抽象类 【一】什么是抽象  将某几个具体的生物，根据特征总结一个类，逐层向上总结  1234#唐老鸭 肉鸭 北京烤鸭 ---&gt; 鸭子# 北极熊 黑熊 --&gt; 熊# 猫 老虎 --&gt; 猫科# 鸭子 熊 猫科 --&gt; 动物  他们的特征都是动物  【二】什么继承  动物–》熊–》北极熊 例子  12345678910111213141516171819class Animal(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="坤博客">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/5.14%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="抽象类 【一】什么是抽象  将某几个具体的生物，根据特征总结一个类，逐层向上总结  1234#唐老鸭 肉鸭 北京烤鸭 ---&gt; 鸭子# 北极熊 黑熊 --&gt; 熊# 猫 老虎 --&gt; 猫科# 鸭子 熊 猫科 --&gt; 动物  他们的特征都是动物  【二】什么继承  动物–》熊–》北极熊 例子  12345678910111213141516171819class Animal(">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T10:31:35.561Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/5.14%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/5.14%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>抽象类</h1>
+<h2 id="【一】什么是抽象">【一】什么是抽象</h2>
+<ul>
+<li>将某几个具体的生物，根据特征总结一个类，逐层向上总结</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#唐老鸭 肉鸭 北京烤鸭 ---&gt; 鸭子</span></span><br><span class="line"><span class="comment"># 北极熊 黑熊 --&gt; 熊</span></span><br><span class="line"><span class="comment"># 猫 老虎 --&gt; 猫科</span></span><br><span class="line"><span class="comment"># 鸭子 熊 猫科 --&gt; 动物</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>他们的特征都是动物</li>
+</ul>
+<h2 id="【二】什么继承">【二】什么继承</h2>
+<ul>
+<li>动物–》熊–》北极熊</li>
+<li>例子</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, color, fool, hand</span>):</span><br><span class="line">        <span class="variable language_">self</span>.color = color</span><br><span class="line">        <span class="variable language_">self</span>.fool = fool</span><br><span class="line">        <span class="variable language_">self</span>.hand = hand</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">one</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;self.color&#125;</span>,<span class="subst">&#123;self.fool&#125;</span>,<span class="subst">&#123;self.hand&#125;</span>&quot;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>(<span class="title class_ inherited__">Animal</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, color, fool, hand</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(color, fool, hand)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog = Dog(<span class="string">&quot;blank&quot;</span>, <span class="number">4</span>, <span class="number">0</span>)</span><br><span class="line"><span class="built_in">print</span>(dog.one)<span class="comment">#&lt;bound method Animal.one of &lt;__main__.Dog object at 0x00000209C1A5E6B0&gt;&gt;</span></span><br><span class="line"><span class="built_in">print</span>(dog.one())</span><br><span class="line"><span class="comment">#blank,4, 0</span></span><br><span class="line"><span class="comment"># None</span></span><br><span class="line">dog.one()<span class="comment">#blank,4, 0</span></span><br></pre></td></tr></table></figure>
+<h2 id="【三】抽象类">【三】抽象类</h2>
+<h3 id="（1）什么是抽象类">（1）什么是抽象类</h3>
+<ul>
+<li>
+<p>所以继承父类的子类必须重写父类的某些方法，这个父类就叫抽象类</p>
+</li>
+<li>
+<p>与<code>java</code>一样，<code>python</code>也有抽象类的概念但是同样需要借助模块实现，抽象类是一个特殊的类，它的特殊之处在于只能被继承，不能被实例化</p>
+</li>
+<li>
+<p>抽象类，前提是导入abc模块，在类名后的（metaclass=abc.ABCMeta）。你在自己的模块中函数头顶上定义了<code>@abc.abstractmethod</code>的时候，在子类中就要重写这个函数方法，</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> abc</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>(metaclass=abc.ABCMeta):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, color, foot, hand</span>):</span><br><span class="line">        <span class="variable language_">self</span>.color = color</span><br><span class="line">        <span class="variable language_">self</span>.foot = foot</span><br><span class="line">        <span class="variable language_">self</span>.hand = hand</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">speak</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;任何动物都能叫&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 在子类中必须重写父类的当前方法</span></span><br><span class="line"><span class="meta">    @abc.abstractmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">walk</span>(<span class="params">self</span>):</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BlackBear</span>(<span class="title class_ inherited__">Animal</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, color, foot, hand</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(color, foot, hand)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果不重写父类的方法就会报错</span></span><br><span class="line">    <span class="comment"># Can&#x27;t instantiate abstract class BlackBear with abstract methods walk</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">walk</span>(<span class="params">self</span>):</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bear = BlackBear(<span class="string">&#x27;black&#x27;</span>, <span class="number">2</span>, <span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(bear.color)</span><br><span class="line">bear.speak()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果不重写父类的方法就会报错</li>
+</ul>
+<h3 id="（2）抽象类的例题">（2）抽象类的例题</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FileCheck</span>(metaclass=abc.ABCMeta):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.BASE_DIR = os.path.dirname(__file__)</span><br><span class="line">        <span class="variable language_">self</span>.encoding = <span class="string">&#x27;utf-8&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @abc.abstractmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read_data</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;读取数据方法&#x27;</span>)</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line"><span class="meta">    @abc.abstractmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">save_data</span>(<span class="params">self</span>):</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 文本文件处理类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TextFileCheck</span>(<span class="title class_ inherited__">FileCheck</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="variable language_">self</span>.file_path = os.path.join(<span class="variable language_">self</span>.BASE_DIR, <span class="string">&#x27;data.text&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read_data</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(file=<span class="variable language_">self</span>.file_path, mode=<span class="string">&#x27;r&#x27;</span>, encoding=<span class="variable language_">self</span>.encoding) <span class="keyword">as</span> fp:</span><br><span class="line">            data = fp.read()</span><br><span class="line">        <span class="keyword">return</span> data</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">save_data</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(file=<span class="variable language_">self</span>.file_path, mode=<span class="string">&#x27;w&#x27;</span>, encoding=<span class="variable language_">self</span>.encoding) <span class="keyword">as</span> fp:</span><br><span class="line">            fp.write(<span class="string">&quot;你真帅！&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;懵逼！&quot;</span></span><br><span class="line"></span><br><span class="line">obj_text = TextFileCheck()</span><br><span class="line"><span class="built_in">print</span>(obj_text.read_data())<span class="comment">#你真帅！</span></span><br><span class="line"><span class="built_in">print</span>(obj_text.save_data())<span class="comment">#懵逼！</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果父类中有函数头上有@<code>abc.abstractmethod</code>装饰器的，你在子类中不管用或者不用这个方法，你就要写重新写父类的方法，不写就会报错就会报错</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/5.0vue3%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/5.11%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%8C%E5%B0%81%E8%A3%85/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">抽象类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AF%E6%8A%BD%E8%B1%A1"><span class="nav-number">1.1.</span> <span class="nav-text">【一】什么是抽象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E4%BB%80%E4%B9%88%E7%BB%A7%E6%89%BF"><span class="nav-number">1.2.</span> <span class="nav-text">【二】什么继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%89%E3%80%91%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-number">1.3.</span> <span class="nav-text">【三】抽象类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E4%BB%80%E4%B9%88%E6%98%AF%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-number">1.3.1.</span> <span class="nav-text">（1）什么是抽象类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E6%8A%BD%E8%B1%A1%E7%B1%BB%E7%9A%84%E4%BE%8B%E9%A2%98"><span class="nav-number">1.3.2.</span> <span class="nav-text">（2）抽象类的例题</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

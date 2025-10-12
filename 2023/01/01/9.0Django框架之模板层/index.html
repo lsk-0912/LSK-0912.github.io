@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Django���֮ģ���  ģ����ֳ�ǰ��  ��һ��ģ���﷨��ֵ��ȡֵ ��1��\\\&#123;&#123; \\\&#125;&#125;���������  ֱ����Ⱦ��˴������ı���������  ��� 1234567891011121314151617181920212223242526272829303132333435def logout(requ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="坤博客">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/9.0Django%E6%A1%86%E6%9E%B6%E4%B9%8B%E6%A8%A1%E6%9D%BF%E5%B1%82/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="Django���֮ģ���  ģ����ֳ�ǰ��  ��һ��ģ���﷨��ֵ��ȡֵ ��1��\\\&#123;&#123; \\\&#125;&#125;���������  ֱ����Ⱦ��˴������ı���������  ��� 1234567891011121314151617181920212223242526272829303132333435def logout(requ">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240625184653583.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240625194847089.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240625194811230.png">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T10:31:35.713Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240625184653583.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/9.0Django%E6%A1%86%E6%9E%B6%E4%B9%8B%E6%A8%A1%E6%9D%BF%E5%B1%82/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/9.0Django%E6%A1%86%E6%9E%B6%E4%B9%8B%E6%A8%A1%E6%9D%BF%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>Django���֮ģ���</h1>
+<ul>
+<li>ģ����ֳ�ǰ��</li>
+</ul>
+<h2 id="��һ��g���﷨��ֵ��ȡֵ">��һ��ģ���﷨��ֵ��ȡֵ</h2>
+<h3 id="��1��-swig￼68-���������">��1��<code>\\\&#123;&#123; \\\&#125;&#125;</code>���������</h3>
+<ul>
+<li>ֱ����Ⱦ��˴������ı���������</li>
+</ul>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">logout</span>(<span class="params">request</span>):</span><br><span class="line">    data_dict = &#123;<span class="string">&quot;username&quot;</span>: <span class="string">&quot;jack&quot;</span>, <span class="string">&quot;password&quot;</span>: <span class="string">&quot;912&quot;</span>&#125;</span><br><span class="line">    data_float = <span class="number">1.233</span></span><br><span class="line">    data_int = <span class="number">12</span></span><br><span class="line">    data_str = <span class="string">&quot;logout&quot;</span></span><br><span class="line">    data_tuple = (<span class="string">&quot;logout&quot;</span>, <span class="string">&quot;12&quot;</span>)</span><br><span class="line">    data_list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="string">&quot;logout&quot;</span>]</span><br><span class="line">    data_bool = <span class="literal">False</span></span><br><span class="line">    data_set = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">6</span>&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">func</span>():</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;û�з���ֵ&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">one</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">func1</span>(<span class="params">self</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="string">f&quot;class,func&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">func2</span>(<span class="params">self</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="string">f&quot;class,func2&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># �󶨸���ķ���</span></span><br><span class="line"><span class="meta">        @classmethod</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">func3</span>(<span class="params">cls</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="string">f&quot;class,func3&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># ��̬����</span></span><br><span class="line"><span class="meta">        @staticmethod</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">func4</span>():</span><br><span class="line">            <span class="keyword">return</span> <span class="string">f&quot;class,func4&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="string">f&quot;__str__����&quot;</span></span><br><span class="line"></span><br><span class="line">    one_obj = one()</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&quot;login.html&quot;</span>, <span class="built_in">locals</span>())</span><br></pre></td></tr></table></figure>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>�˴���������<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_dict \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# &#123;&#x27;username&#x27;: &#x27;jack&#x27;, &#x27;password&#x27;: &#x27;912&#x27;&#125; #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_dict.username \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# jack #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_dict.password \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# 912 #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_dict.items \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# dict_items([(&#x27;username&#x27;, &#x27;jack&#x27;), (&#x27;password&#x27;, &#x27;912&#x27;)]) #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_dict.values \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# dict_values([&#x27;jack&#x27;, &#x27;912&#x27;]) #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_dict.keys \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# dict_keys([&#x27;username&#x27;, &#x27;password&#x27;]) #&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_bool \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# False #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_float \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# 1.233 #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_str \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# logout #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_list \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# [1, 2, 3, 4, 5, 6, &#x27;logout&#x27;] #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_int \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# 12 #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_tuple \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# (&#x27;logout&#x27;, &#x27;12&#x27;) #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_set \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# &#123;1, 2, 3, 4, 5, 6&#125; #&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>��������<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span> `\\\&#123;&#123; func \\\&#125;&#125;` <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# None #&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>�෽��<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; one_obj \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# __str__���� #&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; one \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# __str__���� #&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; one_obj.func1 \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# class,func #&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; one_obj.func2 \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# class,func2 #&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; one.func1 \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# class,func #&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; one.func2 \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# class,func2 #&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; one_obj.func3 \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# class,func3 #&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; one.func3 \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# class,func3 #&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; one_obj.func4 \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# class,func4 #&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; one.func4 \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# class,func4 #&#125;</span><br></pre></td></tr></table></figure>
+<p>·��</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path(<span class="string">&#x27;logout/&#x27;</span>, logout, name=<span class="string">&quot;logout&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>�����ҳ��չʾ</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">�˴���������</span><br><span class="line">&#123;&#x27;username&#x27;: &#x27;jack&#x27;, &#x27;password&#x27;: &#x27;912&#x27;&#125;</span><br><span class="line"></span><br><span class="line">jack</span><br><span class="line"></span><br><span class="line">912</span><br><span class="line"></span><br><span class="line">dict_items([(&#x27;username&#x27;, &#x27;jack&#x27;), (&#x27;password&#x27;, &#x27;912&#x27;)])</span><br><span class="line"></span><br><span class="line">dict_values([&#x27;jack&#x27;, &#x27;912&#x27;])</span><br><span class="line"></span><br><span class="line">dict_keys([&#x27;username&#x27;, &#x27;password&#x27;])</span><br><span class="line"></span><br><span class="line">False</span><br><span class="line"></span><br><span class="line">1.233</span><br><span class="line"></span><br><span class="line">logout</span><br><span class="line"></span><br><span class="line">[1, 2, 3, 4, 5, 6, &#x27;logout&#x27;]</span><br><span class="line"></span><br><span class="line">12</span><br><span class="line"></span><br><span class="line">(&#x27;logout&#x27;, &#x27;12&#x27;)</span><br><span class="line"></span><br><span class="line">&#123;1, 2, 3, 4, 5, 6&#125;</span><br><span class="line"></span><br><span class="line">��������</span><br><span class="line">None</span><br><span class="line"></span><br><span class="line">�෽��</span><br><span class="line">__str__����</span><br><span class="line"></span><br><span class="line">__str__����</span><br><span class="line"></span><br><span class="line">class,func</span><br><span class="line"></span><br><span class="line">class,func2</span><br><span class="line"></span><br><span class="line">class,func</span><br><span class="line"></span><br><span class="line">class,func2</span><br><span class="line"></span><br><span class="line">class,func3</span><br><span class="line"></span><br><span class="line">class,func3</span><br><span class="line"></span><br><span class="line">class,func4</span><br><span class="line"></span><br><span class="line">class,func4</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>ע�⵱ǰ��ʹ�ú��������û�з���ֵʱ������None���з���ֵ�Ļ�����Ⱦ����ֵ</strong></li>
+<li><strong>��������ǰ�˵�<code>\\\&#123;&#123; ������ \\\&#125;&#125;</code>�ڣ��������Զ�����</strong></li>
+<li><strong>���ǲ�֧�ָ��������ݲ���</strong></li>
+<li><strong>��İ󶨷���</strong></li>
+<li><strong>ע�⣺ǰ��ȡֵʱ�����Ǹ��б��ʱ�����<code>\\\&#123;&#123;�б�.����ֵȡֵ\\\&#125;&#125;</code></strong></li>
+</ul>
+<h3 id="��2��-swig￼71-���߼����">��2��<code>\\\&#123;% \\\%&#125;</code>���߼����</h3>
+<ul>
+<li>
+<p><code>\\\&#123;% \\\%&#125;</code> ��ǩ����ִ���߼���صĲ�������Щ����ͨ������ֱ�����ɿɼ������ݣ����ǿ���ģ�����Ⱦ���̡���������ģ���ǩ�����ñ�����</p>
+</li>
+<li>
+<p>�߼���صı�ǩ�ṩ����ģ���н��������жϡ�ѭ����������������ģ��Ƭ�εȹ���</p>
+</li>
+<li>
+<p><strong>�����ж�</strong> (<code>\\\&#123;% if \\\%&#125;`, `\\\&#123;% elif \\\%&#125;`, `\\\&#123;% else \\\%&#125;`, `\\\&#123;% endif \\\%&#125;</code>��</p>
+<ul>
+<li>������ģ���н��������жϣ����������Ľ����Ⱦ��ͬ�����ݡ�</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">`\\\&#123;% if user.is_authenticated \\\%&#125;`  </span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Welcome, `\\\&#123;&#123; user.username \\\&#125;&#125;`.<span class="tag">&lt;/<span class="name">p</span>&gt;</span>  </span><br><span class="line">`\\\&#123;% else \\\%&#125;`  </span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Please log in.<span class="tag">&lt;/<span class="name">p</span>&gt;</span>  </span><br><span class="line">`\\\&#123;% endif \\\%&#125;`</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>ѭ������</strong> (<code>\\\&#123;% for \\\%&#125;`, `\\\&#123;% empty \\\%&#125;`, `\\\&#123;% endfor \\\%&#125;</code>)
+<ul>
+<li>���ڱ����б��Ԫ�顢�ֵ�ȿɵ������󣬲���ÿ�ε�������Ⱦģ�����ݡ�</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">`\\\&#123;% for item in item_list \\\%&#125;`  </span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; item \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span>  </span><br><span class="line">`\\\&#123;% empty \\\%&#125;`  </span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>No items found.<span class="tag">&lt;/<span class="name">p</span>&gt;</span>  </span><br><span class="line">`\\\&#123;% endfor \\\%&#125;`</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>ģ�����</strong> (<code>\\\&#123;% include \\\%&#125;</code>)
+<ul>
+<li>������ģ���а�����һ��ģ������ݡ�</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`\\\&#123;% include &#x27;includes/header.html&#x27; \\\%&#125;`</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>ģ��̳�</strong> (<code>\\\&#123;% extends \\\%&#125;</code>, <code>\\\&#123;% block \\\%&#125;`, `\\\&#123;% endblock \\\%&#125;</code>)
+<ul>
+<li>����һ��ģ��̳���һ��ģ������ݣ�������Ҫ�ĵط����ǻ�������ݡ�</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">`\\\&#123;% extends &#x27;base.html&#x27; \\\%&#125;`  </span><br><span class="line"></span><br><span class="line">`\\\&#123;% block content \\\%&#125;`  </span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>This is my content.<span class="tag">&lt;/<span class="name">p</span>&gt;</span>  </span><br><span class="line">`\\\&#123;% endblock \\\%&#125;`</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>ע��</strong> (<code>\\\&#123;% comment \\\%&#125;`, `\\\&#123;% endcomment \\\%&#125;</code>)
+<ul>
+<li>������ģ�������ע�ͣ���Щע�Ͳ�������Ⱦ���HTML����ʾ��</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">`\\\&#123;% comment \\\%&#125;`  </span><br><span class="line">    This is a comment that will not be rendered.  </span><br><span class="line">`\\\&#123;% endcomment \\\%&#125;`</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>\\\&#123;% \\\%&#125;</code> ��ǩ�е��߼��������ڷ������˽��еģ��������ڿͻ��˵�������С�</li>
+<li>��Django���������յ�һ�����󲢾���ʹ��ĳ��ģ������Ⱦ��Ӧʱ���������ģ���е� <code>\\\&#123;% \\\%&#125;</code> ��ǩ�������ݱ�ǩ�е��߼�ִ����Ӧ�Ĳ�����Ȼ����Ⱦ���HTML���͸��ͻ���</li>
+</ul>
+<h2 id="������������">������������</h2>
+<h3 id="��1��ʲo�n�����">��1��ʲô�ǹ�����</h3>
+<ul>
+<li>��Django��ģ�������У�ͨ��ʹ�ù��������ı��������ʾ</li>
+</ul>
+<h3 id="��2���������﷨">��2���������﷨</h3>
+<ul>
+<li>
+<p><code>\\\&#123;&#123;value|����������:Ĭ��ֵ\\\&#125;&#125;</code></p>
+</li>
+<li>
+<p>ʹ��’|'��Ӧ�� ������</p>
+</li>
+</ul>
+<p>����</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">`\\\&#123;&#123;name|lower\\\&#125;&#125;`</span><br><span class="line"><span class="comment"># �Ὣname������Ӧ��ֵ�����Сд</span></span><br></pre></td></tr></table></figure>
+<h3 id="��3�����������﷨">��3�����������﷨</h3>
+<h4 id="��1�����㳤��–-length">��1�����㳤��–(length)</h4>
+<ul>
+<li>Ӧ�����ַ������б�</li>
+</ul>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>���㳤�ȣ�`\\\&#123;&#123; data|length \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# ���㳤�ȣ�4 #&#125;</span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = <span class="string">&quot;���㳤��&quot;</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-I��ֵ–��default��">(2)Ĭ��ֵ–��default��</h4>
+<ul>
+<li>Ĭ��ֵ���ǵ���Ҫ�Ľ��������ʱ(��ֵ����Falseʱ)����Ĭ��ֵ</li>
+</ul>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Ĭ��ֵ��`\\\&#123;&#123; data_bool|default:&quot;Ĭ��ֵ&quot; \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# Ĭ��ֵ��Ĭ��ֵ #&#125;</span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_bool = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<h4 id="��3�����ڸ�ʽ–-date">��3�����ڸ�ʽ–(date)</h4>
+<ul>
+<li>
+<p>���ڸ�ʽ��</p>
+</li>
+<li>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`\\\&#123;&#123; value|date:&quot;Y-m-d H:i:s&quot;\\\&#125;&#125;`</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ul>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>���ڸ�ʽ����`\\\&#123;&#123; data_time|date:&quot;Y-m-d H:i:s&quot; \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# ���ڸ�ʽ����2024-06-24 18:46:32 #&#125;</span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_time = datetime.datetime.now()</span><br></pre></td></tr></table></figure>
+<h4 id="4-��T����–��slice��">(4)��Ƭ����–��slice��</h4>
+<ul>
+<li>֧�ֲ�����Ƭ����ͷ����β��</li>
+</ul>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;# ��ѭ��ͷ����β #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_english|slice:&#x27;0:6:2&#x27; \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# jcd #&#125;</span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_english = <span class="string">&quot;jackdreamtom&quot;</span></span><br></pre></td></tr></table></figure>
+<p>�����Ƭ����</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data_english = <span class="string">&quot;jackdreamtom&quot;</span></span><br><span class="line">data_english[��ʼ��������������������]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">type_slice = <span class="built_in">slice</span>(��ʼ��������������������)</span><br><span class="line">data_english[type_slice]</span><br></pre></td></tr></table></figure>
+<h4 id="5-��ȡժҪ–��truncatechars��">(5)��ȡժҪ–��truncatechars��</h4>
+<ul>
+<li><code>truncatechars</code>�������ı�̫���������ֻչʾ�����õ��ַ����ȸ��û�</li>
+<li>�ַ��Ὣ…Ҳ��һ���ַ�</li>
+</ul>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;# ժҪ�㷨 #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_truncatechars|truncatechars:10 \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# # Nginx�ǡ� #&#125;</span><br><span class="line">&#123;# ֻ��ʾ9���ı���Ϣ������ʡ�Ժ�ʡ�ԣ���Ϊ...Ҳ��һ���ַ� #&#125;</span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_truncatechars = (<span class="string">&quot;# Nginx��ʲô�� Nginx (engine x) ��һ�������ܵ�HTTP�ͷ������web������ ��ͬʱҲ�ṩ��IMAP/POP3/SMTP����Nginx���������������Ү��Ϊ����˹�������ڶ���Rambler.ruվ�㿪���ģ��������ȶ��ԡ��ḻ�Ĺ��ܼ����򵥵������ļ��͵�ϵͳ��Դ�����Ķ����� ...&quot;</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>���ʲ���.���ȥ</li>
+</ul>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;# ֻ��ʾ5���ı���Ϣ������ʡ�Ժ�ʡ�� #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_cut|truncatewords:5 \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# I just need someone who �� #&#125;</span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_cut = <span class="string">&quot;I just need someone who will never abandon me&quot;</span></span><br></pre></td></tr></table></figure>
+<h4 id="6-�Y�ָ���ַ�–��cut��">(6)�Ƴ�ָ���ַ�–��cut��</h4>
+<ul>
+<li><code>\\\&#123;&#123; value|cut:'�ַ�' \\\&#125;&#125;</code>���ַ���ʲô���Ƴ�ʲô</li>
+</ul>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;# ȥ������ֻ���ַ� #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_cut|cut:&#x27; &#x27; \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# Ijustneedsomeonewhowillneverabandonme #&#125;</span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_cut = <span class="string">&quot;I just need someone who will never abandon me&quot;</span></span><br></pre></td></tr></table></figure>
+<h4 id="7-y���ַ�–��join��">(7)ƴ���ַ�–��join��</h4>
+<ul>
+<li><code>\\\&#123;&#123; value|join:"�ַ�" \\\&#125;&#125;</code>���ַ���ʲô�Ͱ���ʲôƴ��</li>
+</ul>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_join|join:&quot;$&quot; \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# ��$��$�� #&#125;</span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_join = [<span class="string">&quot;��&quot;</span>, <span class="string">&quot;��&quot;</span>, <span class="string">&quot;��&quot;</span>]</span><br></pre></td></tr></table></figure>
+<h4 id="8-�ӷ�–��add��">(8)�ӷ�–��add��</h4>
+<ul>
+<li>����˵����ּ�����add�������ֵ</li>
+</ul>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_add|add:100 \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# 122 #&#125;</span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_add = <span class="number">22</span></span><br></pre></td></tr></table></figure>
+<h4 id="9-ȡ��ת�壨mark-safe��safe��">(9)ȡ��ת�壨mark_safe��safe��</h4>
+<ul>
+<li>ת��–safe</li>
+</ul>
+<p>?	ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;# ȡ��ת�� #&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_safe|safe \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# ����p��ǩ #&#125; &#123;# ����p��ǩ�Ѿ���h1��ǩ #&#125;</span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_safe = <span class="string">&quot;&lt;h1&gt;����p��ǩ&lt;/h1&gt;&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>ת��–mark_safe</li>
+<li>��Ҫ����һ������<code>from django.utils.safestring import mark_safe</code></li>
+<li>�ں�˴����ֱ����ǰ����Ⱦ</li>
+</ul>
+<p>ǰ��</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;`\\\&#123;&#123; data_mark_safe \\\&#125;&#125;`&lt;/p&gt;</span><br><span class="line">&#123;<span class="comment">#����p��ǩ#&#125;&#123;# ����p��ǩ�Ѿ������ת���h1��ǩ�� #&#125;</span></span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ���ȡ��ת����Ҫ���뷽��</span></span><br><span class="line"><span class="keyword">from</span> django.utils.safestring <span class="keyword">import</span> mark_safe</span><br><span class="line"></span><br><span class="line">data_safe = <span class="string">&quot;&lt;h1&gt;����p��ǩ&lt;/h1&gt;&quot;</span></span><br><span class="line"></span><br><span class="line">data_mark_safe = mark_safe(data_safe)</span><br></pre></td></tr></table></figure>
+<h4 id="10-��һ���Զ���ʱ�䣬��������ʱ���z�˶��–��timesince��">(10)��һ���Զ���ʱ�䣬��������ʱ���ȥ�˶��–��timesince��</h4>
+<ul>
+<li>��timeuntil���</li>
+<li>���д�����ʱ��ֻ��д�Ƚ����ʱ��Ҫ�����Ȼֻ����ʾ<code>0 minutes</code></li>
+<li>����������ʱ���ȥ�˶��</li>
+</ul>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_time_since|timesince \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# 1 year, 5 months #&#125;</span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_time_since = datetime.date(<span class="number">2023</span>, <span class="number">1</span>, <span class="number">9</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="11-����Ҳ���Զ���ʱ�䣬����������ʱ�仹�ж��–��timeuntil��">(11)����Ҳ���Զ���ʱ�䣬����������ʱ�仹�ж��–��timeuntil��</h4>
+<ul>
+<li>��timesince���</li>
+<li>���д�����ʱ��ֻ��д�Ƚ����ʱ��Ҫ�磬��Ȼֻ����ʾ<code>0 minutes</code></li>
+<li>������Ǿ������ʱ�仹�ж��</li>
+</ul>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; data_time_until|timeuntil \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;# 11 months #&#125;</span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_time_until = datetime.date(<span class="number">2025</span>, <span class="number">5</span>, <span class="number">24</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="��������k�﷨–��Tags��">��������ǩ�﷨–��Tags��</h2>
+<h3 id="��1��forѭ��">��1��forѭ��</h3>
+<h4 id="��1��forѭ�������o��﷨">��1��forѭ�������õ��﷨</h4>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>forloop.counter</td>
+<td>��ǰѭ��������ֵ����1��ʼ��</td>
+</tr>
+<tr>
+<td>forloop.counter0</td>
+<td>��ǰѭ��������ֵ����0��ʼ��</td>
+</tr>
+<tr>
+<td>forloop.revcounter</td>
+<td>��ǰѭ���ĵ�������ֵ����1��ʼ��</td>
+</tr>
+<tr>
+<td>forloop.revcounter0</td>
+<td>��ǰѭ���ĵ�������ֵ����0��ʼ��</td>
+</tr>
+<tr>
+<td>forloop.first</td>
+<td>��ǰѭ���ǲ��ǵ�һ��ѭ��������ֵ��</td>
+</tr>
+<tr>
+<td>forloop.last</td>
+<td>��ǰѭ���ǲ������һ��ѭ��������ֵ��</td>
+</tr>
+<tr>
+<td>forloop.parentloop</td>
+<td>����ѭ�������ѭ��</td>
+</tr>
+</tbody>
+</table>
+<h4 id="��2��forѭ�����﷨ʹ��">��2��forѭ�����﷨ʹ��</h4>
+<h5 id="1-��jѭ��������ֵ����1��ʼ��–forloop-counter">[1]��ǰѭ��������ֵ����1��ʼ��–forloop.counter</h5>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>forѭ�������б��forloop.counter������������������1��ʼ<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    `\\\&#123;% for data in data_list \\\%&#125;`</span><br><span class="line">    	<span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">        `\\\&#123;&#123; forloop.counter \\\&#125;&#125;`:`\\\&#123;&#123; data \\\&#125;&#125;`</span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        `\\\&#123;% empty \\\%&#125;`</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>�Ѿ�������<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    `\\\&#123;% endfor \\\%&#125;`</span><br><span class="line"><span class="comment">&lt;!-- forѭ�������б��forloop.counter������������������1��ʼ</span></span><br><span class="line"><span class="comment">1:1</span></span><br><span class="line"><span class="comment">2:2</span></span><br><span class="line"><span class="comment">3:3</span></span><br><span class="line"><span class="comment">4:4</span></span><br><span class="line"><span class="comment">5:5</span></span><br><span class="line"><span class="comment">6:6</span></span><br><span class="line"><span class="comment">7:7</span></span><br><span class="line"><span class="comment">8:8</span></span><br><span class="line"><span class="comment">9:9</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>(<span class="params">request</span>):</span><br><span class="line">    data_list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;register.html&#x27;</span>, <span class="built_in">locals</span>())</span><br></pre></td></tr></table></figure>
+<h5 id="2-��jѭ��������ֵ����0��ʼ��–forloop-counter0">[2]��ǰѭ��������ֵ����0��ʼ��–forloop.counter0</h5>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>forѭ�������б��forloop.counter0�õ���������ֵ����0��ʼ����<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    `\\\&#123;% for data in data_list \\\%&#125;`</span><br><span class="line">    	<span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">        `\\\&#123;&#123; forloop.counter0 \\\&#125;&#125;`:`\\\&#123;&#123; data \\\&#125;&#125;`</span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        `\\\&#123;% empty \\\%&#125;`</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>�Ѿ�������<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    `\\\&#123;% endfor \\\%&#125;`</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--forѭ�������б��forloop.counter0�õ���������ֵ����0��ʼ����</span></span><br><span class="line"><span class="comment">0:1</span></span><br><span class="line"><span class="comment">1:2</span></span><br><span class="line"><span class="comment">2:3</span></span><br><span class="line"><span class="comment">3:4</span></span><br><span class="line"><span class="comment">4:5</span></span><br><span class="line"><span class="comment">5:6</span></span><br><span class="line"><span class="comment">6:7</span></span><br><span class="line"><span class="comment">7:8</span></span><br><span class="line"><span class="comment">8:9--&gt;</span></span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>(<span class="params">request</span>):</span><br><span class="line">    data_list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;register.html&#x27;</span>, <span class="built_in">locals</span>())</span><br></pre></td></tr></table></figure>
+<h5 id="3-��jѭ���j�������ֵ����1��ʼ��–forloop-revcounter">[3]��ǰѭ���ĵ�������ֵ����1��ʼ��–forloop.revcounter</h5>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>forѭ�������б��forloop.revcounter�õ����ǵ��������ֵ����1��ʼ<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    `\\\&#123;% for data in data_list \\\%&#125;`</span><br><span class="line">    	<span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">        `\\\&#123;&#123; forloop.revcounter \\\&#125;&#125;`:`\\\&#123;&#123; data \\\&#125;&#125;`</span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        `\\\&#123;% empty \\\%&#125;`</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>�Ѿ�������<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    `\\\&#123;% endfor \\\%&#125;`</span><br><span class="line"><span class="comment">&lt;!--forѭ�������б��forloop.revcounter�õ����ǵ��������ֵ����1��ʼ</span></span><br><span class="line"><span class="comment">9:1</span></span><br><span class="line"><span class="comment">8:2</span></span><br><span class="line"><span class="comment">7:3</span></span><br><span class="line"><span class="comment">6:4</span></span><br><span class="line"><span class="comment">5:5</span></span><br><span class="line"><span class="comment">4:6</span></span><br><span class="line"><span class="comment">3:7</span></span><br><span class="line"><span class="comment">2:8</span></span><br><span class="line"><span class="comment">1:9--&gt;</span></span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>(<span class="params">request</span>):</span><br><span class="line">    data_list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;register.html&#x27;</span>, <span class="built_in">locals</span>())</span><br></pre></td></tr></table></figure>
+<h5 id="4-��jѭ���j�������ֵ����0��ʼ��–forloop-revcounter0">[4]��ǰѭ���ĵ�������ֵ����0��ʼ��–forloop.revcounter0</h5>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>forѭ�������б��forloop.revcounter0�õ����ǵ��������ֵ��������0��ʼ<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    `\\\&#123;% for data in data_list \\\%&#125;`</span><br><span class="line">    	<span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">        `\\\&#123;&#123; forloop.revcounter0 \\\&#125;&#125;`:`\\\&#123;&#123; data \\\&#125;&#125;`</span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        `\\\&#123;% empty \\\%&#125;`</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>�Ѿ�������<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    `\\\&#123;% endfor \\\%&#125;`</span><br><span class="line"><span class="comment">&lt;!--forѭ�������б��forloop.revcounter0�õ����ǵ��������ֵ��������0��ʼ</span></span><br><span class="line"><span class="comment">8:1</span></span><br><span class="line"><span class="comment">7:2</span></span><br><span class="line"><span class="comment">6:3</span></span><br><span class="line"><span class="comment">5:4</span></span><br><span class="line"><span class="comment">4:5</span></span><br><span class="line"><span class="comment">3:6</span></span><br><span class="line"><span class="comment">2:7</span></span><br><span class="line"><span class="comment">1:8</span></span><br><span class="line"><span class="comment">0:9--&gt;</span></span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>(<span class="params">request</span>):</span><br><span class="line">    data_list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;register.html&#x27;</span>, <span class="built_in">locals</span>())</span><br></pre></td></tr></table></figure>
+<h5 id="5-��jѭ���Dz��g�һ��ѭ��������ֵ��–forloop-first">[5]��ǰѭ���ǲ��ǵ�һ��ѭ��������ֵ��–forloop.first</h5>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>forѭ�������б��forloop.first�ж��Ǹ�ֵ�ǵ�һ��ѭ��,�õ����ǲ���ֵ<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    `\\\&#123;% for data in data_list \\\%&#125;`</span><br><span class="line">    	<span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">        `\\\&#123;&#123; forloop.first \\\&#125;&#125;`:`\\\&#123;&#123; data \\\&#125;&#125;`</span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        `\\\&#123;% empty \\\%&#125;`</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>�Ѿ�������<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    `\\\&#123;% endfor \\\%&#125;`</span><br><span class="line"><span class="comment">&lt;!--forѭ�������б��forloop.first�жϵ�ǰѭ���ǲ��ǵ�һ��ѭ��,�õ����ǲ���ֵ</span></span><br><span class="line"><span class="comment">True:1</span></span><br><span class="line"><span class="comment">False:2</span></span><br><span class="line"><span class="comment">False:3</span></span><br><span class="line"><span class="comment">False:4</span></span><br><span class="line"><span class="comment">False:5</span></span><br><span class="line"><span class="comment">False:6</span></span><br><span class="line"><span class="comment">False:7</span></span><br><span class="line"><span class="comment">False:8</span></span><br><span class="line"><span class="comment">False:9--&gt;</span></span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>(<span class="params">request</span>):</span><br><span class="line">    data_list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;register.html&#x27;</span>, <span class="built_in">locals</span>())</span><br></pre></td></tr></table></figure>
+<h5 id="6-��jѭ���Dz������һ��ѭ��������ֵ��–forloop-last">[6]��ǰѭ���ǲ������һ��ѭ��������ֵ��–forloop.last</h5>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>forѭ�������б��forloop.last�ж��Ǹ�ֵ�����һ��ѭ�����õ����ǲ���ֵ<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    `\\\&#123;% for data in data_list \\\%&#125;`</span><br><span class="line">    	<span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">        `\\\&#123;&#123; forloop.last \\\&#125;&#125;`:`\\\&#123;&#123; data \\\&#125;&#125;`</span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        `\\\&#123;% empty \\\%&#125;`</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>�Ѿ�������<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    `\\\&#123;% endfor \\\%&#125;`</span><br><span class="line"><span class="comment">&lt;!--forѭ�������б��forloop.last�жϵ�ǰ�ǲ������һ��ѭ�����õ����ǲ���ֵ</span></span><br><span class="line"><span class="comment">False:1</span></span><br><span class="line"><span class="comment">False:2</span></span><br><span class="line"><span class="comment">False:3</span></span><br><span class="line"><span class="comment">False:4</span></span><br><span class="line"><span class="comment">False:5</span></span><br><span class="line"><span class="comment">False:6</span></span><br><span class="line"><span class="comment">False:7</span></span><br><span class="line"><span class="comment">False:8</span></span><br><span class="line"><span class="comment">True:9--&gt;</span></span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>(<span class="params">request</span>):</span><br><span class="line">    data_list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;register.html&#x27;</span>, <span class="built_in">locals</span>())</span><br></pre></td></tr></table></figure>
+<h5 id="7-����ѭ�������ѭ��–forloop-parentloop">[7]����ѭ�������ѭ��–forloop.parentloop</h5>
+<p>…</p>
+<h4 id="��3��for…empty�﷨">��3��for…empty�﷨</h4>
+<ul>
+<li>empty�﷨�ǵ�ǰ����������Ϊ��ʱ���Ż��ߵ��﷨</li>
+</ul>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">`\\\&#123;% for data in data_false \\\%&#125;`</span><br><span class="line">	`\\\&#123;&#123; data \\\&#125;&#125;`</span><br><span class="line">    `\\\&#123;% empty \\\%&#125;`</span><br><span class="line">     &#x27;data_falseû��ֵ&#x27;</span><br><span class="line">    &#123;# &#x27;data_falseû��ֵ&#x27; #&#125;</span><br><span class="line">`\\\&#123;% endfor \\\%&#125;`</span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_false = <span class="string">&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="��2��if…elif…else�﷨���÷�">��2��if…elif…else�﷨���÷�</h3>
+<ul>
+<li>��if����data_list�������ǣ������ټ��������ߣ�ǰ�˻���Ⱦif���</li>
+<li>��data_listû������ʱ������elif�������жϣ�data_list_one�����ݲ����������ߣ�ǰ�˻���Ⱦelse���</li>
+<li>��data_list_oneҲû������ʱ���ͻ���������else��ǰ�˻���Ⱦelse���</li>
+</ul>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">`\\\&#123;% if data_list \\\%&#125;`</span><br><span class="line">    �����б���ܳ��ȣ�`\\\&#123;&#123; data_list|length \\\&#125;&#125;`</span><br><span class="line">	`\\\&#123;% elif data_list_one\\\%&#125;`</span><br><span class="line">    ��Ƭ��`\\\&#123;&#123; data_list_one|slice:&#x27;1:6:2&#x27;\\\&#125;&#125;`</span><br><span class="line">    `\\\&#123;% else \\\%&#125;`</span><br><span class="line">    û������</span><br><span class="line">`\\\&#123;% endif \\\%&#125;`</span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data_list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line">   data_list_one = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Ҳ����ֻ��if��else</li>
+<li>if���֧��and ��or��==��&gt;��&lt;��!=��&lt;=��&gt;=��in��not in��is��is not�ж�</li>
+</ul>
+<h3 id="��3��with���">��3��with���</h3>
+<ul>
+<li>�����</li>
+</ul>
+<h3 id="��4���o����е�for����–forloop">��4���õ����е�for����–forloop</h3>
+<ul>
+<li>�õ���������for��䷽���Ľ��</li>
+</ul>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">`\\\&#123;% for new in data_new \\\%&#125;`</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>`\\\&#123;&#123; forloop \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">`\\\&#123;% endfor \\\%&#125;`</span><br><span class="line"><span class="comment">&lt;!--&#123;&#x27;parentloop&#x27;: &#123;&#125;, &#x27;counter0&#x27;: 0, &#x27;counter&#x27;: 1, &#x27;revcounter&#x27;: 3, &#x27;revcounter0&#x27;: 2, &#x27;first&#x27;: True, &#x27;last&#x27;: False&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">&#123;&#x27;parentloop&#x27;: &#123;&#125;, &#x27;counter0&#x27;: 1, &#x27;counter&#x27;: 2, &#x27;revcounter&#x27;: 2, &#x27;revcounter0&#x27;: 1, &#x27;first&#x27;: False, &#x27;last&#x27;: False&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">&#123;&#x27;parentloop&#x27;: &#123;&#125;, &#x27;counter0&#x27;: 2, &#x27;counter&#x27;: 3, &#x27;revcounter&#x27;: 1, &#x27;revcounter0&#x27;: 0, &#x27;first&#x27;: False, &#x27;last&#x27;: True&#125;--&gt;</span></span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_new = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="��5��forloop����-��if������">��5��forloop���� ��if������</h3>
+<p>ǰ��</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">`\\\&#123;% for x in data \\\%&#125;`</span><br><span class="line">	`\\\&#123;% if forloop.first \\\%&#125;`</span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>&gt;</span>��ǰҪ�ǵ�һ��ѭ���Ļ������`\\\&#123;&#123; x \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;#        ��ǰҪ�ǵ�һ��ѭ���Ļ������jack#&#125;</span><br><span class="line">        `\\\&#123;% elif forloop.last \\\%&#125;`</span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>��ǰҪ�����һ��ѭ�������`\\\&#123;&#123; x \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;#      ��ǰҪ�����һ��ѭ�������dream  #&#125;</span><br><span class="line">        `\\\&#123;% else \\\%&#125;`</span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>����ÿһ��ֵ��`\\\&#123;&#123; x \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;#        ����ÿһ��ֵ��tom#&#125;</span><br><span class="line">&#123;#          ����ÿһ��ֵ��opp    #&#125;</span><br><span class="line">	`\\\&#123;% endif \\\%&#125;`</span><br><span class="line">`\\\&#123;% endfor \\\%&#125;`</span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">��ǰҪ�ǵ�һ��ѭ���Ļ������jack</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">����ÿһ��ֵ��tom</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">����ÿһ��ֵ��opp</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">��ǰҪ�����һ��ѭ�������dream</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>���</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = [<span class="string">&quot;jack&quot;</span>, <span class="string">&quot;tom&quot;</span>, <span class="string">&quot;opp&quot;</span>, <span class="string">&quot;dream&quot;</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="���g��Զ����������k-inclusion-tag-������k">���ġ��Զ����������ǩ/inclusion_tag(������ǩ)</h2>
+<h3 id="��1��������">��1��������</h3>
+<ul>
+<li>��Django��APP�´�����һ�����ֱ���Ϊtemplatetags�ļ���</li>
+<li>�ڸ��ļ����´���һ������������py�ļ���</li>
+<li>�ڸ��ļ����±���д����Ĵ���</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> template</span><br><span class="line"></span><br><span class="line">register = template.Library()</span><br></pre></td></tr></table></figure>
+<h3 id="��2���Զ��������">��2���Զ��������</h3>
+<ul>
+<li>���������ֻ������������</li>
+</ul>
+<h4 id="��1��ʹ�u�����">��1��ʹ�ù�����</h4>
+<ul>
+<li>��APP�´���һ��templatetags�ļ��У������涨��һ��py�ļ����������</li>
+</ul>
+<p>templatetags/one.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> template</span><br><span class="line"></span><br><span class="line"><span class="comment"># template��ģ����ģ�����</span></span><br><span class="line"><span class="comment"># Library��ͼ���</span></span><br><span class="line"><span class="comment"># template.Library()��ģ����ͼ���</span></span><br><span class="line">register = template.Library()</span><br><span class="line"><span class="comment"># register�õ�һ������</span></span><br><span class="line"><span class="built_in">print</span>(register)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># &lt;django.template.library.Library object at 0x0000012B4320AD40&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># дһ���󶨷�����������������Լ���ǰ���Լ������html�ļ�</span></span><br><span class="line"><span class="meta">@register.inclusion_tag(<span class="params"><span class="string">&quot;login.html&quot;</span></span>)</span></span><br><span class="line"><span class="comment"># one����������Ҳ���Դ�ֵ�����ֻ�ܴ�����</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">one</span>():</span><br><span class="line">    data = <span class="string">&quot;����ģ���one����&quot;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">locals</span>()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@register.inclusion_tag(<span class="params"><span class="string">&quot;right_menu.html&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">two</span>(<span class="params">n</span>):</span><br><span class="line">    data_o = <span class="string">&#x27;������ģ����two����&#x27;</span></span><br><span class="line">    data = [<span class="string">f&quot;��<span class="subst">&#123;i&#125;</span>λ&quot;</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>)]</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">locals</span>()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>�ڴ���һ��html�ļ�����<code>@register.inclusion_tag(&quot;html�ļ�&quot;)</code>�̳У��м��������ʹ�������html�ļ�</li>
+<li>Ȼ�����㴴����html����д����</li>
+</ul>
+<p>login.html</p>
+<ul>
+<li>��Ϊ����one��װ������ֱ��ʹ��data����</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>������loginע�ắ��<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">`\\\&#123;&#123; data \\\&#125;&#125;`</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>right_menu.html</p>
+<ul>
+<li>ӦΪ����two������װ������ֱ��ʹ��data���ݺ�data_o����</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>������right_menu�ļ�<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    `\\\&#123;% for datum in data \\\%&#125;`</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>`\\\&#123;&#123; datum \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    `\\\&#123;% endfor \\\%&#125;`</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">`\\\&#123;&#123; data_o \\\&#125;&#125;`</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>������html�ļ������ݶ�����index.html�ļ���
+<ul>
+<li>��һ���ǽ��㴴����one.py�ļ�����<code>\\\&#123;% load one \\\%&#125;</code></li>
+<li>�ڶ����ǽ�one.py�ļ��е�one��������<code>\\\&#123;% one \\\%&#125;</code>,��Ҫ�����Ļ��ͰѲ���д�ں���������<code>\\\&#123;% two 10\\\%&#125;</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">`\\\&#123;% load one \\\%&#125;`</span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>���Ǳ�װ����װ�ε�html�ļ�<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">`\\\&#123;% one \\\%&#125;`</span><br><span class="line">`\\\&#123;% two 10\\\%&#125;`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://urls.py">urls.py</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> user.views <span class="keyword">import</span> index</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&#x27;admin/&#x27;</span>, admin.site.urls),</span><br><span class="line">    path(<span class="string">&quot;&quot;</span>, index, name=<span class="string">&quot;index&quot;</span>),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>�����ҳ����ʾ</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240625184653583.png" alt="image-20240625184653583"></p>
+<h2 id="���塿g��l̳�">���塿ģ��ļ̳�</h2>
+<ul>
+<li>���Ǵ���һ��ĸ�棬������д�ù̶��ĸ�ʽ���ڸ�ʽ���涨��һ������<code>\\\&#123;% block ���� \\\%&#125;`������طž�������Ը�����Ϣ�ĵط�
+
+- ��˼�������������ط����õ�ʱ�򣬾�ֱ�Ӱ�HTML�ĵ��������Ϣ���
+
+- ֱ��ʹ�÷���`\\\&#123;% extends "home.html" \\\%&#125;`
+
+- home.html�����㶨���ĸģ��
+
+- ֱ������д
+
+- <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">`\\\&#123;% extends &quot;home.html&quot; \\\%&#125;`</span><br><span class="line"></span><br><span class="line">`\\\&#123;% block main_content \\\%&#125;`</span><br><span class="line">	���м������Ҫ��ӵ�����</span><br><span class="line">`\\\&#123;% endblock \\\%&#125;`</span><br></pre></td></tr></table></figure>
+
+- �����Ϳ��Ժ�ĸģ��ʹ��ͨ��һ��ģ�壬�����м�����ݲ�ͬ
+
+��һ��ģ��ҳ��
+
+����һ��home.htmlĸģ��
+
+- ������Ӿ��ǰ�����ҳ��ֳ������ݣ������˷ָ��������ҳ��Ҳ��������ʹ��
+
+- �������Ǹ���������������,`main_content`���������֣�����Ҫʹ�õĻ���ֱ�Ӱ��������ݻ���ͺ���
+
+  - ```html
+     `\\\&#123;% block main_content \\\%&#125;`
+                	��������
+                `\\\&#123;% endblock \\\%&#125;</code>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;link href=&quot;https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</span><br><span class="line">    &lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    `\\\&#123;% load one \\\%&#125;`</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;nav class=&quot;navbar navbar-default&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;container-fluid&quot;&gt;</span><br><span class="line">    &lt;!-- Brand and toggle get grouped for better mobile display --&gt;</span><br><span class="line">    &lt;div class=&quot;navbar-header&quot;&gt;</span><br><span class="line">      &lt;button type=&quot;button&quot; class=&quot;navbar-toggle collapsed&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#bs-example-navbar-collapse-1&quot; aria-expanded=&quot;false&quot;&gt;</span><br><span class="line">        &lt;span class=&quot;sr-only&quot;&gt;Toggle navigation&lt;/span&gt;</span><br><span class="line">        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;</span><br><span class="line">        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;</span><br><span class="line">        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;</span><br><span class="line">      &lt;/button&gt;</span><br><span class="line">      &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Brand&lt;/a&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- Collect the nav links, forms, and other content for toggling --&gt;</span><br><span class="line">    &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;bs-example-navbar-collapse-1&quot;&gt;</span><br><span class="line">      &lt;ul class=&quot;nav navbar-nav&quot;&gt;</span><br><span class="line">        &lt;li class=&quot;active&quot;&gt;&lt;a href=&quot;#&quot;&gt;Link &lt;span class=&quot;sr-only&quot;&gt;(current)&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Link&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">        &lt;li class=&quot;dropdown&quot;&gt;</span><br><span class="line">          &lt;a href=&quot;#&quot; class=&quot;dropdown-toggle&quot; data-toggle=&quot;dropdown&quot; role=&quot;button&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;Dropdown &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;&lt;/a&gt;</span><br><span class="line">          &lt;ul class=&quot;dropdown-menu&quot;&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li role=&quot;separator&quot; class=&quot;divider&quot;&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li role=&quot;separator&quot; class=&quot;divider&quot;&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;One more separated link&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">          &lt;/ul&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">      &lt;/ul&gt;</span><br><span class="line">      &lt;form class=&quot;navbar-form navbar-left&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">          &lt;input type=&quot;text&quot; class=&quot;form-control&quot; placeholder=&quot;Search&quot;&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;button type=&quot;submit&quot; class=&quot;btn btn-default&quot;&gt;Submit&lt;/button&gt;</span><br><span class="line">      &lt;/form&gt;</span><br><span class="line">      &lt;ul class=&quot;nav navbar-nav navbar-right&quot;&gt;</span><br><span class="line">        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Link&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">        &lt;li class=&quot;dropdown&quot;&gt;</span><br><span class="line">          &lt;a href=&quot;#&quot; class=&quot;dropdown-toggle&quot; data-toggle=&quot;dropdown&quot; role=&quot;button&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;Dropdown &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;&lt;/a&gt;</span><br><span class="line">          &lt;ul class=&quot;dropdown-menu&quot;&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li role=&quot;separator&quot; class=&quot;divider&quot;&gt;&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">          &lt;/ul&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">      &lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;&lt;!-- /.navbar-collapse --&gt;</span><br><span class="line">  &lt;/div&gt;&lt;!-- /.container-fluid --&gt;</span><br><span class="line">&lt;/nav&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class=&quot;container-fluid&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;row&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;col-md-2&quot;&gt;</span><br><span class="line">            &lt;p&gt;���&lt;/p&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;col-md-8&quot;&gt;</span><br><span class="line">            `\\\&#123;% block main_content \\\%&#125;`</span><br><span class="line">            	��������</span><br><span class="line">            `\\\&#123;% endblock \\\%&#125;`</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;col-md-2&quot;&gt;</span><br><span class="line">            �ұ�</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240625194847089.png" alt="image-20240625194847089"></p>
+<ul>
+<li>��ģ���Ī��ط���һ���������</li>
+</ul>
+<p>index.html</p>
+<ul>
+<li>
+<p>ֱ�Ӱ�ԭ����index.html������գ�ֱ�ӵ���<code>\\\&#123;% extends "home.html" \\\%&#125;</code></p>
+</li>
+<li>
+<p>�ڵ�������home.html�ļ�����Ҫ�����ݺͷ���</p>
+<ul>
+<li>
+<p>����Ҫչʾ������д��ȥ���ɣ���ӵ��������ݲ��ּ���</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">`\\\&#123;% block main_content \\\%&#125;`</span><br><span class="line">            	��������</span><br><span class="line">            `\\\&#123;% endblock \\\%&#125;`</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>��ҳ����ֱ��д<code>\\\&#123;% extends "home.html" \\\%&#125;</code>,�������м�д����Ҫ����Ϣ</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">`\\\&#123;% extends &quot;home.html&quot; \\\%&#125;`</span><br><span class="line"></span><br><span class="line">`\\\&#123;% block main_content \\\%&#125;`</span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>���������ݻ�����index.html����<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">`\\\&#123;% endblock \\\%&#125;`</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240625194811230.png" alt="image-20240625194811230"></p>
+<ul>
+<li>����һ��ҳ��ֱ�ӽ����������ݽ����滻����</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E5%92%8CAuth%E6%A8%A1%E5%9D%97/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/ATM--SHOPPING%E7%9B%AE%E5%BD%95%E8%A7%A3%E6%9E%90/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Django���֮ģ���</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%D2%BB%EF%BF%BD%EF%BF%BDg%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%B7%A8%EF%BF%BD%EF%BF%BD%D6%B5%EF%BF%BD%EF%BF%BD%C8%A1%D6%B5"><span class="nav-number">1.1.</span> <span class="nav-text">��һ��ģ���﷨��ֵ��ȡֵ</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD-swig%EF%BF%BC68-%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.1.1.</span> <span class="nav-text">��1��\\\{{ \\\}}���������</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD-swig%EF%BF%BC71-%EF%BF%BD%EF%BF%BD%EF%BF%BD%DF%BC%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.1.2.</span> <span class="nav-text">��2��\\\{% \\\%}���߼����</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.2.</span> <span class="nav-text">������������</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%CA%B2o%EF%BF%BDn%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.2.1.</span> <span class="nav-text">��1��ʲô�ǹ�����</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%B7%A8"><span class="nav-number">1.2.2.</span> <span class="nav-text">��2���������﷨</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%B7%A8"><span class="nav-number">1.2.3.</span> <span class="nav-text">��3�����������﷨</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%E3%B3%A4%EF%BF%BD%EF%BF%BD%E2%80%93-length"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">��1�����㳤��–(length)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-I%EF%BF%BD%EF%BF%BD%D6%B5%E2%80%93%EF%BF%BD%EF%BF%BDdefault%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">(2)Ĭ��ֵ–��default��</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%DA%B8%EF%BF%BD%CA%BD%E2%80%93-date"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">��3�����ڸ�ʽ–(date)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%EF%BF%BD%EF%BF%BDT%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%E2%80%93%EF%BF%BD%EF%BF%BDslice%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.2.3.4.</span> <span class="nav-text">(4)��Ƭ����–��slice��</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%EF%BF%BD%EF%BF%BD%C8%A1%D5%AA%D2%AA%E2%80%93%EF%BF%BD%EF%BF%BDtruncatechars%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.2.3.5.</span> <span class="nav-text">(5)��ȡժҪ–��truncatechars��</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%EF%BF%BDY%EF%BF%BD%D6%B8%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B7%EF%BF%BD%E2%80%93%EF%BF%BD%EF%BF%BDcut%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.2.3.6.</span> <span class="nav-text">(6)�Ƴ�ָ���ַ�–��cut��</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-y%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B7%EF%BF%BD%E2%80%93%EF%BF%BD%EF%BF%BDjoin%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.2.3.7.</span> <span class="nav-text">(7)ƴ���ַ�–��join��</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-%EF%BF%BD%D3%B7%EF%BF%BD%E2%80%93%EF%BF%BD%EF%BF%BDadd%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.2.3.8.</span> <span class="nav-text">(8)�ӷ�–��add��</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-%C8%A1%EF%BF%BD%EF%BF%BD%D7%AA%EF%BF%BD%E5%A3%A8mark-safe%EF%BF%BD%EF%BF%BDsafe%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.2.3.9.</span> <span class="nav-text">(9)ȡ��ת�壨mark_safe��safe��</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-%EF%BF%BD%EF%BF%BD%D2%BB%EF%BF%BD%EF%BF%BD%EF%BF%BD%D4%B6%EF%BF%BD%EF%BF%BD%EF%BF%BD%CA%B1%EF%BF%BD%E4%A3%AC%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%CA%B1%EF%BF%BD%EF%BF%BD%EF%BF%BDz%EF%BF%BD%CB%B6%EF%BF%BD%EF%BF%BD%E2%80%93%EF%BF%BD%EF%BF%BDtimesince%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.2.3.10.</span> <span class="nav-text">(10)��һ���Զ���ʱ�䣬��������ʱ���ȥ�˶��–��timesince��</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D2%B2%EF%BF%BD%EF%BF%BD%EF%BF%BD%D4%B6%EF%BF%BD%EF%BF%BD%EF%BF%BD%CA%B1%EF%BF%BD%E4%A3%AC%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%CA%B1%EF%BF%BD%E4%BB%B9%EF%BF%BD%D0%B6%EF%BF%BD%EF%BF%BD%E2%80%93%EF%BF%BD%EF%BF%BDtimeuntil%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.2.3.11.</span> <span class="nav-text">(11)����Ҳ���Զ���ʱ�䣬����������ʱ�仹�ж��–��timeuntil��</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDk%EF%BF%BD%EF%B7%A8%E2%80%93%EF%BF%BD%EF%BF%BDTags%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.3.</span> <span class="nav-text">��������ǩ�﷨–��Tags��</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BDfor%D1%AD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.3.1.</span> <span class="nav-text">��1��forѭ��</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BDfor%D1%AD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDo%EF%BF%BD%EF%BF%BD%EF%B7%A8"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">��1��forѭ�������õ��﷨</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BDfor%D1%AD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%B7%A8%CA%B9%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">��2��forѭ�����﷨ʹ��</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%EF%BF%BD%EF%BF%BDj%D1%AD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B5%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%CA%BC%EF%BF%BD%EF%BF%BD%E2%80%93forloop-counter"><span class="nav-number">1.3.1.2.1.</span> <span class="nav-text">[1]��ǰѭ��������ֵ����1��ʼ��–forloop.counter</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%EF%BF%BD%EF%BF%BDj%D1%AD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B5%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD0%EF%BF%BD%EF%BF%BD%CA%BC%EF%BF%BD%EF%BF%BD%E2%80%93forloop-counter0"><span class="nav-number">1.3.1.2.2.</span> <span class="nav-text">[2]��ǰѭ��������ֵ����0��ʼ��–forloop.counter0</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%EF%BF%BD%EF%BF%BDj%D1%AD%EF%BF%BD%EF%BF%BD%EF%BF%BDj%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B5%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%CA%BC%EF%BF%BD%EF%BF%BD%E2%80%93forloop-revcounter"><span class="nav-number">1.3.1.2.3.</span> <span class="nav-text">[3]��ǰѭ���ĵ�������ֵ����1��ʼ��–forloop.revcounter</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%EF%BF%BD%EF%BF%BDj%D1%AD%EF%BF%BD%EF%BF%BD%EF%BF%BDj%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B5%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD0%EF%BF%BD%EF%BF%BD%CA%BC%EF%BF%BD%EF%BF%BD%E2%80%93forloop-revcounter0"><span class="nav-number">1.3.1.2.4.</span> <span class="nav-text">[4]��ǰѭ���ĵ�������ֵ����0��ʼ��–forloop.revcounter0</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-%EF%BF%BD%EF%BF%BDj%D1%AD%EF%BF%BD%EF%BF%BD%EF%BF%BDDz%EF%BF%BD%EF%BF%BDg%EF%BF%BD%D2%BB%EF%BF%BD%EF%BF%BD%D1%AD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B5%EF%BF%BD%EF%BF%BD%E2%80%93forloop-first"><span class="nav-number">1.3.1.2.5.</span> <span class="nav-text">[5]��ǰѭ���ǲ��ǵ�һ��ѭ��������ֵ��–forloop.first</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-%EF%BF%BD%EF%BF%BDj%D1%AD%EF%BF%BD%EF%BF%BD%EF%BF%BDDz%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D2%BB%EF%BF%BD%EF%BF%BD%D1%AD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B5%EF%BF%BD%EF%BF%BD%E2%80%93forloop-last"><span class="nav-number">1.3.1.2.6.</span> <span class="nav-text">[6]��ǰѭ���ǲ������һ��ѭ��������ֵ��–forloop.last</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D1%AD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D1%AD%EF%BF%BD%EF%BF%BD%E2%80%93forloop-parentloop"><span class="nav-number">1.3.1.2.7.</span> <span class="nav-text">[7]����ѭ�������ѭ��–forloop.parentloop</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BDfor%E2%80%A6empty%EF%BF%BD%EF%B7%A8"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">��3��for…empty�﷨</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BDif%E2%80%A6elif%E2%80%A6else%EF%BF%BD%EF%B7%A8%EF%BF%BD%EF%BF%BD%EF%BF%BD%C3%B7%EF%BF%BD"><span class="nav-number">1.3.2.</span> <span class="nav-text">��2��if…elif…else�﷨���÷�</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BDwith%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.3.3.</span> <span class="nav-text">��3��with���</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD4%EF%BF%BD%EF%BF%BD%EF%BF%BDo%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D0%B5%EF%BF%BDfor%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%E2%80%93forloop"><span class="nav-number">1.3.4.</span> <span class="nav-text">��4���õ����е�for����–forloop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD5%EF%BF%BD%EF%BF%BDforloop%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD-%EF%BF%BD%EF%BF%BDif%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.3.5.</span> <span class="nav-text">��5��forloop���� ��if������</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BDg%EF%BF%BD%EF%BF%BD%D4%B6%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDk-inclusion-tag-%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDk"><span class="nav-number">1.4.</span> <span class="nav-text">���ġ��Զ����������ǩ&#x2F;inclusion_tag(������ǩ)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.1.</span> <span class="nav-text">��1��������</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%D4%B6%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.2.</span> <span class="nav-text">��2���Զ��������</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%CA%B9%EF%BF%BDu%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">��1��ʹ�ù�����</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%E5%A1%BFg%EF%BF%BD%EF%BF%BDl%CC%B3%EF%BF%BD"><span class="nav-number">1.5.</span> <span class="nav-text">���塿ģ��ļ̳�</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

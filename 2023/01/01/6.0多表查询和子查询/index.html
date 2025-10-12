@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="多表查询和子查询  多表查询的方式有两种 子查询 联表查询  【一】子查询   一步步解决问题   将一条SQL语句加括号，当做另一条SQL语句的查询条件   【二】联表查询  将多张表拼接到一起，形成一张大表，基于单表查询获取数据  【三】准备数据  创建表  12345678910111213create table dep(	id int primary key auto_increment">
+<meta property="og:type" content="article">
+<meta property="og:title" content="坤博客">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/6.0%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2%E5%92%8C%E5%AD%90%E6%9F%A5%E8%AF%A2/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="多表查询和子查询  多表查询的方式有两种 子查询 联表查询  【一】子查询   一步步解决问题   将一条SQL语句加括号，当做另一条SQL语句的查询条件   【二】联表查询  将多张表拼接到一起，形成一张大表，基于单表查询获取数据  【三】准备数据  创建表  12345678910111213create table dep(	id int primary key auto_increment">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530190830548.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530190842819.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530190759647.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530191004470.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530191050646.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530191531046.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530191703609.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530192542754.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530192532763.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530193747322.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530194524566.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530195512375.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530200802524.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530200040765.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530200510347.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530200556207.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530201748881.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530201935226.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530203111437.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530204132853.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530203808355.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530205344188.png">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T10:31:35.624Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530190830548.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/6.0%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2%E5%92%8C%E5%AD%90%E6%9F%A5%E8%AF%A2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/6.0%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2%E5%92%8C%E5%AD%90%E6%9F%A5%E8%AF%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>多表查询和子查询</h1>
+<ul>
+<li>多表查询的方式有两种</li>
+<li>子查询</li>
+<li>联表查询</li>
+</ul>
+<h2 id="【一】子查询">【一】子查询</h2>
+<ul>
+<li>
+<p>一步步解决问题</p>
+</li>
+<li>
+<p>将一条SQL语句加括号，当做另一条SQL语句的查询条件</p>
+</li>
+</ul>
+<h2 id="【二】联表查询">【二】联表查询</h2>
+<ul>
+<li>将多张表拼接到一起，形成一张大表，基于单表查询获取数据</li>
+</ul>
+<h2 id="【三】准备数据">【三】准备数据</h2>
+<ul>
+<li>创建表</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create table</span> dep(</span><br><span class="line">	id <span class="type">int</span> <span class="keyword">primary key</span> auto_increment,</span><br><span class="line">    name <span class="type">varchar</span>(<span class="number">32</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">create table</span> emp(</span><br><span class="line">	id <span class="type">int</span> <span class="keyword">primary key</span> auto_increment,</span><br><span class="line">    name <span class="type">varchar</span>(<span class="number">32</span>),</span><br><span class="line">    sex enum(<span class="string">&#x27;male&#x27;</span>,<span class="string">&#x27;female&#x27;</span>) <span class="keyword">not null</span> <span class="keyword">default</span> <span class="string">&#x27;male&#x27;</span>,</span><br><span class="line">    age <span class="type">int</span>,</span><br><span class="line">    dep_id <span class="type">int</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530190830548.png" alt="image-20240530190830548"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530190842819.png" alt="image-20240530190842819"></p>
+<ul>
+<li>插入数据</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert into</span> dep <span class="keyword">values</span> </span><br><span class="line">(<span class="string">&#x27;200&#x27;</span>,<span class="string">&#x27;技术部&#x27;</span>),</span><br><span class="line">(<span class="string">&#x27;201&#x27;</span>,<span class="string">&#x27;人力资源&#x27;</span>),</span><br><span class="line">(&quot;202&quot;,&quot;销售部&quot;),</span><br><span class="line">(&quot;203&quot;,&quot;运营部&quot;),</span><br><span class="line">(&quot;204&quot;,&quot;售后部&quot;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert into</span> emp(name,sex,age,dep_id) <span class="keyword">values</span> (<span class="string">&#x27;dream&#x27;</span>,<span class="string">&#x27;male&#x27;</span>,<span class="number">18</span>,<span class="number">200</span>),</span><br><span class="line">(&quot;chimeng&quot;,&quot;female&quot;,<span class="number">18</span>,<span class="number">201</span>),</span><br><span class="line">(&quot;menmgneg&quot;,&quot;male&quot;,<span class="number">38</span>,<span class="number">202</span>),</span><br><span class="line">(&quot;hope&quot;,&quot;male&quot;,<span class="number">18</span>,<span class="number">203</span>),</span><br><span class="line">(&quot;own&quot;,&quot;male&quot;,<span class="number">28</span>,<span class="number">204</span>),</span><br><span class="line">(&quot;thdream&quot;,&quot;male&quot;,<span class="number">18</span>,<span class="number">205</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530190759647.png" alt="image-20240530190759647"></p>
+<ul>
+<li>查看表</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">desc</span> dep;</span><br><span class="line"></span><br><span class="line"><span class="keyword">desc</span> emp;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530191004470.png" alt="image-20240530191004470"></p>
+<ul>
+<li>查看数据</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> dep;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530191050646.png" alt="image-20240530191050646"></p>
+<h2 id="【四】子表查询">【四】子表查询</h2>
+<ul>
+<li>将一个查询语句的结果当做另外一个查询语句的条件去用</li>
+</ul>
+<h3 id="【1】案例—-获取员工dream所在的部门">【1】案例—&gt;获取员工dream所在的部门</h3>
+<ul>
+<li>先获取dream所在的部门编号</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> dep_id <span class="keyword">from</span> emp <span class="keyword">where</span> name<span class="operator">=</span><span class="string">&#x27;dream&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530191531046.png" alt="image-20240530191531046"></p>
+<ul>
+<li>得到部门编号–&gt;将得到的部门编号作为体查询部门的条件</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> name <span class="keyword">from</span> dep <span class="keyword">where</span> id<span class="operator">=</span>(</span><br><span class="line"><span class="keyword">select</span> dep_id <span class="keyword">from</span> emp <span class="keyword">where</span> name<span class="operator">=</span><span class="string">&#x27;dream&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530191703609.png" alt="image-20240530191703609"></p>
+<h3 id="【2】案例">【2】案例</h3>
+<ul>
+<li>查询部门是技术或者人力资源的员工信息</li>
+<li>先获取部门的ID号，再去员工表里面过滤出对应的员工</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id <span class="keyword">from</span> dep <span class="keyword">where</span> name<span class="operator">=</span><span class="string">&#x27;技术部&#x27;</span> <span class="keyword">or</span> name<span class="operator">=</span><span class="string">&#x27;人力资源&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530192542754.png" alt="image-20240530192542754"></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 将上面的数据作为条件</span></span><br><span class="line"><span class="comment">-- 得到，技术或者人力资源的员工信息</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> name <span class="keyword">from</span> emp <span class="keyword">where</span> dep_id <span class="keyword">in</span> (</span><br><span class="line"><span class="keyword">select</span> id <span class="keyword">from</span> dep <span class="keyword">where</span> name<span class="operator">=</span><span class="string">&#x27;技术部&#x27;</span> <span class="keyword">or</span> name<span class="operator">=</span><span class="string">&#x27;人力资源&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530192532763.png" alt="image-20240530192532763"></p>
+<h2 id="【五】联表查询">【五】联表查询</h2>
+<h3 id="【1】补充知识-笛卡尔积">【1】补充知识----&gt;笛卡尔积</h3>
+<ul>
+<li>
+<p>笛卡尔积 ：用于计算两个集合的所有可能的元素组合的数量，的过程。</p>
+</li>
+<li>
+<p>什么是笛卡尔积</p>
+<ul>
+<li>笛卡尔积是一个数学概念，它描述的是两个集合之间所有可能的元素组合的数量。</li>
+<li>具体来说，如果集合A有n个元素，集合B有m个元素，则它们的笛卡尔积的大小为nm。</li>
+<li>笛卡尔积是通过组合两个元素来创建一个新的集合的过程</li>
+</ul>
+</li>
+<li>
+<p>MySQL中的笛卡尔积</p>
+<ul>
+<li>在SQL中，当我们使用JOIN操作将两个或更多的表连接在一起时，结果集中的行数是所有连接表的行数的乘积。这就是所谓的笛卡尔积。</li>
+<li>例如，假设我们有两个表A和B，其中A有5行，B有3行。</li>
+<li>如果我们使用INNER JOIN将这两个表连接起来，那么结果集中将会有5 x 3 = 15行。</li>
+<li>这是因为对于每一行A，我们可以从B中选择任意一行进行匹配。</li>
+<li>因此，总共有5种不同的方式来组合A表中的每一行和B表中的每一行，这导致了最终结果集的大小为5 x 3 = 15。</li>
+<li>这个过程就是笛卡尔积，它是数学中的一种运算，用于计算两个集合的所有可能的元素组合的数量。</li>
+<li>在这个情况下，每个元素都是一个表格中的行。</li>
+<li>所以，当我们在MySQL中使用JOIN操作时，结果集的大小实际上是所有连接表的行数的乘积，这就是为什么我们称其为笛卡尔积的原因。</li>
+</ul>
+</li>
+<li>
+<p>总结</p>
+<ul>
+<li>笛卡尔因可以帮我们理解数据之间的复杂关系，并为我们提供更深入的数据洞察</li>
+</ul>
+</li>
+</ul>
+<h3 id="【2】拼表">【2】拼表</h3>
+<ul>
+<li>拼好的表的结果就叫笛卡尔积</li>
+<li>dep表：5行数据， emp：6行数据
+<ul>
+<li>笛卡尔因：–》就会有5 * 6 = 30行数据</li>
+</ul>
+</li>
+<li>查询数据</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> dep,emp;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530193747322.png" alt="image-20240530193747322"></p>
+<h3 id="【3】再次拼表-》对拼表语句进行修改">【3】再次拼表-----》对拼表语句进行修改</h3>
+<ul>
+<li>查询数据</li>
+<li><code>dep.id=emp.dep_id</code> 两个数据的id相等才会保留</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> dep,emp <span class="keyword">where</span> dep.id<span class="operator">=</span>emp.dep_id;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530194524566.png" alt="image-20240530194524566"></p>
+<h3 id="【4】拼表关键字">【4】拼表关键字</h3>
+<ul>
+<li>
+<p>inner join : 内连接</p>
+<ul>
+<li>只有两张表共有的数据才会保留</li>
+</ul>
+</li>
+<li>
+<p>left join : 左连接</p>
+<ul>
+<li>左表所有的数据都展示出来，没有对应的项就会用null表示</li>
+</ul>
+</li>
+<li>
+<p>right join ：右连接</p>
+<ul>
+<li>右表所有的数据都展示出来，没有对应的项就会用null表示</li>
+</ul>
+</li>
+<li>
+<p>union : 全连接</p>
+<ul>
+<li>左右两边的数据都展示出来</li>
+</ul>
+</li>
+</ul>
+<h4 id="（1）inner-join-内连接">（1）inner join : 内连接</h4>
+<ul>
+<li>只有两张表共有的数据才会保留</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> dep <span class="keyword">inner</span> <span class="keyword">join</span> emp <span class="keyword">on</span> emp.dep_id<span class="operator">=</span>dep.id; </span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530195512375.png" alt="image-20240530195512375"></p>
+<h4 id="2-left-join-左连接">(2)left join : 左连接</h4>
+<ul>
+<li>左表所有的数据都展示出来，没有对应的项就用null表示</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp <span class="keyword">left</span> <span class="keyword">join</span> dep <span class="keyword">on</span> emp.dep_id<span class="operator">=</span>dep.id;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530200802524.png" alt="image-20240530200802524"></p>
+<h3 id="3-right-join-右连接">(3)right join : 右连接</h3>
+<ul>
+<li>右表所有的数据都展示出来，没有对应的项就用null表示</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> dep <span class="keyword">right</span> <span class="keyword">join</span> emp <span class="keyword">on</span> dep.id<span class="operator">=</span>emp.dep_id;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530200040765.png" alt="image-20240530200040765"></p>
+<h3 id="4-union-全连接—-左边的数据-union-右边的数据">(4)union : 全连接—&gt;左边的数据  union  右边的数据</h3>
+<ul>
+<li>两头的数据要是反了就会出现下面这种情况</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> dep <span class="keyword">left</span> <span class="keyword">join</span> emp <span class="keyword">on</span> dep.id<span class="operator">=</span>emp.dep_id <span class="keyword">union</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp <span class="keyword">right</span> <span class="keyword">join</span> dep <span class="keyword">on</span> emp.dep_id<span class="operator">=</span>dep.id;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530200510347.png" alt="image-20240530200510347"></p>
+<ul>
+<li>正确的全拼接</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> dep <span class="keyword">left</span> <span class="keyword">join</span> emp <span class="keyword">on</span> dep.id<span class="operator">=</span>emp.dep_id <span class="keyword">union</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> dep <span class="keyword">right</span> <span class="keyword">join</span> emp <span class="keyword">on</span> emp.dep_id<span class="operator">=</span>dep.id;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530200556207.png" alt="image-20240530200556207"></p>
+<h2 id="【总结】">【总结】</h2>
+<ul>
+<li>学了联表操作以后就可以将n张表连接到一起了</li>
+<li>怎么将将n张表连接到一起呢？？？？
+<ul>
+<li>将两张表拼接之后的结果起别名当做一张表使用</li>
+<li>再将拼接好的表跟另外一张表拼接，以此类推</li>
+</ul>
+</li>
+</ul>
+<h2 id="【补充】关键字exists">【补充】关键字exists</h2>
+<ul>
+<li>关键字exists，只返回布尔值</li>
+<li>返回False，不执行外部语句</li>
+<li>返回True，执行外部语句</li>
+</ul>
+<p>例子</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp <span class="keyword">where</span> <span class="keyword">exists</span> (<span class="keyword">select</span> id <span class="keyword">from</span> dep <span class="keyword">where</span> id<span class="operator">&gt;</span><span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- exists 接收到的是True，外部语句执行</span></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530201748881.png" alt="image-20240530201748881"></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp <span class="keyword">where</span> <span class="keyword">exists</span> (<span class="keyword">select</span> id <span class="keyword">from</span> dep <span class="keyword">where</span> id<span class="operator">&gt;</span><span class="number">520</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- exists 接收到的bool值是False，不执行外部语句</span></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530201935226.png" alt="image-20240530201935226"></p>
+<h2 id="【练习题】">【练习题】</h2>
+<ul>
+<li>查询平均年龄在25岁以上的部门名称</li>
+</ul>
+<p>方法一 ：–》用联表，内连接</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 将两个连接起来</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp <span class="keyword">inner</span> <span class="keyword">join</span> dep <span class="keyword">on</span> emp.dep_id<span class="operator">=</span>dep.id;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530203111437.png" alt="image-20240530203111437"></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 表连起来以后，分组</span></span><br><span class="line"><span class="comment">-- 因为每个部门只有一个人，看不出来多大的效果</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> dep.name,age <span class="keyword">from</span> emp <span class="keyword">inner</span> <span class="keyword">join</span> dep <span class="keyword">on</span> dep.id<span class="operator">=</span>emp.dep_id <span class="keyword">group</span> <span class="keyword">by</span> dep.name;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530204132853.png" alt="image-20240530204132853"></p>
+<ul>
+<li>总和—》得到结果</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 先连接表，在按部门分组，再筛选出平均年龄为25岁以上的部门</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> dep.name <span class="keyword">from</span> dep <span class="keyword">inner</span> <span class="keyword">join</span> emp <span class="keyword">on</span> dep.id<span class="operator">=</span>emp.dep_id <span class="keyword">group</span> <span class="keyword">by</span> dep.name <span class="keyword">having</span> <span class="built_in">avg</span>(age)<span class="operator">&gt;</span><span class="number">25</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530203808355.png" alt="image-20240530203808355"></p>
+<ul>
+<li>查询平均年龄在25岁以上的部门名称</li>
+</ul>
+<p>方法二 : --&gt;用子查询</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 先分组，再筛选平均工资</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> dep_id <span class="keyword">from</span> emp <span class="keyword">group</span> <span class="keyword">by</span> dep_id <span class="keyword">having</span> <span class="built_in">avg</span>(age)<span class="operator">&gt;</span><span class="number">25</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 将上面的数据当作条件用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> name <span class="keyword">from</span> dep <span class="keyword">where</span> id <span class="keyword">in</span> (<span class="keyword">select</span> dep_id <span class="keyword">from</span> emp <span class="keyword">group</span> <span class="keyword">by</span> dep_id <span class="keyword">having</span> <span class="built_in">avg</span>(age)<span class="operator">&gt;</span><span class="number">25</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530205344188.png" alt="image-20240530205344188"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/7.0CSS%E9%80%89%E6%8B%A9%E5%99%A8/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/6.0Django%E6%A1%86%E6%9E%B6ORM%E4%B9%8B%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">多表查询和子查询</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.1.</span> <span class="nav-text">【一】子查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.2.</span> <span class="nav-text">【二】联表查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%89%E3%80%91%E5%87%86%E5%A4%87%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.</span> <span class="nav-text">【三】准备数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%9B%9B%E3%80%91%E5%AD%90%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.4.</span> <span class="nav-text">【四】子表查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%A1%88%E4%BE%8B%E2%80%94-%E8%8E%B7%E5%8F%96%E5%91%98%E5%B7%A5dream%E6%89%80%E5%9C%A8%E7%9A%84%E9%83%A8%E9%97%A8"><span class="nav-number">1.4.1.</span> <span class="nav-text">【1】案例—&gt;获取员工dream所在的部门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E6%A1%88%E4%BE%8B"><span class="nav-number">1.4.2.</span> <span class="nav-text">【2】案例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%94%E3%80%91%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.5.</span> <span class="nav-text">【五】联表查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E8%A1%A5%E5%85%85%E7%9F%A5%E8%AF%86-%E7%AC%9B%E5%8D%A1%E5%B0%94%E7%A7%AF"><span class="nav-number">1.5.1.</span> <span class="nav-text">【1】补充知识----&gt;笛卡尔积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E6%8B%BC%E8%A1%A8"><span class="nav-number">1.5.2.</span> <span class="nav-text">【2】拼表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%86%8D%E6%AC%A1%E6%8B%BC%E8%A1%A8-%E3%80%8B%E5%AF%B9%E6%8B%BC%E8%A1%A8%E8%AF%AD%E5%8F%A5%E8%BF%9B%E8%A1%8C%E4%BF%AE%E6%94%B9"><span class="nav-number">1.5.3.</span> <span class="nav-text">【3】再次拼表-----》对拼表语句进行修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E6%8B%BC%E8%A1%A8%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.5.4.</span> <span class="nav-text">【4】拼表关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89inner-join-%E5%86%85%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.5.4.1.</span> <span class="nav-text">（1）inner join : 内连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-left-join-%E5%B7%A6%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.5.4.2.</span> <span class="nav-text">(2)left join : 左连接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-right-join-%E5%8F%B3%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.5.5.</span> <span class="nav-text">(3)right join : 右连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-union-%E5%85%A8%E8%BF%9E%E6%8E%A5%E2%80%94-%E5%B7%A6%E8%BE%B9%E7%9A%84%E6%95%B0%E6%8D%AE-union-%E5%8F%B3%E8%BE%B9%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">1.5.6.</span> <span class="nav-text">(4)union : 全连接—&gt;左边的数据  union  右边的数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91"><span class="nav-number">1.6.</span> <span class="nav-text">【总结】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E8%A1%A5%E5%85%85%E3%80%91%E5%85%B3%E9%94%AE%E5%AD%97exists"><span class="nav-number">1.7.</span> <span class="nav-text">【补充】关键字exists</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E7%BB%83%E4%B9%A0%E9%A2%98%E3%80%91"><span class="nav-number">1.8.</span> <span class="nav-text">【练习题】</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

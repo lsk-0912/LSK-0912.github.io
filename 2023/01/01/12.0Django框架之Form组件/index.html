@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Django���֮Form��� ��һ��Django�ı��ϵͳ ��1��ԭʼ��form��� 12345678910&#123;#action·����������Ҫ�ύ���ݵ�Ŀ�ĵأ�����Ĭ�ϱ���#&#125;&lt;form action&#x3D;&quot;&quot; method&#x3D;&quot;post&quot;&gt;    &#123;#˵����ǩ&lt;label">
+<meta property="og:type" content="article">
+<meta property="og:title" content="坤博客">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/12.0Django%E6%A1%86%E6%9E%B6%E4%B9%8BForm%E7%BB%84%E4%BB%B6/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="Django���֮Form��� ��һ��Django�ı��ϵͳ ��1��ԭʼ��form��� 12345678910&#123;#action·����������Ҫ�ύ���ݵ�Ŀ�ĵأ�����Ĭ�ϱ���#&#125;&lt;form action&#x3D;&quot;&quot; method&#x3D;&quot;post&quot;&gt;    &#123;#˵����ǩ&lt;label">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240701220913512.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240701220830767.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240701220838816.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240701220855178.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240701220932862.png">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T10:31:34.940Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240701220913512.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/12.0Django%E6%A1%86%E6%9E%B6%E4%B9%8BForm%E7%BB%84%E4%BB%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/12.0Django%E6%A1%86%E6%9E%B6%E4%B9%8BForm%E7%BB%84%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:34" itemprop="dateModified" datetime="2025-10-11T18:31:34+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>Django���֮Form���</h1>
+<h2 id="��һ��Django�i��ϵͳ">��һ��Django�ı��ϵͳ</h2>
+<h3 id="��1��ԭʼ��form���">��1��ԭʼ��form���</h3>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;#action·����������Ҫ�ύ���ݵ�Ŀ�ĵأ�����Ĭ�ϱ���#&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    &#123;#˵����ǩ<span class="tag">&lt;<span class="name">label</span>&gt;</span>#&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;username&quot;</span>&gt;</span>username:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;username&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;password&quot;</span>&gt;</span>password:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    &#123;#��ť#&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>ͬʱ�����ںöೡ���¶���Ҫ���û���������У��</p>
+</li>
+<li>
+<ul>
+<li>����У���û��Ƿ�����</li>
+<li>����ĳ��Ⱥ͸�ʽ��������ȷ��</li>
+</ul>
+</li>
+<li>
+<p>����û�����������д������Ҫ��ҳ������Ӧ��λ����ʾ��Ӧ�Ĵ�����Ϣ.��</p>
+</li>
+</ul>
+<h3 id="��2��Django�i��ϵͳ">��2��Django�ı��ϵͳ</h3>
+<ul>
+<li>
+<p>Django��Form�������Djangoģ������������߼��ṹ����Ϊ�Լ������ָ��������ݵ���ʽ�ķ�ʽ������ͬ</p>
+</li>
+<li>
+<p>Ϊʲô��Ҫ���������</p>
+</li>
+<li>
+<p>ԭ��֮һ��ģ������һЩ�ֶ��㲻��Ҫ�û���ǰ���������ݣ�������Ҫ�û���������һЩ��ģ���ֶε�����</p>
+</li>
+<li>
+<p>Form�����ȷ��������Щ��Ϊ���൱�������û�HTML���������Djangoģ��֮����м��</p>
+</li>
+</ul>
+<h3 id="��3��form�������Ҫ����">��3��form�������Ҫ����</h3>
+<ul>
+<li>����ҳ����Ҫ��HTML��ǩ</li>
+<li>���û��ύ�����ݽ���У��</li>
+<li>�����ϴ����������</li>
+</ul>
+<h2 id="�������������">�������������</h2>
+<ul>
+<li>дһ��ע�Ṧ��
+<ul>
+<li>��ȡ�û��������룬����form����ύ����</li>
+<li>�ں���ж��û����������Ƿ����һ��������
+<ul>
+<li>�û����в��ܰ���nb_</li>
+<li>���벻��������λ</li>
+</ul>
+</li>
+<li>�������������Ҫ�㽫��ʾ��Ϣչʾ��ǰ��ҳ��</li>
+</ul>
+</li>
+</ul>
+<h2 id="������form���ʵ��">������form���ʵ��</h2>
+<h3 id="��1�������t���رȶ���Ϣ">��1�������ť���رȶ���Ϣ</h3>
+<h4 id="��1��j��ҳ��">��1��ǰ��ҳ��</h4>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;username&quot;</span>&gt;</span>username:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;username&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color: red&quot;</span>&gt;</span>`\\\&#123;&#123; back_dict.username \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    &#123;#   ����һ����̬����չʾ���� #&#125;</span><br><span class="line">    &#123;#  `\\\&#123;&#123; back_dict.username \\\&#125;&#125;`�ᱻ����Ϊ�Ӻ�̨���صĴ�����ʾ��Ϣ#&#125;</span><br><span class="line">    &#123;#  ����û��������������ʾ��ɫ�Ĵ�����ʾ#&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;password&quot;</span>&gt;</span>password:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">id</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color: red&quot;</span>&gt;</span>`\\\&#123;&#123; back_dict.password \\\&#125;&#125;`<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">         &#123;#   ����һ����̬����չʾ���� #&#125;</span><br><span class="line">    &#123;#  `\\\&#123;&#123; back_dict.password \\\&#125;&#125;`�ᱻ����Ϊ�Ӻ�̨���صĴ�����ʾ��Ϣ#&#125;</span><br><span class="line">    &#123;#  ����û��������������ʾ��ɫ�Ĵ�����ʾ#&#125;</span><br><span class="line">     <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-danger&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>�����ǶԱ��Ľ���</p>
+<ul>
+<li>
+<p><code>&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;</code>��</p>
+</li>
+<li>
+<ul>
+<li>����һ�����������action����Ϊ���ַ���������ζ�ű��Ĭ���ύ����ǰҳ�棨�����ں��·�ɴ���ʱ��ָ��һ������URL����</li>
+<li>method��������Ϊ&quot;post&quot;����ʾ������ݽ���POST��ʽ���ͣ����ַ�ʽ���Ը��õر��������Ϣ�������룬��Ϊ��������URL����ʾ��</li>
+</ul>
+</li>
+<li>
+<p><code>&lt;p&gt;username: &lt;input type=&quot;text&quot; class=&quot;form-control&quot; name=&quot;username&quot;&gt;&lt;/p&gt;</code>��</p>
+</li>
+<li>
+<ul>
+<li>�ⲿ�ִ�����һ���ı�������û��ڴ��������û�����</li>
+<li>class����ֵΪ&quot;form-control&quot;������Bootstrap����ṩ��CSS�࣬�����趨��������ʽ��</li>
+<li>name����ֵΪ&quot;username&quot;����������ڷ������˽��ձ������ʱ��Ϊ����ʹ�á�</li>
+</ul>
+</li>
+<li>
+<p><code>&lt;span style=&quot;color: red&quot;&gt;</code>\&lt;!–swig￼56–&gt;<code>&lt;/span&gt;</code>��</p>
+</li>
+<li>
+<ul>
+<li>����һ����̬����չʾ����</li>
+<li>������ʹ�õ�ģ�����棨��Jinja2��Vue.js�ȣ���<code>\\\&#123;&#123; back_dict.username \\\&#125;&#125;</code>�ᱻ����Ϊ�Ӻ�̨���صĴ�����ʾ��Ϣ</li>
+<li>����û��������������ʾ��ɫ�Ĵ�����ʾ��</li>
+</ul>
+</li>
+<li>
+<p><code>&lt;p&gt;password: &lt;input type=&quot;password&quot; class=&quot;form-control&quot; name=&quot;password&quot;&gt;&lt;/p&gt;</code>��</p>
+</li>
+<li>
+<ul>
+<li>�ⲿ�ִ�����һ������������û��ڴ����������롣</li>
+<li>type����ֵΪ&quot;password&quot;��������������ݻ����ǺŻ��������Ŵ�����ʾ�������û����벻�����˿��ӡ�</li>
+<li>ͬ������form-control��ʽ��name���ԡ�</li>
+</ul>
+</li>
+<li>
+<p><code>&lt;span style=&quot;color: red&quot;&gt;</code>\&lt;!–swig￼58–&gt;<code>&lt;/span&gt;</code>��</p>
+</li>
+<li>
+<ul>
+<li>���û���������·���spanԪ������</li>
+<li>�˴�������ʾ��������Ĵ�����ʾ��Ϣ��</li>
+</ul>
+</li>
+<li>
+<p><code>&lt;input type=&quot;submit&quot; class=&quot;btn btn-danger&quot;&gt;</code>��</p>
+</li>
+<li>
+<ul>
+<li>����һ���ύ��ť������ð�ťʱ��������ݽ��ᱻ��������������</li>
+<li>class����ֵΪ&quot;btn btn-danger&quot;������Bootstrap�����ڴ���Σ��������ʽ�İ�ť</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-���">(2)���</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">form_one</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="comment"># �洢������Ϣ</span></span><br><span class="line">    back_dict = &#123;&#125;</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        username = request.POST.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(username)</span><br><span class="line">        password = request.POST.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(password)</span><br><span class="line">        <span class="comment"># �ж��û���</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;nb_&quot;</span> <span class="keyword">in</span> username:</span><br><span class="line">            <span class="comment"># ���������Ϣ</span></span><br><span class="line">            back_dict[<span class="string">&quot;username&quot;</span>] = <span class="string">&#x27;�û��������ϸ�ʽ��&#x27;</span></span><br><span class="line">        <span class="comment"># �ж�����</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(password) &lt; <span class="number">3</span>:</span><br><span class="line">            <span class="comment"># ���������Ϣ</span></span><br><span class="line">            back_dict[<span class="string">&#x27;password&#x27;</span>] = <span class="string">&#x27;���볤�Ȳ����Ե���3&#x27;</span></span><br><span class="line">        <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        ������ get ���� ���� post ����ҳ�涼�ܻ�ȡ���ֵ�</span></span><br><span class="line"><span class="string">            get ����ʱ���ֵ��ǿյģ�û��ֵ</span></span><br><span class="line"><span class="string">            post ����ʱ ���ֵ�����Ƿǿյ�</span></span><br><span class="line"><span class="string">        &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;form_one.html&#x27;</span>, <span class="built_in">locals</span>())</span><br></pre></td></tr></table></figure>
+<h4 id="��3���o���ʲo">��3���õ���ʲô</h4>
+<ul>
+<li>
+<p>�ֶ���дǰ��HTMLҳ�����</p>
+</li>
+<li>
+<ul>
+<li>��ȾHTMLҳ��</li>
+</ul>
+</li>
+<li>
+<p>��˶��û����ݽ���У��</p>
+</li>
+<li>
+<ul>
+<li>У������</li>
+</ul>
+</li>
+<li>
+<p>�Բ�����Ҫ������ݽ���ǰ����ʾ</p>
+</li>
+<li>
+<ul>
+<li>չʾ��ʾ��Ϣ</li>
+</ul>
+</li>
+</ul>
+<h3 id="��2��Form���У������">��2��Form���У������</h3>
+<ul>
+<li>
+<p>form������԰��������</p>
+</li>
+<li>
+<ul>
+<li>��ȾHTMLҳ��</li>
+<li>У������</li>
+<li>չʾ��ʾ��Ϣ</li>
+</ul>
+</li>
+<li>
+<p>Ϊʲô����У��Ҫ�ں��ִ�У�������ǰ����JS��ɣ�</p>
+</li>
+<li>
+<ul>
+<li>����У��ǰ�˿��п���</li>
+<li>���Ǻ�˱����У�</li>
+</ul>
+</li>
+<li>
+<p>ԭ��</p>
+</li>
+<li>
+<ul>
+<li>ǰ�˵�У�����ʵʱ���޸ĵķ��գ�������ǰ��ֱ���޸����������</li>
+<li>���������������ƹ�ǰ��ҳ��ֱ�������ύ����</li>
+</ul>
+</li>
+</ul>
+<h2 id="���g�Form������У������">���ġ�Form������У������</h2>
+<h3 id="��1����д�����">��1����д�����</h3>
+<ul>
+<li>���ǿ���ͨ��Django�ṩ��Form����������������ı����������Ҫ�ֶ���HTML�б�д</li>
+</ul>
+<h4 id="��1�������l�">��1�������ļ�</h4>
+<ul>
+<li>��APP���½�һ��.py�ļ��������·��Django�Ĺ����ַ�������views.py��models.py�ȵȣ�</li>
+</ul>
+<h4 id="��2����дform�����">��2����дform�����</h4>
+<ul>
+<li>��App�ڴ���һ��userForms.py�ļ����ļ���������</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ����Django��forms���</span></span><br><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ����һ��form�������</span></span><br><span class="line"><span class="comment"># �̳�form����� form.Form</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LoginForm</span>(forms.Form):</span><br><span class="line">    <span class="comment"># �������������</span></span><br><span class="line">    <span class="comment"># �û��������ֲ�����nb_��ͷ</span></span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        <span class="comment"># ��󳤶�</span></span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        <span class="comment"># ��С����</span></span><br><span class="line">        min_length=<span class="number">3</span></span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># ����</span></span><br><span class="line">    password = forms.CharField(</span><br><span class="line">        <span class="comment"># ���Ȳ���С��3</span></span><br><span class="line">        min_length=<span class="number">3</span></span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># ����</span></span><br><span class="line">    email = forms.EmailField()</span><br></pre></td></tr></table></figure>
+<h4 id="��3����д�������">��3����д�������</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="comment"># �����Զ�������ࣨ�Լ�д�ģ�</span></span><br><span class="line"><span class="keyword">from</span> user.userForms <span class="keyword">import</span> LoginForm</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="comment"># ʵ���������õ�һ�������</span></span><br><span class="line">    login_form = LoginForm()</span><br><span class="line">    <span class="comment"># ��ǰ����Ⱦ�����form����</span></span><br><span class="line">    <span class="comment"># `\\\&#123;&#123; login_form \\\&#125;&#125;`</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        <span class="comment"># form���������У������</span></span><br><span class="line">        data = request.POST</span><br><span class="line">        <span class="comment"># ��һ����������ݣ�����У��</span></span><br><span class="line">        data = &#123;<span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;dream&#x27;</span>, <span class="string">&#x27;password&#x27;</span>: <span class="string">&#x27;1&#x27;</span>, <span class="string">&quot;email&quot;</span>: <span class="string">&quot;123@qq.com&quot;</span>&#125;</span><br><span class="line">        form_obj = LoginForm(data=data)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># ����У��</span></span><br><span class="line">        <span class="comment"># ���ص�ֵ��boolֵ���յ����ݲ��Ϲ����False��True</span></span><br><span class="line">        <span class="comment"># ������������裬��Ȼ��У��</span></span><br><span class="line">        <span class="comment"># print(form_obj.is_valid())  # False</span></span><br><span class="line">        <span class="comment"># У�鲽��</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> form_obj.is_valid():</span><br><span class="line">            <span class="comment"># ��Ϣ���Ϲ����</span></span><br><span class="line">            <span class="comment"># �鿴�������Ϣ</span></span><br><span class="line">            <span class="built_in">print</span>(form_obj.errors)</span><br><span class="line">            <span class="comment"># ������Ϣ�ĸ�ʽ</span></span><br><span class="line">            <span class="comment"># &lt;ul class=&quot;errorlist&quot;&gt;&lt;li&gt;password&lt;ul class=&quot;errorlist&quot;&gt;&lt;li&gt;Ensure this value has at least 3 characters (it has 1).&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># �鿴ͨ������Ϣ</span></span><br><span class="line">            <span class="built_in">print</span>(form_obj.cleaned_data)</span><br><span class="line">            <span class="comment"># &#123;&#x27;username&#x27;: &#x27;dream&#x27;, &#x27;email&#x27;: &#x27;123@qq.com&#x27;&#125;</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># �鿴��ǰ��Щ�ֶν��й�У��</span></span><br><span class="line">            <span class="built_in">print</span>(form_obj.changed_data)</span><br><span class="line">            <span class="comment"># [&#x27;username&#x27;, &#x27;password&#x27;, &#x27;email&#x27;]</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># ����Ĳ���û�У������˵���û�д����ͻᱨ�����ʾ�˲������봩</span></span><br><span class="line">            <span class="comment"># ����Ĳ������ˣ�û���嵫�Ǵ��ˣ��ͻ᲻�ܣ�û������Ĳ������ᱻУ��</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;form_one.html&#x27;</span>, <span class="built_in">locals</span>())</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="4-��дj������">(4)��дǰ������</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=<span class="string">&quot;&quot;</span> method=<span class="string">&quot;post&quot;</span>&gt;</span><br><span class="line">    `\\\&#123;&#123; login_form \\\&#125;&#125;`</span><br><span class="line">    &lt;p&gt;&lt;<span class="built_in">input</span> <span class="built_in">type</span>=<span class="string">&quot;submit&quot;</span> <span class="keyword">class</span>=<span class="string">&quot;btn btn-danger&quot;</span>&gt;&lt;/p&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="���塿Form������ֶβ���">���塿Form������ֶβ���</h2>
+<h3 id="��1���ܵĲ�������">��1���ܵĲ�������</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login_one</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="comment"># ����form�����</span></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">UserForm</span>(forms.Form):</span><br><span class="line">        username = forms.CharField(</span><br><span class="line">            <span class="comment"># �����ʼֵ</span></span><br><span class="line">            initial=<span class="string">&#x27;tom&#x27;</span></span><br><span class="line">            <span class="comment"># ��󳤶�</span></span><br><span class="line">            max_length=<span class="number">8</span>,</span><br><span class="line">            <span class="comment"># ��С����</span></span><br><span class="line">            min_length=<span class="number">3</span>,</span><br><span class="line">            <span class="comment"># �Ǳ���Ϊ���ֶ�</span></span><br><span class="line">            <span class="comment"># required=False,</span></span><br><span class="line">            <span class="comment"># label����ʾ�������֮ǰ����ʾ�ı�</span></span><br><span class="line">            label=<span class="string">&#x27;�û���&#x27;</span>,</span><br><span class="line">            <span class="comment"># input���ڵ���ʾ��Ϣ</span></span><br><span class="line">            <span class="comment"># initial=&#x27;�������û���&#x27;,</span></span><br><span class="line">            <span class="comment"># ��ʾ�ı���input��֮�����ʾ�ı���</span></span><br><span class="line">            label_suffix=<span class="string">&quot;��&quot;</span>,</span><br><span class="line">            <span class="comment"># ����ǰ�˵���ʽ</span></span><br><span class="line">            widget=forms.widgets.TextInput(</span><br><span class="line">                <span class="comment"># ���Է�ǰ�˵ļ�ֵ����</span></span><br><span class="line">                attrs=&#123;</span><br><span class="line">                    <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;form-control&#x27;</span>,</span><br><span class="line">                    <span class="comment"># �����дid�Ļ������������Ĭ�ϵ�id=id_username</span></span><br><span class="line">                    <span class="string">&#x27;id&#x27;</span>: <span class="string">&#x27;username&#x27;</span>,</span><br><span class="line">                    <span class="comment"># input����ʾ��</span></span><br><span class="line">                    <span class="string">&#x27;placeholder&#x27;</span>: <span class="string">&#x27;�������û���&#x27;</span></span><br><span class="line">                &#125;</span><br><span class="line">            ),</span><br><span class="line">            <span class="comment"># input��������ı�</span></span><br><span class="line">            help_text=<span class="string">&#x27;�û���ע���ı���Ϣ&#x27;</span>,</span><br><span class="line">            <span class="comment"># ��Ŵ�����Ϣ</span></span><br><span class="line">            error_messages=&#123;</span><br><span class="line">                <span class="string">&quot;required&quot;</span>: <span class="string">&#x27;�û������봫&#x27;</span>,</span><br><span class="line">                <span class="string">&quot;min_length&quot;</span>: <span class="string">&quot;�㴫������̫����&quot;</span>,</span><br><span class="line">                <span class="string">&quot;max_length&quot;</span>: <span class="string">&quot;�㴫������̫����&quot;</span>,</span><br><span class="line"></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="comment"># input����ѡ�е�״̬</span></span><br><span class="line">            disabled=<span class="literal">True</span></span><br><span class="line">        )</span><br><span class="line">        password = forms.CharField(</span><br><span class="line">            <span class="comment"># ����Ķ���Ϣ�Ǳ��ܵ�</span></span><br><span class="line">            widget=forms.PasswordInput(</span><br><span class="line"></span><br><span class="line">            )</span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># Select��ѡ��</span></span><br><span class="line">        hobby = forms.ChoiceField(</span><br><span class="line">            choices=((<span class="number">1</span>, <span class="string">&#x27;����&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;��ɽ&#x27;</span>)),</span><br><span class="line">            <span class="comment"># ��ʾ��Ϣ</span></span><br><span class="line">            label=<span class="string">&#x27;����&#x27;</span>,</span><br><span class="line">            <span class="comment"># Ĭ��ֵ</span></span><br><span class="line">            initial=<span class="string">&#x27;2&#x27;</span>,</span><br><span class="line">            <span class="comment"># Select��ѡ��</span></span><br><span class="line">            widget=forms.widgets.Select()</span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># ��ѡ��SelectMultiple</span></span><br><span class="line">        hobby_one = forms.MultipleChoiceField(</span><br><span class="line">            choices=((<span class="number">1</span>, <span class="string">&#x27;��ë��&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;ƹ����&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;����&#x27;</span>)),</span><br><span class="line">            <span class="comment"># ��ʾ��Ϣ</span></span><br><span class="line">            label=<span class="string">&#x27;����&#x27;</span>,</span><br><span class="line">            <span class="comment"># Ĭ��ֵ</span></span><br><span class="line">            initial=[<span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">            <span class="comment"># SelectMultiple��ѡ��</span></span><br><span class="line">            widget=forms.widgets.SelectMultiple()</span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># ��ѡ��CheckboxInput</span></span><br><span class="line">        keep = forms.ChoiceField(</span><br><span class="line">            label=<span class="string">&quot;�Ƿ��ס����&quot;</span>,</span><br><span class="line">            initial=<span class="string">&quot;checked&quot;</span>,</span><br><span class="line">            widget=forms.widgets.CheckboxInput()</span><br><span class="line">        )</span><br><span class="line">        <span class="comment">#��ѡ��</span></span><br><span class="line">        hobby_two = forms.MultipleChoiceField(</span><br><span class="line">            choices=((<span class="number">1</span>, <span class="string">&quot;����&quot;</span>), (<span class="number">2</span>, <span class="string">&quot;����&quot;</span>), (<span class="number">3</span>, <span class="string">&quot;˫ɫ��&quot;</span>),),</span><br><span class="line">            label=<span class="string">&quot;����&quot;</span>,</span><br><span class="line">            initial=[<span class="number">1</span>, <span class="number">3</span>],</span><br><span class="line">            widget=forms.widgets.CheckboxSelectMultiple()</span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># ѡ���RadioSelect</span></span><br><span class="line">        gender = forms.ChoiceField(</span><br><span class="line">            choices=((<span class="number">1</span>, <span class="string">&quot;��&quot;</span>), (<span class="number">2</span>, <span class="string">&quot;Ů&quot;</span>), (<span class="number">3</span>, <span class="string">&quot;����&quot;</span>)),</span><br><span class="line">            label=<span class="string">&quot;�Ա�&quot;</span>,</span><br><span class="line">            initial=<span class="number">3</span>,</span><br><span class="line">            widget=forms.widgets.RadioSelect()</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    form_obj = UserForm(&#123;</span><br><span class="line">        <span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;1222&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">    form_obj.is_valid()</span><br><span class="line">    <span class="comment"># ��ӡ������Ϣ</span></span><br><span class="line">    <span class="built_in">print</span>(form_obj.errors)</span><br><span class="line">    <span class="comment"># ��ȡУ��ɹ�������</span></span><br><span class="line">    <span class="built_in">print</span>(form_obj.cleaned_data)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;form_one.html&#x27;</span>, <span class="built_in">locals</span>())</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="��2������max-length">��2������max_length</h3>
+<ul>
+<li>�ֶε���󳤶�</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ��󳤶�</span></span><br><span class="line">           max_length=<span class="number">8</span>,</span><br></pre></td></tr></table></figure>
+<h3 id="��3������min-length">��3������min_length</h3>
+<ul>
+<li>�ֶε���С����</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ��С����</span></span><br><span class="line">            min_length=<span class="number">3</span>,</span><br></pre></td></tr></table></figure>
+<h3 id="��4������label">��4������label</h3>
+<ul>
+<li>�����֮ǰ����ʾ�ı�</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># label����ʾ�������֮ǰ����ʾ�ı�</span></span><br><span class="line">           label=<span class="string">&#x27;�û���&#x27;</span>,</span><br></pre></td></tr></table></figure>
+<h3 id="��5������label-suffix">��5������label_suffix</h3>
+<ul>
+<li>��ʾ�ı���input��֮�����ʾ�ı���</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ��ʾ�ı���input��֮�����ʾ�ı���</span></span><br><span class="line">            label_suffix=<span class="string">&quot;��&quot;</span>,</span><br></pre></td></tr></table></figure>
+<h3 id="��6������widget">��6������widget</h3>
+<ul>
+<li>����ǰ�˵���ʽ</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ����ǰ�˵���ʽ</span></span><br><span class="line">            widget=forms.widgets.TextInput(</span><br><span class="line">                <span class="comment"># ���Է�ǰ�˵ļ�ֵ����</span></span><br><span class="line">                attrs=&#123;</span><br><span class="line">                    <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;form-control&#x27;</span>,</span><br><span class="line">                    <span class="comment"># �����дid�Ļ������������Ĭ�ϵ�id=id_username</span></span><br><span class="line">                    <span class="string">&#x27;id&#x27;</span>: <span class="string">&#x27;username&#x27;</span>,</span><br><span class="line">                    <span class="comment"># input����ʾ��</span></span><br><span class="line">                    <span class="string">&#x27;placeholder&#x27;</span>: <span class="string">&#x27;�������û���&#x27;</span></span><br><span class="line">                &#125;</span><br><span class="line">            ),</span><br></pre></td></tr></table></figure>
+<h3 id="��7������help-text">��7������help_text</h3>
+<ul>
+<li>input��������ı�</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># input��������ı�</span></span><br><span class="line"> help_text=<span class="string">&#x27;�û���ע���ı���Ϣ&#x27;</span>,</span><br></pre></td></tr></table></figure>
+<h3 id="��8������error-messages">��8������error_messages</h3>
+<ul>
+<li>��Ŵ�����Ϣ</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ��Ŵ�����Ϣ</span></span><br><span class="line">error_messages=&#123;</span><br><span class="line">   <span class="string">&quot;required&quot;</span>: <span class="string">&#x27;�û������봫&#x27;</span>,</span><br><span class="line">   <span class="string">&quot;min_length&quot;</span>: <span class="string">&quot;�㴫������̫����&quot;</span>,</span><br><span class="line">   <span class="string">&quot;max_length&quot;</span>: <span class="string">&quot;�㴫������̫����&quot;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ҳ����˵�Ǹı����</span></span><br></pre></td></tr></table></figure>
+<h3 id="��9������disabled">��9������disabled</h3>
+<ul>
+<li>input�򲻿�ѡ�е�״̬</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># input����ѡ�е�״̬</span></span><br><span class="line">disabled=<span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h3 id="��10������required">��10������required</h3>
+<ul>
+<li>�Ǳ���Ϊ���ֶ�</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># �Ǳ���Ϊ���ֶ�</span></span><br><span class="line"> required=<span class="literal">False</span>,</span><br></pre></td></tr></table></figure>
+<h3 id="��11������initial">��11������initial</h3>
+<ul>
+<li>�����ʼֵ</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># �����ʼֵ</span></span><br><span class="line"> initial=<span class="string">&#x27;tom&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="��12������validators">��12������validators</h3>
+<ul>
+<li>ָ��һ���б�����а�����Ϊ�ֶν�����֤�ĺ�����</li>
+<li>Ҳ����˵��������Զ�������֤����������Django���õ���֤���ܣ���ôҪͨ��������������ֶκ��Զ������֤��������������</li>
+<li>�ο�ǰ����½ڣ�ѧϰ��α�д��֤��</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms  </span><br><span class="line"><span class="keyword">from</span> django.core.exceptions <span class="keyword">import</span> ValidationError  </span><br><span class="line"><span class="keyword">import</span> re  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">validate_email</span>(<span class="params">value</span>):  </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> re.<span class="keyword">match</span>(<span class="string">r&#x27;[^@]+@[^@]+\.[^@]+&#x27;</span>, value):  </span><br><span class="line">        <span class="keyword">raise</span> ValidationError(<span class="string">&quot;������һ����Ч�ĵ����ʼ���ַ&quot;</span>)  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EmailForm</span>(forms.Form):  </span><br><span class="line">    email = forms.EmailField(validators=[validate_email])</span><br></pre></td></tr></table></figure>
+<h3 id="��13��localize">��13��localize</h3>
+<ul>
+<li>localize��������ʵ�ֱ����������ı��ػ���</li>
+<li><code>localize</code> �������ڿ��Ʊ���ֶεı��ػ����ر������ں�ʱ���ֶΡ�������Ϊ<code>True</code>ʱ��Django������û��ĵ�����������ʽ����������</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DateForm</span>(forms.Form):  </span><br><span class="line">    my_date = forms.DateField(localize=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="��14��has-changed-����">��14��has_changed()����</h3>
+<ul>
+<li><code>has_changed()</code> �������ڼ�����ֶε�ֵ�Ƿ��Ա��ʵ���������ѱ����ġ�������ڱ���ύʱ�����Ƿ���Ҫ������֤��������ݷǳ�����</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">form = UserProfileForm(request.POST, instance=user)  </span><br><span class="line"><span class="keyword">if</span> form.is_valid():  </span><br><span class="line">    <span class="keyword">if</span> form.fields[<span class="string">&#x27;email&#x27;</span>].has_changed():  </span><br><span class="line">        <span class="comment"># ִ��������ʼ�������صĲ���  </span></span><br><span class="line">        <span class="keyword">pass</span>  </span><br><span class="line">    form.save()</span><br></pre></td></tr></table></figure>
+<h3 id="��15�������password">��15�������password</h3>
+<ul>
+<li>PasswordInput����������뱣��</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">password = forms.CharField(</span><br><span class="line">   			min_length=<span class="number">6</span>,</span><br><span class="line">        	label=<span class="string">&quot;����&quot;</span>,</span><br><span class="line">            <span class="comment"># ����Ķ���Ϣ�Ǳ��ܵ�</span></span><br><span class="line">            widget=forms.PasswordInput(</span><br><span class="line">				attrs=&#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;c1&#x27;</span>&#125;,</span><br><span class="line">                render_value=<span class="literal">True</span></span><br><span class="line">            )</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<h3 id="��16��ѡ���radioSelect">��16��ѡ���radioSelect</h3>
+<ul>
+<li></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ѡ���RadioSelect</span></span><br><span class="line">        gender = forms.ChoiceField(</span><br><span class="line">            choices=((<span class="number">1</span>, <span class="string">&quot;��&quot;</span>), (<span class="number">2</span>, <span class="string">&quot;Ů&quot;</span>), (<span class="number">3</span>, <span class="string">&quot;����&quot;</span>)),</span><br><span class="line">            label=<span class="string">&quot;�Ա�&quot;</span>,</span><br><span class="line">            initial=<span class="number">3</span>,</span><br><span class="line">            widget=forms.widgets.RadioSelect()</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240701220913512.png" alt="image-20240701220913512"></p>
+<h3 id="��17����ѡ��Select">��17����ѡ��Select</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Select��ѡ��</span></span><br><span class="line">        hobby = forms.ChoiceField(</span><br><span class="line">            choices=((<span class="number">1</span>, <span class="string">&#x27;����&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;��ɽ&#x27;</span>)),</span><br><span class="line">            <span class="comment"># ��ʾ��Ϣ</span></span><br><span class="line">            label=<span class="string">&#x27;����&#x27;</span>,</span><br><span class="line">            <span class="comment"># Ĭ��ֵ</span></span><br><span class="line">            initial=<span class="string">&#x27;2&#x27;</span>,</span><br><span class="line">            <span class="comment"># Select��ѡ��</span></span><br><span class="line">            widget=forms.widgets.Select()</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240701220830767.png" alt="image-20240701220830767"></p>
+<h3 id="��18����ѡ��SelectMultiple">��18����ѡ��SelectMultiple</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ��ѡ��SelectMultiple</span></span><br><span class="line">        hobby_one = forms.MultipleChoiceField(</span><br><span class="line">            choices=((<span class="number">1</span>, <span class="string">&#x27;��ë��&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;ƹ����&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;����&#x27;</span>)),</span><br><span class="line">            <span class="comment"># ��ʾ��Ϣ</span></span><br><span class="line">            label=<span class="string">&#x27;����&#x27;</span>,</span><br><span class="line">            <span class="comment"># Ĭ��ֵ</span></span><br><span class="line">            initial=[<span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">            <span class="comment"># SelectMultiple��ѡ��</span></span><br><span class="line">            widget=forms.widgets.SelectMultiple()</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240701220838816.png" alt="image-20240701220838816"></p>
+<h3 id="��19����ѡ��CheckboxInput">��19����ѡ��CheckboxInput</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ��ѡ��CheckboxInput</span></span><br><span class="line">        keep = forms.ChoiceField(</span><br><span class="line">            label=<span class="string">&quot;�Ƿ��ס����&quot;</span>,</span><br><span class="line">            initial=<span class="string">&quot;checked&quot;</span>,</span><br><span class="line">            widget=forms.widgets.CheckboxInput()</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240701220855178.png" alt="image-20240701220855178"></p>
+<h3 id="��20����ѡ��CheckboxSelectMultiple">��20����ѡ��CheckboxSelectMultiple</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#��ѡ��</span></span><br><span class="line">        hobby_two = forms.MultipleChoiceField(</span><br><span class="line">            choices=((<span class="number">1</span>, <span class="string">&quot;����&quot;</span>), (<span class="number">2</span>, <span class="string">&quot;����&quot;</span>), (<span class="number">3</span>, <span class="string">&quot;˫ɫ��&quot;</span>),),</span><br><span class="line">            label=<span class="string">&quot;����&quot;</span>,</span><br><span class="line">            initial=[<span class="number">1</span>, <span class="number">3</span>],</span><br><span class="line">            widget=forms.widgets.CheckboxSelectMultiple()</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240701220932862.png" alt="image-20240701220932862"></p>
+<h2 id="������choice�ֶε�ע������">������choice�ֶε�ע������</h2>
+<ul>
+<li>
+<p>��ʹ��ѡ���ǩʱ</p>
+</li>
+<li>
+<ul>
+<li>��Ҫע��choices��ѡ��������ô����ݿ��л�ȡ</li>
+</ul>
+</li>
+<li>
+<p>���������Ǿ�̬�ֶ�</p>
+</li>
+<li>
+<ul>
+<li>��ȡ��ֵ�޷�ʵʱ����</li>
+<li>��Ҫ��д���췽���Ӷ�ʵ��choiceʵʱ���¡�</li>
+</ul>
+</li>
+</ul>
+<h3 id="��1������һ">��1������һ</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.forms <span class="keyword">import</span> Form</span><br><span class="line"><span class="keyword">from</span> django.forms <span class="keyword">import</span> widgets</span><br><span class="line"><span class="keyword">from</span> django.forms <span class="keyword">import</span> fields</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(<span class="title class_ inherited__">Form</span>):</span><br><span class="line"> </span><br><span class="line">    user = fields.ChoiceField(</span><br><span class="line">        <span class="comment"># choices=((1, &#x27;�Ϻ�&#x27;), (2, &#x27;����&#x27;),),</span></span><br><span class="line">        initial=<span class="number">2</span>,</span><br><span class="line">        widget=widgets.Select</span><br><span class="line">    )</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, *args, **kwargs</span>):</span><br><span class="line">        <span class="built_in">super</span>(MyForm,<span class="variable language_">self</span>).__init__(*args, **kwargs)</span><br><span class="line">        <span class="comment"># self.fields[&#x27;user&#x27;].choices = ((1, &#x27;�Ϻ�&#x27;), (2, &#x27;����&#x27;),)</span></span><br><span class="line">        <span class="comment"># ��</span></span><br><span class="line">        <span class="variable language_">self</span>.fields[<span class="string">&#x27;user&#x27;</span>].choices = models.Classes.objects.<span class="built_in">all</span>().values_list(<span class="string">&#x27;id&#x27;</span>,<span class="string">&#x27;caption&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="��2��������">��2��������</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"><span class="keyword">from</span> django.forms <span class="keyword">import</span> fields</span><br><span class="line"><span class="keyword">from</span> django.forms <span class="keyword">import</span> models <span class="keyword">as</span> form_model</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FInfo</span>(forms.Form):</span><br><span class="line">    authors = form_model.ModelMultipleChoiceField(queryset=models.NNewType.objects.<span class="built_in">all</span>())  <span class="comment"># ��ѡ</span></span><br><span class="line">    <span class="comment"># authors = form_model.ModelChoiceField(queryset=models.NNewType.objects.all())  # ��ѡ</span></span><br></pre></td></tr></table></figure>
+<h2 id="���ߡ��Զ����ֶ�У��">���ߡ��Զ����ֶ�У��</h2>
+<h3 id="��1���Զ����麯��">��1���Զ����麯��</h3>
+<ul>
+<li>���ڲ�������һ����֤������</li>
+<li>����������������form���������Ҫ�������ֶ�</li>
+<li><code>validators=[phone_validators]</code></li>
+<li>�׳��쳣�� forms_obj = UserInfo���յ�</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"><span class="keyword">from</span> django.core.exceptions <span class="keyword">import</span> ValidationError</span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login_one</span>(<span class="params">request, *args, **kwargs</span>):</span><br><span class="line">    <span class="comment"># ����һ����֤������</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">phone_validators</span>(<span class="params">value</span>):</span><br><span class="line">        <span class="built_in">print</span>(value)</span><br><span class="line">        <span class="comment"># ��������У��</span></span><br><span class="line">        <span class="comment"># ������У��</span></span><br><span class="line">        mobile_re = re.<span class="built_in">compile</span>(<span class="string">r&#x27;^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]&#123;8&#125;$&#x27;</span>)</span><br><span class="line">        <span class="comment"># ͨ��������ʽ����ƥ�����������</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> mobile_re.<span class="keyword">match</span>(value):</span><br><span class="line">            <span class="comment"># �����׳��쳣</span></span><br><span class="line">            <span class="keyword">raise</span> ValidationError(<span class="string">&#x27;�ֻ��ŵĸ�ʽ�������&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">UserInfo</span>(forms.Form):</span><br><span class="line">        phone = forms.CharField(</span><br><span class="line">            <span class="comment"># max_length=11,</span></span><br><span class="line">            <span class="comment"># min_length=11,</span></span><br><span class="line">            validators=[phone_validators]</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    forms_obj = UserInfo(&#123;</span><br><span class="line">        <span class="string">&#x27;phone&#x27;</span>: <span class="string">&#x27;145745625&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">    forms_obj.is_valid()</span><br><span class="line">    <span class="comment"># ��ӡ������Ϣ</span></span><br><span class="line">    <span class="built_in">print</span>(forms_obj.errors)</span><br><span class="line">    <span class="comment"># &lt;ul class=&quot;errorlist&quot;&gt;&lt;li&gt;phone&lt;ul class=&quot;errorlist&quot;&gt;&lt;li&gt;�ֻ��ŵĸ�ʽ�������&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</span></span><br><span class="line">    <span class="comment"># ��ȡУ��ɹ�������</span></span><br><span class="line">    <span class="built_in">print</span>(forms_obj.cleaned_data)</span><br><span class="line">    <span class="comment"># &#123;&#125;</span></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;form_one.html&#x27;</span>, <span class="built_in">locals</span>())</span><br></pre></td></tr></table></figure>
+<h3 id="��2���ܵ�˵һ�²���">��2���ܵ�˵һ�²���</h3>
+<ul>
+<li>
+<p>���ȶ���һ��form�����</p>
+</li>
+<li>
+<p>form����̳�forms.Form</p>
+</li>
+<li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UserInfo</span>(forms.Form):</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>�����ֶε���֤����<code>forms.CharField()</code></p>
+</li>
+<li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UserInfo</span>(forms.Form):</span><br><span class="line">        phone = forms.CharField(</span><br><span class="line">            <span class="comment"># max_length=11,</span></span><br><span class="line">            <span class="comment"># min_length=11,</span></span><br><span class="line">            validators=[phone_validators]</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>����һ����֤�ֶεĺ���</p>
+</li>
+<li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">phone_validators</span>(<span class="params">value</span>):</span><br><span class="line">        <span class="built_in">print</span>(value)</span><br><span class="line">        <span class="comment"># ��������У��</span></span><br><span class="line">        <span class="comment"># ������У��</span></span><br><span class="line">        mobile_re = re.<span class="built_in">compile</span>(<span class="string">r&#x27;^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]&#123;8&#125;$&#x27;</span>)</span><br><span class="line">        <span class="comment"># ͨ��������ʽ����ƥ�����������</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> mobile_re.<span class="keyword">match</span>(value):</span><br><span class="line">            <span class="comment"># �����׳��쳣</span></span><br><span class="line">            <span class="keyword">raise</span> ValidationError(<span class="string">&#x27;�ֻ��ŵĸ�ʽ�������&#x27;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>����֤������ӵ���֤�Ĺ�������</p>
+</li>
+<li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">phone.CharField(</span><br><span class="line">    validators=[phone_validators]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="���ˡ�Form����ֶβ���">���ˡ�Form����ֶβ���</h2>
+<h3 id="��1�������ֶ�">��1�������ֶ�</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br></pre></td><td class="code"><pre><span class="line">Field</span><br><span class="line">    required=<span class="literal">True</span>,               �Ƿ�����Ϊ��</span><br><span class="line">    widget=<span class="literal">None</span>,                 HTML���</span><br><span class="line">    label=<span class="literal">None</span>,                  ��������Label��ǩ����ʾ����</span><br><span class="line">    initial=<span class="literal">None</span>,                ��ʼֵ</span><br><span class="line">    help_text=<span class="string">&#x27;&#x27;</span>,                ������Ϣ(�ڱ�ǩ�Ա���ʾ)</span><br><span class="line">    error_messages=<span class="literal">None</span>,         ������Ϣ &#123;<span class="string">&#x27;required&#x27;</span>: <span class="string">&#x27;����Ϊ��&#x27;</span>, <span class="string">&#x27;invalid&#x27;</span>: <span class="string">&#x27;��ʽ����&#x27;</span>&#125;</span><br><span class="line">    validators=[],               �Զ�����֤����</span><br><span class="line">    localize=<span class="literal">False</span>,              �Ƿ�֧�ֱ��ػ�</span><br><span class="line">    disabled=<span class="literal">False</span>,              �Ƿ���Ա༭</span><br><span class="line">    label_suffix=<span class="literal">None</span>            Label���ݺ�׺</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">CharField(Field)</span><br><span class="line">    max_length=<span class="literal">None</span>,             ��󳤶�</span><br><span class="line">    min_length=<span class="literal">None</span>,             ��С����</span><br><span class="line">    strip=<span class="literal">True</span>                   �Ƿ��Ƴ��û�����հ�</span><br><span class="line"> </span><br><span class="line">IntegerField(Field)</span><br><span class="line">    max_value=<span class="literal">None</span>,              ���ֵ</span><br><span class="line">    min_value=<span class="literal">None</span>,              ��Сֵ</span><br><span class="line"> </span><br><span class="line">FloatField(IntegerField)</span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">DecimalField(IntegerField)</span><br><span class="line">    max_value=<span class="literal">None</span>,              ���ֵ</span><br><span class="line">    min_value=<span class="literal">None</span>,              ��Сֵ</span><br><span class="line">    max_digits=<span class="literal">None</span>,             �ܳ���</span><br><span class="line">    decimal_places=<span class="literal">None</span>,         С��λ����</span><br><span class="line"> </span><br><span class="line">BaseTemporalField(Field)</span><br><span class="line">    input_formats=<span class="literal">None</span>          ʱ���ʽ��   </span><br><span class="line"> </span><br><span class="line">DateField(BaseTemporalField)    ��ʽ��<span class="number">2015</span>-09-01</span><br><span class="line">TimeField(BaseTemporalField)    ��ʽ��<span class="number">11</span>:<span class="number">12</span></span><br><span class="line">DateTimeField(BaseTemporalField)��ʽ��<span class="number">2015</span>-09-01 <span class="number">11</span>:<span class="number">12</span></span><br><span class="line"> </span><br><span class="line">DurationField(Field)            ʱ�����%d %H:%M:%S.%f</span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">RegexField(CharField)</span><br><span class="line">    regex,                      �Զ���������ʽ</span><br><span class="line">    max_length=<span class="literal">None</span>,            ��󳤶�</span><br><span class="line">    min_length=<span class="literal">None</span>,            ��С����</span><br><span class="line">    error_message=<span class="literal">None</span>,         ���ԣ�������Ϣʹ�� error_messages=&#123;<span class="string">&#x27;invalid&#x27;</span>: <span class="string">&#x27;...&#x27;</span>&#125;</span><br><span class="line"> </span><br><span class="line">EmailField(CharField)      </span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">FileField(Field)</span><br><span class="line">    allow_empty_file=<span class="literal">False</span>     �Ƿ�������ļ�</span><br><span class="line"> </span><br><span class="line">ImageField(FileField)      </span><br><span class="line">    ...</span><br><span class="line">    ע����ҪPILģ�飬pip3 install Pillow</span><br><span class="line">    ���������ֵ�ʹ��ʱ����Ҫע�����㣺</span><br><span class="line">        - form����� enctype=<span class="string">&quot;multipart/form-data&quot;</span></span><br><span class="line">        - view������ obj = MyForm(request.POST, request.FILES)</span><br><span class="line"> </span><br><span class="line">URLField(Field)</span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">BooleanField(Field)  </span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">NullBooleanField(BooleanField)</span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">ChoiceField(Field)</span><br><span class="line">    ...</span><br><span class="line">    choices=(),                ѡ��磺choices = ((<span class="number">0</span>,<span class="string">&#x27;�Ϻ�&#x27;</span>),(<span class="number">1</span>,<span class="string">&#x27;����&#x27;</span>),)</span><br><span class="line">    required=<span class="literal">True</span>,             �Ƿ����</span><br><span class="line">    widget=<span class="literal">None</span>,               �����Ĭ��select���</span><br><span class="line">    label=<span class="literal">None</span>,                Label����</span><br><span class="line">    initial=<span class="literal">None</span>,              ��ʼֵ</span><br><span class="line">    help_text=<span class="string">&#x27;&#x27;</span>,              ������ʾ</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">ModelChoiceField(ChoiceField)</span><br><span class="line">    ...                        django.forms.models.ModelChoiceField</span><br><span class="line">    queryset,                  <span class="comment"># ��ѯ���ݿ��е�����</span></span><br><span class="line">    empty_label=<span class="string">&quot;---------&quot;</span>,   <span class="comment"># Ĭ�Ͽ���ʾ����</span></span><br><span class="line">    to_field_name=<span class="literal">None</span>,        <span class="comment"># HTML��value��ֵ��Ӧ���ֶ�</span></span><br><span class="line">    limit_choices_to=<span class="literal">None</span>      <span class="comment"># ModelForm�ж�queryset����ɸѡ</span></span><br><span class="line">     </span><br><span class="line">ModelMultipleChoiceField(ModelChoiceField)</span><br><span class="line">    ...                        django.forms.models.ModelMultipleChoiceField</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">     </span><br><span class="line">TypedChoiceField(ChoiceField)</span><br><span class="line">    coerce = <span class="keyword">lambda</span> val: val   ��ѡ�е�ֵ����һ��ת��</span><br><span class="line">    empty_value= <span class="string">&#x27;&#x27;</span>            ��ֵ��Ĭ��ֵ</span><br><span class="line"> </span><br><span class="line">MultipleChoiceField(ChoiceField)</span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">TypedMultipleChoiceField(MultipleChoiceField)</span><br><span class="line">    coerce = <span class="keyword">lambda</span> val: val   ��ѡ�е�ÿһ��ֵ����һ��ת��</span><br><span class="line">    empty_value= <span class="string">&#x27;&#x27;</span>            ��ֵ��Ĭ��ֵ</span><br><span class="line"> </span><br><span class="line">ComboField(Field)</span><br><span class="line">    fields=()                  ʹ�ö����֤�����£�����֤��󳤶�<span class="number">20</span>������֤�����ʽ</span><br><span class="line">                               fields.ComboField(fields=[fields.CharField(max_length=<span class="number">20</span>), fields.EmailField(),])</span><br><span class="line"> </span><br><span class="line">MultiValueField(Field)</span><br><span class="line">    PS: �����࣬�����п���ʵ�־ۺ϶���ֵ�ȥƥ��һ��ֵ��Ҫ���MultiWidgetʹ��</span><br><span class="line"> </span><br><span class="line">SplitDateTimeField(MultiValueField)</span><br><span class="line">    input_date_formats=<span class="literal">None</span>,   ��ʽ�б��[<span class="string">&#x27;%Y--%m--%d&#x27;</span>, <span class="string">&#x27;%m%d/%Y&#x27;</span>, <span class="string">&#x27;%m/%d/%y&#x27;</span>]</span><br><span class="line">    input_time_formats=<span class="literal">None</span>    ��ʽ�б��[<span class="string">&#x27;%H:%M:%S&#x27;</span>, <span class="string">&#x27;%H:%M:%S.%f&#x27;</span>, <span class="string">&#x27;%H:%M&#x27;</span>]</span><br><span class="line"> </span><br><span class="line">FilePathField(ChoiceField)     �ļ�ѡ�Ŀ¼���ļ���ʾ��ҳ����</span><br><span class="line">    path,                      �ļ���·��</span><br><span class="line">    <span class="keyword">match</span>=<span class="literal">None</span>,                ����ƥ��</span><br><span class="line">    recursive=<span class="literal">False</span>,           �ݹ�������ļ���</span><br><span class="line">    allow_files=<span class="literal">True</span>,          �����ļ�</span><br><span class="line">    allow_folders=<span class="literal">False</span>,       �����ļ���</span><br><span class="line">    required=<span class="literal">True</span>,</span><br><span class="line">    widget=<span class="literal">None</span>,</span><br><span class="line">    label=<span class="literal">None</span>,</span><br><span class="line">    initial=<span class="literal">None</span>,</span><br><span class="line">    help_text=<span class="string">&#x27;&#x27;</span></span><br><span class="line"> </span><br><span class="line">GenericIPAddressField</span><br><span class="line">    protocol=<span class="string">&#x27;both&#x27;</span>,           both,ipv4,ipv6֧�ֵ�IP��ʽ</span><br><span class="line">    unpack_ipv4=<span class="literal">False</span>          ����ipv4��ַ�������::ffff:<span class="number">192.0</span><span class="number">.2</span><span class="number">.1</span>ʱ�򣬿ɽ���Ϊ<span class="number">192.0</span><span class="number">.2</span><span class="number">.1</span>�� PS��protocol����Ϊboth��������</span><br><span class="line"> </span><br><span class="line">SlugField(CharField)           ���֣���ĸ���»��ߣ����ţ����ַ���</span><br><span class="line">    ...</span><br><span class="line"> </span><br><span class="line">UUIDField(CharField)           uuid����</span><br></pre></td></tr></table></figure>
+<h3 id="��2������">��2������</h3>
+<h4 id="��1��BooleanField">��1��BooleanField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��CheckboxInput</li>
+<li>��ֵ��False</li>
+<li>�淶��Ϊ��Python��True����False</li>
+<li>���õĴ�����Ϣ����required</li>
+</ul>
+<h4 id="��2��CharField">��2��CharField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��TextInput</li>
+<li>��ֵ����empty_value�������κ�ֵ��</li>
+<li>�淶��Ϊ��һ��Unicode ����</li>
+<li>��֤max_length��min_length����������������������� �������е����붼�ǺϷ��ġ�</li>
+<li>���õĴ�����Ϣ����min_length, max_length, required</li>
+</ul>
+<p>���ĸ���ѡ������</p>
+<ul>
+<li>max_length��min_length�������ַ�����������С���ȡ�</li>
+<li>strip�����True��Ĭ�ϣ���ȥ�������ǰ����β��ո�</li>
+<li>empty_value��������ʾ���ա���ֵ�� Ĭ��Ϊ���ַ�����</li>
+</ul>
+<h4 id="��3��ChoiceField">��3��ChoiceField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��Select</li>
+<li>��ֵ��’'��һ�����ַ�����</li>
+<li>�淶��Ϊ��һ��Unicode ����</li>
+<li>��֤������ֵ�Ƿ���ѡ���б��С�</li>
+<li>���õĴ�����Ϣ����required, invalid_choice</li>
+</ul>
+<p>����choices��</p>
+<p>������Ϊ���ֶ�ѡ���һ����Ԫ����ɵĿɵ����������磬�б��Ԫ�飩����һ���ɵ��ö���</p>
+<p>��ʽ�����ں�ORMģ���ֶε�choices������ͬ��</p>
+<h4 id="��4��TypedChoiceField">��4��TypedChoiceField</h4>
+<p>��ChoiceFieldһ����ֻ�ǻ�����������Ĳ�����coerce��empty_value��</p>
+<ul>
+<li>Ĭ�ϵ�Widget��Select</li>
+<li>��ֵ��empty_value�������õ�ֵ��</li>
+<li>�淶��Ϊ��coerce�������͵�ֵ��</li>
+<li>��֤������ֵ��ѡ���б��д��ڲ��ҿ��Ա�ǿ��ת����</li>
+<li>���õĴ�����Ϣ�ļ���required, invalid_choice</li>
+</ul>
+<h4 id="��5��DateField">��5��DateField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��DateInput</li>
+<li>��ֵ��None</li>
+<li>�淶��Ϊ��datetime.date����</li>
+<li>��֤������ֵ��һ��datetime.date��datetime.datetime ��ָ�����ڸ�ʽ���ַ�����</li>
+<li>������Ϣ�ļ���required, invalid</li>
+</ul>
+<p>����һ����ѡ�Ĳ�����input_formats��</p>
+<p>һ����ʽ���б������ת���ַ���Ϊdatetime.date����</p>
+<p>���û���ṩinput_formats��Ĭ�ϵ������ʽΪ��</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;%Y-%m-%d&#x27;,      # &#x27;2006-10-25&#x27;</span><br><span class="line"> &#x27;%m/%d/%Y&#x27;,      # &#x27;10/25/2006&#x27;</span><br><span class="line"> &#x27;%m/%d/%y&#x27;]      # &#x27;10/25/06&#x27;</span><br></pre></td></tr></table></figure>
+<p>���⣬�������������ָ��USE_L10N=False�����µĸ�ʽҲ��������Ĭ�ϵ������ʽ�У�</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;%b %d %Y&#x27;,      # &#x27;Oct 25 2006&#x27;</span><br><span class="line"> &#x27;%b %d, %Y&#x27;,     # &#x27;Oct 25, 2006&#x27;</span><br><span class="line"> &#x27;%d %b %Y&#x27;,      # &#x27;25 Oct 2006&#x27;</span><br><span class="line"> &#x27;%d %b, %Y&#x27;,     # &#x27;25 Oct, 2006&#x27;</span><br><span class="line"> &#x27;%B %d %Y&#x27;,      # &#x27;October 25 2006&#x27;</span><br><span class="line"> &#x27;%B %d, %Y&#x27;,     # &#x27;October 25, 2006&#x27;</span><br><span class="line"> &#x27;%d %B %Y&#x27;,      # &#x27;25 October 2006&#x27;</span><br><span class="line"> &#x27;%d %B, %Y&#x27;]     # &#x27;25 October, 2006&#x27;</span><br></pre></td></tr></table></figure>
+<h4 id="��6��DateTimeField">��6��DateTimeField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��DateTimeInput</li>
+<li>��ֵ��None</li>
+<li>�淶��Ϊ��Python��datetime.datetime����</li>
+<li>��֤������ֵ��һ��datetime.datetime��datetime.date��ָ�����ڸ�ʽ���ַ�����</li>
+<li>������Ϣ�ļ���required, invalid</li>
+</ul>
+<p>����һ����ѡ�Ĳ�����input_formats</p>
+<p>���û���ṩinput_formats��Ĭ�ϵ������ʽΪ��</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;%Y-%m-%d %H:%M:%S&#x27;,    # &#x27;2006-10-25 14:30:59&#x27;</span><br><span class="line"> &#x27;%Y-%m-%d %H:%M&#x27;,       # &#x27;2006-10-25 14:30&#x27;</span><br><span class="line"> &#x27;%Y-%m-%d&#x27;,             # &#x27;2006-10-25&#x27;</span><br><span class="line"> &#x27;%m/%d/%Y %H:%M:%S&#x27;,    # &#x27;10/25/2006 14:30:59&#x27;</span><br><span class="line"> &#x27;%m/%d/%Y %H:%M&#x27;,       # &#x27;10/25/2006 14:30&#x27;</span><br><span class="line"> &#x27;%m/%d/%Y&#x27;,             # &#x27;10/25/2006&#x27;</span><br><span class="line"> &#x27;%m/%d/%y %H:%M:%S&#x27;,    # &#x27;10/25/06 14:30:59&#x27;</span><br><span class="line"> &#x27;%m/%d/%y %H:%M&#x27;,       # &#x27;10/25/06 14:30&#x27;</span><br><span class="line"> &#x27;%m/%d/%y&#x27;]             # &#x27;10/25/06&#x27;</span><br></pre></td></tr></table></figure>
+<h4 id="��7��DecimalField">��7��DecimalField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget����Field.localize��FalseʱΪNumberInput������ΪTextInput��</li>
+<li>��ֵ��None</li>
+<li>�淶��Ϊ��Python decimal����</li>
+<li>��֤������ֵΪһ��ʮ�������� ����ǰ����β��Ŀհס�</li>
+<li>������Ϣ�ļ���max_whole_digits, max_digits, max_decimal_places,max_value, invalid, required,min_value</li>
+</ul>
+<p>�����ĸ���ѡ�Ĳ�����</p>
+<p>max_value,min_value:�����ֵ�ķ�Χ����Ҫ��ֵdecimal.Decimal���󣬲���ֱ�Ӹ����������͡�</p>
+<p>max_digits��ֵ��������λ����С����֮ǰ��֮��������ܹ���λ����ǰ�����㽫��ɾ������</p>
+<p>decimal_places����������С��λ��</p>
+<h4 id="��8��DurationField">��8��DurationField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��TextInput</li>
+<li>��ֵ��None</li>
+<li>�淶��Ϊ��Python timedelta��</li>
+<li>��֤������ֵ��һ���ַ��������ҿ���ת��Ϊtimedelta����</li>
+<li>������Ϣ�ļ���required, invalid.</li>
+</ul>
+<h4 id="��9��EmailField">��9��EmailField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��EmailInput</li>
+<li>��ֵ��’'��һ�����ַ�����</li>
+<li>�淶��Ϊ��Unicode ����</li>
+<li>ʹ��������ʽ��֤������ֵ��һ���Ϸ����ʼ���ַ��</li>
+<li>������Ϣ�ļ���required, invalid</li>
+</ul>
+<p>������ѡ�Ĳ���������֤��max_length ��min_length��</p>
+<h4 id="��10��FileField">��10��FileField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��ClearableFileInput</li>
+<li>��ֵ��None</li>
+<li>�淶��Ϊ��һ��UploadedFile��������װ�ļ����ݺ��ļ�����һ�������ڡ�</li>
+<li>��֤�ǿյ��ļ������Ѿ��󶨵������</li>
+<li>������Ϣ�ļ���missing, invalid, required, empty, max_length</li>
+</ul>
+<p>����������ѡ�Ĳ���������֤��max_length �� allow_empty_file��</p>
+<h4 id="��11��FilePathField">��11��FilePathField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��Select</li>
+<li>��ֵ��None</li>
+<li>�淶��Ϊ��Unicode ����</li>
+<li>��֤ѡ���ѡ����ѡ���б��д��ڡ�</li>
+<li>������Ϣ�ļ���required, invalid_choice</li>
+</ul>
+<p>����ֶ������һ���ض���Ŀ¼ѡ���ļ��� �����������Ĳ��������е�path�Ǳ���ģ�</p>
+<p>path��Ҫ�г���Ŀ¼�ľ���·���� ���Ŀ¼������ڡ�</p>
+<p>recursive�����ΪFalse��Ĭ��ֵ����ֻ��ֱ��λ��path�µ��ļ���Ŀ¼��Ϊѡ����ΪTrue�����ݹ�������Ŀ¼���������е���Ŀ¼���ļ�������Ϊѡ�</p>
+<p>match��������ģʽ��ֻ�о�����˱��ʽƥ����ļ����Ʋű�������Ϊѡ�</p>
+<p>allow_files����ѡ��Ĭ��ΪTrue����ʾ�Ƿ�Ӧ�ð���ָ��λ�õ��ļ�������allow_folders������һ��ΪTrue��</p>
+<p>allow_folders��ѡ��Ĭ��ΪFalse����ʾ�Ƿ�Ӧ�ð���ָ��λ�õ�Ŀ¼��</p>
+<h4 id="��12��FloatField">��12��FloatField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget����Field.localize��FalseʱΪNumberInput������ΪTextInput��</li>
+<li>��ֵ��None</li>
+<li>�淶��Ϊ��Float ����</li>
+<li>��֤������ֵ��һ����������</li>
+<li>������Ϣ�ļ���max_value, invalid, required, min_value</li>
+</ul>
+<p>����������ѡ�Ĳ���������֤��max_value��min_value�����������ֵ�ķ�Χ��</p>
+<h4 id="��13��ImageField">��13��ImageField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��ClearableFileInput</li>
+<li>��ֵ��None</li>
+<li>�淶��Ϊ��һ��UploadedFile ������װ�ļ����ݺ��ļ���Ϊһ�������Ķ���</li>
+<li>��֤�ļ������Ѱ󶨵���������Ҹ��ļ���Pillow���Խ�����ͼ���ʽ��</li>
+<li>������Ϣ�ļ���missing, invalid, required, empty, invalid_image</li>
+</ul>
+<p>ʹ��ImageField��Ҫ��װPillow��pip install pillow����������ϴ�ͼƬʱ����ͼ���𻵴���ͨ����ζ��ʹ����Pillow��֧�ֵĸ�ʽ��</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> django.core.files.uploadedfile <span class="keyword">import</span> SimpleUploadedFile</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">class</span> <span class="title class_">ImageForm</span>(forms.Form):</span><br><span class="line"><span class="meta">... </span>    img = forms.ImageField()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>file_data = &#123;<span class="string">&#x27;img&#x27;</span>: SimpleUploadedFile(<span class="string">&#x27;test.png&#x27;</span>, &lt;file data&gt;)&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>form = ImageForm(&#123;&#125;, file_data)</span><br><span class="line"><span class="comment"># Pillow closes the underlying file descriptor.</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>form.is_valid()</span><br><span class="line"><span class="literal">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image_field = form.cleaned_data[<span class="string">&#x27;img&#x27;</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image_field.image</span><br><span class="line">&lt;PIL.PngImagePlugin.PngImageFile image mode=RGBA size=191x287 at <span class="number">0x7F5985045C18</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image_field.image.width</span><br><span class="line"><span class="number">191</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image_field.image.height</span><br><span class="line"><span class="number">287</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image_field.image.<span class="built_in">format</span></span><br><span class="line"><span class="string">&#x27;PNG&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image_field.image.getdata()</span><br><span class="line"><span class="comment"># Raises AttributeError: &#x27;NoneType&#x27; object has no attribute &#x27;seek&#x27;.</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image = Image.<span class="built_in">open</span>(image_field)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image.getdata()</span><br><span class="line">&lt;ImagingCore <span class="built_in">object</span> at <span class="number">0x7f5984f874b0</span>&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="��14��IntegerField">��14��IntegerField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget����Field.localize��FalseʱΪNumberInput������ΪTextInput��</li>
+<li>��ֵ��None</li>
+<li>�淶��Ϊ��Python ������������</li>
+<li>��֤����ֵ��һ�������� ����ǰ����β��ո�����Python��int()������</li>
+<li>������Ϣ�ļ���max_value, invalid, required, min_value</li>
+</ul>
+<p>������ѡ������max_value��min_value�����������ֵ�ķ�Χ��</p>
+<h4 id="��15��JSONField">��15��JSONField</h4>
+<p>Django3.1������</p>
+<p>����JSON������ֶΡ�</p>
+<ul>
+<li>Ĭ�ϵ�Widget��Textarea</li>
+<li>��ֵ��None</li>
+<li>�淶��Ϊ��һ��JSON����</li>
+<li>��֤����ֵ�Ƿ�Ϸ���JSON��</li>
+<li>������Ϣ�ļ���required, invalid</li>
+<li>�ɽ�������������encoder��decoder���������ͽ�����</li>
+</ul>
+<h4 id="��16��GenericIPAddressField">��16��GenericIPAddressField</h4>
+<p>����IPv4��IPv6��ַ���ֶΡ�</p>
+<ul>
+<li>Ĭ�ϵ�Widget��TextInput</li>
+<li>��ֵ��’'��һ�����ַ�����</li>
+<li>�淶��Ϊ��һ��Unicode����</li>
+<li>��֤����ֵ����Ч��IP��ַ��</li>
+<li>������Ϣ�ļ���required, invalid</li>
+</ul>
+<p>��������ѡ������protocol��unpack_ipv4</p>
+<h4 id="��17��MultipleChoiceField">��17��MultipleChoiceField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��SelectMultiple</li>
+<li>��ֵ��[]��һ�����б��</li>
+<li>�淶��Ϊ��һ��Unicode �����б��</li>
+<li>��֤����ֵ�б��е�ÿ��ֵ��������ѡ���б��С�</li>
+<li>������Ϣ�ļ���invalid_list, invalid_choice, required</li>
+</ul>
+<h4 id="��18��TypedMultipleChoiceField">��18��TypedMultipleChoiceField</h4>
+<p>����MultipleChoiceField��������Ҫ��������Ĳ�����coerce��empty_value��</p>
+<ul>
+<li>Ĭ�ϵ�Widget��SelectMultiple</li>
+<li>��ֵ��empty_value</li>
+<li>�淶��Ϊ��coerce�����ṩ������ֵ�б��</li>
+<li>��֤����ֵ������ѡ���б��в��ҿ���ǿ�ơ�</li>
+<li>������Ϣ�ļ���required, invalid_choice</li>
+</ul>
+<h4 id="��19��NullBooleanField">��19��NullBooleanField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��NullBooleanSelect</li>
+<li>��ֵ��None</li>
+<li>�淶��Ϊ��Python None, False ��True ֵ��</li>
+<li>����֤�κ����ݣ��������Ӳ�����ValidationError����</li>
+</ul>
+<h4 id="��20��RegexField">��20��RegexField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��TextInput</li>
+<li>��ֵ��’'��һ�����ַ�����</li>
+<li>�淶��Ϊ��һ��Unicode ����</li>
+<li>��֤����ֵ��ĳ��������ʽƥ�䡣</li>
+<li>������Ϣ�ļ���required, invalid</li>
+</ul>
+<p>��Ҫһ������Ĳ�����regex����Ҫƥ���������ʽ��</p>
+<p>�����Խ���max_length��min_length��strip����������CharField��</p>
+<h4 id="��21��SlugField">��21��SlugField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��TextInput</li>
+<li>��ֵ��’'��һ�����ַ�����</li>
+<li>�淶��Ϊ��һ��Unicode ����</li>
+<li>��֤�������ַ���ֻ������ĸ�����֡��»��߼����ַ���</li>
+<li>������Ϣ�ļ���required, invalid</li>
+</ul>
+<p>���ֶ������ڱ���б�ʾģ�͵�SlugField��</p>
+<h4 id="��22��TimeField">��22��TimeField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��TextInput</li>
+<li>��ֵ��None</li>
+<li>�淶��Ϊ��һ��Python ��datetime.time ����</li>
+<li>��֤����ֵ��datetime.time�����ض�ʱ���ʽ��ʽ�����ַ�����</li>
+<li>������Ϣ�ļ���required, invalid</li>
+</ul>
+<p>����һ����ѡ�Ĳ�����input_formats�����ڳ��Խ��ַ���ת��Ϊ��Ч��datetime.time����ĸ�ʽ�б��</p>
+<p>���û���ṩinput_formats��Ĭ�ϵ������ʽΪ��</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x27;%H:%M:%S&#x27;,     # &#x27;14:30:59&#x27;</span><br><span class="line">&#x27;%H:%M&#x27;,        # &#x27;14:30&#x27;</span><br></pre></td></tr></table></figure>
+<h4 id="��23��URLField">��23��URLField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��URLInput</li>
+<li>��ֵ��’'��һ�����ַ�����</li>
+<li>�淶��Ϊ��һ��Unicode ����</li>
+<li>��֤����ֵ�Ǹ���Ч��URL��</li>
+<li>������Ϣ�ļ���required, invalid</li>
+</ul>
+<p>��ѡ������max_length��min_length</p>
+<h4 id="��24��UUIDField">��24��UUIDField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��TextInput</li>
+<li>��ֵ��’'��һ�����ַ�����</li>
+<li>�淶��Ϊ��UUID����</li>
+<li>������Ϣ�ļ���required, invalid</li>
+</ul>
+<h4 id="��25��-ComboField">��25�� ComboField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��TextInput</li>
+<li>��ֵ��’'��һ�����ַ�����</li>
+<li>�淶��Ϊ��Unicode ����</li>
+<li>����ָ��ΪComboField�Ĳ�����ÿ���ֶ���֤����ֵ��</li>
+<li>������Ϣ�ļ���required, invalid</li>
+</ul>
+<p>����һ������ı�ѡ������fields��������֤�ֶ�ֵ���ֶ��б�����ṩ���ǵ�˳�򣩡�</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from django.forms import ComboField</span><br><span class="line">&gt;&gt;&gt; f = ComboField(fields=[CharField(max_length=20), EmailField()])</span><br><span class="line">&gt;&gt;&gt; f.clean(&#x27;test@example.com&#x27;)</span><br><span class="line">&#x27;test@example.com&#x27;</span><br><span class="line">&gt;&gt;&gt; f.clean(&#x27;longemailaddress@example.com&#x27;)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">...</span><br><span class="line">ValidationError: [&#x27;Ensure this value has at most 20 characters (it has 28).&#x27;]</span><br></pre></td></tr></table></figure>
+<h4 id="��26��MultiValueField">��26��MultiValueField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��TextInput</li>
+<li>��ֵ��’'��һ�����ַ�����</li>
+<li>�淶��Ϊ�������compress�������ص����͡�</li>
+<li>����ָ��ΪMultiValueField�Ĳ�����ÿ���ֶ���֤����ֵ��</li>
+<li>������Ϣ�ļ���incomplete, invalid, required</li>
+</ul>
+<h4 id="��27��SplitDateTimeField">��27��SplitDateTimeField</h4>
+<ul>
+<li>Ĭ�ϵ�Widget��SplitDateTimeWidget</li>
+<li>��ֵ��None</li>
+<li>�淶��Ϊ��Python datetime.datetime ����</li>
+<li>��֤������ֵ��datetime.datetime�����ض�����ʱ���ʽ��ʽ�����ַ�����</li>
+<li>������Ϣ�ļ���invalid_date, invalid, required, invalid_time</li>
+</ul>
+<h3 id="��3�������Զ����ֶ�">��3�������Զ����ֶ�</h3>
+<ul>
+<li>������õ�Field��Ĳ�������������󣬻������Զ���Field��</li>
+<li>ֻ��Ҫ����һ��django.forms.Field�����࣬��ʵ��clean()��__init__()���췽����<code>__init__</code>()���췽����Ҫ����ǰ���������Щ���Ĳ���������widget��required,��label��help_text��initial��</li>
+<li>������ͨ������get_bound_field()�������Զ�������ֶεķ�ʽ</li>
+</ul>
+<h2 id="���s�forms��������ܽᣬ����">���š�forms��������ܽᣬ����</h2>
+<h3 id="��1����������">��1����������</h3>
+<h4 id="��1��autocomplete">��1��autocomplete</h4>
+<ul>
+<li>�����Ƿ������Զ���书�ܣ�����ʹ������ֵ��</li>
+<li>on��������Զ�������</li>
+<li>off������������Զ���䡣</li>
+</ul>
+<h4 id="��2��disabled">��2��disabled</h4>
+<ul>
+<li>���ñ�����Ƿ���ã����ú��û��޷��༭��ѡ������ֵ��</li>
+</ul>
+<h4 id="��3��readonly">��3��readonly</h4>
+<ul>
+<li>���ñ�����Ƿ�ֻ����ֻ���ı���������ʾ���������û��޸ġ�</li>
+</ul>
+<h4 id="��4��max-��-min">��4��max �� min</h4>
+<ul>
+<li>�����������ֻ��������͵�����ֵ��������Сֵ��</li>
+</ul>
+<h4 id="��5��-maxlength-��-minlength">��5��***maxlength �� minlength</h4>
+<ul>
+<li>��������ֵ����󳤶Ⱥ���С���ȣ���������ڳ�������ʱ��������֤����</li>
+</ul>
+<h4 id="��6��pattern">��6��pattern</h4>
+<ul>
+<li>ʹ��������ʽָ������ֵ�ĸ�ʽ��֤����</li>
+</ul>
+<h4 id="��7��required">��7��required</h4>
+<ul>
+<li>���ñ�����Ƿ�Ϊ��������δ��д������ύ���ʱ��������֤����</li>
+</ul>
+<h4 id="��8��step">��8��step</h4>
+<ul>
+<li>�����������͵�����ֵ��ָ������������������Χ��</li>
+</ul>
+<h4 id="��9��aria-describedby">��9��aria-describedby</h4>
+<ul>
+<li>ָ��������������������ı���id��������������ʹ�ô���Ϣ�ṩ���õĿɷ����ԡ�</li>
+</ul>
+<h4 id="��10��aria-invalid">��10��aria-invalid</h4>
+<ul>
+<li>�����Ƿ񽫱������Ϊ��Ч�����������ֵ��������֤���򣬿��Խ�������Ϊ&quot;true&quot;��</li>
+</ul>
+<h3 id="��2���������">��2���������</h3>
+<h4 id="��1��-widget����ӱ�k����">��1��***widget����ӱ�ǩ����</h4>
+<ul>
+<li>ָ���ֶεĿؼ���ʾ��ʽ��</li>
+<li>����ʹ�ø���Ԥ�����С������widgets�����Զ����С�����ࡣ</li>
+<li>���磬����ʹ�� forms.TextInput ���ֶ����ı������ʽ��ʾ������</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&quot;�û���&quot;</span>,</span><br><span class="line">        widget=forms.TextInput(attrs=&#123;<span class="string">&quot;class&quot;</span>: <span class="string">&quot;form-control&quot;</span>&#125;)</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>��Django�ı����</p>
+</li>
+<li>
+<ul>
+<li>widget�����������ñ���ֶε�չʾ��ʽ��ʹ���Զ����HTMLԪ���������ֶΡ�</li>
+</ul>
+</li>
+<li>
+<p>widget����</p>
+</li>
+<li>
+<ul>
+<li>���Խ���һ��Django�ṩ�����õ�С�����ࣨwidget class��</li>
+<li>Ҳ����ʹ���Զ����С�����ࡣ</li>
+</ul>
+</li>
+<li>
+<p>�����Ǽ������õ�С�����༰�����ã�</p>
+</li>
+</ul>
+<ol>
+<li>forms.TextInput��Ĭ�ϵ��ı������С������</li>
+<li>forms.Textarea�������ı������С������</li>
+<li>forms.CheckboxInput����ѡ��С������</li>
+<li>forms.Select������ѡ���С������</li>
+<li>forms.RadioSelect����ѡ��ťС������</li>
+<li>forms.FileInput���ļ��ϴ�С������</li>
+<li>forms.HiddenInput�����������С������</li>
+</ol>
+<ul>
+<li>
+<p>������һ��ʾ������Ƭ��</p>
+</li>
+<li>
+<ul>
+<li>��ʾ���ʹ��widget��������һ������ֶε�С������</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">100</span>,</span><br><span class="line">        widget=forms.TextInput(attrs=&#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;my-custom-class&#x27;</span>&#125;)</span><br><span class="line">    )</span><br><span class="line">    password = forms.CharField(</span><br><span class="line">        max_length=<span class="number">100</span>,</span><br><span class="line">        widget=forms.PasswordInput()</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>����������</p>
+</li>
+<li>
+<ul>
+<li>username �ֶ�ʹ���Զ����CSS����ʽ��������Ӧ�õ�һ���ı������С�����С�</li>
+<li>password �ֶ���ʹ�������������С������</li>
+</ul>
+</li>
+<li>
+<p>��Ҫע�����</p>
+</li>
+<li>
+<ul>
+<li>����ͨ��attrs��������������HTML���Ը�С������</li>
+<li>���磬�������ʾ���У�����Ϊusername�ֶζ�����class���ԡ�</li>
+</ul>
+</li>
+<li>
+<p>����</p>
+</li>
+<li>
+<ul>
+<li>�����Ҫʹ���Զ����С������</li>
+<li>���Զ���һ���̳���DjangoС��������࣬�����䴫�ݸ�widget����������</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyCustomWidget</span>(forms.widgets.TextInput):</span><br><span class="line">    <span class="comment"># �Զ����С������</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    my_field = forms.CharField(</span><br><span class="line">        widget=MyCustomWidget()</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>����������</p>
+</li>
+<li>
+<ul>
+<li>���Ǵ�����һ����ΪMyCustomWidget���Զ���С�����࣬</li>
+<li>����������my_field�ֶΡ�</li>
+</ul>
+</li>
+<li>
+<p>ͨ��ʹ��widget����</p>
+</li>
+<li>
+<ul>
+<li>���ǿ��Զ�Django����ֶε�չʾ��ʽ�������Ķ���</li>
+<li>�����������Ŀ������</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-required���Ƿ�Ϊ�����ֶ�">(2)***required���Ƿ�Ϊ�����ֶ�</h4>
+<ul>
+<li>�����ֶ��Ƿ�Ϊ�����Ĭ��Ϊ True��</li>
+<li>�������Ϊ False���������û��ύ��ֵ�����磺</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&quot;�û���&quot;</span>,</span><br><span class="line">        required=<span class="literal">False</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<h4 id="��3��-label���Զ����k�i�">��3��***label���Զ����ǩ�ı�</h4>
+<ul>
+<li>ָ���ֶεı�ǩ��ʾ�ı���</li>
+<li>����ʹ�øò����Զ����ֶ��ڱ���еı�ǩ�ı������磺</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&quot;Your Username&quot;</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<h4 id="��4��-error-messages����k���Ϸ�����ʾ��Ϣ">��4��***error_messages����ǩ���Ϸ�����ʾ��Ϣ</h4>
+<ul>
+<li>�����Զ��������Ϣ��</li>
+<li>����ͨ���ò����Զ����ֶ���֤ʧ��ʱ��ʾ�Ĵ�����Ϣ�����磺</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&quot;�û���&quot;</span>,</span><br><span class="line">        error_messages=&#123;</span><br><span class="line">            <span class="string">&quot;max_length&quot;</span>: <span class="string">&quot;�û������Ϊ8���ַ�&quot;</span>,</span><br><span class="line">            <span class="string">&quot;min_length&quot;</span>: <span class="string">&quot;�û�������Ϊ3���ַ�&quot;</span>,</span><br><span class="line">            <span class="string">&quot;required&quot;</span>: <span class="string">&quot;����д�û���&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<h4 id="��5��help-text������������Ϣ">��5��help_text������������Ϣ</h4>
+<ul>
+<li>Ϊ�ֶ��ṩ�����ı���</li>
+<li>����ʹ�øò���Ϊ�ֶ���������Եİ����ı��������û����͸��ֶε���;���ṩ���뽨�顣���磺</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&quot;�û���&quot;</span>,</span><br><span class="line">        help_text=<span class="string">&quot;������3-8���ַ����û���&quot;</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<h3 id="��6��-validators��������ʽ">��6��***validators��������ʽ</h3>
+<ul>
+<li>�����Զ����ֶ���֤����</li>
+<li>����ʹ�øò�����Ӷ������֤���������ֶν��и����ӵ���֤�����磺</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.core.validators <span class="keyword">import</span> RegexValidator</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&quot;�û���&quot;</span>,</span><br><span class="line">        validators=[</span><br><span class="line">            RegexValidator(</span><br><span class="line">                regex=<span class="string">r&quot;^[a-zA-Z]+$&quot;</span>,</span><br><span class="line">                message=<span class="string">&quot;ֻ������ĸ�ַ�&quot;</span></span><br><span class="line">            )</span><br><span class="line">        ]</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<h3 id="��7��-initial��I��ֵ">��7��***initial��Ĭ��ֵ</h3>
+<ul>
+<li>����ͨ�� initial ����Ϊ����ֶ�����Ĭ��ֵ��</li>
+<li>�ò���ָ�����ڱ������ʱ��ʾ�ĳ�ʼֵ��������ʾ�����룺</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&quot;�û���&quot;</span>,</span><br><span class="line">        initial=<span class="string">&quot;JohnDoe&quot;</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>������ʾ����</p>
+</li>
+<li>
+<ul>
+<li>username �ֶν���ʾһ���ı���</li>
+<li>����Ĭ��ֵΪ &quot;JohnDoe&quot;��</li>
+</ul>
+</li>
+<li>
+<p>����</p>
+</li>
+<li>
+<ul>
+<li>���ҪΪ����ֶ�����Ĭ��ֵ</li>
+<li>����ͨ��ʹ�� initial �ֵ���һ�������ö���ֶεĳ�ʼֵ�����磺</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyForm</span>(forms.Form):</span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&quot;�û���&quot;</span></span><br><span class="line">    )</span><br><span class="line">    email = forms.EmailField(</span><br><span class="line">        label=<span class="string">&quot;����&quot;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    initial = &#123;</span><br><span class="line">        <span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;JohnDoe&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;email&#x27;</span>: <span class="string">&#x27;johndoe@example.com&#x27;</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>������ʵ�����������ʱ���� initial �ֵ��������������ֶε�Ĭ��ֵ��</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">form = MyForm(initial=&#123;</span><br><span class="line">    <span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;JohnSmith&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;email&#x27;</span>: <span class="string">&#x27;johnsmith@example.com&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>���������ʱ</p>
+</li>
+<li>
+<ul>
+<li>username �ֶν���ʾΪ “JohnSmith”</li>
+<li>email �ֶν���ʾΪ &quot;<a href="mailto:johnsmith@example.com">johnsmith@example.com</a>&quot;��</li>
+</ul>
+</li>
+<li>
+<p>����</p>
+</li>
+<li>
+<ul>
+<li>ͨ��ʹ�� initial ����</li>
+<li>���Է����Ϊ����ֶ�����Ĭ��ֵ���ṩ���õ��û����顣</li>
+</ul>
+</li>
+</ul>
+<h3 id="��3�������ֶ���T">��3�������ֶ���Ⱦ</h3>
+<h4 id="��1��radioSelect����ѡ��">��1��radioSelect����ѡ��</h4>
+<ul>
+<li>�������ڱ������ʹ��forms.RadioSelect�ֶ�����ȾradioSelect�ֶΡ�������һ��������ʾ��</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GenderForm</span>(forms.Form):</span><br><span class="line">    gender_choices = [</span><br><span class="line">        (<span class="string">&#x27;male&#x27;</span>, <span class="string">&#x27;Male&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;female&#x27;</span>, <span class="string">&#x27;Female&#x27;</span>),</span><br><span class="line">    ]</span><br><span class="line">    gender = forms.ChoiceField(choices=gender_choices, widget=forms.RadioSelect)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>����������У����Ƕ�����һ����ΪGenderForm�ı���࣬���а�����һ��gender�ֶ�����ѡ���Ա�</li>
+<li>ͨ������widget=forms.RadioSelect�����ǽ����ֶ���ȾΪ��ѡ��ť��</li>
+</ul>
+<h4 id="��2����ѡSelect">��2����ѡSelect</h4>
+<ul>
+<li>������ʹ��forms.Select�ֶ������������˵���ʽ�ĵ�ѡѡ�������һ��������ʾ��</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CityForm</span>(forms.Form):</span><br><span class="line">    city_choices = [</span><br><span class="line">        (<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;New York&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;London&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;3&#x27;</span>, <span class="string">&#x27;Tokyo&#x27;</span>),</span><br><span class="line">    ]</span><br><span class="line">    city = forms.ChoiceField(choices=city_choices, widget=forms.Select)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>����������У����Ƕ�����һ����ΪCityForm�ı���࣬���а�����һ��city�ֶ�����ѡ����С�ͨ������widget=forms.Select�����ǽ����ֶ���ȾΪ�����˵���</li>
+</ul>
+<h4 id="��3����ѡSelect">��3����ѡSelect</h4>
+<ul>
+<li>ʹ��forms.SelectMultiple�ֶο�����Ⱦ��ѡSelect�����������һ��������ʾ��</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">InterestsForm</span>(forms.Form):</span><br><span class="line">    interest_choices = [</span><br><span class="line">        (<span class="string">&#x27;coding&#x27;</span>, <span class="string">&#x27;Coding&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;gaming&#x27;</span>, <span class="string">&#x27;Gaming&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;reading&#x27;</span>, <span class="string">&#x27;Reading&#x27;</span>),</span><br><span class="line">    ]</span><br><span class="line">    interests = forms.MultipleChoiceField(choices=interest_choices, widget=forms.SelectMultiple)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>����������У����Ƕ�����һ����ΪInterestsForm�ı����</li>
+<li>���а�����һ��interests�ֶ�����ѡ����Ȥ��</li>
+<li>ͨ������widget=forms.SelectMultiple�����ǽ����ֶ���ȾΪ֧�ֶ�ѡ�������˵���</li>
+</ul>
+<h4 id="��4����ѡcheckbox">��4����ѡcheckbox</h4>
+<ul>
+<li>Ҫ��Ⱦ��ѡcheckbox�ֶΣ�������ʹ��forms.CheckboxInput�ֶΡ�</li>
+<li>������һ��������ʾ��</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AgreeForm</span>(forms.Form):</span><br><span class="line">    agree = forms.BooleanField(widget=forms.CheckboxInput)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>����������У����Ƕ�����һ����ΪAgreeForm�ı����</li>
+<li>���а�����һ��agree�ֶ����ڽ������</li>
+<li>ͨ������widget=forms.CheckboxInput�����ǽ����ֶ���ȾΪ��ѡ��ѡ��</li>
+</ul>
+<h4 id="��5����ѡcheckbox">��5����ѡcheckbox</h4>
+<ul>
+<li>Ҫ��Ⱦ��ѡcheckbox�ֶ�</li>
+<li>����ʹ��forms.CheckboxSelectMultiple�ֶΡ�</li>
+<li>������һ��������ʾ</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ColorsForm</span>(forms.Form):</span><br><span class="line">    color_choices = [</span><br><span class="line">        (<span class="string">&#x27;red&#x27;</span>, <span class="string">&#x27;Red&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;green&#x27;</span>, <span class="string">&#x27;Green&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;blue&#x27;</span>, <span class="string">&#x27;Blue&#x27;</span>),</span><br><span class="line">    ]</span><br><span class="line">    colors = forms.MultipleChoiceField(choices=color_choices, widget=forms.CheckboxSelectMultiple)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>����������У����Ƕ�����һ����ΪColorsForm�ı���࣬���а�����һ��colors�ֶ�����ѡ����ɫ��</li>
+<li>ͨ������widget=forms.CheckboxSelectMultiple�����ǽ����ֶ���ȾΪ�����ѡ���û�ѡ��</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/11.0Django%E6%A1%86%E6%9E%B6%E4%B9%8B%E5%88%86%E9%A1%B5%E5%99%A8%E6%8E%A8%E5%88%B0/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/10.0selenium%E6%A1%86%E6%9E%B6%E4%B9%8B%E6%B5%8F%E8%A7%88%E5%99%A8%E6%93%8D%E4%BD%9C/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Django���֮Form���</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%D2%BB%EF%BF%BD%EF%BF%BDDjango%EF%BF%BDi%EF%BF%BD%EF%BF%BD%CF%B5%CD%B3"><span class="nav-number">1.1.</span> <span class="nav-text">��һ��Django�ı��ϵͳ</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%D4%AD%CA%BC%EF%BF%BD%EF%BF%BDform%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.1.1.</span> <span class="nav-text">��1��ԭʼ��form���</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BDDjango%EF%BF%BDi%EF%BF%BD%EF%BF%BD%CF%B5%CD%B3"><span class="nav-number">1.1.2.</span> <span class="nav-text">��2��Django�ı��ϵͳ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BDform%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D2%AA%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.1.3.</span> <span class="nav-text">��3��form�������Ҫ����</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.2.</span> <span class="nav-text">�������������</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDform%EF%BF%BD%EF%BF%BD%EF%BF%BD%CA%B5%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.3.</span> <span class="nav-text">������form���ʵ��</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDt%EF%BF%BD%EF%BF%BD%EF%BF%BD%D8%B1%C8%B6%EF%BF%BD%EF%BF%BD%EF%BF%BD%CF%A2"><span class="nav-number">1.3.1.</span> <span class="nav-text">��1�������ť���رȶ���Ϣ</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BDj%EF%BF%BD%EF%BF%BD%D2%B3%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">��1��ǰ��ҳ��</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">(2)���</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BD%EF%BF%BDo%EF%BF%BD%EF%BF%BD%EF%BF%BD%CA%B2o"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">��3���õ���ʲô</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BDForm%EF%BF%BD%EF%BF%BD%EF%BF%BD%D0%A3%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.3.2.</span> <span class="nav-text">��2��Form���У������</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BDg%EF%BF%BDForm%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D0%A3%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.</span> <span class="nav-text">���ġ�Form������У������</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D0%B4%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.1.</span> <span class="nav-text">��1����д�����</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDl%EF%BF%BD"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">��1�������ļ�</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D0%B4form%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">��2����дform�����</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D0%B4%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">��3����д�������</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%EF%BF%BD%EF%BF%BD%D0%B4j%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">(4)��дǰ������</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%E5%A1%BFForm%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B6%CE%B2%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.5.</span> <span class="nav-text">���塿Form������ֶβ���</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%DC%B5%C4%B2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.5.1.</span> <span class="nav-text">��1���ܵĲ�������</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDmax-length"><span class="nav-number">1.5.2.</span> <span class="nav-text">��2������max_length</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDmin-length"><span class="nav-number">1.5.3.</span> <span class="nav-text">��3������min_length</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD4%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDlabel"><span class="nav-number">1.5.4.</span> <span class="nav-text">��4������label</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD5%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDlabel-suffix"><span class="nav-number">1.5.5.</span> <span class="nav-text">��5������label_suffix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD6%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDwidget"><span class="nav-number">1.5.6.</span> <span class="nav-text">��6������widget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD7%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDhelp-text"><span class="nav-number">1.5.7.</span> <span class="nav-text">��7������help_text</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD8%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDerror-messages"><span class="nav-number">1.5.8.</span> <span class="nav-text">��8������error_messages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD9%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDdisabled"><span class="nav-number">1.5.9.</span> <span class="nav-text">��9������disabled</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD10%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDrequired"><span class="nav-number">1.5.10.</span> <span class="nav-text">��10������required</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD11%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDinitial"><span class="nav-number">1.5.11.</span> <span class="nav-text">��11������initial</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD12%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDvalidators"><span class="nav-number">1.5.12.</span> <span class="nav-text">��12������validators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD13%EF%BF%BD%EF%BF%BDlocalize"><span class="nav-number">1.5.13.</span> <span class="nav-text">��13��localize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD14%EF%BF%BD%EF%BF%BDhas-changed-%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.5.14.</span> <span class="nav-text">��14��has_changed()����</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD15%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDpassword"><span class="nav-number">1.5.15.</span> <span class="nav-text">��15�������password</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD16%EF%BF%BD%EF%BF%BD%D1%A1%EF%BF%BD%EF%BF%BD%EF%BF%BDradioSelect"><span class="nav-number">1.5.16.</span> <span class="nav-text">��16��ѡ���radioSelect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD17%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D1%A1%EF%BF%BD%EF%BF%BDSelect"><span class="nav-number">1.5.17.</span> <span class="nav-text">��17����ѡ��Select</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD18%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D1%A1%EF%BF%BD%EF%BF%BDSelectMultiple"><span class="nav-number">1.5.18.</span> <span class="nav-text">��18����ѡ��SelectMultiple</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD19%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D1%A1%EF%BF%BD%EF%BF%BDCheckboxInput"><span class="nav-number">1.5.19.</span> <span class="nav-text">��19����ѡ��CheckboxInput</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD20%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D1%A1%EF%BF%BD%EF%BF%BDCheckboxSelectMultiple"><span class="nav-number">1.5.20.</span> <span class="nav-text">��20����ѡ��CheckboxSelectMultiple</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDchoice%EF%BF%BD%D6%B6%CE%B5%EF%BF%BD%D7%A2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.6.</span> <span class="nav-text">������choice�ֶε�ע������</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D2%BB"><span class="nav-number">1.6.1.</span> <span class="nav-text">��1������һ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.6.2.</span> <span class="nav-text">��2��������</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%DF%A1%EF%BF%BD%EF%BF%BD%D4%B6%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B6%EF%BF%BD%D0%A3%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.7.</span> <span class="nav-text">���ߡ��Զ����ֶ�У��</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%D4%B6%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%E9%BA%AF%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.7.1.</span> <span class="nav-text">��1���Զ����麯��</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%DC%B5%EF%BF%BD%CB%B5%D2%BB%EF%BF%BD%C2%B2%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.7.2.</span> <span class="nav-text">��2���ܵ�˵һ�²���</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%CB%A1%EF%BF%BDForm%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B6%CE%B2%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.8.</span> <span class="nav-text">���ˡ�Form����ֶβ���</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B6%EF%BF%BD"><span class="nav-number">1.8.1.</span> <span class="nav-text">��1�������ֶ�</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.8.2.</span> <span class="nav-text">��2������</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BDBooleanField"><span class="nav-number">1.8.2.1.</span> <span class="nav-text">��1��BooleanField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BDCharField"><span class="nav-number">1.8.2.2.</span> <span class="nav-text">��2��CharField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BDChoiceField"><span class="nav-number">1.8.2.3.</span> <span class="nav-text">��3��ChoiceField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD4%EF%BF%BD%EF%BF%BDTypedChoiceField"><span class="nav-number">1.8.2.4.</span> <span class="nav-text">��4��TypedChoiceField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD5%EF%BF%BD%EF%BF%BDDateField"><span class="nav-number">1.8.2.5.</span> <span class="nav-text">��5��DateField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD6%EF%BF%BD%EF%BF%BDDateTimeField"><span class="nav-number">1.8.2.6.</span> <span class="nav-text">��6��DateTimeField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD7%EF%BF%BD%EF%BF%BDDecimalField"><span class="nav-number">1.8.2.7.</span> <span class="nav-text">��7��DecimalField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD8%EF%BF%BD%EF%BF%BDDurationField"><span class="nav-number">1.8.2.8.</span> <span class="nav-text">��8��DurationField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD9%EF%BF%BD%EF%BF%BDEmailField"><span class="nav-number">1.8.2.9.</span> <span class="nav-text">��9��EmailField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD10%EF%BF%BD%EF%BF%BDFileField"><span class="nav-number">1.8.2.10.</span> <span class="nav-text">��10��FileField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD11%EF%BF%BD%EF%BF%BDFilePathField"><span class="nav-number">1.8.2.11.</span> <span class="nav-text">��11��FilePathField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD12%EF%BF%BD%EF%BF%BDFloatField"><span class="nav-number">1.8.2.12.</span> <span class="nav-text">��12��FloatField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD13%EF%BF%BD%EF%BF%BDImageField"><span class="nav-number">1.8.2.13.</span> <span class="nav-text">��13��ImageField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD14%EF%BF%BD%EF%BF%BDIntegerField"><span class="nav-number">1.8.2.14.</span> <span class="nav-text">��14��IntegerField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD15%EF%BF%BD%EF%BF%BDJSONField"><span class="nav-number">1.8.2.15.</span> <span class="nav-text">��15��JSONField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD16%EF%BF%BD%EF%BF%BDGenericIPAddressField"><span class="nav-number">1.8.2.16.</span> <span class="nav-text">��16��GenericIPAddressField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD17%EF%BF%BD%EF%BF%BDMultipleChoiceField"><span class="nav-number">1.8.2.17.</span> <span class="nav-text">��17��MultipleChoiceField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD18%EF%BF%BD%EF%BF%BDTypedMultipleChoiceField"><span class="nav-number">1.8.2.18.</span> <span class="nav-text">��18��TypedMultipleChoiceField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD19%EF%BF%BD%EF%BF%BDNullBooleanField"><span class="nav-number">1.8.2.19.</span> <span class="nav-text">��19��NullBooleanField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD20%EF%BF%BD%EF%BF%BDRegexField"><span class="nav-number">1.8.2.20.</span> <span class="nav-text">��20��RegexField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD21%EF%BF%BD%EF%BF%BDSlugField"><span class="nav-number">1.8.2.21.</span> <span class="nav-text">��21��SlugField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD22%EF%BF%BD%EF%BF%BDTimeField"><span class="nav-number">1.8.2.22.</span> <span class="nav-text">��22��TimeField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD23%EF%BF%BD%EF%BF%BDURLField"><span class="nav-number">1.8.2.23.</span> <span class="nav-text">��23��URLField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD24%EF%BF%BD%EF%BF%BDUUIDField"><span class="nav-number">1.8.2.24.</span> <span class="nav-text">��24��UUIDField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD25%EF%BF%BD%EF%BF%BD-ComboField"><span class="nav-number">1.8.2.25.</span> <span class="nav-text">��25�� ComboField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD26%EF%BF%BD%EF%BF%BDMultiValueField"><span class="nav-number">1.8.2.26.</span> <span class="nav-text">��26��MultiValueField</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD27%EF%BF%BD%EF%BF%BDSplitDateTimeField"><span class="nav-number">1.8.2.27.</span> <span class="nav-text">��27��SplitDateTimeField</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D4%B6%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B6%EF%BF%BD"><span class="nav-number">1.8.3.</span> <span class="nav-text">��3�������Զ����ֶ�</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BDs%EF%BF%BDforms%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%DC%BD%E1%A3%AC%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.9.</span> <span class="nav-text">���š�forms��������ܽᣬ����</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.9.1.</span> <span class="nav-text">��1����������</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BDautocomplete"><span class="nav-number">1.9.1.1.</span> <span class="nav-text">��1��autocomplete</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BDdisabled"><span class="nav-number">1.9.1.2.</span> <span class="nav-text">��2��disabled</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BDreadonly"><span class="nav-number">1.9.1.3.</span> <span class="nav-text">��3��readonly</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD4%EF%BF%BD%EF%BF%BDmax-%EF%BF%BD%EF%BF%BD-min"><span class="nav-number">1.9.1.4.</span> <span class="nav-text">��4��max �� min</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD5%EF%BF%BD%EF%BF%BD-maxlength-%EF%BF%BD%EF%BF%BD-minlength"><span class="nav-number">1.9.1.5.</span> <span class="nav-text">��5��***maxlength �� minlength</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD6%EF%BF%BD%EF%BF%BDpattern"><span class="nav-number">1.9.1.6.</span> <span class="nav-text">��6��pattern</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD7%EF%BF%BD%EF%BF%BDrequired"><span class="nav-number">1.9.1.7.</span> <span class="nav-text">��7��required</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD8%EF%BF%BD%EF%BF%BDstep"><span class="nav-number">1.9.1.8.</span> <span class="nav-text">��8��step</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD9%EF%BF%BD%EF%BF%BDaria-describedby"><span class="nav-number">1.9.1.9.</span> <span class="nav-text">��9��aria-describedby</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD10%EF%BF%BD%EF%BF%BDaria-invalid"><span class="nav-number">1.9.1.10.</span> <span class="nav-text">��10��aria-invalid</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.9.2.</span> <span class="nav-text">��2���������</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD-widget%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D3%B1%EF%BF%BDk%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.9.2.1.</span> <span class="nav-text">��1��***widget����ӱ�ǩ����</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-required%EF%BF%BD%EF%BF%BD%EF%BF%BD%C7%B7%EF%BF%BD%CE%AA%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B6%EF%BF%BD"><span class="nav-number">1.9.2.2.</span> <span class="nav-text">(2)***required���Ƿ�Ϊ�����ֶ�</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BD-label%EF%BF%BD%EF%BF%BD%EF%BF%BD%D4%B6%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDk%EF%BF%BDi%EF%BF%BD"><span class="nav-number">1.9.2.3.</span> <span class="nav-text">��3��***label���Զ����ǩ�ı�</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD4%EF%BF%BD%EF%BF%BD-error-messages%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDk%EF%BF%BD%EF%BF%BD%EF%BF%BD%CF%B7%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%CA%BE%EF%BF%BD%EF%BF%BD%CF%A2"><span class="nav-number">1.9.2.4.</span> <span class="nav-text">��4��***error_messages����ǩ���Ϸ�����ʾ��Ϣ</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD5%EF%BF%BD%EF%BF%BDhelp-text%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%CF%A2"><span class="nav-number">1.9.2.5.</span> <span class="nav-text">��5��help_text������������Ϣ</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD6%EF%BF%BD%EF%BF%BD-validators%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%CA%BD"><span class="nav-number">1.9.3.</span> <span class="nav-text">��6��***validators��������ʽ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD7%EF%BF%BD%EF%BF%BD-initial%EF%BF%BD%EF%BF%BDI%EF%BF%BD%EF%BF%BD%D6%B5"><span class="nav-number">1.9.4.</span> <span class="nav-text">��7��***initial��Ĭ��ֵ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B6%EF%BF%BD%EF%BF%BD%EF%BF%BDT"><span class="nav-number">1.9.5.</span> <span class="nav-text">��3�������ֶ���Ⱦ</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BDradioSelect%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D1%A1%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.9.5.1.</span> <span class="nav-text">��1��radioSelect����ѡ��</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D1%A1Select"><span class="nav-number">1.9.5.2.</span> <span class="nav-text">��2����ѡSelect</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D1%A1Select"><span class="nav-number">1.9.5.3.</span> <span class="nav-text">��3����ѡSelect</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD4%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D1%A1checkbox"><span class="nav-number">1.9.5.4.</span> <span class="nav-text">��4����ѡcheckbox</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD5%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D1%A1checkbox"><span class="nav-number">1.9.5.5.</span> <span class="nav-text">��5����ѡcheckbox</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="文件操作 【一】打开文件的两种方式（open和with open） 【1】有三种模式(r,w,a) （1）r : 只读不取（read）  &#x2F;格式：  1234567891011121314#通过with open ......语句打开文件，并将文件内容一次性读完with open（&#x27;这个是你创建的文本地址&#x27;，**mode &#x3D;** &quot;r&quot;,**encoding">
+<meta property="og:type" content="article">
+<meta property="og:title" content="坤博客">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/2.1%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="文件操作 【一】打开文件的两种方式（open和with open） 【1】有三种模式(r,w,a) （1）r : 只读不取（read）  &#x2F;格式：  1234567891011121314#通过with open ......语句打开文件，并将文件内容一次性读完with open（&#x27;这个是你创建的文本地址&#x27;，**mode &#x3D;** &quot;r&quot;,**encoding">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T10:31:35.036Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/2.1%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/2.1%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>文件操作</h1>
+<h1>【一】打开文件的两种方式（open和with open）</h1>
+<h2 id="【1】有三种模式-r-w-a">【1】有三种模式(r,w,a)</h2>
+<h3 id="（1）r-只读不取（read）">（1）r : 只读不取（read）</h3>
+<ul>
+<li>/格式：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#通过with open ......语句打开文件，并将文件内容一次性读完</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>（<span class="string">&#x27;这个是你创建的文本地址&#x27;</span>，**mode =** <span class="string">&quot;r&quot;</span>,**encoding =** <span class="string">&quot;utf-8&quot;</span>） <span class="keyword">as</span> l:<span class="comment">#l这个值可以随便取值</span></span><br><span class="line">    <span class="comment">#会将原本的内容由硬盘全部读入内存，赋值给res</span></span><br><span class="line">    res = l.read()</span><br><span class="line"><span class="built_in">print</span>（res）<span class="comment">#你文本里面的信息就会被读取</span></span><br><span class="line">    <span class="comment">#l.close()执行这个语句是将你创建的文本文件关闭</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">#它还可以进行切片</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#文件0.1txt里面是tom|710</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;0.1txt&quot;</span>,<span class="string">&quot;r&quot;</span>,encoding = <span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> ly:</span><br><span class="line">    num = ly.read()</span><br><span class="line">    num_one = num.split(<span class="string">&quot;|&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(num_one)<span class="comment">#[&#x27;tom&#x27;, &#x27;710&#x27;]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>补充</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">当路径中有\的时候他有可能是转义字符的意思</span><br><span class="line">所以我们就用\\取消转义效果</span><br><span class="line">字符串前面加r也可以</span><br><span class="line"><span class="comment">#案例</span></span><br><span class="line">path = <span class="string">&#x27;E:\\PythonProjects\\01.py&#x27;</span>  <span class="comment"># \\ 反转义</span></span><br><span class="line">path = <span class="string">r&#x27;E:\PythonProjects\01.py&#x27;</span>  <span class="comment"># \\ +r 取消转义</span></span><br></pre></td></tr></table></figure>
+<h3 id="（2）w-只写（write）">（2）w : 只写（write）</h3>
+<ul>
+<li>在文件不存在时会创建空文档，文件存在时会清空文件，文件指针跑到文件开头</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#写入一次</span></span><br><span class="line">data = <span class="string">&quot;name|912&quot;</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(file=<span class="string">&quot;0.1txt&quot;</span>, mode=<span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> ly:</span><br><span class="line">    ly.write(data)<span class="comment">#文本里就是name|912</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#连续写入</span></span><br><span class="line">data = <span class="string">&quot;name|912&quot;</span></span><br><span class="line">age = <span class="string">&quot;18&quot;</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(file=<span class="string">&quot;0.1txt&quot;</span>, mode=<span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> ly:</span><br><span class="line">    ly.write(data )</span><br><span class="line">    ly.write(age)<span class="comment">#文本里就是name|91218</span></span><br><span class="line">    <span class="comment">#（）括号里面也可以直接输入文字但是要带引号</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>要是后面又ly.close()这个表示文件已关闭无法再添加，文件打开还可以继续添加（会覆盖原来写的文本信息）</li>
+</ul>
+<h3 id="3-a-追加写模式（append追加数据）">(3)a : 追加写模式（append追加数据）</h3>
+<ul>
+<li>文件不存在则新建并写入</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;0.2txt&quot;</span>,mode=<span class="string">&quot;a&quot;</span>,encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    file.write(<span class="string">&quot;欧里给&quot;</span>)</span><br><span class="line"><span class="comment">#没有文本文件会自动创建并写入</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>文件存在则打开并继续写入（文件指针直接移动到末尾，不会清空原来的文本信息）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name=<span class="built_in">input</span>(<span class="string">&#x27;username&gt;&gt;&gt;: &#x27;</span>).strip()<span class="comment">#输入名字</span></span><br><span class="line">pwd=<span class="built_in">input</span>(<span class="string">&#x27;password&gt;&gt;&gt;: &#x27;</span>).strip()<span class="comment">#输入密码</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;0.1.txt&#x27;</span>,mode=<span class="string">&#x27;a&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    info=<span class="string">&#x27;%s:%s\n&#x27;</span>%(name,pwd)<span class="comment">#%s占位，你输入的名字会保存在0.1txt中</span></span><br><span class="line">    f.write(info)<span class="comment">#保存</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>不自带换行功能，需要手动输入</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#例如</span></span><br><span class="line">hobby = <span class="string">&quot;tom|710\n&quot;</span></span><br><span class="line">num = <span class="string">&quot;18\n&quot;</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;0.2txt&quot;</span>,<span class="string">&quot;a&quot;</span>,encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(hobby)</span><br><span class="line">    f.write(num)</span><br><span class="line"><span class="comment">#\n换行符</span></span><br></pre></td></tr></table></figure>
+<h3 id="（4）a和w的区别">（4）a和w的区别</h3>
+<ul>
+<li>a文本信息添加的时候不会吧原有的清除</li>
+<li>b文本就会把原有的文本信息清除</li>
+<li>相同点就是文本信息打开时，都可以连续写入</li>
+</ul>
+<h3 id="（5）-模式的应用">（5）+模式的应用</h3>
+<ul>
+<li>r+，w+，a+ : 可读可写</li>
+<li>用的最多的就是rwa。</li>
+</ul>
+<h1>【二】文件读写内容模式</h1>
+<ul>
+<li>前提是tb不能单独使用，必须与r/w/a之一结合使用</li>
+</ul>
+<h2 id="【1】t-文本模式">【1】t : 文本模式</h2>
+<ul>
+<li>读写的文件都是以字符串为单位的，只针对文本文件，必须指定encoding参数</li>
+</ul>
+<h3 id="（1）使用：">（1）使用：</h3>
+<ul>
+<li>如果指定的文件打开模式为r/w/a，其实默认的就是rt/wt/at</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">name_list = [<span class="string">&#x27;dream&#x27;</span>, <span class="string">&#x27;hope&#x27;</span>]</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;01.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">    <span class="comment"># 无法直接写入 列表 / 字典等类型</span></span><br><span class="line">    <span class="comment"># fp.write(name_list) # Expected type &#x27;str&#x27; (matched generic type &#x27;AnyStr&#x27;), got &#x27;list[str]&#x27; instead</span></span><br><span class="line">    <span class="comment"># 只能写入字符串格式的内容，可以使用str强转</span></span><br><span class="line">    fp.write(<span class="built_in">str</span>(name_list))</span><br><span class="line">    <span class="comment">#文件夹里面有文本的话覆盖在输入</span></span><br><span class="line">    <span class="comment">#想连续的话就在fp.write(str(name_list))在加一个</span></span><br><span class="line"><span class="comment">#例子</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;0.1.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">    data = fp.read()<span class="comment">#如果文本0.1.txt里面有值的话</span></span><br><span class="line">    <span class="comment"># 通过 r 模式读出来的数据都是字符串格式的</span></span><br><span class="line">    <span class="built_in">print</span>(data, <span class="built_in">type</span>(data)) <span class="comment">#文本0.1.txt里面的内容就是 欧里给  &lt;class &#x27;str&#x27;&gt;</span></span><br><span class="line">    <span class="comment"># 及时读出来的数据符合列表格式，强转以后，仍然是字符串格式</span></span><br><span class="line">    data_list = <span class="built_in">list</span>(data)</span><br><span class="line">    <span class="built_in">print</span>(data_list, <span class="built_in">type</span>(data_list))</span><br><span class="line">    <span class="comment">#[&#x27;欧&#x27;, &#x27;里&#x27;, &#x27;给&#x27;] &lt;class &#x27;list&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="【2】b-：二进制模式">【2】b ：二进制模式</h2>
+<ul>
+<li>读写文件都是以bytes/二进制为单位的</li>
+<li>可以针对所有文件</li>
+<li>一定不能指定encoding参数</li>
+</ul>
+<h3 id="（1）使用">（1）使用</h3>
+<ul>
+<li>b都是以二进制为单位的</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;0.1.txt&#x27;</span>,mode=<span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">     data=f.read()</span><br><span class="line">     <span class="built_in">print</span>(<span class="built_in">type</span>(data))<span class="comment">#&lt;class &#x27;bytes&#x27;&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;0.1.txt&#x27;</span>,mode=<span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">     msg=<span class="string">&quot;你好&quot;</span><span class="comment">#文本文件里的内容会是”你好“</span></span><br><span class="line">     res=msg.encode(<span class="string">&#x27;utf-8&#x27;</span>) <span class="comment"># res为bytes类型</span></span><br><span class="line">     f.write(res) <span class="comment"># 在b模式下写入文件的只能是bytes类型</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>针对非文本文件（图片、视频、音乐等）只能使用b模式。</li>
+<li>rb（read bytes）</li>
+<li>ab(append bytes)</li>
+<li>wb(write bytes)</li>
+</ul>
+<h1>【三】文件的操作方法</h1>
+<h2 id="读【1】读操作">读【1】读操作</h2>
+<ul>
+<li>f.read()
+<ul>
+<li>读取所有内容，执行完该操作后，文件移动到文件末尾</li>
+</ul>
+</li>
+<li>f.readline()
+<ul>
+<li>读取一行内容，光标移动到第二行首部</li>
+</ul>
+</li>
+<li>f.readlines()
+<ul>
+<li>读取每一行内容，存放于列表中</li>
+</ul>
+</li>
+</ul>
+<h3 id="（1）一次性读完方式一">（1）一次性读完方式一</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#循环遍历</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;0.2txt&quot;</span>,mode=<span class="string">&quot;rt&quot;</span>,encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> ly:</span><br><span class="line">    <span class="keyword">for</span> name <span class="keyword">in</span> ly:</span><br><span class="line">        <span class="built_in">print</span>(name)<span class="comment">#一次只读取0.2txt文本的一行内容</span></span><br><span class="line">        </span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;0.2txt&quot;</span>,mode=<span class="string">&quot;rt&quot;</span>,encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> ly:</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        data =ly.readline()</span><br><span class="line">        <span class="keyword">if</span> data:</span><br><span class="line">            <span class="built_in">print</span>( data)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<h3 id="（2）一次性读完方式二">（2）一次性读完方式二</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;0.2txt&quot;</span>,mode=<span class="string">&quot;rt&quot;</span>,encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> ly:</span><br><span class="line">    data = ly.read()</span><br><span class="line">    <span class="built_in">print</span>(data)</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;0.2txt&quot;</span>,mode=<span class="string">&quot;rt&quot;</span>,encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> ly:</span><br><span class="line">    data = ly.readlines()</span><br><span class="line">    <span class="built_in">print</span>(data)</span><br><span class="line"><span class="comment">#输出结果是一个列表里面包含所有的0.2txt内容</span></span><br></pre></td></tr></table></figure>
+<h2 id="写【2】写操作">写【2】写操作</h2>
+<ul>
+<li>f.write()
+<ul>
+<li>一次性全部写入</li>
+</ul>
+</li>
+<li>f.writelines()
+<ul>
+<li>可以迭代写入可迭代对象的内容</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-write方法">(1)write方法</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">name = [<span class="string">&quot;tom&quot;</span>,<span class="string">&quot;710&quot;</span>,<span class="string">&quot;/n&quot;</span>,<span class="string">&quot;dream&quot;</span>,<span class="string">&quot;123&quot;</span>,<span class="string">&quot;/n&quot;</span>]</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;01.txt&quot;</span>,mode=<span class="string">&quot;a&quot;</span>,encoding=<span class="string">&quot;utf8&quot;</span>) <span class="keyword">as</span> lm:</span><br><span class="line">    lm.write(<span class="built_in">str</span>(name))</span><br><span class="line"><span class="comment">#    虽然01.txt文本文件夹里是[&quot;tom&quot;,&quot;710&quot;,&quot;/n&quot;,&quot;dream&quot;,&quot;123&quot;,&quot;/n&quot;]这个，但是它是字符串</span></span><br></pre></td></tr></table></figure>
+<h3 id="（2）writelines方法">（2）writelines方法</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">name = [<span class="string">&quot;710&quot;</span>,<span class="string">&quot;\n&quot;</span>,<span class="string">&quot;dream&quot;</span>,<span class="string">&quot;\n&quot;</span>]</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;01.txt&quot;</span>,mode=<span class="string">&quot;a&quot;</span>,encoding=<span class="string">&quot;utf8&quot;</span>) <span class="keyword">as</span> lm:</span><br><span class="line">    lm.writelines(name)</span><br><span class="line">    <span class="comment">#01.txt文本文件夹里是</span></span><br><span class="line">    <span class="comment">#710</span></span><br><span class="line">    <span class="comment">#dream</span></span><br></pre></td></tr></table></figure>
+<h3 id="【3】判断文件是否可读-可写-可关闭、">【3】判断文件是否可读/可写/可关闭、</h3>
+<ul>
+<li>
+<p>f.readable()</p>
+<ul>
+<li>文件是否可读</li>
+</ul>
+</li>
+<li>
+<p>f.writable()</p>
+<ul>
+<li>文件是否可写</li>
+</ul>
+</li>
+<li>
+<p>f.close()</p>
+<ul>
+<li>文件是否可关闭</li>
+</ul>
+</li>
+<li>
+<p>f.encoding()</p>
+<ul>
+<li>如果文件打开模式为b，则没有该属性</li>
+</ul>
+</li>
+<li>
+<p>f.flush()</p>
+<ul>
+<li>立刻将文本内容从内存刷到硬盘</li>
+</ul>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://f.name">f.name</a>()</p>
+<ul>
+<li>获取文件名字</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;example.txt&#x27;</span>, mode=<span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;可读性: <span class="subst">&#123;f.readable()&#125;</span>&quot;</span>)  <span class="comment"># 输出: 可读性: False</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;可写性: <span class="subst">&#123;f.writable()&#125;</span>&quot;</span>)  <span class="comment"># 输出: 可写性: True</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;是否关闭: <span class="subst">&#123;f.closed&#125;</span>&quot;</span>)  <span class="comment"># 输出: 是否关闭: False</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;编码格式: <span class="subst">&#123;f.encoding&#125;</span>&quot;</span>)  <span class="comment"># 输出: 编码格式: utf-8</span></span><br><span class="line"></span><br><span class="line">    f.flush()  <span class="comment"># 立即将内容刷新到硬盘</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;在 &#x27;with&#x27; 块之后是否关闭: <span class="subst">&#123;f.closed&#125;</span>&quot;</span>)  <span class="comment"># 输出: 在 &#x27;with&#x27; 块之后是否关闭: True</span></span><br></pre></td></tr></table></figure>
+<h1>【四】控制文件指针</h1>
+<ul>
+<li>reand补充</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ith <span class="built_in">open</span>(<span class="string">&#x27;01.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line"><span class="comment">#     # read 可以放参数，参数是读取到哪个索引位置</span></span><br><span class="line">    data = fp.read(<span class="number">5</span>)</span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment">#索引字符的位置，索引是五的话就是五个字符，换行也算一个</span></span><br></pre></td></tr></table></figure>
+<h2 id="【1】seek函数">【1】seek函数</h2>
+<ul>
+<li>f.seek(指针移动的字节数，模式控制)：</li>
+<li>0：默认的模式，该模式代表指针的字节数是以文件开头为参照物的</li>
+<li>1：指针的位置是以当前为参照物（py3.8以后好像就不允许操作文本了）</li>
+<li>2：指针的位置是以末尾为参照物的</li>
+<li>模式1：以当前位置为参照物向后移动</li>
+<li>模式2：以结尾位置为参照物移动</li>
+<li>lm.seek(-2,2)</li>
+<li>字节数：字母占一个字节，汉字占三个字节</li>
+</ul>
+<h1>【五】练习题</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">张一蛋     山东    179    49    12344234523</span></span><br><span class="line"><span class="string">李二蛋     河北    163    57    13913453521</span></span><br><span class="line"><span class="string">王全蛋     山西    153    62    18651433422</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">张一蛋&lt;妇女主任&gt; 179    49    12344234523</span></span><br><span class="line"><span class="string">李二蛋     河北    163    57    13913453521</span></span><br><span class="line"><span class="string">王全蛋     山西    153    62    18651433422</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开文件</span></span><br><span class="line"><span class="comment"># 打开的模式有一些变化</span></span><br><span class="line"><span class="comment"># w 会覆盖写</span></span><br><span class="line"><span class="comment"># a 会追加在结尾</span></span><br><span class="line"><span class="comment"># with open(&#x27;01.text&#x27;, &#x27;w+&#x27;, encoding=&#x27;utf-8&#x27;) as fp:</span></span><br><span class="line"><span class="comment">#     fp.seek(9, 0)</span></span><br><span class="line"><span class="comment">#     fp.write(&#x27;&lt;妇女主任&gt;&#x27;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># r ：读 rt</span></span><br><span class="line"><span class="comment"># r+</span></span><br><span class="line"><span class="comment"># with open(&#x27;01.text&#x27;, &#x27;r+&#x27;, encoding=&#x27;utf-8&#x27;) as fp:</span></span><br><span class="line"><span class="comment">#     fp.seek(9, 0)</span></span><br><span class="line"><span class="comment">#     fp.write(&#x27;&lt;妇女主任&gt;&#x27;)</span></span><br><span class="line"><span class="comment">#     # 回到开头读</span></span><br><span class="line"><span class="comment">#     fp.seek(0, 0)</span></span><br><span class="line"><span class="comment">#     data = fp.read()</span></span><br><span class="line"><span class="comment"># print(data)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">张一蛋     山东    179    49    12344234523</span></span><br><span class="line"><span class="string">李二蛋     河北    163    57    13913453521</span></span><br><span class="line"><span class="string">王全蛋     山西    153    62    18651433422</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">张一蛋(妇女主任)     山东    179    49    12344234523</span></span><br><span class="line"><span class="string">李二蛋(村长)     河北    163    57    13913453521</span></span><br><span class="line"><span class="string">王全蛋(书记)     山西    153    62    18651433422</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># line_list = []</span></span><br><span class="line"><span class="comment"># for line in data:</span></span><br><span class="line"><span class="comment">#     if &#x27;张一蛋&#x27; in line:</span></span><br><span class="line"><span class="comment">#         line = line.replace(line.split()[0], f&#x27;&#123;line.split()[0]&#125;(妇女主任)&#x27;)</span></span><br><span class="line"><span class="comment">#     elif &#x27;李二蛋&#x27; in line:</span></span><br><span class="line"><span class="comment">#         line = line.replace(line.split()[0], f&#x27;&#123;line.split()[0]&#125;(村长)&#x27;)</span></span><br><span class="line"><span class="comment">#     elif &#x27;王全蛋&#x27; in line:</span></span><br><span class="line"><span class="comment">#         line = line.replace(line.split()[0], f&#x27;&#123;line.split()[0]&#125;(书记)&#x27;)</span></span><br><span class="line"><span class="comment">#     line_list.append(line)</span></span><br><span class="line"><span class="comment"># print(line_list)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># with open(&#x27;01.txt&#x27;, &#x27;w&#x27;, encoding=&#x27;utf-8&#x27;) as fp:</span></span><br><span class="line"><span class="comment">#     fp.writelines(line_list)</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/2.1%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/2.2UDP%E5%A5%97%E6%8E%A5%E5%AD%97/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">文件操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">【一】打开文件的两种方式（open和with open）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%9C%89%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F-r-w-a"><span class="nav-number">2.1.</span> <span class="nav-text">【1】有三种模式(r,w,a)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89r-%E5%8F%AA%E8%AF%BB%E4%B8%8D%E5%8F%96%EF%BC%88read%EF%BC%89"><span class="nav-number">2.1.1.</span> <span class="nav-text">（1）r : 只读不取（read）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89w-%E5%8F%AA%E5%86%99%EF%BC%88write%EF%BC%89"><span class="nav-number">2.1.2.</span> <span class="nav-text">（2）w : 只写（write）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-a-%E8%BF%BD%E5%8A%A0%E5%86%99%E6%A8%A1%E5%BC%8F%EF%BC%88append%E8%BF%BD%E5%8A%A0%E6%95%B0%E6%8D%AE%EF%BC%89"><span class="nav-number">2.1.3.</span> <span class="nav-text">(3)a : 追加写模式（append追加数据）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89a%E5%92%8Cw%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.1.4.</span> <span class="nav-text">（4）a和w的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%885%EF%BC%89-%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">2.1.5.</span> <span class="nav-text">（5）+模式的应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">【二】文件读写内容模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91t-%E6%96%87%E6%9C%AC%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.1.</span> <span class="nav-text">【1】t : 文本模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E4%BD%BF%E7%94%A8%EF%BC%9A"><span class="nav-number">3.1.1.</span> <span class="nav-text">（1）使用：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91b-%EF%BC%9A%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.2.</span> <span class="nav-text">【2】b ：二进制模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E4%BD%BF%E7%94%A8"><span class="nav-number">3.2.1.</span> <span class="nav-text">（1）使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">【三】文件的操作方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E3%80%901%E3%80%91%E8%AF%BB%E6%93%8D%E4%BD%9C"><span class="nav-number">4.1.</span> <span class="nav-text">读【1】读操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E4%B8%80%E6%AC%A1%E6%80%A7%E8%AF%BB%E5%AE%8C%E6%96%B9%E5%BC%8F%E4%B8%80"><span class="nav-number">4.1.1.</span> <span class="nav-text">（1）一次性读完方式一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E4%B8%80%E6%AC%A1%E6%80%A7%E8%AF%BB%E5%AE%8C%E6%96%B9%E5%BC%8F%E4%BA%8C"><span class="nav-number">4.1.2.</span> <span class="nav-text">（2）一次性读完方式二</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E3%80%902%E3%80%91%E5%86%99%E6%93%8D%E4%BD%9C"><span class="nav-number">4.2.</span> <span class="nav-text">写【2】写操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-write%E6%96%B9%E6%B3%95"><span class="nav-number">4.2.1.</span> <span class="nav-text">(1)write方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89writelines%E6%96%B9%E6%B3%95"><span class="nav-number">4.2.2.</span> <span class="nav-text">（2）writelines方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%8F%AF%E8%AF%BB-%E5%8F%AF%E5%86%99-%E5%8F%AF%E5%85%B3%E9%97%AD%E3%80%81"><span class="nav-number">4.2.3.</span> <span class="nav-text">【3】判断文件是否可读&#x2F;可写&#x2F;可关闭、</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">【四】控制文件指针</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91seek%E5%87%BD%E6%95%B0"><span class="nav-number">5.1.</span> <span class="nav-text">【1】seek函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">【五】练习题</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="��һ��С������� ��1��ʲô��΢��С���� 123456789# 1 ΢��С������һ��������΢���ڲ��� ������ Ӧ�ó���# 2 С�����������غͰ�װ��ֻ��Ҫ��΢������������һ�� �� ɨһɨ �������ʹ�ü���# 3 ��ǰ�˸���		webǰ��    �����    app��    С����">
+<meta property="og:type" content="article">
+<meta property="og:title" content="坤博客">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/1.0%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8%E3%80%81%E5%AE%89%E8%A3%85%E3%80%81%E5%88%9B%E5%BB%BA%E3%80%81%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="��һ��С������� ��1��ʲô��΢��С���� 123456789# 1 ΢��С������һ��������΢���ڲ��� ������ Ӧ�ó���# 2 С�����������غͰ�װ��ֻ��Ҫ��΢������������һ�� �� ɨһɨ �������ʹ�ü���# 3 ��ǰ�˸���		webǰ��    �����    app��    С����">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5C1.jpg">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5C2.jpg">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5C3.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240909154518076.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240909154559662.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240909154733945.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401170203442.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240909154850487.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401171250657.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401171410814.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401171702375-17258691270211.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401171722531.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401171756755.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401171823876.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401172015541.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401172035213.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401172457001.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401173007494.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401173252969.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401173528007.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401175651049.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401183121794.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401183643713.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401183658809-17258699980402.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401182959992.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401190745667.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401183121794-17258700599333.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401180250486.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401183529724.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401181409860-17258782659184.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240909195930146.png">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T10:31:34.793Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5C1.jpg">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/1.0%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8%E3%80%81%E5%AE%89%E8%A3%85%E3%80%81%E5%88%9B%E5%BB%BA%E3%80%81%E9%85%8D%E7%BD%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/1.0%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8%E3%80%81%E5%AE%89%E8%A3%85%E3%80%81%E5%88%9B%E5%BB%BA%E3%80%81%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:34" itemprop="dateModified" datetime="2025-10-11T18:31:34+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>��һ��С�������</h1>
+<h2 id="��1��ʲo��΢��С����">��1��ʲô��΢��С����</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 ΢��С������һ��������΢���ڲ��� ������ Ӧ�ó���</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2 С�����������غͰ�װ��ֻ��Ҫ��΢������������һ�� �� ɨһɨ �������ʹ�ü���</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3 ��ǰ�˸���	</span></span><br><span class="line">	webǰ��</span><br><span class="line">    �����</span><br><span class="line">    app��</span><br><span class="line">    С����</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5C1.jpg" alt="1"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5C2.jpg" alt="2"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5C3.png" alt="3"></p>
+<h2 id="��2��΢��С������˺�ע��">��2��΢��С������˺�ע��</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 ���ʡ�΢�Ź���ƽ̨����ע��һ��΢��С�����˺�</span></span><br><span class="line">	-https://mp.weixin.qq.com/</span><br><span class="line"><span class="comment"># 2 �����˺���Ҫ׼��һ�����䣬������Ҫ��</span></span><br><span class="line">    -δ��΢�Ź���ƽ̨ע��</span><br><span class="line">    -δ��΢�ſ���ƽ̨ע��</span><br><span class="line">    -δ������΢�źŰ󶨹�</span><br><span class="line">    -�����������Ҫ��� �� ʹ����������</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240909154518076.png" alt="image-20240909154518076"></p>
+<h2 id="��3��΢��С�������Ϣ����">��3��΢��С�������Ϣ����</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 ע��ɹ�����Ҫ��΢�Ź���ƽ̨��С�����˺Ž���һЩ����</span></span><br><span class="line">	-С���������Ҫ �ύ��˺�����--���ύ���ʱ��С�����˺���Ϣ�Ǳ�����</span><br><span class="line">	-���ơ�ͼ�ꡢ��Ŀ��</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    -С���򱸰���΢����֤</span><br><span class="line">    	<span class="comment"># ������������ʹ�ã����ǲ��ᱻ��������</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>������������</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240909154559662.png" alt="image-20240909154559662"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240909154733945.png" alt="image-20240909154733945"></p>
+<h2 id="��4��΢��С���򿪷�����">��4��΢��С���򿪷�����</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ΢��С����--�����ؿ�������--�����ϻ���</span></span><br><span class="line">	-���أ�΢�ſ����߹���+Pycharm����Django</span><br><span class="line">    -���ϣ�</span><br><span class="line">    	-����棺���������飬API��Ҫ�ڹ���</span><br><span class="line">        -������������API��Ҫ�ڹ�����ȫ�������˶�������</span><br><span class="line">        </span><br><span class="line">        - ����ͱ�����������ǣ�����</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401170203442.png" alt="image-20240401170203442"></p>
+<h2 id="��5��΢��С�����Ա">��5��΢��С�����Ա</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ΢��С�����Ա��Ϊ����</span></span><br><span class="line">	-��Ŀ��Ա����ʾ����С���򿪷������ǣ�����Ӫ�ĳ�Ա��������Ӫ�ߡ������߼����ݷ����ߣ���Ŀ��Ա�ɵ�½΢�Ź��ں�̨������Ա�����ڳ�Ա��������ӡ�ɾ����Ŀ��Ա����������Ŀ��Ա�Ľ�ɫ��</span><br><span class="line">    </span><br><span class="line">	-�����Ա����ʾ����С�����ڲ�����ĳ�Ա����ʹ�������С���򣬵���������Ŀ��Ա������Ա����Ŀ��Ա������ӡ�ɾ�������Ա��</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240909154850487.png" alt="image-20240909154850487"></p>
+<h1>��������Ŀ����</h1>
+<h2 id="��1��������L������">��1��������Ŀ������</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 ��ȡ С����id</span></span><br><span class="line">	-С�����̨--������--����������--����������--��������ID</span><br><span class="line">    -AppID(С����ID)	   	wxa6cc4c684a50d232</span><br><span class="line">	-AppSecret(С������Կ)  </span><br><span class="line"><span class="comment"># 2 ���ء�΢�ſ������ߡ�--��Ҫ��������ʹ��</span></span><br><span class="line">	-���ص�ַ</span><br><span class="line">    https://developers.weixin.qq.com/miniprogram/dev/devtools/stable.html</span><br><span class="line">        </span><br><span class="line"><span class="comment"># 3 һ·��һ����װ</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4 ������Ŀ</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5 ��Ϻ��API</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401171250657.png" alt="image-20240401171250657"><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401171410814.png" alt="image-20240401171410814"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401171702375-17258691270211.png" alt="image-20240401171702375"><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401171722531.png" alt="image-20240401171722531"><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401171756755.png" alt="image-20240401171756755"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401171823876.png" alt="image-20240401171823876"></p>
+<h2 id="��2��������L">��2��������Ŀ</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 ��΢�ſ����߹���--��ʹ��΢��ɨ���ά��</span></span><br><span class="line"><span class="comment"># 2 ������Ŀ</span></span><br><span class="line">	-��д����</span><br><span class="line">    -·��</span><br><span class="line">    -APPID</span><br><span class="line">    -��ʹ���ƿ�����ʹ����Ѷ�Ƶ��ƺ������������ȵȣ���Ҫ��Ǯ��</span><br><span class="line">    -��ʹ��ģ��</span><br><span class="line"><span class="comment"># 3 ������ɺ󣬽�������</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4 ����</span></span><br><span class="line">	-����--���༭������--���ı������С</span><br><span class="line">    -��ͼ--�����--���ƶ�ģ����λ��</span><br><span class="line">    -���Թ�ѡ�����ʾ��ģ��������������</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401172015541.png" alt="image-20240401172015541"><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401172035213.png" alt="image-20240401172035213"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401172457001.png" alt="image-20240401172457001"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401173007494.png" alt="image-20240401173007494"><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401173252969.png" alt="image-20240401173252969"></p>
+<h2 id="��3�����ؿ���֧��http">��3�����ؿ���֧��<code>http</code></h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 django ������ 0.0.0.0 �ĵ�ַ</span></span><br><span class="line"><span class="comment"># 2 С����Ĭ��ֻ֧��https��������Ҫ���������ã�����֧��http���������Ǳ��ؿ���</span></span><br><span class="line">	-���Ͻ�--������--����������--����У��Ϸ�����</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401173528007.png" alt="image-20240401173528007"></p>
+<h1>��������ĿĿ¼</h1>
+<h2 id="��1����L��L¼�u">��1����Ŀ��Ŀ¼�ṹ</h2>
+<h3 id="��1��L¼����">��1��Ŀ¼����</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 ��Ŀ�������ļ�</span></span><br><span class="line">	��Ŀ�������ļ�����ŵ���Ŀ�ĸ�Ŀ¼�£�����������Ŀ</span><br><span class="line">    	- app.js��  С��������ļ�</span><br><span class="line">    	- app.json��С�����ȫ�������ļ�</span><br><span class="line">    	- app.wxss��С�����ȫ����ʽ</span><br><span class="line">    	-app.js �� app.json �ļ��Ǳ���ģ�����û��</span><br><span class="line">        </span><br><span class="line"><span class="comment"># 2 ҳ���ļ�</span></span><br><span class="line">	С������һ����ҳ�棬ÿ��ҳ��������ļ���������� pages Ŀ¼�£�һ��ҳ��һ���ļ���</span><br><span class="line">        -xx.js��  ҳ���߼�  js������λ��</span><br><span class="line">        -xx.wxml��ҳ��ṹ  ��html�ļ����λ��</span><br><span class="line">        -xx.wxss��ҳ����ʽ  css���λ��</span><br><span class="line">        -xx.json��Сҳ������ </span><br><span class="line">        -xx.js �ļ��� xx.wxml �ļ��Ǳ���ģ�����û��</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line"><span class="comment"># 3 ��������ĵ�</span></span><br><span class="line">https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401175651049.png" alt="image-20240401175651049"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">������ components                  ��ҳ����ʹ�õ������</span><br><span class="line">������ pages   					��ҳ���ļ�Ŀ¼��</span><br><span class="line">��?? ������ index					��ҳ�桿</span><br><span class="line">��?? ��?? ������ index.js				��ҳ��JS��</span><br><span class="line">��?? ��?? ������ index.json				��ҳ�����á�</span><br><span class="line">��?? ��?? ������ index.wxml				��ҳ��HTML��</span><br><span class="line">��?? ��?? ������ index.wxss				��ҳ��CSS��</span><br><span class="line">��?? ������ logs					��ҳ�桿</span><br><span class="line">��??     ������ logs.js					...</span><br><span class="line">��??     ������ logs.json				...</span><br><span class="line">��??     ������ logs.wxml				...</span><br><span class="line">��??     ������ logs.wxss				...</span><br><span class="line">������ utils						���Զ��幤�ߡ�</span><br><span class="line">��	������ utils.js					�����ܵĶ��塿</span><br><span class="line">������ app.js						��ȫ��JS��</span><br><span class="line">������ app.json					��ȫ�����á�</span><br><span class="line">������ app.wxss					��ȫ��CSS��</span><br><span class="line">������ project.config.json			�������߹���Ĭ�����á�</span><br><span class="line">������ project.private.config.json	�������߹����û�����,�������޸ģ����������������ɾ����</span><br><span class="line">������ .eslintrc.js				��ESlint�﷨������á�</span><br><span class="line">������ sitemap.json				��΢����¼ҳ�棬�������������ߺ������ؼ��־Ϳ����ѵ����ǡ�</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401183121794.png" alt="image-20240401183121794"></p>
+<h3 id="��2�������l�">��2�������ļ�</h3>
+<h4 id="1-app-json">[1]<code>app.json</code></h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1 С����ȫ�������ļ�����������С�����һЩȫ�����Ժ�ҳ��·��</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2 �ο���ַ </span></span><br><span class="line">https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 3 app.json ����</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment"># ȷ��˭��Ϊ��ҳ</span></span><br><span class="line">  <span class="string">&quot;entryPagePath&quot;</span>: <span class="string">&quot;pages/login/login&quot;</span>,</span><br><span class="line">  <span class="string">&quot;pages&quot;</span>: [</span><br><span class="line">    <span class="comment"># ��������ʵ�·��</span></span><br><span class="line">    <span class="string">&quot;pages/index/index&quot;</span>,</span><br><span class="line">    <span class="string">&quot;pages/login/login&quot;</span></span><br><span class="line">    </span><br><span class="line">  ],</span><br><span class="line">    <span class="comment"># ����ĵ�Ҳ���������������</span></span><br><span class="line">    <span class="string">&quot;window&quot;</span>: &#123;</span><br><span class="line">      <span class="string">&quot;navigationBarTitleText&quot;</span>: <span class="string">&quot;������ʾ&quot;</span>,   <span class="comment"># ����</span></span><br><span class="line">      <span class="string">&quot;navigationBarBackgroundColor&quot;</span>: <span class="string">&quot;#0000FF&quot;</span>, <span class="comment">#������������ɫ</span></span><br><span class="line">      <span class="string">&quot;enablePullDownRefresh&quot;</span>: false,  <span class="comment"># �Ƿ������ˢ��</span></span><br><span class="line">      <span class="string">&quot;backgroundColor&quot;</span>: <span class="string">&quot;#00FFFF&quot;</span>,    <span class="comment"># ����ˢ�µ����ɫ</span></span><br><span class="line">      <span class="string">&quot;backgroundTextStyle&quot;</span>: <span class="string">&quot;dark&quot;</span>    <span class="comment"># light ������ˢ�µĵ������ʲô��ɫ</span></span><br><span class="line">    &#125;,</span><br><span class="line">  <span class="string">&quot;style&quot;</span>: <span class="string">&quot;v2&quot;</span>,</span><br><span class="line">  <span class="string">&quot;sitemapLocation&quot;</span>: <span class="string">&quot;sitemap.json&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401183643713.png" alt="image-20240401183658809"><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401183658809-17258699980402.png" alt="image-20240401183658809"></p>
+<h4 id="2-ҳ������">[2]ҳ������</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 С����ҳ�������ļ���Ҳ�ƾֲ������ļ����������õ�ǰҳ��Ĵ�����ʽ��ҳ������</span></span><br><span class="line"><span class="comment"># 2 app.json �еĲ������ã�Ҳ֧�ֶԵ���ҳ��������ã�������ҳ���Ӧ�� .json �ļ����Ա�ҳ��ı��ֽ������á�</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3 ҳ�����������ڵ�ǰҳ��Ḳ�� app.json ����ͬ���������ʽ��ص����������� app.json �е� window ���ԣ������ﲻ��Ҫ����ָ�� window �ֶΣ��������ȡֵ�ͺ���ɲο�ȫ�������ĵ���˵��\</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4 �ο�</span></span><br><span class="line">https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/page.html</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"> <span class="comment"># 5 ����---�����ھֲ�������ʹ�þֲ�</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;usingComponents&quot;</span>: &#123;&#125;,    <span class="comment"># ���������</span></span><br><span class="line">  <span class="string">&quot;navigationBarTitleText&quot;</span>: <span class="string">&quot;��¼ҳ��&quot;</span>,   <span class="comment"># ͷ���ı�</span></span><br><span class="line">  <span class="string">&quot;navigationBarBackgroundColor&quot;</span>: <span class="string">&quot;#000080&quot;</span>,   <span class="comment"># ͷ������ɫ</span></span><br><span class="line">  <span class="string">&quot;enablePullDownRefresh&quot;</span>: true,     <span class="comment"># �Ƿ���������</span></span><br><span class="line">  <span class="string">&quot;backgroundTextStyle&quot;</span>: <span class="string">&quot;light&quot;</span>     <span class="comment"># �������ı���ɫ</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">###����ҳ��</span></span><br><span class="line">	- ���ַ�ʽ����һ��---ֱ���Ҽ�pages--�����ļ��У��ͻ��Զ�����</span><br><span class="line">    			�ڶ���----ֱ��������·����Ȼ��ctrl+s���棬�Զ�����</span><br></pre></td></tr></table></figure>
+<h4 id="3-������L�������l�">[3]������Ŀ�������ļ�</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1 project.config.json    project.private.config.json	</span></span><br><span class="line"><span class="comment">#2  С������Ŀ�������ļ������ڱ�����Ŀ��һЩ������Ϣ�Ϳ����ߵĸ�������</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3 �ο�</span></span><br><span class="line">https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401182959992.png" alt="image-20240401182959992"></p>
+<h4 id="4-�����������">[4]�����������</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ΢�����ѿ���С�����������������߿���ͨ�� sitemap.json ���ã����߹����̨ҳ����¼������������С����ҳ���Ƿ�����΢��������������������΢������ʱ��΢�Ż�ͨ���������ʽ��ΪС�����ҳ�����ݽ������������û���������������������ʱ��С�����ҳ�潫����չʾ����������С� �������С������ҳ��ʱ����Я���ض��� user-agent��mpcrawler ������ֵ��1129����Ҫע����ǣ���С�������淢�ֵ�ҳ�����ݺ���ʵ�û��ĳ��ֲ�һ�£���ô��ҳ�潫�������������</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># �ο��ĵ�</span></span><br><span class="line">https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/sitemap.html</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401190745667.png" alt="image-20240401190745667"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401183121794-17258700599333.png" alt="image-20240401183121794"></p>
+<h2 id="��2��WebView��Tgʽ�ʹ�����L">��2��<code>WebView</code>��Ⱦģʽ�ʹ�����Ŀ</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># �е�ʱ�������Ŀ�����ˣ�������о�û�д����ֻ��Ҫ���һ�»��棬�����±���һ�¾ͺ�----��Ϊ���app���������</span></span><br></pre></td></tr></table></figure>
+<h3 id="��1��WebView��Tgʽ">��1��WebView��Ⱦģʽ</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 Ĭ��ʹ��Skyline ��Ⱦģʽ��֧�����µĻ����⣬��֧�ֵͰ汾�ͻ���</span></span><br><span class="line">	-��app.json	��ȥ����������������</span><br><span class="line">      <span class="string">&quot;renderer&quot;</span>: <span class="string">&quot;skyline&quot;</span>,</span><br><span class="line">      <span class="string">&quot;rendererOptions&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;skyline&quot;</span>: &#123;</span><br><span class="line">          <span class="string">&quot;defaultDisplayBlock&quot;</span>: true,</span><br><span class="line">          <span class="string">&quot;disableABTest&quot;</span>: true,</span><br><span class="line">          <span class="string">&quot;sdkVersionBegin&quot;</span>: <span class="string">&quot;3.0.0&quot;</span>,</span><br><span class="line">          <span class="string">&quot;sdkVersionEnd&quot;</span>: <span class="string">&quot;15.255.255&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="string">&quot;componentFramework&quot;</span>: <span class="string">&quot;glass-easel&quot;</span>,</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401180250486.png" alt="image-20240401180250486"></p>
+<h3 id="��2��������L-2">��2��������Ŀ</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># b�����е���Ŀ��ɾ����ֻ������ͼ���ļ�</span></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401183529724.png" alt="image-20240401183529724"></p>
+<h3 id="��3���½�ҳ��">��3���½�ҳ��</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 ��pages�ϣ��½��ļ��У�logs</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2 ���ļ����ϣ��Ҽ�--���½�ҳ�棬д������logs</span></span><br><span class="line">	-�������ĸ��ļ�</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 3 �� app.json�е�pages�ͻ��һ��</span></span><br><span class="line">      <span class="string">&quot;pages&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;pages/index/index&quot;</span>,</span><br><span class="line">        <span class="string">&quot;pages/logs/logs&quot;</span></span><br><span class="line">      ],</span><br><span class="line">       </span><br><span class="line">    </span><br><span class="line"><span class="comment"># 4 �½�ҳ�����ֱ����app.json������һ�У�pages�»��Զ�������һ��ҳ��</span></span><br><span class="line">  <span class="string">&quot;pages&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;pages/index/index&quot;</span>,</span><br><span class="line">    <span class="string">&quot;pages/logs/logs&quot;</span>,</span><br><span class="line">    <span class="string">&quot;pages/login/login&quot;</span></span><br><span class="line">  ],</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240401181409860-17258782659184.png" alt="image-20240401181409860"></p>
+<h1>���ġ���������</h1>
+<h2 id="��1���������">��1���������</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># �ο���ַ��</span></span><br><span class="line">https://developers.weixin.qq.com/miniprogram/dev/component/</span><br></pre></td></tr></table></figure>
+<ul>
+<li>text----������span</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">text</span>&gt;</span>tom<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>view–������div</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span>&gt;</span>Pythonɽ����<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span>&gt;</span>Justin<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span>&gt;</span>΢�ţ�616564099<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>image��������img��ǩ</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">image</span> <span class="attr">src</span>=<span class="string">&quot;/image/��ֽǽ ������Ů .png&quot;</span> <span class="attr">mode</span>=<span class="string">&quot;&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"># ���Բο��ĵ�����ͼƬ</span><br></pre></td></tr></table></figure>
+<ul>
+<li>icon</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- ͼ����� --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">icon</span> <span class="attr">type</span>=<span class="string">&quot;success&quot;</span> <span class="attr">size</span>=<span class="string">&#x27;198rpx&#x27;</span> <span class="attr">color</span>=<span class="string">&quot;red&quot;</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- size�ǿ���ͼ��Ĵ�С --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">icon</span> <span class="attr">type</span>=<span class="string">&quot;success_no_circle&quot;</span> <span class="attr">size</span>=<span class="string">&#x27;198rpx&#x27;</span> <span class="attr">color</span>=<span class="string">&quot;red&quot;</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- icon�����ͣ���Чֵ��success, success_no_circle, info, warn, waiting, cancel, download, search, clear --&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>��ת----������a��ǩ</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- ��ת��indexҳ�� --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">navigator</span> <span class="attr">url</span>=<span class="string">&quot;/pages/index/index&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">text</span>&gt;</span>��ת<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">navigator</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>���¼�����js����ת��</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- ���¼�����js����ת --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">bind:tap</span>=<span class="string">&quot;ClickLogs&quot;</span>&gt;</span>�����תҳ��<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- ���¼�,��ת,���ݲ��� --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">bind:tap</span>=<span class="string">&quot;ClickLogs&quot;</span> <span class="attr">data-nid</span>=<span class="string">&#x27;111&#x27;</span>&gt;</span>�����תҳ��<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ���¼�����js�д�ֵ����ת</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Page</span>(&#123;</span><br><span class="line">  <span class="title class_">ClickLogs</span>(e)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(e);  </span><br><span class="line">      <span class="comment">// ���յ���������ť������������</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">currentTarget</span>.<span class="property">dataset</span>.<span class="property">nid</span>);  <span class="comment">// 111</span></span><br><span class="line">      </span><br><span class="line">    <span class="comment">// ��תҳ��</span></span><br><span class="line">    wx.<span class="title function_">navigateTo</span>(&#123;</span><br><span class="line">      <span class="attr">url</span>: <span class="string">&#x27;/pages/index/index?name=lsk&amp;age=18&#x27;</span>,  <span class="comment">// ��ת��indexҳ��</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ����������ת��ҳ�������ݣ���onLoad�л�ȡ����</span></span><br><span class="line"><span class="title class_">Page</span>(&#123;</span><br><span class="line">    <span class="comment">// �����ȶ���</span></span><br><span class="line">  <span class="attr">data</span>:&#123;</span><br><span class="line">    <span class="attr">name</span>:<span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>:<span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">onLoad</span>:<span class="keyword">function</span>(<span class="params">options</span>)&#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(options);  <span class="comment">// &#123;name: &quot;lsk&quot;, sge: &quot;18&quot;&#125;</span></span><br><span class="line">      <span class="comment">// ����д�Ż�����Ӧʽ</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">setData</span>(&#123;<span class="attr">name</span>:options.<span class="property">name</span>&#125;)</span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">setData</span>(&#123;<span class="attr">age</span>:options.<span class="property">age</span>&#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ��Ⱦ</span></span><br><span class="line">&lt;view&gt;���֣�<span class="string">`\\\&#123;&#123;name\\\&#125;&#125;`</span>&lt;/view&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">view</span>&gt;</span>���䣺`\\\&#123;&#123;age\\\&#125;&#125;`<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>button��ť</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- button��ť --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- loading����ֱ�Ӽ�д�����кܶ��д�Ĳ��� --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- primary��default��warn����ɫ--&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- size=&quot;mini&quot;��ť��С�� --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;default&quot;</span> <span class="attr">loading</span>=<span class="string">&quot;true&quot;</span> <span class="attr">size</span>=<span class="string">&quot;mini&quot;</span>&gt;</span>ҳ�������� Loading<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="��2���ߴ絥λ����ʽ">��2���ߴ絥λ����ʽ</h2>
+<h3 id="��1��rpx-�ߴ絥λ">��1��<code>rpx</code>------�ߴ絥λ</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rpx ���Ը��ݲ�ͬ���ֻ���Ļ�����Զ�����������Ӧ����</span></span><br><span class="line">	-����ʲô�ֻ�--����Ļ��ȶ��� 750rpx</span><br><span class="line">    </span><br><span class="line"><span class="comment"># xx.wxml</span></span><br><span class="line">&lt;view <span class="keyword">class</span>=<span class="string">&quot;box&quot;</span>&gt;Justin&lt;/view&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># xx.wxss</span></span><br><span class="line">.box &#123;</span><br><span class="line">  width: 375rpx;</span><br><span class="line">  height: 500rpx;</span><br><span class="line">  background-color: pink;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="��2���ֲ���ʽxxx-wxss">��2���ֲ���ʽ<code>xxx.wxss</code></h3>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">400</span>rpx;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">400</span>rpx;</span><br><span class="line">  <span class="attribute">background-color</span>: greenyellow;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="��3��o����ʽapp-wxss">��3��ȫ����ʽ<code>app.wxss</code></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ��ס�ֲ�����ʽ������ʹ�þֲ���ʽ</span></span><br><span class="line"></span><br><span class="line">.box &#123;</span><br><span class="line">  width: 375rpx;</span><br><span class="line">  height: 600rpx;</span><br><span class="line">  background-color: pink;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>���塿<code>tabbar</code>����</h1>
+<ul>
+<li>���õ�<code>app.json</code>��</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;tabBar&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;selectedColor&quot;</span>: <span class="string">&quot;#b4282d&quot;</span>,</span><br><span class="line">  <span class="string">&quot;position&quot;</span>: <span class="string">&quot;bottom&quot;</span>,</span><br><span class="line">  <span class="string">&quot;list&quot;</span>: [&#123;</span><br><span class="line">      <span class="string">&quot;pagePath&quot;</span>: <span class="string">&quot;pages/index/index&quot;</span>,</span><br><span class="line">      <span class="string">&quot;text&quot;</span>: <span class="string">&quot;��ҳ&quot;</span>,</span><br><span class="line">      <span class="string">&quot;iconPath&quot;</span>: <span class="string">&quot;images/home.png&quot;</span>,</span><br><span class="line">      <span class="string">&quot;selectedIconPath&quot;</span>: <span class="string">&quot;images/home_select.png&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;pagePath&quot;</span>: <span class="string">&quot;pages/my/my&quot;</span>,</span><br><span class="line">      <span class="string">&quot;text&quot;</span>: <span class="string">&quot;�ҵ�&quot;</span>,</span><br><span class="line">      <span class="string">&quot;iconPath&quot;</span>: <span class="string">&quot;images/my.png&quot;</span>,</span><br><span class="line">      <span class="string">&quot;selectedIconPath&quot;</span>: <span class="string">&quot;images/my_select.png&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240909195930146.png" alt="image-20240909195930146"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/1.0%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E5%BC%95%E5%85%A5%EF%BC%8CHTTP%E5%8D%8F%E8%AE%AE/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/1.0web%E6%A1%86%E6%9E%B6%E6%9C%AC%E8%B4%A8/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">��һ��С�������</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%CA%B2o%EF%BF%BD%EF%BF%BD%CE%A2%EF%BF%BD%EF%BF%BD%D0%A1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.1.</span> <span class="nav-text">��1��ʲô��΢��С����</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%CE%A2%EF%BF%BD%EF%BF%BD%D0%A1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%CB%BA%EF%BF%BD%D7%A2%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.2.</span> <span class="nav-text">��2��΢��С������˺�ע��</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BD%CE%A2%EF%BF%BD%EF%BF%BD%D0%A1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%CF%A2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.3.</span> <span class="nav-text">��3��΢��С�������Ϣ����</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD4%EF%BF%BD%EF%BF%BD%CE%A2%EF%BF%BD%EF%BF%BD%D0%A1%EF%BF%BD%EF%BF%BD%EF%BF%BD%F2%BF%AA%B7%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.</span> <span class="nav-text">��4��΢��С���򿪷�����</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD5%EF%BF%BD%EF%BF%BD%CE%A2%EF%BF%BD%EF%BF%BD%D0%A1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D4%B1"><span class="nav-number">1.5.</span> <span class="nav-text">��5��΢��С�����Ա</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">��������Ŀ����</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDL%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">2.1.</span> <span class="nav-text">��1��������Ŀ������</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDL"><span class="nav-number">2.2.</span> <span class="nav-text">��2��������Ŀ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D8%BF%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%A7%EF%BF%BD%EF%BF%BDhttp"><span class="nav-number">2.3.</span> <span class="nav-text">��3�����ؿ���֧��http</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">��������ĿĿ¼</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDL%EF%BF%BD%EF%BF%BDL%C2%BC%EF%BF%BDu"><span class="nav-number">3.1.</span> <span class="nav-text">��1����Ŀ��Ŀ¼�ṹ</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BDL%C2%BC%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">3.1.1.</span> <span class="nav-text">��1��Ŀ¼����</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDl%EF%BF%BD"><span class="nav-number">3.1.2.</span> <span class="nav-text">��2�������ļ�</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-app-json"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">[1]app.json</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%D2%B3%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">[2]ҳ������</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDL%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDl%EF%BF%BD"><span class="nav-number">3.1.2.3.</span> <span class="nav-text">[3]������Ŀ�������ļ�</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">3.1.2.4.</span> <span class="nav-text">[4]�����������</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BDWebView%EF%BF%BD%EF%BF%BDTg%CA%BD%EF%BF%BD%CD%B4%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDL"><span class="nav-number">3.2.</span> <span class="nav-text">��2��WebView��Ⱦģʽ�ʹ�����Ŀ</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BDWebView%EF%BF%BD%EF%BF%BDTg%CA%BD"><span class="nav-number">3.2.1.</span> <span class="nav-text">��1��WebView��Ⱦģʽ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDL-2"><span class="nav-number">3.2.2.</span> <span class="nav-text">��2��������Ŀ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BD%EF%BF%BD%C2%BD%EF%BF%BD%D2%B3%EF%BF%BD%EF%BF%BD"><span class="nav-number">3.2.3.</span> <span class="nav-text">��3���½�ҳ��</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">���ġ���������</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">4.1.</span> <span class="nav-text">��1���������</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%DF%B4%E7%B5%A5%CE%BB%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%CA%BD"><span class="nav-number">4.2.</span> <span class="nav-text">��2���ߴ絥λ����ʽ</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BDrpx-%EF%BF%BD%DF%B4%E7%B5%A5%CE%BB"><span class="nav-number">4.2.1.</span> <span class="nav-text">��1��rpx------�ߴ絥λ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B2%EF%BF%BD%EF%BF%BD%EF%BF%BD%CA%BDxxx-wxss"><span class="nav-number">4.2.2.</span> <span class="nav-text">��2���ֲ���ʽxxx.wxss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BDo%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%CA%BDapp-wxss"><span class="nav-number">4.2.3.</span> <span class="nav-text">��3��ȫ����ʽapp.wxss</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">���塿tabbar����</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -147,7 +147,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/1.0web%E6%A1%86%E6%9E%B6%E6%9C%AC%E8%B4%A8/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E9%9B%86%E6%88%90Selenium%E6%A1%86%E6%9E%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -161,7 +161,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/1.0web%E6%A1%86%E6%9E%B6%E6%9C%AC%E8%B4%A8/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E9%9B%86%E6%88%90Selenium%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -170,9 +170,140 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:40" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1>Scrapy框架之集成Selenium框架</h1>
+<ul>
+<li>scrapy中集成selenium：解析使用的是selenium拿回来的页面</li>
+</ul>
+<h2 id="【一】前言">【一】前言</h2>
+<ul>
+<li>
+<p>使用scrapy默认下载器</p>
+</li>
+<li>
+<ul>
+<li>类似于requests模块发送请求，不能执行js，有的页面拿回来数据不完整</li>
+</ul>
+</li>
+<li>
+<p>想在scrapy中集成selenium</p>
+</li>
+<li>
+<ul>
+<li>获取数据更完整，获取完后，自己组装成 Response对象</li>
+<li>就会进爬虫解析，现在<strong>解析的是使用selenium拿回来的页面</strong>，数据更完整</li>
+</ul>
+</li>
+</ul>
+<h2 id="【二】大概步骤">【二】大概步骤</h2>
+<h3 id="【1】在爬虫类里面写浏览器对象">【1】在爬虫类里面写浏览器对象</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium.webdriver <span class="keyword">import</span> Chrome</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.chrome.service <span class="keyword">import</span> Service</span><br><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定chromedriver.exe有效的路径</span></span><br><span class="line">base_url = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))</span><br><span class="line">driver_path = os.path.join(base_url, <span class="string">&#x27;chromedriver.exe&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BlogSpider</span>(scrapy.Spider):</span><br><span class="line">    name = <span class="string">&quot;blog&quot;</span></span><br><span class="line">    allowed_domains = [<span class="string">&quot;www.cnblogs.com&quot;</span>]</span><br><span class="line">    start_urls = [<span class="string">&quot;https://www.cnblogs.com&quot;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 首先声明驱动的位置</span></span><br><span class="line">    service = Service(executable_path=driver_path)</span><br><span class="line">    <span class="comment"># 创建浏览器的对象</span></span><br><span class="line">    browser = Chrome(service=service)</span><br><span class="line">    <span class="comment"># 隐士等待</span></span><br><span class="line">    browser.implicitly_wait(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="【2】在中间间里面处理">【2】在中间间里面处理</h3>
+<ul>
+<li>下载中间件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拦截请求的所有对象</span></span><br><span class="line">    <span class="comment"># 参数：request就是拦截到的请求对象，spider爬虫文件中爬虫类实例化的对象</span></span><br><span class="line">    <span class="comment"># spider参数的作用可以实现类和中间类的数据交互</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">process_request</span>(<span class="params">self, request, spider</span>):</span><br><span class="line">        <span class="comment"># print(request.url)</span></span><br><span class="line">        <span class="comment"># https://www.cnblogs.com</span></span><br><span class="line">        <span class="comment"># 提取当前的url，找到含有&quot;/sitehome/p&quot;的地址</span></span><br><span class="line">        <span class="comment"># 利用自己的selenium 访问并拿到源码交给Response</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;/sitehome/p&quot;</span> <span class="keyword">in</span> request.url:</span><br><span class="line">            <span class="comment"># 调用自己的selenium对象进行页面的抓取</span></span><br><span class="line">            spider.browser.get(request.url)</span><br><span class="line">            <span class="comment"># 获取页面的响应源码</span></span><br><span class="line">            body = spider.browser.page_source</span><br><span class="line">            <span class="comment"># 将页面源码转换为scrapy的response对象</span></span><br><span class="line">            <span class="comment"># 引入一个方法</span></span><br><span class="line">            <span class="keyword">from</span> scrapy.http.response.html <span class="keyword">import</span> HtmlResponse</span><br><span class="line">            <span class="keyword">return</span> HtmlResponse(</span><br><span class="line">                url=request.url,</span><br><span class="line">                body=<span class="built_in">bytes</span>(body, encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<h3 id="【3】再配置文件中开启中间件">【3】再配置文件中开启中间件</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 是否启用下载器中间件</span></span><br><span class="line">DOWNLOADER_MIDDLEWARES = &#123;</span><br><span class="line">   <span class="string">&quot;SpiderNews.middlewares.SpiderNewsDownloaderMiddleware&quot;</span>: <span class="number">543</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="【三】总的步骤">【三】总的步骤</h2>
+<ul>
+<li>爬虫程序</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> Request</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver <span class="keyword">import</span> Chrome</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.chrome.service <span class="keyword">import</span> Service</span><br><span class="line"><span class="keyword">from</span> SpiderNews.items <span class="keyword">import</span> BoKeYuanItem</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">base_url = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))</span><br><span class="line">driver_path = os.path.join(base_url, <span class="string">&#x27;chromedriver.exe&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BlogSpider</span>(scrapy.Spider):</span><br><span class="line">    name = <span class="string">&quot;blog&quot;</span></span><br><span class="line">    allowed_domains = [<span class="string">&quot;www.cnblogs.com&quot;</span>]</span><br><span class="line">    start_urls = [<span class="string">&quot;https://www.cnblogs.com&quot;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 首先声明驱动的位置</span></span><br><span class="line">    service = Service(executable_path=driver_path)</span><br><span class="line">    <span class="comment"># 创建浏览器的对象</span></span><br><span class="line">    browser = Chrome(service=service)</span><br><span class="line">    <span class="comment"># 隐士等待</span></span><br><span class="line">    browser.implicitly_wait(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">parse</span>(<span class="params">self, response</span>):</span><br><span class="line">        <span class="comment"># 用Xpath语法爬取数据</span></span><br><span class="line">        article_list = response.xpath(<span class="string">&#x27;//*[@id=&quot;post_list&quot;]/article&#x27;</span>)</span><br><span class="line">        <span class="comment"># print(article_list)</span></span><br><span class="line">        <span class="keyword">for</span> article <span class="keyword">in</span> article_list:</span><br><span class="line">            <span class="comment"># 创建一个管道类对象</span></span><br><span class="line">            item = BoKeYuanItem()</span><br><span class="line">            <span class="comment"># 拿到头像</span></span><br><span class="line">            <span class="comment"># //*[@id=&quot;post_list&quot;]/article[1]/section/div/p/a/img</span></span><br><span class="line">            head_img_url = article.xpath(<span class="string">&#x27;./section/div/p/a[1]/img/@src&#x27;</span>).extract_first()</span><br><span class="line">            <span class="comment"># 文章的作者</span></span><br><span class="line">            <span class="comment"># //*[@id=&quot;post_list&quot;]/article[1]/section/footer/a[1]/span</span></span><br><span class="line">            article_author = article.xpath(<span class="string">&#x27;./section/footer/a[1]/span/text()&#x27;</span>).extract_first()</span><br><span class="line">            <span class="comment"># 文章标题</span></span><br><span class="line">            <span class="comment"># //*[@id=&quot;post_list&quot;]/article[1]/section/div/a</span></span><br><span class="line">            article_title = article.xpath(<span class="string">&#x27;./section/div/a/text()&#x27;</span>).extract_first().strip()</span><br><span class="line">            <span class="comment"># 创建一个详情链接</span></span><br><span class="line">            <span class="comment"># //*[@id=&quot;post_list&quot;]/article[1]/section/div/a</span></span><br><span class="line">            article_link = article.xpath(<span class="string">&#x27;./section/div/a/@href&#x27;</span>).extract_first()</span><br><span class="line">            <span class="comment"># 拿到文章内容</span></span><br><span class="line">            <span class="comment"># //*[@id=&quot;post_list&quot;]/article[2]/section/div/p/text()</span></span><br><span class="line">            <span class="comment"># //*[@id=&quot;post_list&quot;]/article[1]/section/div/p/text()</span></span><br><span class="line">            <span class="comment"># /html/body/div/div[3]/div/div[2]/div[1]/div[4]/article[3]/section/div/p/text()</span></span><br><span class="line">            article_desc_list = article.xpath(<span class="string">&#x27;./section/div/p/text()&#x27;</span>).extract()</span><br><span class="line">            article_desc = <span class="string">&#x27;&#x27;</span></span><br><span class="line">            <span class="keyword">for</span> article_desc <span class="keyword">in</span> article_desc_list:</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> article_desc:</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    article_desc = article_desc.strip()</span><br><span class="line">            <span class="comment"># 文章更新时间</span></span><br><span class="line">            <span class="comment"># //*[@id=&quot;post_list&quot;]/article[1]/section/footer/span[1]/span</span></span><br><span class="line">            article_update_time = article.xpath(<span class="string">&#x27;./section/footer/span[1]/span/text()&#x27;</span>).extract_first().strip()</span><br><span class="line">            <span class="comment"># print(article_update_time)</span></span><br><span class="line">            <span class="comment"># itme是一个字典--&gt;用字典方便，可以update()更新数据，更新的时候，更新字段要和管道类里面的字段一摸一样</span></span><br><span class="line">            <span class="comment"># print(f&quot;----&#123;article_desc&#125;---&quot;)</span></span><br><span class="line">            item.update(&#123;</span><br><span class="line">                <span class="string">&quot;head_img_url&quot;</span>: head_img_url,</span><br><span class="line">                <span class="string">&quot;article_author&quot;</span>: article_author,</span><br><span class="line">                <span class="string">&quot;article_title&quot;</span>: article_title,</span><br><span class="line">                <span class="string">&quot;article_link&quot;</span>: article_link,</span><br><span class="line">                <span class="string">&quot;article_desc&quot;</span>: article_desc,</span><br><span class="line">                <span class="string">&quot;article_update_time&quot;</span>: article_update_time</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="comment"># 将itme对象返回出去</span></span><br><span class="line">            <span class="comment"># return 会结束整个程序，不用它</span></span><br><span class="line">            <span class="comment"># 我们用yield，yield可以保存item的状态，不会终止程序的执行</span></span><br><span class="line">            <span class="keyword">yield</span> Request(</span><br><span class="line">                url=article_link,</span><br><span class="line">                callback=<span class="variable language_">self</span>.detail_parse,</span><br><span class="line">                meta=&#123;<span class="string">&quot;item&quot;</span>: item&#125;</span><br><span class="line">            )</span><br><span class="line">        <span class="comment"># 获取下一页的链接地址</span></span><br><span class="line">        <span class="comment"># 这里的流程就是，for把所有的article遍历出来以后，就会走这里，走到这里就代表该爬下一页的数据了</span></span><br><span class="line">        <span class="comment"># //*[@id=&quot;paging_block&quot;]/div/a[5]</span></span><br><span class="line">        next_url = <span class="string">&#x27;https://www.cnblogs.com&#x27;</span> + response.xpath(</span><br><span class="line">            <span class="string">&#x27;//*[@id=&quot;paging_block&quot;]/div/a[last()]/@href&#x27;</span>).extract_first()</span><br><span class="line">        <span class="keyword">yield</span> Request(</span><br><span class="line">            url=next_url,</span><br><span class="line">            callback=<span class="variable language_">self</span>.parse</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">detail_parse</span>(<span class="params">self, response</span>):</span><br><span class="line">        <span class="comment"># 获取到传入的item对象</span></span><br><span class="line">        item = response.meta.get(<span class="string">&#x27;item&#x27;</span>)</span><br><span class="line">        <span class="comment"># 解析文章详情</span></span><br><span class="line">        content = <span class="built_in">str</span>(response.xpath(<span class="string">&#x27;//*[@id=&quot;topics&quot;]&#x27;</span>).extract_first())</span><br><span class="line">        <span class="comment"># 继续向 item 对象中添加文章详情内容</span></span><br><span class="line">        item[<span class="string">&#x27;article_content&#x27;</span>] = content</span><br><span class="line">        <span class="comment"># 将完整的信息返回</span></span><br><span class="line">        <span class="keyword">yield</span> item</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>中间件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载中间件</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SpiderNewsDownloaderMiddleware</span>:</span><br><span class="line"><span class="comment"># 拦截请求的所有对象</span></span><br><span class="line">    <span class="comment"># 参数：request就是拦截到的请求对象，spider爬虫文件中爬虫类实例化的对象</span></span><br><span class="line">    <span class="comment"># spider参数的作用可以实现类和中间类的数据交互</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">process_request</span>(<span class="params">self, request, spider</span>):</span><br><span class="line">        <span class="comment"># print(request.url)</span></span><br><span class="line">        <span class="comment"># https://www.cnblogs.com</span></span><br><span class="line">        <span class="comment"># 提取当前的url，找到含有&quot;/sitehome/p&quot;的地址</span></span><br><span class="line">        <span class="comment"># 利用自己的selenium 访问并拿到源码交给Response</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;/sitehome/p&quot;</span> <span class="keyword">in</span> request.url:</span><br><span class="line">            <span class="comment"># 调用自己的selenium对象进行页面的抓取</span></span><br><span class="line">            spider.browser.get(request.url)</span><br><span class="line">            <span class="comment"># 获取页面的响应源码</span></span><br><span class="line">            body = spider.browser.page_source</span><br><span class="line">            <span class="comment"># 将页面源码转换为scrapy的response对象</span></span><br><span class="line">            <span class="comment"># 引入一个方法</span></span><br><span class="line">            <span class="keyword">from</span> scrapy.http.response.html <span class="keyword">import</span> HtmlResponse</span><br><span class="line">            <span class="keyword">return</span> HtmlResponse(</span><br><span class="line">                url=request.url,</span><br><span class="line">                body=<span class="built_in">bytes</span>(body, encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/01/hello-world/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -205,7 +336,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/1.0vue%E7%9A%84%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95%EF%BC%8C%E6%8C%87%E4%BB%A4/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/Xpath---JD%E6%A1%88%E4%BE%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -219,7 +350,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/1.0vue%E7%9A%84%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95%EF%BC%8C%E6%8C%87%E4%BB%A4/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/Xpath---JD%E6%A1%88%E4%BE%8B/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -228,9 +359,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:40" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -244,7 +390,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1>Xpath—JD案例</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Current username：爬虫 </span></span><br><span class="line"><span class="comment"># current date：2024/7/18</span></span><br><span class="line"><span class="comment"># current time ：20:24</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> fake_useragent <span class="keyword">import</span> UserAgent</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SpiderJD</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.target_url = <span class="string">&#x27;https://search.jd.com/Search&#x27;</span></span><br><span class="line">        <span class="variable language_">self</span>.headers = &#123;</span><br><span class="line">            <span class="string">&#x27;User-Agent&#x27;</span>: UserAgent().random,</span><br><span class="line">            <span class="string">&#x27;cookie&#x27;</span>: <span class="string">&#x27;unpl=JF8EAK5nNSttCElSV0gFT0FETgpUWw4PSx8HbzVVVFtRSQNQGQdLEBZ7XlVdWBRKER9vbhRUVVNPUA4aASsSEXteXVdZDEsWC2tXVgQFDQ8VXURJQlZAFDNVCV9dSRZRZjJWBFtdT1xWSAYYRRMfDlAKDlhCR1FpMjVkXlh7VAQrCx0aE0pZUVpVOEonBF9XNVNfX0pSACsDKxMgCQkIXVgAQxADIm4DXF5ZT1EBEzIaIhM; __jdv=76161171|baidu-pinzhuan|t_288551095_baidupinzhuan|cpc|0f3d30c8dba7459bb52f2eb5eba8ac7d_0_a37cb6ebe4f14b61951ca1783fd34a37|1721303702650; __jdu=879205459; areaId=2; ipLoc-djd=2-2830-0-0; PCSYCityID=CN_310000_310100_0; shshshfpa=4478e6fc-66dd-0aa5-8b60-231dd4b08b7b-1721303703; shshshfpx=4478e6fc-66dd-0aa5-8b60-231dd4b08b7b-1721303703; mt_xid=V2_52007VwoUWl5ZVl8bQSlaAWFTRQJbCk5fTx4fQABkAEZODV5aDwNKTAhSZVYRUlVZUA0vShhfAHsCFE5dUUNaF0IdWA5mBiJSbVhiWRlAH1kHZwQVW1xoVl4cSw%3D%3D; _pst=jd_4a91e650cd9db; unick=jd_397vk80cnvgo8s; pin=jd_4a91e650cd9db; thor=7B313C99DB275AE5C764C0B60003C437FC74A96B6B69EDD9208823C5605C9BA18CA7B18A1AAEFAEA8DE68FE1212FE6F9F98A30F6BE8CA6CA8A06D8EC7D63C0F5800574631A2FADE4A4B11E8430FE806A5E4EA4F8744D8578A71EA9AB91424FB938CBECAFF201BED3936D408C1E9123DF8AF4DD208CAF142FFE79C4B2FFD4B5C18F0D1963337C12CDF2917CEFFA7D8C203FD43BC7014318CE2C697AC7C6F64D9B; flash=2_8JWjGuwDPim1IDMs4fzpIr5eZvfMSFHx-Yyrdm69TtYdJC7IJuTBs0H51Sm7j0PViQKXgI8bJ-5YagIdtxi_yoU3fg5KVdCglVGY9fxWxRPjWE6HK56Urzb5VE2kK-yTE0O37pIBhhdAaSaZnE6PzCOZSgY8LzKFWxy8W9UGYt5*; _tp=SACEmZU4OohYaEFpbqf7X4%2FGM7qJetbpBri8Wb%2Bveq4%3D; pinId=kZyY4NkPNVHcLtr2Y91ugbV9-x-f3wj7; jsavif=1; jsavif=1; __jda=143920055.879205459.1721303702.1721303702.1721303703.1; __jdc=143920055; rkv=1.0; avif=1; xapieid=jdd03N5XF4VIWT7TIO6XK2DZLWO3W3VFEJZCITSMME7PGOPLOL3YQNL6YYPNT7SXH57RVVBJWCZR7GN2SZMM2J52YA7NNZAAAAAMQYXHH6VIAAAAACZAYI55Q2IVWKUX; qrsc=3; __jdb=143920055.12.879205459|1.1721303703; 3AB9D23F7A4B3CSS=jdd03N5XF4VIWT7TIO6XK2DZLWO3W3VFEJZCITSMME7PGOPLOL3YQNL6YYPNT7SXH57RVVBJWCZR7GN2SZMM2J52YA7NNZAAAAAMQYXJXJOYAAAAADYA6DZV5FBWOIYX; _gia_d=1; shshshfpb=BApXcouDbxvVAjkjslJrkETmpSmpvdjqhBmNxMCwX9xJ1MiU5hIC2; 3AB9D23F7A4B3C9B=N5XF4VIWT7TIO6XK2DZLWO3W3VFEJZCITSMME7PGOPLOL3YQNL6YYPNT7SXH57RVVBJWCZR7GN2SZMM2J52YA7NNZA&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 住区京东零食的html</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">spider_page_tree</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 路径的参数</span></span><br><span class="line">        <span class="comment"># params = &#123;</span></span><br><span class="line">        <span class="comment">#     &quot;keyword&quot;: &#x27;零食&#x27;</span></span><br><span class="line">        <span class="comment"># &#125;</span></span><br><span class="line">        <span class="comment"># 拼接路径</span></span><br><span class="line">        <span class="comment"># response = requests.get(self.target_url, headers=self.headers, params=params)</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        <span class="comment"># page_text = response.text</span></span><br><span class="line">        <span class="comment"># 将得到的源码信息保存起来</span></span><br><span class="line">        <span class="comment"># self.save(data=page_text)</span></span><br><span class="line">        <span class="comment"># 查看原始的请求地址，判断是不是想要的数据</span></span><br><span class="line">        <span class="comment"># print(response.request.url)</span></span><br><span class="line">        <span class="comment"># 保存好以后就不用上面的了，直接读</span></span><br><span class="line">        data = <span class="variable language_">self</span>.read()</span><br><span class="line">        tree = etree.HTML(data)</span><br><span class="line">        <span class="keyword">return</span> tree</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将得到的数据HTML,存起来</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">save</span>(<span class="params">self,data</span>):</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;jd.html&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">            fp.write(data)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 读取HTML页面</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;jd.html&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">            data = fp.read()</span><br><span class="line">        <span class="keyword">return</span> data</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 解析源码</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">parse_good_data</span>(<span class="params">self</span>):</span><br><span class="line">        tree = <span class="variable language_">self</span>.spider_page_tree()</span><br><span class="line">        <span class="comment"># 拿到零食的li标签</span></span><br><span class="line">        li_list = tree.xpath(<span class="string">&#x27;//*[@id=&quot;J_goodsList&quot;]/ul/li&#x27;</span>)</span><br><span class="line">        <span class="comment"># 拿到了所有的li标签</span></span><br><span class="line">        <span class="comment"># print(li_list)</span></span><br><span class="line">        good_data = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> li <span class="keyword">in</span> li_list:</span><br><span class="line">            <span class="comment"># 拿到了所有的价格</span></span><br><span class="line">            <span class="comment"># //*[@id=&quot;J_goodsList&quot;]/ul/li[1]/div/div[2]/strong/i</span></span><br><span class="line">            <span class="comment"># print(li.xpath(&#x27;./div/div[2]/strong/i/text()&#x27;)[0])</span></span><br><span class="line">            price = li.xpath(<span class="string">&#x27;./div/div[2]/strong/i/text()&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 那所有的商品信息</span></span><br><span class="line">            <span class="comment"># //*[@id=&quot;J_goodsList&quot;]/ul/li[1]/div/div[3]/a/em</span></span><br><span class="line">            <span class="comment"># print(li.xpath(&#x27;./div/div[3]/a/em/text()&#x27;)[0])</span></span><br><span class="line">            desc = li.xpath(<span class="string">&#x27;./div/div[3]/a/em/text()&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 获得店名</span></span><br><span class="line">            store_name = li.xpath(<span class="string">&#x27;./div/div[5]/span/a/text()&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">            <span class="comment"># print(store_name)</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 营业模式</span></span><br><span class="line">            trade_mode = li.xpath(<span class="string">&#x27;//*[@id=&quot;J_pro_100047511237&quot;]/i/text()&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">            <span class="comment"># print(trade_mode)</span></span><br><span class="line">            good_data[store_name] = &#123;</span><br><span class="line">                <span class="string">&quot;desc&quot;</span>: desc.strip(),</span><br><span class="line">                <span class="string">&quot;price&quot;</span>: price,</span><br><span class="line">                <span class="string">&quot;trade_mode&quot;</span>: trade_mode</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">print</span>(good_data)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    s = SpiderJD()</span><br><span class="line">    s.parse_good_data()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -263,7 +411,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/1.0Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E4%BB%8B%E7%BB%8D/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/python%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -277,7 +425,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/1.0Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/python%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -286,9 +434,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:40" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -302,7 +465,142 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1>【一】python安装过程</h1>
+<h2 id="【1】安装路径">【1】安装路径</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.python.org/">https://www.python.org/</a></li>
+</ul>
+<h2 id="2-选择win系统">[2]选择win系统</h2>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326142834370.png" alt="image-20240326142834370"></p>
+<h2 id="【3】搜索指定版本">【3】搜索指定版本</h2>
+<ul>
+<li>win系统快捷键 【ctrl+f】</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326143229243.png" alt="image-20240326143229243"></p>
+<ul>
+<li>macos系统快捷键【command+f】</li>
+</ul>
+<h3 id="（1）打开Python解释器官网">（1）打开Python解释器官网</h3>
+<p><a target="_blank" rel="noopener" href="http://zhaochunze.dream521.site/202311151055871.png"><img src="http://zhaochunze.dream521.site/202311151055871.png" alt="image-20231115105550707"></a></p>
+<h3 id="（2）点击Downloads">（2）点击Downloads</h3>
+<ul>
+<li>选择macOS</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://zhaochunze.dream521.site/202311151133981.png"><img src="http://zhaochunze.dream521.site/202311151133981.png" alt="a227694c1db0b4a82a1ab5b54eb9ebc"></a></p>
+<h3 id="（3）下载安装程序">（3）下载安装程序</h3>
+<p><a target="_blank" rel="noopener" href="http://zhaochunze.dream521.site/202311151132419.png"><img src="http://zhaochunze.dream521.site/202311151132419.png" alt="274616ac2ad83134b8eccab3749d420"></a></p>
+<h2 id="【5】安装解释器（win）">【5】安装解释器（win）</h2>
+<h3 id="（1）双击安装好的程序">（1）双击安装好的程序</h3>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326150017091.png" alt="image-20240326150017091"></p>
+<ul>
+<li></li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326150042839.png" alt="image-20240326150042839"></p>
+<h3 id="（2）自定义程序位置">（2）自定义程序位置</h3>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326150130183.png" alt="image-20240326150130183"></p>
+<h3 id="3-等待安装">(3)等待安装</h3>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326150203062.png" alt="image-20240326150203062"></p>
+<h3 id="（4）安装成功">（4）安装成功</h3>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326150220454.png" alt="image-20240326150220454"></p>
+<h2 id="【6】macos版本解释器安装">【6】macos版本解释器安装</h2>
+<h3 id="（1）打开Python解释器官网-2">（1）打开Python解释器官网</h3>
+<p><a target="_blank" rel="noopener" href="http://zhaochunze.dream521.site/202311151055871.png"><img src="http://zhaochunze.dream521.site/202311151055871.png" alt="image-20231115105550707"></a></p>
+<h3 id="（2）点击Downloads-2">（2）点击Downloads</h3>
+<ul>
+<li>选择macOS</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://zhaochunze.dream521.site/202311151133981.png"><img src="http://zhaochunze.dream521.site/202311151133981.png" alt="a227694c1db0b4a82a1ab5b54eb9ebc"></a></p>
+<h3 id="（3）下载安装程序-2">（3）下载安装程序</h3>
+<p><a target="_blank" rel="noopener" href="http://zhaochunze.dream521.site/202311151132419.png"><img src="http://zhaochunze.dream521.site/202311151132419.png" alt="274616ac2ad83134b8eccab3749d420"></a></p>
+<h3 id="（4）保存文件">（4）保存文件</h3>
+<p><a target="_blank" rel="noopener" href="http://zhaochunze.dream521.site/202311151135543.png"><img src="http://zhaochunze.dream521.site/202311151135543.png" alt="b9f551a549af506ed239dc4fd680758"></a></p>
+<ul>
+<li>
+<h3 id="双击安装程序">双击安装程序</h3>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://zhaochunze.dream521.site/202311151137068.png"><img src="http://zhaochunze.dream521.site/202311151137068.png" alt="8d40eb7d7cabed2a04a2dd2d29befb0"></a></p>
+<ul>
+<li>
+<h3 id="继续">继续</h3>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://zhaochunze.dream521.site/202311151138884.png"><img src="http://zhaochunze.dream521.site/202311151138884.png" alt="fb93c1d3a6cbef44467fea7f2803dc0"></a></p>
+<ul>
+<li>
+<h3 id="安装">安装</h3>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://zhaochunze.dream521.site/202311151218668.png"><img src="http://zhaochunze.dream521.site/202311151218668.png" alt="1505f7e28a76eedc83a8e4b0b88f6a3"></a></p>
+<ul>
+<li>
+<h3 id="开始安装">开始安装</h3>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://zhaochunze.dream521.site/202311151219326.png"><img src="http://zhaochunze.dream521.site/202311151219326.png" alt="a66e1fe6ae33e9ada51652b70c05e3a"></a></p>
+<ul>
+<li>安装成功</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://zhaochunze.dream521.site/202311151219194.png"><img src="http://zhaochunze.dream521.site/202311151219194.png" alt="8e087289cbe44e9b433d21533954af4"></a></p>
+<h1>【二】多版本共存问题</h1>
+<h2 id="【1】多版本共存的原因">【1】多版本共存的原因</h2>
+<ul>
+<li>电脑系统里存在多个python解释器</li>
+<li>比如有python3.10和python3.8</li>
+</ul>
+<blockquote>
+<p>解救多版本共存有两种办法</p>
+</blockquote>
+<h2 id="【2】查看电脑的环境变量">【2】查看电脑的环境变量</h2>
+<h3 id="（方法一）">（方法一）</h3>
+<ul>
+<li>打开设置搜索环境变量</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326143956584.png" alt="image-20240326143956584"></p>
+<ul>
+<li>
+<p>点击环境变量</p>
+</li>
+<li>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326144017017.png" alt="image-20240326144017017"></p>
+</li>
+<li>
+<p>系统变量</p>
+</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326144531023.png" alt="image-20240326144531023"></p>
+<ul>
+<li>
+<p>找到python310上移到最前面，并点击确定按钮</p>
+</li>
+<li>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326144133232.png" alt="image-20240326144133232"></p>
+</li>
+<li>
+<p>很少有人用</p>
+</li>
+</ul>
+<h3 id="（方法二）">（方法二）</h3>
+<ul>
+<li>将原本的python解释器快捷方式（python.exe）复制一份成副本</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326151223040.png" alt="image-20240326151223040"></p>
+<ul>
+<li>
+<p>其它的解释器也是如此</p>
+</li>
+<li>
+<p>打开命令窗口（win+r），输入cmd</p>
+</li>
+<li>
+<p>把副本的名字改成版本型号（python310）</p>
+</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326145203744.png" alt="image-20240326145203744"></p>
+<ul>
+<li>用哪个版本就输入哪个版本就可以</li>
+</ul>
+
       
     </div>
 
@@ -321,7 +619,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/1.0reids/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/flex%E6%A1%88%E4%BE%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -335,7 +633,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/1.0reids/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/flex%E6%A1%88%E4%BE%8B/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -344,9 +642,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:40" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -360,7 +673,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1>【一】元素垂直居中</h1>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.box</span>&#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">800px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">flex-direction</span>: column;</span></span><br><span class="line"><span class="language-css">            <span class="comment">/*背景颜色*/</span></span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: pink;</span></span><br><span class="line"><span class="language-css">            <span class="comment">/*边框*/</span></span></span><br><span class="line"><span class="language-css">            <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span></span><br><span class="line"><span class="language-css">            <span class="comment">/*居中*/</span></span></span><br><span class="line"><span class="language-css">            <span class="attribute">margin</span>: auto;</span></span><br><span class="line"><span class="language-css">            <span class="comment">/*使项目在主轴中心对齐*/</span></span></span><br><span class="line"><span class="language-css">            <span class="attribute">justify-content</span>: center;</span></span><br><span class="line"><span class="language-css">            <span class="comment">/*是项目在交叉中心对齐*/</span></span></span><br><span class="line"><span class="language-css">            <span class="attribute">align-items</span>: center;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="comment">/*这个意思是继承class属性内的div标签*/</span></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.box</span> <span class="selector-tag">div</span>&#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="comment">/*背景颜色*/</span></span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: darkgreen;</span></span><br><span class="line"><span class="language-css">            <span class="comment">/*边框*/</span></span></span><br><span class="line"><span class="language-css">            <span class="attribute">border</span>: <span class="number">1px</span> solid red;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;box&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240910170620903.png" alt="image-20240910170620903"></p>
+<h1>【二】圣杯布局</h1>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.box</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="comment">/*使用flex布局*/</span></span></span><br><span class="line"><span class="language-css">            <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.one</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: darkgreen;</span></span><br><span class="line"><span class="language-css">            <span class="comment">/*定制标签的显示顺序第三个显示*/</span></span></span><br><span class="line"><span class="language-css">            <span class="attribute">order</span>:<span class="number">3</span></span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.two</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">600px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: palevioletred;</span></span><br><span class="line"><span class="language-css">            <span class="comment">/*占满剩余的空位*/</span></span></span><br><span class="line"><span class="language-css">            <span class="attribute">flex</span>: <span class="number">1</span>;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.three</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: grey;</span></span><br><span class="line"><span class="language-css">            <span class="comment">/*定制标签的显示顺序：第一个显示*/</span></span></span><br><span class="line"><span class="language-css">            <span class="attribute">order</span>: -<span class="number">1</span>;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;box&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;one&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;two&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;three&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240910171817626.png" alt="image-20240910171817626"></p>
+<h1>【三】小米商城</h1>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.container</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">1100px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">margin</span>: <span class="number">0</span> auto;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.row1</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="language-css">            <span class="comment">/*水平方向为主轴，起点在左端*/</span></span></span><br><span class="line"><span class="language-css">            <span class="attribute">flex-direction</span>: row;</span></span><br><span class="line"><span class="language-css">            <span class="comment">/*两端对齐，项目之间的间距一样*/</span></span></span><br><span class="line"><span class="language-css">            <span class="attribute">justify-content</span>: space-between;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.row1</span> <span class="selector-class">.company</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">210px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">180px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: saddlebrown;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.row1</span> <span class="selector-class">.pic</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">266px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">180px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: cadetblue;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.row2</span> <span class="selector-class">.title</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">flex-direction</span>: row;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">justify-content</span>: space-between;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.row2</span> <span class="selector-class">.pic-list</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">flex-direction</span>: row;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">justify-content</span>: space-between;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.row2</span> <span class="selector-class">.pic-list</span> <span class="selector-class">.big</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: aquamarine;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">610px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">210px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">margin-right</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.row2</span> <span class="selector-class">.pic-list</span> <span class="selector-class">.right-list</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: antiquewhite;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">flex-grow</span>: <span class="number">1</span>;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.row2</span> <span class="selector-class">.pic-list</span> <span class="selector-class">.right-list</span> <span class="selector-class">.group</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">flex-direction</span>: row;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">justify-content</span>: space-between;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">flex-wrap</span>: wrap;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.row2</span> <span class="selector-class">.pic-list</span> <span class="selector-class">.right-list</span> <span class="selector-class">.phone</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">margin-bottom</span>: <span class="number">10px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">border</span>: <span class="number">1px</span> solid red;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">300px</span>;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.course-list</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">justify-content</span>: space-between;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">flex-wrap</span>: wrap;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.course-list</span> <span class="selector-class">.item</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">24%</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: skyblue;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">margin-top</span>: <span class="number">15px</span>;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">        <span class="comment">/*如果最后一个元素，是第3个，右边距=一个位置 + 所有空白位置/3（有三个空白位置）*/</span></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.course-list</span> <span class="selector-class">.item</span><span class="selector-pseudo">:last-child</span><span class="selector-pseudo">:nth-child</span>(<span class="number">4</span>n - <span class="number">1</span>) &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">margin-right</span>: <span class="built_in">calc</span>(<span class="number">24%</span> + <span class="number">4%</span> / <span class="number">3</span>);</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.course-list</span> <span class="selector-class">.item</span><span class="selector-pseudo">:last-child</span><span class="selector-pseudo">:nth-child</span>(<span class="number">4</span>n - <span class="number">2</span>) &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">margin-right</span>: <span class="built_in">calc</span>(<span class="number">48%</span> + <span class="number">8%</span> / <span class="number">3</span>);</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--    第一行的布局：用flex布局--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row1&quot;</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        单的的一个颜色--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;company&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;pic&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;pic&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;pic&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    中间布局--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row2&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;title&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span>手机<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span>查看更多<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;pic-list&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;big&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right-list&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;group&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;phone&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;phone&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;phone&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;phone&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;group&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;phone&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;phone&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;phone&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;phone&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    最低层的布局--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;course-list&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240910184245776.png" alt="image-20240910184245776"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240910184335752.png" alt="image-20240910184335752"></p>
+
       
     </div>
 
@@ -379,7 +702,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/1.0MySQL%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B,%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/jQuery%E4%BB%8B%E7%BB%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -393,7 +716,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/1.0MySQL%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B,%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/jQuery%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -402,9 +725,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:40" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -418,7 +756,253 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1>jQuery介绍</h1>
+<h2 id="【一】什么是jQuery">【一】什么是jQuery</h2>
+<h3 id="【1】概括">【1】概括</h3>
+<ul>
+<li>jQuery是一个轻量级的、兼容多浏览器的JavaScript库</li>
+<li>jQuery使用户能够更方便地处理HTML Document、Events、实现动画效果、方便地进行Ajax交互，能够极大地简化JavaScript编程。它的宗旨就是：“Write less, do mor</li>
+</ul>
+<h3 id="【2】小结">【2】小结</h3>
+<ul>
+<li>
+<p>jQuery是一个第三方的库</p>
+</li>
+<li>
+<p>jQuery内部封装了原生的JavaScript代码</p>
+</li>
+<li>
+<p>减少了代码的书写量就完成了JavaScript的操作，就像是python中的模块</p>
+</li>
+<li>
+<p>前端又叫类库</p>
+</li>
+<li>
+<p>兼容多个浏览器</p>
+</li>
+<li>
+<p>Ajax交互</p>
+<ul>
+<li>异步提交 局部刷新</li>
+</ul>
+</li>
+</ul>
+<h2 id="【二】jQuery中导入库发生了那些事情">【二】jQuery中导入库发生了那些事情</h2>
+<ul>
+<li>在jQuery中导入库可以通过一下步骤</li>
+</ul>
+<h3 id="【1】获取类库文件">【1】获取类库文件</h3>
+<ul>
+<li>首先获取需要的类库文件（通常是一个JavaScript文件），可以从官网等地方下载乃</li>
+</ul>
+<h3 id="【2】导入类库文件">【2】导入类库文件</h3>
+<ul>
+<li>将类库文件保存在项目目录中，并在HTML文件中使用<code>&lt;script&gt;</code>标签来导入类库文件</li>
+<li>在<code>&lt;script&gt;</code>标签中，使用src属性指定类库的路径，让浏览器能够加载并执行该文件</li>
+</ul>
+<p>比如</p>
+<ul>
+<li>这样，当浏览器解析到这两个<script>标签时，就会下载并执行对应的类库文件</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;path/to/jquery.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;path/to/plugin.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="【3】使用类库功能">【3】使用类库功能</h3>
+<ul>
+<li>一旦类库文件被加载和执行，就可以使用其中提供的功能</li>
+<li>类库会扩展或增强原生 JavaScript 的功能，通过在页面中引入类库文件，我们可以使用类库提供的函数、方法或特性</li>
+</ul>
+<p>比如</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="variable language_">document</span>).<span class="title function_">ready</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 在文档加载完成后执行一些代码</span></span><br><span class="line">  <span class="comment">// 使用类库提供的函数或方法</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>上述代码示例中，$符号是 jQuery 的别名，通过调用.ready()方法，我们可以确保在文档加载完成后执行传入的函数。</li>
+</ul>
+<h3 id="【4】总结">【4】总结</h3>
+<ul>
+<li>总结起来，导入 jQuery 类库涉及获取类库文件、在 HTML 文件中导入类库文件，并通过调用类库提供的功能来实现对页面元素的操作、动态加载和事件处理等功能。</li>
+</ul>
+<h2 id="【三】jQuery的优势">【三】jQuery的优势</h2>
+<h2 id="【1】详细">【1】详细</h2>
+<h3 id="（1）简化DOM操作：">（1）简化DOM操作：</h3>
+<ul>
+<li>jQuery提供了强大且简洁的API，使得对DOM元素的选择、遍历和操作变得更加容易。</li>
+<li>通过使用jQuery，可以通过简洁的语法实现复杂的DOM操作，减少编写冗长代码的工作量。</li>
+</ul>
+<h3 id="（2）跨浏览器兼容性">（2）跨浏览器兼容性</h3>
+<ul>
+<li>jQuery解决了不同浏览器之间的兼容性问题。</li>
+<li>它封装了一致的API，使得开发人员能够编写跨浏览器兼容的代码，无需关注各种细节和差异。</li>
+</ul>
+<h3 id="（3）丰富的插件生态系统：">（3）丰富的插件生态系统：</h3>
+<ul>
+<li>jQuery拥有庞大的插件生态系统，涵盖了各种功能和特性，如动画效果、表单验证、图像轮播等。</li>
+<li>这些插件可以大幅度提高开发效率，让开发人员能够快速实现复杂的功能。</li>
+</ul>
+<h3 id="（4）AJAX支持">（4）AJAX支持</h3>
+<ul>
+<li>jQuery对AJAX进行了封装，使得在Web应用中进行异步请求变得更加简单。</li>
+<li>通过使用jQuery的AJAX API，可以轻松地发送AJAX请求、处理响应和更新页面内容，实现更好的用户体验。</li>
+</ul>
+<h3 id="（5）动画效果">（5）动画效果</h3>
+<ul>
+<li>jQuery提供了丰富的动画效果和过渡效果，可以轻松地实现元素的淡入淡出、滑动、展开收起等动画效果，给网页增添了交互和生动性。</li>
+</ul>
+<h3 id="（6）扩展性与可定制性">（6）扩展性与可定制性</h3>
+<ul>
+<li>jQuery允许开发人员根据自己的需求进行定制和扩展。</li>
+<li>开发人员可以自定义插件，编写自己的jQuery代码，并且可以根据项目需求选择只导入所需的模块，减小文件体积。</li>
+</ul>
+<h2 id="【2】小结-2">【2】小结</h2>
+<h3 id="（1）一款轻量级的JS框架。">（1）一款轻量级的JS框架。</h3>
+<ul>
+<li>jQuery核心js文件才几十kb，不会影响页面加载速度。</li>
+</ul>
+<h3 id="（2）丰富的DOM选择器">（2）丰富的DOM选择器</h3>
+<ul>
+<li>jQuery的选择器用起来很方便</li>
+<li>比如要找到某个DOM对象的相邻元素，JS可能要写好几行代码，而jQuery一行代码就搞定了，再比如要将一个表格的隔行变色，jQuery也是一行代码搞定。</li>
+</ul>
+<h3 id="（3）链式表达式">（3）链式表达式</h3>
+<ul>
+<li>jQuery的链式操作可以把多个操作写在一行代码里，更加简洁。</li>
+</ul>
+<h3 id="（4）事件、样式、动画支持">（4）事件、样式、动画支持</h3>
+<ul>
+<li>jQuery还简化了js操作css的代码，并且代码的可读性也比js要强。</li>
+</ul>
+<h3 id="（5）Ajax操作支持">（5）Ajax操作支持</h3>
+<ul>
+<li>jQuery简化了AJAX操作，后端只需返回一个JSON格式的字符串就能完成与前端的通信。</li>
+</ul>
+<h3 id="（6）跨浏览器兼容">（6）跨浏览器兼容</h3>
+<ul>
+<li>jQuery基本兼容了现在主流的浏览器，不用再为浏览器的兼容问题而伤透脑筋。</li>
+</ul>
+<h3 id="（7）插件扩展开发">（7）插件扩展开发</h3>
+<ul>
+<li>
+<p>jQuery有着丰富的第三方的插件</p>
+</li>
+<li>
+<ul>
+<li>例如：树形菜单、日期控件、图片切换插件、弹出窗口等等基本前端页面上的组件都有对应插件，并且用jQuery插件做出来的效果很炫，并且可以根据自己需要去改写和封装插件，简单实用。</li>
+</ul>
+</li>
+</ul>
+<h2 id="【四】jQuery学习内容">【四】jQuery学习内容</h2>
+<h3 id="【1】内容概括">【1】内容概括</h3>
+<ul>
+<li>选择器</li>
+<li>筛选器</li>
+<li>样式操作</li>
+<li>文本操作</li>
+<li>属性操作</li>
+<li>文档处理</li>
+<li>事件</li>
+<li>动画效果</li>
+<li>插件</li>
+<li>each、data、Ajax</li>
+</ul>
+<h3 id="【2】下载链接">【2】下载链接</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://jquery.com/">jQuery</a></li>
+</ul>
+<h2 id="【五】jQuery的版本">【五】jQuery的版本</h2>
+<h2 id="【1】1-x">【1】1.x</h2>
+<ul>
+<li>兼容IE678,使用最为广泛的，官方只做BUG维护，功能不再新增。</li>
+<li>因此一般项目来说，使用1.x版本就可以了，最终版本：1.12.4 (2016年5月20日)</li>
+</ul>
+<h2 id="【2】2-x：">【2】2.x：</h2>
+<ul>
+<li>不兼容IE678，很少有人使用，官方只做BUG维护，功能不再新增。</li>
+<li>如果不考虑兼容低版本的浏览器可以使用2.x，最终版本：2.2.4 (2016年5月20日)</li>
+</ul>
+<h2 id="【3】3-x：">【3】3.x：</h2>
+<ul>
+<li>不兼容IE678，只支持最新的浏览器。</li>
+<li>需要注意的是很多老的jQuery插件不支持3.x版。目前该版本是官方主要更新维护的版本。</li>
+</ul>
+<p><em>维护IE678是一件让人头疼的事情，一般我们都会额外加载一个CSS和JS单独处理。值得庆幸的是使用这些浏览器的人也逐步减少，PC端用户已经逐步被移动端用户所取代，如果没有特殊要求的话，一般都会选择放弃对678的支持。</em></p>
+<h2 id="【六】jQuery配置">【六】jQuery配置</h2>
+<h3 id="【1】基于网络分发（CDN）">【1】基于网络分发（CDN）</h3>
+<h4 id="（1）官网">（1）官网</h4>
+<ul>
+<li>
+<p>直接引入jQuery提供的CDN服务(基于网络请求加载)</p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://www.bootcdn.cn/">BootCDN - Bootstrap 中文网开源项目免费 CDN 加速服务</a></p>
+</li>
+</ul>
+<h4 id="（2）压缩">（2）压缩</h4>
+<ul>
+<li>如果 URL 结尾含有 min、compressed、gz 或 .gzipped 等词汇及其对应后缀，如 .min.js、.gz.css 等，则可能是指向已压缩的文件。</li>
+<li>后缀名区分是否已压缩</li>
+</ul>
+<p>未压缩：<a target="_blank" rel="noopener" href="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js">https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js</a></p>
+<p>已压缩：<a target="_blank" rel="noopener" href="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.min.js">https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.min.js</a></p>
+<ul>
+<li>
+<p>缺点</p>
+</li>
+<li>
+<ul>
+<li>必须联网</li>
+</ul>
+</li>
+</ul>
+<h1>jQuery之引入</h1>
+<h2 id="【一】jQuery基本语法">【一】jQuery基本语法</h2>
+<h3 id="【1】语法">【1】语法</h3>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">jQuery</span>(选择器).<span class="title function_">action</span>()</span><br></pre></td></tr></table></figure>
+<h3 id="【2】简写语法">【2】简写语法</h3>
+<ul>
+<li>讲jQuery换成$</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(选择器).<span class="title function_">action</span>()</span><br></pre></td></tr></table></figure>
+<h2 id="【二】jQuery的引入方式">【二】jQuery的引入方式</h2>
+<h3 id="【1】两种引入方式">【1】两种引入方式</h3>
+<h4 id="（1）方式一：直接创建本地js文件，HTML导入js文件">（1）方式一：直接创建本地js文件，HTML导入js文件</h4>
+<ul>
+<li>进入官网–&gt;<a target="_blank" rel="noopener" href="https://www.bootcdn.cn/">BootCDN - Bootstrap 中文网开源项目免费 CDN 加速服务</a>–&gt;点击jQuery–&gt;复制链接–&gt;打开链接–&gt;把文本复制到创建好的js文件里</li>
+</ul>
+<h4 id="（2）方式二：直接浏览访问地址">（2）方式二：直接浏览访问地址</h4>
+<ul>
+<li>进入官网–&gt;<a target="_blank" rel="noopener" href="https://www.bootcdn.cn/">BootCDN - Bootstrap 中文网开源项目免费 CDN 加速服务</a>–&gt;点击jQuery–&gt;复制链接标签添加到head标签内部–》导入<code>&lt;script&gt;</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="【三】基础选择器">【三】基础选择器</h2>
+<h3 id="【1】元素选择器（Element-Selector）">【1】元素选择器（Element Selector）</h3>
+<ul>
+<li>标签名字作为选择器</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;标签名&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="【2】ID选择器（ID-Selector）">【2】ID选择器（ID Selector）</h3>
+<ul>
+<li>选择用了id选择器的所有标签</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;#id对应的值&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="【3】类选择器（Class-Selector）">【3】类选择器（Class Selector）</h3>
+<ul>
+<li>选择用了class选择器的所有标签</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;.类对应的值&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="【4】属性选择器（Attribute-Selector）">【4】属性选择器（Attribute Selector）</h3>
+<ul>
+<li>元素的属性和属性值进行选择</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;[标签里的属性]&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="【5】选择器组合（Multiple-Selectors）">【5】选择器组合（Multiple Selectors）</h3>
+<ul>
+<li>选择多个选择器，选择器之间用&quot;，&quot;隔开</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;p, .myClass&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="【6】后代选择器（Descendant-Selector）">【6】后代选择器（Descendant Selector）</h3>
+<ul>
+<li>选择某个元素的后代元素</li>
+<li>比如，选择所有 “myElement” 元素内的段落p标签元素</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;#myElement p&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -437,7 +1021,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/1.0cs%E6%A8%A1%E5%9D%97%E5%92%8Cbs%E6%A8%A1%E5%9D%97/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/pycharm%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -451,7 +1035,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/1.0cs%E6%A8%A1%E5%9D%97%E5%92%8Cbs%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/pycharm%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -460,9 +1044,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:40" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -476,7 +1075,101 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1>【一】pycharm安装过程</h1>
+<h3 id="【1】官网地址">【1】官网地址</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.jetbrains.com.cn/">https://www.jetbrains.com.cn/</a></li>
+</ul>
+<h2 id="【2】下载pycharm">【2】下载pycharm</h2>
+<ul>
+<li>选择pycharm软件</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326154803956.png" alt="image-20240326154803956"></p>
+<ul>
+<li>点击下载</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326154832364.png" alt="image-20240326154832364"></p>
+<ul>
+<li>下载安装包</li>
+<li>
+<img src="C:\Users\86177\AppData\Roaming\Typora\typora-user-images\image-20240326154918653.png" alt="image-20240326154918653" style="zoom:25%;" />
+</li>
+</ul>
+<h2 id="【3】安装pycharm软件">【3】安装pycharm软件</h2>
+<ul>
+<li>
+<p>双击安装包</p>
+</li>
+<li>
+<p>安装路径不要出现中文</p>
+</li>
+<li>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326155502913.png" alt="image-20240326155502913"></p>
+</li>
+<li>
+<p>选择朋友pycharm配置</p>
+</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326155611121.png" alt="image-20240326155611121"></p>
+<ul>
+<li>安装jetbrains</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326155817679.png" alt="image-20240326155817679"></p>
+<ul>
+<li>安装完成</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326155849271.png" alt="image-20240326155849271"></p>
+<ul>
+<li>提示激活码</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326155921408.png" alt="image-20240326155921408"></p>
+<h2 id="【4】激活pycharm">【4】激活pycharm</h2>
+<h3 id="（1）脚本破解版">（1）脚本破解版</h3>
+<ul>
+<li>
+<p>激活码</p>
+</li>
+<li>
+<p>参考网址</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.junxu666.top/p/46415.html">https://blog.junxu666.top/p/46415.html</a></li>
+</ul>
+</li>
+<li>
+<p>重新打开 Pycharm 后，打开网址，复制里面的激活码</p>
+</li>
+<li>
+<p>粘贴到输入框内，点击 <code>Activate</code> 按钮，就激活成功了</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://zhaochunze.dream521.site/202311151836249.jpeg"><img src="http://zhaochunze.dream521.site/202311151836249.jpeg" alt="输入 Pycharm 破解激活码"></a></p>
+<h1>【二】使用pycharm软件运行python软件</h1>
+<h2 id="【1】创建项目">【1】创建项目</h2>
+<ul>
+<li>名称用英文</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326162032990.png" alt="image-20240326162032990"></p>
+<ul>
+<li>点击创建python文件</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326163143939.png" alt="image-20240326163143939"></p>
+<ul>
+<li>输入名称</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326163201913.png" alt="image-20240326163201913"></p>
+<ul>
+<li>输入python代码</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326163406114.png" alt="image-20240326163406114"></p>
+<ul>
+<li>点击运行python代码</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326163458500.png" alt="image-20240326163458500"></p>
+<ul>
+<li>运行效果</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240326163303908.png" alt="image-20240326163303908"></p>
+
       
     </div>
 
@@ -495,7 +1188,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/1.0%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E5%8E%BB%E9%87%8D%E8%BF%87%E6%BB%A4%E5%99%A8%E5%8E%9F%E7%90%860000000000/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -509,7 +1202,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/1.0%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E5%8E%BB%E9%87%8D%E8%BF%87%E6%BB%A4%E5%99%A8%E5%8E%9F%E7%90%860000000000/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -518,9 +1211,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:40" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -534,7 +1242,32 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1>scrapy框架之去重过滤器原理</h1>
+<h2 id="【一】源码去重规则">【一】源码去重规则</h2>
+<h3 id="【1】内置去重规则">【1】内置去重规则</h3>
+<ul>
+<li>
+<p>在Scrapy框架中，为了防止重复爬取相同的URL地址，采用了去重机制。</p>
+</li>
+<li>
+<p>其中，一种常用的去重方法是使用布隆过滤器(Bloom Filter)。</p>
+</li>
+<li>
+<p>如果爬取过的地址，就不会再爬了</p>
+</li>
+<li>
+<ul>
+<li>调度器可以去重，研究一下，如何去重的</li>
+<li>使用了集合</li>
+</ul>
+</li>
+</ul>
+<h3 id="【2】内置去重原理">【2】内置去重原理</h3>
+<ul>
+<li>引入模块</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -553,7 +1286,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/%E3%80%90%E4%B8%80%E3%80%91%E6%85%A2%E6%9F%A5%E8%AF%A2/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/%E3%80%90%E4%B8%80%E3%80%91%E6%85%A2%E6%9F%A5%E8%AF%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -567,7 +1300,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/%E3%80%90%E4%B8%80%E3%80%91%E6%85%A2%E6%9F%A5%E8%AF%A2/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/%E3%80%90%E4%B8%80%E3%80%91%E6%85%A2%E6%9F%A5%E8%AF%A2/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -576,9 +1309,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:08 / 修改时间：18:01:42" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:08+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -592,7 +1340,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1>【一】慢查询</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -611,7 +1361,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/%E3%80%901.1%E3%80%91MySQL8.4.2%E5%85%B1%E5%AD%98%E5%AE%89%E8%A3%85/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/%E3%80%901.1%E3%80%91MySQL8.4.2%E5%85%B1%E5%AD%98%E5%AE%89%E8%A3%85/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -625,7 +1375,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/%E3%80%901.1%E3%80%91MySQL8.4.2%E5%85%B1%E5%AD%98%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/%E3%80%901.1%E3%80%91MySQL8.4.2%E5%85%B1%E5%AD%98%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -634,9 +1384,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:08 / 修改时间：18:01:42" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:08+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -650,65 +1415,72 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
-      
-    </div>
+          <h2 id="一、下载">一、下载</h2>
+<h4 id="1-进入官网选择下载">1.进入官网选择下载</h4>
+<h4 id="2-拉到最底下，选择社区版下载">2.拉到最底下，选择社区版下载</h4>
+<p><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C1.png" alt="1"></p>
+<h4 id="3-选择mysql-community-server">3.选择mysql community server</h4>
+<h4 id="2"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C2.png" alt="2"></h4>
+<h4 id="4-选择数据库版本，以及系统和安装方式（这里我选的msi）">4.选择数据库版本，以及系统和安装方式（这里我选的msi）</h4>
+<p><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C3.png" alt="3"></p>
+<h4 id="5-直接点击no-thanks-just-start-my-download">5.直接点击no thanks,just start my download.</h4>
+<p><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C4.png" alt="4"></p>
+<h3 id="二、安装（windows）">二、安装（windows）</h3>
+<h4 id="1-双击安装包，出现以下页面选择next">1.双击安装包，出现以下页面选择next</h4>
+<h4 id="5"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C5.png" alt="5"></h4>
+<h4 id="2-选择我同意，继续下一步">2.选择我同意，继续下一步</h4>
+<h4 id="6"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C6.png" alt="6"></h4>
+<h4 id="3-选择custom自定义安装">3.选择custom自定义安装</h4>
+<h4 id="7"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C7.png" alt="7"></h4>
+<h4 id="4-选择安装的位置，下一步">4.选择安装的位置，下一步</h4>
+<h4 id="8"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C8.png" alt="8"></h4>
+<p>一路下一步</p>
+<h4 id="5-出现以下页面证明安装完成，接下来进行配置">5.出现以下页面证明安装完成，接下来进行配置</h4>
+<h4 id="9"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C9.png" alt="9"></h4>
+<h3 id="三、mysql配置">三、mysql配置</h3>
+<h4 id="1-进入到数据库软件配置界面，点击下一步">1.进入到数据库软件配置界面，点击下一步</h4>
+<h4 id="10"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C10.png" alt="10"></h4>
+<h4 id="2-设置文件路径">2.设置文件路径</h4>
+<h4 id="11"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C11.png" alt="11"></h4>
+<h4 id="3-勾选named-pipe-，修改数据库名字为mysql84-点击下一步">3.勾选named pipe ，修改数据库名字为mysql84,点击下一步</h4>
+<h4 id="12"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C12.png" alt="12"></h4>
+<h4 id="4-点击下一步">4.点击下一步</h4>
+<h4 id="13"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C13.png" alt="13"></h4>
+<h4 id="4-输入root用户密码，并且添加一个用户为test并为其添加密码">4.输入root用户密码，并且添加一个用户为test并为其添加密码</h4>
+<p><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C14.png" alt="14"></p>
+<h4 id="14"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C15.png" alt="14"></h4>
+<p><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C16.png" alt="16"></p>
+<h4 id="5-点下一步">5.点下一步</h4>
+<p><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C17.png" alt="17"></p>
+<h4 id="6-选择给予全部权限，点击下一步">6.选择给予全部权限，点击下一步</h4>
+<p><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C18.png" alt="18"></p>
+<h4 id="7-点击下一步，自己构建">7.点击下一步，自己构建</h4>
+<p><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C19.png" alt="19"></p>
+<h4 id="8-选择execute安装">8.选择execute安装</h4>
+<h4 id="20"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C20.png" alt="20"></h4>
+<h4 id="9-等待安装部署完成">9.等待安装部署完成</h4>
+<h4 id="21"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C21.png" alt="21"></h4>
+<p><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C22.png" alt="22"></p>
+<h3 id="四、验证是否成功">四、验证是否成功</h3>
+<h4 id="1-打开运行窗口win-r，搜索services-msc">1.打开运行窗口win+r，搜索services.msc</h4>
+<p><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C23.png" alt="23"></p>
+<h4 id="2-查看是否存在mysql81，并将其启动类型改为手动，防止他占用端口">2.查看是否存在mysql81，并将其启动类型改为手动，防止他占用端口</h4>
+<h4 id="24"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C24.png" alt="24"></h4>
+<p><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C25.png" alt="25"></p>
+<h3 id="五、环境部署">五、环境部署</h3>
+<h4 id="1-复制我们mysql的bin路径">1.复制我们mysql的bin路径</h4>
+<h4 id="26"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C26.png" alt="26"></h4>
+<h4 id="2-找到电脑的环境变量选择高级，在选择系统变量的path，双击进入">2.找到电脑的环境变量选择高级，在选择系统变量的path，双击进入</h4>
+<p><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C27.png" alt="27"></p>
+<p><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C28.png" alt="28"></p>
+<h4 id="3-进入编辑环境变量，选择新建，将我们mysql的bin路劲复制上去，然后一直选择确定知道退出。">3.进入编辑环境变量，选择新建，将我们mysql的bin路劲复制上去，然后一直选择确定知道退出。</h4>
+<h4 id="29"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C29.png" alt="29"></h4>
+<p><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C30.png" alt="30"></p>
+<h4 id="4-打开命令行窗口">4.打开<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%91%BD%E4%BB%A4%E8%A1%8C&amp;spm=1001.2101.3001.7020">命令行</a>窗口</h4>
+<h4 id="31"><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C31.png" alt="31"></h4>
+<h4 id="5-输入mysql-uroot-p，输入刚开始设置的密码，进入我们的数据库，出现以下的界面证明成功">5.输入mysql -uroot -p，输入刚开始设置的密码，进入我们的数据库，出现以下的界面证明成功</h4>
+<p><img src="H:%5CPython%E5%85%A8%E6%A0%88%5C%E3%80%903.0%E3%80%91MySQL%5C%E5%9B%BE%E7%89%87%5C32.png" alt="32"></p>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/%E7%BB%BC%E5%90%88%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/11/%E7%BB%BC%E5%90%88%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-11 17:32:08 / 修改时间：18:01:42" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:08+08:00">2025-10-11</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
       
     </div>
 
@@ -726,7 +1498,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -792,9 +1564,17 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">201</span>
+          <span class="site-state-item-count">196</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
       </div>
   </nav>
 </div>

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="爬虫初始 【一】Python爬虫 【1】什么是python爬虫  Python爬虫是一种自动化获取互联网数据的技术，它通过编写程序实现自动访问网站并抓取所需的数据。  【2】爬虫的定义  爬虫是一种自动化获取互联网数据的技术，通过模拟浏览器行为，向目标网站发送请求并获取响应，然后解析响应中的数据 应用的领域：用于网站数据的获取，如新闻、论坛、电商等  【3】爬虫的工作原理  爬虫通过发送HTTP请">
+<meta property="og:type" content="article">
+<meta property="og:title" content="坤博客">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/1.0%E7%88%AC%E8%99%AB%E5%88%9D%E5%A7%8B/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="爬虫初始 【一】Python爬虫 【1】什么是python爬虫  Python爬虫是一种自动化获取互联网数据的技术，它通过编写程序实现自动访问网站并抓取所需的数据。  【2】爬虫的定义  爬虫是一种自动化获取互联网数据的技术，通过模拟浏览器行为，向目标网站发送请求并获取响应，然后解析响应中的数据 应用的领域：用于网站数据的获取，如新闻、论坛、电商等  【3】爬虫的工作原理  爬虫通过发送HTTP请">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T10:31:34.799Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/1.0%E7%88%AC%E8%99%AB%E5%88%9D%E5%A7%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/1.0%E7%88%AC%E8%99%AB%E5%88%9D%E5%A7%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:34" itemprop="dateModified" datetime="2025-10-11T18:31:34+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>爬虫初始</h1>
+<h2 id="【一】Python爬虫">【一】Python爬虫</h2>
+<h3 id="【1】什么是python爬虫">【1】什么是python爬虫</h3>
+<ul>
+<li>Python爬虫是一种自动化获取互联网数据的技术，它<strong>通过编写程序实现自动访问网站并抓取所需的数据</strong>。</li>
+</ul>
+<h3 id="【2】爬虫的定义">【2】爬虫的定义</h3>
+<ul>
+<li>爬虫是一种自动化获取互联网数据的技术，通过模拟浏览器行为，向目标网站发送请求并获取响应，然后解析响应中的数据</li>
+<li>应用的领域：用于网站数据的获取，如新闻、论坛、电商等</li>
+</ul>
+<h3 id="【3】爬虫的工作原理">【3】爬虫的工作原理</h3>
+<ul>
+<li>爬虫通过发送HTTP请求，模拟浏览器行为，获取网站的响应，并解析响应中的数据</li>
+<li>爬虫可以用于数据分析和挖掘，如文本分析、情感分析等</li>
+</ul>
+<h3 id="【4】爬虫的分类">【4】爬虫的分类</h3>
+<h4 id="（1）通用爬虫和定向爬虫">（1）通用爬虫和定向爬虫</h4>
+<ul>
+<li>通用爬虫：对于整个互联网进行爬虫</li>
+<li>定向爬虫：针对特定的网站进行爬取</li>
+</ul>
+<h4 id="（2）基于规则的爬虫和基于机器学习的爬虫">（2）基于规则的爬虫和基于机器学习的爬虫</h4>
+<ul>
+<li>基于规则的爬虫：就是基于人工事先定义好的规则进行提取数据</li>
+<li>基于机器学习的爬虫：就是通过学习算法自动提取数据</li>
+</ul>
+<h4 id="（3）单机爬虫和分布式爬虫">（3）单机爬虫和分布式爬虫</h4>
+<ul>
+<li>单机爬虫：就是在单个计算机上运行</li>
+<li>分布式爬虫：通过多台计算机协同工作</li>
+</ul>
+<h3 id="【5】python爬虫常见的库">【5】python爬虫常见的库</h3>
+<h4 id="（1）requests库">（1）requests库</h4>
+<ul>
+<li>用于发送HTTP请求，方便地发送GET、POST等请求，并获取响应
+<ul>
+<li>爬虫可以使用requests库来发送请求和获取响应。</li>
+</ul>
+</li>
+</ul>
+<h4 id="（2）BeautifulSoup库">（2）BeautifulSoup库</h4>
+<ul>
+<li>用于解析HTML和XML文档，方便提取其中的数据
+<ul>
+<li>爬虫可以使用BeautifulSoup库来解析网页并提取需要的数据。</li>
+</ul>
+</li>
+</ul>
+<h4 id="（3）Scrapy框架">（3）Scrapy框架</h4>
+<ul>
+<li>提供了一套完整的爬虫开发的流程，包括发送请求，获取相应，解析响应，存储数据等
+<ul>
+<li>爬虫可以使用Scrapy框架进行爬虫开发。</li>
+</ul>
+</li>
+</ul>
+<h4 id="（4）Selenium库">（4）Selenium库</h4>
+<ul>
+<li>用于模拟浏览器行为，模拟用户在浏览器中的操作，比如点击，输入等
+<ul>
+<li>爬虫可以使用Selenium库来模拟用户的行为，获取需要的数据</li>
+</ul>
+</li>
+</ul>
+<h3 id="【6】爬虫的注意事项">【6】爬虫的注意事项</h3>
+<h4 id="（1）爬虫的合法性">（1）爬虫的合法性</h4>
+<ul>
+<li>在进行爬虫开发时，需要遵守相关的法律法规，如《计算机软件保护条例》、《互联网信息服务管理办法》等。</li>
+</ul>
+<h4 id="（2）爬虫的速度">（2）爬虫的速度</h4>
+<ul>
+<li>需要注意爬虫的速度，避免对目标网站造成过大的负担。</li>
+</ul>
+<h4 id="（3）爬虫的稳定性">（3）爬虫的稳定性</h4>
+<ul>
+<li>需要注意爬虫的稳定性，避免因为网络波动等原因导致爬虫中断。</li>
+</ul>
+<h4 id="（4）爬虫的数据存储">（4）爬虫的数据存储</h4>
+<ul>
+<li>需要注意数据的存储方式，避免因为数据量过大导致存储不足。</li>
+</ul>
+<h3 id="【7】小结">【7】小结</h3>
+<ul>
+<li>
+<p>python爬虫是一种自动化获取互联网数据的技术</p>
+</li>
+<li>
+<p>常用库包括requests库、BeautifulSoup库、Scrapy框架和Selenium库等</p>
+</li>
+<li>
+<p>它在爬取网页数据、数据分析、自动化测试和机器学习等领域有广泛应用。</p>
+</li>
+<li>
+<p>在进行爬虫开发时，需要遵守相关法律法规，注意爬虫的速度、稳定性和数据存储方式</p>
+</li>
+</ul>
+<h3 id="【8】爬虫的流程">【8】爬虫的流程</h3>
+<h4 id="（1）发送请求">（1）发送请求</h4>
+<ul>
+<li>首先确定目标网站的URL，并使用相关的库或框架发送HTTP请求</li>
+<li>通常获取网页数据的方法是：POST,GET</li>
+<li>请求可能包含一些额外的参数
+<ul>
+<li>比如请求头，Cookie等，以便模拟真实的浏览器行为</li>
+</ul>
+</li>
+</ul>
+<h4 id="（2）获取响应">（2）获取响应</h4>
+<ul>
+<li>一旦成功发送请求， 目标网站会返回一个HTTP响应</li>
+<li>这个响应通常包含网页的HTML代码和其他相关信息，如状态码、响应头等</li>
+<li>通过使用Python模块（如requests、selenium）可以获取到完整的响应内容</li>
+</ul>
+<h4 id="（3）解析响应">（3）解析响应</h4>
+<ul>
+<li>
+<p>通过使用解析库（如BeautifulSoup、lxml、re）或者正则表达式等方式，对获取到的HTML代码进行解析。</p>
+</li>
+<li>
+<p>解析的目的是提取出我们所需的具体数据，如标题、链接、图片等，并进行进一步的处理。</p>
+</li>
+<li>
+<p>可以根据网页的结构和特征，选择合适的解析工具，从而方便地提取出所需数据。</p>
+</li>
+</ul>
+<h4 id="（4）存储数据">（4）存储数据</h4>
+<ul>
+<li>
+<p>解析到有价值的数据后，需要将其进行储存，以便后续的使用和分析。</p>
+</li>
+<li>
+<p>可以选择将数据保存到本地文件，数据库，其他的存储介质中</p>
+</li>
+<li>
+<p>存储的方式可以依据具体需求和数据结构来进行选择，常用的存储方式包括存储到文件（如CSV、JSON、Excel）、存储到关系型数据库（如MySQL、PostgreSQL）、存储到非关系型数据库（如Redis、MongoDB）等</p>
+</li>
+</ul>
+<h4 id="（5）小结">（5）小结</h4>
+<ul>
+<li>
+<p>爬虫的流程：发送请求、获取响应、解析响应、存储数据等步骤，通过合理的设计和技术实现，可以快速、高效地从目标网站中提取所需的数据</p>
+</li>
+<li>
+<p>在实际爬取过程中，还需要考虑其他因素，如处理请求失败的情况、抓取策略的设计（如并发请求、延时等）、反爬虫措施的处理等</p>
+</li>
+<li>
+<p>此外，对于特殊情况下的动态网页，可能需要使用浏览器自动化工具（如Selenium）来模拟真实用户的操作，以获取页面的完整数据</p>
+</li>
+</ul>
+<h3 id="【9】常见的反爬虫措施">【9】常见的反爬虫措施</h3>
+<h4 id="（1）频率限制">（1）频率限制</h4>
+<ul>
+<li>网站会针对某个IP地址或用户账号设置请求频率限制，如单位时间内只允许发送一定数量的请求</li>
+</ul>
+<h4 id="（2）封IP和账号">（2）封IP和账号</h4>
+<ul>
+<li>
+<p>网站可以通过监测异常行为，如频繁请求、高并发等来判断是否有恶意爬取行为，并对相关IP地址或账号进行封禁</p>
+</li>
+<li>
+<p>为了规避封禁，爬虫可以使用代理池来随机切换IP地址，或使用大量小号（账号池）轮流发送请求</p>
+</li>
+</ul>
+<h4 id="（3）请求头中携带加密信息">（3）请求头中携带加密信息</h4>
+<ul>
+<li>网站可能要求请求头中包含特定的加密信息，如Referer（来源页面地址）和User-Agent（浏览器标识），用于验证请求的合法性</li>
+</ul>
+<h4 id="（4）响应回来的数据是加密的">（4）响应回来的数据是加密的</h4>
+<ul>
+<li>为了防止直接获取数据，网站可能会对返回的数据进行加密或编码，爬虫需要解密或解码才能获取到有效信息
+<ul>
+<li>爬虫可能需要分析加密算法或从其他渠道获取解密密钥</li>
+</ul>
+</li>
+</ul>
+<h4 id="（5）验证码反扒">（5）验证码反扒</h4>
+<ul>
+<li>
+<p>网站为了防止机器自动注册、恶意爬取等行为，可能会在关键操作前设置验证码</p>
+</li>
+<li>
+<p>爬虫需要通过第三方平台或自己破解验证码来进行自动化操作</p>
+</li>
+</ul>
+<h4 id="（6）JS加密">（6）JS加密</h4>
+<ul>
+<li>
+<p>网站可能使用JavaScript对核心代码进行了压缩和混淆，以 ers() -&gt; function() 的形式， ers.somethin() -&gt; function somethin() ，并添加了一些晦涩的加密方法</p>
+</li>
+<li>
+<p>爬虫需要逆向工程来还原和理解这些加密算法，并编写相应的代码进行解密</p>
+</li>
+</ul>
+<h4 id="（7）手机设备唯一ID号">（7）手机设备唯一ID号</h4>
+<ul>
+<li>
+<p>网站可能会根据爬虫请求的设备唯一标识符（例如IMEI、Android ID、iOS设备ID等）进行识别和限制</p>
+</li>
+<li>
+<p>爬虫可能需要模拟不同设备的请求，或者通过修改设备信息达到绕过检测的效果</p>
+</li>
+</ul>
+<h3 id="【10】总结">【10】总结</h3>
+<ul>
+<li>注意：
+<ul>
+<li>对于某些网站，爬虫绕过这些反爬虫措施可能涉及到违法行为，建议在合法范围内开展爬虫活动，遵守相关法律法规和网站的使用规定</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/1.1Navicate%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/1.1%E5%A4%9A%E7%89%88%E6%9C%AC%E5%85%B1%E5%AD%98%E9%97%AE%E9%A2%98/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">爬虫初始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91Python%E7%88%AC%E8%99%AB"><span class="nav-number">1.1.</span> <span class="nav-text">【一】Python爬虫</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AFpython%E7%88%AC%E8%99%AB"><span class="nav-number">1.1.1.</span> <span class="nav-text">【1】什么是python爬虫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E7%88%AC%E8%99%AB%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">【2】爬虫的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E7%88%AC%E8%99%AB%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.3.</span> <span class="nav-text">【3】爬虫的工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E7%88%AC%E8%99%AB%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">1.1.4.</span> <span class="nav-text">【4】爬虫的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E9%80%9A%E7%94%A8%E7%88%AC%E8%99%AB%E5%92%8C%E5%AE%9A%E5%90%91%E7%88%AC%E8%99%AB"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">（1）通用爬虫和定向爬虫</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%9F%BA%E4%BA%8E%E8%A7%84%E5%88%99%E7%9A%84%E7%88%AC%E8%99%AB%E5%92%8C%E5%9F%BA%E4%BA%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%88%AC%E8%99%AB"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">（2）基于规则的爬虫和基于机器学习的爬虫</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E5%8D%95%E6%9C%BA%E7%88%AC%E8%99%AB%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E7%88%AC%E8%99%AB"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">（3）单机爬虫和分布式爬虫</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%905%E3%80%91python%E7%88%AC%E8%99%AB%E5%B8%B8%E8%A7%81%E7%9A%84%E5%BA%93"><span class="nav-number">1.1.5.</span> <span class="nav-text">【5】python爬虫常见的库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89requests%E5%BA%93"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">（1）requests库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89BeautifulSoup%E5%BA%93"><span class="nav-number">1.1.5.2.</span> <span class="nav-text">（2）BeautifulSoup库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89Scrapy%E6%A1%86%E6%9E%B6"><span class="nav-number">1.1.5.3.</span> <span class="nav-text">（3）Scrapy框架</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%884%EF%BC%89Selenium%E5%BA%93"><span class="nav-number">1.1.5.4.</span> <span class="nav-text">（4）Selenium库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%906%E3%80%91%E7%88%AC%E8%99%AB%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.1.6.</span> <span class="nav-text">【6】爬虫的注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E7%88%AC%E8%99%AB%E7%9A%84%E5%90%88%E6%B3%95%E6%80%A7"><span class="nav-number">1.1.6.1.</span> <span class="nav-text">（1）爬虫的合法性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E7%88%AC%E8%99%AB%E7%9A%84%E9%80%9F%E5%BA%A6"><span class="nav-number">1.1.6.2.</span> <span class="nav-text">（2）爬虫的速度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E7%88%AC%E8%99%AB%E7%9A%84%E7%A8%B3%E5%AE%9A%E6%80%A7"><span class="nav-number">1.1.6.3.</span> <span class="nav-text">（3）爬虫的稳定性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E7%88%AC%E8%99%AB%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8"><span class="nav-number">1.1.6.4.</span> <span class="nav-text">（4）爬虫的数据存储</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%907%E3%80%91%E5%B0%8F%E7%BB%93"><span class="nav-number">1.1.7.</span> <span class="nav-text">【7】小结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%908%E3%80%91%E7%88%AC%E8%99%AB%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">1.1.8.</span> <span class="nav-text">【8】爬虫的流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82"><span class="nav-number">1.1.8.1.</span> <span class="nav-text">（1）发送请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E8%8E%B7%E5%8F%96%E5%93%8D%E5%BA%94"><span class="nav-number">1.1.8.2.</span> <span class="nav-text">（2）获取响应</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E8%A7%A3%E6%9E%90%E5%93%8D%E5%BA%94"><span class="nav-number">1.1.8.3.</span> <span class="nav-text">（3）解析响应</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.8.4.</span> <span class="nav-text">（4）存储数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%885%EF%BC%89%E5%B0%8F%E7%BB%93"><span class="nav-number">1.1.8.5.</span> <span class="nav-text">（5）小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%909%E3%80%91%E5%B8%B8%E8%A7%81%E7%9A%84%E5%8F%8D%E7%88%AC%E8%99%AB%E6%8E%AA%E6%96%BD"><span class="nav-number">1.1.9.</span> <span class="nav-text">【9】常见的反爬虫措施</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E9%A2%91%E7%8E%87%E9%99%90%E5%88%B6"><span class="nav-number">1.1.9.1.</span> <span class="nav-text">（1）频率限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%B0%81IP%E5%92%8C%E8%B4%A6%E5%8F%B7"><span class="nav-number">1.1.9.2.</span> <span class="nav-text">（2）封IP和账号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E8%AF%B7%E6%B1%82%E5%A4%B4%E4%B8%AD%E6%90%BA%E5%B8%A6%E5%8A%A0%E5%AF%86%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.9.3.</span> <span class="nav-text">（3）请求头中携带加密信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E5%93%8D%E5%BA%94%E5%9B%9E%E6%9D%A5%E7%9A%84%E6%95%B0%E6%8D%AE%E6%98%AF%E5%8A%A0%E5%AF%86%E7%9A%84"><span class="nav-number">1.1.9.4.</span> <span class="nav-text">（4）响应回来的数据是加密的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%885%EF%BC%89%E9%AA%8C%E8%AF%81%E7%A0%81%E5%8F%8D%E6%89%92"><span class="nav-number">1.1.9.5.</span> <span class="nav-text">（5）验证码反扒</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%886%EF%BC%89JS%E5%8A%A0%E5%AF%86"><span class="nav-number">1.1.9.6.</span> <span class="nav-text">（6）JS加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%887%EF%BC%89%E6%89%8B%E6%9C%BA%E8%AE%BE%E5%A4%87%E5%94%AF%E4%B8%80ID%E5%8F%B7"><span class="nav-number">1.1.9.7.</span> <span class="nav-text">（7）手机设备唯一ID号</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%9010%E3%80%91%E6%80%BB%E7%BB%93"><span class="nav-number">1.1.10.</span> <span class="nav-text">【10】总结</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

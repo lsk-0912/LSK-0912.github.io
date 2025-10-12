@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Django���֮CSRF��վ���� ��һ������  ��ô��ÿ��ע�͵���м��django.middleware.csrf.CsrfViewMiddleware Django �� CsrfViewMiddleware �м�����������վ���� CSRF ���� �м���������� Django Ӧ���д����վ����α�죨Cross-Site Re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="坤博客">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E5%92%8CAuth%E6%A8%A1%E5%9D%97/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="Django���֮CSRF��վ���� ��һ������  ��ô��ÿ��ע�͵���м��django.middleware.csrf.CsrfViewMiddleware Django �� CsrfViewMiddleware �м�����������վ���� CSRF ���� �м���������� Django Ӧ���д����վ����α�죨Cross-Site Re">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240703212520474.png">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T10:31:35.748Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240703212520474.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E5%92%8CAuth%E6%A8%A1%E5%9D%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E5%92%8CAuth%E6%A8%A1%E5%9D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>Django���֮CSRF��վ����</h1>
+<h2 id="��һ������">��һ������</h2>
+<ul>
+<li>��ô��ÿ��ע�͵���м��<code>django.middleware.csrf.CsrfViewMiddleware</code></li>
+<li>Django �� <code>CsrfViewMiddleware</code> �м�����������վ���� CSRF ����</li>
+<li>�м���������� Django Ӧ���д����վ����α�죨Cross-Site Request Forgery, CSRF�����м��</li>
+</ul>
+<h2 id="������ʲo��CSRF">������ʲô��CSRF</h2>
+<ul>
+<li>
+<p>CSRF��վ����αװ��һ�ֳ��������繥����ʽ</p>
+</li>
+<li>
+<p>������ͨ���յ��ܺ��߷��ʶ�����վ������������</p>
+</li>
+<li>
+<ul>
+<li>�����������͵�Ŀ����վ��</li>
+<li>�����ܺ�����Ŀ����վ���ѵ�¼�������ִ��ĳЩ����</li>
+<li>�Ӷ��ﵽ������Ŀ��</li>
+</ul>
+</li>
+</ul>
+<h2 id="������������ʩ">������������ʩ</h2>
+<h3 id="��1��ʹ��CSRF����">��1��ʹ��CSRF����</h3>
+<ul>
+<li>���û������������������ɵ����ƣ����������Ʊ��浽�û��Ự��</li>
+<li>ÿ���ύ����ʱ������֤�����ƣ�ȷ�������ǺϷ���</li>
+</ul>
+<h3 id="��2���ϸ���֤�������Դ">��2���ϸ���֤�������Դ</h3>
+<ul>
+<li>����˿�����֤�������Դ�Ƿ���Դ��Ԥ�ڵ���վ����</li>
+<li>������HTTP Refererͷ��</li>
+</ul>
+<h3 id="��3��ʹ����֤��">��3��ʹ����֤��</h3>
+<ul>
+<li>����еĲ�����ʹ���ֻ���֤���</li>
+<li>�����û������֤�ķ���</li>
+</ul>
+<h2 id="���g�CSRF������֤">���ġ�CSRF������֤</h2>
+<h3 id="��1������">��1������</h3>
+<ul>
+<li>csrfУ����һ�����ڷ�ֹ��վ����α�죨Cross-Site Request Forgery�������İ�ȫ��ʩ</li>
+</ul>
+<h3 id="��2��k������">��2��ǩ������</h3>
+<ul>
+<li>��ǰ��html�����<code>\\\&#123;% csrf_token \\\%&#125;</code> --��������ǰ���Զ�����һ��<code>csrfmiddlewaretoken</code> ��input��ǩ</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    `\\\&#123;% csrf_token \\\%&#125;`</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>username:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>username:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240703212520474.png" alt="image-20240703212520474"></p>
+<h3 id="��3��from�����֤����">��3��from�����֤����</h3>
+<ul>
+<li>
+<p>csrfmiddlewaretoken����������Я�������ݷ��͹���������username,password��</p>
+</li>
+<li>
+<p>������ݾͻᱻ<code>django.middleware.csrf.CsrfViewMiddleware</code>�м������</p>
+</li>
+<li>
+<p>��֤��������ȥ�����ǲ��������ص�</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        username = request.POST.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">        password = request.POST.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;�û�<span class="subst">&#123;username&#125;</span>��������<span class="subst">&#123;password&#125;</span>&#x27;</span>)</span><br><span class="line">        <span class="comment"># �û�tom��������710</span></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;login.html&#x27;</span>, <span class="built_in">locals</span>())</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    `\\\&#123;% csrf_token \\\%&#125;`</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>username:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>username:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>����ķ������ǰ��м��<code>CsrfViewMiddleware</code>ע�͵��Ҳ������������Ӧ</li>
+</ul>
+<h3 id="��4��Ajax��֤����">��4��Ajax��֤����</h3>
+<h4 id="��1����ʽһ">��1����ʽһ</h4>
+<ul>
+<li>��form�������ÿһ����ǩ��ȡ�� ����ֵƴ�ӵ���������</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>����������ת��ҳ��<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">&quot;transform_form&quot;</span>&gt;</span></span><br><span class="line">    `\\\&#123;% csrf_token \\\%&#125;`</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>bank_card</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;bank_card&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>password</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>to_bank_card</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;to_bank_card&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>money</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;money&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">value</span>=<span class="string">&quot;����ת��&quot;</span> <span class="attr">id</span>=<span class="string">&quot;btn_click&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    $(<span class="variable language_">document</span>).<span class="title function_">ready</span>(</span></span><br><span class="line"><span class="language-javascript">        $(<span class="string">&quot;#btn_click&quot;</span>).<span class="title function_">click</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">let</span> data = &#123;&#125;</span></span><br><span class="line"><span class="language-javascript">            $(<span class="string">&quot;#transform_form&quot;</span>).<span class="title function_">serializeArray</span>().<span class="title function_">forEach</span>(</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// ��һ������ �ǵ�ǰ��ǩ��name �� value</span></span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// �ڶ������� ��ǰԪ�ص�����</span></span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// ���������� ԭ��������</span></span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">function</span> (<span class="params">a</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                    data[a.<span class="property">name</span>] = a.<span class="property">value</span></span></span><br><span class="line"><span class="language-javascript">                &#125;)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            $.<span class="title function_">ajax</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">url</span>: <span class="string">&quot;&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">type</span>: <span class="string">&quot;post&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">data</span>: data,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">success</span>: <span class="keyword">function</span> (<span class="params">response</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="title function_">alert</span>(response.<span class="property">msg</span>)</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript">            &#125;)</span></span><br><span class="line"><span class="language-javascript">        &#125;)</span></span><br><span class="line"><span class="language-javascript">    )</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-��ʽ��">(2)��ʽ��</h4>
+<ul>
+<li>��ȡ���ƶ��� input ��ǩ ��ȡ val</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>����������ת��ҳ��<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">&quot;transform_form&quot;</span>&gt;</span></span><br><span class="line">    `\\\&#123;% csrf_token \\\%&#125;`</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>bank_card</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;bank_card&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>password</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>to_bank_card</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;to_bank_card&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>money</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;money&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">value</span>=<span class="string">&quot;����ת��&quot;</span> <span class="attr">id</span>=<span class="string">&quot;btn_click&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    $(<span class="variable language_">document</span>).<span class="title function_">ready</span>(</span></span><br><span class="line"><span class="language-javascript">        $(<span class="string">&quot;#btn_click&quot;</span>).<span class="title function_">click</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">let</span> data = &#123;&#125;</span></span><br><span class="line"><span class="language-javascript">						data[<span class="string">&quot;csrfmiddlewaretoken&quot;</span>]= $(<span class="string">&quot;input[name=&#x27;csrfmiddlewaretoken&#x27;]&quot;</span>).<span class="title function_">val</span>()</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            $.<span class="title function_">ajax</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">url</span>: <span class="string">&quot;&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">type</span>: <span class="string">&quot;post&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">data</span>: data,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">success</span>: <span class="keyword">function</span> (<span class="params">response</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="title function_">alert</span>(response.<span class="property">msg</span>)</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript">            &#125;)</span></span><br><span class="line"><span class="language-javascript">        &#125;)</span></span><br><span class="line"><span class="language-javascript">    )</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-��ʽ��">(3)��ʽ��</h4>
+<ul>
+<li>Django��ģ���﷨ϵͳ�Զ�����</li>
+<li><code>\\\&#123;% csrf_token \\\%&#125;</code></li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>����������ת��ҳ��<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">&quot;transform_form&quot;</span>&gt;</span></span><br><span class="line">    `\\\&#123;% csrf_token \\\%&#125;`</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>bank_card</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;bank_card&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>password</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>to_bank_card</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;to_bank_card&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>money</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;money&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">value</span>=<span class="string">&quot;����ת��&quot;</span> <span class="attr">id</span>=<span class="string">&quot;btn_click&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    $(<span class="variable language_">document</span>).<span class="title function_">ready</span>(</span></span><br><span class="line"><span class="language-javascript">        $(<span class="string">&quot;#btn_click&quot;</span>).<span class="title function_">click</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">let</span> data = &#123;&#125;</span></span><br><span class="line"><span class="language-javascript">						data[<span class="string">&quot;csrfmiddlewaretoken&quot;</span>] = <span class="string">&quot;`\\\&#123;&#123; csrf_token \\\&#125;&#125;`&quot;</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            $.<span class="title function_">ajax</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">url</span>: <span class="string">&quot;&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">type</span>: <span class="string">&quot;post&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">data</span>: data,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">success</span>: <span class="keyword">function</span> (<span class="params">response</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="title function_">alert</span>(response.<span class="property">msg</span>)</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript">            &#125;)</span></span><br><span class="line"><span class="language-javascript">        &#125;)</span></span><br><span class="line"><span class="language-javascript">    )</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-��ʽ��">(4)��ʽ��</h4>
+<ul>
+<li>
+<p>���� js �ű���� csrf ��֤</p>
+</li>
+<li>
+<p><code>static/csrf.js</code></p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">getCookie</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> cookieValue = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">document</span>.<span class="property">cookie</span> &amp;&amp; <span class="variable language_">document</span>.<span class="property">cookie</span> !== <span class="string">&#x27;&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> cookies = <span class="variable language_">document</span>.<span class="property">cookie</span>.<span class="title function_">split</span>(<span class="string">&#x27;;&#x27;</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; cookies.<span class="property">length</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">var</span> cookie = jQuery.<span class="title function_">trim</span>(cookies[i]);</span><br><span class="line">            <span class="comment">// Does this cookie string begin with the name we want?</span></span><br><span class="line">            <span class="keyword">if</span> (cookie.<span class="title function_">substring</span>(<span class="number">0</span>, name.<span class="property">length</span> + <span class="number">1</span>) === (name + <span class="string">&#x27;=&#x27;</span>)) &#123;</span><br><span class="line">                cookieValue = <span class="built_in">decodeURIComponent</span>(cookie.<span class="title function_">substring</span>(name.<span class="property">length</span> + <span class="number">1</span>));</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cookieValue;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> csrftoken = <span class="title function_">getCookie</span>(<span class="string">&#x27;csrftoken&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">csrfSafeMethod</span>(<span class="params">method</span>) &#123;</span><br><span class="line">  <span class="comment">// these HTTP methods do not require CSRF protection</span></span><br><span class="line">  <span class="keyword">return</span> (<span class="regexp">/^(GET|HEAD|OPTIONS|TRACE)$/</span>.<span class="title function_">test</span>(method));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$.<span class="title function_">ajaxSetup</span>(&#123;</span><br><span class="line">  <span class="attr">beforeSend</span>: <span class="keyword">function</span> (<span class="params">xhr, settings</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_">csrfSafeMethod</span>(settings.<span class="property">type</span>) &amp;&amp; !<span class="variable language_">this</span>.<span class="property">crossDomain</span>) &#123;</span><br><span class="line">      xhr.<span class="title function_">setRequestHeader</span>(<span class="string">&quot;X-CSRFToken&quot;</span>, csrftoken);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>����������ת��ҳ��<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">&quot;transform_form&quot;</span>&gt;</span></span><br><span class="line">    `\\\&#123;% csrf_token \\\%&#125;`</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>bank_card</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;bank_card&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>password</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>to_bank_card</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;to_bank_card&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>money</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;money&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">value</span>=<span class="string">&quot;����ת��&quot;</span> <span class="attr">id</span>=<span class="string">&quot;btn_click&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;`\\\&#123;% static &#x27;csrf.js&#x27; \\\%&#125;`&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    $(<span class="variable language_">document</span>).<span class="title function_">ready</span>(</span></span><br><span class="line"><span class="language-javascript">        $(<span class="string">&quot;#btn_click&quot;</span>).<span class="title function_">click</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">let</span> data = &#123;&#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// ��ʽ�� �� jQuery �ٷ��ĵ� ͨ��������һ���������</span></span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// �����ǿ��Խ��� �ٷ��ṩ�� js �ű��ļ��� csrf ���ȥ</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            $.<span class="title function_">ajax</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">url</span>: <span class="string">&quot;&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">type</span>: <span class="string">&quot;post&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">data</span>: data,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">success</span>: <span class="keyword">function</span> (<span class="params">response</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="title function_">alert</span>(response.<span class="property">msg</span>)</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript">            &#125;)</span></span><br><span class="line"><span class="language-javascript">        &#125;)</span></span><br><span class="line"><span class="language-javascript">    )</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="5-���">(5)���</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> JsonResponse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">transform</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="keyword">if</span> request.is_ajax():</span><br><span class="line">        <span class="built_in">print</span>(request.POST)</span><br><span class="line">        <span class="comment"># �Լ����˻���ȡ������</span></span><br><span class="line">        bank_card = request.POST.get(<span class="string">&quot;bank_card&quot;</span>)</span><br><span class="line">        password = request.POST.get(<span class="string">&quot;password&quot;</span>)</span><br><span class="line">        <span class="comment"># Ŀ���˻�</span></span><br><span class="line">        to_bank_card = request.POST.get(<span class="string">&quot;to_bank_card&quot;</span>)</span><br><span class="line">        money = request.POST.get(<span class="string">&quot;money&quot;</span>)</span><br><span class="line">        message = <span class="string">f&quot;��ǰ�˻� <span class="subst">&#123;bank_card&#125;</span> ��Ŀ���˻� <span class="subst">&#123;to_bank_card&#125;</span> ת���� <span class="subst">&#123;money&#125;</span>&quot;</span></span><br><span class="line">        back_dict = &#123;</span><br><span class="line">            <span class="string">&quot;code&quot;</span>: <span class="number">200</span>,</span><br><span class="line">            <span class="string">&quot;msg&quot;</span>: message</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> JsonResponse(back_dict)</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&quot;transform.html&quot;</span>, <span class="built_in">locals</span>())</span><br></pre></td></tr></table></figure>
+<h2 id="���塿CSRFװ����">���塿CSRFװ����</h2>
+<h3 id="��1��o�ֿ�����ֲ�����">��1��ȫ�ֿ�����ֲ�����</h3>
+<ul>
+<li>
+<p>ֻ���� CBV ��ͼ�е� dispatch ��Ч ��������Ч</p>
+<ul>
+<li>
+<p>�����Ķ�����Ч</p>
+</li>
+<li>
+<pre><code class="language-python"># csrf_protect ���� csrf ��֤����
+# csrf_exempt ȡ�� csrf ��֤����
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```python</span><br><span class="line">from django.views import View</span><br><span class="line">from django.views.decorators.csrf import csrf_protect, csrf_exempt</span><br><span class="line"></span><br><span class="line"># csrf_protect ���� csrf ��֤����</span><br><span class="line"># csrf_exempt ȡ�� csrf ��֤����</span><br><span class="line">from django.utils.decorators import method_decorator</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># ��ʽ�� ������������ --- ����Ч</span><br><span class="line"># @method_decorator(csrf_protect, name=&#x27;post&#x27;)</span><br><span class="line">class CSRFView(View):</span><br><span class="line">    def get(self, request):</span><br><span class="line">        return render(request, &quot;csrf_index.html&quot;, locals())</span><br><span class="line"></span><br><span class="line">    # ��ʽһ �� �ֲ�����װ���� ȡ����֤ --- ����Ч</span><br><span class="line">    # @method_decorator(csrf_exempt)</span><br><span class="line">    def post(self, request):</span><br><span class="line">        return HttpResponse(&quot;post&quot;)</span><br><span class="line"></span><br><span class="line">    @method_decorator(csrf_exempt) # --- ����ȡ��</span><br><span class="line">    def dispatch(self, request, *args, **kwargs):</span><br><span class="line">        # Try to dispatch to the right method; if a method doesn&#x27;t exist,</span><br><span class="line">        # defer to the error handler. Also defer to the error handler if the</span><br><span class="line">        # request method isn&#x27;t on the approved list.</span><br><span class="line">        if request.method.lower() in self.http_method_names:</span><br><span class="line">            handler = getattr(self, request.method.lower(), self.http_method_not_allowed)</span><br><span class="line">        else:</span><br><span class="line">            handler = self.http_method_not_allowed</span><br><span class="line">        return handler(request, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="��2��o�ֹرգ��ֲ�����">��2��ȫ�ֹرգ��ֲ�����</h3>
+<ul>
+<li>
+<p>ÿһ������������Ч</p>
+</li>
+<li>
+<p>ȫ�ֹر�</p>
+<ul>
+<li>
+<pre><code class="language-python">django.middleware.csrf.CsrfViewMiddleware
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```python</span><br><span class="line">from django.views import View</span><br><span class="line">from django.views.decorators.csrf import csrf_protect, csrf_exempt</span><br><span class="line"></span><br><span class="line"># csrf_protect ���� csrf ��֤����</span><br><span class="line"># csrf_exempt ȡ�� csrf ��֤����</span><br><span class="line">from django.utils.decorators import method_decorator</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># ��ʽ�� ������������ --- ��Ч</span><br><span class="line"># @method_decorator(csrf_protect, name=&#x27;post&#x27;)</span><br><span class="line">class CSRFView(View):</span><br><span class="line">    def get(self, request):</span><br><span class="line">        return render(request, &quot;csrf_index.html&quot;, locals())</span><br><span class="line"></span><br><span class="line">    # ��ʽһ �� �ֲ�����װ���� ȡ����֤ --- ��Ч</span><br><span class="line">    # @method_decorator(csrf_protect)</span><br><span class="line">    def post(self, request):</span><br><span class="line">        return HttpResponse(&quot;post&quot;)</span><br><span class="line"></span><br><span class="line">    @method_decorator(csrf_protect) # --- ��Ч</span><br><span class="line">    def dispatch(self, request, *args, **kwargs):</span><br><span class="line">        # Try to dispatch to the right method; if a method doesn&#x27;t exist,</span><br><span class="line">        # defer to the error handler. Also defer to the error handler if the</span><br><span class="line">        # request method isn&#x27;t on the approved list.</span><br><span class="line">        if request.method.lower() in self.http_method_names:</span><br><span class="line">            handler = getattr(self, request.method.lower(), self.http_method_not_allowed)</span><br><span class="line">        else:</span><br><span class="line">            handler = self.http_method_not_allowed</span><br><span class="line">        return handler(request, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="���ߡ�Authg��">���ߡ�Authģ��</h2>
+<ul>
+<li>
+<p>Authģ������Django�ṩ��Ĭ�ϵ��û�ģ��</p>
+</li>
+<li>
+<p>�������Ǻ�� Django��admin ��̨���û�У�鶼�Ǵ� auth ģ��������֤��</p>
+</li>
+</ul>
+<h3 id="��1��������������Ա">��1��������������Ա</h3>
+<ul>
+<li>�նˣ�python <a target="_blank" rel="noopener" href="http://manage.py">manage.py</a> createsuperuser</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> auth</span><br><span class="line"><span class="comment"># Django�� auth ģ���ģ�ͱ�</span></span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br></pre></td></tr></table></figure>
+<h3 id="��2����֤ע��">��2����֤ע��</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">RegisterView</span>(<span class="title class_ inherited__">View</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self, request</span>):</span><br><span class="line">        <span class="keyword">return</span> render(request, <span class="string">&quot;register.html&quot;</span>, <span class="built_in">locals</span>())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self, request</span>):</span><br><span class="line">        username = request.POST.get(<span class="string">&quot;username&quot;</span>)</span><br><span class="line">        password = request.POST.get(<span class="string">&quot;password&quot;</span>)</span><br><span class="line">        <span class="comment"># �û�ע�� ��</span></span><br><span class="line">        <span class="comment"># ���ݿ������������ĵ����� ��֪�����ܷ�ʽ</span></span><br><span class="line">        <span class="comment"># �������ݿ�ģ�ͱ���Ҫģ�ͱ� û��ģ�ͱ�</span></span><br><span class="line">        <span class="comment"># ����ֱ�Ӵ����û� ��Ϊ��������û���Ϣ�� �û����������������ݶ�������������</span></span><br><span class="line">        <span class="comment"># User.objects.create(username=username, password=password)</span></span><br><span class="line">        User.objects.create_user(username=username, password=password)</span><br><span class="line">        <span class="keyword">return</span> redirect(reverse(<span class="string">&quot;home&quot;</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="��3����֤��¼�������½״̬">��3����֤��¼�������½״̬</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">LoginView</span>(<span class="title class_ inherited__">View</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self, request</span>):</span><br><span class="line">        <span class="keyword">return</span> render(request, <span class="string">&quot;login.html&quot;</span>, <span class="built_in">locals</span>())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self, request</span>):</span><br><span class="line">        username = request.POST.get(<span class="string">&quot;username&quot;</span>)</span><br><span class="line">        password = request.POST.get(<span class="string">&quot;password&quot;</span>)</span><br><span class="line">        <span class="comment"># �û���½</span></span><br><span class="line">        <span class="comment"># ��֤��ǰ�û����û���������</span></span><br><span class="line">        <span class="comment"># ��֤�û���û����</span></span><br><span class="line">        <span class="comment"># ���������ĵ� ���ݿ�������</span></span><br><span class="line">        user_obj = auth.authenticate(username=username, password=password)</span><br><span class="line">        <span class="comment"># print(user_obj, type(user_obj))  # dream1 &lt;class &#x27;django.contrib.auth.models.User&#x27;&gt;</span></span><br><span class="line">        <span class="comment"># print(user_obj.username) # dream1</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">dir</span>(request))</span><br><span class="line">        <span class="built_in">print</span>(request.user)  <span class="comment"># AnonymousUser �����û�</span></span><br><span class="line">        <span class="comment"># �����û��ĵ�½״̬</span></span><br><span class="line">        <span class="comment"># ��ǰ��ʹ��Cookie�� session</span></span><br><span class="line">        <span class="keyword">if</span> user_obj:</span><br><span class="line">            auth.login(request, user_obj)  <span class="comment"># ��ʼ���ǽ�request ����� user �����滻�ɵ�ǰ��֤�����û�����</span></span><br><span class="line">            <span class="comment"># print(request.user,type(request.user))</span></span><br><span class="line">            <span class="keyword">return</span> redirect(reverse(<span class="string">&quot;home&quot;</span>))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> redirect(reverse(<span class="string">&quot;login&quot;</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="��4���޸�����">��4���޸�����</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UpdateView</span>(<span class="title class_ inherited__">View</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self, request</span>):</span><br><span class="line">        <span class="keyword">return</span> render(request, <span class="string">&quot;update.html&quot;</span>, <span class="built_in">locals</span>())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self, request</span>):</span><br><span class="line">        username = request.POST.get(<span class="string">&quot;username&quot;</span>)</span><br><span class="line">        old_password = request.POST.get(<span class="string">&quot;old_password&quot;</span>)</span><br><span class="line">        new_password = request.POST.get(<span class="string">&quot;new_password&quot;</span>)</span><br><span class="line">        <span class="comment"># �û��޸�����</span></span><br><span class="line">        <span class="comment"># ���ĵ����� ������ת��������</span></span><br><span class="line">        <span class="comment"># У��ԭ���������Ƿ���ȷ</span></span><br><span class="line">        <span class="keyword">if</span> request.user.check_password(old_password):</span><br><span class="line">            <span class="comment"># ��������ȷ�޸�������</span></span><br><span class="line">            request.user.set_password(new_password)</span><br><span class="line">            <span class="comment"># û�д�������</span></span><br><span class="line">            request.user.save()</span><br><span class="line">            <span class="keyword">return</span> redirect(reverse(<span class="string">&quot;home&quot;</span>))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> redirect(reverse(<span class="string">&quot;update&quot;</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="��5��ע����¼">��5��ע����¼</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">logout</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="comment"># ע����¼</span></span><br><span class="line">    auth.logout(request)</span><br><span class="line">    <span class="keyword">return</span> redirect(reverse(<span class="string">&quot;home&quot;</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="��6��У���½">��6��У���½</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># У���½</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="comment"># У�鵱ǰ�û��Ƿ��¼</span></span><br><span class="line">    <span class="keyword">if</span> request.user.is_authenticated:</span><br><span class="line">        <span class="keyword">return</span> render(request, <span class="string">&quot;index.html&quot;</span>, <span class="built_in">locals</span>())</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> redirect(reverse(<span class="string">&quot;home&quot;</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="��7����½��֤װ����">��7����½��֤װ����</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ��½��֤װ����</span></span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.decorators <span class="keyword">import</span> login_required</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">Decorator for views that checks that the user is logged in, redirecting</span></span><br><span class="line"><span class="string">    to the log-in page if necessary.</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ������һ����ֱ����װ�������� login_url</span></span><br><span class="line"><span class="comment"># û�е�½�����û�����ĳ��ҳ�� ---&gt; ��ת����½ҳ�����û�ȥ��¼</span></span><br><span class="line"><span class="comment"># @login_required(login_url=&quot;/login/&quot;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ��������������ȫ�ֵ� settings �������ò���</span></span><br><span class="line"><span class="comment"># LOGIN_URL = &#x27;/login/&#x27;</span></span><br><span class="line"><span class="meta">@login_required</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index_decorators</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="comment"># У�鵱ǰ�û��Ƿ��¼</span></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&quot;index.html&quot;</span>, <span class="built_in">locals</span>())</span><br></pre></td></tr></table></figure>
+<h3 id="��8����չAuth��">��8����չAuth��</h3>
+<ul>
+<li>��չAuth����Ҫ��settings��������<code>AUTH_USER_MODEL = 'user.UserInfo'</code>��д����</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your models here.</span></span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User,AbstractUser</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ��չ authģ��� User��</span></span><br><span class="line"><span class="comment"># ��ʽһ �� �̳� AbstractUser ��д�ֶ�</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserInfo</span>(<span class="title class_ inherited__">AbstractUser</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    ԭ���кܶ��ֶ� ԭ�����ֶ��Ҳ������ģ�</span></span><br><span class="line"><span class="string">    ����ԭ�����ֶν�������</span></span><br><span class="line"><span class="string">    �����ֶ� �ֻ��� ��ַ</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    phone = models.CharField(max_length=<span class="number">11</span>, null=<span class="literal">True</span>, blank=<span class="literal">True</span>)</span><br><span class="line">    addr = models.CharField(max_length=<span class="number">100</span>, null=<span class="literal">True</span>, blank=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ���ò��� ��settings ���� ��һ��������</span></span><br><span class="line"><span class="comment"># AUTH_USER_MODEL = &#x27;user.UserInfo&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ��ʽ�� �� ���±��й����ɱ�</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserDetail</span>(models.Model):</span><br><span class="line">    phone = models.CharField(max_length=<span class="number">11</span>, null=<span class="literal">True</span>, blank=<span class="literal">True</span>)</span><br><span class="line">    user = models.OneToOneField(</span><br><span class="line">        to=<span class="string">&quot;User&quot;</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/BBS%E9%A1%B9%E7%9B%AE%E4%B9%8B%E8%A1%A8%E5%88%86%E6%9E%90%EF%BC%88%E6%A8%A1%E4%BB%BF%E5%8D%9A%E5%AE%A2%E5%9B%AD%E7%9A%84%E9%A1%B9%E7%9B%AE%EF%BC%89/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/9.0Django%E6%A1%86%E6%9E%B6%E4%B9%8B%E6%A8%A1%E6%9D%BF%E5%B1%82/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Django���֮CSRF��վ����</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%D2%BB%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.1.</span> <span class="nav-text">��һ������</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%CA%B2o%EF%BF%BD%EF%BF%BDCSRF"><span class="nav-number">1.2.</span> <span class="nav-text">������ʲô��CSRF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%CA%A9"><span class="nav-number">1.3.</span> <span class="nav-text">������������ʩ</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%CA%B9%EF%BF%BD%EF%BF%BDCSRF%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.3.1.</span> <span class="nav-text">��1��ʹ��CSRF����</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%CF%B8%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%A4%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D4%B4"><span class="nav-number">1.3.2.</span> <span class="nav-text">��2���ϸ���֤�������Դ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BD%CA%B9%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%A4%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.3.3.</span> <span class="nav-text">��3��ʹ����֤��</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BDg%EF%BF%BDCSRF%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%A4"><span class="nav-number">1.4.</span> <span class="nav-text">���ġ�CSRF������֤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.1.</span> <span class="nav-text">��1������</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BDk%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.2.</span> <span class="nav-text">��2��ǩ������</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BDfrom%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%A4%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.3.</span> <span class="nav-text">��3��from�����֤����</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD4%EF%BF%BD%EF%BF%BDAjax%EF%BF%BD%EF%BF%BD%D6%A4%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.4.</span> <span class="nav-text">��4��Ajax��֤����</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%CA%BD%D2%BB"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">��1����ʽһ</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%EF%BF%BD%EF%BF%BD%CA%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">(2)��ʽ��</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%EF%BF%BD%EF%BF%BD%CA%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.4.3.</span> <span class="nav-text">(3)��ʽ��</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%EF%BF%BD%EF%BF%BD%CA%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.4.4.</span> <span class="nav-text">(4)��ʽ��</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.4.4.5.</span> <span class="nav-text">(5)���</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%E5%A1%BFCSRF%D7%B0%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.5.</span> <span class="nav-text">���塿CSRFװ����</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BDo%EF%BF%BD%D6%BF%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%B2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.5.1.</span> <span class="nav-text">��1��ȫ�ֿ�����ֲ�����</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BDo%EF%BF%BD%D6%B9%D8%B1%D5%A3%EF%BF%BD%EF%BF%BD%D6%B2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.5.2.</span> <span class="nav-text">��2��ȫ�ֹرգ��ֲ�����</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%DF%A1%EF%BF%BDAuthg%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.6.</span> <span class="nav-text">���ߡ�Authģ��</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D4%B1"><span class="nav-number">1.6.1.</span> <span class="nav-text">��1��������������Ա</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%A4%D7%A2%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.6.2.</span> <span class="nav-text">��2����֤ע��</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D6%A4%EF%BF%BD%EF%BF%BD%C2%BC%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%C2%BD%D7%B4%CC%AC"><span class="nav-number">1.6.3.</span> <span class="nav-text">��3����֤��¼�������½״̬</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD4%EF%BF%BD%EF%BF%BD%EF%BF%BD%DE%B8%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.6.4.</span> <span class="nav-text">��4���޸�����</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD5%EF%BF%BD%EF%BF%BD%D7%A2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%C2%BC"><span class="nav-number">1.6.5.</span> <span class="nav-text">��5��ע����¼</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD6%EF%BF%BD%EF%BF%BD%D0%A3%EF%BF%BD%EF%BF%BD%EF%BF%BD%C2%BD"><span class="nav-number">1.6.6.</span> <span class="nav-text">��6��У���½</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD7%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%C2%BD%EF%BF%BD%EF%BF%BD%D6%A4%D7%B0%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.6.7.</span> <span class="nav-text">��7����½��֤װ����</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD8%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%D5%B9Auth%EF%BF%BD%EF%BF%BD"><span class="nav-number">1.6.8.</span> <span class="nav-text">��8����չAuth��</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

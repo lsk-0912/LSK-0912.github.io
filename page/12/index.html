@@ -147,7 +147,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/3.1%E6%AD%BB%E9%94%81%EF%BC%8C%E9%80%92%E5%BD%92%E9%94%81/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/4.6os%E6%A8%A1%E5%9D%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -161,7 +161,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/3.1%E6%AD%BB%E9%94%81%EF%BC%8C%E9%80%92%E5%BD%92%E9%94%81/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/4.6os%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -170,9 +170,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:41" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -186,7 +201,113 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1>os模块</h1>
+<h1>【一】什么是os模块</h1>
+<ul>
+<li>
+<p>os模块可以操作本地的文件夹及文件</p>
+</li>
+<li>
+<p>创建删除文件夹/文件</p>
+</li>
+<li>
+<p>执行本地的cmd命令</p>
+</li>
+<li>
+<p>拼接路径</p>
+</li>
+<li>
+<h2 id="file-表示当前文件">__file__表示当前文件</h2>
+</li>
+</ul>
+<h1>【二】文件路径相关操作(path)</h1>
+<h2 id="【1】获取当前绝对路径（abspath）">【1】获取当前绝对路径（abspath）</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment">#获取当前路径</span></span><br><span class="line">os_path = os.path.abspath(__file__)</span><br><span class="line"><span class="built_in">print</span>(os_path)<span class="comment">#输出：D:\pycharm\project\DAY01\作业\笔记练习.py</span></span><br></pre></td></tr></table></figure>
+<h2 id="【2】获得当前文件所在文件路径-dirname">【2】获得当前文件所在文件路径(dirname)</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment">#获得当前文件所在文件路径</span></span><br><span class="line">os_path = os.path.dirname(__file__)</span><br><span class="line"><span class="built_in">print</span>(os_path)<span class="comment">#D:\pycharm\project\DAY01\作业</span></span><br></pre></td></tr></table></figure>
+<h2 id="【3】判断当前文件路径是否存在-》文件夹-文件-exists">【3】判断当前文件路径是否存在----》文件夹/文件(exists)</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">file_name = <span class="string">r&quot;D:\pycharm\project\DAY01\作业\tom_log.text&quot;</span><span class="comment">#先给一个路径</span></span><br><span class="line"><span class="built_in">print</span>(os.path.exists(path=file_name))<span class="comment">#输出True    说明这个路径存在，不存在返回False</span></span><br></pre></td></tr></table></figure>
+<h2 id="【4】拼接文件路径（join）">【4】拼接文件路径（join）</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">BASE_DIR = os.path.dirname(__file__)<span class="comment">#当前路径</span></span><br><span class="line"><span class="built_in">print</span>(BASE_DIR)<span class="comment">#D:\pycharm\project\DAY01\作业</span></span><br><span class="line"></span><br><span class="line">file_name = <span class="string">&#x27;img&#x27;</span></span><br><span class="line"><span class="comment"># join 后面可以跟多个路径</span></span><br><span class="line">file_path = os.path.join(BASE_DIR, file_name)<span class="comment">#拼接</span></span><br><span class="line"><span class="built_in">print</span>(file_path)<span class="comment">#D:\pycharm\project\DAY01\作业\img</span></span><br></pre></td></tr></table></figure>
+<h2 id="【5】切割文件路径">【5】切割文件路径</h2>
+<ul>
+<li>切后得到一个元组里面有两个元素，两个元素分别是（其他路径，最后一个文件夹/文件夹名）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment">#获得当前路径</span></span><br><span class="line">BASE_DIR = os.path.abspath(__file__)</span><br><span class="line"><span class="built_in">print</span>(BASE_DIR)<span class="comment">#D:\pycharm\project\DAY01\作业\笔记练习.py</span></span><br><span class="line"><span class="comment">#拆分</span></span><br><span class="line">file_path = os.path.split(BASE_DIR)</span><br><span class="line"><span class="built_in">print</span>(file_path)<span class="comment">#(&#x27;D:\\pycharm\\project\\DAY01\\作业&#x27;, &#x27;笔记练习.py&#x27;)</span></span><br></pre></td></tr></table></figure>
+<h2 id="【6】获取文件结尾的文件-文件夹名（basename）">【6】获取文件结尾的文件/文件夹名（basename）</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">file_path = os.path.dirname(__file__)</span><br><span class="line"><span class="built_in">print</span>(file_path)<span class="comment">#D:\pycharm\project\DAY01\作业</span></span><br><span class="line">filen_name_basename = os.path.basename(file_path)</span><br><span class="line"><span class="built_in">print</span>(filen_name_basename)<span class="comment">#笔记练习.py</span></span><br></pre></td></tr></table></figure>
+<h2 id="【7】判断当前文件是不是文件夹-文件（isdir-isfile）">【7】判断当前文件是不是文件夹/文件（isdir,isfile）</h2>
+<ul>
+<li>判断是否是文件isfile</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">file_path = os.path.dirname(__file__)</span><br><span class="line"><span class="built_in">print</span>(file_path)<span class="comment">#D:\pycharm\project\DAY01\作业</span></span><br><span class="line">file_path_two = os.path.isfile(file_path)</span><br><span class="line"><span class="built_in">print</span>(file_path_two)<span class="comment">#False</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>判断是否是文件夹isdir</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">file_path = os.path.dirname(__file__)</span><br><span class="line"><span class="built_in">print</span>(file_path)<span class="comment">#D:\pycharm\project\DAY01\作业</span></span><br><span class="line">file_path_two = os.path.isdir(file_path)</span><br><span class="line"><span class="built_in">print</span>(file_path_two)<span class="comment">#True</span></span><br></pre></td></tr></table></figure>
+<h2 id="【8】判断当前路径是否是绝对路径-isabs">【8】判断当前路径是否是绝对路径(isabs)</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">file_path = <span class="string">r&quot;作业/01.txt&quot;</span></span><br><span class="line"><span class="built_in">print</span>(os.path.isabs(file_path))<span class="comment">#False</span></span><br><span class="line"></span><br><span class="line">file_path = <span class="string">r&quot;D:\pycharm\project\DAY01\作业\01.txt&quot;</span></span><br><span class="line"><span class="built_in">print</span>(os.path.isabs(file_path))<span class="comment">#True</span></span><br></pre></td></tr></table></figure>
+<h2 id="【9】获取当前文件或目录的最后访问时间（getatime）">【9】获取当前文件或目录的最后访问时间（getatime）</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">file_path = os.path.abspath(__file__)</span><br><span class="line"><span class="built_in">print</span>(file_path)<span class="comment">#D:\pycharm\project\DAY01\作业\笔记练习.py</span></span><br><span class="line">file_time =os.path.getatime(file_path)</span><br><span class="line"><span class="built_in">print</span>(file_time)<span class="comment">#1713527506.5012364</span></span><br></pre></td></tr></table></figure>
+<h2 id="【10】获取当前文件或目录的最后修改时间（getmtime）">【10】获取当前文件或目录的最后修改时间（getmtime）</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">file_path = <span class="string">r&#x27;D:\pycharm\project&#x27;</span></span><br><span class="line">file_time = os.path.getmtime(file_path)</span><br><span class="line"><span class="built_in">print</span>(time.strftime(<span class="string">&quot;%Y-%m-%d  %H-%M-%S&quot;</span>, time.localtime(file_time)))<span class="comment">#2024-03-28  19-34-18</span></span><br></pre></td></tr></table></figure>
+<h2 id="【11】获取当前文件或者目录的创建时间-getctime">【11】获取当前文件或者目录的创建时间(getctime)</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">file_path = <span class="string">r&#x27;D:\pycharm\project&#x27;</span></span><br><span class="line">file_time = os.path.getctime(file_path)</span><br><span class="line"><span class="built_in">print</span>(time.strftime(<span class="string">&quot;%Y-%m-%d  %H-%M-%S&quot;</span>, time.localtime(file_time)))<span class="comment">#2024-03-27  16-30-42</span></span><br></pre></td></tr></table></figure>
+<h2 id="【12】获取当前文件的大小（getsize）">【12】获取当前文件的大小（getsize）</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">file_path = <span class="string">r&#x27;D:\pycharm\project\DAY01\作业\ATMuser_pass.py&#x27;</span></span><br><span class="line">file_time = os.path.getsize(file_path)</span><br><span class="line"><span class="built_in">print</span>(file_time)<span class="comment">#18283</span></span><br></pre></td></tr></table></figure>
+<h1>【三】文件和文件夹操作</h1>
+<h2 id="【1】创建文件夹（mkdir）">【1】创建文件夹（mkdir）</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BASE_DIR = os.path.dirname(__file__)</span><br><span class="line"><span class="built_in">print</span>(BASE_DIR)<span class="comment">#D:\pycharm\project\DAY01\作业</span></span><br><span class="line">file_path = os.path.join(BASE_DIR,<span class="string">&quot;py&quot;</span>)<span class="comment">#先判断它存在不存在</span></span><br><span class="line"><span class="built_in">print</span>(os.path.exists(file_path))<span class="comment">#False</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(file_path):</span><br><span class="line">    os.mkdir(file_path)</span><br><span class="line"><span class="built_in">print</span>(os.path.exists(file_path))<span class="comment">#True创建成功</span></span><br></pre></td></tr></table></figure>
+<h2 id="【2】创建多级文件夹-makedirs">【2】创建多级文件夹(makedirs)</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BASE_DIR = os.path.dirname(__file__)</span><br><span class="line"><span class="built_in">print</span>(BASE_DIR)<span class="comment">#D:\pycharm\project\DAY01\作业</span></span><br><span class="line">file_path = os.path.join(BASE_DIR,<span class="string">&quot;py&quot;</span>,<span class="string">&quot;user&quot;</span>,<span class="string">&quot;log&quot;</span>)<span class="comment">#先判断它存在不存在</span></span><br><span class="line"><span class="built_in">print</span>(os.path.exists(file_path))<span class="comment">#False</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(file_path):</span><br><span class="line">    os.makedirs(file_path)</span><br><span class="line"><span class="built_in">print</span>(os.path.exists(file_path))<span class="comment">#True创建成功</span></span><br></pre></td></tr></table></figure>
+<h2 id="【3】删除单级文件夹-rmdir">【3】删除单级文件夹(rmdir)</h2>
+<ul>
+<li>只能删除空的文件夹 即使文件夹内有空文件夹也不算空的</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#D:\pycharm\project\DAY01\作业\py</span></span><br><span class="line"><span class="built_in">print</span>(os.path.exists(py))<span class="comment">#检验路径是否存在</span></span><br><span class="line">os.rmdir(py)<span class="comment">#删除文件夹</span></span><br><span class="line"><span class="built_in">print</span>(os.path.exists(py))<span class="comment">#检验路径是否删除</span></span><br></pre></td></tr></table></figure>
+<h2 id="【4】删除多级文件夹-removedirs">【4】删除多级文件夹(removedirs)</h2>
+<ul>
+<li>删除多级文件夹目录 路径一定是到最里面那一层并且每个文件夹必须是空的</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#D:\pycharm\project\DAY01\作业</span></span><br><span class="line"><span class="built_in">print</span>(os.path.exists())<span class="comment">#检验路径是否存在</span></span><br><span class="line">os.removedirs(py)<span class="comment">#删除文件夹</span></span><br><span class="line"><span class="built_in">print</span>(os.path.exists())<span class="comment">#检验路径是否删除</span></span><br></pre></td></tr></table></figure>
+<h2 id="【5】列出当前文件夹下所有文件名-listdir">【5】列出当前文件夹下所有文件名(listdir)</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BASE_DIR = os.path.dirname(__file__)</span><br><span class="line"><span class="built_in">print</span>(os.listdir(BASE_DIR))</span><br></pre></td></tr></table></figure>
+<h2 id="【6】删除指定文件-remove">【6】删除指定文件(remove)</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#D:\pycharm\project\DAY01\作业</span></span><br><span class="line">BASE_DIR = os.path.dirname(__file__)</span><br><span class="line">file_path = <span class="string">&quot;11.py&quot;</span></span><br><span class="line">data = os.path.join(BASE_DIR,file_path)</span><br><span class="line"><span class="built_in">print</span>(os.remove(data))<span class="comment">#None  说明已经删除</span></span><br></pre></td></tr></table></figure>
+<h2 id="【7】给指定文件夹和文件重命名（rename）">【7】给指定文件夹和文件重命名（rename）</h2>
+<ul>
+<li>给两个绝对路径
+<ul>
+<li>一个是之前的绝对路径</li>
+<li>一个是重命名后的绝对路径</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">BASE_DIR = os.path.dirname(__file__)</span><br><span class="line"><span class="built_in">print</span>(BASE_DIR)<span class="comment">#D:\pycharm\project\DAY01\练习模块</span></span><br><span class="line">old_path = os.path.join(BASE_DIR,<span class="string">&#x27;img&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(old_path)<span class="comment">#D:\pycharm\project\DAY01\练习模块\img</span></span><br><span class="line">new_path = os.path.join(BASE_DIR,<span class="string">&#x27;new_img&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(new_path)<span class="comment">#D:\pycharm\project\DAY01\练习模块\new_img</span></span><br><span class="line">os.rename(old_path)</span><br></pre></td></tr></table></figure>
+<h2 id="【8】获取当前文件-文件夹详细信息，元信息（stat）">【8】获取当前文件/文件夹详细信息，元信息（stat）</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">BASE_DIR = os.path.dirname(__file__)</span><br><span class="line"><span class="built_in">print</span>(BASE_DIR)<span class="comment">#D:\pycharm\project\DAY01\练习模块</span></span><br><span class="line"><span class="built_in">print</span>(os.stat(BASE_DIR))<span class="comment">#os.stat_result(st_mode=16895, st_ino=21673573206763848, st_dev=1718800474, st_nlink=1, st_uid=0, st_gid=0, st_size=0, st_atime=1713531542, st_mtime=1713531541, st_ctime=1713531157)</span></span><br></pre></td></tr></table></figure>
+<h2 id="【9】获取当前工作目录-getcwd">【9】获取当前工作目录(getcwd)</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(os.getcwd())<span class="comment">#D:\pycharm\project\DAY01\练习模块</span></span><br></pre></td></tr></table></figure>
+<h2 id="【10】切换工作-chdir">【10】切换工作(chdir)</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">BASE_DIR = os.path.dirname(__file__)</span><br><span class="line"><span class="comment"># 获取当前工作目录，即当前python脚本工作的目录路径</span></span><br><span class="line">file_path = os.getcwd()</span><br><span class="line"><span class="built_in">print</span>(file_path)<span class="comment">#D:\pycharm\project\DAY01\练习模块</span></span><br><span class="line"><span class="comment"># E:\PythonProjects\07常用模块学习</span></span><br><span class="line"></span><br><span class="line">img_file_path = os.path.join(BASE_DIR, <span class="string">&#x27;img&#x27;</span>)</span><br><span class="line">os.chdir(img_file_path)</span><br><span class="line"></span><br><span class="line">file_path_new = os.getcwd()</span><br><span class="line"><span class="built_in">print</span>(file_path_new)<span class="comment">#D:\pycharm\project\DAY01\练习模块\img</span></span><br></pre></td></tr></table></figure>
+<h2 id="【补充】执行shell命令">【补充】执行shell命令</h2>
+<ul>
+<li>执行cmd命令</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(os.system(<span class="string">&quot;dir&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(os.popen(<span class="string">&quot;dir&quot;</span>)）</span><br></pre></td></tr></table></figure>
+<h2 id="【补充】获取当前系统所对行的默认分隔符">【补充】获取当前系统所对行的默认分隔符</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># win \</span></span><br><span class="line"><span class="comment"># mac / linux  /</span></span><br><span class="line"><span class="comment"># 输出操作系统特定的路径分隔符</span></span><br><span class="line"><span class="built_in">print</span>(os.sep) <span class="comment"># \</span></span><br><span class="line"><span class="comment"># 输出当前平台使用的行终止符</span></span><br><span class="line"><span class="built_in">print</span>(os.linesep) <span class="comment"># </span></span><br><span class="line"><span class="comment"># 输出用于分割文件路径的字符串</span></span><br><span class="line"><span class="built_in">print</span>(os.pathsep)<span class="comment"># ;</span></span><br><span class="line"><span class="comment"># 输出字符串指示当前使用平台</span></span><br><span class="line"><span class="built_in">print</span>(os.name) <span class="comment"># nt</span></span><br><span class="line"><span class="comment"># win下为 &#x27;nt&#x27;</span></span><br><span class="line"><span class="comment"># Linux下为 &#x27;posix&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="【记住重点】">【记住重点】</h2>
+<ul>
+<li>os.path.join() 拼接路径</li>
+<li>os.path.dirname(	<code>__file__	</code>) 获取当前文件所在的文件夹路径</li>
+<li>os.path.abspath(<code>__file__	</code>)获取当前文件所在的文件路径</li>
+<li>os.path.exists() 判断路径是否存在</li>
+<li>os.mkdir() 创建单级文件夹</li>
+<li>os.makedirs() 创建多级文件夹</li>
+<li>os.makedirs(path, exist_ok=True) 自动创建不存在的多级文件夹路径</li>
+</ul>
+
       
     </div>
 
@@ -205,7 +326,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/3.1%E5%87%BD%E6%95%B0%E7%9A%84%E8%B0%83%E7%94%A8%E6%96%B9%E5%BC%8F/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/4%E6%9C%8821%E5%A4%A7%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -219,7 +340,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/3.1%E5%87%BD%E6%95%B0%E7%9A%84%E8%B0%83%E7%94%A8%E6%96%B9%E5%BC%8F/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/4%E6%9C%8821%E5%A4%A7%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -228,9 +349,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:41" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -244,7 +380,402 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1>4.21大总结</h1>
+<h2 id="【一】函数">【一】函数</h2>
+<ul>
+<li>
+<p>什么是函数</p>
+<ul>
+<li>就是把一个复杂的需求拆分，然后做成单个功能的，在全局都能用（前提是在调用函数的下面使用）</li>
+</ul>
+</li>
+<li>
+<p>函数的标志-----》 def打头</p>
+</li>
+<li>
+<p>函数的调用方式</p>
+<ul>
+<li>直接掉调用
+<ul>
+<li>def name_age(name,age)#调用的时候别忘记给参数</li>
+</ul>
+</li>
+<li>表达式调用
+<ul>
+<li>data = age(2,3) + 6#age()是函数</li>
+</ul>
+</li>
+<li>函数作返回值
+<ul>
+<li>函数的返回值作为参数，给其他参数使用</li>
+<li>函数的内存地址可以作为参数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>函数的形参</p>
+<ul>
+<li>就是在定义函数（）里面的参数名</li>
+</ul>
+</li>
+<li>
+<p>函数的实参</p>
+<ul>
+<li>就是函数被调用阶段进去的参数</li>
+</ul>
+</li>
+<li>
+<p>传参</p>
+<ul>
+<li>位置传参</li>
+<li>关键字传参</li>
+<li>默认值传参</li>
+</ul>
+</li>
+<li>
+<p>可变长位置擦参数</p>
+<ul>
+<li>*ages</li>
+</ul>
+</li>
+<li>
+<p>可变长关键字参数</p>
+<ul>
+<li>**kwargs</li>
+</ul>
+</li>
+</ul>
+<h1>【二】名称空间</h1>
+<ul>
+<li>
+<p>内建名称空间：python自带的</p>
+</li>
+<li>
+<p>全局名称空间：自己定义的</p>
+</li>
+<li>
+<p>局部名称空间：定义在函数/类 里面的函数名…</p>
+</li>
+<li>
+<p>程序启动的加载顺序–</p>
+<ul>
+<li>先内-再全-最后局</li>
+</ul>
+</li>
+<li>
+<p>寻找变量名的加载顺序</p>
+<ul>
+<li>先局-在全-最后内</li>
+</ul>
+</li>
+</ul>
+<h1>【三】作用域</h1>
+<ul>
+<li>
+<p>局部作用域（Local）</p>
+<ul>
+<li>函数亡，局部变量亡</li>
+<li>范围：整个函数体范围</li>
+<li>查看局部变量：locals</li>
+</ul>
+</li>
+<li>
+<p>嵌套作用域(Enclosed)</p>
+<ul>
+<li>范围：闭包函数</li>
+</ul>
+</li>
+<li>
+<p>全局作用域（Global）</p>
+<ul>
+<li>在模块文件最顶层生命的变量，具有全局性</li>
+<li>修改全局变量我们可以用globals</li>
+</ul>
+</li>
+<li>
+<p>内建作用域（Built）</p>
+<ul>
+<li>随着python启动自己加载的名称空间</li>
+</ul>
+</li>
+<li>
+<p>查找顺序legb</p>
+</li>
+<li>
+<p>全局变量和局部变量重名时，采用就近原则</p>
+</li>
+</ul>
+<h1>【四】函数对象</h1>
+<ul>
+<li>python中一切皆对象</li>
+<li>函数可以直接被引用
+<ul>
+<li>定义一个函数用一个新的变量来存，用新的变量名调用</li>
+</ul>
+</li>
+<li>可以做为元组被储存</li>
+<li>函数可以作为一个参数传给另一个参数</li>
+<li>函数的返回值可以是一个参数传给另一个参数</li>
+<li>函数的返回值可以是一个函数
+<ul>
+<li>直接将函数的内存地址返回</li>
+</ul>
+</li>
+</ul>
+<h1>【五】装饰器</h1>
+<ul>
+<li>在不修改被装饰对象源代码和调用方式的前提下为被装饰对象添加额外的功能。</li>
+<li>分类
+<ul>
+<li>有参函数</li>
+<li>无参函数</li>
+</ul>
+</li>
+<li>原理
+<ul>
+<li>闭包函数和函数对象的组合使用</li>
+</ul>
+</li>
+<li>无参装饰器
+<ul>
+<li>没有参数的装饰器</li>
+</ul>
+</li>
+<li>模板</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 无参装饰器的模板</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">outer</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27; </span></span><br><span class="line"><span class="string">    :param func: 每一次需要调用传递的函数</span></span><br><span class="line"><span class="string">    :return:返回值是内嵌函数 inner 的函数内存地址 </span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>():</span><br><span class="line">        <span class="comment"># 可以加逻辑校验</span></span><br><span class="line">        <span class="comment"># 当符合指定条件后，可以允许执行传递进来的函数</span></span><br><span class="line">        <span class="comment"># 不符合条件的时候不执行函数</span></span><br><span class="line">        func()</span><br><span class="line">        <span class="comment"># 做逻辑校验，func 函数执行后的逻辑</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> inner</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>有参装饰器</p>
+<ul>
+<li>根据指定的位置传递参数</li>
+</ul>
+</li>
+<li>
+<p>优化</p>
+<ul>
+<li>用可变长位置参数和可变长关键字参数接收函数所需要的所有参数</li>
+</ul>
+</li>
+<li>
+<p>模板</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#无参模版</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">outer</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>():</span><br><span class="line">        func()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line"><span class="comment">#有参模版</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">outer_yes</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*args, **kwargs</span>):</span><br><span class="line">        func(*args, **kwargs)</span><br><span class="line">    <span class="keyword">return</span> inner</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>装饰器语法糖</p>
+</li>
+<li>
+<p>标志@</p>
+</li>
+<li>
+<p>无参装饰器语法糖</p>
+<ul>
+<li>无参数</li>
+</ul>
+</li>
+<li>
+<p>有参语法糖</p>
+<ul>
+<li>有参数</li>
+<li>但语法糖：就@</li>
+<li>多语法糖：多个@</li>
+</ul>
+</li>
+</ul>
+<h1>【六】迭代器</h1>
+<ul>
+<li>每次迭代得到的返回值结果可就是下一次迭代开始的初始值</li>
+<li>可迭代对象
+<ul>
+<li>内置有.__iter__方法的对象都是可迭代对象</li>
+<li>不可迭代的：布尔，整数，浮点数，剩下都的可以</li>
+</ul>
+</li>
+</ul>
+<h1>【七】迭代器对象</h1>
+<ul>
+<li>
+<p>内置有.__iter__和.__next__就是迭代器对象</p>
+</li>
+<li>
+<p>.__next__挨个取值一次只能取一个，下次从你上一次的取值结果继续开始</p>
+</li>
+<li>
+<p>也可以直接写成next（），iter（）</p>
+</li>
+<li>
+<p>缺点：除非取值取到尽头，否则永远不知道终止索引在哪里</p>
+<ul>
+<li>只能取一次记一次位置，下一次的起始位置是上一次的终止位置，想回到开头，回不去</li>
+</ul>
+</li>
+</ul>
+<h1>【八】生成器</h1>
+<ul>
+<li>
+<p>在python中生成器就是一种特殊的迭代器</p>
+</li>
+<li>
+<p>创建方式</p>
+<ul>
+<li>
+<p>可以将列表推导式的方括号改为圆括号，即可创建一个生成器</p>
+</li>
+<li>
+<p>yield关键字</p>
+<ul>
+<li>生成器函数中的yield语句会暂停函数执行并返回一个值，下一次调用该函数时会继续执行并返回下一个值</li>
+<li>send（）传值</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1>【九】模块与包</h1>
+<ul>
+<li>
+<p>模块</p>
+<ul>
+<li>一个py文件就是一个模块</li>
+</ul>
+</li>
+<li>
+<p>from 模块名 import 属性名</p>
+</li>
+<li>
+<p>import 模块名</p>
+</li>
+<li>
+<p>支持导入多个模块</p>
+</li>
+<li>
+<p>重命名模块—》import 模块名 as 新模块名</p>
+</li>
+<li>
+<p>模块分类</p>
+<ul>
+<li>纯python编写的自己定义的模块</li>
+<li>内置的一系列模块 (python解释器自带的和你安装 pip install )</li>
+<li>使用c语言编写的底层代码</li>
+<li>c和c++扩展出来的模块</li>
+</ul>
+</li>
+<li>
+<p>加载顺序</p>
+<ul>
+<li>跟上面反过来</li>
+</ul>
+</li>
+<li>
+<p>查找顺序</p>
+<ul>
+<li>跟加载顺序相反</li>
+</ul>
+</li>
+<li>
+<p>包</p>
+<ul>
+<li>模块的聚集地</li>
+<li>里面有.__init__文件的就是包</li>
+</ul>
+</li>
+<li>
+<p>from 模块名 import 属性名</p>
+</li>
+<li>
+<p>from 包名 import 模块名</p>
+</li>
+</ul>
+<h1>【十】绝对路径</h1>
+<ul>
+<li>在python查找的顺序就是绝对路径
+<ul>
+<li>D:\Python\PythonProjects\PythonProjects29\day17</li>
+</ul>
+</li>
+</ul>
+<h1>【十一】相对路径</h1>
+<ul>
+<li>你所在的文件夹就是相对历经</li>
+<li>./当前同目录下载</li>
+<li>.//当前目录上一级目录下载</li>
+<li>默认就是当前目录下载</li>
+</ul>
+<h1>【十二】json模块</h1>
+<ul>
+<li>
+<p>json是 你存进去是什么类型读出来就是什么类型</p>
+</li>
+<li>
+<p>导入模块</p>
+<ul>
+<li>import json模块</li>
+</ul>
+</li>
+<li>
+<p>保存为json文件</p>
+<ul>
+<li>with open…</li>
+<li>写入用json.dump(存数据的变量名，句柄= 句柄)</li>
+</ul>
+</li>
+<li>
+<p>读出来转为python对象</p>
+<ul>
+<li>with open…</li>
+<li>读出用json.load(句柄)</li>
+</ul>
+</li>
+<li>
+<p>将字典转换为字符串</p>
+<ul>
+<li>json.dumps(变量名)</li>
+</ul>
+</li>
+<li>
+<p>字符串转换为字典</p>
+<ul>
+<li>json.loads</li>
+</ul>
+</li>
+</ul>
+<h1>【十二】time模块</h1>
+<ul>
+<li>
+<p>生成时间戳：time.time()</p>
+</li>
+<li>
+<p>time.sleep():睡眠时间</p>
+</li>
+<li>
+<p>生成时间戳转为时间元组</p>
+<ul>
+<li>国际时间time.gmtime(time.time)</li>
+<li>本地时间time.localtime(time.time)</li>
+</ul>
+</li>
+<li>
+<p>转换为时间字符串time.strftime(‘%Y-%m-%d %H:%M:%S’)</p>
+</li>
+<li>
+<p>从时间元组中获取指定的元素</p>
+<ul>
+<li>年：变量名.tm_year</li>
+<li>月：变量名.tm_mon</li>
+<li>…</li>
+</ul>
+</li>
+<li>
+<p>time.strptime(“2023-11-24”, “%Y-%m-%d”)括号里可以改任意时间</p>
+<ul>
+<li>将时间字符串格式转换为时间元组</li>
+</ul>
+</li>
+</ul>
+
       
     </div>
 
@@ -263,7 +794,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/3.1vue%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/5.0%20BeautifulSoup%E6%A8%A1%E5%9D%97%E4%B9%8B%E5%9B%9B%E7%A7%8D%E5%AF%B9%E8%B1%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -277,7 +808,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/3.1vue%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/5.0%20BeautifulSoup%E6%A8%A1%E5%9D%97%E4%B9%8B%E5%9B%9B%E7%A7%8D%E5%AF%B9%E8%B1%A1/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -286,9 +817,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:41" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -302,7 +848,124 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1><strong>BeautifulSoup模块之四种对象</strong></h1>
+<h2 id="【一】前言">【一】前言</h2>
+<ul>
+<li>
+<p>在生成的soup中存在四种取值方式</p>
+<ul>
+<li>
+<p>BeautifulSoup</p>
+</li>
+<li>
+<p>Tag</p>
+</li>
+<li>
+<p>NavigableString</p>
+</li>
+<li>
+<p>Comment</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="【二】介绍四种对象">【二】介绍四种对象</h2>
+<h3 id="【1】BeautifulSoup对象">【1】BeautifulSoup对象</h3>
+<ul>
+<li>代表解析后的HTML文档，是最顶层的对象</li>
+<li>它包含了整个文档的全部内容，并提供了操作HTML文档的方法和属性</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 假设html_doc是一个包含HTML内容的字符串  </span></span><br><span class="line">html_doc = <span class="string">&quot;&quot;&quot;  </span></span><br><span class="line"><span class="string">&lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse&#x27;s story&lt;/title&gt;&lt;/head&gt;  </span></span><br><span class="line"><span class="string">&lt;body&gt;  </span></span><br><span class="line"><span class="string">&lt;p class=&quot;title&quot;&gt;&lt;b&gt;The Dormouse&#x27;s story&lt;/b&gt;&lt;/p&gt;  </span></span><br><span class="line"><span class="string">&lt;p class=&quot;story&quot;&gt;Once upon a time there were three little sisters; and their names were  </span></span><br><span class="line"><span class="string">&lt;a href=&quot;http://example.com/elsie&quot; class=&quot;sister&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;,  </span></span><br><span class="line"><span class="string">&lt;a href=&quot;http://example.com/lacie&quot; class=&quot;sister&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt; and  </span></span><br><span class="line"><span class="string">&lt;a href=&quot;http://example.com/tillie&quot; class=&quot;sister&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;;  </span></span><br><span class="line"><span class="string">and they lived at the bottom of a well.&lt;/p&gt;  </span></span><br><span class="line"><span class="string">&lt;p class=&quot;story&quot;&gt;...&lt;/p&gt;  </span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 使用html.parser解析器创建一个BeautifulSoup对象  </span></span><br><span class="line">soup = BeautifulSoup(html_doc, <span class="string">&#x27;html.parser&#x27;</span>) </span><br></pre></td></tr></table></figure>
+<h3 id="【2】Tag对象">【2】Tag对象</h3>
+<ul>
+<li>
+<p>标识HTML中的标签，不如<p>,<a>等</p>
+</li>
+<li>
+<p>Tag对象包含了标签的名称和对应的属性，并可以通过Tag对象来获取标签内的内容或进行进一步的操作</p>
+</li>
+<li>
+<p>可以通过传递HTML文档给BeautifulSoup类初始化的方式创建Tag对象</p>
+</li>
+</ul>
+<p>练习.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span><span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;<span class="name">title</span>&gt;</span>The Dormouse&#x27;s story<span class="tag">&lt;/<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    测试div</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    div标签</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;title&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">b</span>&gt;</span>The Dormouse&#x27;s story<span class="tag">&lt;/<span class="name">b</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;story&quot;</span>&gt;</span>Once upon a time there were three little sisters; and their names were</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;sister&quot;</span> <span class="attr">href</span>=<span class="string">&quot;http://example.com/elsie&quot;</span> <span class="attr">id</span>=<span class="string">&quot;link1&quot;</span>&gt;</span>Elsie<span class="tag">&lt;/<span class="name">a</span>&gt;</span>,</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;sister&quot;</span> <span class="attr">href</span>=<span class="string">&quot;http://example.com/lacie&quot;</span> <span class="attr">id</span>=<span class="string">&quot;link2&quot;</span>&gt;</span>Lacie<span class="tag">&lt;/<span class="name">a</span>&gt;</span> and</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;sister&quot;</span> <span class="attr">href</span>=<span class="string">&quot;http://example.com/tillie&quot;</span> <span class="attr">id</span>=<span class="string">&quot;link3&quot;</span>&gt;</span>Tillie<span class="tag">&lt;/<span class="name">a</span>&gt;</span>;</span><br><span class="line">and they lived at the bottom of a well.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;story&quot;</span>&gt;</span>...<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="（1）查看tag对象">（1）查看tag对象</h4>
+<ul>
+<li>通过soup.tag获取到指定标签对象</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取html文档</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;练习.html&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf&quot;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">    data = fp.read()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成soup对象</span></span><br><span class="line">soup = BeautifulSoup(data, <span class="string">&quot;lxml&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定标签名查找指定的标签对象</span></span><br><span class="line"><span class="comment"># 输出head标签及其属性</span></span><br><span class="line">head = soup.head</span><br><span class="line"><span class="built_in">print</span>(head, <span class="built_in">type</span>(head))  <span class="comment"># &lt;class &#x27;bs4.element.Tag&#x27;&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出title标签及其类型</span></span><br><span class="line">title = soup.title</span><br><span class="line"><span class="built_in">print</span>(title, <span class="built_in">type</span>(title))  <span class="comment"># &lt;class &#x27;bs4.element.Tag&#x27;&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出第一个a标签和类型</span></span><br><span class="line">a = soup.a</span><br><span class="line"><span class="built_in">print</span>(a, <span class="built_in">type</span>(a))  <span class="comment"># &lt;class &#x27;bs4.element.Tag&#x27;&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出第一个p标签下的第一个a标签</span></span><br><span class="line">b = soup.p.b</span><br><span class="line"><span class="built_in">print</span>(b, <span class="built_in">type</span>(b))  <span class="comment"># &lt;class &#x27;bs4.element.Tag&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-查找tag对象的标签名和属性">(2)查找tag对象的标签名和属性</h4>
+<ul>
+<li>通过soup.tag名.属性名获取到指定标签属性名对应的属性值</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取html文档</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;练习.html&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf&quot;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">    data = fp.read()</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 生成soup对象</span></span><br><span class="line">soup = BeautifulSoup(data, <span class="string">&quot;lxml&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出a标签下的name属性</span></span><br><span class="line"><span class="built_in">print</span>(soup.a.name)  <span class="comment"># a</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出第一个p标签下的第一个b标签的name属性值</span></span><br><span class="line"><span class="built_in">print</span>(soup.p.b.name)  <span class="comment"># b</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出第一个a标签的href属性值</span></span><br><span class="line"><span class="built_in">print</span>(soup.a[<span class="string">&quot;href&quot;</span>])  <span class="comment"># http://example.com/elsie</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到第一个a标签的属性值</span></span><br><span class="line"><span class="built_in">print</span>(soup.a.attrs)  <span class="comment"># &#123;&#x27;href&#x27;: &#x27;http://example.com/elsie&#x27;, &#x27;class&#x27;: [&#x27;sister&#x27;], &#x27;id&#x27;: &#x27;link1&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="（3）返回多值的属性">（3）返回多值的属性</h4>
+<ul>
+<li>常见的多值的属性是 class (一个tag可以有多个CSS的class)</li>
+<li>在BeautifulSoup多值属性的返回类型都是list</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取html文档</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;练习.html&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf&quot;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">    data = fp.read()</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 生成soup对象</span></span><br><span class="line">soup = BeautifulSoup(data, <span class="string">&quot;lxml&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 返回当前标签的class属性值</span></span><br><span class="line"><span class="built_in">print</span>(soup.a[<span class="string">&quot;class&quot;</span>], <span class="built_in">type</span>(soup.a[<span class="string">&quot;class&quot;</span>]))  <span class="comment"># [&#x27;sister&#x27;] &lt;class &#x27;list&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="（4）曾，删，改，查-tag的属性">（4）曾，删，改，查  tag的属性</h4>
+<ul>
+<li>tag的属性可以被、曾，删，改</li>
+<li>操作的方法和字典一样</li>
+</ul>
+<p>曾</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 给div标签添加一个类属性值，只给你的第一个div标签添加class属性，</span></span><br><span class="line">soup.div[<span class="string">&quot;class&quot;</span>] = [<span class="string">&quot;aaa&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(souop) <span class="comment"># 可以发现已经增加上去</span></span><br></pre></td></tr></table></figure>
+<p>删</p>
+<ul>
+<li>方式一</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除第一个a标签的id属性值</span></span><br><span class="line"><span class="keyword">del</span> soup.a[<span class="string">&quot;id&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(souop) <span class="comment"># 可以发现已经删除</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>方式二</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取到当前的标签的所有属性名和属性值，然后再根据键 删除掉指定的值</span></span><br><span class="line"><span class="built_in">print</span>(soup.p.attrs)</span><br><span class="line"><span class="built_in">print</span>(soup.p.attrs.pop(<span class="string">&quot;class&quot;</span>))</span><br><span class="line"><span class="built_in">print</span>(souop) <span class="comment"># 可以发现已经删除</span></span><br></pre></td></tr></table></figure>
+<p>改</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改第一个a标签的class属性值</span></span><br><span class="line">soup.a[<span class="string">&quot;class&quot;</span>] = [<span class="string">&quot;sister c1&quot;</span>]</span><br></pre></td></tr></table></figure>
+<p>查</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(soup.p[<span class="string">&quot;class&quot;</span>])  <span class="comment"># [&#x27;title&#x27;]</span></span><br></pre></td></tr></table></figure>
+<h4 id="（5）获取标签对象的文本内容">（5）获取标签对象的文本内容</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取p标签的第一个标签中的文本内容</span></span><br><span class="line">text = soup.p.get_text()</span><br><span class="line"><span class="built_in">print</span>(text)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取标签中间内容的生成器对象</span></span><br><span class="line">strings = soup.p.strings</span><br><span class="line"><span class="built_in">print</span>(strings)  <span class="comment"># &lt;generator object Tag._all_strings at 0x000001BCA80C71B0&gt;</span></span><br><span class="line"><span class="comment"># 遍历生成器对象</span></span><br><span class="line">texts = [i <span class="keyword">for</span> i <span class="keyword">in</span> strings]</span><br><span class="line"><span class="comment"># 得到p标签下所有的文本内容</span></span><br><span class="line"><span class="built_in">print</span>(texts)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>string和strings的区别</p>
+</li>
+<li>
+<p>如果tag包含了多个子节点,tag就无法确定</p>
+</li>
+<li>
+<ul>
+<li>.string 方法应该调用哪个子节点的内容,</li>
+<li>.string 的输出结果是 None</li>
+</ul>
+</li>
+<li>
+<p>如果只有一个子节点那么就输出该子节点的文本，</p>
+</li>
+<li>
+<ul>
+<li>比如下面的这种结构</li>
+<li>soup.p.string 返回为None</li>
+<li>但soup.p.strings就可以找到所有文本</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果标签里面是多层级的情况，使用.string不生效，返回None</span></span><br><span class="line"><span class="built_in">print</span>(soup.p.string)  <span class="comment"># None</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 想要获取当前标签下的文本</span></span><br><span class="line"><span class="built_in">print</span>(soup.p.a.string)  <span class="comment"># Elsie</span></span><br><span class="line"></span><br><span class="line">data = soup.find_all(<span class="string">&quot;p&quot;</span>)[<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span>(data.string)  <span class="comment"># None</span></span><br><span class="line"></span><br><span class="line">data = soup.find_all(<span class="string">&quot;p&quot;</span>)[<span class="number">1</span>]</span><br><span class="line"><span class="comment"># print(data.strings)</span></span><br><span class="line"></span><br><span class="line">data = [a <span class="keyword">for</span> a <span class="keyword">in</span> data.strings]</span><br><span class="line"><span class="built_in">print</span>(data)</span><br><span class="line"><span class="comment"># [&#x27;Once upon a time there were three little sisters; and their names were\n&#x27;, &#x27;Elsie&#x27;, &#x27;,\n&#x27;, &#x27;Lacie&#x27;, &#x27; and\n&#x27;, &#x27;Tillie&#x27;, &#x27;;\nand they lived at the bottom of a well.&#x27;]</span></span><br></pre></td></tr></table></figure>
+<h3 id="【3】NavigableString对象">【3】NavigableString对象</h3>
+<ul>
+<li>表示标签内的文本内容，或者是非标签字符串</li>
+<li>当tag只包含单一的字符串时，可以使用tag.string或tag.text来获取该字符串</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="comment"># 生成soup对象</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;练习.html&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf8&quot;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">    data = fp.read()</span><br><span class="line"></span><br><span class="line">soup = BeautifulSoup(data, <span class="string">&quot;lxml&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或群单一标签的文本内容</span></span><br><span class="line">text = soup.title.string</span><br><span class="line"><span class="built_in">print</span>(text)</span><br><span class="line"><span class="comment"># 获得p标签下所有的文本信息</span></span><br><span class="line">p_text = soup.p.strings</span><br><span class="line"><span class="built_in">print</span>(p_text)  <span class="comment"># The Dormouse&#x27;s story</span></span><br><span class="line"><span class="comment"># &lt;generator object Tag._all_strings at 0x0000028BBF5371B0&gt;</span></span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> p_text:</span><br><span class="line">    <span class="built_in">print</span>(p)  <span class="comment"># The Dormouse&#x27;s story</span></span><br></pre></td></tr></table></figure>
+<h3 id="【4】Comment对象">【4】Comment对象</h3>
+<ul>
+<li>代表HTML文档中的注释内容</li>
+<li>当解析遇到HTML文档中的注释时，BeautifulSoup会将注释封装成Comment对象</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成soup对象</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;练习.html&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf8&quot;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">    data = fp.read()</span><br><span class="line"></span><br><span class="line">soup = BeautifulSoup(data, <span class="string">&quot;lxml&quot;</span>)</span><br><span class="line"></span><br><span class="line">text = soup.span.b.string</span><br><span class="line"><span class="built_in">print</span>(text, <span class="built_in">type</span>(text))</span><br><span class="line"><span class="comment"># 猪头！！ &lt;class &#x27;bs4.element.NavigableString&#x27;&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -321,7 +984,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/3.0%E5%87%BD%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/5.0Django%E8%AF%B7%E6%B1%82%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -335,7 +998,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/3.0%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/5.0Django%E8%AF%B7%E6%B1%82%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -344,9 +1007,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:41" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -360,7 +1038,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1>Django请求生命周期</h1>
+<h3 id="【1】Django生命周期流程图">【1】Django生命周期流程图</h3>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5C0528db72-2b1a-4af7-87d8-9d0bb613a239.png" alt="0528db72-2b1a-4af7-87d8-9d0bb613a239"></p>
+<h3 id="【2】回想一下wsgiref模块-的请求周期">【2】回想一下wsgiref模块 的请求周期</h3>
+<ul>
+<li>前端发起请求 —&gt;</li>
+<li>wsgiref 模块的 Request 上 —&gt;</li>
+<li>获取 路径 —</li>
+<li><a target="_blank" rel="noopener" href="http://urls.py">urls.py</a> 中映射视图函数—</li>
+<li>进入到视图函数中 —</li>
+<li>读取前端模版 / 读取数据库数据 ----</li>
+<li>经过 wsgiref 模块的 response 对象封装—</li>
+<li>交给前端页面 渲染数据</li>
+</ul>
+<h3 id="【3】Django的请求生命周期">【3】Django的请求生命周期</h3>
+<ol>
+<li>从前端入手 前端发送请求</li>
+<li>wsgiref 模块上对 Request 进行分装</li>
+<li>Django框架上 中间件 （相当于你的公司的保安 你的第一道防线）</li>
+<li>Django框架上的 路由映射  <a target="_blank" rel="noopener" href="http://urls.py">urls.py</a> 去根据路径映射制定的视图函数</li>
+<li>Django框架上的 视图函数 <a target="_blank" rel="noopener" href="http://views.py">views.py</a> 中
+<ul>
+<li>获取前端页面 (模版语法渲染)</li>
+<li>读取数据库数据 (增删改查)</li>
+<li>记录你的操作日志 (记录日志)</li>
+<li>返回 response对象</li>
+</ul>
+</li>
+<li>Django框架上的 <a target="_blank" rel="noopener" href="http://urls.py">urls.py</a> 根据制定路径回去</li>
+<li>回到了 wsgiref 模块上 对Django的 response 对象进行封装</li>
+<li>回到前端解包渲染</li>
+</ol>
+
       
     </div>
 
@@ -379,7 +1089,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/3.0session%E5%AF%B9%E8%B1%A1/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/5.0BeautifulSoup%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D(1)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -393,7 +1103,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/3.0session%E5%AF%B9%E8%B1%A1/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/5.0BeautifulSoup%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D(1)/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -402,9 +1112,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:41" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -418,7 +1143,112 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1>BeautifulSoup模块介绍</h1>
+<h2 id="【一】BeautifulSoup模块">【一】BeautifulSoup模块</h2>
+<h3 id="【1】介绍">【1】介绍</h3>
+<ul>
+<li>BeautifulSoup是python的一个库</li>
+<li>主要的功能就是从网页上抓取数据</li>
+</ul>
+<h3 id="【2】官方介绍">【2】官方介绍</h3>
+<ul>
+<li>
+<p>Beautiful Soup提供一些简单的、python式的函数用来处理导航、搜索、修改分析树等功能</p>
+</li>
+<li>
+<p>它是一个工具箱，通过解析文档为用户提供需要抓取的数据，因为简单，所以不需要多少代码就可以写出一个完整的应用程序</p>
+</li>
+</ul>
+<h3 id="【3】小结">【3】小结</h3>
+<ul>
+<li>
+<p>BeautifulSoup是一个可以从HTML或XML文件中提取数据的python库</p>
+</li>
+<li>
+<p>它能够通过喜欢的转换器实现惯用的文档导航，查询，修改文档方式</p>
+</li>
+<li>
+<p>Beautiful Soup会帮你节省数小时甚至数天的工作时间</p>
+</li>
+<li>
+<p>你可能在寻找 Beautiful Soup3 的文档,Beautiful Soup 3 目前已经停止开发</p>
+<ul>
+<li>官网推荐在现在的项目中使用Beautiful Soup 4</li>
+<li>官方文档: <a target="_blank" rel="noopener" href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/">https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="【二】安装BeautifulSoup4模块">【二】安装BeautifulSoup4模块</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install BeautifulSoup4</span><br></pre></td></tr></table></figure>
+<h2 id="【三】解析器的介绍">【三】解析器的介绍</h2>
+<h3 id="【1】导入模块">【1】导入模块</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br></pre></td></tr></table></figure>
+<h3 id="【2】解析器">【2】解析器</h3>
+<ul>
+<li>能够解析当前页面生成页面的dom对象</li>
+</ul>
+<ol>
+<li>内置的解析器：<code>&quot;html.parser&quot;</code></li>
+<li>第三方解释器：<code>&quot;lxml&quot;</code>–&gt;<code>pip install lxml</code></li>
+<li>第三方解释器：<code>&quot;html5lib&quot;</code>–&gt;<code>pip install html5lib</code></li>
+</ol>
+<h3 id="【3】使用">【3】使用</h3>
+<ul>
+<li>不写解析器：就使用默认的解析器<code>html.parser</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soup = BeautifulSoup(<span class="string">&quot;页面源码&quot;</span>,<span class="string">&quot;解析器类型&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="【4】解析器的优缺点">【4】解析器的优缺点</h3>
+<table>
+<thead>
+<tr>
+<th>解析器</th>
+<th>使用方法</th>
+<th>优势</th>
+<th>劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python标准库</td>
+<td>BeautifulSoup(markup, “html.parser”)</td>
+<td>Python的内置标准库 执行速度适中 文档容错能力强</td>
+<td>Python 2.7.3 or 3.2.2)前 的版本中文档容错能力差</td>
+</tr>
+<tr>
+<td>lxml HTML 解析器</td>
+<td>BeautifulSoup(markup, “lxml”)</td>
+<td>速度快 文档容错能力强</td>
+<td>需要安装C语言库</td>
+</tr>
+<tr>
+<td>lxml XML 解析器</td>
+<td>BeautifulSoup(markup, [“lxml”, “xml”]) 或BeautifulSoup(markup, “xml”)</td>
+<td>速度快 唯一支持XML的解析器</td>
+<td>需要安装C语言库</td>
+</tr>
+<tr>
+<td>html5lib</td>
+<td>BeautifulSoup(markup, “html5lib”)</td>
+<td>最好的容错性 以浏览器的方式解析文档 生成HTML5格式的文档</td>
+<td>速度慢 不依赖外部扩展</td>
+</tr>
+</tbody>
+</table>
+<h3 id="【5】生成soup对象">【5】生成soup对象</h3>
+<ul>
+<li>从一个soup对象开始，以下两种方式生成一个soup对象</li>
+</ul>
+<h4 id="（1）方式一">（1）方式一</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定HTML源码文件，传入文件源码</span></span><br><span class="line">soup = BeautifulSoup(<span class="built_in">open</span>(<span class="string">&quot;index.html&quot;</span>))</span><br></pre></td></tr></table></figure>
+<h4 id="2-方式二">(2)方式二</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 直接放入 HTML 源码</span></span><br><span class="line">soup = BeautifulSoup(<span class="string">&quot;&lt;html&gt;data&lt;/html&gt;&quot;</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>构造soup对象时，可以传入解析器参数</li>
+<li>如果不传入的话，会以最好的方式去解析</li>
+</ul>
+<h3 id="【6】使用案例">【6】使用案例</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取html页面</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;练习.html&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf&quot;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">    data = fp.read()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 要用lxml首先安装</span></span><br><span class="line"><span class="comment"># pip install lxml</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成一个soup解析器对象</span></span><br><span class="line">soup = BeautifulSoup(</span><br><span class="line">    data,<span class="string">&quot;lxml&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取文章的所有文本内容</span></span><br><span class="line">text = soup.get_text()</span><br><span class="line"><span class="built_in">print</span>(text)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取文章的a标签</span></span><br><span class="line">a_tags = soup.find_all(<span class="string">&quot;a&quot;</span>)</span><br><span class="line"><span class="comment"># 提取每个a标签的href属性</span></span><br><span class="line">a_href = [a.get(<span class="string">&quot;href&quot;</span>) <span class="keyword">for</span> a <span class="keyword">in</span> a_tags]</span><br><span class="line"><span class="built_in">print</span>(a_href)</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -437,7 +1267,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/3.0Scrapy%E6%A1%86%E6%9E%B6%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E9%A1%B9%E7%9B%AE/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/5.0BeautifulSoup%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -451,7 +1281,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/3.0Scrapy%E6%A1%86%E6%9E%B6%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E9%A1%B9%E7%9B%AE/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/5.0BeautifulSoup%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -460,9 +1290,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:41" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -476,7 +1321,112 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1>BeautifulSoup模块介绍</h1>
+<h2 id="【一】BeautifulSoup模块">【一】BeautifulSoup模块</h2>
+<h3 id="【1】介绍">【1】介绍</h3>
+<ul>
+<li>BeautifulSoup是python的一个库</li>
+<li>主要的功能就是从网页上抓取数据</li>
+</ul>
+<h3 id="【2】官方介绍">【2】官方介绍</h3>
+<ul>
+<li>
+<p>Beautiful Soup提供一些简单的、python式的函数用来处理导航、搜索、修改分析树等功能</p>
+</li>
+<li>
+<p>它是一个工具箱，通过解析文档为用户提供需要抓取的数据，因为简单，所以不需要多少代码就可以写出一个完整的应用程序</p>
+</li>
+</ul>
+<h3 id="【3】小结">【3】小结</h3>
+<ul>
+<li>
+<p>BeautifulSoup是一个可以从HTML或XML文件中提取数据的python库</p>
+</li>
+<li>
+<p>它能够通过喜欢的转换器实现惯用的文档导航，查询，修改文档方式</p>
+</li>
+<li>
+<p>Beautiful Soup会帮你节省数小时甚至数天的工作时间</p>
+</li>
+<li>
+<p>你可能在寻找 Beautiful Soup3 的文档,Beautiful Soup 3 目前已经停止开发</p>
+<ul>
+<li>官网推荐在现在的项目中使用Beautiful Soup 4</li>
+<li>官方文档: <a target="_blank" rel="noopener" href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/">https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="【二】安装BeautifulSoup4模块">【二】安装BeautifulSoup4模块</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install BeautifulSoup4</span><br></pre></td></tr></table></figure>
+<h2 id="【三】解析器的介绍">【三】解析器的介绍</h2>
+<h3 id="【1】导入模块">【1】导入模块</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br></pre></td></tr></table></figure>
+<h3 id="【2】解析器">【2】解析器</h3>
+<ul>
+<li>能够解析当前页面生成页面的dom对象</li>
+</ul>
+<ol>
+<li>内置的解析器：<code>&quot;html.parser&quot;</code></li>
+<li>第三方解释器：<code>&quot;lxml&quot;</code>–&gt;<code>pip install lxml</code></li>
+<li>第三方解释器：<code>&quot;html5lib&quot;</code>–&gt;<code>pip install html5lib</code></li>
+</ol>
+<h3 id="【3】使用">【3】使用</h3>
+<ul>
+<li>不写解析器：就使用默认的解析器<code>html.parser</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soup = BeautifulSoup(<span class="string">&quot;页面源码&quot;</span>,<span class="string">&quot;解析器类型&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="【4】解析器的优缺点">【4】解析器的优缺点</h3>
+<table>
+<thead>
+<tr>
+<th>解析器</th>
+<th>使用方法</th>
+<th>优势</th>
+<th>劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python标准库</td>
+<td>BeautifulSoup(markup, “html.parser”)</td>
+<td>Python的内置标准库 执行速度适中 文档容错能力强</td>
+<td>Python 2.7.3 or 3.2.2)前 的版本中文档容错能力差</td>
+</tr>
+<tr>
+<td>lxml HTML 解析器</td>
+<td>BeautifulSoup(markup, “lxml”)</td>
+<td>速度快 文档容错能力强</td>
+<td>需要安装C语言库</td>
+</tr>
+<tr>
+<td>lxml XML 解析器</td>
+<td>BeautifulSoup(markup, [“lxml”, “xml”]) 或BeautifulSoup(markup, “xml”)</td>
+<td>速度快 唯一支持XML的解析器</td>
+<td>需要安装C语言库</td>
+</tr>
+<tr>
+<td>html5lib</td>
+<td>BeautifulSoup(markup, “html5lib”)</td>
+<td>最好的容错性 以浏览器的方式解析文档 生成HTML5格式的文档</td>
+<td>速度慢 不依赖外部扩展</td>
+</tr>
+</tbody>
+</table>
+<h3 id="【5】生成soup对象">【5】生成soup对象</h3>
+<ul>
+<li>从一个soup对象开始，以下两种方式生成一个soup对象</li>
+</ul>
+<h4 id="（1）方式一">（1）方式一</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定HTML源码文件，传入文件源码</span></span><br><span class="line">soup = BeautifulSoup(<span class="built_in">open</span>(<span class="string">&quot;index.html&quot;</span>))</span><br></pre></td></tr></table></figure>
+<h4 id="2-方式二">(2)方式二</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 直接放入 HTML 源码</span></span><br><span class="line">soup = BeautifulSoup(<span class="string">&quot;&lt;html&gt;data&lt;/html&gt;&quot;</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>构造soup对象时，可以传入解析器参数</li>
+<li>如果不传入的话，会以最好的方式去解析</li>
+</ul>
+<h3 id="【6】使用案例">【6】使用案例</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取html页面</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;练习.html&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf&quot;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">    data = fp.read()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 要用lxml首先安装</span></span><br><span class="line"><span class="comment"># pip install lxml</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成一个soup解析器对象</span></span><br><span class="line">soup = BeautifulSoup(</span><br><span class="line">    data,<span class="string">&quot;lxml&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取文章的所有文本内容</span></span><br><span class="line">text = soup.get_text()</span><br><span class="line"><span class="built_in">print</span>(text)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取文章的a标签</span></span><br><span class="line">a_tags = soup.find_all(<span class="string">&quot;a&quot;</span>)</span><br><span class="line"><span class="comment"># 提取每个a标签的href属性</span></span><br><span class="line">a_href = [a.get(<span class="string">&quot;href&quot;</span>) <span class="keyword">for</span> a <span class="keyword">in</span> a_tags]</span><br><span class="line"><span class="built_in">print</span>(a_href)</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -495,7 +1445,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/3.0MySQL%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E,%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/5.0Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -509,7 +1459,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/3.0MySQL%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E,%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/5.0Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -518,9 +1468,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:41" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -534,7 +1499,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1>Scrapy框架之配置文件介绍</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> fake_useragent <span class="keyword">import</span> UserAgent</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当前项目的项目名字</span></span><br><span class="line">BOT_NAME = <span class="string">&quot;SpiderNews&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 当前爬虫项目所在的位置</span></span><br><span class="line">SPIDER_MODULES = [<span class="string">&quot;SpiderNews.spiders&quot;</span>]</span><br><span class="line"><span class="comment"># 当前爬虫项目所在的位置</span></span><br><span class="line">NEWSPIDER_MODULE = <span class="string">&quot;SpiderNews.spiders&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定那个日志级别，达到了你设置的日志级别才会显示日志</span></span><br><span class="line"><span class="comment"># 指定输出日志的类型：</span></span><br><span class="line">LOG_LEVEL = <span class="string">&quot;WARNING&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 自定义请求头</span></span><br><span class="line"><span class="comment"># 我们也可以写成：</span></span><br><span class="line">USER_AGENT = UserAgent().random</span><br><span class="line"><span class="comment">#USER_AGENT = &quot;SpiderNews (+http://www.yourdomain.com)&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Obey robots.txt rules</span></span><br><span class="line"><span class="comment"># 是否遵循robots.txt协议</span></span><br><span class="line">ROBOTSTXT_OBEY = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最大请求数量</span></span><br><span class="line"><span class="comment">#CONCURRENT_REQUESTS = 32</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载延迟，如果下载三秒中还没反应，会直接抛出异常</span></span><br><span class="line"><span class="comment">#DOWNLOAD_DELAY = 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 并发请求的最大数量</span></span><br><span class="line"><span class="comment">#CONCURRENT_REQUESTS_PER_DOMAIN = 16</span></span><br><span class="line"><span class="comment"># 并发请求的ip最大数量</span></span><br><span class="line"><span class="comment">#CONCURRENT_REQUESTS_PER_IP = 16</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否启用cookie</span></span><br><span class="line"><span class="comment">#COOKIES_ENABLED = False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用控制台输出</span></span><br><span class="line"><span class="comment">#TELNETCONSOLE_ENABLED = False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认的请求头参数</span></span><br><span class="line"><span class="comment">#DEFAULT_REQUEST_HEADERS = &#123;</span></span><br><span class="line"><span class="comment">#    &quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&quot;,</span></span><br><span class="line"><span class="comment">#    &quot;Accept-Language&quot;: &quot;en&quot;,</span></span><br><span class="line"><span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否启用爬虫中间件</span></span><br><span class="line"><span class="comment">#SPIDER_MIDDLEWARES = &#123;</span></span><br><span class="line"><span class="comment">#    &quot;SpiderNews.middlewares.SpidernewsSpiderMiddleware&quot;: 543,</span></span><br><span class="line"><span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否启用下载器中间件</span></span><br><span class="line"><span class="comment">#DOWNLOADER_MIDDLEWARES = &#123;</span></span><br><span class="line"><span class="comment">#    &quot;SpiderNews.middlewares.SpidernewsDownloaderMiddleware&quot;: 543,</span></span><br><span class="line"><span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 调度引擎</span></span><br><span class="line"><span class="comment">#EXTENSIONS = &#123;</span></span><br><span class="line"><span class="comment">#    &quot;scrapy.extensions.telnet.TelnetConsole&quot;: None,</span></span><br><span class="line"><span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 管道类</span></span><br><span class="line">ITEM_PIPELINES = &#123;</span><br><span class="line">    <span class="comment"># 项目默认的处理类，没有任何操作</span></span><br><span class="line">   <span class="string">&quot;SpiderNews.pipelines.SpidernewsPipeline&quot;</span>: <span class="number">300</span>,</span><br><span class="line">    <span class="comment"># 自己写的注册的处理类，后面你的数字越小优先级越高，根据优先级一次执行管道处理类</span></span><br><span class="line">   <span class="string">&quot;SpiderNews.pipelines.BoKeYuanPipeline&quot;</span>: <span class="number">300</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自动限速</span></span><br><span class="line"><span class="comment">#AUTOTHROTTLE_ENABLED = True</span></span><br><span class="line"><span class="comment"># 下载延迟</span></span><br><span class="line"><span class="comment">#AUTOTHROTTLE_START_DELAY = 5</span></span><br><span class="line"><span class="comment"># 最大并发数延迟</span></span><br><span class="line"><span class="comment">#AUTOTHROTTLE_MAX_DELAY = 60</span></span><br><span class="line"><span class="comment"># The average number of requests Scrapy should be sending in parallel to</span></span><br><span class="line"><span class="comment"># each remote server</span></span><br><span class="line"><span class="comment">#AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0</span></span><br><span class="line"><span class="comment"># Enable showing throttling stats for every response received:</span></span><br><span class="line"><span class="comment">#AUTOTHROTTLE_DEBUG = False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Enable and configure HTTP caching (disabled by default)</span></span><br><span class="line"><span class="comment"># See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings</span></span><br><span class="line"><span class="comment">#HTTPCACHE_ENABLED = True</span></span><br><span class="line"><span class="comment">#HTTPCACHE_EXPIRATION_SECS = 0</span></span><br><span class="line"><span class="comment">#HTTPCACHE_DIR = &quot;httpcache&quot;</span></span><br><span class="line"><span class="comment">#HTTPCACHE_IGNORE_HTTP_CODES = []</span></span><br><span class="line"><span class="comment">#HTTPCACHE_STORAGE = &quot;scrapy.extensions.httpcache.FilesystemCacheStorage&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set settings whose default value is deprecated to a future-proof value</span></span><br><span class="line">REQUEST_FINGERPRINTER_IMPLEMENTATION = <span class="string">&quot;2.7&quot;</span></span><br><span class="line">TWISTED_REACTOR = <span class="string">&quot;twisted.internet.asyncioreactor.AsyncioSelectorReactor&quot;</span></span><br><span class="line">FEED_EXPORT_ENCODING = <span class="string">&quot;utf-8&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -553,7 +1520,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/3.0HTML%E8%BF%9B%E9%98%B6/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/5.10%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%8C%E7%B1%BB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -567,7 +1534,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/3.0HTML%E8%BF%9B%E9%98%B6/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/5.10%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%8C%E7%B1%BB/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -576,9 +1543,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:41" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -592,7 +1574,253 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1>面向对象</h1>
+<h1>【一】简介----》引入</h1>
+<ul>
+<li>将数据和功能进行绑定</li>
+<li>不再是所有数据都可以调用任意的功能</li>
+<li>上述将数据与功能整合到</li>
+<li>可以理解为：可以理解我们写的面条版程序，一步接着做</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#引入例题</span></span><br><span class="line"><span class="comment"># 定义专门用来描述人和狗的函数(最好单独编写)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_person</span>(<span class="params">name, gender, age, t_type, attack_val, life_val</span>):</span><br><span class="line">    data_dict = &#123;</span><br><span class="line">        <span class="string">&#x27;name&#x27;</span>: name,</span><br><span class="line">        <span class="string">&#x27;gender&#x27;</span>: gender,</span><br><span class="line">        <span class="string">&#x27;age&#x27;</span>: age,</span><br><span class="line">        <span class="string">&#x27;t_type&#x27;</span>: t_type,</span><br><span class="line">        <span class="string">&#x27;attack_val&#x27;</span>: attack_val,</span><br><span class="line">        <span class="string">&#x27;life_val&#x27;</span>: life_val</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> data_dict</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_dog</span>(<span class="params">name, t_type, attack_val, life_val</span>):</span><br><span class="line">    data_dict = &#123;</span><br><span class="line">        <span class="string">&#x27;name&#x27;</span>: name,</span><br><span class="line">        <span class="string">&#x27;t_type&#x27;</span>: t_type,</span><br><span class="line">        <span class="string">&#x27;attack_val&#x27;</span>: attack_val,</span><br><span class="line">        <span class="string">&#x27;life_val&#x27;</span>: life_val</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> data_dict</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p1 = get_person(<span class="string">&#x27;dream&#x27;</span>, <span class="string">&#x27;male&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;猛男&#x27;</span>, <span class="number">800</span>, <span class="number">1000</span>)</span><br><span class="line">p2 = get_person(<span class="string">&#x27;hope&#x27;</span>, <span class="string">&#x27;female&#x27;</span>, <span class="number">28</span>, <span class="string">&#x27;淑女&#x27;</span>, <span class="number">5</span>, <span class="number">100</span>)</span><br><span class="line">dog1 = get_dog(<span class="string">&#x27;小黑&#x27;</span>, <span class="string">&#x27;松狮犬&#x27;</span>, <span class="number">300</span>, <span class="number">500</span>)</span><br><span class="line">dog2 = get_dog(<span class="string">&#x27;小白&#x27;</span>, <span class="string">&#x27;泰迪犬&#x27;</span>, <span class="number">50</span>, <span class="number">200</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个函数用来描述人和狗的攻击行为</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dog_attack</span>(<span class="params">dog_obj, person_obj</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    :param dog_obj: 接收一条狗</span></span><br><span class="line"><span class="string">    :param person_obj: 接收一个人</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 使用最简答的掉血逻辑  血量减去对方攻击力</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;当前人的血量是:%s&#x27;</span> % person_obj.get(<span class="string">&#x27;life_val&#x27;</span>))</span><br><span class="line">    person_obj[<span class="string">&#x27;life_val&#x27;</span>] -= dog_obj.get(<span class="string">&#x27;attack_val&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;&quot;&quot;狗:%s 咬了人:%s 一口 人掉血:%s 剩余血量:%s&quot;&quot;&quot;</span> % (</span><br><span class="line">        dog_obj.get(<span class="string">&#x27;name&#x27;</span>), person_obj.get(<span class="string">&#x27;name&#x27;</span>), dog_obj.get(<span class="string">&#x27;attack_val&#x27;</span>), person_obj[<span class="string">&#x27;life_val&#x27;</span>]))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">person_attack</span>(<span class="params">person_obj, dog_obj</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    :param person_obj: 接收一个人</span></span><br><span class="line"><span class="string">    :param dog_obj: 接收一条狗</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;当前狗的血量是:%s&#x27;</span> % dog_obj.get(<span class="string">&#x27;life_val&#x27;</span>))</span><br><span class="line">    dog_obj[<span class="string">&#x27;life_val&#x27;</span>] -= person_obj.get(<span class="string">&#x27;attack_val&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;&quot;&quot;人:%s 锤了狗:%s 一下 狗掉血:%s 剩余血量:%s&quot;&quot;&quot;</span> % (</span><br><span class="line">        person_obj.get(<span class="string">&#x27;name&#x27;</span>), dog_obj.get(<span class="string">&#x27;name&#x27;</span>), person_obj.get(<span class="string">&#x27;attack_val&#x27;</span>), dog_obj[<span class="string">&#x27;life_val&#x27;</span>]))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 狗咬人</span></span><br><span class="line">dog_attack(dog2, p1)</span><br><span class="line"><span class="built_in">print</span>(p1)</span><br><span class="line"><span class="comment"># 人锤狗</span></span><br><span class="line">person_attack(p2, dog1)</span><br><span class="line"><span class="built_in">print</span>(dog1)</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;人调用了狗的攻击动作&#x27;&#x27;&#x27;</span></span><br><span class="line">dog_attack(p1, dog1)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;狗调用了人的攻击工作&#x27;&#x27;&#x27;</span></span><br><span class="line">person_attack(dog2, p2)</span><br></pre></td></tr></table></figure>
+<h1>【二】面向对象和 面向过程</h1>
+<h2 id="【1】面向过程">【1】面向过程</h2>
+<ul>
+<li>核心在于&quot;过程&quot;
+<ul>
+<li><strong>将程序&quot;流程化&quot;</strong></li>
+</ul>
+</li>
+<li>过程就像流水线，用来分步骤解决问题</li>
+<li>过程指是解决问题的步骤，先干什么在干什么</li>
+<li>面向对象的设计就好比精心设计好一条流水线，是一种机械式的思维方式。</li>
+</ul>
+<h2 id="【2】优点，缺点">【2】优点，缺点</h2>
+<ul>
+<li>
+<p>优点</p>
+<ul>
+<li>复杂度的问题流程化，进而简单化（一个复杂的问题，分成一个个小步骤，去实现晓得步骤就会相对简单）</li>
+</ul>
+</li>
+<li>
+<p>缺点</p>
+<ul>
+<li>一套流水线或者流程就是用来解决一个问题。改一个组件，牵一发而动全身。</li>
+</ul>
+</li>
+</ul>
+<h2 id="【3】面向对象">【3】面向对象</h2>
+<ul>
+<li>
+<p>核心在于&quot;对象&quot;二字。</p>
+</li>
+<li>
+<p>对象的终级奥秘就是将程序&quot;整合&quot;。</p>
+</li>
+<li>
+<p>对象就是&quot;容器&quot;，用来存放数据与功能</p>
+</li>
+<li>
+<p>文字版理解</p>
+<ul>
+<li>面向对象就相当于上帝，在上帝的视角，人是对象，动物是对象，石头是对象，水是对象，山是对象…存在的可以扩充，不存在的可以创造。</li>
+</ul>
+</li>
+<li>
+<p><strong>可以这样理解面向对象就像我们要设计的校园模拟器，需要在校园中创造各种生活场景。</strong></p>
+<ul>
+<li><strong>一个学校：下面有学生，老师，运动员等。。。</strong></li>
+<li><strong>而每一个角色都会对应其具有的责任和功能</strong>
+<ul>
+<li><strong>比如一个学生具有姓名、年龄、性别、所在班级等。</strong></li>
+<li><strong>学生还有能做的活动，读书、写作、跑步、打篮球等。</strong></li>
+<li><strong>比如一个老师可以教书、批改作业等。</strong></li>
+<li><strong>比如运行员可以参加训练和比赛等。</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>可以理解为学校就是一个对象</p>
+</li>
+</ul>
+<h2 id="【4】优缺点">【4】优缺点</h2>
+<ul>
+<li>优点
+<ul>
+<li>解决了程序的扩展性</li>
+<li>对某一个对象单独修改，会立刻反映到整个体系中，比如对游戏中的人物和场景进行修改就会很容易，而且是立刻有成效。</li>
+</ul>
+</li>
+<li>缺点
+<ul>
+<li>编程的复杂度远高于面向过程，不了解面向对象而立即上手基于它设计程序，极容易出现过度设计的问题。</li>
+<li>无法向面向过程的程序设计流水线式的可以很精准的预测问题的处理流程与结果，面向对象的程序一旦开始就由对象之间的交互解决问题，即便是上帝也无法准确地预测最终结果。</li>
+</ul>
+</li>
+</ul>
+<h2 id="【5】什么是程序">【5】什么是程序</h2>
+<ul>
+<li>程序 = 数据 + 功能</li>
+<li>编写程序的本质就是定义出一系列的数据，然后定义出一系列的功能来对数据进行操作。</li>
+</ul>
+<h1>【二】类</h1>
+<h2 id="【1】什么是类">【1】什么是类</h2>
+<ul>
+<li>类即类别、种类，是面向对象设计最重要的概念，对象是特征与技能的结合体，而类则是一系列对象相似的特征与技能的结合体</li>
+</ul>
+<h2 id="【2】定义类">【2】定义类</h2>
+<ul>
+<li>
+<p>只能描述共同特性，不同特性要对象自己描述</p>
+</li>
+<li>
+<p>关键字class声明一个类（先定义了类才有对象）</p>
+<ul>
+<li>定义类尽量用驼峰体（例如：User）</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#定义类格式有的三种</span></span><br><span class="line"><span class="number">1</span>：<span class="keyword">class</span> <span class="title class_">Student</span>(<span class="title class_ inherited__">object</span>)</span><br><span class="line"><span class="number">2</span>：<span class="keyword">class</span> <span class="title class_">Student</span>()</span><br><span class="line"><span class="number">3</span>：<span class="keyword">class</span> <span class="title class_">Student</span></span><br><span class="line"><span class="comment">#类名后面的 () 参数不写默认就是 object</span></span><br><span class="line"><span class="comment">#定义类的格式</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">类名</span>：</span><br><span class="line">	类体代码</span><br><span class="line">    <span class="built_in">object</span>:父类</span><br><span class="line">    <span class="number">1</span>：<span class="keyword">class</span>是定义类的关键字</span><br><span class="line">    <span class="number">2</span>：类名类似于函数名，定义类尽量用驼峰体</span><br><span class="line">    <span class="number">3</span>：类体代码就是存放对象公共数据和功能的地方</span><br><span class="line">    	数据：变量名 = 变量值</span><br><span class="line">        功能：函数</span><br><span class="line"><span class="comment">#函数名（）得到的是函数的返回值</span></span><br><span class="line"><span class="comment"># 如果你自己写了那就是你写的，如果没写就是 None</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>调用类的方法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#例子</span></span><br><span class="line">变量名 = 类名（）</span><br><span class="line"><span class="built_in">print</span>（变量名）<span class="comment">#得到的是名称空间字典 例如：&lt;__main__.Student object at 0x000001F2074B1340&gt;</span></span><br><span class="line"><span class="comment">#想用类里面的属性和方法</span></span><br><span class="line"><span class="built_in">print</span>(变量名.属性)<span class="comment">#前提是已经走了这一步：变量名 = 类名（）</span></span><br><span class="line"><span class="built_in">print</span>(student.read())</span><br></pre></td></tr></table></figure>
+<h2 id="【3】类的属性加扩展属性">【3】类的属性加扩展属性</h2>
+<h3 id="【1】扩展属性">【1】扩展属性</h3>
+<ol>
+<li>获取当前类的名字
+<ul>
+<li>对象名.	<code>__name__	</code></li>
+</ul>
+</li>
+<li>获取类中的文档字符串
+<ul>
+<li>对象名.	<code>__doc__	</code></li>
+</ul>
+</li>
+<li>获取类的父类
+<ul>
+<li>对象名.	<code>__base__	</code></li>
+</ul>
+</li>
+<li>获取类的所有父类
+<ul>
+<li>对象名.	<code>__bases__	</code></li>
+</ul>
+</li>
+<li>获取当前类的名称空间
+<ul>
+<li>变量名:		<code>__dict__	</code></li>
+</ul>
+</li>
+<li>获取类定义所在的模块名
+<ul>
+<li>变量名：	<code>__module__	</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="【2】类的定义">【2】类的定义</h3>
+<ul>
+<li>案例</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">     <span class="comment"># 数据属性</span></span><br><span class="line">     school_name = <span class="string">&quot;清华&quot;</span></span><br><span class="line"></span><br><span class="line">     <span class="comment"># 函数属性</span></span><br><span class="line">     <span class="keyword">def</span> <span class="title function_">read</span>(<span class="params">self</span>):</span><br><span class="line">         age = <span class="number">18</span></span><br><span class="line">         <span class="comment"># self : 表示对象自己本身，</span></span><br><span class="line">         <span class="built_in">print</span>(<span class="string">f&quot;当前学校是 <span class="subst">&#123;self.school_name&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">student = Student()</span><br><span class="line"><span class="built_in">print</span>(student)  <span class="comment"># &lt;__main__.Student object at 0x000001F2074B1340&gt;</span></span><br><span class="line"><span class="comment"># 想用类里面的属性和方法</span></span><br><span class="line"><span class="built_in">print</span>(student.school_name)</span><br><span class="line"><span class="built_in">print</span>(student.read())  <span class="comment"># None</span></span><br></pre></td></tr></table></figure>
+<h3 id="【3】查看类的名称空间">【3】查看类的名称空间</h3>
+<h4 id="【1】方法">【1】方法</h4>
+<ul>
+<li>​	<code>__dict__	</code></li>
+<li>类.	<code>__dict__	</code>返回值是一个字典</li>
+</ul>
+<h4 id="【2】如何产生对象">【2】如何产生对象</h4>
+<ul>
+<li>类名加括号</li>
+</ul>
+<h4 id="【3】如何修改对象的属性">【3】如何修改对象的属性</h4>
+<ul>
+<li>
+<p>通过类的名称空间修改属性</p>
+</li>
+<li>
+<p>类的名称空间不允许修改属性</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">DreamStudent</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    school = <span class="string">&#x27;梦想学城&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read_books</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;is reading books&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">write_nodes</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;is write nodes&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">running</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;is running&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">obj1 = DreamStudent()  <span class="comment"># 目前对象没有自己独有的属性</span></span><br><span class="line">obj2 = DreamStudent()  <span class="comment"># 目前对象没有自己独有的属性</span></span><br><span class="line"><span class="built_in">print</span>(obj1.__dict__)  <span class="comment"># 大白话就是给字典添加键值对  &#123;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(obj2.__dict__)  <span class="comment"># 大白话就是给字典添加键值对  &#123;&#125;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;方案1:逐步给对象添加独有的数据&#x27;&#x27;&#x27;</span></span><br><span class="line">obj1.__dict__[<span class="string">&#x27;name&#x27;</span>] = <span class="string">&#x27;dream&#x27;</span>  <span class="comment"># obj1.name = &#x27;dream&#x27;</span></span><br><span class="line">obj1.__dict__[<span class="string">&#x27;age&#x27;</span>] = <span class="number">18</span>  <span class="comment"># obj1.age = 18</span></span><br><span class="line">obj1.__dict__[<span class="string">&#x27;gender&#x27;</span>] = <span class="string">&#x27;male&#x27;</span>  <span class="comment"># obj1.gender = &#x27;male&#x27;</span></span><br><span class="line"></span><br><span class="line">obj2.__dict__[<span class="string">&#x27;name&#x27;</span>] = <span class="string">&#x27;hope&#x27;</span>  <span class="comment"># obj2.name = &#x27;hope&#x27;</span></span><br><span class="line">obj2.__dict__[<span class="string">&#x27;age&#x27;</span>] = <span class="number">2</span>  <span class="comment"># obj2.age = 28</span></span><br><span class="line">obj2.__dict__[<span class="string">&#x27;gender&#x27;</span>] = <span class="string">&#x27;female&#x27;</span>  <span class="comment"># obj2.gender = &#x27;female&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(obj1.__dict__,</span><br><span class="line">      obj2.__dict__)  <span class="comment"># &#123;&#x27;name&#x27;: &#x27;dream&#x27;, &#x27;age&#x27;: 18, &#x27;gender&#x27;: &#x27;male&#x27;&#125; &#123;&#x27;name&#x27;: &#x27;hope&#x27;, &#x27;age&#x27;: 2, &#x27;gender&#x27;: &#x27;female&#x27;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(obj1.name)  <span class="comment"># dream</span></span><br><span class="line"><span class="built_in">print</span>(obj2.name)  <span class="comment"># hope</span></span><br></pre></td></tr></table></figure>
+<h4 id="【4】批量修改属性">【4】批量修改属性</h4>
+<h5 id="（0）修改方法">（0）修改方法</h5>
+<ul>
+<li>
+<p>方式一：通过名称空间字典替换</p>
+<ul>
+<li>student.	<code>__dict__	</code>[‘name’] = “dream”</li>
+</ul>
+</li>
+<li>
+<p>方式二：通过对象.属性名=属性值替换</p>
+<ul>
+<li>
+<pre><code class="language-python">student_one.name = 'dream'
+student_one.age = 18
+student_one.gender = 'male'
+student_two.name = 'opp'
+student_two.age = 19
+student_two.gender = 'female'
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">##### （1）批量向对象中添加各自独有的属性值和属性名</span><br><span class="line"></span><br><span class="line">- init_obj(obj=student_one,name=&#x27;dream&#x27;,age=18,gender=&#x27;male&#x27;)</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">#Student()：类名称</span><br><span class="line">def init_obj(obj,name,age,gender):</span><br><span class="line">    obj.name = name</span><br><span class="line">    obj.age = age</span><br><span class="line">    obj.gender = gender</span><br><span class="line">student_one = Student()</span><br><span class="line">student_two = Student()</span><br><span class="line">init_obj(obj=student_one,name=&#x27;dream&#x27;,age=18,gender=&#x27;male&#x27;)</span><br><span class="line">init_obj(obj=student_two,name=&#x27;opp&#x27;,age=19,gender=&#x27;female&#x27;)</span><br><span class="line"></span><br><span class="line">print(student_one.name)</span><br><span class="line">print(student_two.name)</span><br></pre></td></tr></table></figure>
+
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="（2）在类内部初始化自己的参数">（2）在类内部初始化自己的参数</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="comment"># 数据属性</span></span><br><span class="line">    school_name = <span class="string">&quot;清华&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">init_obj</span>(<span class="params">self, name, age, gender</span>):</span><br><span class="line">        <span class="comment"># self 就是这个类的对象本身</span></span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line">        <span class="variable language_">self</span>.gender = gender</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 函数属性</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;当前学校是 <span class="subst">&#123;self.school_name&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;当前学生姓名是 <span class="subst">&#123;self.name&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;当前学生年龄是 <span class="subst">&#123;self.age&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;当前学生性别是 <span class="subst">&#123;self.gender&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">student = Student()</span><br><span class="line"><span class="comment"># &#x27;Student&#x27; object has no attribute &#x27;name&#x27;</span></span><br><span class="line">student.init_obj(name=<span class="string">&#x27;dream&#x27;</span>,age=<span class="number">18</span>,gender=<span class="string">&#x27;male&#x27;</span>)</span><br><span class="line">student.read()</span><br></pre></td></tr></table></figure>
+<h4 id="【5】魔法方法值初始化方法-init">【5】魔法方法值初始化方法		<code>__init__	</code></h4>
+<ol>
+<li>类中的	<code>__init__	</code>方法会在类产生对象的时候自己执行</li>
+<li>类产生对象的具体步骤
+<ul>
+<li>先创建一个没有独有数据的空对象</li>
+<li>将空对象和类括号内传入的数据一并交给<code>__init__</code>
+<ul>
+<li><code>__init__</code>第一个参数就是对象本身</li>
+<li><code>__init__</code>(obj,name,age,gender)</li>
+</ul>
+</li>
+<li>创建好的对象自动返回，给你提供这种方式能够减少代码的编写</li>
+</ul>
+</li>
+<li>针对括号内第一个形参self其实就是一个普通的变量名而已
+<ul>
+<li>只不过该变量名将来专门接收对象的 所以给它起了个固定的名字叫self</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#案例</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="comment"># 数据属性</span></span><br><span class="line">    school_name = <span class="string">&quot;清华&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age, gender</span>):</span><br><span class="line">        <span class="comment"># self 就是这个类的对象本身</span></span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line">        <span class="variable language_">self</span>.gender = gender</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 函数属性</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;当前学校是 <span class="subst">&#123;self.school_name&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;当前学生姓名是 <span class="subst">&#123;self.name&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;当前学生年龄是 <span class="subst">&#123;self.age&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;当前学生性别是 <span class="subst">&#123;self.gender&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">write</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;当前学生 :&gt;&gt;&gt; <span class="subst">&#123;self.name&#125;</span> 可以写作业!&quot;</span>)</span><br><span class="line">        </span><br><span class="line"><span class="comment"># 初始化类得到对象</span></span><br><span class="line">student = Student(name=<span class="string">&#x27;dream&#x27;</span>, age=<span class="number">18</span>, gender=<span class="string">&#x27;male&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(student.__dict__)</span><br><span class="line">student.read()</span><br><span class="line">student.write()</span><br><span class="line">student_one = Student(name=<span class="string">&#x27;opp&#x27;</span>, age=<span class="number">28</span>, gender=<span class="string">&#x27;female&#x27;</span>)</span><br><span class="line">student_one.read()</span><br><span class="line">student_one.write() </span><br></pre></td></tr></table></figure>
+<h4 id="【6】属性查找顺序">【6】属性查找顺序</h4>
+<ul>
+<li>
+<p>由内向外</p>
+<ul>
+<li>
+<p>首先在自己的对象中查找</p>
+</li>
+<li>
+<p>自己找不到就去父类里面找</p>
+</li>
+<li>
+<p>如果父类里面找不到，就去基类里面找</p>
+</li>
+<li>
+<p>如果基类里面也没有，就去 object 里面找</p>
+</li>
+<li>
+<p>如果还是找不到则报错</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="【7】对象是可变数据类型">【7】对象是可变数据类型</h4>
+
       
     </div>
 
@@ -611,7 +1839,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/3.0GIL%E5%85%A8%E5%B1%80%E8%A7%A3%E9%87%8A%E5%99%A8%E9%94%81/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/5.12%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%8C%E7%BB%A7%E6%89%BF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -625,7 +1853,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/3.0GIL%E5%85%A8%E5%B1%80%E8%A7%A3%E9%87%8A%E5%99%A8%E9%94%81/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/5.12%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%8C%E7%BB%A7%E6%89%BF/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -634,9 +1862,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:41" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -650,7 +1893,179 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1>继承</h1>
+<h2 id="【一】介绍">【一】介绍</h2>
+<h3 id="【1】什么是继承">【1】什么是继承</h3>
+<ul>
+<li>继承就是创建新类的方式，新建的类可以继承一个或多个类的属性</li>
+<li>新的类如果有自己的属性，就叫派生</li>
+</ul>
+<h3 id="【2】优点">【2】优点</h3>
+<ul>
+<li>可以继承父类的所有的属性和方法，实现代码的去重</li>
+</ul>
+<h3 id="【3】继承的方式">【3】继承的方式</h3>
+<ul>
+<li>
+<p>两种方式</p>
+<ul>
+<li>
+<p>单继承：继承一个父类的子类</p>
+</li>
+<li>
+<pre><code class="language-python">class Person(object):
+    height = 188
+    weight = 66
+    
+#继承一个父类的所有属性
+class Student(Person):
+    def __init__(self, name):
+        self.name = name
+    def tell_me(self):
+        print(self.height)
+        print(self.weight)
+        print(self.name)
+        
+student = Student(name=&quot;tom&quot;)
+student.tell_me()
+# 188
+# 66
+# tom
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 多继承：继承多个父类的子类(两个父类以上)</span><br><span class="line"></span><br><span class="line">  ```python</span><br><span class="line">  class Person(object):</span><br><span class="line">      height = 188</span><br><span class="line">      weight = 66</span><br><span class="line">      </span><br><span class="line">  class School(object):</span><br><span class="line">      school = &quot;家里蹲大学&quot;</span><br><span class="line">      </span><br><span class="line">  class Student(Person, School):</span><br><span class="line">      def __init__(self, name):</span><br><span class="line">          self.name = name</span><br><span class="line">      def tell_me(self):</span><br><span class="line">          print(self.height)</span><br><span class="line">          print(self.weight)</span><br><span class="line">          print(self.name)</span><br><span class="line">          print(self.school)</span><br><span class="line">          </span><br><span class="line">  student = Student(name=&quot;tom&quot;)</span><br><span class="line">  student.tell_me()</span><br><span class="line">  # 188</span><br><span class="line">  # 66</span><br><span class="line">  # tom</span><br><span class="line">  #家里蹲大学</span><br></pre></td></tr></table></figure>
+
+
+
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>例子：</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>(<span class="title class_ inherited__">School</span>):</span><br><span class="line"><span class="comment">#新建的类叫子类：Student</span></span><br><span class="line"><span class="comment">#继承的类叫父类：School</span></span><br></pre></td></tr></table></figure>
+<h3 id="【4】如何查看继承的父类">【4】如何查看继承的父类</h3>
+<h4 id="（1）查看当前的父类（-base-）">（1）查看当前的父类（<code>__base__</code>）</h4>
+<ul>
+<li>如果类名括号里有多个父类，默认打印第一个</li>
+</ul>
+<h4 id="（2）查看当前继承的父类们（-bases-）">（2）查看当前继承的父类们（<code>__bases__</code>）</h4>
+<ul>
+<li>得到的是一个元组，元组中继承的是搜有的父类</li>
+</ul>
+<h2 id="【二】经典类和新式类">【二】经典类和新式类</h2>
+<ul>
+<li>经典类和新式类的区别就在于python版本的区别</li>
+<li>在python3之前存在这两个概念，之后就不存在与经典类概念了，只有新式类</li>
+</ul>
+<h3 id="【1】什么是经典类">【1】什么是经典类</h3>
+<ul>
+<li>在python3之前没有显示继承object的类就叫经典类
+<ul>
+<li>意思就是：类名后面（）没有定义–》都叫经典类</li>
+</ul>
+</li>
+</ul>
+<h3 id="【2】什么是新式类">【2】什么是新式类</h3>
+<ul>
+<li>在python3之后没有显示继承的类，默认都是新式类，默认继承object</li>
+</ul>
+<h2 id="【三】继承和抽象（抽象在继承下）">【三】继承和抽象（抽象在继承下）</h2>
+<ul>
+<li>继承是子类与父类之间的关系</li>
+<li>必须先抽象在继承</li>
+<li>抽象：抽取类似的或者比较像的部分</li>
+</ul>
+<h3 id="【1】抽象">【1】抽象</h3>
+<ul>
+<li>讲不同的类，根据指定的表征总结起来归介于一个类
+<ul>
+<li>意思就是从多个类中抽取类似的部分，总结到一个类里面</li>
+</ul>
+</li>
+</ul>
+<h3 id="【2】继承">【2】继承</h3>
+<ul>
+<li>基于抽象的结果，然后用语言去实现
+<ul>
+<li>用抽象，来实现语法</li>
+</ul>
+</li>
+</ul>
+<h3 id="【3】继承，抽象">【3】继承，抽象</h3>
+<ul>
+<li>
+<p>继承是由少变多</p>
+</li>
+<li>
+<p>抽象是由多变小</p>
+</li>
+<li>
+<h3 id="没有抽象和继承">没有抽象和继承</h3>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Cat</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">speak</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;猫可以喵喵叫&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">eat</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;猫可以吃饭&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">drink</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;猫可以喝水&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 有一只狗</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">speak</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;狗可以旺旺叫&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">eat</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;狗可以吃饭&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">drink</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;狗可以喝水&quot;</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<h3 id="抽象">抽象</h3>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#总结一个公共的类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">speak</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;self.name&#125;</span>可以叫&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">eat</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;self.name&#125;</span>可以吃饭&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">drink</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;self.name&#125;</span>可以喝水&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<h3 id="继承—-直接用抽象定义的公共类">继承—&gt;直接用抽象定义的公共类</h3>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 有一只猫</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Cat</span>(<span class="title class_ inherited__">Animal</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = <span class="string">&#x27;猫&#x27;</span>+name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 有一只狗</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>(<span class="title class_ inherited__">Animal</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = <span class="string">&#x27;狗&#x27;</span>+name</span><br><span class="line"></span><br><span class="line">cat_one = Cat(name=<span class="string">&#x27;小花&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(cat_one.speak())</span><br><span class="line">dog_one = Dog(name=<span class="string">&quot;旺财&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(dog_one.speak())</span><br></pre></td></tr></table></figure>
+<h2 id="【四】封装和继承的属性查找顺序">【四】封装和继承的属性查找顺序</h2>
+<h3 id="【1】没有封装之前查找属性的顺序">【1】没有封装之前查找属性的顺序</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">f1</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Foo.f1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 【四】在父类 Foo 里面找到了 f2</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">f2</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 【五】打印 Foo.f2</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Foo.f2&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.f1()<span class="comment">#【六】这里的f1是Bar里面的f1，因为f2（self）：self是Bar。哪个对象调用方法，self 就是谁</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bar</span>(<span class="title class_ inherited__">Foo</span>):</span><br><span class="line">    <span class="comment"># 【七】因为是 通过Bar实例化得到的对象，所以 self 就是 Bar</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">f1</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 【八】打印 Bar.f1</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Bar.f1&#x27;</span>)</span><br><span class="line">    <span class="comment"># 【三】Bar里面没有f2，去父类找 Foo</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 【一】类实例化得到对象</span></span><br><span class="line">b = Bar()</span><br><span class="line"><span class="comment"># 【二】对象调用方法 f2</span></span><br><span class="line">b.f2()</span><br><span class="line"><span class="comment">#Foo.f2</span></span><br><span class="line"><span class="comment">#Bar.f1</span></span><br></pre></td></tr></table></figure>
+<h3 id="【2】有封装的时候的继承">【2】有封装的时候的继承</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>:</span><br><span class="line">    <span class="comment"># __f1 --&gt; _Foo__f1</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__f1</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Foo.f1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 【4】在Foo里面找到了 f2</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">f2</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 【5】打印 Foo.f2</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Foo.f2&#x27;</span>)</span><br><span class="line">        <span class="comment"># 【6】没有变形的时候 self 是谁就去谁里面找</span></span><br><span class="line">        <span class="comment"># 但是变形之后 就只能在自己的类里面找，没办跳到别的类里面</span></span><br><span class="line">        <span class="comment"># Foo.f1 2</span></span><br><span class="line">        <span class="comment"># Bar.f1 3</span></span><br><span class="line">        <span class="variable language_">self</span>.__f1()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bar</span>(<span class="title class_ inherited__">Foo</span>):</span><br><span class="line">    <span class="comment"># 【3】没有f2. 去 Foo</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__f1</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Bar.f1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 【1】</span></span><br><span class="line">b = Bar()</span><br><span class="line"><span class="comment"># 【2】</span></span><br><span class="line">b.f2()</span><br><span class="line"><span class="comment">#Foo.f2</span></span><br><span class="line"><span class="comment">#Foo.f1</span></span><br></pre></td></tr></table></figure>
+<h3 id="【3】总结">【3】总结</h3>
+<ul>
+<li>如果属性不封装的情况下，谁实例化得到的self就去谁里面找</li>
+<li>如果属性封装的情况下 ， 谁实例化得到的self 无效，只能在当前所在的类的民称空间里面找</li>
+</ul>
+<h2 id="【五】菱形继承-》继承实现的原理">【五】菱形继承-----》继承实现的原理</h2>
+<ul>
+<li>
+<p>菱形继承问题，一个类可以继承多个父类，父类又可以继承父类</p>
+</li>
+<li>
+<p>如果继承关系为菱形结构，那么属性的查找方式有两种，分别是：分为深度优先和广度优先</p>
+</li>
+</ul>
+<h3 id="【1】深度优先">【1】深度优先</h3>
+<ul>
+<li>发生在经典类上，在当前类内部找不到指定属性的时候会想上找</li>
+<li>查找规则就是深度优先</li>
+<li>一条线找到黑</li>
+<li>当类是经典类时，多继承情况下，在查找属性不存在时，会按照深度优先的方式查找下去</li>
+</ul>
+<h3 id="【2】广度优先">【2】广度优先</h3>
+<ul>
+<li>
+<p>发生在新式类上，在当前内部找不到指定属性的收会想上找</p>
+</li>
+<li>
+<p>查找顺序就是广度优先</p>
+</li>
+<li>
+<p>当类是新式类时，多继承情况下，在查找属性不存在时，会按照广度优先的方式查找下去</p>
+</li>
+</ul>
+<h3 id="【3】例题">【3】例题</h3>
+<ul>
+<li><code>__mro__</code>查找所有的类里面的函数名
+<ul>
+<li><code>(&lt;class '__main__.F'&gt;, &lt;class '__main__.D'&gt;, &lt;class '__main__.B'&gt;, &lt;class '__main__.E'&gt;, &lt;class '__main__.C'&gt;, &lt;class '__main__.A'&gt;, &lt;class 'object'&gt;)</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;from A&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span>(<span class="title class_ inherited__">A</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;from B&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span>(<span class="title class_ inherited__">A</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;from C&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">D</span>(<span class="title class_ inherited__">B</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;from D&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">E</span>(<span class="title class_ inherited__">C</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;from E&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">F</span>(D, E):</span><br><span class="line">    <span class="comment"># def test(self):</span></span><br><span class="line">    <span class="comment">#     print(&#x27;from F&#x27;)</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">f1 = F()</span><br><span class="line">f1.test()<span class="comment">#from D</span></span><br><span class="line"><span class="comment"># 只有新式才有这个属性可以查看线性列表，经典类没有这个属性</span></span><br><span class="line"><span class="built_in">print</span>(F.__mro__)<span class="comment">#(&lt;class &#x27;__main__.F&#x27;&gt;, &lt;class &#x27;__main__.D&#x27;&gt;, &lt;class &#x27;__main__.B&#x27;&gt;, &lt;class &#x27;__main__.E&#x27;&gt;, &lt;class &#x27;__main__.C&#x27;&gt;, &lt;class &#x27;__main__.A&#x27;&gt;, &lt;class &#x27;object&#x27;&gt;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 深度优先：新式类继承顺序:F-&gt;D-&gt;B-&gt;E-&gt;C-&gt;A</span></span><br><span class="line"><span class="comment"># 广度优先：经典类继承顺序:F-&gt;D-&gt;B-&gt;A-&gt;E-&gt;C</span></span><br><span class="line"><span class="comment"># python3中统一都是新式类</span></span><br><span class="line"><span class="comment"># pyhon2中才分新式类与经典类</span></span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -669,7 +2084,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/11/3.0Django%E4%B8%89%E6%9D%BF%E6%96%A7%EF%BC%8C%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%EF%BC%8Cshortcuts,request%E5%AF%B9%E8%B1%A1/">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/5.13%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%8C%E6%B4%BE%E7%94%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -683,7 +2098,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/10/11/3.0Django%E4%B8%89%E6%9D%BF%E6%96%A7%EF%BC%8C%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%EF%BC%8Cshortcuts,request%E5%AF%B9%E8%B1%A1/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/01/01/5.13%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%8C%E6%B4%BE%E7%94%9F/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -692,9 +2107,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-10-11 17:32:09 / 修改时间：18:01:41" itemprop="dateCreated datePublished" datetime="2025-10-11T17:32:09+08:00">2025-10-11</time>
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
             </span>
 
           
@@ -708,7 +2138,71 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1>派生</h1>
+<h2 id="【一】什么是派生">【一】什么是派生</h2>
+<ul>
+<li>派生就是<strong>子类继承父类所有的属性和方法，并且派生出自己的属性与方法</strong></li>
+</ul>
+<h3 id="【1】子类继承父类的属性">【1】子类继承父类的属性</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">People</span>:</span><br><span class="line">    school = <span class="string">&#x27;清华大学&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, sex, age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.sex = sex</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Teacher</span>(<span class="title class_ inherited__">People</span>):</span><br><span class="line">    <span class="comment"># 派生 ： 派生出自己新的属性，在进行属性查找时，子类中的属性名会优先于父类被查找</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, sex, age, title</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.sex = sex</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line">        <span class="variable language_">self</span>.title = title</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">teach</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;%s is teaching&#x27;</span> % <span class="variable language_">self</span>.name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 只会找自己类中的__init__，并不会自动调用父类的</span></span><br><span class="line">obj = Teacher(<span class="string">&#x27;dream&#x27;</span>, <span class="string">&#x27;male&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;高级讲师&#x27;</span>)</span><br><span class="line">obj.teach()<span class="comment">#dream is teaching</span></span><br><span class="line"><span class="built_in">print</span>(obj.name, obj.sex, obj.age, obj.title,obj.school)<span class="comment">#dream male 18 高级讲师</span></span><br></pre></td></tr></table></figure>
+<h3 id="【2】继承方法一">【2】继承方法一</h3>
+<ul>
+<li>用的时候直接用类名调用函数方法
+<ul>
+<li><code>People.__init__(self, name, age, sex)</code></li>
+<li>直接调用就可以用这个函数的属性和方法</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">People</span>:</span><br><span class="line">    school = <span class="string">&#x27;清华大学&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, sex, age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.sex = sex</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Teacher</span>(<span class="title class_ inherited__">People</span>):</span><br><span class="line">    <span class="comment"># 派生 ： 派生出自己新的属性，在进行属性查找时，子类中的属性名会优先于父类被查找</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, sex, age, title</span>):</span><br><span class="line">        <span class="comment"># 直接调用 父类 中 的 __init__ 方法</span></span><br><span class="line">        <span class="comment"># 调用的是函数,因而需要传入self</span></span><br><span class="line">        People.__init__(<span class="variable language_">self</span>, name, age, sex)</span><br><span class="line">        <span class="variable language_">self</span>.title = title</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">teach</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;%s is teaching&#x27;</span> % <span class="variable language_">self</span>.name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 只会找自己类中的__init__，并不会自动调用父类的</span></span><br><span class="line">obj = Teacher(<span class="string">&#x27;dream&#x27;</span>, <span class="string">&#x27;male&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;高级讲师&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(obj.name, obj.sex, obj.age, obj.title)</span><br><span class="line"><span class="comment"># dream male 18 高级讲师</span></span><br></pre></td></tr></table></figure>
+<h3 id="【3】继承方法二">【3】继承方法二</h3>
+<ul>
+<li>调用**super()**会得到一个特殊的对象</li>
+<li>该对象专门用来引用父类的属性</li>
+<li>且严格按照MRO规定的顺序向后查找</li>
+<li>MRO:查看继承的顺序</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">People</span>:</span><br><span class="line">    school = <span class="string">&#x27;清华大学&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, sex, age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.sex = sex</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Teacher</span>(<span class="title class_ inherited__">People</span>):</span><br><span class="line">    <span class="comment"># 派生 ： 派生出自己新的属性，在进行属性查找时，子类中的属性名会优先于父类被查找</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, sex, age, title</span>):</span><br><span class="line">        <span class="comment"># 直接调用 父类 中 的 __init__ 方法</span></span><br><span class="line">        <span class="comment"># 调用的是绑定方法，因此会自动传入self,但是需要传入相应的参数</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(name, sex, age)</span><br><span class="line">        <span class="variable language_">self</span>.title = title</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">teach</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;%s is teaching&#x27;</span> % <span class="variable language_">self</span>.name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 只会找自己类中的__init__，并不会自动调用父类的</span></span><br><span class="line">obj = Teacher(<span class="string">&#x27;dream&#x27;</span>, <span class="string">&#x27;male&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;高级讲师&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(obj.name, obj.sex, obj.age, obj.title)</span><br><span class="line"><span class="comment"># dream male 18 高级讲师</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>优缺点：super()，只会拿类名（）里面的第一个父类的属性和方法</li>
+</ul>
+<h3 id="【4】总结">【4】总结</h3>
+<ul>
+<li>这两种方式的区别是：
+<ul>
+<li>方式一是跟继承没有关系的，而方式二的super()是依赖于继承的</li>
+<li>并且即使没有直接继承关系，super()仍然会按照MRO继续往后查找</li>
+</ul>
+</li>
+</ul>
+<h3 id="【5】组合">【5】组合</h3>
+<ul>
+<li>在一个类中<strong>以另外一个类的对象作为数据属性</strong>，称为类的组合。</li>
+<li>有所有父类的属性和方法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Course</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, period, price</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.period = period</span><br><span class="line">        <span class="variable language_">self</span>.price = price</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">tell_info</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;当前课程名字 <span class="subst">&#123;self.name&#125;</span> 当前课程周期 <span class="subst">&#123;self.period&#125;</span> 当前课程价格 <span class="subst">&#123;self.price&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Date</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, year, mon, day</span>):</span><br><span class="line">        <span class="variable language_">self</span>.year = year</span><br><span class="line">        <span class="variable language_">self</span>.mon = mon</span><br><span class="line">        <span class="variable language_">self</span>.day = day</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">tell_birth</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;当前生日 <span class="subst">&#123;self.year&#125;</span> 年 <span class="subst">&#123;self.mon&#125;</span> 月 <span class="subst">&#123;self.day&#125;</span> 日&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">People</span>:</span><br><span class="line">    school = <span class="string">&#x27;清华大学&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, sex, age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.sex = sex</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Teacher类基于继承来重用People的代码</span></span><br><span class="line"><span class="comment"># 基于组合来重用Date类和Course类的代码</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Teacher</span>(<span class="title class_ inherited__">People</span>):</span><br><span class="line">    <span class="comment"># 老师是人</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, sex, age, title, year, mon, day</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(name, age, sex)</span><br><span class="line">        <span class="comment"># 老师有生日</span></span><br><span class="line">        <span class="variable language_">self</span>.birth = Date(year, mon, day)</span><br><span class="line">        <span class="comment"># 老师有课程，可以在实例化后，往该列表中添加Course类的对象</span></span><br><span class="line">        <span class="variable language_">self</span>.courses = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">teach</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;当前老师正在授课 <span class="subst">&#123;self.name&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">python = Course(<span class="string">&#x27;python&#x27;</span>, <span class="string">&#x27;3mons&#x27;</span>, <span class="number">3000.0</span>)</span><br><span class="line">linux = Course(<span class="string">&#x27;linux&#x27;</span>, <span class="string">&#x27;5mons&#x27;</span>, <span class="number">5000.0</span>)</span><br><span class="line">teacher1 = Teacher(<span class="string">&#x27;dream&#x27;</span>, <span class="string">&#x27;male&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;金牌讲师&#x27;</span>, <span class="number">1987</span>, <span class="number">3</span>, <span class="number">23</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># teacher1有两门课程</span></span><br><span class="line">teacher1.courses.append(python)</span><br><span class="line">teacher1.courses.append(linux)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重用Date类的功能</span></span><br><span class="line">teacher1.birth.tell_birth()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重用Course类的功能</span></span><br><span class="line"><span class="keyword">for</span> obj <span class="keyword">in</span> teacher1.courses:</span><br><span class="line">    obj.tell_info()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当前生日 1987 年 3 月 23 日</span></span><br><span class="line"><span class="comment"># 当前课程名字 python 当前课程周期 3mons 当前课程价格 3000.0</span></span><br><span class="line"><span class="comment"># 当前课程名字 linux 当前课程周期 5mons 当前课程价格 5000.0</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>此时对象teacher1集对象独有的属性、Teacher类中的内容、Course类中的内容于一身（都可以访问到），是一个高度整合的产物</li>
+<li><strong>当类之间有显著不同，并且较小的类是较大的类所需要的组件时，用组合比较好</strong></li>
+</ul>
+<h3 id="【6】组合和继承的区别">【6】组合和继承的区别</h3>
+<ul>
+<li>组合与继承都是有效地利用已有类的资源的重要方式。但是二者的概念和使用场景皆不同</li>
+<li>继承的方式
+<ul>
+<li>通过继承建立了派生类与基类之间的关系，它是一种’是’的关系，比如白马是马，人是动物。</li>
+<li>当类之间有很多相同的功能，提取这些共同的功能做成基类，用继承比较好，比如老师是人，学生是人</li>
+</ul>
+</li>
+<li>组合的方式
+<ul>
+<li>用组合的方式建立了类与组合的类之间的关系，它是一种‘有’的关系,比如教授有生日，教授教python和linux课程，教授有学生s1、s2、s3…</li>
+</ul>
+</li>
+</ul>
+<h3 id="【7】小练习">【7】小练习</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"> A没有继承B,但是A内<span class="built_in">super</span>会基于C.mro()继续往后找</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;A----&gt;test&#x27;</span>)</span><br><span class="line">        <span class="built_in">super</span>().aaa()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;B----&gt;test&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">aaa</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;B----&gt;aaa&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span>(A, B):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">aaa</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;C-----&gt;aaa&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">c = C()</span><br><span class="line">c.test()  </span><br><span class="line"><span class="comment"># 打印结果:</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">A----&gt;test</span></span><br><span class="line"><span class="string">B----&gt;aaa</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># C作为方法调用（即c.test()）的发起者，方法调用过程中涉及的属性查找都参考C.mro()。</span></span><br><span class="line"><span class="comment"># 父子关系按照mro列表为准，千万不要从代码层面看父子。例如</span></span><br><span class="line"><span class="built_in">print</span>(C.mro())</span><br><span class="line"><span class="comment"># c.test()，发起者C.mro()列表如下</span></span><br><span class="line"><span class="comment"># 从列表中可以看出，B类就是A类他爹，而代码层面二者并无继承关系</span></span><br><span class="line"><span class="comment"># [&lt;class &#x27;__main__.C&#x27;&gt;, &lt;class &#x27;__main__.A&#x27;&gt;, &lt;class &#x27;__main__.B&#x27;&gt;, &lt;class &#x27;object&#x27;&gt;]</span></span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -726,7 +2220,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -792,9 +2286,17 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">201</span>
+          <span class="site-state-item-count">196</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
       </div>
   </nav>
 </div>

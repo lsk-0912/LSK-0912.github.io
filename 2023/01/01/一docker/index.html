@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="��һ��djangoԭ������mysql 1234567891011121314151617181920212223import osimport djangoif __name__ &#x3D;&#x3D; &#x27;__main__&#x27;:    os.environ.setdefault(&#x27;DJANGO_SETTINGS_MODULE&#x27;, &#x27;drf_mysql_des">
+<meta property="og:type" content="article">
+<meta property="og:title" content="坤博客">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/%E4%B8%80docker/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="��һ��djangoԭ������mysql 1234567891011121314151617181920212223import osimport djangoif __name__ &#x3D;&#x3D; &#x27;__main__&#x27;:    os.environ.setdefault(&#x27;DJANGO_SETTINGS_MODULE&#x27;, &#x27;drf_mysql_des">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240619105810065.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240619110513136.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240312121741177-17187679368771.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240926122213317.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240620102936389.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240313102219623.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240313104034977.png">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T10:31:35.972Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240619105810065.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/%E4%B8%80docker/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/%E4%B8%80docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:35" itemprop="dateModified" datetime="2025-10-11T18:31:35+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>��һ��djangoԭ������mysql</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> django</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    os.environ.setdefault(<span class="string">&#x27;DJANGO_SETTINGS_MODULE&#x27;</span>, <span class="string">&#x27;drf_mysql_deserialize.settings&#x27;</span>)</span><br><span class="line">    django.setup()</span><br><span class="line">    <span class="keyword">from</span> django.db <span class="keyword">import</span> connection</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ִ��ԭ����sql���---��ʽһ����������</span></span><br><span class="line">    conn = connection.cursor()</span><br><span class="line">    conn.execute(<span class="string">&#x27;select id,name,price from app1_book where id=1&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(conn.fetchall())</span><br><span class="line">    conn.close()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ִ��ԭ����sql���---��ʽ��������</span></span><br><span class="line">    <span class="comment"># ��������ӳ��</span></span><br><span class="line">    <span class="keyword">from</span> app1.models <span class="keyword">import</span> Book</span><br><span class="line"></span><br><span class="line">    book_list = Book.objects.raw(<span class="string">&#x27;select id,name, price from app1_book where id&gt;10&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(book_list)  <span class="comment"># &lt;RawQuerySet: select name, price from app1_book&gt;</span></span><br><span class="line">    <span class="keyword">for</span> book_obj <span class="keyword">in</span> book_list:</span><br><span class="line">        <span class="built_in">print</span>(book_obj)  <span class="comment"># Book object (32)</span></span><br><span class="line">        <span class="built_in">print</span>(book_obj.name)  <span class="comment"># ���μ�</span></span><br></pre></td></tr></table></figure>
+<h1>������docker����</h1>
+<h2 id="��1�����⻯">��1�����⻯</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  �ڼ�����У����⻯��Ӣ�Virtualization����һ����Դ����������ǽ�������ĸ���ʵ����Դ��������������硢�ڴ漰�洢�ȣ����Գ���ת������ֳ���������ʵ��ṹ��Ĳ����и���ϰ���ʹ�û����Ա�ԭ������̬���õķ�ʽ��Ӧ����Щ��Դ����Щ��Դ�������ⲿ���ǲ���������Դ�ļ��跽ʽ�������������̬�����ơ�һ����ָ�����⻯��Դ�����������������ϴ洢��</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ��ʵ�ʵ����������У����⻯������Ҫ������������ܵ�����Ӳ�����ܹ�ʣ���ϵľɵ�Ӳ�����ܹ��͵��������ã�͸�����ײ�����Ӳ�����Ӷ���󻯵���������Ӳ��  ����Դ�������</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ���⻯��������ܶ࣬���磺������⻯��Ӳ�����⻯���ڴ����⻯���������⻯(vip)���������⻯���������⻯��������ȵȡ�</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="��2������kvm-VMware-openstack-docker-k8s">��2������<code>kvm,VMware,openstack,docker,k8s</code></h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. KVM (Kernel-based Virtual Machine)</span></span><br><span class="line">���ͣ�ȫ���⻯</span><br><span class="line">�ص㣺</span><br><span class="line">KVM �� Linux �ں˵�һ���֣��� Linux ת��Ϊһ������ <span class="number">1</span> ��������������</span><br><span class="line">֧�ֶ��ֲ���ϵͳ�Ĳ������У����� Windows �Ͳ�ͬ�� Linux ���а档</span><br><span class="line">�߶ȼ����� Linux ϵͳ�����ܱ������á�</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. VMware</span></span><br><span class="line">���ͣ�ȫ���⻯</span><br><span class="line">�ص㣺</span><br><span class="line">VMware �ṩ�˶����Ʒ���� VMware vSphere��VMware Workstation �ȡ�</span><br><span class="line">ǿ��Ĺ�����ߺ��û����棬�ʺ���ҵ��Ӧ�á�</span><br><span class="line">�ṩ�߿����ԡ����ؾ���ȹ��ܣ��㷺Ӧ�����������ġ�</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. OpenStack</span></span><br><span class="line">���ͣ��Ƽ���ƽ̨</span><br><span class="line">�ص㣺</span><br><span class="line">OpenStack ��һ����Դ�Ƽ������ƽ̨��֧�ֹ����͹��������˽���ơ�</span><br><span class="line">֧�ֶ������⻯���������� KVM �� VMware����</span><br><span class="line">�ṩ���㡢�洢����������ʺϴ��ģ����</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. Docker</span></span><br><span class="line">���ͣ�������</span><br><span class="line">�ص㣺</span><br><span class="line">Docker ��һ����Դƽ̨�������Զ���Ӧ�ó���Ĳ�����չ�͹����</span><br><span class="line">Ӧ�ó��������������У�����������������ϵͳ�ں˵��໥���롣</span><br><span class="line">����ٶȿ죬��Դ�����ʸߣ��ʺ�΢����ܹ���</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. Kubernetes (K8s)</span></span><br><span class="line">���ͣ���������</span><br><span class="line">�ص㣺</span><br><span class="line">Kubernetes ��һ����Դ��������ƽ̨�������Զ��������Ĳ�����չ�͹����</span><br><span class="line">�ṩ�����֡����ؾ��⡢�������µȹ��ܡ�</span><br><span class="line">֧�ֶ�����������ʱ���� Docker�����ڴ��ģ�����зǳ��ܻ�ӭ��</span><br><span class="line"></span><br><span class="line"><span class="comment"># �ܽ�</span></span><br><span class="line">��Щ�������Խ���˲�ͬ�����⻯�����������󣬴������������������ţ�Ϊ�ִ� IT ������ʩ�ṩ��ǿ���֧�֡�ѡ����ʵĹ���ȡ���ھ����ҵ������ͼ���ջ��</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240619105810065.png" alt="image-20240619105810065"></p>
+<h2 id="��3��docker����">��3��docker����</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Docker ��һ����Դ��Ŀ�������� 2013 ���������� dotCloud ��˾�ڲ���һ��ҵ����Ŀ�������� Google ��˾�Ƴ��� Go ����ʵ�֡� ���� Linux ����ᣬ����� Apache 2.0 Э�飬��Ŀ�������Ͻ���ά����</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ��������������������������������������������������ŵ㣬�����ٶȿ���ŵ�</span></span><br><span class="line"><span class="comment"># ������Դ���룬�������</span></span><br><span class="line"><span class="comment"># ����������һ�����������</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># docker����������</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Docker �Ļ����� Linux ������LXC���ȼ���</span></span><br></pre></td></tr></table></figure>
+<h2 id="��4��docker������������L�">��4��docker������������Ƚ�</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker ����Ҫ���⻯�� ����ϵͳ��һ��---����������--ռ�ռ��С---������ʵ�ָ���</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># �����������ȱ�㣺</span></span><br><span class="line">    <span class="number">1.</span>��Դռ��̫��</span><br><span class="line">    <span class="number">2.</span>���ಽ���</span><br><span class="line">    <span class="number">3.</span>�������</span><br><span class="line"></span><br><span class="line"><span class="comment"># ����������</span></span><br><span class="line">    <span class="number">1.</span>��������Դ�����ʸ�</span><br><span class="line">    <span class="number">2.</span>�Ƚ�������</span><br><span class="line">    <span class="number">3.</span>���������ԣ�һ������</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">�Ƚ�Docker�������������ͬ��</span><br><span class="line">? <span class="number">1.</span>��ͳ����������һ��Ӳ��������һ�������Ĳ���ϵͳ��Ȼ�������ϵͳ�ϰ�װ���������</span><br><span class="line">? <span class="number">2.</span>�����ڵ�Ӧ��֮�������� �����������ݣ�������û���Լ����ں˵ģ�Ҳû���������ǵ�Ӳ�������Ծ������</span><br><span class="line">? <span class="number">3.</span>ÿ���������ǻ������ģ�ÿ�������ڶ��������Լ����ļ�ϵͳ������Ӱ��</span><br><span class="line">? <span class="number">4.</span>��ȫ�ԣ�docker�İ�ȫ�Ը���</span><br><span class="line">? <span class="number">5.</span>���������ȣ�docker�����Ը�����docker���ڽ���֮��ĸ��룬�������ʵ��ϵͳ�������</span><br><span class="line">? <span class="number">6.</span>docker����ʱ�뼶�ģ�docker�Ŀ��ٵ����ԣ������ǿ��������ԡ����𶼿��Խ�Լ����ʱ��</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240619110513136.png" alt="image-20240619110513136"></p>
+<h2 id="��5��docker�ܹ�">��5��docker�ܹ�</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cs �ܹ�---���ͻ��˷����</span></span><br><span class="line">	- c �ˣ��û���������������</span><br><span class="line">    - s�ˣ������û����ִ��</span><br><span class="line">    -c��sͨ�ţ�ʹ��httpЭ�飬��ѭrestful�淶</span><br><span class="line">    	-mysql��tcp---���Զ����   </span><br><span class="line">        -redis��tcp---���Զ����  </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">  <span class="comment"># �ܹ�</span></span><br><span class="line">	<span class="number">1</span> client���ͻ��ˣ���������</span><br><span class="line">    <span class="number">2</span> ����ˣ�</span><br><span class="line">    	containers������</span><br><span class="line">        images:����--����ע����������������</span><br><span class="line">        </span><br><span class="line">    <span class="number">3</span> register��ע������</span><br><span class="line">    	-���˺ܶྵ��--��redis��nginx��mysql</span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240312121741177-17187679368771.png" alt="image-20240312121741177-17187679368771"></p>
+<h1>������docker��װ������</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 1 linux   win ��װ</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2 win:https://www.docker.com/products/docker-desktop/  ���� docker-desktop</span></span><br><span class="line">	-һ·��һ����װ</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment"># 3 centos 7.9 ��װ</span></span><br><span class="line">	-��Ƶ�������vmware �������ļ�</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment"># 4 ����һ��centos 7.9�������������������Ͻ�docker</span></span><br><span class="line">	- �����������֮�󣬿���ʹ��finalshell����������������finalshell��װdocker</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 5 ���֮ǰװ����ж��</span></span><br><span class="line">    <span class="comment"># yum remove docker docker-common  docker-selinux docker-engine</span></span><br><span class="line">        <span class="comment"># ɾ��</span></span><br><span class="line">        <span class="comment"># rm -rf /var/lib/docker</span></span><br><span class="line">    yum update  <span class="comment"># ����yum�ֿ�</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ���䣺���yum install װ�����װ���ˣ���������Ѳֿ⻻�ɰ�����</span></span><br><span class="line">    cd /etc/yum.repos.d</span><br><span class="line">    cp  CentOS-Base.repo CentOS-Base.repo.bk</span><br><span class="line">    <span class="comment"># wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span></span><br><span class="line">        <span class="comment"># ִ������Ĵ���Ҫ�Ǳ��Ҳ���wget����Ļ�����ִ������Ĵ���</span></span><br><span class="line">        - curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-<span class="number">7.</span>repo</span><br><span class="line">    <span class="comment"># �������</span></span><br><span class="line">    yum clean <span class="built_in">all</span></span><br><span class="line">    <span class="comment"># ���ɻ���</span></span><br><span class="line">    yum makecache</span><br><span class="line">    <span class="comment"># ����ϵͳ</span></span><br><span class="line">    yum update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6 ��װ</span></span><br><span class="line">    <span class="comment"># װ����</span></span><br><span class="line">    yum install -y yum-utils device-mapper-persistent-data lvm2 container-selinux</span><br><span class="line">    <span class="comment"># �������ȥdocker</span></span><br><span class="line">    yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line">    <span class="comment"># �鿴docker����Щ�汾---����ǰ������ִ��������Ĵ���</span></span><br><span class="line">    yum <span class="built_in">list</span> docker-ce --showduplicates | sort -r</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ��װ</span></span><br><span class="line">    yum install docker-ce docker-ce-cli containerd.io -y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 7 �鿴��װ�İ汾</span></span><br><span class="line">    docker --version</span><br><span class="line"></span><br><span class="line"><span class="comment"># 8 Ŀǰ����ֻװ�� docker-ce docker-ce-cli containerd.io</span></span><br><span class="line">	-ֻ�У�c  �� s��</span><br><span class="line">    -û��docker-compose</span><br><span class="line">    -û��ͼ�λ�����</span><br><span class="line">    -��docker-destop������</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment"># 9 ���docker</span></span><br><span class="line">    <span class="comment"># �鿴docker��״̬</span></span><br><span class="line">    systemctl status docker</span><br><span class="line">    <span class="comment"># ���docker</span></span><br><span class="line">    systemctl start docker</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 10 ����--����Զ������������---��hub.docker.com --&gt;�ֿ��µ�</span></span><br><span class="line">	-�зǳ��ྵ�������������ѵ��Ժ󣬾����в�ͬ�汾</span><br><span class="line">    -Ŀǰ�����ʲ����ˣ���ȥ������</span><br><span class="line">    -���ã����ھ���վ��������</span><br><span class="line">    <span class="comment"># �������Ҳ����������</span></span><br><span class="line">    -https://cr.console.aliyun.com/cn-shanghai/instances/mirrors</span><br><span class="line">    <span class="comment"># ������һЩdocker�ľ���վ���ٶ�����</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># ����docker</span></span><br><span class="line">    sudo mkdir -p /etc/docker <span class="comment"># ����У��Ͳ���Ҫ������</span></span><br><span class="line">    </span><br><span class="line">    vi /etc/docker/daemon.json </span><br><span class="line">    <span class="comment"># ����</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;registry-mirrors&quot;</span>: [<span class="string">&quot;https://docker.1panel.live&quot;</span>,<span class="string">&quot;https://docker.rainbond.cc&quot;</span>]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># �� esc</span></span><br><span class="line">    <span class="comment"># ����  :wq  �ûس�--</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># �����˳�</span></span><br><span class="line">    	- ���¼���docker���ã�systemctl daemon-reload</span><br><span class="line">		- ����docker����systemctl restart docker</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># ����֮������</span></span><br><span class="line">    	- docker pull redis</span><br><span class="line">        - ����Ļ����ܿ��ܾ���Դ�����ˣ�������Դ----�ٶ���</span><br></pre></td></tr></table></figure>
+<h1>���ġ�docker����Դ����</h1>
+<h2 id="��1�����������">��1�����������</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ����image</span></span><br><span class="line">	- һ���ļ�---��Ŀǰ���Ǵ�register(hub.docker.com)---������(docker pull ����)---��������������centos <span class="number">7.9</span>������</span><br><span class="line">    </span><br><span class="line">    -��ȣ�������װϵͳ</span><br><span class="line">    	- ����ϵͳ�ļ� xx.iso---&gt;װ���������</span><br><span class="line">        - �����㵱�� xx.iso ����ϵͳ�ļ����������</span><br><span class="line">        - ��isoװ�ڲ�ͬ�������---�����---����̨�в���ϵͳ�Ļ���</span><br><span class="line">       </span><br><span class="line">    <span class="comment"># ����Ĳ���</span></span><br><span class="line">        - ��������ʹ�� docker build ������� Dockerfile ��������</span><br><span class="line">        - �鿴����ʹ�� docker images �����г����ش��ڵľ���</span><br><span class="line">        - ɾ������ʹ�� docker rmi ����ɾ��������Ҫ�ľ���</span><br><span class="line">    </span><br><span class="line"><span class="comment"># ������container</span></span><br><span class="line">	-��������---�����г�����</span><br><span class="line">    - ���������������������������ļ�������</span><br><span class="line">    -��ȣ�</span><br><span class="line">    	-��������һ���������еĲ���ϵͳ</span><br><span class="line">    -һ�����񣬿������гɶ������</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># ��������������</span></span><br><span class="line">        - �����м�����Ҫ���������ڽ׶Σ�</span><br><span class="line"></span><br><span class="line">        - ������ʹ�� docker create �� docker run ���������ʵ����</span><br><span class="line">        - ���������ͨ�� docker start ��������Ѵ��������������������ʱ������ִ�� Dockerfile �ж�������</span><br><span class="line">        - ֹͣ��ʹ�� docker stop ����������ŵ�ֹͣ�������е�������</span><br><span class="line">        - ɾ����ͨ�� docker rm �������ɾ��������Ҫ��������</span><br><span class="line">    <span class="comment"># �����Ĺ���</span></span><br><span class="line">		- �鿴������ʹ�� docker ps ����鿴�������е�������docker ps -a �鿴����������������ֹͣ�ģ���</span><br><span class="line">		- ��������������ʹ�� docker <span class="built_in">exec</span> �����������е�������ִ���������ʹ�� docker attach ���ӵ������ı�׼���������</span><br><span class="line">		- ��־�����ʹ�� docker logs ����鿴�����������־��������Ժͼ�ء�</span><br><span class="line">    </span><br><span class="line"><span class="comment"># ���</span></span><br><span class="line">	- python���������</span><br><span class="line">    	- �ࣺ����</span><br><span class="line">       	- ����ʵ�����õ��������û�������Ƕ�����</span><br><span class="line">        </span><br><span class="line"><span class="comment"># �Ժ�һ�����������Ǿ͵����ǣ�һ������ϵͳ + ���----����������</span></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240926122213317.png" alt="image-20240926122213317"></p>
+<h2 id="��2������Ĳ���">��2������Ĳ���</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 0 ��������</span></span><br><span class="line">	-ȥ��վ�ѣ�https://hub.docker.com/ </span><br><span class="line">	-ʹ���������ѣ�docker search mysql</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 1 ��ȡ������ȥ����---����register���ص�����--������վ--��������ȡ</span></span><br><span class="line">	docker pull mysql:<span class="number">5.7</span> <span class="comment"># ����mysql 5.7����</span></span><br><span class="line">	docker pull redis:latest <span class="comment"># ����redis���µľ���</span></span><br><span class="line">    docker pull nginx:latest  <span class="comment"># ���� nginx���µľ���</span></span><br><span class="line">    docker pull centos:centos7  <span class="comment"># ���� centos���µľ���</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 2 �鿴����</span></span><br><span class="line">	docker images</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3 ɾ������</span></span><br><span class="line">	docker rmi redis:latest</span><br></pre></td></tr></table></figure>
+<h1>���塿�����Ĳ���</h1>
+<h2 id="��0���������">��0���������</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ����</span></span><br><span class="line">	- docker search  <span class="comment"># �鿴����Щ����</span></span><br><span class="line">    - docker pull    <span class="comment"># ���ؾ���</span></span><br><span class="line">    - docker images   <span class="comment"># �鿴����</span></span><br><span class="line">    - docker rmi    <span class="comment"># ɾ������</span></span><br><span class="line">    	<span class="comment"># ����ǣ�docker remove image����д</span></span><br><span class="line">        </span><br><span class="line"><span class="comment"># �������У����������һ������������ж�������������ǿ��Խ�һ����������һ�������</span></span><br><span class="line">	- ��������У�</span><br><span class="line">    	- ����ϵͳ</span><br><span class="line">        - �ļ�</span><br><span class="line">        - ���</span><br><span class="line">        - ����</span><br><span class="line">        </span><br><span class="line"><span class="comment"># ���г�һ������</span></span><br><span class="line">	<span class="comment"># �򵥵���������н���</span></span><br><span class="line">	- docker run -<span class="built_in">id</span> ubuntu</span><br><span class="line">    - docker run -it ubuntu</span><br></pre></td></tr></table></figure>
+<h2 id="��1��run-��������">��1��run-----��������</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 �Ѿ������г�һ������</span></span><br><span class="line">	<span class="comment"># ֱ�����У��������û�У���ȥԶ�ֿ̲�����</span></span><br><span class="line">    docker run -<span class="built_in">id</span> --name=centos7 centos:<span class="number">7</span></span><br><span class="line">    docker run -it --name=centos7 centos:<span class="number">7</span></span><br><span class="line">    <span class="comment"># ����</span></span><br><span class="line">    	<span class="comment"># -id����������������������ڲ�</span></span><br><span class="line">        <span class="comment"># -it��������������������ڲ�</span></span><br><span class="line">        <span class="comment"># --name��ָ�����������֣��������ֲ������ظ�������ظ��˾ͻᱨ���������������֣���д�����ֵĻ������������һ������</span></span><br><span class="line">        <span class="comment"># centos:7�������Ǹ�������������</span></span><br><span class="line">        </span><br><span class="line"><span class="comment"># 2 �鿴�������е�����</span></span><br><span class="line">	- docker ps</span><br><span class="line"><span class="comment"># 3 ���뵽�������ڲ�</span></span><br><span class="line">	- docker <span class="built_in">exec</span> -it centos7 /<span class="built_in">bin</span>/bash</span><br><span class="line">    	- /<span class="built_in">bin</span>/bash������Ҫ��������ִ��centos7��������������һ�� Bash shell</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 4 ִ��docker run -it  centos:centos7 �����������һ���µ�docker����</span></span><br><span class="line">	- ���뵽�������ڲ�������ִ��centos�����������������ϵͳ���ܶ�����û�У�ʹ�õĻ���Ҫ��װ</span><br><span class="line">    - �˳�����������������exit</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 5 ������Ҫ����Ȼ������</span></span><br><span class="line">	- ������create��</span><br><span class="line">    - ���У�run</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 6 ����Ҫ���У��ڲ������и�ǰ̨�������������������ͻ�ͣ��</span></span><br><span class="line">	<span class="comment"># ���ӣ�</span></span><br><span class="line">    	- docker run -<span class="built_in">id</span> --name=-=demo redis:latest sleep <span class="number">10</span></span><br><span class="line">        <span class="comment"># ������20s����������ͻ��Զ�ֹͣ</span></span><br><span class="line">        </span><br><span class="line"><span class="comment"># 6 �鿴��������--����ֹͣ������</span></span><br><span class="line">	- docker ps -a</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 7 �������</span></span><br><span class="line">	- docker start centos7</span><br><span class="line">	�ͱ���nginx���������ʾ���һ��n����ϵͳ + ���</span><br><span class="line"></span><br><span class="line"><span class="comment"># 8 ֹͣ����</span></span><br><span class="line">	- docker stop ������<span class="built_in">id</span>��</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 9 ɾ��������ɾ���������������ֹͣ����ֹͣ������ɾ��</span></span><br><span class="line">	- docker rm ����������/������<span class="built_in">id</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 10 һ����ɾ���������</span></span><br><span class="line">	- docker rm ����<span class="built_in">id</span>������id1</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 11 ɾ�����е�����</span></span><br><span class="line">	- docker rm `docker ps -a -q`</span><br><span class="line">    <span class="comment"># ���ͣ�docker ps -a -q���ǲ鿴����������id��</span></span><br><span class="line">    - docker rm `docker ps -a -q` -f  <span class="comment"># ��Σ������</span></span><br><span class="line">    <span class="comment"># ����������Ҫʹ�ã������ǿ��ɾ�����е�������������û����ʹ��</span></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240620102936389.png" alt="image-20240620102936389"></p>
+<h2 id="��2��run����Ĳ���">��2��run����Ĳ���</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 docker run ����</span></span><br><span class="line">	- i����ʾ��������</span><br><span class="line">    - d�����ػ�ʽ�����ں�̨���У�������������������������������л����������ϣ�û�н��뵽�����ڲ����������һ���µ�docker����</span><br><span class="line">    - t����ʾ��������󣬽��뵽�����ڵ������С�������һ��α�ն�</span><br><span class="line">    - name��ָ�����������֣������ָ�������һ������</span><br><span class="line">    - p����ʾ�˿�ӳ�䣬ǰ�����������˿ڣ������������ڵ�ӳ��˿ڣ�����ʹ�ö��-p������˿�ӳ��</span><br><span class="line">    - v����ʾĿ¼ӳ���ϵ��ǰ����������Ŀ¼��������������Ŀ¼����������һ��-v�����Ŀ¼���ļ�ӳ�䡣ע�������Ŀ¼ӳ�䣬�������������޸ģ�Ȼ�����������</span><br></pre></td></tr></table></figure>
+<h3 id="��������">��������</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ���һ��centos���������룬���ֽ�mycentos���������ڲ�װһ��vim��Ȼ���˳�</span></span><br><span class="line">	- <span class="number">1</span>��docker run -<span class="built_in">id</span> --name=mycentos centos:<span class="number">7</span></span><br><span class="line">    - <span class="number">2</span>������������</span><br><span class="line">    - <span class="number">3</span>�����뵽�����ڲ����¿���һ��bash���̣���docker <span class="built_in">exec</span> -it mycentos /<span class="built_in">bin</span>/bash</span><br><span class="line">    - <span class="number">4</span>: ���أ�yum install vim -y�����ܻ����ز��ˣ�</span><br><span class="line">    - <span class="number">5</span>��curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-<span class="number">7.</span>repo</span><br><span class="line">    - <span class="number">6</span>����ִ�У�yum install vim -y</span><br><span class="line">    - <span class="number">7</span>���˳�������exit</span><br><span class="line">    - ���������û��ֹͣ����Ϊ�������е�ֻ��bash����--������ֻ��bash����</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker exec ����</span></span><br><span class="line">	- ��������������������ִ����������������ظ�������</span><br><span class="line">    - docker <span class="built_in">exec</span> ����������/������<span class="built_in">id</span>�� ls</span><br><span class="line">    - eg��docker <span class="built_in">exec</span> mycentos ls  <span class="comment"># ls���г�ָ��Ŀ¼�е��ļ���Ŀ¼</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ���뵽�������ڲ�</span></span><br><span class="line">	- ���������ڲ���docker <span class="built_in">exec</span> -it ��������/����<span class="built_in">id</span> /<span class="built_in">bin</span>/bash</span><br><span class="line">    <span class="comment"># ��������ִ������</span></span><br><span class="line">		- ���docker <span class="built_in">exec</span> ����������/������<span class="built_in">id</span>�� ����</span><br><span class="line">    - �������������������룺sh <span class="comment"># ����һ�������/bin/bash</span></span><br><span class="line">    <span class="comment"># �˳�������/bin/bash����</span></span><br><span class="line">    - exit</span><br></pre></td></tr></table></figure>
+<h2 id="��3��v-L¼ӳ��">��3��v----Ŀ¼ӳ��</h2>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240313102219623.png" alt="image-20240313102219623"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -v������ʾ��������ʱ������������Ŀ¼��ӳ��</span></span><br><span class="line">	<span class="comment"># ����Ҫ�Ǻ�����������ӳ�䣬��ֻ��Ҫ�޸��������ϵ��ļ����ݣ�������ӳ����ļ�Ҳ������޸ģ���˫���</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ������</span></span><br><span class="line">	<span class="comment"># ����</span></span><br><span class="line">	- ����һ��centos77�����������룬��Ŀ¼ӳ��</span><br><span class="line">    - ����������/root/lqz�ļ��У�ӳ�䵽�����ڲ���/lpz�ļ��У����������û��lqz�ļ��У��ͻ��Զ�������</span><br><span class="line">    - -v����д������������ļ��л������ļ�</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># ʵ��</span></span><br><span class="line">    - cd <span class="comment"># ��Ŀ¼��ǰ������root�û�</span></span><br><span class="line">    - mkdir lsk <span class="comment"># ��rootĿ¼�´���һ��lqz�ļ���</span></span><br><span class="line">    - ������������Ŀ¼ӳ��</span><br><span class="line">    	- docker run -<span class="built_in">id</span> --name=centos77 -v /root/lqz:/lqz centos:<span class="number">7</span></span><br><span class="line">    - ������������/root/lsk�´���һ��xx.txt</span><br><span class="line">    	- vim xx.txt</span><br><span class="line">    - ���뵽centos77�����ڲ������㴴����xx.txt�ļ����ڲ�</span><br><span class="line">    - ˫�����໥Ӱ���</span><br><span class="line">    	- �����ڲ��޸��ļ�---��Ӱ���ⲿ�������ݣ�</span><br><span class="line">        - �ⲿ�������ݣ��޸��ļ�----��Ӱ���ڲ���������</span><br><span class="line">        </span><br><span class="line"><span class="comment"># Ŀ¼ӳ��ô��ǣ��������ǲ���django��Ŀ</span></span><br><span class="line">	- �и�django����������ӳ�䣬��������������ϼ��ɣ��Ժ�����˴��룬ֻҪ�����������������������</span><br><span class="line">    - ����mysql����---��mysql�����ļ�������dataĿ¼������������������ӳ��</span><br><span class="line">    	��� mysql����---�������ݣ��ŵ�������---�����ɾ������---�����ݿ�ȫû��</span><br><span class="line">    	�����ݣ�������������---��������ɾ��---�������ݻ���----�������һ����������ӳ��---�����ݶ�����</span><br><span class="line">        </span><br><span class="line"><span class="comment"># ����</span></span><br><span class="line">	<span class="comment"># һ����ɾ����������</span></span><br><span class="line">    	- docker rm `docker ps -a -q`</span><br><span class="line">    <span class="comment"># һ����ɾ�����о���</span></span><br><span class="line">    	- docker rm `docker images -q`</span><br></pre></td></tr></table></figure>
+<h2 id="��4��p-�˿�ӳ��">��4��p----�˿�ӳ��</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 -p�������˿�ӳ�䣬���������һ��mysql5.7---�����е�3306��������������3306û�˼��������˿�ӳ�����������3306�ͷ���docker���������������</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2 ����</span></span><br><span class="line">	- docker run -<span class="built_in">id</span> --name=mysql5<span class="number">.7</span> -p <span class="number">3307</span>:<span class="number">3306</span> -e MYSQL_ROOT_PASSWORD=<span class="number">123456</span> mysql:<span class="number">5.7</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># -p�����mysql���� -p �������˿�:�����˿�</span></span><br><span class="line"><span class="comment"># -e�������mysql��root������123456</span></span><br><span class="line"><span class="comment"># �Ժ�̨�ػ���������mysql������mysql��root�û�������123456�����������������˶˿�ӳ��</span></span><br><span class="line">	- �������Ķ˿�<span class="number">3307</span>��ӳ�������Ķ˿�<span class="number">3306</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 2.1 �鿴������3307�˿�ռ�����</span></span><br><span class="line">	-  netstat -nlp |grep <span class="number">3307</span> <span class="comment"># �鿴����3307�˿�ռ�����</span></span><br><span class="line">    - ����ȱ��netstat���yum install net-tools -y</span><br><span class="line">    - �ڴβ鿴��netstat -nlp |grep <span class="number">3307</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># Զ��������������3307�˿�</span></span><br><span class="line">	- �Ժ����������<span class="number">3307</span>�˿ھ͵��ڷ���������<span class="number">3306</span>�˿�</span><br><span class="line">    <span class="comment"># win��������Զ������mysql</span></span><br><span class="line">    	- �ն����������ӣ�mysql -h <span class="number">10.0</span><span class="number">.0</span><span class="number">.100</span> -P <span class="number">3307</span> -uroot -p</span><br><span class="line">        - Navicate�� ���ӣ�����lsk���ݿ�</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># ������--�����뵽�����ڲ�--�����뵽mysql���鿴��û�д���lsk�����</span></span><br><span class="line">        docker <span class="built_in">exec</span> -it mysql5<span class="number">.7</span> /<span class="built_in">bin</span>/bash <span class="comment"># ���������ڲ�</span></span><br><span class="line">        mysql -uroot  -p  <span class="comment"># ����mysql</span></span><br><span class="line">        show databases;  <span class="comment"># �鿴�������ݿ�</span></span><br></pre></td></tr></table></figure>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%CD%BC%C6%AC%5Cimage-20240313104034977.png" alt="image-20240313104034977"></p>
+<h2 id="��5������">��5������</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># �������</span></span><br><span class="line">	docker start ����<span class="built_in">id</span>/��������</span><br><span class="line"></span><br><span class="line"><span class="comment"># ֹͣ����</span></span><br><span class="line">	docker stop ����<span class="built_in">id</span>/��������</span><br><span class="line"></span><br><span class="line"><span class="comment"># �鿴���е�������ֹͣ��δֹͣ��ȫ��</span></span><br><span class="line">	docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment">#  mysql�������ײ�Ĳ���ϵͳ�� centos����ϵͳ��װ����Ļ���Ҫ</span></span><br><span class="line">	yum install</span><br><span class="line">	<span class="comment"># �����debianϵͳ�Ļ�---ִ������</span></span><br><span class="line">    apt-get update</span><br><span class="line">    apt-get install vim -y</span><br><span class="line">    </span><br><span class="line"><span class="comment"># �ļ�����(������ִ��)</span></span><br><span class="line">	<span class="comment"># �������ļ�cope���������ϣ�������������ִ�У�</span></span><br><span class="line">    	docker cp ��������:����Ŀ¼ ��Ҫ�������ļ���Ŀ¼</span><br><span class="line">        docker cp  mysql5<span class="number">.7</span>:/xx.txt /root/lsk/lsk.txt   </span><br><span class="line">    <span class="comment"># ���������ļ�copy��������</span></span><br><span class="line">        docker cp ��Ҫ�������ļ���Ŀ¼ ��������:����Ŀ¼</span><br><span class="line">        docker cp /root/lqz/xx.txt  mysql5<span class="number">.7</span>:/xx.txt</span><br><span class="line">            </span><br><span class="line"><span class="comment"># �鿴������ip��ַ</span></span><br><span class="line">	docker inspect ��������  <span class="comment"># �鿴��������ϸ�������ܶ�</span></span><br><span class="line">    docker inspect �������ƣ�����ID�� --<span class="built_in">format</span>=<span class="string">&#x27;`\\\&#123;&#123;.NetworkSettings.Networks.bridge.IPAddress\\\&#125;&#125;`&#x27;</span> </span><br><span class="line">    </span><br><span class="line"><span class="comment"># �ڶ������֮���ǿ���pingͨ��(������������Ҳ����)</span></span><br><span class="line">    <span class="comment"># mycentos:172.17.0.2</span></span><br><span class="line">    <span class="comment"># mysql5.7:172.17.0.4</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ȱ����Ͱ�װ</span></span><br><span class="line">    	apt-get install iputils-ping</span><br><span class="line">    ping <span class="number">172.17</span><span class="number">.0</span><span class="number">.2</span>  <span class="comment"># ping����mycentos</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># ɾ��������ɾ����ֹͣ��������</span></span><br><span class="line">	docker rm ����<span class="built_in">id</span>  </span><br><span class="line">    docker rm `docker ps -a -q` <span class="comment"># ɾ������������������Ҫʹ�ã�</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># ��״̬�ķ����������о���������״̬�ķ���,���Ҫ������״̬����Ҫ��Ŀ¼ӳ��</span></span><br><span class="line">    -mysql reids   ��״̬�����й����в������ݣ����棬����ɾ�������ݾ�û��</span><br><span class="line">    -uwsgi+django  ��״̬�ķ���</span><br><span class="line">    </span><br><span class="line"><span class="comment"># ����</span></span><br><span class="line">	<span class="number">1</span> ip��ַ  ip </span><br><span class="line">        <span class="number">10.0</span><span class="number">.0</span><span class="number">.111</span></span><br><span class="line">        <span class="number">10.0</span><span class="number">.2</span><span class="number">.1</span></span><br><span class="line">        <span class="number">10.0</span><span class="number">.4</span><span class="number">.2</span></span><br><span class="line">    <span class="number">2</span> �������� mask</span><br><span class="line">    	<span class="number">255.255</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line">        </span><br><span class="line">    <span class="number">3</span> ���� gatway</span><br><span class="line">    	<span class="number">10.0</span><span class="number">.0</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
+<h1>�����䡿</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl restart network  ---��������</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># docker ps   # �鿴�������е�����</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># docker ps -a  # �鿴���е�����������ֹͣ������</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># docekr images  # �鿴����Դ</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># docker exec -it ��������/����id /bin/bash # ���뵽�����ڲ�</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># docker start ��������/����id  # �������</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ���뵽redis��������ӻ���</span></span><br><span class="line">	- redis-cli SET mykey <span class="string">&quot;Hello, Redis!&quot;</span></span><br><span class="line">	- �ᱨ��������֤</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/%E6%99%BA%E6%85%A7%E7%A4%BE%E5%8C%BA%E9%A1%B9%E7%9B%AE%E4%BA%8C/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/%E4%BA%8Cdocker/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">��һ��djangoԭ������mysql</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">������docker����</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%E2%BB%AF"><span class="nav-number">2.1.</span> <span class="nav-text">��1�����⻯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDkvm-VMware-openstack-docker-k8s"><span class="nav-number">2.2.</span> <span class="nav-text">��2������kvm,VMware,openstack,docker,k8s</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BDdocker%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">2.3.</span> <span class="nav-text">��3��docker����</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD4%EF%BF%BD%EF%BF%BDdocker%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BDL%EF%BF%BD"><span class="nav-number">2.4.</span> <span class="nav-text">��4��docker������������Ƚ�</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD5%EF%BF%BD%EF%BF%BDdocker%EF%BF%BD%DC%B9%EF%BF%BD"><span class="nav-number">2.5.</span> <span class="nav-text">��5��docker�ܹ�</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">������docker��װ������</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">���ġ�docker����Դ����</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">4.1.</span> <span class="nav-text">��1�����������</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%C4%B2%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">4.2.</span> <span class="nav-text">��2������Ĳ���</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">���塿�����Ĳ���</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD0%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">5.1.</span> <span class="nav-text">��0���������</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD1%EF%BF%BD%EF%BF%BDrun-%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">5.2.</span> <span class="nav-text">��1��run-----��������</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD2%EF%BF%BD%EF%BF%BDrun%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%C4%B2%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">5.3.</span> <span class="nav-text">��2��run����Ĳ���</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">5.3.1.</span> <span class="nav-text">��������</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD3%EF%BF%BD%EF%BF%BDv-L%C2%BC%D3%B3%EF%BF%BD%EF%BF%BD"><span class="nav-number">5.4.</span> <span class="nav-text">��3��v----Ŀ¼ӳ��</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD4%EF%BF%BD%EF%BF%BDp-%EF%BF%BD%CB%BF%EF%BF%BD%D3%B3%EF%BF%BD%EF%BF%BD"><span class="nav-number">5.5.</span> <span class="nav-text">��4��p----�˿�ӳ��</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BF%BD%EF%BF%BD5%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD"><span class="nav-number">5.6.</span> <span class="nav-text">��5������</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">�����䡿</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

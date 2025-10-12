@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="【一】什么是与用户交互  交互的本质就是输入与输出 用户交户就是人往计算机中input&#x2F;输入数据，print&#x2F;输出数据  【二】为什么要与用户交互  为了让计算机像人一样与用户沟通交流 比如  以前上银行取钱就是去人工柜台把卡给人家、密码告诉人家然后取钱 现在用户直接去ATM自动取款机里面取钱 ATM机就像一台计算机，用户也必须要把账号密码告诉ATM机 所以我们的程序中必须有相应的机制来控制计算机">
+<meta property="og:type" content="article">
+<meta property="og:title" content="坤博客">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/1.4%20%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%8E%E7%94%A8%E6%88%B7%E4%BA%A4%E4%BA%92/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="【一】什么是与用户交互  交互的本质就是输入与输出 用户交户就是人往计算机中input&#x2F;输入数据，print&#x2F;输出数据  【二】为什么要与用户交互  为了让计算机像人一样与用户沟通交流 比如  以前上银行取钱就是去人工柜台把卡给人家、密码告诉人家然后取钱 现在用户直接去ATM自动取款机里面取钱 ATM机就像一台计算机，用户也必须要把账号密码告诉ATM机 所以我们的程序中必须有相应的机制来控制计算机">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5CDay05%5C%E7%AC%94%E8%AE%B0%5Cimage-20240330091303533.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5CDay05%5C%E7%AC%94%E8%AE%B0%5Cimage-20240330104029020.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5CDay05%5C%E7%AC%94%E8%AE%B0%5Cimage-20240330105545287.png">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T10:31:34.864Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5CDay05%5C%E7%AC%94%E8%AE%B0%5Cimage-20240330091303533.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/1.4%20%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%8E%E7%94%A8%E6%88%B7%E4%BA%A4%E4%BA%92/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/1.4%20%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%8E%E7%94%A8%E6%88%B7%E4%BA%A4%E4%BA%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:34" itemprop="dateModified" datetime="2025-10-11T18:31:34+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>【一】什么是与用户交互</h1>
+<ul>
+<li>交互的本质就是输入与输出</li>
+<li>用户交户就是人往计算机中input/输入数据，print/输出数据</li>
+</ul>
+<h1>【二】为什么要与用户交互</h1>
+<ul>
+<li>为了让计算机像人一样与用户沟通交流</li>
+<li>比如
+<ul>
+<li>以前上银行取钱就是去人工柜台把卡给人家、密码告诉人家然后取钱</li>
+<li>现在用户直接去ATM自动取款机里面取钱</li>
+<li>ATM机就像一台计算机，用户也必须要把账号密码告诉ATM机</li>
+<li>所以我们的程序中必须有相应的机制来控制计算机接收用户输入的内容</li>
+<li>并且输出结果</li>
+</ul>
+</li>
+</ul>
+<h1>【三】如何与用户交互</h1>
+<h2 id="【1】输入（input）">【1】输入（input）</h2>
+<ul>
+<li>在python3中input功能就会等待用户的输入
+<ul>
+<li>用户输入一些内容，用户按下回车键后，input函数会返回用户输入的内容</li>
+<li>input接受的所有数据类型都是str类型</li>
+</ul>
+</li>
+<li>input接收的所有类型都是str类型</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">username = <span class="built_in">input</span>(<span class="string">&quot;用户的名字&gt;&gt;&gt;&gt;&quot;</span>)</span><br><span class="line">password = <span class="built_in">input</span>(<span class="string">&quot;用户的密码&gt;&gt;&gt;&gt;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(username,<span class="built_in">type</span>(username))<span class="comment">#&lt;class &#x27;str&#x27;&gt;</span></span><br><span class="line"><span class="built_in">print</span>(password,<span class="built_in">type</span>(password))<span class="comment">#&lt;class &#x27;str&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>然后赋值给等号左边的变量名</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">username = <span class="built_in">input</span>(<span class="string">&quot;请输入你的用户名：&quot;</span>)<span class="comment">#请输入你的用户名：Dream #点回车键</span></span><br><span class="line"><span class="comment">#username = &quot;Dream&quot;#(输出的Dream就是username的值)</span></span><br><span class="line"></span><br><span class="line">password = <span class="built_in">input</span>(<span class="string">&quot;请输入你的密码：&quot;</span>)  <span class="comment">#请输入你的密码：521 #点回车键</span></span><br><span class="line"><span class="comment">#password = &quot;521&quot;#（输出的的521就是password的值）</span></span><br></pre></td></tr></table></figure>
+<h2 id="【2】输出（print）">【2】输出（print）</h2>
+<h3 id="（1）简单字符串">（1）简单字符串</h3>
+<ul>
+<li>print函数用于控制台输出信息，你可以用print函数显示函数运行的结果和提示信息等</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello word!&quot;</span>)<span class="comment">#控制台上显示的是Hello word!</span></span><br><span class="line"><span class="comment">#输出简单的字符串</span></span><br></pre></td></tr></table></figure>
+<h3 id="（2）多个变量输出">（2）多个变量输出</h3>
+<ul>
+<li>print函数可以输出多值，用逗号隔开。输出时，各个值之间默认使用空格分隔</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;Tom&quot;</span></span><br><span class="line">age = <span class="number">22</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;姓名：&quot;</span>,name,<span class="string">&quot;年龄:&quot;</span>,age)<span class="comment">#姓名: Tom 年龄: 22</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-默认end参数">(3)默认end参数</h3>
+<ul>
+<li>print函数也有一些可选参数，例如end参数指定输出的结尾字符，默认为换行符**“/n”(代表换行)**。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#end参数示例</span></span><br><span class="line"><span class="built_in">print</span>（<span class="string">&quot;Hello&quot;</span>,end=<span class="string">&quot;&quot;</span>）<span class="comment">#&quot;空格&quot;这里面可以改成任意字符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;,Word!&quot;</span>)<span class="comment">#Hello Word!</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以将end参数的值改成任意其它字符</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;I&quot;</span>,end=<span class="string">&quot;不&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Love&quot;</span>,end=<span class="string">&quot;￥&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;you&quot;</span>,end=<span class="string">&quot;爱￥&quot;</span>)<span class="comment">#I不Love￥you爱￥</span></span><br></pre></td></tr></table></figure>
+<h1>【四】运算符</h1>
+<ul>
+<li>参考网站（菜鸟教程）：<a target="_blank" rel="noopener" href="https://www.runoob.com/python/python-operators.html">https://www.runoob.com/python/python-operators.html</a></li>
+</ul>
+<h2 id="【1】算数运算符">【1】算数运算符</h2>
+<ul>
+<li>python支持的算数运算符与数学上计算的符号使用是一致的
+<ul>
+<li>我们以x=9，y=2为例来依次介绍它们</li>
+</ul>
+</li>
+</ul>
+<h3 id="【1】加法运算符">【1】加法运算符 <code>+</code></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">9</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line">result = x + y</span><br><span class="line"><span class="built_in">print</span>(result)  <span class="comment"># 输出：11</span></span><br></pre></td></tr></table></figure>
+<h3 id="【2】减法运算符">【2】减法运算符 <code>-</code></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">9</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line">result = x - y</span><br><span class="line"><span class="built_in">print</span>(result)  <span class="comment"># 输出：7</span></span><br></pre></td></tr></table></figure>
+<h3 id="【3】乘法运算符">【3】乘法运算符 <code>*</code></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">9</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line">result = x * y</span><br><span class="line"><span class="built_in">print</span>(result)  <span class="comment"># 输出：18</span></span><br></pre></td></tr></table></figure>
+<h3 id="【4】除法运算符">【4】除法运算符 <code>/</code></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">9</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line">result = x / y</span><br><span class="line"><span class="built_in">print</span>(result)  <span class="comment"># 输出：4.5</span></span><br></pre></td></tr></table></figure>
+<h3 id="【5】取整除运算符">【5】取整除运算符 <code>//</code></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">9</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line">result = x // y</span><br><span class="line"><span class="built_in">print</span>(result)  <span class="comment"># 输出：4</span></span><br></pre></td></tr></table></figure>
+<h3 id="【6】求余数运算符">【6】求余数运算符 <code>%</code></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">9</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line">result = x % y</span><br><span class="line"><span class="built_in">print</span>(result)  <span class="comment"># 输出：1</span></span><br></pre></td></tr></table></figure>
+<h3 id="【7】幂运算符">【7】幂运算符 <code>**</code></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">9</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line">result = x ** y</span><br><span class="line"><span class="built_in">print</span>(result)  <span class="comment"># 输出：81</span></span><br></pre></td></tr></table></figure>
+<h2 id="【2】比较运算符">【2】比较运算符</h2>
+<ul>
+<li>比较运算符用来对两个值进行比较，返回的是布尔值Ture或False</li>
+</ul>
+<h3 id="【1】相等运算符">【1】相等运算符==</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">9</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line">result = x == y</span><br><span class="line"><span class="built_in">print</span>(result)  <span class="comment"># 输出：False</span></span><br></pre></td></tr></table></figure>
+<h3 id="【2】不等运算符！">【2】不等运算符！=</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">9</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line">result = x == y</span><br><span class="line"><span class="built_in">print</span>(result)  <span class="comment"># 输出：False</span></span><br></pre></td></tr></table></figure>
+<h3 id="【3】大于运算符">【3】大于运算符 <code>&gt;</code></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">9</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line">result = x &gt; y</span><br><span class="line"><span class="built_in">print</span>(result)  <span class="comment"># 输出：True</span></span><br></pre></td></tr></table></figure>
+<h3 id="【4】小于运算符">【4】小于运算符 <code>&lt;</code></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">9</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line">result = x &lt; y</span><br><span class="line"><span class="built_in">print</span>(result)  <span class="comment"># 输出：False</span></span><br></pre></td></tr></table></figure>
+<h3 id="【5】大于等于运算符">【5】大于等于运算符 <code>&gt;=</code></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">9</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line">result = x &gt;= y</span><br><span class="line"><span class="built_in">print</span>(result)  <span class="comment"># 输出：True</span></span><br></pre></td></tr></table></figure>
+<h3 id="【6】小于等于运算符">【6】小于等于运算符 <code>&lt;=</code></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">9</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line">result = x &lt;= y</span><br><span class="line"><span class="built_in">print</span>(result)  <span class="comment"># 输出：False</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-赋值运算符">[3]赋值运算符</h2>
+<h3 id="【1】增量赋值">【1】增量赋值</h3>
+<h4 id="（1）介绍">（1）介绍</h4>
+<ul>
+<li>增量赋值运算符用于将变量与右侧的表达式相结合，并将结果赋值给变量。</li>
+</ul>
+<h4 id="（2）使用">（2）使用</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">9</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 等同于 x = x + y</span></span><br><span class="line">x += y<span class="comment">#下x += y等同于x + y = x它表示将变量 x 的值与 y 相加，并将结果赋值给 x。</span></span><br><span class="line"><span class="built_in">print</span>(x)  <span class="comment"># 输出：11</span></span><br></pre></td></tr></table></figure>
+<h3 id="【2】链式赋值">【2】链式赋值</h3>
+<h4 id="（1）介绍-2">（1）介绍</h4>
+<ul>
+<li>链式赋值允许在单一语句中给多个变量赋值。这样可以减少代码行数，提高代码的紧凑性。</li>
+</ul>
+<h4 id="（2）使用-2">（2）使用</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = b = c = <span class="number">5</span>  <span class="comment">#a = b = c = 5 表示同时给变量 a、b、c 赋值为 5。</span></span><br><span class="line"><span class="built_in">print</span>(a, b, c)  <span class="comment"># 输出：5 5 5</span></span><br></pre></td></tr></table></figure>
+<h3 id="【3】交叉赋值">【3】交叉赋值</h3>
+<h3 id="（1）介绍-3">（1）介绍</h3>
+<ul>
+<li>交叉赋值允许在不使用临时变量的情况下，交换两个变量的值。</li>
+</ul>
+<h3 id="（2）使用-3">（2）使用</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">9</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 交叉赋值</span></span><br><span class="line">x, y = y, x  <span class="comment">#x, y = y, x 表示将变量 x 的值赋给 y，同时将变量 y 的值赋给 x，实现了两个变量值的交换。</span></span><br><span class="line"><span class="built_in">print</span>(x, y)  <span class="comment"># 输出：2 9</span></span><br></pre></td></tr></table></figure>
+<h3 id="【4】解压赋值">【4】解压赋值</h3>
+<h4 id="（1）介绍-4">（1）介绍</h4>
+<ul>
+<li>解压赋值允许将一个可迭代对象（如列表、元组等）的值解压到多个变量中，以便进一步使用。</li>
+</ul>
+<h3 id="（2）使用-4">（2）使用</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">coordinates = (<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解压赋值</span></span><br><span class="line">x, y = coordinates   <span class="comment">#x, y = coordinates 表示将元组 coordinates 中的值解压到变量 x 和 y 中，以便分别使用。</span></span><br><span class="line"><span class="built_in">print</span>(x, y)  <span class="comment"># 输出：3 5</span></span><br></pre></td></tr></table></figure>
+<h2 id="【4】逻辑运算符">【4】逻辑运算符</h2>
+<ul>
+<li>逻辑运算符用来连接多个条件，进行关联判断，并返回布尔值True或False。</li>
+<li>常用的逻辑运算符有与（and）、或（or）、非（not）。</li>
+<li><img src="D:%5Cpycharm%5CTemporary_notes%5CDay05%5C%E7%AC%94%E8%AE%B0%5Cimage-20240330091303533.png" alt="image-20240330091303533"></li>
+</ul>
+<h4 id="【1】与运算符（and）">【1】与运算符（and）</h4>
+<ul>
+<li>与运算符and在两个条件都为True时，返回True；如果其中一个条件为False,则返回False</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">5</span></span><br><span class="line">y = <span class="number">87</span></span><br><span class="line">result=(x&gt;<span class="number">0</span>)<span class="keyword">and</span>(y&gt;<span class="number">0</span>)  <span class="comment">#(x &gt; 0) and (y &gt; 0) 表示同时判断 x &gt; 0 和 y &gt; 0 是否都为 True，因为两个条件都满足，所以结果为 True。</span></span><br><span class="line"><span class="built_in">print</span>(result)<span class="comment">#True</span></span><br></pre></td></tr></table></figure>
+<h4 id="【2】或运算符（or）">【2】或运算符（or）</h4>
+<ul>
+<li>或运算符or在两个条件中有一个是True，返回True;如果两个条件都为False，则返回False</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">5</span></span><br><span class="line">y = <span class="number">87</span></span><br><span class="line">result = (x &gt; <span class="number">0</span>) <span class="keyword">or</span> (y &lt; <span class="number">0</span>)  <span class="comment">#(x &gt; 0) or (y &gt; 0) 表示判断 x &gt; 0 或者 y &lt; 0 至少有一个条件为 True，因为 x &gt; 0 为 True，所以结果为 True。</span></span><br><span class="line"><span class="built_in">print</span>(result)<span class="comment">#True</span></span><br></pre></td></tr></table></figure>
+<h4 id="【3】非运算逻辑（not）">【3】非运算逻辑（not）</h4>
+<ul>
+<li>非运算逻辑用于对一个条件取反，条件为True，则返回False；如果条件为False，则返回True。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">100</span></span><br><span class="line">result=<span class="keyword">not</span>(x&lt;<span class="number">0</span>) <span class="comment">#not (x &gt; 0) 表示对条件 x &gt; 0 取反，因为 x &gt; 0 为 True，所以结果为 False。</span></span><br><span class="line"><span class="built_in">print</span>(result) <span class="comment">#True</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-连续问题">[4]连续问题</h4>
+<h5 id="（1）连续多个and">（1）连续多个and</h5>
+<ul>
+<li>在连续多个and运算中，如果其中一个条件False，则整个表达式的结果为False；如果条件都为True，则表达式结果为True</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">7</span></span><br><span class="line">y=<span class="number">9</span></span><br><span class="line">z=<span class="number">10</span></span><br><span class="line">result=(x&gt;<span class="number">0</span>)<span class="keyword">and</span>(y&gt;<span class="number">0</span>)<span class="keyword">and</span>(z&gt;<span class="number">0</span>)  <span class="comment">#(x &gt; 0) and (y &gt; 0) and (z &gt; 0) 表示同时判断 x &gt; 0、y &gt; 0 和 z &gt; 0 是否都为 True，因为三个条件都满足，所以结果为 True。</span></span><br><span class="line"><span class="built_in">print</span>(result) <span class="comment">#True</span></span><br></pre></td></tr></table></figure>
+<h5 id="2-连续多个or">(2)连续多个or</h5>
+<ul>
+<li>在连续多个or运算中，其中一个条件为True，则运算结果为True；全部条件为False时，运算结果为False</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">7</span></span><br><span class="line">y=<span class="number">9</span></span><br><span class="line">z=<span class="number">10</span></span><br><span class="line">result=(x&gt;<span class="number">0</span>)<span class="keyword">or</span>(y&lt;<span class="number">0</span>)<span class="keyword">or</span>(z&lt;<span class="number">0</span>)  <span class="comment">#(x&gt;0)or(y&lt;0)or(z&lt;0)表示同时判断x&gt;0,y&lt;0,z&lt;0其中是否有条件为True，因为有一个条件为True（x&gt;0），所以运算结果为Ture。</span></span><br><span class="line"><span class="built_in">print</span>(result) <span class="comment">#True</span></span><br></pre></td></tr></table></figure>
+<h4 id="【5】优先级not-and-or">【5】优先级not&gt;and&gt;or</h4>
+<ul>
+<li>在逻辑运算中not的优先级最高其次and再其次or</li>
+<li>当表达式中同时包含这三种运算符时，<code>not</code> 会首先被计算，然后是 <code>and</code>，最后是 <code>or</code>。</li>
+</ul>
+<h5 id="（1）优先级关系">（1）优先级关系</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="number">3</span> &gt; <span class="number">4</span> <span class="keyword">and</span> <span class="number">4</span> &gt; <span class="number">3</span> <span class="keyword">or</span> <span class="number">1</span> == <span class="number">3</span> <span class="keyword">and</span> <span class="string">&#x27;x&#x27;</span> == <span class="string">&#x27;x&#x27;</span> <span class="keyword">or</span> <span class="number">3</span> &gt; <span class="number">3</span>)<span class="comment">#False</span></span><br></pre></td></tr></table></figure>
+<h5 id="（2）区分板块">（2）区分板块</h5>
+<ul>
+<li>not的优先级最高，就是把紧跟其后的那个条件结果取反，所以not与紧跟其后的条件不可分割</li>
+<li>如果语句中全部是用and连接，或者全部用or连接，那么按照从左到右的顺序依次计算即可</li>
+<li>如果语句中既有and也有or，那么先用括号把and的左右两个条件给括起来，然后再进行运算</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>((<span class="number">3</span> &gt; <span class="number">4</span> <span class="keyword">and</span> <span class="number">4</span> &gt; <span class="number">3</span>) <span class="keyword">or</span> (<span class="number">1</span> == <span class="number">3</span> <span class="keyword">and</span> <span class="string">&#x27;x&#x27;</span> == <span class="string">&#x27;x&#x27;</span>) <span class="keyword">or</span> <span class="number">3</span> &gt; <span class="number">3</span>)<span class="comment"># False</span></span><br></pre></td></tr></table></figure>
+<h5 id="（3）短路运算">（3）短路运算</h5>
+<ul>
+<li>逻辑运算的结果一旦可以确定</li>
+<li>那么就以当前处计算到的值作为最终结果返回</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#例子</span></span><br><span class="line">result= (<span class="number">10</span> <span class="keyword">and</span> <span class="number">0</span>) <span class="keyword">or</span> (<span class="string">&#x27;&#x27;</span> <span class="keyword">and</span> <span class="number">0</span>) <span class="keyword">or</span> <span class="string">&#x27;abc&#x27;</span> <span class="keyword">or</span> (<span class="string">&#x27;egon&#x27;</span> == <span class="string">&#x27;dsb&#x27;</span> <span class="keyword">and</span> <span class="number">333</span>) <span class="keyword">or</span> <span class="number">10</span> &gt; <span class="number">4</span>  <span class="comment">#在&quot;abc&quot;这里短路了 不要再继续往下执行</span></span><br><span class="line"><span class="built_in">print</span>(result) <span class="comment">#abc</span></span><br><span class="line"></span><br><span class="line">result= (<span class="number">10</span> <span class="keyword">and</span> <span class="number">0</span>) <span class="keyword">or</span> (<span class="string">&#x27;&#x27;</span> <span class="keyword">and</span> <span class="number">0</span>)  <span class="keyword">or</span> (<span class="string">&#x27;egon&#x27;</span> == <span class="string">&#x27;dsb&#x27;</span> <span class="keyword">and</span> <span class="number">333</span>) <span class="keyword">or</span> <span class="number">10</span> &gt; <span class="number">4</span></span><br><span class="line"><span class="built_in">print</span>(result) <span class="comment">#True</span></span><br></pre></td></tr></table></figure>
+<h5 id="（4）短路运算面试题">（4）短路运算面试题</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="keyword">or</span> <span class="number">3</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="number">1</span> <span class="keyword">and</span> <span class="number">3</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">0</span> <span class="keyword">and</span> <span class="number">2</span> <span class="keyword">and</span> <span class="number">1</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="number">0</span> <span class="keyword">and</span> <span class="number">2</span> <span class="keyword">or</span> <span class="number">1</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="number">0</span> <span class="keyword">and</span> <span class="number">2</span> <span class="keyword">or</span> <span class="number">1</span> <span class="keyword">or</span> <span class="number">4</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="number">0</span> <span class="keyword">or</span> <span class="literal">False</span> <span class="keyword">and</span> <span class="number">1</span></span><br><span class="line"><span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<h2 id="【5】成员运算符">【5】成员运算符</h2>
+<ul>
+<li>成员运算符用于测试序列是否包含特定的元素，可以用字符串、元组、列表等序列类型的数据。</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5CDay05%5C%E7%AC%94%E8%AE%B0%5Cimage-20240330104029020.png" alt="image-20240330104029020"></p>
+<h3 id="【1】in运算符">【1】in运算符</h3>
+<ul>
+<li>如果在序列中找到值返回True，否则返回False</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fruits=[<span class="string">&quot;apple&quot;</span>,<span class="string">&quot;banana&quot;</span>,<span class="string">&quot;cherry&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;banana&quot;</span> <span class="keyword">in</span> fruits) <span class="comment">#True</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;tangerine&quot;</span> <span class="keyword">in</span> fruits) <span class="comment">#False</span></span><br></pre></td></tr></table></figure>
+<h3 id="【2】not-in-运算符">【2】not in 运算符</h3>
+<ul>
+<li>如果在指定的序列中没有找到值返回True；否则返回False</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fruits=[<span class="string">&quot;apple&quot;</span>,<span class="string">&quot;banana&quot;</span>,<span class="string">&quot;cherry&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;banana&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> fruits) <span class="comment">#False</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;tangerine&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> fruits) <span class="comment">#True</span></span><br></pre></td></tr></table></figure>
+<h3 id="【3】小结">【3】小结</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="keyword">not</span> <span class="string">&#x27;lili&#x27;</span> <span class="keyword">in</span> [<span class="string">&#x27;jack&#x27;</span>,<span class="string">&#x27;tom&#x27;</span>,<span class="string">&#x27;robin&#x27;</span>])</span><br><span class="line"><span class="comment"># True</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;lili&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> [<span class="string">&#x27;jack&#x27;</span>,<span class="string">&#x27;tom&#x27;</span>,<span class="string">&#x27;robin&#x27;</span>])</span><br><span class="line"><span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意：虽然下述两种判断可以达到相同的效果，但我们推荐使用第二种格式，因为not in语义更加明确</li>
+</ul>
+<h2 id="【6】身份运算符">【6】身份运算符</h2>
+<ul>
+<li>身份运算符用于比较对象的内存地址，判断两个对象是否指向同一块内存地址。</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5CDay05%5C%E7%AC%94%E8%AE%B0%5Cimage-20240330105545287.png" alt="image-20240330105545287"></p>
+<h2 id="【1】is运算符">【1】<code>is</code>运算符</h2>
+<ul>
+<li>如果两个变量引用同一个对象，则返回 True，否则返回 False。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = [1, 2, 3]</span><br><span class="line">b = a</span><br><span class="line">c = [1, 2, 3]</span><br><span class="line"></span><br><span class="line">print(a is b)  # True</span><br><span class="line">print(a is c)  # False</span><br></pre></td></tr></table></figure>
+<h2 id="【2】is-not运算符">【2】<code>is not</code>运算符</h2>
+<ul>
+<li>如果两个变量引用的不是同一个对象，则返回 True，否则返回 False。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = [1, 2, 3]</span><br><span class="line">b = a</span><br><span class="line">c = [1, 2, 3]</span><br><span class="line"></span><br><span class="line">print(a is not b)  # False</span><br><span class="line">print(a is not c)  # True</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这两个运算符主要用于检查对象的标识，即它们是否指向相同的内存地址。</li>
+</ul>
+<h1>【补充】<code>==</code>和 <code>is</code></h1>
+<ul>
+<li>==比较的是值（value）是否相等</li>
+<li>is比较的是内存地址（id）是否相同</li>
+<li>在实际应用中，特别是对于可变对象，==通常适合比较值，而is更适合用于比较对象的身份。</li>
+<li>id相同，内存地址必定相同，意味着type和value必定相同</li>
+<li>value相同type肯定相同，但id可能不同</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">【<span class="number">1</span>】</span><br><span class="line">x = <span class="string">&#x27;Info Tony:18&#x27;</span> <span class="comment">#1865216957872</span></span><br><span class="line">y = <span class="string">&#x27;Info Tony:18&#x27;</span> <span class="comment">#1865216957872</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(x), <span class="built_in">id</span>(y)) <span class="comment">#x与y的id相同，二者的值也相同</span></span><br><span class="line"><span class="comment">#2346061471152，2346061471152</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(x)) <span class="comment">#&lt;class &#x27;str&#x27;&gt;，值相同type肯定相同</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(y)) <span class="comment">#&lt;class &#x27;str&#x27;&gt;，值相同type肯定相同</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(x <span class="keyword">is</span> y) <span class="comment">#True，is比较的是id</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(x == y) <span class="comment">#True，等号比较的是value</span></span><br><span class="line"></span><br><span class="line">【<span class="number">2</span>】</span><br><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(a)) <span class="comment">#1455830618048</span></span><br><span class="line">b = a</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(b)) <span class="comment">#1455830618048</span></span><br><span class="line">c = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(c)) <span class="comment">#1455837781504</span></span><br><span class="line"><span class="comment"># 因为 a 是b来的所以a是b</span></span><br><span class="line"><span class="built_in">print</span>(a <span class="keyword">is</span> b) <span class="comment">#True</span></span><br><span class="line"><span class="comment"># 因为a 和 c 是两个独立的内存空间，所以 a 不是 c</span></span><br><span class="line"><span class="built_in">print</span>(a <span class="keyword">is</span> c) <span class="comment">#False</span></span><br><span class="line"><span class="built_in">print</span>(a <span class="keyword">is</span> <span class="keyword">not</span> c) <span class="comment">#True</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/1.3OSI%E4%B8%83%E5%B1%82%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/1.3%20%E5%85%AB%E5%A4%A7%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">【一】什么是与用户交互</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">【二】为什么要与用户交互</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">【三】如何与用户交互</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E8%BE%93%E5%85%A5%EF%BC%88input%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">【1】输入（input）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E8%BE%93%E5%87%BA%EF%BC%88print%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">【2】输出（print）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E7%AE%80%E5%8D%95%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.2.1.</span> <span class="nav-text">（1）简单字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%A4%9A%E4%B8%AA%E5%8F%98%E9%87%8F%E8%BE%93%E5%87%BA"><span class="nav-number">3.2.2.</span> <span class="nav-text">（2）多个变量输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%BB%98%E8%AE%A4end%E5%8F%82%E6%95%B0"><span class="nav-number">3.2.3.</span> <span class="nav-text">(3)默认end参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">【四】运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E7%AE%97%E6%95%B0%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.1.</span> <span class="nav-text">【1】算数运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%8A%A0%E6%B3%95%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.1.1.</span> <span class="nav-text">【1】加法运算符 +</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%87%8F%E6%B3%95%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.1.2.</span> <span class="nav-text">【2】减法运算符 -</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.1.3.</span> <span class="nav-text">【3】乘法运算符 *</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E9%99%A4%E6%B3%95%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.1.4.</span> <span class="nav-text">【4】除法运算符 &#x2F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%905%E3%80%91%E5%8F%96%E6%95%B4%E9%99%A4%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.1.5.</span> <span class="nav-text">【5】取整除运算符 &#x2F;&#x2F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%906%E3%80%91%E6%B1%82%E4%BD%99%E6%95%B0%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.1.6.</span> <span class="nav-text">【6】求余数运算符 %</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%907%E3%80%91%E5%B9%82%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.1.7.</span> <span class="nav-text">【7】幂运算符 **</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.2.</span> <span class="nav-text">【2】比较运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E7%9B%B8%E7%AD%89%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.2.1.</span> <span class="nav-text">【1】相等运算符&#x3D;&#x3D;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E4%B8%8D%E7%AD%89%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%81"><span class="nav-number">4.2.2.</span> <span class="nav-text">【2】不等运算符！&#x3D;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%A4%A7%E4%BA%8E%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.2.3.</span> <span class="nav-text">【3】大于运算符 &gt;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E5%B0%8F%E4%BA%8E%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.2.4.</span> <span class="nav-text">【4】小于运算符 &lt;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%905%E3%80%91%E5%A4%A7%E4%BA%8E%E7%AD%89%E4%BA%8E%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.2.5.</span> <span class="nav-text">【5】大于等于运算符 &gt;&#x3D;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%906%E3%80%91%E5%B0%8F%E4%BA%8E%E7%AD%89%E4%BA%8E%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.2.6.</span> <span class="nav-text">【6】小于等于运算符 &lt;&#x3D;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.3.</span> <span class="nav-text">[3]赋值运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%A2%9E%E9%87%8F%E8%B5%8B%E5%80%BC"><span class="nav-number">4.3.1.</span> <span class="nav-text">【1】增量赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E4%BB%8B%E7%BB%8D"><span class="nav-number">4.3.1.1.</span> <span class="nav-text">（1）介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E4%BD%BF%E7%94%A8"><span class="nav-number">4.3.1.2.</span> <span class="nav-text">（2）使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E9%93%BE%E5%BC%8F%E8%B5%8B%E5%80%BC"><span class="nav-number">4.3.2.</span> <span class="nav-text">【2】链式赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E4%BB%8B%E7%BB%8D-2"><span class="nav-number">4.3.2.1.</span> <span class="nav-text">（1）介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E4%BD%BF%E7%94%A8-2"><span class="nav-number">4.3.2.2.</span> <span class="nav-text">（2）使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E4%BA%A4%E5%8F%89%E8%B5%8B%E5%80%BC"><span class="nav-number">4.3.3.</span> <span class="nav-text">【3】交叉赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E4%BB%8B%E7%BB%8D-3"><span class="nav-number">4.3.4.</span> <span class="nav-text">（1）介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E4%BD%BF%E7%94%A8-3"><span class="nav-number">4.3.5.</span> <span class="nav-text">（2）使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E8%A7%A3%E5%8E%8B%E8%B5%8B%E5%80%BC"><span class="nav-number">4.3.6.</span> <span class="nav-text">【4】解压赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E4%BB%8B%E7%BB%8D-4"><span class="nav-number">4.3.6.1.</span> <span class="nav-text">（1）介绍</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E4%BD%BF%E7%94%A8-4"><span class="nav-number">4.3.7.</span> <span class="nav-text">（2）使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%904%E3%80%91%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.4.</span> <span class="nav-text">【4】逻辑运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%88and%EF%BC%89"><span class="nav-number">4.4.0.1.</span> <span class="nav-text">【1】与运算符（and）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%902%E3%80%91%E6%88%96%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%88or%EF%BC%89"><span class="nav-number">4.4.0.2.</span> <span class="nav-text">【2】或运算符（or）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%903%E3%80%91%E9%9D%9E%E8%BF%90%E7%AE%97%E9%80%BB%E8%BE%91%EF%BC%88not%EF%BC%89"><span class="nav-number">4.4.0.3.</span> <span class="nav-text">【3】非运算逻辑（not）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E8%BF%9E%E7%BB%AD%E9%97%AE%E9%A2%98"><span class="nav-number">4.4.0.4.</span> <span class="nav-text">[4]连续问题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E8%BF%9E%E7%BB%AD%E5%A4%9A%E4%B8%AAand"><span class="nav-number">4.4.0.4.1.</span> <span class="nav-text">（1）连续多个and</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E8%BF%9E%E7%BB%AD%E5%A4%9A%E4%B8%AAor"><span class="nav-number">4.4.0.4.2.</span> <span class="nav-text">(2)连续多个or</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%905%E3%80%91%E4%BC%98%E5%85%88%E7%BA%A7not-and-or"><span class="nav-number">4.4.0.5.</span> <span class="nav-text">【5】优先级not&gt;and&gt;or</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E4%BC%98%E5%85%88%E7%BA%A7%E5%85%B3%E7%B3%BB"><span class="nav-number">4.4.0.5.1.</span> <span class="nav-text">（1）优先级关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%8C%BA%E5%88%86%E6%9D%BF%E5%9D%97"><span class="nav-number">4.4.0.5.2.</span> <span class="nav-text">（2）区分板块</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E7%9F%AD%E8%B7%AF%E8%BF%90%E7%AE%97"><span class="nav-number">4.4.0.5.3.</span> <span class="nav-text">（3）短路运算</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E7%9F%AD%E8%B7%AF%E8%BF%90%E7%AE%97%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">4.4.0.5.4.</span> <span class="nav-text">（4）短路运算面试题</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%905%E3%80%91%E6%88%90%E5%91%98%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.5.</span> <span class="nav-text">【5】成员运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91in%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.5.1.</span> <span class="nav-text">【1】in运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91not-in-%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.5.2.</span> <span class="nav-text">【2】not in 运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%B0%8F%E7%BB%93"><span class="nav-number">4.5.3.</span> <span class="nav-text">【3】小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%906%E3%80%91%E8%BA%AB%E4%BB%BD%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.6.</span> <span class="nav-text">【6】身份运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91is%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.7.</span> <span class="nav-text">【1】is运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91is-not%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.8.</span> <span class="nav-text">【2】is not运算符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">【补充】&#x3D;&#x3D;和 is</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

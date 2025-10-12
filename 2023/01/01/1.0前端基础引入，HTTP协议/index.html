@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前端基础引入 【一】前后端介绍 【1】什么是前端   与用户进行交互，让用户输入数据以及展示响应数据的媒介   就比如：浏览器界面，手机界面，电脑界面等   【2】什么是后端   后端是对用户输入的数据进行校验和加密逻辑的位置   用于真正执行业务逻辑的代码   就比如：python代码，java代码等   【二】前端的学习思路 【1】前端三剑客  HTML----》骨架，没有任何样式  有一个人">
+<meta property="og:type" content="article">
+<meta property="og:title" content="坤博客">
+<meta property="og:url" content="https://aurora-lsk.asia/2023/01/01/1.0%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E5%BC%95%E5%85%A5%EF%BC%8CHTTP%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="前端基础引入 【一】前后端介绍 【1】什么是前端   与用户进行交互，让用户输入数据以及展示响应数据的媒介   就比如：浏览器界面，手机界面，电脑界面等   【2】什么是后端   后端是对用户输入的数据进行校验和加密逻辑的位置   用于真正执行业务逻辑的代码   就比如：python代码，java代码等   【二】前端的学习思路 【1】前端三剑客  HTML----》骨架，没有任何样式  有一个人">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-11T10:31:34.786Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2023/01/01/1.0%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E5%BC%95%E5%85%A5%EF%BC%8CHTTP%E5%8D%8F%E8%AE%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2023/01/01/1.0%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E5%BC%95%E5%85%A5%EF%BC%8CHTTP%E5%8D%8F%E8%AE%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-01T00:00:00+08:00">2023-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-11 18:31:34" itemprop="dateModified" datetime="2025-10-11T18:31:34+08:00">2025-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>前端基础引入</h1>
+<h2 id="【一】前后端介绍">【一】前后端介绍</h2>
+<h3 id="【1】什么是前端">【1】什么是前端</h3>
+<ul>
+<li>
+<p>与用户进行交互，让用户输入数据以及展示响应数据的媒介</p>
+</li>
+<li>
+<p>就比如：浏览器界面，手机界面，电脑界面等</p>
+</li>
+</ul>
+<h3 id="【2】什么是后端">【2】什么是后端</h3>
+<ul>
+<li>
+<p>后端是对用户输入的数据进行校验和加密逻辑的位置</p>
+</li>
+<li>
+<p>用于真正执行业务逻辑的代码</p>
+</li>
+<li>
+<p>就比如：python代码，java代码等</p>
+</li>
+</ul>
+<h2 id="【二】前端的学习思路">【二】前端的学习思路</h2>
+<h3 id="【1】前端三剑客">【1】前端三剑客</h3>
+<ul>
+<li>HTML----》骨架，没有任何样式
+<ul>
+<li>有一个人没穿衣服</li>
+</ul>
+</li>
+<li>CSS-----》给骨架添加样式
+<ul>
+<li>给那个人买了一身衣服</li>
+</ul>
+</li>
+<li>JavaScript（JS）-----》控制界面的动态效果
+<ul>
+<li>穿好衣服的人动起来</li>
+</ul>
+</li>
+</ul>
+<h4 id="（1）HTML介绍">（1）HTML介绍</h4>
+<ul>
+<li>HTML指的是超文本语言，它是用来描述网页的一种语言</li>
+<li>HTML不是变成语言，而是一种标记语言</li>
+<li>标记语言是一套标记标签</li>
+</ul>
+<h4 id="（2）CSS介绍">（2）CSS介绍</h4>
+<ul>
+<li>层叠样式表，是用来为结构化文档（HTML、XML等应用）添加样式,比如字体、颜色、大小、间距的计算机语言</li>
+</ul>
+<h4 id="（3）javascript介绍">（3）javascript介绍</h4>
+<ul>
+<li>JavaScript是一种运行在<em><strong>客户端</strong></em> 的<em><strong>脚本语言</strong></em></li>
+</ul>
+<h3 id="【2】Bootstrap-HTML-CSS">【2】Bootstrap(HTML+CSS)</h3>
+<ul>
+<li>做前后端项目结合的时候，因为Bootstrap 小而轻便并且好上手</li>
+<li>在后面开发过程中如果对Vue掌握不牢直接用Bootstrap</li>
+</ul>
+<h2 id="【三】前端框架">【三】前端框架</h2>
+<ul>
+<li>BOOTSTRAP/JQuery/Vue</li>
+<li>Bootstrap: 轻便前端框架</li>
+<li>提前封装好了很多操作，只需要按照固定的语法调用即可</li>
+</ul>
+<h1>浏览器访问地址全过程</h1>
+<h2 id="【一】在浏览器中输入网址（URL）">【一】在浏览器中输入网址（URL）</h2>
+<h3 id="【1】用户在浏览器的地址栏中输入目标网址www-biadu-com">【1】<a target="_blank" rel="noopener" href="http://xn--www-u68d60m59inlb4bzhc4891amuo5c635g6x1ahtew1bh01fbt5bvhya.biadu.com/">用户在浏览器的地址栏中输入目标网址www.biadu.com/</a></h3>
+<h3 id="【2】www-biadu-com-：叫域名">【2】<a target="_blank" rel="noopener" href="http://www.biadu.com/">www.biadu.com/</a> ：叫域名</h3>
+<ul>
+<li>
+<p>域名是用串英文字符来代表 一串ip和port的标志</p>
+</li>
+<li>
+<p>有了域名需要做DNS解析，得到ip和port</p>
+</li>
+<li>
+<p>域名就会不断地找服务器做域名直到解析出指定的额ip和port</p>
+</li>
+</ul>
+<h3 id="【3】让ip和port和服务器建立连接-TCP连接">【3】让ip和port和服务器建立连接  TCP连接</h3>
+<ul>
+<li>三次握手
+<ul>
+<li>第一次：客户端向服务端提交请求</li>
+<li>第二次：服务端回复请求</li>
+<li>第三次：建立联系</li>
+</ul>
+</li>
+</ul>
+<h3 id="【4】TCP的连接">【4】TCP的连接</h3>
+<ul>
+<li>流式协议：数据就会一直传输，不断的向你的服务器发送请求和携带响应的数据</li>
+</ul>
+<h3 id="【5】后端服务器接收到请求和携带的数据">【5】后端服务器接收到请求和携带的数据</h3>
+<ul>
+<li>将数据进行处理</li>
+<li>python的后端框架：Django / flask  /fastapi</li>
+</ul>
+<h3 id="【6】数据处理完后返回给客户端指定的响应内容">【6】数据处理完后返回给客户端指定的响应内容</h3>
+<ul>
+<li>在响应内容中会携带相应的相应标志</li>
+</ul>
+<h3 id="【7】前端拿到响应数据">【7】前端拿到响应数据</h3>
+<ul>
+<li>在页面渲染指定的结果或者页面</li>
+</ul>
+<h3 id="【8】渲染完成后和服务端断开连接">【8】渲染完成后和服务端断开连接</h3>
+<ul>
+<li>
+<p>断开的连接不是指TCP的连接</p>
+</li>
+<li>
+<p>指的是本次的请求断开</p>
+</li>
+</ul>
+<h1>HTTP协议初始</h1>
+<h2 id="【一】那些应用可以充当客户端？？？">【一】那些应用可以充当客户端？？？</h2>
+<ul>
+<li>自己写的TCP客户端</li>
+<li>我们用的浏览器</li>
+<li>cs架构里面符合c的程序</li>
+<li>bs架构里面符合b的程序</li>
+</ul>
+<h2 id="【二】我们自己写的TCP的客户端无法和浏览器进行交互的原因">【二】我们自己写的TCP的客户端无法和浏览器进行交互的原因</h2>
+<ul>
+<li>浏览器和服务端之间遵循HTTP协议</li>
+</ul>
+<h2 id="【三】什么是HTTP协议">【三】什么是HTTP协议</h2>
+<ul>
+<li>规定了服务端和浏览器之间数据交互的格式</li>
+<li>如果服务端遵循了HTTP协议，就可以被浏览器识别到</li>
+<li>如果服务端不遵循HTTP协议 浏览器就不会正常访问和展示 但是不影响服务端</li>
+<li>如果应用非常火爆，可以做成app客户端</li>
+</ul>
+<h1>HTTP协议</h1>
+<h2 id="【一】什么是HTTP协议">【一】什么是HTTP协议</h2>
+<ul>
+<li>
+<p>HTTP协议（HyperText Transfer Protocol，超文本传输协议）</p>
+<ul>
+<li>由蒂姆·伯纳斯-李于1989年为了推广互联网技术而推出的一种<strong>无状态网络应用协议</strong></li>
+</ul>
+</li>
+<li>
+<p>HTTP协议构建于TCP/IP协议族之上</p>
+<ul>
+<li>属于应用层协议</li>
+</ul>
+</li>
+<li>
+<p>主要用于传输与超文本相关的资源文件</p>
+<ul>
+<li>如HTML网页，css，is，图片，视频，音频等</li>
+</ul>
+</li>
+<li>
+<p>下载的HTTP协议基于数据是否加密，主要分两种</p>
+<ol>
+<li>一种是正常的HTTP协议
+<ul>
+<li>没有进行加密传输数据的就是HTTP协议</li>
+<li>默认端口为80端口</li>
+<li>常用端口3000,5000,8000,8080等</li>
+</ul>
+</li>
+<li>一种是TLS/SSL认证的HTTPS协议
+<ul>
+<li>构建与TLS或SSL协议之上</li>
+<li>对数据使用SSL加密传输数据的是HTTPS协议</li>
+<li>默认端口是443端口</li>
+<li>常用端口：8443</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h1>HTTP协议的特点----》重点</h1>
+<h2 id="【一】特点">【一】特点</h2>
+<h3 id="【1】基于请求和响应的协议">【1】基于请求和响应的协议</h3>
+<ul>
+<li>服务端永远不会主动联系客户端</li>
+<li>所有数据都是有客户端发起</li>
+<li>服务端必须做出响应</li>
+</ul>
+<h3 id="【2】HTTP协议是基于TCP-IP协议之上的应用层协议">【2】HTTP协议是基于TCP/IP协议之上的应用层协议</h3>
+<ul>
+<li>应用层协议:HTTP HTTPS FTP …</li>
+</ul>
+<h3 id="【3】无状态">【3】无状态</h3>
+<ul>
+<li>
+<p>服务端不保存客户端状态（不管见了多少遍，每次见面都相当于是初见）</p>
+</li>
+<li>
+<p>无状态指的是http协议默认的情况下，服务端不识别客户端</p>
+</li>
+<li>
+<p>在客户端多次发起请求到同一个服务器，服务端接收到客户端的请求在处理完成以后就会主动断开。</p>
+</li>
+<li>
+<p>对于客户端的每次请求，对于服务端来说，都是一次新的客户端请求</p>
+</li>
+<li>
+<p>服务端无法辨别多次请求的客户端是否是同一个客户端</p>
+</li>
+</ul>
+<h3 id="【4】短连接">【4】短连接</h3>
+<ul>
+<li>不保持客户端之间的连接通道</li>
+<li>服务端响应数据，立马就会断开连接</li>
+</ul>
+<h3 id="【5】长连接–》websocket">【5】长连接–》websocket</h3>
+<ul>
+<li>
+<p>客户端和服务端不断地在数据交互直至数据拿到并处理，处理完成之后不会断开连接</p>
+</li>
+<li>
+<p>主要用于加好友聊天业务</p>
+</li>
+</ul>
+<h1>HTTP协议的请求和响应的格式</h1>
+<h2 id="【一】HTTP协议的请求格式">【一】HTTP协议的请求格式</h2>
+<h3 id="（1）客户端给客户端发送消息应该遵循的数据格式">（1）客户端给客户端发送消息应该遵循的数据格式</h3>
+<ol>
+<li>请求首行
+<ul>
+<li>请求方式 + 请求路径 + 协议版本</li>
+</ul>
+</li>
+<li>请求头
+<ul>
+<li>一大堆k:v键值对</li>
+</ul>
+</li>
+<li>换行不能省略—》/r/n</li>
+<li>请求体(携带敏感数据:密码 身份照号…) 不是一直都有</li>
+</ol>
+<h3 id="（2）HTTP请求头（Request-Head）">（2）HTTP请求头（Request Head）</h3>
+<ul>
+<li>
+<p>主要对客户端请求操作进行限制条件与补充说明</p>
+</li>
+<li>
+<p>常见的标准HTTP协议如下</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>描述</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Host</strong></td>
+<td>指定客户端请求的服务器的域名和端口号。</td>
+<td><a target="_blank" rel="noopener" href="http://www.baidu.com">www.baidu.com</a></td>
+</tr>
+<tr>
+<td><strong>Content-Type</strong></td>
+<td>告诉服务器，客户端请求携带的请求体数据的媒体类型信息（MIME类型）</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>User-Agent</strong></td>
+<td>告知服务器HTTP 客户端网络代理程序的版本信息，一般就是浏览器的版本信息。</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Authorization</strong></td>
+<td>告知服务器客户端的Web认证信息。</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Content-Length</strong></td>
+<td>HTTP报文中请求体的大小，以字节为单位。</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Referer</strong></td>
+<td>告诉服务器该网页是从哪个页面链接过来。也就是上一页页面的地址。</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Accept</strong></td>
+<td>指定客户端能够接收并理解的媒体类型类型（MIME类型），用于表达希望服务端的返回资源格式。</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Accept-Encoding</strong></td>
+<td>指定浏览器可以支持的web服务器返回内容压缩编码类型。</td>
+<td><strong>gzip</strong>, <strong>deflate</strong>, br</td>
+</tr>
+<tr>
+<td>Pragma</td>
+<td>指定服务端控制缓存行为。http/1.0以前的字段。</td>
+<td>Pragme: no-cache</td>
+</tr>
+<tr>
+<td>Cache-Control</td>
+<td>指定服务端控制缓存行为。http/1.1以后的字段。</td>
+<td>Cache-Control: no-cache</td>
+</tr>
+<tr>
+<td>Upgrade</td>
+<td>向服务器请求在当前http协议的基础上升级采用新的某种传输协议以便服务器进行转换</td>
+<td>常用于http协议升级到ws协议。</td>
+</tr>
+<tr>
+<td>Connection</td>
+<td>指定本次http通信结束以后，是否关闭TCP网络连接。如果设置持久连接，则可以在一次会话中，可以使用同一个TCP连接，进行多次的HTTP通信，提高效率。</td>
+<td>持久连接，Connection: keep-alive 非持久连接，Connection: close</td>
+</tr>
+</tbody>
+</table>
+<h3 id="（3）常见的MIME格式">（3）常见的MIME格式</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th>描述</th>
+<th>别名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>text/html</strong></td>
+<td>HTML网页</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>application/json</strong></td>
+<td>json文本</td>
+<td>text/json</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>text/plain</strong></td>
+<td>纯文本，普通文本</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>text/xml</strong></td>
+<td>xml文档</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>application/javascript</strong></td>
+<td>js脚本</td>
+<td>text/javascript</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>text/css</strong></td>
+<td>css样式</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>image/png</strong></td>
+<td>png格式图片</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>image/jpeg</strong></td>
+<td>jpg格式图片</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>image/gif</strong></td>
+<td>gif格式图片</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>application/x-gzip</strong></td>
+<td>gzip格式压缩包</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>application/msword</strong></td>
+<td>doc文档</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>application/vnd.openxmlformats-officedocument.wordprocessingml.document</strong></td>
+<td>docx文档</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>application/vnd.ms-excel</strong></td>
+<td>xls文档</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</strong></td>
+<td>xlsx文档</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">application/pdf</td>
+<td>pdf文档</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">audio/mpeg</td>
+<td>mp3音频</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">video/mp4</td>
+<td>mp4视频</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="（4）请求方法">（4）请求方法</h3>
+<ul>
+<li>HTTP请求方法（HTTP Request Method）</li>
+<li>表示客户端希望对服务器指定资源进行哪一类型的操作</li>
+<li>存在多种HTTP请求方法表达增删查改</li>
+</ul>
+<p>常见的请求方法如下：</p>
+<table>
+<thead>
+<tr>
+<th>请求方法</th>
+<th style="text-align:center">描述</th>
+<th>报文中是否包含请求体</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GET</strong></td>
+<td style="text-align:center">表示客户端希望从服务器中<strong>获取</strong>或<strong>下载</strong>资源信息</td>
+<td>Flase</td>
+</tr>
+<tr>
+<td><strong>POST</strong></td>
+<td style="text-align:center">表示客户端希望<strong>上传</strong>文件或通过请求在服务器<strong>创建</strong>资源信息。</td>
+<td>True</td>
+</tr>
+<tr>
+<td><strong>PUT</strong></td>
+<td style="text-align:center">表示客户端希望<strong>修改或更新</strong>服务器资源（表示修改全部资源信息，例如数据表的一整个记录）</td>
+<td>True</td>
+</tr>
+<tr>
+<td><strong>PATCH</strong></td>
+<td style="text-align:center">表示客户端希望<strong>修改或更新</strong>服务器资源（表示修改部分资源信息，例如数据表的一个记录里面某个属性值）</td>
+<td>True</td>
+</tr>
+<tr>
+<td><strong>DELETE</strong></td>
+<td style="text-align:center">表示客户端希望<strong>删除或废弃</strong>服务器资源</td>
+<td>Flase</td>
+</tr>
+<tr>
+<td>OPTION</td>
+<td style="text-align:center">表示客户端希望获取服务器所支持的请求方法列表</td>
+<td>Flase</td>
+</tr>
+<tr>
+<td>HEAD</td>
+<td style="text-align:center">表示客户端希望获取服务器支持的跨域地址列表</td>
+<td>Flase</td>
+</tr>
+</tbody>
+</table>
+<h3 id="（5）请求行">（5）请求行</h3>
+<ul>
+<li>请求行（HTTP Request Line）
+<ul>
+<li>表示请求报文的首行</li>
+</ul>
+</li>
+<li>主要有三部分组成，使用单个空格隔开
+<ul>
+<li>请求方法</li>
+<li>请求路径</li>
+<li>HTTP协议版本</li>
+</ul>
+</li>
+</ul>
+<h3 id="（6）请求路径">（6）请求路径</h3>
+<ul>
+<li>表示远程web服务端的一个可访问资源</li>
+<li>一般就是代表的就是一个服务器的具体文件或数据表中的记录信息，或一个服务端里面的函数或方法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/     表示根路径</span><br><span class="line">/<span class="number">1.</span>html   表示web服务器中web根目录下的<span class="number">1.</span>html文件</span><br><span class="line">/login    表示web服务器中的一个login方法或者login函数</span><br></pre></td></tr></table></figure>
+<h3 id="（7）http协议版本">（7）http协议版本</h3>
+<ul>
+<li>表示客户端目前使用的HTTP协议版本，并期望服务端也采用同样版本的协议与客户端进行通信。</li>
+<li>http协议发送至今已经到了HTTP2.0版本，目前主流的使用版本有：HTTP/1.0 、HTTP/1.1。</li>
+</ul>
+<h2 id="【二】HTTP的响应格式">【二】HTTP的响应格式</h2>
+<h3 id="【1】服务端给客户端发送消息应该遵循的数据格式">【1】服务端给客户端发送消息应该遵循的数据格式</h3>
+<ol>
+<li>响应首行
+<ul>
+<li>HTTP协议 响应状态码 协议版本</li>
+</ul>
+</li>
+<li>响应头
+<ul>
+<li>一大堆k:v键值对</li>
+</ul>
+</li>
+<li>换行不能省略—》/r/n</li>
+<li>响应体
+<ul>
+<li>给浏览器展示给客户看的页面信息</li>
+</ul>
+</li>
+</ol>
+<h3 id="【2】响应状态码">【2】响应状态码</h3>
+<ul>
+<li>状态码（Status Code）
+<ul>
+<li>用于表达本次服务端在接收客户端请求之后的操作结果的成功或失败结果，有三位整数组成</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>状态码类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1xx</td>
+<td>告诉客户端，本次请求，服务端还在持续处理中，并<strong>没有结束</strong>。</td>
+</tr>
+<tr>
+<td>2xx</td>
+<td>告诉客户端，本次请求，服务端已经接收并<strong>成功受理</strong>了。</td>
+</tr>
+<tr>
+<td>3xx</td>
+<td>告诉客户端，服务端位置发生改变，希望客户端<strong>重定向</strong>访问跳转新的服务器地址进行请求</td>
+</tr>
+<tr>
+<td>4xx</td>
+<td>告诉<strong>客户端</strong>，本次<strong>请求有误</strong>，服务器无法处理。</td>
+</tr>
+<tr>
+<td>5xx</td>
+<td>告诉客户端，本次请求服务端在处理过程中<strong>服务端出错</strong>了。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="【3】常见的HTTP状态码">【3】常见的HTTP状态码</h3>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>响应信息</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>101</td>
+<td>Switching Protocols</td>
+<td>服务器已经理解了客户端的请求，并将通过Upgrade消息头通知客户端采用升级协议来完成请求。</td>
+</tr>
+<tr>
+<td><strong>200</strong></td>
+<td>OK</td>
+<td>请求已成功，请求所希望的响应头或数据体将随此响应返回。出现此状态码是表示正常状态。常用于GET，PUT或PATCH</td>
+</tr>
+<tr>
+<td><strong>201</strong></td>
+<td>Created</td>
+<td>请求已成功，请求的资源已经创建成功或更新完成，常用于POST，PUT或PATCH</td>
+</tr>
+<tr>
+<td><strong>204</strong></td>
+<td>No Content</td>
+<td>请求已成功，但是没有任何内容返回。常用于DEELTE</td>
+</tr>
+<tr>
+<td><strong>301</strong></td>
+<td>Moved Permanently</td>
+<td>永久重定向，表示当前客户端请求的资源地址已经永久发生改变。</td>
+</tr>
+<tr>
+<td><strong>302</strong></td>
+<td>Move Temporarily</td>
+<td>临时重定向，表示当前客户端请求的资源地址还存在，但是访问客户端达不到访问资源的条件，所以暂时无法访问。</td>
+</tr>
+<tr>
+<td><strong>304</strong></td>
+<td>Not Modified</td>
+<td>表示本次客户端请求的资源，并非来自服务端，而是本地缓存。如果web项目有做了客户端缓存，一般静态文件都会出现304</td>
+</tr>
+<tr>
+<td>305</td>
+<td>Use Proxy</td>
+<td>被请求的资源必须通过指定的代理才能被访问。</td>
+</tr>
+<tr>
+<td>307</td>
+<td>Temporary Redirect</td>
+<td>请求的资源临时从不同的URI 响应请求。</td>
+</tr>
+<tr>
+<td><strong>400</strong></td>
+<td>Bad Request</td>
+<td>本次请求，报文语义有误或请求参数有误，当前请求无法被服务器理解。</td>
+</tr>
+<tr>
+<td><strong>401</strong></td>
+<td>Unauthorized</td>
+<td>本次请求，需要需要用户验证，但用户并没有提供认证。</td>
+</tr>
+<tr>
+<td><strong>403</strong></td>
+<td>Forbidden</td>
+<td>服务器已经理解请求，但是拒绝执行它。一般是因为没有权限导致的。</td>
+</tr>
+<tr>
+<td><strong>404</strong></td>
+<td>Not Found</td>
+<td>请求失败，请求所希望得到的资源未被在服务器上发现，请求路径不存在。</td>
+</tr>
+<tr>
+<td><strong>405</strong></td>
+<td>Method Not Allowed</td>
+<td>请求行中指定的请求方法不能被用于请求相应的资源。使用了错误的请求方法。</td>
+</tr>
+<tr>
+<td><strong>500</strong></td>
+<td>Internal Server Error</td>
+<td>服务器遇到了一个未曾预料的状况，导致了它无法完成对请求的处理。就是服务端的代码报错了。</td>
+</tr>
+<tr>
+<td><strong>502</strong></td>
+<td>Bad Gateway</td>
+<td>网关宕机，作为网关或者代理工作的服务器尝试执行请求时，从上游服务器接收到无效的响应。一般就是大量访问请求导致服务器瘫痪或宕机了。</td>
+</tr>
+<tr>
+<td><strong>503</strong></td>
+<td>Service Unavailable</td>
+<td>网关过载，由于临时的服务器维护或者过载，服务器当前无法处理请求。</td>
+</tr>
+<tr>
+<td><strong>504</strong></td>
+<td>Gateway Timeout</td>
+<td>网关超时，作为网关或者代理工作的服务器尝试执行请求时，未能及时从上游服务器或者辅助服务器（例如DNS）收到响应。</td>
+</tr>
+<tr>
+<td>507</td>
+<td>Insufficient Storage</td>
+<td>服务器无法存储完成请求所必须的内容。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="【4】响应头">【4】响应头</h3>
+<ul>
+<li>HTTP响应头（Response Head）,主要是服务器返回的内容进行补充说明，并提供下一次请求的一些辅助信息</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Content-Type</strong></td>
+<td>告知客户端，响应数据的MIME类型</td>
+</tr>
+<tr>
+<td><strong>Content-Length</strong></td>
+<td>告知客户端，响应数据的字节大小</td>
+</tr>
+<tr>
+<td>Content-Encoding</td>
+<td>告知客户端，响应数据采用的压缩格式</td>
+</tr>
+<tr>
+<td><strong>Server</strong></td>
+<td>告知客户端，响应服务器的名字或类型</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>告知客户端，响应请求的时间</td>
+</tr>
+<tr>
+<td><strong>Location</strong></td>
+<td>告知客户端，实际要请求的资源地址（用于301或302进行页面跳转）</td>
+</tr>
+<tr>
+<td>Cache-Control</td>
+<td>告知客户端，响应数据的缓存机制</td>
+</tr>
+<tr>
+<td><strong>Refresh</strong></td>
+<td>告知客户端，要定时刷新的时间间隔</td>
+</tr>
+<tr>
+<td><strong>Connection</strong></td>
+<td>告知客户端，本次HTTP通信完成以后是否要保持TCP连接。</td>
+</tr>
+<tr>
+<td>Transfer-Encoding</td>
+<td>告知客户端，数据是<strong>以分块方式</strong>响应回来的。</td>
+</tr>
+<tr>
+<td><strong>Content-Disposition</strong></td>
+<td>告知客户端，以下载方式打数据的，格式：Content-Disposition: attachment;filename=文件名</td>
+</tr>
+<tr>
+<td><strong>Expires</strong></td>
+<td>告知客户端，响应数据的过期事件，-1表示马上过期，客户端不要缓存当前响应数据。</td>
+</tr>
+<tr>
+<td><strong>Retry-After</strong></td>
+<td>告知客户端，应该在多久之后再次发送请求。常见于服务端限流，或503中。</td>
+</tr>
+<tr>
+<td><strong>Access-Control-Allow-Origin</strong></td>
+<td>指定客户端通过哪些域名下的脚本可以访问服务器资源。</td>
+</tr>
+<tr>
+<td>Access-Control-Allow-Methods</td>
+<td>指定客户端通过哪些HTTP请求方法访问服务端资源。</td>
+</tr>
+<tr>
+<td>Access-Control-Allow-Headers</td>
+<td>指定客户端请求服务器的报文中，允许包含哪些请求头。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="【5】响应行">【5】响应行</h3>
+<ul>
+<li>HTTP响应行（HTTP Reques），是响应报文的首行</li>
+<li>由三部分组成，使用单个空格隔开
+<ul>
+<li>HTTP协议版本</li>
+<li>响应状态码</li>
+<li>响应信息</li>
+</ul>
+</li>
+</ul>
+<h3 id="【6】HTTP协议版本">【6】HTTP协议版本</h3>
+<ul>
+<li>响应报文的HTTP协议版本，与客户端的协议版本保持一致</li>
+<li>例如：HTTP/1.0, HTTP/1.1</li>
+</ul>
+<h1>服务器模板</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建套接字</span></span><br><span class="line">server = socket.socket()</span><br><span class="line"><span class="comment"># 设置地址重用</span></span><br><span class="line">server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, <span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">ip = <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line">port = <span class="number">8801</span></span><br><span class="line"><span class="comment"># 绑定端口</span></span><br><span class="line">addr = (ip, port)</span><br><span class="line"><span class="comment"># 建立连接</span></span><br><span class="line">server.bind(addr)</span><br><span class="line"><span class="comment"># 设置监听</span></span><br><span class="line">server.listen(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">conn, addr = server.accept()</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="comment">#接收数据</span></span><br><span class="line">    data = conn.recv(<span class="number">1024</span>)</span><br><span class="line">    <span class="comment"># 解码</span></span><br><span class="line">    data_str = data.decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(data_str)</span><br><span class="line">    <span class="comment"># 响应首行---&gt;协议版本  响应状态码 换行(\r\n)</span></span><br><span class="line">    response_line = <span class="string">&quot;HTTP/1.1 200 OK\r\n&quot;</span></span><br><span class="line">    <span class="comment"># 响应头</span></span><br><span class="line">    response_header = <span class="string">&quot;Server:Python20ws/21.1\r\n&quot;</span></span><br><span class="line">    <span class="comment"># 换行</span></span><br><span class="line">    response_blank = <span class="string">&quot;\r\n&quot;</span></span><br><span class="line">    <span class="comment">#响应主体</span></span><br><span class="line">    <span class="comment"># 方式一</span></span><br><span class="line">    <span class="comment"># response_body = &quot;&lt;html&gt;&lt;h&gt;HelloWorld!&lt;h/&gt;&lt;html/&gt;&quot;</span></span><br><span class="line">    <span class="comment"># 方式二 ：拆开</span></span><br><span class="line">    html_head = <span class="string">&quot;&lt;html&gt;&quot;</span></span><br><span class="line">    response_content = <span class="string">&quot;Hello World!&quot;</span></span><br><span class="line">    html_fool = <span class="string">&quot;&lt;html/&gt;&quot;</span></span><br><span class="line">    <span class="comment"># 拼接响应主体</span></span><br><span class="line">    response_body = html_head + response_content + html_fool</span><br><span class="line">    <span class="comment"># 拼接响应数据并转为二进制数据，发送</span></span><br><span class="line">    client_data = response_line + response_header + response_blank + response_body</span><br><span class="line">    <span class="comment"># 转为二进制</span></span><br><span class="line">    client_data_bytes = client_data.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    <span class="comment"># 发送</span></span><br><span class="line">    conn.send(client_data_bytes)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行sever</span></span><br><span class="line"><span class="comment"># 在浏览器中搜索127.0.0.1：8801</span></span><br><span class="line"><span class="comment"># pycharm 打印数据</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="comment"># GET / HTTP/1.1</span></span><br><span class="line"><span class="comment"># Host: 127.0.0.1:8801</span></span><br><span class="line"><span class="comment"># Connection: keep-alive</span></span><br><span class="line"><span class="comment"># Cache-Control: max-age=0</span></span><br><span class="line"><span class="comment"># sec-ch-ua: &quot;Chromium&quot;;v=&quot;9&quot;, &quot;Not?A_Brand&quot;;v=&quot;8&quot;</span></span><br><span class="line"><span class="comment"># sec-ch-ua-mobile: ?0</span></span><br><span class="line"><span class="comment"># sec-ch-ua-platform: &quot;Windows&quot;</span></span><br><span class="line"><span class="comment"># Upgrade-Insecure-Requests: 1</span></span><br><span class="line"><span class="comment"># User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36 SLBrowser/9.0.3.5211 SLBChan/105</span></span><br><span class="line"><span class="comment"># Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span></span><br><span class="line"><span class="comment"># Sec-Fetch-Site: none</span></span><br><span class="line"><span class="comment"># Sec-Fetch-Mode: navigate</span></span><br><span class="line"><span class="comment"># Sec-Fetch-User: ?1</span></span><br><span class="line"><span class="comment"># Sec-Fetch-Dest: document</span></span><br><span class="line"><span class="comment"># Accept-Encoding: gzip, deflate, br</span></span><br><span class="line"><span class="comment"># Accept-Language: zh-CN,zh;q=0.9</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/01/1.1%E5%A4%9A%E7%89%88%E6%9C%AC%E5%85%B1%E5%AD%98%E9%97%AE%E9%A2%98/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/01/1.0%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8%E3%80%81%E5%AE%89%E8%A3%85%E3%80%81%E5%88%9B%E5%BB%BA%E3%80%81%E9%85%8D%E7%BD%AE/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">前端基础引入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">【一】前后端介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AF%E5%89%8D%E7%AB%AF"><span class="nav-number">1.1.1.</span> <span class="nav-text">【1】什么是前端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AF%E5%90%8E%E7%AB%AF"><span class="nav-number">1.1.2.</span> <span class="nav-text">【2】什么是后端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E5%89%8D%E7%AB%AF%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%80%9D%E8%B7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">【二】前端的学习思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%89%8D%E7%AB%AF%E4%B8%89%E5%89%91%E5%AE%A2"><span class="nav-number">1.2.1.</span> <span class="nav-text">【1】前端三剑客</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89HTML%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">（1）HTML介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89CSS%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">（2）CSS介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89javascript%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">（3）javascript介绍</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91Bootstrap-HTML-CSS"><span class="nav-number">1.2.2.</span> <span class="nav-text">【2】Bootstrap(HTML+CSS)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%89%E3%80%91%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6"><span class="nav-number">1.3.</span> <span class="nav-text">【三】前端框架</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">浏览器访问地址全过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%EF%BC%88URL%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">【一】在浏览器中输入网址（URL）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E7%94%A8%E6%88%B7%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E6%A0%8F%E4%B8%AD%E8%BE%93%E5%85%A5%E7%9B%AE%E6%A0%87%E7%BD%91%E5%9D%80www-biadu-com"><span class="nav-number">2.1.1.</span> <span class="nav-text">【1】用户在浏览器的地址栏中输入目标网址www.biadu.com&#x2F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91www-biadu-com-%EF%BC%9A%E5%8F%AB%E5%9F%9F%E5%90%8D"><span class="nav-number">2.1.2.</span> <span class="nav-text">【2】www.biadu.com&#x2F; ：叫域名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E8%AE%A9ip%E5%92%8Cport%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5-TCP%E8%BF%9E%E6%8E%A5"><span class="nav-number">2.1.3.</span> <span class="nav-text">【3】让ip和port和服务器建立连接  TCP连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91TCP%E7%9A%84%E8%BF%9E%E6%8E%A5"><span class="nav-number">2.1.4.</span> <span class="nav-text">【4】TCP的连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%905%E3%80%91%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A5%E6%94%B6%E5%88%B0%E8%AF%B7%E6%B1%82%E5%92%8C%E6%90%BA%E5%B8%A6%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">2.1.5.</span> <span class="nav-text">【5】后端服务器接收到请求和携带的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%906%E3%80%91%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%AE%8C%E5%90%8E%E8%BF%94%E5%9B%9E%E7%BB%99%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8C%87%E5%AE%9A%E7%9A%84%E5%93%8D%E5%BA%94%E5%86%85%E5%AE%B9"><span class="nav-number">2.1.6.</span> <span class="nav-text">【6】数据处理完后返回给客户端指定的响应内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%907%E3%80%91%E5%89%8D%E7%AB%AF%E6%8B%BF%E5%88%B0%E5%93%8D%E5%BA%94%E6%95%B0%E6%8D%AE"><span class="nav-number">2.1.7.</span> <span class="nav-text">【7】前端拿到响应数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%908%E3%80%91%E6%B8%B2%E6%9F%93%E5%AE%8C%E6%88%90%E5%90%8E%E5%92%8C%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%96%AD%E5%BC%80%E8%BF%9E%E6%8E%A5"><span class="nav-number">2.1.8.</span> <span class="nav-text">【8】渲染完成后和服务端断开连接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">HTTP协议初始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E9%82%A3%E4%BA%9B%E5%BA%94%E7%94%A8%E5%8F%AF%E4%BB%A5%E5%85%85%E5%BD%93%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%9F%EF%BC%9F%EF%BC%9F"><span class="nav-number">3.1.</span> <span class="nav-text">【一】那些应用可以充当客户端？？？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E6%88%91%E4%BB%AC%E8%87%AA%E5%B7%B1%E5%86%99%E7%9A%84TCP%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%97%A0%E6%B3%95%E5%92%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">3.2.</span> <span class="nav-text">【二】我们自己写的TCP的客户端无法和浏览器进行交互的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%89%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AFHTTP%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.3.</span> <span class="nav-text">【三】什么是HTTP协议</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">HTTP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AFHTTP%E5%8D%8F%E8%AE%AE"><span class="nav-number">4.1.</span> <span class="nav-text">【一】什么是HTTP协议</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">HTTP协议的特点----》重点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E7%89%B9%E7%82%B9"><span class="nav-number">5.1.</span> <span class="nav-text">【一】特点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%9F%BA%E4%BA%8E%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E7%9A%84%E5%8D%8F%E8%AE%AE"><span class="nav-number">5.1.1.</span> <span class="nav-text">【1】基于请求和响应的协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91HTTP%E5%8D%8F%E8%AE%AE%E6%98%AF%E5%9F%BA%E4%BA%8ETCP-IP%E5%8D%8F%E8%AE%AE%E4%B9%8B%E4%B8%8A%E7%9A%84%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE"><span class="nav-number">5.1.2.</span> <span class="nav-text">【2】HTTP协议是基于TCP&#x2F;IP协议之上的应用层协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E6%97%A0%E7%8A%B6%E6%80%81"><span class="nav-number">5.1.3.</span> <span class="nav-text">【3】无状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E7%9F%AD%E8%BF%9E%E6%8E%A5"><span class="nav-number">5.1.4.</span> <span class="nav-text">【4】短连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%905%E3%80%91%E9%95%BF%E8%BF%9E%E6%8E%A5%E2%80%93%E3%80%8Bwebsocket"><span class="nav-number">5.1.5.</span> <span class="nav-text">【5】长连接–》websocket</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">HTTP协议的请求和响应的格式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91HTTP%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%AF%B7%E6%B1%82%E6%A0%BC%E5%BC%8F"><span class="nav-number">6.1.</span> <span class="nav-text">【一】HTTP协议的请求格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%99%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF%E5%BA%94%E8%AF%A5%E9%81%B5%E5%BE%AA%E7%9A%84%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="nav-number">6.1.1.</span> <span class="nav-text">（1）客户端给客户端发送消息应该遵循的数据格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89HTTP%E8%AF%B7%E6%B1%82%E5%A4%B4%EF%BC%88Request-Head%EF%BC%89"><span class="nav-number">6.1.2.</span> <span class="nav-text">（2）HTTP请求头（Request Head）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E5%B8%B8%E8%A7%81%E7%9A%84MIME%E6%A0%BC%E5%BC%8F"><span class="nav-number">6.1.3.</span> <span class="nav-text">（3）常见的MIME格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="nav-number">6.1.4.</span> <span class="nav-text">（4）请求方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%885%EF%BC%89%E8%AF%B7%E6%B1%82%E8%A1%8C"><span class="nav-number">6.1.5.</span> <span class="nav-text">（5）请求行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%886%EF%BC%89%E8%AF%B7%E6%B1%82%E8%B7%AF%E5%BE%84"><span class="nav-number">6.1.6.</span> <span class="nav-text">（6）请求路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%887%EF%BC%89http%E5%8D%8F%E8%AE%AE%E7%89%88%E6%9C%AC"><span class="nav-number">6.1.7.</span> <span class="nav-text">（7）http协议版本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91HTTP%E7%9A%84%E5%93%8D%E5%BA%94%E6%A0%BC%E5%BC%8F"><span class="nav-number">6.2.</span> <span class="nav-text">【二】HTTP的响应格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%BB%99%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF%E5%BA%94%E8%AF%A5%E9%81%B5%E5%BE%AA%E7%9A%84%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="nav-number">6.2.1.</span> <span class="nav-text">【1】服务端给客户端发送消息应该遵循的数据格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%93%8D%E5%BA%94%E7%8A%B6%E6%80%81%E7%A0%81"><span class="nav-number">6.2.2.</span> <span class="nav-text">【2】响应状态码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%B8%B8%E8%A7%81%E7%9A%84HTTP%E7%8A%B6%E6%80%81%E7%A0%81"><span class="nav-number">6.2.3.</span> <span class="nav-text">【3】常见的HTTP状态码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E5%93%8D%E5%BA%94%E5%A4%B4"><span class="nav-number">6.2.4.</span> <span class="nav-text">【4】响应头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%905%E3%80%91%E5%93%8D%E5%BA%94%E8%A1%8C"><span class="nav-number">6.2.5.</span> <span class="nav-text">【5】响应行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%906%E3%80%91HTTP%E5%8D%8F%E8%AE%AE%E7%89%88%E6%9C%AC"><span class="nav-number">6.2.6.</span> <span class="nav-text">【6】HTTP协议版本</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">服务器模板</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
