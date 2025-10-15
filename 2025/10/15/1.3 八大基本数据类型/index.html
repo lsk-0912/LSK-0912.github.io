@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="【一】八大基本数据类型  数字类型  整数类型（int） 浮点类型（float）   字符串类型（str） 列表类型（list） 字典类型（dict） 布尔类型（bool） 元组类型（tuple） 集合类型（set）  【1】数字类型 （1）整数类型   整数类型用于表示整数，广泛用于表示计数、索引等整数值   在python中，整数类型的定义是直接赋予一个整数值   &#96;&#96;&#96;python age">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.3 八大基本数据类型">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/1.3%20%E5%85%AB%E5%A4%A7%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="【一】八大基本数据类型  数字类型  整数类型（int） 浮点类型（float）   字符串类型（str） 列表类型（list） 字典类型（dict） 布尔类型（bool） 元组类型（tuple） 集合类型（set）  【1】数字类型 （1）整数类型   整数类型用于表示整数，广泛用于表示计数、索引等整数值   在python中，整数类型的定义是直接赋予一个整数值   &#96;&#96;&#96;python age">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhaochunze.dream521.site/202311161054334.png">
+<meta property="article:published_time" content="2025-10-15T03:34:54.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:49.959Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhaochunze.dream521.site/202311161054334.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/1.3%20%E5%85%AB%E5%A4%A7%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>1.3 八大基本数据类型 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/1.3%20%E5%85%AB%E5%A4%A7%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          1.3 八大基本数据类型
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:54 / 修改时间：16:15:49" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:54+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>【一】八大基本数据类型</h1>
+<ul>
+<li>数字类型
+<ul>
+<li>整数类型（int）</li>
+<li>浮点类型（float）</li>
+</ul>
+</li>
+<li>字符串类型（str）</li>
+<li>列表类型（list）</li>
+<li>字典类型（dict）</li>
+<li>布尔类型（bool）</li>
+<li>元组类型（tuple）</li>
+<li>集合类型（set）</li>
+</ul>
+<h2 id="【1】数字类型">【1】数字类型</h2>
+<h3 id="（1）整数类型">（1）整数类型</h3>
+<ul>
+<li>
+<p>整数类型用于表示整数，广泛用于表示计数、索引等整数值</p>
+</li>
+<li>
+<p>在python中，整数类型的定义是直接赋予一个整数值</p>
+</li>
+</ul>
+```python
+age = 18
+# 查看变量名
+print(age)  # 18
+# 查看地址
+print(id(age))  # 1853270917904
+# 查看数据类型
+print(type(age))#<class 'int'>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 整数型可以参与各种数学运算，加减乘除等</span><br><span class="line"></span><br><span class="line">### （2）浮点类型</span><br><span class="line"></span><br><span class="line">- 浮点类型用于表示带有小数点的部分，适用于需要更精确数值表示的情况</span><br><span class="line"></span><br><span class="line">- 就是通过数字后面添加小数点</span><br><span class="line"></span><br><span class="line">  &#123;% raw %&#125;```python</span><br><span class="line">  age = 1.88</span><br><span class="line">  print(age)#1.88</span><br><span class="line">  print(id(age))#1776489613616</span><br><span class="line">  print(type(age))#&lt;class &#x27;str&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-数字类型的应用">[3]数字类型的应用</h3>
+<ul>
+<li>
+<p>整数和浮点数可以进行常见的数学运算，包括加法、减法、乘法、除法等。</p>
+</li>
+<li>
+```python
+  str = 1.88
+  int = 88
+  age = str + int
+  print(age)  # 89.88
+  print(id(age))  # 2314768730832
+  print(type(age))  # <class 'float'>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 我们可以使用比较运算符（如`&lt;`、`&gt;`、`&lt;=`、`&gt;=`）来比较数字的大小，得到布尔类型的结果</span><br><span class="line"></span><br><span class="line">- &#123;% raw %&#125;```python</span><br><span class="line">  str = 1.88</span><br><span class="line">  int = 88</span><br><span class="line">  compare = str &gt; int</span><br><span class="line">  print(compare)  # False</span><br><span class="line">  print(id(compare))  # 140706766773128</span><br><span class="line">  print(type(compare))  # &lt;class &#x27;bool&#x27;&gt;</span><br><span class="line">  结果是False(不正确)】</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="2-字符串类型">[2]字符串类型</h2>
+<ul>
+<li>字符串用于表示文本信息，是一种非常重要的数据类型，用于处理文字，字符等信息</li>
+</ul>
+<h3 id="（1）单行字符串">（1）单行字符串</h3>
+<ul>
+<li>
+<p>字符可以使用单引号，双引号，三引号进行定义</p>
+</li>
+<li>
+```py
+  Name = 'dream'
+  Name = "dream"
+  Name = '''dream'''
+  Name = """dream"""#
+  (当左边有赋值符号和遍历名的时候，它就是字符串)
+  
+  上面是例子
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 引号的嵌套需要注意，外层是单引号时，内层应使用双引号</span><br><span class="line"></span><br><span class="line">- 如果需要在字符串中包含引号，可以灵活运用不同类型的引号</span><br><span class="line"></span><br><span class="line">### （2）多行字符串</span><br><span class="line"></span><br><span class="line">- 通过三引号（单引号或双引号）可以定义多行字符串，方便表示包含换行的文本内容</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">#三引号支持多行文本内容</span><br><span class="line">msg_1 = &#x27;&#x27;&#x27;         </span><br><span class="line">	天下只有两种人。比如一串葡萄到手，一种人挑最好的先吃，另一种人把最好的留到最后吃。</span><br><span class="line">    照例第一种人应该乐观，因为他每吃一颗都是吃剩的葡萄里最好的；</span><br><span class="line">    第二种人应该悲观，因为他每吃一颗都是吃剩的葡萄里最坏的。 </span><br><span class="line">    不过事实却适得其反，缘故是第二种人还有希望，第一种人只有回忆,</span><br><span class="line">    &#x27;&#x27;&#x27;</span><br><span class="line">msg_1 = &quot;&quot;&quot;        </span><br><span class="line">	天下只有两种人。比如一串葡萄到手，一种人挑最好的先吃，另一种人把最好的留到最后吃。</span><br><span class="line">    照例第一种人应该乐观，因为他每吃一颗都是吃剩的葡萄里最好的；</span><br><span class="line">    第二种人应该悲观，因为他每吃一颗都是吃剩的葡萄里最坏的。 </span><br><span class="line">    不过事实却适得其反，缘故是第二种人还有希望，第一种人只有回忆,</span><br><span class="line">    &quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="3-使用">(3)使用</h3>
+<ul>
+<li>
+<p>字符串只能进行加 和 乘</p>
+</li>
+<li>
+<p>相加</p>
+```py
+  greeting = "Hello"
+  name = "Dream"
+  message = greeting + ", " + name + "!"
+  
+  print(message)  # Hello, Dream!
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 相乘</span><br><span class="line">- 就是让你的变量值相乘几次</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">divider = &quot;-&quot; * 20</span><br><span class="line"></span><br><span class="line">print(divider) # --------------------</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="（4）索引取值">（4）索引取值</h3>
+<ul>
+<li>字符串属于序列类型，所谓序列，指的是一块可存放多个值的连续内存空间，这些值按一定顺序排列，可通过每个值所在位置的编号（称为索引）访问它们。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://zhaochunze.dream521.site/202311161054334.png"><img src="http://zhaochunze.dream521.site/202311161054334.png" alt="image-20231116105406123"></a></p>
+```
+msg = 'Hello World'
+
+print(len(msg))  # 11
+# 取索引为 0 的位置的元素
+print(msg[0])  # H
+# 取索引位置为 10 的元素 （上面打印的长度为11，但是我们是从 0 开始计数的，所以是 11-1=10）
+print(msg[10])  # d
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- Python 还支持索引值是负数，此类索引是从右向左计数，换句话说，从最后一个元素开始计数，从索引值 -1 开始，如图 所示。</span><br><span class="line"></span><br><span class="line">[![image-20231116105650426](http://zhaochunze.dream521.site/202311161056558.png)](http://zhaochunze.dream521.site/202311161056558.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line">msg = &#x27;Hello World&#x27;</span><br><span class="line"></span><br><span class="line">print(len(msg))  # 11</span><br><span class="line"># 取索引为 -1 的位置的元素</span><br><span class="line">print(msg[-1])  # d</span><br><span class="line"># 取索引位置为 -11 的元素 （上面打印的长度为11，但是我们是从 -1 开始计数的，所以是 -11）</span><br><span class="line">print(msg[-11])  # H</span><br></pre></td></tr></table></figure>
+
+<h3 id="（5）-输出">（5）%输出</h3>
+<ul>
+<li>
+```python
+  name = 'dream'
+  age = 18
+  height = 175.5
+  print('My name is %s;My age is %d;My height is %f' % (name, age))#My name is dream;My age is 18;My height is 175.5
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 在上例中，`%s` 和 `%d` 是占位符，分别表示字符串和整数，而 `(name, age)` 是传入这两个占位符的实际值。</span><br><span class="line">- 占位符类型</span><br><span class="line">  - `%s`：字符串</span><br><span class="line">  - `%d`：整数</span><br><span class="line">  - `%f`：浮点数</span><br><span class="line">  - `%x`：十六进制整数</span><br><span class="line"></span><br><span class="line">### （6）formate 输出</span><br><span class="line"></span><br><span class="line">- 使用 `format` 方法进行格式化输出，通过花括号 `&#123;&#125;` 表示占位符，然后调用 `format` 方法传入实际值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line">name = &quot;Dream&quot;</span><br><span class="line">age = 18</span><br><span class="line"># 格式化输出语法三 ： formate</span><br><span class="line">print(&quot;My name is &#123;&#125;; My age is &#123;&#125;&quot;.format(name, age))</span><br><span class="line"># My name is Dream; My age is 18</span><br></pre></td></tr></table></figure>
+
+</li>
+<li>
+<p>在这个例子中，<code>&#123;&#125;</code> 是占位符，它会按顺序依次填充传入 <code>format</code> 方法的值</p>
+</li>
+</ul>
+<h3 id="（7）f-输出">（7）f + {} 输出</h3>
+<ul>
+<li>使用 f-string（f + <code>&#123;&#125;</code>）进行格式化输出，通过在字符串前加上 <code>f</code> 或 <code>F</code> 前缀，然后在字符串中使用 <code>&#123;&#125;</code> 表示占位符，并在 <code>&#123;&#125;</code> 中直接引用变量。</li>
+</ul>
+```
+name = "Dream"
+age = 18
+# 格式化输出语法二 ： f + {}
+print(f"My name is {name}; My age is {age}")
+# My name is Dream; My age is 18
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （8）字符串的转义</span><br><span class="line"></span><br><span class="line">- 在字符串中，转义字符用于表示一些特殊字符或执行一些特殊操作，常用的转义字符如下：</span><br><span class="line"></span><br><span class="line">| 转义字符 | 说明                                                         |</span><br><span class="line">| :------- | :----------------------------------------------------------- |</span><br><span class="line">| \n       | 换行符，将光标位置移到下一行开头。                           |</span><br><span class="line">| \r       | 回车符，将光标位置移到本行开头。                             |</span><br><span class="line">| \t       | 水平制表符，也即 Tab 键，一般相当于四个空格。                |</span><br><span class="line">| \a       | 蜂鸣器响铃。注意不是喇叭发声，现在的计算机很多都不带蜂鸣器了，所以响铃不一定有效。 |</span><br><span class="line">| \b       | 退格（Backspace），将光标位置移到前一列。                    |</span><br><span class="line">| \        | 反斜线                                                       |</span><br><span class="line">| &#x27;        | 单引号                                                       |</span><br><span class="line">| &quot;        | 双引号                                                       |</span><br><span class="line">| \        | 在字符串行尾的续行符，即一行未完，转到下一行继续写。         |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"># 换行符</span><br><span class="line">print(&quot;Hello\nWorld&quot;)</span><br><span class="line"># Hello</span><br><span class="line"># World</span><br><span class="line"></span><br><span class="line"># 制表符</span><br><span class="line">print(&quot;Name\tAge&quot;)</span><br><span class="line"># Name    Age</span><br><span class="line"></span><br><span class="line"># 反斜线</span><br><span class="line">print(&quot;This is a backslash: \\&quot;)</span><br><span class="line"># This is a backslash: \</span><br><span class="line"></span><br><span class="line"># 单引号</span><br><span class="line">print(&quot;I&#x27;m a programmer.&quot;)</span><br><span class="line"># I&#x27;m a programmer.</span><br><span class="line"></span><br><span class="line"># 双引号</span><br><span class="line">print(&quot;He said, \&quot;Hello.\&quot;&quot;)</span><br><span class="line"># He said, &quot;Hello.&quot;</span><br><span class="line"></span><br><span class="line"># 回车符与退格符</span><br><span class="line">print(&quot;One\rTwo\bThree&quot;)</span><br><span class="line"># Two Three</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-列表类型">[3]列表类型</h2>
+<ul>
+<li>存取多个相同属性的值，并且方便存取</li>
+<li>如果我们需要用一个变量记录多个学生的姓名，用数字类型是无法实现，字符串类型则可以记录下来</li>
+</ul>
+```python
+# 字符串类型
+stu_names=’张三 李四 王五’
+# 列表类型
+names_list = ['张三', '李四', '王五']
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 存的目的是为了取，此时若想取出第二个学生的姓名实现起来相当麻烦</span><br><span class="line">- 而列表类型就是专门用来记录多个同种属性的值（比如同一个班级多个学生的姓名、同一个人的多个爱好等），并且存取都十分方便</span><br><span class="line"></span><br><span class="line">### [1】索引取值</span><br><span class="line"></span><br><span class="line">- 列表类型是用索引来对应值，索引代表的是数据的位置，从0开始计数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 列表类型</span><br><span class="line">names_list = [&#x27;张三&#x27;, &#x27;李四&#x27;, &#x27;王五&#x27;]</span><br><span class="line"></span><br><span class="line"># 索引取值</span><br><span class="line">first_student = names_list[0]</span><br><span class="line">print(first_student)  # 输出结果：张三</span><br><span class="line"></span><br><span class="line">second_student = names_list[1]</span><br><span class="line">print(second_student)  # 输出结果：李四</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）列表嵌套及嵌套取值">（2）列表嵌套及嵌套取值</h3>
+<ul>
+<li>列表可以嵌套在其他列表中，形成二维或多维数组，通过嵌套的方式可以方便地处理复杂的数据结构。</li>
+</ul>
+```
+# 列表嵌套
+class1 = ['张三', '李四', '王五']
+class2 = ['Tom', 'Jerry', 'Spike']
+classes = [class1, class2]
+
+# 嵌套取值
+student_1_class_1 = classes[0][0]
+print(student_1_class_1)  # 输出结果：张三
+
+student_2_class_2 = classes[1][1]
+print(student_2_class_2)  # 输出结果：Jerry
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【四】字典类型</span><br><span class="line"></span><br><span class="line">- 如果我们需要用一个变量记录多个值，但多个值是不同属性的</span><br><span class="line">  - 比如人的姓名、年龄、身高，用列表可以存，但列表是用索引对应值的，而索引不能明确地表示值的含义</span><br><span class="line"></span><br><span class="line">- 这就用到字典类型，字典类型是用key：value形式来存储数据</span><br><span class="line">  - 其中key可以对value有描述性的功能，能够明确的描述详细信息</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line">person_info = &#123;&#x27;name&#x27;: &#x27;Dream&#x27;, &#x27;age&#x27;: 18, &#x27;height&#x27;: 185.3, &#x27;hobby&#x27;: [&quot;动漫&quot;, &quot;小说&quot;]&#125;</span><br><span class="line"></span><br><span class="line">print(person_info)  # &#123;&#x27;name&#x27;: &#x27;Dream&#x27;, &#x27;age&#x27;: 18, &#x27;height&#x27;: 185.3, &#x27;hobby&#x27;: [&#x27;动漫&#x27;, &#x27;小说&#x27;]&#125;</span><br><span class="line"></span><br><span class="line">print(type(person_info))  # &lt;class &#x27;dict&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="【1】字典取值（键取值）">【1】字典取值（键取值）</h3>
+<ul>
+<li>字典不能通过索引取值</li>
+</ul>
+```
+person_info = {'name': 'Dream', 'age': 18, 'height': 185.3, 'hobby': ["动漫", "小说"]}
+
+# 字典取值(键取值)
+name = person_info['name']
+print(name)  # 输出结果：Dream
+
+age = person_info['age']
+print(age)  # 输出结果：18
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）字典嵌套及取值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"># 字典嵌套及取值</span><br><span class="line">student1 = &#123;&#x27;name&#x27;: &#x27;Tom&#x27;, &#x27;age&#x27;: 18&#125;</span><br><span class="line">student2 = &#123;&#x27;name&#x27;: &#x27;Jerry&#x27;, &#x27;age&#x27;: 19&#125;</span><br><span class="line">classroom = &#123;&#x27;student1&#x27;: student1, &#x27;student2&#x27;: student2&#125;</span><br><span class="line"></span><br><span class="line"># 取值</span><br><span class="line">student1_name = classroom[&#x27;student1&#x27;][&#x27;name&#x27;]</span><br><span class="line">print(student1_name)  # 输出结果：Tom</span><br><span class="line"></span><br><span class="line">student2_age = classroom[&#x27;student2&#x27;][&#x27;age&#x27;]</span><br><span class="line">print(student2_age)  # 输出结果：19</span><br></pre></td></tr></table></figure>
+
+```python
+#练习
+
+info={
+     'name':'Dream',
+     'addr':{
+           '国家':'中国',
+           'info':[666,999,{'编号':466722,'hobby':['read','study','music']}]
+     }
+}
+
+#print('my name is {} 我的国家{} 我的编号{} 我的爱好{} 我的幸运数字{}')
+print(f'''
+my name is {info['name']}
+my contry is {info['addr']['国家']}
+我的编号{info['addr']['info'][2]['编号']}
+我的爱好{info['addr']['info'][2]['hobby'][2]}
+我的幸运数字{info['addr']['info'][0]}
+''')
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【五】布尔类型</span><br><span class="line"></span><br><span class="line">- 布尔类型用于表示逻辑值，只有两个取值：True （真的）和 False（假的）。</span><br><span class="line">- 在编程中，布尔类型经常用于控制程序的流程，例如条件判断、循环等。</span><br><span class="line"></span><br><span class="line">- 定义</span><br><span class="line"></span><br><span class="line">  - 布尔类型只有两个取值：True 和 False。在 Python 中，首字母必须大写</span><br><span class="line"></span><br><span class="line">  - 布尔值的命名规范：结果可能是布尔值的情况，我们都采用 **is 开头** 命名</span><br><span class="line"></span><br><span class="line">### 【1】条件判断（判断对错）</span><br><span class="line"></span><br><span class="line">- 布尔类型常常用于条件判断</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">name = &quot;&quot;</span><br><span class="line">name = []</span><br><span class="line">name = &#123;&#125;</span><br><span class="line">print(bool(name))  # False</span><br><span class="line">name = 1</span><br><span class="line">print(bool(name))  # True</span><br></pre></td></tr></table></figure>
+
+<h3 id="【2】在python中典型的真或假的情况">【2】在python中典型的真或假的情况</h3>
+<ul>
+<li>
+<p>什么时候为真</p>
+</li>
+<li>
+<p>数字1为真</p>
+</li>
+<li>
+<p>什么时候为假</p>
+</li>
+<li>
+<p>不存在的情况：空值为假,空的字符串、空的列表、空的字典、空的元组、数字 0</p>
+</li>
+<li>
+<p><strong>非空列表、非空字典、非空集合等：</strong> 如果容器类型中包含元素，被视为真。</p>
+</li>
+<li>
+<p><strong>非空字符串：</strong> 非空字符串被视为真。</p>
+</li>
+<li>
+<p><strong>非零数字：</strong> 除了零之外的任何整数或浮点数都被视为真。</p>
+</li>
+<li>
+<p><strong>布尔值为 True：</strong> <code>True</code> 本身表示真。</p>
+</li>
+<li>
+<p><strong>布尔值为 False：</strong> 显而易见，<code>False</code> 本身就表示假。</p>
+</li>
+<li>
+<p><strong>数字零：</strong> 数字类型中，整数或浮点数中的零被视为假。</p>
+</li>
+<li>
+<p><strong>空字符串：</strong> 空字符串 <code>''</code> 被视为假。</p>
+</li>
+<li>
+<p><strong>空列表、空字典、空集合等：</strong> 对于容器类型，如果它们为空，被视为假。</p>
+</li>
+</ul>
+<h2 id="六-元组类型">[六]元组类型</h2>
+<ul>
+<li>元组（tuple）是一种不可变的序列类型，类似于列表，用于存储多个有序元素。</li>
+<li>元组与列表的主要区别在于元组的元素不能被修改、删除或添加，是不可变的数据类型。</li>
+<li>元组通常用于存储相关联的数据，保持数据的完整性。</li>
+</ul>
+<h3 id="1-定义">[1]定义</h3>
+<ul>
+<li>
+<p>元组通过小括号 <code>()</code> 定义，其中的元素可以是不同的数据类型，用逗号 <code>,</code> 分隔。</p>
+</li>
+<li>
+<p>可以使用索引访问元素</p>
+</li>
+</ul>
+```python
+# 定义元组
+my_tuple = (1, 'hello', 3.14, True)
+
+# 访问元组元素
+first_element = my_tuple[0]
+second_element = my_tuple[1]
+
+print(first_element)  # 1
+print(second_element)  # 'hello'
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### [2]元组的不可变性</span><br><span class="line"></span><br><span class="line">- 由于元组是不可变的，不能对元素进行修改、删除或添加</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">my_tuple = (1, &#x27;hello&#x27;, 3.14, True)</span><br><span class="line"># 尝试修改元组的元素（会报错）</span><br><span class="line">my_tuple[0] = 42  # TypeError: &#x27;tuple&#x27; object does not support item assignment</span><br><span class="line"></span><br><span class="line"># 尝试删除元组的元素（会报错）</span><br><span class="line">del my_tuple[1]  # TypeError: &#x27;tuple&#x27; object doesn&#x27;t support item deletion</span><br><span class="line"></span><br><span class="line"># 尝试添加元素到元组（会报错）</span><br><span class="line">my_tuple.append(&#x27;new_element&#x27;)  # AttributeError: &#x27;tuple&#x27; object has no attribute &#x27;append&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-元组的基本操作">[3]元组的基本操作</h3>
+<ul>
+<li>元组支持基本的操作，如切片、拼接等。</li>
+</ul>
+```python
+my_tuple = (1, 'hello', 3.14, True)
+# 切片操作
+sliced_tuple = my_tuple[1:3]
+print(sliced_tuple)  # ('hello', 3.14)
+
+# 拼接操作
+new_tuple = my_tuple + ('world', False)
+print(new_tuple)  # (1, 'hello', 3.14, True, 'world', False)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### [4]元组解包</span><br><span class="line"></span><br><span class="line">- 元组解包是一种将元组中的元素分配给多个变量的方法。（解压赋值）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">my_tuple = (1, &#x27;hello&#x27;, 3.14, True)</span><br><span class="line"></span><br><span class="line"># 元组解包</span><br><span class="line">a, b, c, d = my_tuple</span><br><span class="line"></span><br><span class="line">print(a)  # 1</span><br><span class="line">print(b)  # &#x27;hello&#x27;</span><br><span class="line">print(c)  # 3.14</span><br><span class="line">print(d)  # True</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>元组是一个灵活且强大的数据类型，适用于许多场景，特别是需要不可变性的情况</li>
+</ul>
+<h2 id="七-集合类型（set）">[七]集合类型（set）</h2>
+<ul>
+<li>集合（set）是一种无序、不重复的数据类型，用于存储多个独立的元素。</li>
+<li>集合通常用于去除重复元素，执行集合运算（如并集、交集、差集等），以及检查成员资格</li>
+</ul>
+<h3 id="【1】定义">【1】定义</h3>
+<ul>
+<li>集合通过大括号 <code>&#123;&#125;</code> 定义，其中的元素是不可重复的，可以包含不同的数据类型。</li>
+</ul>
+```python
+# 集合类型中不能存放的元素类型是 字典和列表 ： 因字典和列表是可变数据类型不能被 hash
+num = {1, 2, 3, 'name', 'dream', 4, 1.11, 5, 5, 5, 5, 5, 5}
+print(num)
+# {1, 2, 3, 4, 1.11, 5, 'dream', 'name'}
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 集合的不可重复性</span><br><span class="line"></span><br><span class="line">  - 集合中的元素是不可重复的，即相同的元素不会重复存储。</span><br><span class="line"></span><br><span class="line">  &#123;% raw %&#125;```</span><br><span class="line">  unique_set = &#123;1, 2, 3, 1, 2, 4, 5&#125;</span><br><span class="line">  print(unique_set)  # &#123;1, 2, 3, 4, 5&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/1.3%E7%BB%88%E7%AB%AF%E8%BD%AF%E4%BB%B6Tabby/" rel="prev" title="1.3终端软件Tabby">
+      <i class="fa fa-chevron-left"></i> 1.3终端软件Tabby
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/1.3OSI%E4%B8%83%E5%B1%82%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D/" rel="next" title="1.3OSI七层协议介绍">
+      1.3OSI七层协议介绍 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">【一】八大基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">【1】数字类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">（1）整数类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">[3]数字类型的应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">[2]字符串类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E5%8D%95%E8%A1%8C%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.2.1.</span> <span class="nav-text">（1）单行字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.2.</span> <span class="nav-text">(3)使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E7%B4%A2%E5%BC%95%E5%8F%96%E5%80%BC"><span class="nav-number">1.2.3.</span> <span class="nav-text">（4）索引取值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%885%EF%BC%89-%E8%BE%93%E5%87%BA"><span class="nav-number">1.2.4.</span> <span class="nav-text">（5）%输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%887%EF%BC%89f-%E8%BE%93%E5%87%BA"><span class="nav-number">1.2.5.</span> <span class="nav-text">（7）f + {} 输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%88%97%E8%A1%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">[3]列表类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%88%97%E8%A1%A8%E5%B5%8C%E5%A5%97%E5%8F%8A%E5%B5%8C%E5%A5%97%E5%8F%96%E5%80%BC"><span class="nav-number">1.3.1.</span> <span class="nav-text">（2）列表嵌套及嵌套取值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%AD%97%E5%85%B8%E5%8F%96%E5%80%BC%EF%BC%88%E9%94%AE%E5%8F%96%E5%80%BC%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">【1】字典取值（键取值）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%9C%A8python%E4%B8%AD%E5%85%B8%E5%9E%8B%E7%9A%84%E7%9C%9F%E6%88%96%E5%81%87%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">1.3.3.</span> <span class="nav-text">【2】在python中典型的真或假的情况</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD-%E5%85%83%E7%BB%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.4.</span> <span class="nav-text">[六]元组类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%9A%E4%B9%89"><span class="nav-number">1.4.1.</span> <span class="nav-text">[1]定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%85%83%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">1.4.2.</span> <span class="nav-text">[3]元组的基本操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83-%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B%EF%BC%88set%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">[七]集合类型（set）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%AE%9A%E4%B9%89"><span class="nav-number">1.5.1.</span> <span class="nav-text">【1】定义</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

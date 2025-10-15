@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="SQL语句介绍 【一】SQL语句的由来 【1】socket通信  任何基于网络通信的应用程序底层用的都是socket  服务端  基于socket通信 收发信息   客户端  基于socket通信 收发信息      【2】SQL语句的由来  为了使 MySQL 不仅能支持 MySQL 自己的客户端应用程序，还能支持其他编程语言 MySQL 采用了 SQL 作为统一的语言来进行数据操作。 这样就可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2.0SQL语句介绍">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/2.0SQL%E8%AF%AD%E5%8F%A5%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="SQL语句介绍 【一】SQL语句的由来 【1】socket通信  任何基于网络通信的应用程序底层用的都是socket  服务端  基于socket通信 收发信息   客户端  基于socket通信 收发信息      【2】SQL语句的由来  为了使 MySQL 不仅能支持 MySQL 自己的客户端应用程序，还能支持其他编程语言 MySQL 采用了 SQL 作为统一的语言来进行数据操作。 这样就可">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527170454446.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527170602367.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527171537164.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527171923357.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527172207726.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528145449547.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527191501404.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527192108535.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527194001569.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527194625368.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527201046163.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527201349621.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527201753976.png">
+<meta property="article:published_time" content="2025-10-15T03:34:54.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.034Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527170454446.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/2.0SQL%E8%AF%AD%E5%8F%A5%E4%BB%8B%E7%BB%8D/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2.0SQL语句介绍 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/2.0SQL%E8%AF%AD%E5%8F%A5%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2.0SQL语句介绍
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:54 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:54+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>SQL语句介绍</h1>
+<h2 id="【一】SQL语句的由来">【一】SQL语句的由来</h2>
+<h3 id="【1】socket通信">【1】socket通信</h3>
+<ul>
+<li>任何基于网络通信的应用程序底层用的都是socket
+<ul>
+<li>服务端
+<ul>
+<li>基于socket通信</li>
+<li>收发信息</li>
+</ul>
+</li>
+<li>客户端
+<ul>
+<li>基于socket通信</li>
+<li>收发信息</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="【2】SQL语句的由来">【2】SQL语句的由来</h3>
+<ul>
+<li>为了使 MySQL 不仅能支持 MySQL 自己的客户端应用程序，还能支持其他编程语言</li>
+<li>MySQL 采用了 SQL 作为统一的语言来进行数据操作。</li>
+<li>这样就可以让服务器端兼容所有语言，因为所有的客户端应用程序都可以通过执行相同的 SQL 语句来进行数据操作。</li>
+</ul>
+<h2 id="【二】库-表-记录-表头-表单">【二】库/表/记录/表头/表单</h2>
+<h3 id="【1】库（Database）">【1】库（Database）</h3>
+<ul>
+<li>库是指在数据库管理系统中用于存储和组织数据的容器。</li>
+<li>它可以视为一个文件夹，用于存放相关的数据表。 数据库中可以包含多个库，每个库可以包含多个表。</li>
+</ul>
+<h3 id="【2】表（Table）">【2】表（Table）</h3>
+<ul>
+<li>表是数据库中的一个基本组成单位，用于存储和展示数据。</li>
+<li>表由行（记录）和列（字段）组成，每一行表示一个记录，每一列表示一个字段。</li>
+<li>表可以看作是一个二维数据结构，类似于电子表格。</li>
+</ul>
+<h3 id="【3】记录（Record）">【3】记录（Record）</h3>
+<ul>
+<li>记录也称作行，是表中的一个数据项或实体。</li>
+<li>每一行都代表了一个完整的数据记录，其中包含了各个字段的具体数值或信息。</li>
+<li>例如，在一个学生信息表中，每一行代表一个学生的具体信息。</li>
+</ul>
+<h3 id="【4】表头（Header）">【4】表头（Header）</h3>
+<ul>
+<li>
+<p>表头是表中的第一行，用于描述每个列字段的含义或名称。</p>
+</li>
+<li>
+<p>表头通常包含了列的标签或标题，通过表头可以了解每个列字段所代表的意义，方便数据的理解和查询。</p>
+</li>
+</ul>
+<h3 id="【5】表单（Form）">【5】表单（Form）</h3>
+<ul>
+<li>表单是一种用来收集和展示数据的界面形式，常见于数据输入和显示的场景中。</li>
+<li>表单通常包含了各种输入字段（例如文本框、下拉列表等）和相关的操作按钮，用户可以通过表单进行数据的录入、编辑和提交等操作。</li>
+<li>表单的数据可以被存储到相应的表中，用于后续的数据处理和分析。</li>
+</ul>
+<h3 id="【6】小结">【6】小结</h3>
+<ul>
+<li>库：
+<ul>
+<li>相当于我们的文件夹</li>
+</ul>
+</li>
+<li>表
+<ul>
+<li>相当于我们的文件</li>
+</ul>
+</li>
+<li>记录
+<ul>
+<li>相当于我们一行一行的数据</li>
+</ul>
+</li>
+<li>表头
+<ul>
+<li>表格的第一行代码</li>
+</ul>
+</li>
+<li>表单
+<ul>
+<li>表头对应的每一条数据</li>
+</ul>
+</li>
+</ul>
+<h1>SQL语句基础</h1>
+<h2 id="【一】引入">【一】引入</h2>
+<ul>
+<li>mysql是关系型数据库</li>
+<li>所以我们要操作mysql就需要SQL（结构化查询语言）</li>
+</ul>
+<h2 id="【二】SQL规范">【二】SQL规范</h2>
+<ul>
+<li>在数据库管理系统中，SQL语句不区分大小写（建议用大写），因为参数区分大小写
+<ul>
+<li>建议命令大写，数据库名、数据表名、字段名统一小写，如数据库名、数据表名、字段名与关键字同名，使用反引号 圈起来，避免冲突。</li>
+</ul>
+</li>
+<li>SQL语句单行或多行书写，默认以英文分号（;）结尾，关键字不能跨多行或简写</li>
+<li>字符串跟日期类型的值都要以 单引号括起来，单词之间需要使用半角的空格隔开</li>
+<li>用空格和缩进来提高SQL语句的可读性。</li>
+</ul>
+<h2 id="【三】注释语法">【三】注释语法</h2>
+<h3 id="【1】单行注释">【1】单行注释</h3>
+<ul>
+<li>用 --空格</li>
+<li>一个#也是注释</li>
+<li>mysql支持单行注释</li>
+</ul>
+```sql
+--这是单行注释
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【2】多行注释</span><br><span class="line"></span><br><span class="line">- /*   */   </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">/*</span><br><span class="line">多行注释</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+
+<h2 id="【四】SQL类型">【四】SQL类型</h2>
+<ul>
+<li>不同的用途，SQL语句通常分3大类型</li>
+</ul>
+<h3 id="【1】数据定义语言（Data-Definition-Language-DDL）">【1】数据定义语言（Data Definition Language,DDL）</h3>
+<ul>
+<li>用于创建或删除数据库以及数据表的语句，DDL包含一下指令：</li>
+<li>CREATE：创建数据库和表等对象</li>
+<li>DROP：删除数据库和表对象</li>
+<li>ALTER:修改数据库和表对象的结构</li>
+</ul>
+<h3 id="【2】数据操纵语言（Data-Manipulation-Language，DML）">【2】数据操纵语言（Data Manipulation Language，DML）</h3>
+<ul>
+<li>用于对数据表中的数据进行增删改查</li>
+<li>SELECT：查询表中的数据</li>
+<li>INSERT:向表中插入新数据</li>
+<li>UPDATE：变更表中的数据</li>
+<li>DELETE:删除表中的数据</li>
+</ul>
+<h3 id="【3】数据控制语言（Data-Control-Language，DCL）">【3】数据控制语言（Data Control Language，DCL）</h3>
+<ul>
+<li>用于对控制数据库的操作权限，包括用户权限以及数据操作权限</li>
+<li>COMMIT：确认对数据库中的数据进行变更</li>
+<li>ROLLBACK:取消对数据库中的数据进行变更</li>
+<li>GRANT：赋予用户操作权限</li>
+<li>REMOVE:取消用户的操作权限</li>
+</ul>
+<h2 id="【五】常用命令">【五】常用命令</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>help</td>
+<td>用作显示帮助信息或特定命令/功能的说明</td>
+</tr>
+<tr>
+<td>status</td>
+<td>查看数据库管理系统的状态信息</td>
+</tr>
+<tr>
+<td>exit</td>
+<td>退出数据库终端连接</td>
+</tr>
+<tr>
+<td>quit</td>
+<td>退出数据库终端连接</td>
+</tr>
+<tr>
+<td>\c</td>
+<td>当打错命令了，想换行重新写时可以在错误命令后面跟着\c回车</td>
+</tr>
+</tbody>
+</table>
+<h1>SQL语句操作MySQL数据库基础</h1>
+<h2 id="【一】针对库的增删改查（文件夹）">【一】针对库的增删改查（文件夹）</h2>
+<h3 id="【1】创建数据库">【1】创建数据库</h3>
+<h4 id="（1）语法">（1）语法</h4>
+<ul>
+<li>在磁盘上创建一个储存数据表的文件夹</li>
+</ul>
+```sql
+create database[if not exists] 数据库名 [character set 编码字符]
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 注意mysql中的编码字符集中utf-8，要换成utf8mb4.SQL语句中的中括号部分表示可选</span><br><span class="line"></span><br><span class="line">#### （2）例子</span><br><span class="line"></span><br><span class="line">- create：创建</span><br><span class="line">- database：数据库</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">create database day01;</span><br></pre></td></tr></table></figure>
+
+```sql
+#设置库的默认编码
+create databases db1 charset='gbk';
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527162547220](D:\pycharm\Temporary_notes\图片\image-20240527162547220.png)</span><br><span class="line"></span><br><span class="line">### 【2】查看数据库</span><br><span class="line"></span><br><span class="line">#### （1）语法</span><br><span class="line"></span><br><span class="line">- show : 显示</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">show databases;  -- 查看所有数据库</span><br><span class="line">show databases like &#x27;%test%&#x27;; -- 查看名字中包含test的数据库</span><br><span class="line">show create database 数据库名; -- 查看指定库</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-例子">(2)例子</h4>
+```sql
+# 查看所有库
+show databases;
+# 查看指定库
+show create database db1;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527162818655](D:\pycharm\Temporary_notes\图片\image-20240527162818655.png)</span><br><span class="line"></span><br><span class="line">![image-20240527162926181](D:\pycharm\Temporary_notes\图片\image-20240527162926181.png)</span><br><span class="line"></span><br><span class="line">### 【3】修改数据库的编码格式</span><br><span class="line"></span><br><span class="line">#### （1）语法</span><br><span class="line"></span><br><span class="line">- character ： 字符</span><br><span class="line">- set : 集</span><br><span class="line">- alter：改动，修改</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql </span><br><span class="line">alter database 数据库名 [character set 编码字符集];</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-例子-2">(2)例子</h4>
+<ul>
+<li>charset ： 字符集</li>
+</ul>
+```sql
+alter database day01 charset='gbk'
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527164011652](D:\pycharm\Temporary_notes\图片\image-20240527164011652.png)</span><br><span class="line"></span><br><span class="line">#### (3)删除库</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">drop database [if exists] 数据库名;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>例子</li>
+</ul>
+```sql
+drop database db2;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【二】针对表的增删改查（文件）</span><br><span class="line"></span><br><span class="line">- 在操作表的时候要指定所在的库</span><br><span class="line"></span><br><span class="line">### 【1】查看当前所在库的名字</span><br><span class="line"></span><br><span class="line">#### （1）语法</span><br><span class="line"></span><br><span class="line">- select ： 选择</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select database(); -- 查看当前使用的数据库</span><br></pre></td></tr></table></figure>
+
+<h4 id="（2）例子">（2）例子</h4>
+```sql
+select database();
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527164306600](D:\pycharm\Temporary_notes\图片\image-20240527164306600.png)</span><br><span class="line"></span><br><span class="line">### 【2】切换到指定库</span><br><span class="line"></span><br><span class="line">#### （1）语法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">use 数据库名;     --切换数据库</span><br></pre></td></tr></table></figure>
+
+<h4 id="（2）例子-2">（2）例子</h4>
+```sql
+use sys;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527164740766](D:\pycharm\Temporary_notes\图片\image-20240527164740766.png)</span><br><span class="line"></span><br><span class="line">- 切换数据库要注意：进入到某一个数据库后没办法再回到之前的状态，但可以通过use在切换回去</span><br><span class="line"></span><br><span class="line">### 【3】创建表</span><br><span class="line"></span><br><span class="line">- 数据表也是有表名的，就像文件有文件名一样</span><br><span class="line">- 数据表中的一条记录就相当于文件的一行内容</span><br><span class="line">- 只是不同的是，数据表需要定义表头，成为表的字段名。</span><br><span class="line"></span><br><span class="line">- 而且因为数据库的存储数据更加科学、严谨，所以需要创建表时要给每个字段设置数据类型以及字段约束（完整性约束条件）</span><br><span class="line"></span><br><span class="line">#### （1）语法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">create table  [if not exists]  表名 (</span><br><span class="line">    字段名1    数据类型[ ( 存储空间 )    字段约束 ],</span><br><span class="line">    字段名2    数据类型[ ( 存储空间 )    字段约束 ],</span><br><span class="line">    字段名3    数据类型[ ( 存储空间 )    字段约束 ],</span><br><span class="line">    .....</span><br><span class="line">    字段名n   数据类型[ ( 存储空间 )    字段约束 ],</span><br><span class="line">    primary key(一个 或 多个 字段名)    -- 注意，最后一段定义语句，不能有英文逗号的出现，否则报错。</span><br><span class="line">) [engine = 存储引擎 character set 字符集];</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>
+```sql
+  create table 表名(字段名 字段类型(长度) 约束条件,字段名 字段类型(长度) 约束条件);
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 注意</span><br><span class="line">  </span><br><span class="line">  - 上面SQL语句中，小括号中的定义字段语句后面必须以英文逗号结尾，而最后一个字段的定义语句不能有英文逗号出现，否则报错。</span><br><span class="line">  </span><br><span class="line">- - 在同一张数据表中，字段名是不能相同，否则报错！</span><br><span class="line"></span><br><span class="line">#### （2）例子</span><br><span class="line"></span><br><span class="line">- 创建表定义字段</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">-- mysql中创建数据表要以 create table `表名`</span><br><span class="line">-- 表的字段信息必须写在 (  )  小括号里面</span><br><span class="line">create table classes (</span><br><span class="line">    -- 建议一行一个字段，id 就是字段名</span><br><span class="line">    -- int 表示设置字段值要以整数的格式保存到硬盘中，</span><br><span class="line">    -- auto_increment表示当前字段值在每次新增数据时自动+1作为值保存</span><br><span class="line">    -- primary key，mysql中叫主键，表示用于区分一个数据表中不同行的数据的唯一性，同时还具备加快查询速度的作用</span><br><span class="line">    -- 注意：auto_increment与primary key 一般是配合使用的，对应的字段名一般也叫id，而且在一个数据表中只有一个字段能使用auto_increment primary key进行设置。</span><br><span class="line">    id int auto_increment primary key,</span><br><span class="line">    -- 字段名：name</span><br><span class="line">    -- varchar(10) 表示当前name这一列可以存储的数据是字符串格式，并且最多只能存10个字符</span><br><span class="line">    name varchar(10),</span><br><span class="line">    -- 字段名：address</span><br><span class="line">    -- varchar(100) 表示adderss这一列可以存储的数据是字符串格式，并且最多只能存100个字符</span><br><span class="line">    address varchar(100),</span><br><span class="line">    -- 字段名：total</span><br><span class="line">    -- int 表示当前total这一列的数据只能是整数，而且一个数据表中，整数的最大范围只能是42亿</span><br><span class="line">    total int</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527170454446.png" alt="image-20240527170454446"></p>
+<ul>
+<li>上面的SQL语句就相当于创建一个表格</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527170602367.png" alt="image-20240527170602367"></p>
+<h4 id="3-练习：创建学生表">(3)练习：创建学生表</h4>
+```sql
+create table student(
+    id int auto_increment,   -- 字段名：id，数据类型：int整型，auto_increment整数自动增长+1
+    name varchar(10),   -- 字段名：name， 数据类型：varchar字符串（长度限制最多10个字符）
+    sex int default 1,  -- 字段名：sex，数据类型：int整型，默认值（default）：1 相当于True 
+    classes int,         -- 字段名：classes， 数据类型：int整型，
+    age int,             -- 字段名：age，数据类型：int整数,
+    description text,  -- 字段名：description，数据类型：text文本
+    primary key (id)  -- 设置主键(id) 每个表必须都有主键，用以区分不同行的数据
+);
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527171009874](D:\pycharm\Temporary_notes\图片\image-20240527171009874.png)</span><br><span class="line"></span><br><span class="line">![image-20240527171020991](D:\pycharm\Temporary_notes\图片\image-20240527171020991.png)</span><br><span class="line"></span><br><span class="line">#### (4)练习：创建课程表</span><br><span class="line"></span><br><span class="line">- 假设现在我们有一个课程表(courses)，</span><br><span class="line">- 里面需要保存课程编号（id），课程名（cource），授课老师（lecturer），教室（address）</span><br><span class="line"></span><br><span class="line">![image-20240527171235002](D:\pycharm\Temporary_notes\图片\image-20240527171235002.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">create table courses (</span><br><span class="line">  id int auto_increment primary key comment &quot;课程编号&quot;,</span><br><span class="line">  course varchar(50) comment &quot;课程名称&quot;,</span><br><span class="line">  lecturer int comment &quot;讲师编号&quot;,</span><br><span class="line">  address int comment &quot;教室编号&quot;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="【4】查看当前库下面的所有表">【4】查看当前库下面的所有表</h3>
+<h4 id="（1）查看所有表">（1）查看所有表</h4>
+<ul>
+<li>列出当前库的所有的数据表</li>
+</ul>
+```sql
+show tables;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527171020991](D:\pycharm\Temporary_notes\图片\image-20240527171020991.png)</span><br><span class="line"></span><br><span class="line">#### (2)查看指定的表</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">show create table 表名;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527171537164.png" alt="image-20240527171537164"></p>
+```sql
+show create table 表名\G;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527171739165](D:\pycharm\Temporary_notes\图片\image-20240527171739165.png)</span><br><span class="line"></span><br><span class="line">#### (3)查看当前表的详细信息</span><br><span class="line"></span><br><span class="line">- 以表格形式列出当前数据表的结构信息</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">describe 表名;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527171923357.png" alt="image-20240527171923357"></p>
+<ul>
+<li>查看当前表的详细信息（缩写）</li>
+</ul>
+```sql
+desc 表名;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527172041242](D:\pycharm\Temporary_notes\图片\image-20240527172041242.png)</span><br><span class="line"></span><br><span class="line">#### （4）查看建表语句</span><br><span class="line"></span><br><span class="line">- 我们当时创建的格式</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">show create table 表名 \G;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527172207726.png" alt="image-20240527172207726"></p>
+<h3 id="【5】修改表">【5】修改表</h3>
+<h4 id="（1）修改表的字段类型">（1）修改表的字段类型</h4>
+<ul>
+<li>modify：修改</li>
+<li>modify（只能改类型不能改名字）</li>
+</ul>
+```sql
+alter table 表名 modify 字段名 字段类型(宽度);
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527172711238](D:\pycharm\Temporary_notes\图片\image-20240527172711238.png)</span><br><span class="line"></span><br><span class="line">- change:变化</span><br><span class="line">- change（名字类型都可）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">alter table 表名 change 旧字段名 字段名 字段类型（宽度）;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528145449547.png" alt="image-20240528145449547"></p>
+<h4 id="2-修改表名字">(2)修改表名字</h4>
+```sql
+alter table 原表名 rename 新表名;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527190751393](D:\pycharm\Temporary_notes\图片\image-20240527190751393.png)</span><br><span class="line"></span><br><span class="line">#### (3)添加字段</span><br><span class="line"></span><br><span class="line">- 默认是尾部追加字段</span><br><span class="line">- alter ： 改动</span><br><span class="line">- table ：表格</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">alter table 表名 add 字段名 字段类型;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527191501404.png" alt="image-20240527191501404"></p>
+<ul>
+<li>指定追加位置</li>
+</ul>
+```sql
+alter table 表名 add 字段名 字段类型 after 原字段名;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527191744360](D:\pycharm\Temporary_notes\图片\image-20240527191744360.png)</span><br><span class="line"></span><br><span class="line">- 指定头部添加字段</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">alter table 表名 add 字段名 字段类型 first;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527192108535.png" alt="image-20240527192108535"></p>
+<h4 id="4-删除字段">(4)删除字段</h4>
+<ul>
+<li>drop ： 下降</li>
+</ul>
+```sql
+alter table 表名 drop 字段名;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527192227663](D:\pycharm\Temporary_notes\图片\image-20240527192227663.png)</span><br><span class="line"></span><br><span class="line">### 【6】删除表</span><br><span class="line"></span><br><span class="line">- 删除表结构并且把数据一并删除</span><br><span class="line"></span><br><span class="line">#### （1）语法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">drop table 表名;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-例子-3">(2)例子</h4>
+```sql
+drop table student01;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527192430257](D:\pycharm\Temporary_notes\图片\image-20240527192430257.png)</span><br><span class="line"></span><br><span class="line">#### (3)提示</span><br><span class="line"></span><br><span class="line">- DROP DATABASE：删除数据库</span><br><span class="line"></span><br><span class="line">- 使用DROP DATABASE命令时要非常谨慎</span><br><span class="line">- 在执行该命令后，MySQL 不会给出任何提示确认信息。</span><br><span class="line"></span><br><span class="line">- DROP DATABASE 删除数据库后，数据库中存储的所有数据表和数据也将一同被删除，而且不能恢复。</span><br><span class="line"></span><br><span class="line">- 最好在删除数据库之前先将数据库进行备份</span><br><span class="line"></span><br><span class="line">### 【7】以绝对路径的形式操作不同的库</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">create table db2.t1(id int);</span><br></pre></td></tr></table></figure>
+
+<h3 id="【8】重置表信息">【8】重置表信息</h3>
+<ul>
+<li>保留数据表结构，但是把数据表存储的数据以及数据表的状态回滚，</li>
+<li>相当于删除原表，并新建一张一模一样的空数据表</li>
+</ul>
+```sql
+TRUNCATE table 表名;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【三】针对数据的增删改查（一行行数据）</span><br><span class="line"></span><br><span class="line">- 操作数据要有明确的数据库下的数据表</span><br><span class="line"></span><br><span class="line">### 【1】数据的增加</span><br><span class="line"></span><br><span class="line">#### （1）语法</span><br><span class="line"></span><br><span class="line">- INSERT...VALUES 语句</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">INSERT [INTO] &lt;表名&gt; [ &lt;列名1&gt; [ , … &lt;列名n&gt;] ] VALUES (值1) [… , (值n) ];</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>
+<p>指定需要插入数据的列名。若向表中的所有列插入数据，则全部的列名均可以省略，直接采用 INSERT&lt;表名&gt;VALUES(…) 即可。</p>
+</li>
+<li>
+<p>INSERT 语句后面的列名称顺序可以不是 表定义时的顺序，即插入数据时，不需要按照表定义的顺序插入，只要保证值的顺序与列字段的顺序相同就可以。</p>
+</li>
+<li>
+<p>使用 INSERT…VALUES 语句可以向表中插入一行数据，也可以插入多行数据；</p>
+<ul>
+<li>插入多行数据</li>
+</ul>
+</li>
+</ul>
+```sql
+INSERT [INTO] <表名> [ <列名1> [ , … <列名n>] ] VALUES (值1…,值n),
+                                                      (值1…,值n),
+                                                      ...
+                                                      (值1…,值n);
+-- 用单条 INSERT 语句处理多个插入要比使用多条 INSERT 语句更快。
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### (2)例子</span><br><span class="line"></span><br><span class="line">- 可以添加多个数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">insert into classes(name) values(&quot;tom&quot;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527194001569.png" alt="image-20240527194001569"></p>
+<ul>
+<li>也可以这样写</li>
+</ul>
+```sql
+INSERT employee (name,gender,birthday,salary,department) VALUES 
+                                                             ("dream",1,"1985-12-12",8000,"教学部"),
+                                                             ("hope",1,"1987-08-08",5000,"保安部"),
+                                                             ("meng",1,"1990-06-06",20000,"销售部");
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 插入单条数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">insert into classes(id,name,total) values(22,&quot;hope&quot;,8);</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527194625368.png" alt="image-20240527194625368"></p>
+<ul>
+<li>插入多条数据</li>
+</ul>
+```sql
+insert into classes(id,name,total) values(64,"asd",52),(84,"zcx",66);
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527195227107](D:\pycharm\Temporary_notes\图片\image-20240527195227107.png)</span><br><span class="line"></span><br><span class="line">- 批量添加信息</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">INSERT INTO emp (name,gender,age,dep,city,salary) VALUES</span><br><span class="line">                (&quot;yuan&quot;,&quot;male&quot;,24,&quot;教学部&quot;,&quot;河北省&quot;,8000),</span><br><span class="line">                (&quot;eric&quot;,&quot;male&quot;,34,&quot;销售部&quot;,&quot;山东省&quot;,8000),</span><br><span class="line">                (&quot;rain&quot;,&quot;male&quot;,28,&quot;销售部&quot;,&quot;山东省&quot;,10000),</span><br><span class="line">                (&quot;alvin&quot;,&quot;female&quot;,22,&quot;教学部&quot;,&quot;北京&quot;,9000),</span><br><span class="line">                (&quot;George&quot;, &quot;male&quot;,24,&quot;教学部&quot;,&quot;河北省&quot;,6000),</span><br><span class="line">                (&quot;danae&quot;, &quot;male&quot;,32,&quot;运营部&quot;,&quot;北京&quot;,12000),</span><br><span class="line">                (&quot;Sera&quot;, &quot;male&quot;,38,&quot;运营部&quot;,&quot;河北省&quot;,7000),</span><br><span class="line">                (&quot;Echo&quot;, &quot;male&quot;,19,&quot;运营部&quot;,&quot;河北省&quot;,9000),</span><br><span class="line">                (&quot;Abel&quot;, &quot;female&quot;,24,&quot;销售部&quot;,&quot;北京&quot;,9000);</span><br></pre></td></tr></table></figure>
+
+<h3 id="【2】数据的查看">【2】数据的查看</h3>
+<ul>
+<li>数据量的时候不建议使用</li>
+<li>数据会冲击服务器导致瘫痪</li>
+</ul>
+<h4 id="（1）语法-2">（1）语法</h4>
+```sql
+SELECT *|field1,filed2 ...   FROM tab_name
+                  					 WHERE 条件
+                  					 GROUP BY field
+                  					 HAVING 筛选
+                  					 ORDER BY field
+                  					 LIMIT 限制条数
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- MySQL在执行sql语句时的执行顺序：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">-- from  where  select  group by  having order by</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-例子-4">(2)例子</h4>
+```sql
+# 查看全部数据
+select * from classes;
+# 根据指定字段查看数据
+select id from classes;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527200318956](D:\pycharm\Temporary_notes\图片\image-20240527200318956.png)</span><br><span class="line"></span><br><span class="line">![image-20240527200240879](D:\pycharm\Temporary_notes\图片\image-20240527200240879.png)</span><br><span class="line"></span><br><span class="line">### 【3】数据的更改</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line"># 以限定调价修改指定字段的数据</span><br><span class="line">update classes set name=&#x27;tom&#x27; where id &gt; 1;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527201046163.png" alt="image-20240527201046163"></p>
+<ul>
+<li>id &gt; 1 : id只要大于1的都会被改为“tom”</li>
+</ul>
+<h3 id="【4】删除数据">【4】删除数据</h3>
+```sql
+# 
+delete from t1;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 删除指定字段的数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">delete from classes where id &gt; 60;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527201349621.png" alt="image-20240527201349621"></p>
+<ul>
+<li>删除指定字段的数据</li>
+</ul>
+```sql
+delete from classes where id=1;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240527201534020](D:\pycharm\Temporary_notes\图片\image-20240527201534020.png)</span><br><span class="line"></span><br><span class="line">- 清空当前表的所有数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">delete from classes;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240527201753976.png" alt="image-20240527201753976"></p>
+<h2 id="【四】总结">【四】总结</h2>
+<ul>
+<li>MySQL–&gt;SQL语句–&gt;创建数据库–&gt;库里面的表–&gt;数据</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/2.0requests%E6%A8%A1%E5%9D%97/" rel="prev" title="2.0requests模块">
+      <i class="fa fa-chevron-left"></i> 2.0requests模块
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/2.0Scrapy%E6%A1%86%E6%9E%B6%E5%AE%89%E8%A3%85/" rel="next" title="2.0Scrapy框架安装">
+      2.0Scrapy框架安装 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">SQL语句介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91SQL%E8%AF%AD%E5%8F%A5%E7%9A%84%E7%94%B1%E6%9D%A5"><span class="nav-number">1.1.</span> <span class="nav-text">【一】SQL语句的由来</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91socket%E9%80%9A%E4%BF%A1"><span class="nav-number">1.1.1.</span> <span class="nav-text">【1】socket通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91SQL%E8%AF%AD%E5%8F%A5%E7%9A%84%E7%94%B1%E6%9D%A5"><span class="nav-number">1.1.2.</span> <span class="nav-text">【2】SQL语句的由来</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E5%BA%93-%E8%A1%A8-%E8%AE%B0%E5%BD%95-%E8%A1%A8%E5%A4%B4-%E8%A1%A8%E5%8D%95"><span class="nav-number">1.2.</span> <span class="nav-text">【二】库&#x2F;表&#x2F;记录&#x2F;表头&#x2F;表单</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%BA%93%EF%BC%88Database%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">【1】库（Database）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E8%A1%A8%EF%BC%88Table%EF%BC%89"><span class="nav-number">1.2.2.</span> <span class="nav-text">【2】表（Table）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E8%AE%B0%E5%BD%95%EF%BC%88Record%EF%BC%89"><span class="nav-number">1.2.3.</span> <span class="nav-text">【3】记录（Record）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E8%A1%A8%E5%A4%B4%EF%BC%88Header%EF%BC%89"><span class="nav-number">1.2.4.</span> <span class="nav-text">【4】表头（Header）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%905%E3%80%91%E8%A1%A8%E5%8D%95%EF%BC%88Form%EF%BC%89"><span class="nav-number">1.2.5.</span> <span class="nav-text">【5】表单（Form）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%906%E3%80%91%E5%B0%8F%E7%BB%93"><span class="nav-number">1.2.6.</span> <span class="nav-text">【6】小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">SQL语句基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E5%BC%95%E5%85%A5"><span class="nav-number">2.1.</span> <span class="nav-text">【一】引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91SQL%E8%A7%84%E8%8C%83"><span class="nav-number">2.2.</span> <span class="nav-text">【二】SQL规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%89%E3%80%91%E6%B3%A8%E9%87%8A%E8%AF%AD%E6%B3%95"><span class="nav-number">2.3.</span> <span class="nav-text">【三】注释语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%8D%95%E8%A1%8C%E6%B3%A8%E9%87%8A"><span class="nav-number">2.3.1.</span> <span class="nav-text">【1】单行注释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%9B%9B%E3%80%91SQL%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.4.</span> <span class="nav-text">【四】SQL类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E8%AF%AD%E8%A8%80%EF%BC%88Data-Definition-Language-DDL%EF%BC%89"><span class="nav-number">2.4.1.</span> <span class="nav-text">【1】数据定义语言（Data Definition Language,DDL）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E6%95%B0%E6%8D%AE%E6%93%8D%E7%BA%B5%E8%AF%AD%E8%A8%80%EF%BC%88Data-Manipulation-Language%EF%BC%8CDML%EF%BC%89"><span class="nav-number">2.4.2.</span> <span class="nav-text">【2】数据操纵语言（Data Manipulation Language，DML）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E6%95%B0%E6%8D%AE%E6%8E%A7%E5%88%B6%E8%AF%AD%E8%A8%80%EF%BC%88Data-Control-Language%EF%BC%8CDCL%EF%BC%89"><span class="nav-number">2.4.3.</span> <span class="nav-text">【3】数据控制语言（Data Control Language，DCL）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%94%E3%80%91%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">2.5.</span> <span class="nav-text">【五】常用命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">SQL语句操作MySQL数据库基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E9%92%88%E5%AF%B9%E5%BA%93%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%EF%BC%88%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">【一】针对库的增删改查（文件夹）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">3.1.1.</span> <span class="nav-text">【1】创建数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E8%AF%AD%E6%B3%95"><span class="nav-number">3.1.1.1.</span> <span class="nav-text">（1）语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BE%8B%E5%AD%90"><span class="nav-number">3.1.1.2.</span> <span class="nav-text">(2)例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BE%8B%E5%AD%90-2"><span class="nav-number">3.1.1.3.</span> <span class="nav-text">(2)例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E4%BE%8B%E5%AD%90"><span class="nav-number">3.1.1.4.</span> <span class="nav-text">（2）例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E4%BE%8B%E5%AD%90-2"><span class="nav-number">3.1.1.5.</span> <span class="nav-text">（2）例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%BB%83%E4%B9%A0%EF%BC%9A%E5%88%9B%E5%BB%BA%E5%AD%A6%E7%94%9F%E8%A1%A8"><span class="nav-number">3.1.1.6.</span> <span class="nav-text">(3)练习：创建学生表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E5%BA%93%E4%B8%8B%E9%9D%A2%E7%9A%84%E6%89%80%E6%9C%89%E8%A1%A8"><span class="nav-number">3.1.2.</span> <span class="nav-text">【4】查看当前库下面的所有表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E8%A1%A8"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">（1）查看所有表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%905%E3%80%91%E4%BF%AE%E6%94%B9%E8%A1%A8"><span class="nav-number">3.1.3.</span> <span class="nav-text">【5】修改表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E4%BF%AE%E6%94%B9%E8%A1%A8%E7%9A%84%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.1.3.1.</span> <span class="nav-text">（1）修改表的字段类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%90%8D%E5%AD%97"><span class="nav-number">3.1.3.2.</span> <span class="nav-text">(2)修改表名字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%88%A0%E9%99%A4%E5%AD%97%E6%AE%B5"><span class="nav-number">3.1.3.3.</span> <span class="nav-text">(4)删除字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BE%8B%E5%AD%90-3"><span class="nav-number">3.1.3.4.</span> <span class="nav-text">(2)例子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%908%E3%80%91%E9%87%8D%E7%BD%AE%E8%A1%A8%E4%BF%A1%E6%81%AF"><span class="nav-number">3.1.4.</span> <span class="nav-text">【8】重置表信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E6%95%B0%E6%8D%AE%E7%9A%84%E6%9F%A5%E7%9C%8B"><span class="nav-number">3.1.5.</span> <span class="nav-text">【2】数据的查看</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E8%AF%AD%E6%B3%95-2"><span class="nav-number">3.1.5.1.</span> <span class="nav-text">（1）语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BE%8B%E5%AD%90-4"><span class="nav-number">3.1.5.2.</span> <span class="nav-text">(2)例子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="nav-number">3.1.6.</span> <span class="nav-text">【4】删除数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%9B%9B%E3%80%91%E6%80%BB%E7%BB%93"><span class="nav-number">3.2.</span> <span class="nav-text">【四】总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

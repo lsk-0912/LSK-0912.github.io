@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="requests模块 【一】Requests模块初始 【1】介绍   Requests 是⽤Python语⾔编写，基于 urllib ，采⽤Apache2 Licensed开源协议的 HTTP 库   它⽐ urllib 更加⽅便，可以节约我们⼤量的⼯作，完全满⾜HTTP测试需求   它用于发送HTTP请求   【2】来源   requests模块最初由Kenneth Reitz于2010年创建并">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2.0requests模块">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/2.0requests%E6%A8%A1%E5%9D%97/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="requests模块 【一】Requests模块初始 【1】介绍   Requests 是⽤Python语⾔编写，基于 urllib ，采⽤Apache2 Licensed开源协议的 HTTP 库   它⽐ urllib 更加⽅便，可以节约我们⼤量的⼯作，完全满⾜HTTP测试需求   它用于发送HTTP请求   【2】来源   requests模块最初由Kenneth Reitz于2010年创建并">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-15T03:34:54.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.011Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/2.0requests%E6%A8%A1%E5%9D%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2.0requests模块 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/2.0requests%E6%A8%A1%E5%9D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2.0requests模块
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:54 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:54+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>requests模块</h1>
+<h2 id="【一】Requests模块初始">【一】Requests模块初始</h2>
+<h3 id="【1】介绍">【1】介绍</h3>
+<ul>
+<li>
+<p>Requests 是⽤Python语⾔编写，基于 urllib ，采⽤Apache2 Licensed开源协议的 HTTP 库</p>
+</li>
+<li>
+<p>它⽐ urllib 更加⽅便，可以节约我们⼤量的⼯作，完全满⾜HTTP测试需求</p>
+</li>
+<li>
+<p>它用于发送HTTP请求</p>
+</li>
+</ul>
+<h3 id="【2】来源">【2】来源</h3>
+<ul>
+<li>
+<p>requests模块最初由Kenneth Reitz于2010年创建并开源，旨在提供一种更人性化的方式来发送HTTP请求</p>
+</li>
+<li>
+<p>可以模拟发送HTTP请求</p>
+</li>
+</ul>
+<h3 id="【3】浏览器开发者模式：介绍">【3】浏览器开发者模式：介绍</h3>
+<ul>
+<li>
+<p>元素 就是渲染在当前页面上的所有源代码</p>
+</li>
+<li>
+<p>控制台 可以控制当前页面文档对象和浏览器对象</p>
+</li>
+<li>
+<p>源代码 你自己的项目源码结构</p>
+</li>
+<li>
+<p>网络 捕获到所有发送和接收到的数据包 从网络入手</p>
+</li>
+<li>
+<p>应用 存储当前页面中的部分数据 Cookie / session</p>
+</li>
+</ul>
+<h2 id="【二】初步使用">【二】初步使用</h2>
+<h3 id="【1】安装requests模块">【1】安装requests模块</h3>
+```shell
+pip install requests
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【2】引入模块</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import requests</span><br></pre></td></tr></table></figure>
+
+<h3 id="【3】爬虫的流程">【3】爬虫的流程</h3>
+```python
+import requests
+# 目标地址
+target_url = "https://www.baidu.com/?tn=15007414_13_dg"
+# # 发送请求，获取响应
+response = requests.get(target_url)
+# 你的到信息是乱码，原因是编码格式不一致 utf-8/gbk
+# 将响应编码，解析
+response.encoding = 'utf8'
+# 解析响应内容，相应内容格式是txt格式
+page_text = response.text
+print(page_text)
+# 得到的是一堆数据
+# 存储数据
+# 你可以打开你的html文件夹，然后再页面中打开，它就是一个百度的页面
+with open('baidu.html', 'w', encoding="utf-8") as f:
+    f.write(page_text)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【三】requests模块之请求</span><br><span class="line"></span><br><span class="line">### 【1】请求发送</span><br><span class="line"></span><br><span class="line">- 默认是发送到get请求，数据不超过1k只内</span><br><span class="line">- 发送的get请求</span><br><span class="line">  - 浏览器地址栏回车</span><br><span class="line">  - 点击别人给你的链接</span><br><span class="line">  - form 表单</span><br><span class="line">  - Ajax</span><br><span class="line">  - import requests</span><br><span class="line"></span><br><span class="line">### 【2】携带请求头数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 携带请求头数据</span><br><span class="line">import requests</span><br><span class="line">target_url = &quot;https://www.baidu.com/s?wd=%E5%91%A8%E6%98%9F%E9%A9%B0&quot;</span><br><span class="line">response = requests.get(url=target_url)</span><br><span class="line">response.encoding = &quot;utf8&quot;</span><br><span class="line">print(response.text)</span><br><span class="line"># 得到的数据 不是你想要的，看着好像被拦截了，原因是你和浏览器不像</span><br></pre></td></tr></table></figure>
+
+<h4 id="（1）浏览器标识UA">（1）浏览器标识UA</h4>
+```python
+# 我们的开发者模式中网络里第一个文件夹，里面有一个User-Agent:
+# User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 Edg/123.0.0.0
+
+# User-Agent 浏览器标识 ： 能够让服务器识别出来我是正常的浏览器
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### （2）requests模块的UA</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import requests</span><br><span class="line"></span><br><span class="line"># # requests模块的UA</span><br><span class="line">target_url = &quot;https://www.baidu.com/?tn=15007414_13_dg&quot;</span><br><span class="line">response = requests.get(url=target_url)</span><br><span class="line">print(response.request.headers)</span><br><span class="line"># &#123;&#x27;User-Agent&#x27;: &#x27;python-requests/2.31.0&#x27;, &#x27;Accept-Encoding&#x27;: &#x27;gzip, deflate&#x27;, &#x27;Accept&#x27;: &#x27;*/*&#x27;, &#x27;Connection&#x27;: &#x27;keep-alive&#x27;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="（3）携带浏览器标识获取浏览器数据-UA">（3）携带浏览器标识获取浏览器数据 --UA</h4>
+```python
+# 携带浏览器标识获取到数据
+import requests
+target_url = "https://www.baidu.com/"
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36 SLBrowser/9.0.3.5211 SLBChan/105"
+}
+response = requests.get(url=target_url, headers=headers)
+response.encoding = "utf8"
+page_text = response.text
+print(page_text)
+# 得到弄想要的数据
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### （4）随机UA模块介绍</span><br><span class="line"></span><br><span class="line">- 安装随机生成请求头的模块</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````python</span><br><span class="line">pip install fake-useragent</span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 引入模块</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">form fake_useragent impot UserAgent</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用</li>
+</ul>
+```python
+import requests
+from fake_useragent import UserAgent
+
+target_url = "https://www.baidu.com/"
+headers = {
+    'User-Agent': UserAgent().random
+}
+response = requests.get(url=target_url, headers=headers)
+response.encoding = "utf8"
+page_text = response.text
+print(page_text)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### （5）小结</span><br><span class="line"></span><br><span class="line">- 常见的HTTP头部字段包括</span><br><span class="line"></span><br><span class="line">  - Host：指定目标浏览器的域名和IP地址</span><br><span class="line">  - User-Agent：标识发送请求的用户代理（通常是浏览器）</span><br><span class="line">    - PC浏览器</span><br><span class="line">    - APP浏览器</span><br><span class="line">    - Linux</span><br><span class="line">    - macOS</span><br><span class="line">  - Accept：指定客户端能够接收的客户类型</span><br><span class="line"></span><br><span class="line">  - Content-Type：指定请求或响应中实体的媒体类型</span><br><span class="line">  - Content-Length：指定实体主体的长度（以字节为单位）</span><br><span class="line">  - Cookie：向服务器传递保存在客户端的cookie信息</span><br><span class="line">  - Cache-Control：指定如何缓存和重新验证响应</span><br><span class="line">  - Referer：大型网站通常都会根据该参数判断请求的来源</span><br><span class="line"></span><br><span class="line">### 【3】携带请求体参数,及对参数进行编码</span><br><span class="line"></span><br><span class="line">#### （1）方式一</span><br><span class="line"></span><br><span class="line">- 直接复制目标网址发送请求</span><br><span class="line">- 需要安全验证</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import requests</span><br><span class="line">from fake_useragent import UserAgent</span><br><span class="line">target_url = &quot;https://www.baidu.com/s?wd=%E5%91%A8%E6%98%9F%E9%A9%B0&quot;</span><br><span class="line">headers = &#123;</span><br><span class="line">    &quot;User-Agent&quot;: UserAgent().random</span><br><span class="line">&#125;</span><br><span class="line">response = requests.get(url=target_url, headers=headers)</span><br><span class="line">response.encoding = &quot;utf8&quot;</span><br><span class="line">print(response.text)</span><br><span class="line"># 不可访问，需要安全验证</span><br></pre></td></tr></table></figure>
+
+<h4 id="（2）方式二">（2）方式二</h4>
+<ul>
+<li>主动编码</li>
+<li>在浏览器中会默认将所有些参数进行URL编码—&gt;urlencode</li>
+</ul>
+```python
+# 编码练习
+from urllib.parse import urlencode
+
+keyword = {
+    "wd": "周星驰"
+}
+url_encode = urlencode(keyword, encoding="utf8")
+print(url_encode)
+# 得到的是浏览器后面跟着的后面的乱码信息
+# wd=%E5%91%A8%E6%98%9F%E9%A9%B0
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 引入编码格式的方法</span><br><span class="line">from urllib.parse import urlencode</span><br><span class="line"></span><br><span class="line">import requests</span><br><span class="line">from fake_useragent import UserAgent</span><br><span class="line"></span><br><span class="line">keyword = &#123;</span><br><span class="line">    &quot;wd&quot;: &quot;周星驰&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">target_url = &quot;https://www.baidu.com/&quot; + &quot;?&quot; + urlencode(keyword, encoding=&quot;utf8&quot;)</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line">    &quot;User-Agent&quot;: UserAgent().random</span><br><span class="line">&#125;</span><br><span class="line">response = requests.get(url=target_url, headers=headers)</span><br><span class="line">response.encoding = &quot;utf8&quot;</span><br><span class="line">page_text = response.text</span><br><span class="line">print(page_text)</span><br></pre></td></tr></table></figure>
+
+<h4 id="（3）requests自动编码">（3）requests自动编码</h4>
+<ul>
+<li>requests模块自带一个帮助我们转码的参数:<code>params</code></li>
+</ul>
+```python
+import requests
+from fake_useragent import UserAgent
+
+keyword = {
+    "wd": "周星驰"
+}
+
+target_url = "https://www.baidu.com/"
+
+headers = {
+    "User-Agent": UserAgent().random,
+}
+response = requests.get(url=target_url, headers=headers, params=keyword)
+response.encoding = "utf8"
+page_text = response.text
+print(page_text)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【4】请求中携带Cookie</span><br><span class="line"></span><br><span class="line">- Cookie的作用就是为了保存登入信息</span><br><span class="line"></span><br><span class="line">#### （1）方式一</span><br><span class="line"></span><br><span class="line">- 直接携带在请求中</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import requests</span><br><span class="line">from fake_useragent import UserAgent</span><br><span class="line"></span><br><span class="line"># 登入京东，搜索零食的网址</span><br><span class="line">target_url = &quot;https://search.jd.com/Search?keyword=%E9%9B%B6%E9%A3%9F&quot;</span><br><span class="line">headers = &#123;</span><br><span class="line">    &quot;User-Agent&quot;: UserAgent().random,</span><br><span class="line">    &quot;Cookie&quot;:&quot;开发者模式，网络的第一个文件夹，把Cookie复制出来&quot;</span><br><span class="line">&#125;</span><br><span class="line">response = requests.get(url=target_url, headers=headers)</span><br><span class="line">response.encoding = &quot;utf8&quot;</span><br><span class="line">page_text = response.text</span><br><span class="line">print(response.url)</span><br><span class="line"># 得到的是京东的登入地址，不登入进不去，需要加Cookie</span><br><span class="line"># 所以我们打开开发者模式，网络的第一个文件夹，把Cookie复制出来</span><br><span class="line">print(page_text)</span><br><span class="line"># 把Cookie加上就拿打了，京东搜索零食的页面信息</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）方式二-2">（2）方式二</h3>
+<ul>
+<li>携带在请求参数中</li>
+<li>将cookie进行切分，做成键值对的形式</li>
+</ul>
+```python
+import requests
+from fake_useragent import UserAgent
+
+target_url = "https://search.jd.com/Search?keyword=%E9%9B%B6%E9%A3%9F"
+
+
+# 对cookie参数进行切分
+def split_cookie(cookies):
+    first_data_start = cookies.split(";")
+    # for item in first_data_start:
+    #     for k, v in item.split("="):
+    #         data_dict = {k: v}
+    # return data_dict
+    return {key: value for key, value in [item.split("=") for item in first_data_start]}
+
+
+headers = {
+    # 在请求头中携带Cookie
+    'User-Agent': UserAgent().random
+}
+
+old_cookie = "开发者模式，网络的第一个文件夹，把Cookie复制出来"
+cookie = split_cookie(cookies=old_cookie)
+
+print(cookie)
+# 得的的是一个字典
+
+response = requests.get(url=target_url, headers=headers, cookies=cookie)
+response.encoding = "utf8"
+page_text = response.text
+print(page_text)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【四】requests模块之POST请求</span><br><span class="line"></span><br><span class="line">- post和get请求是一样的，携带请求体数据不一样</span><br><span class="line">- GET 请求 携带在URL地址中 / 带在requests参数中</span><br><span class="line">- POST 请求 携带在requests参数中</span><br><span class="line"></span><br><span class="line">### 【1】目标网址</span><br><span class="line"></span><br><span class="line">- `http://www.aa7a.cn/user.php`</span><br><span class="line"></span><br><span class="line">### 【2】分析</span><br><span class="line"></span><br><span class="line">- 我们输入信息，点击登入</span><br><span class="line"></span><br><span class="line">- 通过抓包发现，请求方式是POST，目标网址是`http://www.aa7a.cn/user.php`</span><br><span class="line">- 还有你输入的信息</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">username: 2870005304@qq.com</span><br><span class="line">password: lsk2lmy13</span><br><span class="line">captcha: jzf5</span><br><span class="line">remember: 1</span><br><span class="line">ref: http://www.aa7a.cn</span><br><span class="line">act: act_login</span><br></pre></td></tr></table></figure>
+
+<h3 id="【3】模拟请求">【3】模拟请求</h3>
+```python
+from fake_useragent import UserAgent
+import requests
+
+target_url = "http://www.aa7a.cn/user.php"
+headers = {
+    "User-Agent": UserAgent().random
+}
+data = {
+    "username": "2870005304@qq.com",
+    "password": "123456",
+    "captcha": "skcc",
+    "remember": "1",
+    "ref": "http://www.aa7a.cn",
+    "act": "act_login",
+}
+
+# 携带请求体参数有两种方式
+response = requests.post(
+    target_url, headers=headers, 
+    # 方式一
+    # data=data,
+    # 方式二
+    json=data
+)
+print(response.text)
+```
+
+<h4 id="（1）json-data">（1）json=data</h4>
+<ul>
+<li>当使用requests.post方式时</li>
+<li>将data参数设置为一个字典，并同时将headers参数中的Content-Type设置为application/json，那么data字典将被自动序列化为JSON字符串，并作为请求的主体数据发送</li>
+<li>这样的请求方式常用于与服务器交互时，需要使用JSON格式进行数据传输的情况</li>
+</ul>
+<h4 id="（2）data-data">（2）data=data</h4>
+<ul>
+<li>
+<p>默认情况下，requests.post方法将会将data参数以application/x-www-form-urlencoded格式进行编码</p>
+</li>
+<li>
+<p>这种编码方式将字典数据转换成键值对的形式，并使用&amp;符号进行连接</p>
+</li>
+<li>
+<p>然后，将生成的字符串作为请求的主体数据发送到服务器，这种方式常用于处理表单提交的场景</p>
+</li>
+</ul>
+<h3 id="【4】可能会遇到的情况">【4】可能会遇到的情况</h3>
+<ul>
+<li>先对目标网址发起请求</li>
+<li>需要拿到cookie</li>
+<li>再对网址发起请求，获取到标识token</li>
+<li>只有携带你的token和你的用户名密码才能登入成功</li>
+</ul>
+<p>遇到这种问题，我们需要抓包分析</p>
+<ul>
+<li>分析cookie和token再那个包里面</li>
+<li>对目标包进行抓取</li>
+<li>获取到cookie和token</li>
+<li>拿着cookie和token去登入</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/2.0HTML%E5%9F%BA%E7%A1%80%EF%BC%8CHTML%E6%A0%87%E7%AD%BE/" rel="prev" title="2.0HTML基础，HTML标签">
+      <i class="fa fa-chevron-left"></i> 2.0HTML基础，HTML标签
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/2.0SQL%E8%AF%AD%E5%8F%A5%E4%BB%8B%E7%BB%8D/" rel="next" title="2.0SQL语句介绍">
+      2.0SQL语句介绍 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">requests模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91Requests%E6%A8%A1%E5%9D%97%E5%88%9D%E5%A7%8B"><span class="nav-number">1.1.</span> <span class="nav-text">【一】Requests模块初始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.1.</span> <span class="nav-text">【1】介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E6%9D%A5%E6%BA%90"><span class="nav-number">1.1.2.</span> <span class="nav-text">【2】来源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E6%B5%8F%E8%A7%88%E5%99%A8%E5%BC%80%E5%8F%91%E8%80%85%E6%A8%A1%E5%BC%8F%EF%BC%9A%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.3.</span> <span class="nav-text">【3】浏览器开发者模式：介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E5%88%9D%E6%AD%A5%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">【二】初步使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%AE%89%E8%A3%85requests%E6%A8%A1%E5%9D%97"><span class="nav-number">1.2.1.</span> <span class="nav-text">【1】安装requests模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E7%88%AC%E8%99%AB%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.2.</span> <span class="nav-text">【3】爬虫的流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A0%87%E8%AF%86UA"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">（1）浏览器标识UA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E6%90%BA%E5%B8%A6%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A0%87%E8%AF%86%E8%8E%B7%E5%8F%96%E6%B5%8F%E8%A7%88%E5%99%A8%E6%95%B0%E6%8D%AE-UA"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">（3）携带浏览器标识获取浏览器数据 --UA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E6%96%B9%E5%BC%8F%E4%BA%8C"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">（2）方式二</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89requests%E8%87%AA%E5%8A%A8%E7%BC%96%E7%A0%81"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">（3）requests自动编码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E6%96%B9%E5%BC%8F%E4%BA%8C-2"><span class="nav-number">1.2.3.</span> <span class="nav-text">（2）方式二</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E6%A8%A1%E6%8B%9F%E8%AF%B7%E6%B1%82"><span class="nav-number">1.2.4.</span> <span class="nav-text">【3】模拟请求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89json-data"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">（1）json&#x3D;data</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89data-data"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">（2）data&#x3D;data</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E5%8F%AF%E8%83%BD%E4%BC%9A%E9%81%87%E5%88%B0%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">1.2.5.</span> <span class="nav-text">【4】可能会遇到的情况</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

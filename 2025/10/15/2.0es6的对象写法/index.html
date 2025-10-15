@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="【0】定时器使用 选图片案例   定时器的使用   &#96;&#96;&#96;&#96;python     定时器（过多长时间，就会执行一次）：setInterval(箭头函数,时间)         Math.floor(Math.random() * this.img_urls.length)     &#96;&#96;&#96;&#96;&#96;&#96;&#96;&#96;      html             Title         &lt;img :src&#x3D;&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2.0es6的对象写法">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/2.0es6%E7%9A%84%E5%AF%B9%E8%B1%A1%E5%86%99%E6%B3%95/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="【0】定时器使用 选图片案例   定时器的使用   &#96;&#96;&#96;&#96;python     定时器（过多长时间，就会执行一次）：setInterval(箭头函数,时间)         Math.floor(Math.random() * this.img_urls.length)     &#96;&#96;&#96;&#96;&#96;&#96;&#96;&#96;      html             Title         &lt;img :src&#x3D;&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240808163340693.png">
+<meta property="article:published_time" content="2025-10-15T03:34:54.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.005Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240808163340693.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/2.0es6%E7%9A%84%E5%AF%B9%E8%B1%A1%E5%86%99%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2.0es6的对象写法 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/2.0es6%E7%9A%84%E5%AF%B9%E8%B1%A1%E5%86%99%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2.0es6的对象写法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:54 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:54+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>【0】定时器使用</h1>
+<p>选图片案例</p>
+<ul>
+<li>
+<p>定时器的使用</p>
+<ul>
+<li>
+````python
+    定时器（过多长时间，就会执行一次）：setInterval(箭头函数,时间)
+        Math.floor(Math.random() * this.img_urls.length)
+    ````````
+
+</li>
+</ul>
+</li>
+</ul>
+<p>html</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./js2/vue.js"></script>
+</head>
+<body>
+<div class="app">
+<pre><code>&lt;img :src=&quot;img&quot; alt=&quot;&quot; height=&quot;400px&quot; width=&quot;400px&quot;&gt;
+&lt;br&gt;
+&lt;button @click=&quot;handleClick&quot;&gt;开始/停止&lt;/button&gt;
+</code></pre>
+</div>
+</body>
+<script>
+    new Vue({
+        el: '.app',
+        data: {
+            img: './img/1.jpg',
+            img_urls: ['./img/1.jpg', './img/2.jpg', './img/3.jpg'],
+            t: null
+        },
+        methods: {
+            handleClick: function () {
+                if (this.t) {
+                    // 如果有值，说明定时器开启了  ,清空定时器
+                    clearInterval(this.t)
+                    this.t = null
+                } else {
+                    // 如果没有值，定时器没开启
+                    // 定时器--每个1s干xx
+                    var _this = this
+                    this.t = setInterval(function () {
+                        //修改img的值
+                        // 根据索引取值_this.img_urls[数字]
+                        //  Math.random() * arr.length     Math.random() 生成 0---1之间数字 *数组长度---》0--数组长度之间的数字---》Math.floor 向下取整
+                        _this.img = _this.img_urls[Math.floor(Math.random() * _this.img_urls.length)]
+                    }, 1000)
+                }
+<pre><code>        &#125;
+    &#125;
+&#125;)
+</code></pre>
+</script>
+</html>
+````
+
+
+
+
+
+# 【一】es6的对象写法
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">html</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  // 我们最原始的对象定义</span><br><span class="line">    // var person=&#123;</span><br><span class="line">    //     &quot;name&quot;:&quot;lsk&quot;,</span><br><span class="line">    //     &quot;age&quot;:19</span><br><span class="line">    // &#125;</span><br><span class="line"></span><br><span class="line">  // 对象定义，省略key的&#x27;&#x27;</span><br><span class="line">  // var person=&#123;</span><br><span class="line">  //    name:&quot;lsk&quot;,</span><br><span class="line">  //    age:19</span><br><span class="line">  // &#125;</span><br><span class="line">  // console.log(person.name)</span><br><span class="line">    // 得到的是lsk</span><br><span class="line"></span><br><span class="line">  // 对象定义，省略key的&#x27;&#x27;,定义一个变量叫做name,age</span><br><span class="line">  // 对象</span><br><span class="line">  // var name=&quot;liu&quot;</span><br><span class="line">  // var age=18</span><br><span class="line">  // var wife=&#123;name:&quot;lmy&quot;,hobby:&quot;唱歌&quot;&#125;</span><br><span class="line">  // var person=&#123;</span><br><span class="line">  //     name,</span><br><span class="line">  //     age,</span><br><span class="line">  //     wife,</span><br><span class="line">  // &#125;</span><br><span class="line">  //</span><br><span class="line">  // // 改不改变取决于他是什么类型，</span><br><span class="line">  // // 没改变，说明它是不可变数据类型：值变内存地址也变</span><br><span class="line">  // name=&quot;li&quot;</span><br><span class="line">  // // 改变了，说明它是可变数据类型：值变内存地址不变</span><br><span class="line">  // wife.age=&quot;90&quot;</span><br><span class="line">  // console.log(person)</span><br><span class="line">  // console.log(person.name)</span><br><span class="line">    // 得到的是li，但是person里面的name还是liu，没有被改</span><br><span class="line">  // console.log(person.wife.age)</span><br><span class="line">    // 得到的是90，person里面的wife里面的age也被改了</span><br><span class="line"></span><br><span class="line">  // 对象中放函数</span><br><span class="line">  // var name=&quot;liu&quot;</span><br><span class="line">  // var age=18</span><br><span class="line">  // var wife=&#123;name:&quot;lmy&quot;,hobby:&quot;唱歌&quot;&#125;</span><br><span class="line">  // var showName=function()&#123;</span><br><span class="line">  //     console.log(this.name)</span><br><span class="line">  // &#125;</span><br><span class="line">  // var person=&#123;</span><br><span class="line">  //     name,</span><br><span class="line">  //     age,</span><br><span class="line">  //     wife,</span><br><span class="line">  //     showName,</span><br><span class="line">  // &#125;</span><br><span class="line">    </span><br><span class="line">  // person.showName()</span><br><span class="line">   // 得到的是刘</span><br><span class="line"></span><br><span class="line">  // 最终写法</span><br><span class="line">  var name=&quot;liu&quot;</span><br><span class="line">  var age=18</span><br><span class="line">  var wife=&#123;name:&quot;lmy&quot;,hobby:&quot;唱歌&quot;&#125;</span><br><span class="line">  // person这是个对象</span><br><span class="line">  var person=&#123;</span><br><span class="line">      name,</span><br><span class="line">      age,</span><br><span class="line">      wife,</span><br><span class="line">      showName()&#123;</span><br><span class="line">          console.log(this.name)</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  person.showName()</span><br><span class="line">   // 得到的是liu</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【二】class和style</span><br><span class="line"></span><br><span class="line">## 【1】前言</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python</p>
+<h1>class 和 style 都是属性</h1>
+<pre><code>- 我们学习的属性方法----使用属性指令  ：
+</code></pre>
+````
+
+
+
+## 【2】练习
+
+- 你要往对象中添加属性的时候,必须使用下面的方法
+
+- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">javascript</span><br><span class="line">  Vue.set(one.对象，属性名，属性值)</span><br><span class="line">  &#123;% raw %&#125;`````````html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;./js2/vue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .red&#123;</span><br><span class="line">            background-color: palegreen;</span><br><span class="line">        &#125;</span><br><span class="line">        .height&#123;</span><br><span class="line">            height: 100px;</span><br><span class="line">        &#125;</span><br><span class="line">        .width&#123;</span><br><span class="line">            width: 100px;</span><br><span class="line">        &#125;</span><br><span class="line">        .font &#123;</span><br><span class="line">            font-size: 60px;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">&lt;h1&gt;</span><br><span class="line">    class的使用-字符串-数组-对象</span><br><span class="line">&lt;/h1&gt;</span><br><span class="line">    &lt;div :class=&quot;class_str&quot;&gt;</span><br><span class="line">        666</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &lt;div :class=&quot;class_list&quot;&gt;</span><br><span class="line">        888</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &lt;div :class=&quot;class_dict&quot;&gt;</span><br><span class="line">&lt;!--        这里有一个坑，对象类型修改属性，必须在一开始就要放进去，后期再放的，无响应--&gt;</span><br><span class="line">&lt;!--        我们使用Vue.set(one.对象，属性名，属性值)--&gt;</span><br><span class="line">&lt;!--        比如：Vue.set(one.class_obj,&#x27;font&#x27;,true)--&gt;</span><br><span class="line">        加油，老铁！！</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &lt;div :style=&quot;style_str&quot;&gt;</span><br><span class="line">        加油，铁铁</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &lt;div :style=&quot;style_list&quot;&gt;</span><br><span class="line">        加油，铁铁</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &lt;div :style=&quot;style_dict&quot;&gt;</span><br><span class="line">        加油，铁铁</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var one = new Vue(&#123;</span><br><span class="line">        el:&quot;#app&quot;,</span><br><span class="line">        data:&#123;</span><br><span class="line">            class_str:&quot;red&quot;,</span><br><span class="line">            class_list:[&quot;red&quot;,&quot;height&quot;,&quot;width&quot;],</span><br><span class="line">            class_dict:&#123;red:true,height:true&#125;,</span><br><span class="line"></span><br><span class="line">            style_str:&quot;font-size: 66px;background-color: palegreen;&quot;,</span><br><span class="line">            style_list:[&#123;&quot;font-size&quot;:&quot;66px&quot;&#125;,&#123;&quot;background-color&quot;:&quot;palegreen&quot;&#125;],</span><br><span class="line">            // 这里有一个坑，字典里面的属性名字，中间有的有一个-，这个我们可以写成驼峰体</span><br><span class="line">            // 就比如：font-size我们写成：fontSize</span><br><span class="line">            style_dict:&#123;fontSize:&quot;66px&quot;&#125;</span><br><span class="line">            // 想添加属性的话使用，Vue.set(one.对象，属性名，属性值)，指定格式</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">`````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【三】条件渲染</span><br><span class="line"></span><br><span class="line">## 【1】条件</span><br><span class="line"></span><br><span class="line">|   指令    |      释义       |</span><br><span class="line">| :-------: | :-------------: |</span><br><span class="line">|   v-if    |   相当于： if   |</span><br><span class="line">|  v-else   |  相当于：else   |</span><br><span class="line">| v-else-if | 相当于：else if |</span><br><span class="line"></span><br><span class="line">## 【2】使用</span><br><span class="line"></span><br><span class="line">- 就是我们使用的if,else语句</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;./js2/vue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div class=&quot;app&quot;&gt;</span><br><span class="line">    &lt;!--比如我们需要判断一个人的智商--&gt;</span><br><span class="line">    &lt;h1&gt;</span><br><span class="line">        小明的智商是：---&#123;&#123;intelligent&#125;&#125;--这个智商属于&gt;&gt;</span><br><span class="line">        &lt;span v-if=&quot;intelligent&gt;=120&amp;&amp;intelligent&lt;=150&quot;&gt;聪明&lt;/span&gt;</span><br><span class="line">        &lt;span v-else-if=&quot;intelligent&gt;=100&amp;&amp;intelligent&lt;120&quot;&gt;优秀&lt;/span&gt;</span><br><span class="line">        &lt;span v-else-if=&quot;intelligent&gt;=80&amp;&amp;intelligent&lt;100&quot;&gt;平庸&lt;/span&gt;</span><br><span class="line">        &lt;span v-else&gt;弱智&lt;/span&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/h1&gt;</span><br><span class="line">    &lt;!--   你v-if语句和v-else-if--&gt;</span><br><span class="line"></span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        el: &quot;.app&quot;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            &quot;intelligent&quot;: 80,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240808163340693.png" alt="image-20240808163340693"></p>
+<h1>【四】列表渲染语句</h1>
+<h2 id="【1】语法">【1】语法</h2>
+```python
+# v-if,v-else-if
+# v-for
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】使用`v-for`</span><br><span class="line"></span><br><span class="line">- 简单的v-for循环购物车</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;./bootstrap05/min.css&quot;&gt;</span><br><span class="line">    &lt;script src=&quot;./bootstrap05/min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;./js2/vue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div class=&quot;app&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;container-fluid&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;row&quot;&gt;</span><br><span class="line">            &lt;div class=&quot;col-md-6 offset-md-3&quot;&gt;</span><br><span class="line">                &lt;table class=&quot;table table-success table-striped&quot;&gt;</span><br><span class="line">                    &lt;thead&gt;</span><br><span class="line">                    &lt;tr&gt;</span><br><span class="line">                        &lt;th scope=&quot;col&quot;&gt;#&lt;/th&gt;</span><br><span class="line">                        &lt;th scope=&quot;col&quot;&gt;商品名字&lt;/th&gt;</span><br><span class="line">                        &lt;th scope=&quot;col&quot;&gt;商品价格&lt;/th&gt;</span><br><span class="line">                        &lt;th scope=&quot;col&quot;&gt;商品库存&lt;/th&gt;</span><br><span class="line">                    &lt;/tr&gt;</span><br><span class="line">                    &lt;/thead&gt;</span><br><span class="line">                    &lt;tbody class=&quot;table-group-divider&quot;&gt;</span><br><span class="line"></span><br><span class="line">                    &lt;tr v-for=&quot;shopping in shopping_car&quot;&gt;</span><br><span class="line">                        &lt;th scope=&quot;row&quot;&gt;&#123;&#123;shopping.id&#125;&#125;&lt;/th&gt;</span><br><span class="line">                        &lt;td&gt;&#123;&#123;shopping.name&#125;&#125;&lt;/td&gt;</span><br><span class="line">                        &lt;td&gt;&#123;&#123;shopping.price&#125;&#125;&lt;/td&gt;</span><br><span class="line">                        &lt;td&gt;&#123;&#123;shopping.count&#125;&#125;&lt;/td&gt;</span><br><span class="line">                    &lt;/tr&gt;</span><br><span class="line">                    &lt;/tbody&gt;</span><br><span class="line">                &lt;/table&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        el: &#x27;.app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            shopping_car: [</span><br><span class="line">                &#123;id: 1001, name: &#x27;特斯拉&#x27;, price: &#x27;29999元&#x27;, count: 1&#125;,</span><br><span class="line">                &#123;id: 1002, name: &#x27;苹果笔记本&#x27;, price: &#x27;59999元&#x27;, count: 3&#125;,</span><br><span class="line">                &#123;id: 1003, name: &#x27;脸盆&#x27;, price: &#x27;9元&#x27;, count: 8&#125;,</span><br><span class="line">                &#123;id: 1004, name: &#x27;钢笔&#x27;, price: &#x27;19元&#x27;, count: 10&#125;,</span><br><span class="line">            ]</span><br><span class="line"></span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>添加@click的点击事件的购物车案例</li>
+</ul>
+````html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./bootstrap05/min.css">
+    <script src="./bootstrap05/min.js"></script>
+    <script src="./js2/vue.js"></script>
+</head>
+<body>
+<div class="app">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h1 class="text-center">购物车</h1>
+                <div class="text-center">
+                    <button class="btn btn-danger" @click="handleLoad">清空购物车</button>
+                    <button class="btn btn-success text-center" @click="handleClear">加载购物出</button>
+                </div>
+                <hr>
+                <table class="table table-success table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">商品名字</th>
+                        <th scope="col">商品价格</th>
+                        <th scope="col">商品库存</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+
+                    <tr v-for="shopping in shopping_car">
+                        <th scope="row">{{shopping.id}}</th>
+                        <td>{{shopping.name}}</td>
+                        <td>{{shopping.price}}</td>
+                        <td>{{shopping.count}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+<script>
+    var vm = new Vue({
+        el: '.app',
+        data: {
+            shopping_car: [
+            ]
+
+        },
+        methods: {
+            handleLoad() {
+                this.shopping_car = []
+            },
+            handleClear() {
+                this.shopping_car = [
+                    {id: 1001, name: '特斯拉', price: '29999元', count: 1},
+                    {id: 1002, name: '苹果笔记本', price: '59999元', count: 3},
+                    {id: 1003, name: '脸盆', price: '9元', count: 8},
+                    {id: 1004, name: '钢笔', price: '19元', count: 10},
+                ]
+            }
+        }
+    })
+
+</script>
+</html>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【3】使用`v-for循环变量类型`</span><br><span class="line"></span><br><span class="line">- 可以循环`数字、字符串、数组、对象`</span><br><span class="line">- 循环的时候可以拿到索引值，但是对象得到的是键值</span><br><span class="line">- **注意！**在`Vue`中：</span><br><span class="line">  - **数组**的`index`和`value`是**反的**</span><br><span class="line">  - **对象**的`key`和`value`也是**反的**</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;./bootstrap05/min.css&quot;&gt;</span><br><span class="line">    &lt;script src=&quot;./bootstrap05/min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;./js2/vue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;container-fluid&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;row&quot;&gt;</span><br><span class="line">            &lt;div class=&quot;col-md-6 offset-md-3&quot;&gt;</span><br><span class="line">                &lt;h1 class=&quot;text-center&quot;&gt;for循环数字&lt;/h1&gt;</span><br><span class="line">                &lt;hr&gt;</span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &lt;!--第一个是值，第二个是索引值--&gt;</span><br><span class="line">                &lt;li v-for=&quot;(item,index) in for_number&quot;&gt;</span><br><span class="line">                    循环得到的数字是&#123;&#123;item&#125;&#125;--得到的位置是&#123;&#123;index&#125;&#125;</span><br><span class="line">                &lt;/li&gt;</span><br><span class="line">            &lt;/ul&gt;</span><br><span class="line">                &lt;hr&gt;</span><br><span class="line">                &lt;h1 class=&quot;text-center&quot;&gt;for循环字符串&lt;/h1&gt;</span><br><span class="line">                &lt;hr&gt;</span><br><span class="line">                &lt;ul&gt;</span><br><span class="line">                    &lt;!--第一个是值，第二个是索引值--&gt;</span><br><span class="line">                    &lt;li v-for=&quot;(item,index) in for_str&quot;&gt;</span><br><span class="line">                        循环得到的字母是&#123;&#123;item&#125;&#125;--得到的位置是&#123;&#123;index&#125;&#125;</span><br><span class="line">                    &lt;/li&gt;</span><br><span class="line">                &lt;/ul&gt;</span><br><span class="line">                &lt;hr&gt;</span><br><span class="line">                &lt;h1 class=&quot;text-center&quot;&gt;for循环字符串&lt;/h1&gt;</span><br><span class="line">                &lt;hr&gt;</span><br><span class="line">                &lt;ul&gt;</span><br><span class="line">                    &lt;!--第一个是值，第二个是索引值--&gt;</span><br><span class="line">                    &lt;li v-for=&quot;(item,index) in for_list&quot;&gt;</span><br><span class="line">                        循环得到的姓是&#123;&#123;item&#125;&#125;--得到的位置是&#123;&#123;index&#125;&#125;</span><br><span class="line">                    &lt;/li&gt;</span><br><span class="line">                &lt;/ul&gt;</span><br><span class="line">                &lt;hr&gt;</span><br><span class="line">                &lt;h1 class=&quot;text-center&quot;&gt;for循环对象&lt;/h1&gt;</span><br><span class="line">                &lt;hr&gt;</span><br><span class="line">                &lt;ul&gt;</span><br><span class="line">                    &lt;!--第一个是值，第二个是索引值--&gt;</span><br><span class="line">                    &lt;li v-for=&quot;(value,key) in for_dict&quot;&gt;</span><br><span class="line">&lt;!--                        这里的键值是反者取的--&gt;</span><br><span class="line">                        循环得到的键是&#123;&#123;key&#125;&#125;--得到值是&#123;&#123;value&#125;&#125;</span><br><span class="line">                    &lt;/li&gt;</span><br><span class="line">                &lt;/ul&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        el:&quot;#app&quot;,</span><br><span class="line">        data:&#123;</span><br><span class="line">            for_number:10,</span><br><span class="line">            for_str:&quot;my name is lsk!&quot;,</span><br><span class="line">            for_list:[&quot;li&quot;,&quot;wang&quot;,&quot;liu&quot;,&quot;fang&quot;],</span><br><span class="line">            for_dict:&#123;name:&quot;lsk&quot;,age:22,price:110&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【4】Key值的解释</span><br><span class="line"></span><br><span class="line">- vue中使用的是虚拟DOM，会和原生的DOM进行比较，然后进行数据的更新，**提高数据的刷新速度**（虚拟DOM用了diff算法）</span><br><span class="line">  - 在`v-for`循环`数组、对象`时，建议在`控件/组件/标签`写1个`key属性`，属性值唯一</span><br><span class="line">  - 页面更新之后，会加速DOM的替换（渲染）</span><br><span class="line">  - `:key=&quot;变量&quot;`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````html</span><br><span class="line">&lt;li v-for=&quot;(item,index) in for_list&quot; :item=&quot;item&quot;&gt;</span><br><span class="line">    # item：一定要唯一</span><br></pre></td></tr></table></figure>
+
+<h2 id="【5】数组、对象的检测和更新">【5】数组、对象的检测和更新</h2>
+<ul>
+<li>
+<p>对数组来说</p>
+<ul>
+<li>
+<p>可以检测到变动的数组操作：</p>
+<ul>
+<li>push：最后位置添加</li>
+<li>pop：最后位置删除</li>
+<li>shift：第一个位置删除</li>
+<li>unshift：第一个位置添加</li>
+<li>splice：切片</li>
+<li>sort：排序</li>
+<li>reverse：反转</li>
+</ul>
+</li>
+<li>
+<p>检测不到变动的数组操作：</p>
+<ul>
+<li>filter()：过滤</li>
+<li>concat()：追加另一个数组</li>
+<li>slice()：</li>
+<li>map()：</li>
+</ul>
+</li>
+<li>
+<p>对于对象</p>
+<ul>
+<li>对象.属性=值
+<ul>
+<li>如果属性之前就不才能在，也不会有响应，你想添加新的话用：<code>Vue.set(one.对象，属性名，属性值)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+```python
+# 数组或对象的值改了，但是页面没有变化
+	-使用Vue.set(变量.对象，对象key，对象value)
+    // 方法1：通过 索引值 更新数组（数据会更新，但是页面不会发生改变）
+    vm.arrayList[0]
+    "Alan"
+    vm.arrayList[0]='Darker'
+    "Darker"
+
+    // 方法2：通过 Vue.set(对象, index/key, value) 更新数组（数据会更新，页面也会发生改变）
+    Vue.set(vm.arrayList, 0, 'Darker')
+    
+    
+    
+    -使用Vue.set(变量.数组，数组的下标，数组value)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【五】事件处理</span><br><span class="line"></span><br><span class="line">|  事件  |               释义                |</span><br><span class="line">| :----: | :-------------------------------: |</span><br><span class="line">| input  | 当输入框进行输入的时候 触发的事件 |</span><br><span class="line">| change |  当元素的值发生改变时 触发的事件  |</span><br><span class="line">|  blur  | 当输入框失去焦点的时候 触发的事件 |</span><br><span class="line">| focus  |        获得焦点，触发事件         |</span><br><span class="line"></span><br><span class="line">## 【1】事件的简单使用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;`````html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;./js2/vue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;h1&gt;input事件处理&lt;/h1&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; @input=&quot;handleInput&quot; v-model=&quot;input1&quot;&gt;---&#123;&#123;input1&#125;&#125;</span><br><span class="line"></span><br><span class="line">    &lt;h1&gt;change事件处理&lt;/h1&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; @change=&quot;handleChange&quot; v-model=&quot;change1&quot;&gt;----&#123;&#123;change1&#125;&#125;</span><br><span class="line"></span><br><span class="line">    &lt;h1&gt;blur事件处理&lt;/h1&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; @blur=&quot;handleBlur&quot; v-model=&quot;blur1&quot;&gt;----&#123;&#123;blur1&#125;&#125;</span><br><span class="line"></span><br><span class="line">    &lt;h1&gt;focus事件处理&lt;/h1&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; @focus=&quot;handleFocus&quot; v-model=&quot;focus1&quot;&gt;----&#123;&#123;focus1&#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        el: &quot;#app&quot;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            input1: &quot;&quot;,</span><br><span class="line">            change1: &quot;&quot;,</span><br><span class="line">            blur1: &quot;&quot;,</span><br><span class="line">            focus1: &quot;&quot;,</span><br><span class="line"></span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">            handleInput(event) &#123;</span><br><span class="line">                console.log(event)</span><br><span class="line">                // 得到你输入的内容</span><br><span class="line">                console.log(event.data)</span><br><span class="line">            &#125;,</span><br><span class="line">            handleChange() &#123;</span><br><span class="line">                alert(&quot;发生变化了！！&quot;)</span><br><span class="line">            &#125;,</span><br><span class="line">            handleBlur() &#123;</span><br><span class="line">                alert(&quot;失去焦点了！！&quot;)</span><br><span class="line">            &#125;,</span><br><span class="line">            handleFocus() &#123;</span><br><span class="line">                console.log(&quot;获得焦点了！！&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">`````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】过滤的案例</span><br><span class="line"></span><br><span class="line">- 就相当于，你在浏览器输入信息，然后下面会出现你输入的提示信息</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;`````html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;./js2/vue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">&lt;!--    绑定事件--&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; v-model=&quot;myText&quot; @focus=&quot;handleFocus&quot; @input=&quot;handleInput&quot; @blur=&quot;handleBlur&quot;&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">        &lt;li v-for=&quot;letter in letter_list&quot;&gt;</span><br><span class="line">            &#123;&#123;letter&#125;&#125;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var vm=new Vue(&#123;</span><br><span class="line">        el:&quot;#app&quot;,</span><br><span class="line">        data:&#123;</span><br><span class="line">            // 所有数据</span><br><span class="line">            data_list: [&#x27;a&#x27;, &#x27;at&#x27;, &#x27;atom&#x27;, &#x27;atommon&#x27;, &#x27;be&#x27;, &#x27;beyond&#x27;, &#x27;cs&#x27;, &#x27;csrf&#x27;],</span><br><span class="line">            // 一开始是空的，输入什么的到什么</span><br><span class="line">            myText:&quot;&quot;,</span><br><span class="line">            // 输入的什么就展示什么，负责收集符合的资料</span><br><span class="line">            letter_list:[]</span><br><span class="line">        &#125;,</span><br><span class="line">        methods:&#123;</span><br><span class="line">            // 判断一下是不是有没有输入数据</span><br><span class="line">            handleFocus:function()&#123;</span><br><span class="line">                if (this.myText.length==0)&#123;</span><br><span class="line">                    this.letter_list= [&#x27;a&#x27;, &#x27;at&#x27;, &#x27;atom&#x27;, &#x27;atommon&#x27;, &#x27;be&#x27;, &#x27;beyond&#x27;, &#x27;cs&#x27;, &#x27;csrf&#x27;]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            handleInput:function()&#123;</span><br><span class="line">                // 这里用到一个过滤</span><br><span class="line">                // 箭头函数最新版</span><br><span class="line">                this.letter_list=this.data_list.filter(item=&gt;&#123;</span><br><span class="line">                    // 判断你输入的信息在不在data_list里面</span><br><span class="line">                    // letter是你否循环的值</span><br><span class="line">                    if (item.indexOf(this.myText)&gt;=0)&#123;</span><br><span class="line">                            return true</span><br><span class="line">                    &#125;else&#123;</span><br><span class="line">                            return false</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;,</span><br><span class="line">            handleBlur()&#123;</span><br><span class="line">                if (this.myText==&quot;&quot;)&#123;</span><br><span class="line">                    this.letter_list=[]</span><br><span class="line">                &#125;else&#123;</span><br><span class="line">                    return true</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">	</span><br><span class="line">    // indexOf：判断包不包含的语法，返会索引值</span><br><span class="line">    // var l=&quot;lsk&quot;</span><br><span class="line">    // var s=&quot;my name is lsk&quot;</span><br><span class="line">    // // 加上判断：s.indexOf(l)  要是包含的话返回的是索引值</span><br><span class="line">    // if(s.indexOf(l))&#123;</span><br><span class="line">    //     // 得到的索引值是：11</span><br><span class="line">    //     console.log(s.indexOf(l))</span><br><span class="line">    //     console.log(&quot;包含&quot;)</span><br><span class="line">    // &#125;else&#123;</span><br><span class="line">    //     console.log(&quot;不包含&quot;)</span><br><span class="line">    // &#125;</span><br><span class="line"></span><br><span class="line">	// 过滤：filter的用法</span><br><span class="line">    // var l =[&#x27;a&#x27;, &#x27;at&#x27;, &#x27;atom&#x27;, &#x27;atommon&#x27;, &#x27;be&#x27;, &#x27;beyond&#x27;, &#x27;cs&#x27;, &#x27;csrf&#x27;]</span><br><span class="line">    // // 这是固定的语法</span><br><span class="line">    // // item你顾虑的时候每次都要传个值</span><br><span class="line">    // l.filter(function (item)&#123;</span><br><span class="line">    //     // 挨个全部打印</span><br><span class="line">    //     console.log(item)</span><br><span class="line">    //</span><br><span class="line">    // &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">`````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【六】数据的双向绑定</span><br><span class="line"></span><br><span class="line">## 【1】`v-model`的使用</span><br><span class="line"></span><br><span class="line">- `v-model`只针对于input标签</span><br><span class="line">  - 双向数据绑定：变量变，页面变；页面变，变量变</span><br><span class="line">  - 如果使用属性指令绑定value，只有单项绑定</span><br><span class="line">    - 意思就是：数据对象中的数据变了input标签的内容会改变，手动修改了 input 元素的值，数据对象中的数据不会改变</span><br><span class="line"></span><br><span class="line">## 【2】使用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;./js2/vue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;p&gt;用户名：&lt;input type=&quot;text&quot; v-model=&quot;username&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;密码：&lt;input type=&quot;password&quot; v-model=&quot;password&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;&lt;input type=&quot;submit&quot; @click=&quot;handleSubmit&quot; value=&quot;点击登录&quot;&gt;&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var vm=new Vue(&#123;</span><br><span class="line">        el:&quot;#app&quot;,</span><br><span class="line">        data:&#123;</span><br><span class="line">            username:&quot;&quot;,</span><br><span class="line">            password:&quot;&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        methods:&#123;</span><br><span class="line">            handleSubmit()&#123;</span><br><span class="line">                // 你输入什么，点击登录都会得到</span><br><span class="line">                console.log(this.username)</span><br><span class="line">                console.log(this.password)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![03 v-model](D:\pycharm\Temporary_notes\图片\03 v-model-17231262028982.gif)</span><br><span class="line"></span><br><span class="line"># 【七】es6的箭头函数语法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;箭头函数&lt;/title&gt;</span><br><span class="line"></span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    // 1 正常函数</span><br><span class="line">    // function demo01()&#123;</span><br><span class="line">    //     console.log(&#x27;demo01&#x27;)</span><br><span class="line">    // &#125;</span><br><span class="line">    // demo01()</span><br><span class="line"></span><br><span class="line">    // 2 匿名函数</span><br><span class="line">    // var f=function ()&#123;</span><br><span class="line">    //     console.log(&#x27;我是匿名函数&#x27;)</span><br><span class="line">    // &#125;</span><br><span class="line">    // f()</span><br><span class="line"></span><br><span class="line">    //3 由于在函数内部，使用this,会有指向问题--》暂时先不研究--》 箭头函数没有自己的this--&gt;在箭头函数中使用this 指的是上一层的this</span><br><span class="line">    // 无参数无返回值   function 去掉，() 和 函数体之间加个 =&gt;</span><br><span class="line">    // var f = () =&gt; &#123;</span><br><span class="line">    //     console.log(&#x27;我是匿名函数&#x27;)</span><br><span class="line">    // &#125;</span><br><span class="line">    // f()</span><br><span class="line"></span><br><span class="line">    // 4 有一个参数无返回值</span><br><span class="line">    // var f = (a) =&gt; &#123;</span><br><span class="line">    //     console.log(&#x27;我是匿名函数&#x27;+ a)</span><br><span class="line">    // &#125;</span><br><span class="line">    // f(&#x27;lqz&#x27;)</span><br><span class="line"></span><br><span class="line">    // 4.1 有一个参数  简写成</span><br><span class="line">    // var f = a =&gt; &#123;</span><br><span class="line">    //     console.log(&#x27;我是匿名函数&#x27; + a)</span><br><span class="line">    // &#125;</span><br><span class="line">    // f(&#x27;lqz&#x27;)</span><br><span class="line"></span><br><span class="line">    // 5 多个个参数无返回值,不能简写</span><br><span class="line">    // var f = (a, b) =&gt; &#123;</span><br><span class="line">    //     console.log(b + a)</span><br><span class="line">    // &#125;</span><br><span class="line">    // f(10, 11)</span><br><span class="line"></span><br><span class="line">    // 6  多个参数，有返回值</span><br><span class="line">    // var f = (a, b) =&gt; &#123;</span><br><span class="line">    //     return a + b</span><br><span class="line">    // &#125;</span><br><span class="line">    // console.log(f(10, 11))</span><br><span class="line"></span><br><span class="line">    // 6.1  多个参数，有返回值,可以简写，函数体内容很简单</span><br><span class="line">    // var f = (a, b) =&gt; a + b</span><br><span class="line">    // console.log(f(10, 11))</span><br><span class="line"></span><br><span class="line">    // 7  一个参数，有返回值</span><br><span class="line">    //  var f = a =&gt; a + 10</span><br><span class="line">     var f = (a) =&gt; &#123;</span><br><span class="line">         return a + 10</span><br><span class="line">     &#125;</span><br><span class="line">     console.log(f(10))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【八】js 的各种循环</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;./bootstrap05/jq.mim.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    // 方式一：基于索引的循环</span><br><span class="line">    // for (let i=0; i&lt;10;i++)&#123;</span><br><span class="line">    //     console.log(i)</span><br><span class="line">    //     // 打印出了0-9</span><br><span class="line">    // &#125;</span><br><span class="line"></span><br><span class="line">    // 方式二：for in 基于索引的循环</span><br><span class="line">    // var number_list=[1,2,3,4,5,6,7]</span><br><span class="line">    // for (const number in number_list)&#123;</span><br><span class="line">    //     console.log(number)</span><br><span class="line">    //     // 得到每个数据的索引</span><br><span class="line">    // &#125;</span><br><span class="line"></span><br><span class="line">    // 方式三：for of 循环：循环出来的是值，不是索引</span><br><span class="line">    // var number_list=[1,2,3,4,5,6,7]</span><br><span class="line">    // for (const number of number_list)&#123;</span><br><span class="line">    //     console.log(number)</span><br><span class="line">    //     // 得到每个数据的索引</span><br><span class="line">    // &#125;</span><br><span class="line"></span><br><span class="line">    // 方式四：forEach循环：得到的是索引值</span><br><span class="line">    // var number_list=[1,2,3,4,5,6,7]</span><br><span class="line">    // number_list.forEach(item=&gt;&#123;</span><br><span class="line">    //     console.log(item)</span><br><span class="line">    // &#125;)</span><br><span class="line"></span><br><span class="line">    // 方式五：对象循环</span><br><span class="line">    // var obj=&#123;name:&quot;lsk&quot;,age:18&#125;</span><br><span class="line">    // for (const item in obj)&#123;</span><br><span class="line">    //     // 得到键值</span><br><span class="line">    //     console.log(item)</span><br><span class="line">    //     // 得到值</span><br><span class="line">    //     console.log(obj[item])</span><br><span class="line">    // &#125;</span><br><span class="line"></span><br><span class="line">    // 方式六：基于jq的循环--》必须引入jquery，没有不能用</span><br><span class="line">    // 对象</span><br><span class="line">    // var obj=&#123;name:&quot;lsk&quot;,age:18&#125;</span><br><span class="line">    // $.each(obj,(key,value)=&gt;&#123;</span><br><span class="line">    //     console.log(key)</span><br><span class="line">    //     console.log(value)</span><br><span class="line">    // &#125;)</span><br><span class="line">    // 列表</span><br><span class="line">    var number_list=[1,2,3,4,5,6,7]</span><br><span class="line">    $.each(number_list,(index,value)=&gt;&#123;</span><br><span class="line">        console.log(index)</span><br><span class="line">        console.log(value)</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【九】事件之修饰符，按键修饰符</span><br><span class="line"></span><br><span class="line">## 【1】事件修饰符</span><br><span class="line"></span><br><span class="line">- 修饰click事件</span><br><span class="line"></span><br><span class="line">| 事件修饰符 |                           释义                           |</span><br><span class="line">| :--------: | :------------------------------------------------------: |</span><br><span class="line">|   .stop    | 只处理自己的事件，父控件冒泡的事件不处理（阻止事件冒泡） |</span><br><span class="line">|   .self    |         只处理自己的事件，子控件冒泡的事件不处理         |</span><br><span class="line">|  .prevent  |                     阻止a链接的跳转                      |</span><br><span class="line">|   .once    |            事件只会触发一次（适用于抽奖页面）            |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;./js2/vue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">&lt;!--    阻止事件冒泡的意思是--&gt;</span><br><span class="line">    &lt;h1&gt;事件修饰符-stop阻止事件冒泡&lt;/h1&gt;</span><br><span class="line"></span><br><span class="line">    &lt;div style=&quot;height: 300px;background-color: pink&quot; @click=&quot;handelDiv&quot;&gt;</span><br><span class="line">&lt;!--        @click.stop只处理自己的点击事件其他时间的不处理，就好比，你不加stop时，点击了这个按钮，会触发两次弹框，因为你你在div的标签内--&gt;</span><br><span class="line">        &lt;button @click.stop=&quot;handleButton&quot;&gt;点我-弹出美女&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;h1&gt;事件修饰符-self只处理自己的事件&lt;/h1&gt;</span><br><span class="line">    &lt;!--        @click.self这个是只处理自己的事件，子标签不处理--&gt;</span><br><span class="line">    &lt;div style=&quot;height: 300px;background-color: pink&quot; @click.self=&quot;handelDiv&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;button @click=&quot;handleButton&quot;&gt;点我-弹出美女&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;h1&gt;事件修饰符-prevent阻止a跳转&lt;/h1&gt;</span><br><span class="line">&lt;!--    @click.prevent你原来的地址要跳转到百度，但是他给你阻止了，重新跳转到了博客园--&gt;</span><br><span class="line">    &lt;a href=&quot;http://www.baidu.com&quot; @click.prevent=&quot;handleA&quot;&gt;点我看美女&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">    &lt;h1&gt;事件修饰符-once只执行一次&lt;/h1&gt;</span><br><span class="line">&lt;!--    你进入到web中，无论你点击这个按钮多少次，它只会触发一次，你刷新页面才可以，再点击一次，再刷新...--&gt;</span><br><span class="line">    &lt;button @click.once=&quot;handleSeckill&quot;&gt;秒杀&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;&#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">            handleButton() &#123;</span><br><span class="line">                alert(&#x27;美女&#x27;)</span><br><span class="line">            &#125;,</span><br><span class="line">            handelDiv() &#123;</span><br><span class="line">                alert(&#x27;div被点了&#x27;)</span><br><span class="line">            &#125;,</span><br><span class="line">            handleA() &#123;</span><br><span class="line">                console.log(&#x27;a被点了&#x27;)</span><br><span class="line">                location.href = &#x27;http://www.cnblogs.com&#x27;</span><br><span class="line">            &#125;,</span><br><span class="line">            handleSeckill() &#123;</span><br><span class="line">                console.log(&#x27;秒到了&#x27;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![冒泡动图](D:\pycharm\Temporary_notes\图片\冒泡动图.gif)</span><br><span class="line"></span><br><span class="line">![02 click1](D:\pycharm\Temporary_notes\图片\02 click1-17231249176461.gif)</span><br><span class="line"></span><br><span class="line">![02 prevent](D:\pycharm\Temporary_notes\图片\02 prevent.gif)</span><br><span class="line"></span><br><span class="line">## 【2】按键修饰符</span><br><span class="line"></span><br><span class="line">- &#123;% raw %&#125;```python</span><br><span class="line">  &lt;!--@keyup.键盘上的按键：按下弹起来才会触发--&gt;</span><br><span class="line">  &lt;!--@keydown.键盘上的按键：按下就会触发--&gt;</span><br><span class="line">  </span><br><span class="line">     &lt;!--你也可以不指定你键盘上的按键，不指定按键的话，你点什么键都会触发--&gt;</span><br><span class="line">      &lt;!--@keyup.键盘上的按键：按下弹起来才会触发--&gt;</span><br><span class="line">      &lt;!--@keydown.键盘上的按键：按下就会触发--&gt;</span><br><span class="line">      &lt;!--@keyup.enter和@keyup.13相等，因为每一个按键都对应一个数字：https://tool.ip138.com/keycode/--&gt;</span><br></pre></td></tr></table></figure>
+
+````html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./js2/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--你也可以不指定，不指定按键的话你点什么键都会触发-->
+    <!--@keyup.键盘上的按键：按下弹起来才会触发-->
+    <!--@keydown.键盘上的按键：按下就会触发-->
+    <!--@keyup.enter和@keyup.13相等，因为每一个按键都对应一个数字：https://tool.ip138.com/keycode/-->
+    <input type="text" v-model="myText" @keyup.enter="handleKeyUp">
+</div>
+
+</body>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            myText: ""
+        },
+        methods: {
+            handleKeyUp(event) {
+                // 你打印以下就可以得到一堆数据，keyCode就在其中，对应的就是你的键码
+                console.log(event)
+                // 我们进行判断
+                if (event.keyCode == 13) {
+                    alert("你敲了回车键！！")
+                }
+            },
+        }
+    })
+</script>
+</html>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【十】表单控制</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;`````python</span><br><span class="line"># 我们input框里面的text有</span><br><span class="line"># checkbox方法：多选框---这个v-model可以绑定数组，True和False</span><br><span class="line"># radio方法：单选框---这个v-model可以绑定：字符串</span><br><span class="line">`````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- input的text的属性值`checkbox`和`radio`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;./js2/vue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;p&gt;用户名：&lt;input type=&quot;text&quot; v-model=&quot;username&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;密码：&lt;input type=&quot;password&quot; v-model=&quot;password&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;记住密码：&lt;input type=&quot;checkbox&quot; v-model=&quot;remember&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;爱好：</span><br><span class="line">        &lt;input type=&quot;checkbox&quot; v-model=&quot;hobby&quot; value=&quot;1&quot;&gt; 篮球</span><br><span class="line">        &lt;input type=&quot;checkbox&quot; v-model=&quot;hobby&quot; value=&quot;2&quot;&gt; 足球</span><br><span class="line">        &lt;input type=&quot;checkbox&quot; v-model=&quot;hobby&quot; value=&quot;3&quot;&gt; 乒乓球</span><br><span class="line">        &lt;input type=&quot;checkbox&quot; v-model=&quot;hobby&quot; value=&quot;4&quot;&gt; 游泳</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;p&gt;性别：</span><br><span class="line">        &lt;input type=&quot;radio&quot; v-model=&quot;gender&quot; value=&quot;1&quot;&gt;男</span><br><span class="line">        &lt;input type=&quot;radio&quot;  v-model=&quot;gender&quot;  value=&quot;2&quot;&gt;女</span><br><span class="line">        &lt;input type=&quot;radio&quot;  v-model=&quot;gender&quot;  value=&quot;0&quot;&gt;未知</span><br><span class="line"></span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">        &lt;input type=&quot;submit&quot; @click=&quot;handleSubmit&quot; value=&quot;点击登录&quot;&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var vm=new Vue(&#123;</span><br><span class="line">        el:&quot;#app&quot;,</span><br><span class="line">        data:&#123;</span><br><span class="line">            username:&quot;&quot;,</span><br><span class="line">            password:&quot;&quot;,</span><br><span class="line">            remember:&quot;&quot;,</span><br><span class="line">            hobby:[],</span><br><span class="line">            gender:&quot;&quot;,</span><br><span class="line">        &#125;,</span><br><span class="line">        methods:&#123;</span><br><span class="line">            handleSubmit()&#123;</span><br><span class="line">                console.log(this.username)</span><br><span class="line">                console.log(this.password)</span><br><span class="line">                console.log(this.remember)</span><br><span class="line">                console.log(this.hobby)</span><br><span class="line">                console.log(this.gender)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h1>【十一】购物车案例</h1>
+````html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./bootstrap05/min.css">
+    <script src="./bootstrap05/min.js"></script>
+    <script src="./js2/vue.js"></script>
+</head>
+<body>
+<div class="app">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h1 class="text-center">购物车</h1>
+                <div class="text-center">
+                    <button class="btn btn-danger" @click="handleLoad">清空购物车</button>
+                    <button class="btn btn-success text-center" @click="handleClear">加载购物出</button>
+                </div>
+                <hr>
+                <table class="table table-success table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">商品名字</th>
+                        <th scope="col">商品价格</th>
+                        <th scope="col">商品库存</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+
+                    <tr v-for="shopping in shopping_car">
+                        <th scope="row">{{shopping.id}}</th>
+                        <td>{{shopping.name}}</td>
+                        <td>{{shopping.price}}</td>
+                        <td>{{shopping.count}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+<script>
+    var vm = new Vue({
+        el: '.app',
+        data: {
+            shopping_car: [
+            ]
+
+        },
+        methods: {
+            handleLoad() {
+                this.shopping_car = []
+            },
+            handleClear() {
+                this.shopping_car = [
+                    {id: 1001, name: '特斯拉', price: '29999元', count: 1},
+                    {id: 1002, name: '苹果笔记本', price: '59999元', count: 3},
+                    {id: 1003, name: '脸盆', price: '9元', count: 8},
+                    {id: 1004, name: '钢笔', price: '19元', count: 10},
+                ]
+            }
+        }
+    })
+
+</script>
+</html>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【十二】v-model进阶-修饰符</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># v-model修饰符之：lazy、number、trim</span><br><span class="line">lazy：等待input框的数据绑定时区焦点之后再变化</span><br><span class="line">number：数字开头，只保留数字，后面的字母不保留；字母开头，都保留</span><br><span class="line">trim：去除首位的空格</span><br><span class="line">```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 使用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;./js2/vue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;h1&gt;lazy&lt;/h1&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; v-model.lazy=&quot;text01&quot;&gt;--&gt;&#123;&#123;text01&#125;&#125;</span><br><span class="line">    &lt;h1&gt;number&lt;/h1&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; v-model.number=&quot;text02&quot;&gt;--&gt;&#123;&#123;text02&#125;&#125;</span><br><span class="line">        &lt;h1&gt;trim&lt;/h1&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; v-model.trim=&quot;text03&quot;&gt;--&gt;&#123;&#123;text03&#125;&#125;</span><br><span class="line"></span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            text01: &#x27;&#x27;,</span><br><span class="line">            text02: &#x27;&#x27;,</span><br><span class="line">            text03: &#x27;&#x27;,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【补充知识】</span><br><span class="line"></span><br><span class="line">## 【1】`indexOf`的使用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````javascript</span><br><span class="line">var l=&quot;lsk&quot;</span><br><span class="line">    var s=&quot;my name is lsk&quot;</span><br><span class="line">    // 加上判断：s.indexOf(l)  要是包含的话返回的是索引值</span><br><span class="line">    if(s.indexOf(l))&#123;</span><br><span class="line">        // 得到的索引值是：11</span><br><span class="line">        console.log(s.indexOf(l))</span><br><span class="line">        console.log(&quot;包含&quot;)</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        console.log(&quot;不包含&quot;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="【2】过滤的使用">【2】过滤的使用</h2>
+`````javascript
+var l =['a', 'at', 'atom', 'atommon', 'be', 'beyond', 'cs', 'csrf']
+    // 这是固定的语法
+    // item你顾虑的时候每次都要传个值
+    l.filter(function (item){
+        // 挨个全部打印
+        console.log(item)
+        
+    })
+`````
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/2.1Ajax%E8%AF%B7%E6%B1%82/" rel="prev" title="2.1Ajax请求">
+      <i class="fa fa-chevron-left"></i> 2.1Ajax请求
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/2.0socketserver%E6%A8%A1%E5%9D%97/" rel="next" title="2.0socketserver模块">
+      2.0socketserver模块 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">【0】定时器使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">class 和 style 都是属性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">【四】列表渲染语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E8%AF%AD%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">【1】语法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">购物车</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%905%E3%80%91%E6%95%B0%E7%BB%84%E3%80%81%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%A3%80%E6%B5%8B%E5%92%8C%E6%9B%B4%E6%96%B0"><span class="nav-number">4.1.</span> <span class="nav-text">【5】数组、对象的检测和更新</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">【十一】购物车案例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">购物车</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E8%BF%87%E6%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">6.1.</span> <span class="nav-text">【2】过滤的使用</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

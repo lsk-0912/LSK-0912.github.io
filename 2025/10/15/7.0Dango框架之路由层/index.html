@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Django路由系统 【一】什么是URL配置  URL调度器 | Django 文档 | Django (djangoproject.com)、 URL配置(URLconf)就像Django 所支撑网站的目录。  它的本质是URL与要为该URL调用的视图函数之间的映射表。   你就是以这种方式告诉Django，对于这个URL调用这段代码，对于那个URL调用那段代码  【1】Djnago的语法变革">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7.0Dango框架之路由层">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/7.0Dango%E6%A1%86%E6%9E%B6%E4%B9%8B%E8%B7%AF%E7%94%B1%E5%B1%82/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="Django路由系统 【一】什么是URL配置  URL调度器 | Django 文档 | Django (djangoproject.com)、 URL配置(URLconf)就像Django 所支撑网站的目录。  它的本质是URL与要为该URL调用的视图函数之间的映射表。   你就是以这种方式告诉Django，对于这个URL调用这段代码，对于那个URL调用那段代码  【1】Djnago的语法变革">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240620210821277.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240620210932357.png">
+<meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.343Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240620210821277.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/7.0Dango%E6%A1%86%E6%9E%B6%E4%B9%8B%E8%B7%AF%E7%94%B1%E5%B1%82/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>7.0Dango框架之路由层 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/7.0Dango%E6%A1%86%E6%9E%B6%E4%B9%8B%E8%B7%AF%E7%94%B1%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          7.0Dango框架之路由层
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>Django路由系统</h1>
+<h2 id="【一】什么是URL配置">【一】什么是URL配置</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/topics/http/urls/">URL调度器 | Django 文档 | Django (djangoproject.com)</a>、</li>
+<li>URL配置(URLconf)就像Django 所支撑网站的目录。
+<ul>
+<li>它的本质是URL与要为该URL调用的视图函数之间的映射表。</li>
+</ul>
+</li>
+<li>你就是以这种方式告诉Django，对于这个URL调用这段代码，对于那个URL调用那段代码</li>
+</ul>
+<h3 id="【1】Djnago的语法变革">【1】Djnago的语法变革</h3>
+<h4 id="（1）Django1-x版本语法">（1）Django1.x版本语法</h4>
+<ul>
+<li>比如我们想写一个登入函数的路由就要在前面加一个r
+<ul>
+<li><code>r'^admin/'</code>：必须与admin开头</li>
+</ul>
+</li>
+</ul>
+```python
+from  from django.conf.urls import url
+ 
+ urlpatterns = [
+     url(r'^admin/', admin.site.urls, name='admin',别名)，
+     
+     url(正则表达式，views视图函数，参数，别名)，
+ ]
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### （2）Django2.x+版本语法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from django.urls import path, re_path</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&quot;路径&quot;,视图函数)，</span><br><span class="line">    #正则书写方法</span><br><span class="line">    re_path(&quot;正则表达式&quot;,视图函数)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="【2】路由匹配">【2】路由匹配</h3>
+<h4 id="（1）路径参数相似及解决方案">（1）路径参数相似及解决方案</h4>
+<ul>
+<li>
+<p>根据路径参数匹配指定的视图函数</p>
+</li>
+<li>
+<p>在views.py中做两个视图函数</p>
+</li>
+</ul>
+```python
+from django.shortcuts import HttpResponse
+
+
+
+def one(request):
+    return HttpResponse("6666")
+
+
+def two(request):
+    return HttpResponse("8888")
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 在再urls.py中做两个路由</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">    path(&quot;aaa/&quot;, one),</span><br><span class="line">    </span><br><span class="line">    path(&quot;aaaa/&quot;, two)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>用正则方法写urls.py中做两个路由
+<ul>
+<li>路由匹配：<code>http://localhost:8000/aaaa</code></li>
+<li>显示结果：666
+<ul>
+<li>得到的结果应该是</li>
+<li>8888</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+```python
+re_path(r'^aaa', aaa),
+re_path(r'^aaaa', bbb),
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 解决方法就是在后面放一个/</span><br><span class="line">  - 只有遇到/才认为是当前路径结束</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">re_path(r&#x27;^aaa/&#x27;, aaa),</span><br><span class="line">re_path(r&#x27;^aaaa/&#x27;, bbb),</span><br></pre></td></tr></table></figure>
+
+<h3 id="【补充】">【补充】</h3>
+```python
+Django默认会给你加 /
+# http://localhost:8000/aaaa
+# 当在浏览器地址结尾没有 加 / 的时候
+默认会匹配两次
+# 访问指定路径会匹配两次 第一次 不带 /
+# 访问指定路径会匹配两次 第二次 带 /
+# 如果上面两个都找不到  ---就会报错，黄色的页面 page not found
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【二】有名分组和无名分组</span><br><span class="line"></span><br><span class="line">- 有名和无名用正则写</span><br><span class="line"></span><br><span class="line">- 有名分组和无名分组是定义在url匹配规则的时候让最后的路径参数有没有名字而定的</span><br><span class="line">- get请求</span><br><span class="line">- 有名分组：`http://127.0.0.1:8000/?username=dream`</span><br><span class="line">- 无名分组：`http://127.0.0.1:8000/?tom`</span><br><span class="line"></span><br><span class="line">### 【1】无名分组</span><br><span class="line"></span><br><span class="line">- 比如：`http://127.0.0.1:8000/?tom`</span><br><span class="line"></span><br><span class="line">- 定义在url匹配规则的时候让最后的路径参数没有名字</span><br><span class="line">- `http://127.0.0.1:8000/no_name/2`</span><br><span class="line"></span><br><span class="line">在urls.py定义</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">re_path(r&quot;^no_name/(d+)/&quot;,no_name)</span><br></pre></td></tr></table></figure>
+
+<p>在views.py中定义</p>
+```python
+def no_name(request,*ages,**kwargs):
+    print(args), # ('2',)
+    print(kwargs) #{}
+    return HttpResponse("you_name")
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【2】有名分组</span><br><span class="line"></span><br><span class="line">- 比如：`http://127.0.0.1:8000/?username=dream`</span><br><span class="line"></span><br><span class="line">- 定义在url匹配规则的时候让最后的路径参数有名字</span><br><span class="line">- `http://127.0.0.1:8000/name/3`</span><br><span class="line"></span><br><span class="line">在urls.py定义</span><br><span class="line"></span><br><span class="line">- (?P&lt;键名字&gt;正则规则)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">re_path(r&#x27;^name/(?P&lt;id&gt;\d+)&#x27;, name)</span><br></pre></td></tr></table></figure>
+
+<p>在views.py中定义</p>
+```python
+def name(request, *args, **kwargs):
+    print(args)  # ()
+    print(kwargs)  # {'id': '3'}
+    return HttpResponse("name")
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【3】Djang2+已经取消了无名分组，只有有名分组</span><br><span class="line"></span><br><span class="line">- 在urls.py中定义</span><br><span class="line">- int：类型</span><br><span class="line">- pk：键值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">path(&quot;url_name/&lt;int:pk&gt;/&quot;, url_name)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在views.py中定义</li>
+</ul>
+```python
+def url_name(request, *args, **kwargs):
+    print(args)
+    print(kwargs) # {'pk': 2}
+    return HttpResponse("url_name")
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【4】无名分组和有名分组混合使用</span><br><span class="line"></span><br><span class="line">- 无名和有名不能混合使用</span><br><span class="line">- 访问不到此页面</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">path(&quot;url_name/&lt;int:pk&gt;/(\d+)/&quot;, url_name)  # 错误的</span><br></pre></td></tr></table></figure>
+
+<h1>反向解析</h1>
+<h2 id="【一】什么是反向解析">【一】什么是反向解析</h2>
+<ul>
+<li></li>
+</ul>
+<h2 id="【二】问题引入">【二】问题引入</h2>
+<ul>
+<li>我们在urls.py文件中定义一个路由</li>
+</ul>
+```python
+path('user/admin/login/', login)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 我们在前端的a标签中用这个路由</span><br><span class="line">  - 路径很长，我们后期维护也不好维护，修改了，就要全部修改，很麻烦</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```html</span><br><span class="line">&lt;a href=&quot;http://127.0.0.1:8000/user/admin/login/&quot;&gt;&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="【三】解决问题">【三】解决问题</h2>
+<ul>
+<li>
+<p>Django为我们提供了一个参数<code>name</code>,在path中的参数，可以快速的实现路径的访问</p>
+</li>
+<li>
+<p>在定义路由和试图映射的时候加上一个参数name=“自定义值”</p>
+</li>
+</ul>
+```python
+path("user/login/", login, name="login"),
+    path("user/register/", register, name="register")
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 我们在前端写路径的时候就可以直接引用name的值</span><br><span class="line">- 这个是login.html里面的a标签，点击它就会跳到注册页面</span><br><span class="line"></span><br><span class="line">前端使用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````python</span><br><span class="line">&lt;a href=&quot;&#123;% url &#x27;register&#x27; %&#125;&quot;&gt;登入&lt;/a&gt;</span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- views.py</span><br><span class="line"></span><br><span class="line">后端使用需要借助`from django.shortcuts import  reverse`</span><br><span class="line"></span><br><span class="line">- `reverse(&#x27;定义的规则名字&#x27;)`---&gt;得到的是你定义的路由</span><br><span class="line">  - 你访问login的时候就会跳到register</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def login(request):</span><br><span class="line">    return redirect(to=reverse(&#x27;register&#x27;))</span><br><span class="line"></span><br><span class="line">def register(request):</span><br><span class="line">    return render(request, &#x27;register.html&#x27;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>原理就是
+<ul>
+<li>根据当前的url的名字去路由去路由中对应名字的路由，然后根据路径添加指定的位置</li>
+</ul>
+</li>
+</ul>
+<h2 id="【四】反向解析的本质">【四】反向解析的本质</h2>
+<ul>
+<li>在路由映射中定义路由应装设规则，我们给这个规则起个名字
+<ul>
+<li>我们可以根据这个名字找到对应的映射规则</li>
+<li>就是<code>name对应的名字</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="【五】有名分组和无名分组的反向解析">【五】有名分组和无名分组的反向解析</h2>
+<ul>
+<li>有名和无名配置路由要用正则去写</li>
+</ul>
+<h3 id="【1】无名分组的反向解析">【1】无名分组的反向解析</h3>
+<p>无名分组在传递参数的时候不仅仅要加 规则名字 还要加 args = (元祖</p>
+<ul>
+<li>前端的反向解析</li>
+</ul>
+```html
+# no_name：是规则名
+<p><a href="{% url 'no_name' '1' '2' %}">登入</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 后端的反向解析</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def no_name(request, *args, **kwargs):</span><br><span class="line">    # 无名参数，要传参数你没传就会出错</span><br><span class="line">    # args是一个元组</span><br><span class="line">    print(reverse(&quot;no_name&quot;, args=(&quot;1&quot;, &quot;2&quot;)), )  # /no_name/1/2</span><br><span class="line">    print(args)  # (&#x27;1&#x27;, &#x27;2&#x27;)</span><br><span class="line">    print(kwargs)  # &#123;&#125;</span><br><span class="line">    return HttpResponse(&quot;no_name&quot;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>路由和映射
+<ul>
+<li><code>(\d+)/(\d+)</code>：默认必须给两个值</li>
+</ul>
+</li>
+</ul>
+```python
+re_path(r'^no_name/(\d+)/(\d+)', no_name, name="no_name")
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【2】有名分组的反向解析</span><br><span class="line"></span><br><span class="line">- 前端的反向解析</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```html</span><br><span class="line"># url_name：是规则名</span><br><span class="line">&lt;p&gt;&lt;a href=&quot;&#123;% url &#x27;url_name&#x27; &#x27;4&#x27; %&#125;&quot;&gt;注册&lt;/a&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>后端的反向解析
+<ul>
+<li>又名函数接收的都是字典</li>
+</ul>
+</li>
+</ul>
+```python
+def url_name(request, *args, **kwargs):
+    #有名分组一定要按照，关键字传参
+    # 有名分组在传递参数的时候不仅仅要加 规则名字 还要加 kwargs = {}
+    print(reverse("url_name", kwargs={"id": 1})) # /url_name/1/
+    print(args) # ()
+    print(kwargs) # {'id': '4'}
+    return HttpResponse("url_name")
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 路由和映射</span><br><span class="line">  - `(?P&lt;id&gt;\d+)/`：必须传一个参数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">re_path(r&#x27;^url_name/(?P&lt;id&gt;\d+)/&#x27;, url_name, name=&quot;url_name&quot;),</span><br></pre></td></tr></table></figure>
+
+<h1>路由分发</h1>
+<h2 id="【一】什么是路由分发">【一】什么是路由分发</h2>
+<ul>
+<li>路由分发（Route Redistribution）是指在一个网络环境中，当存在多种路由协议或同种协议的不同进程时，为了实现这些路由协议的协同工作，通过自治系统边界路由器（ASBR）同时工作在两种协议或两个进程中，学习到两端所有的路由条目后，将这些路由信息从一个路由协议或进程共享到另一个路由协议或进程的过程</li>
+</ul>
+<h2 id="【二】路由分发系统解析">【二】路由分发系统解析</h2>
+<ul>
+<li>
+<p>就是在每个APP下都有自己的路由映射规则文件</p>
+</li>
+<li>
+<p>将所有的给规则文件进行统合到一起</p>
+</li>
+<li>
+<p>再根据制定的规则进行分发</p>
+</li>
+</ul>
+<p>就好比</p>
+```python
+user-->APP下有多个视图
+	login
+    index
+    register
+    
+shop--->APP下有多个视图
+	index
+    login
+    buy_shopping
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 要是都写在urls.py下进行路由映射就会很多</span><br><span class="line"></span><br><span class="line">## 【三】解决方法</span><br><span class="line"></span><br><span class="line">### 【1】原本的路由规则模式</span><br><span class="line"></span><br><span class="line">- 我们会写成这样</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;admin/&#x27;, admin.site.urls),</span><br><span class="line">    path(&#x27;user/login/&#x27;, login),</span><br><span class="line">    path(&#x27;user/register/&#x27;, register),</span><br><span class="line">    path(&#x27;user/logout/&#x27;, logout),</span><br><span class="line">    path(&#x27;shop/buy_good/&#x27;, buy_good),</span><br><span class="line">    path(&#x27;shop/payfor/&#x27;, payfor),</span><br><span class="line">    ]</span><br></pre></td></tr></table></figure>
+
+<h3 id="【2】简化">【2】简化</h3>
+<ul>
+<li>在每一个APP下都创建一个urls.py文件</li>
+<li>在总路由中定义每个子路由规则</li>
+</ul>
+<p>主urlse.pu文件</p>
+<ul>
+<li>​	引入了一个内置方法，include方法
+<ul>
+<li>每一个py文件还不能为空，为空也会报错</li>
+</ul>
+</li>
+</ul>
+```python
+from django.contrib import admin
+from django.urls import path,include
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('user/', include("user.urls"))
+    path('shop/', include("shop.urls"))
+]
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">子的APP下的user/urls.py文件</span><br><span class="line"></span><br><span class="line">- 每一个py文件还不能为空，为空也会报错</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from django.urls import path</span><br><span class="line"></span><br><span class="line">from user.views import login, register, logout</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;login/&#x27;, login),</span><br><span class="line">    path(&#x27;register/&#x27;, register),</span><br><span class="line">    path(&#x27;logout/&#x27;, logout),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>子的APP下的user/shop.py文件</p>
+<ul>
+<li>每一个py文件还不能为空，为空也会报错</li>
+</ul>
+```python
+from django.urls import path
+
+from shop.views import buy_good, payfor
+
+
+urlpatterns = [
+    path('shop/buy_good/', buy_good),
+    path('shop/payfor/', payfor),
+]
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【3】路由分发的反向解析</span><br><span class="line"></span><br><span class="line">- `path(&quot;user/&quot;,include(&quot;user.urls&quot;)`</span><br><span class="line"></span><br><span class="line">- 在你 APP 下面的每一个路由规则中都会为你 匹配一个 user 前缀</span><br><span class="line"></span><br><span class="line">- 如果想让每一个 APP下面你的路由规则都进行分类</span><br><span class="line"></span><br><span class="line">- 在指定分发的时候就必须戴前缀</span><br><span class="line">- 不分类就什么 都别写</span><br><span class="line"></span><br><span class="line">如果是自己写的路由规则路径 在前端使用可能会失效</span><br><span class="line"></span><br><span class="line">- 自己写的路由：就是给自己APP下面的urls.py文件中的urlpatterns另起名字</span><br><span class="line"></span><br><span class="line">所以为了避免是自己的失误，建议使用 Django提供的路由解析方案</span><br><span class="line"></span><br><span class="line">### 【4】路由携带额外参数</span><br><span class="line"></span><br><span class="line">- 主urls.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">path(&#x27;shop/&#x27;, include(&quot;shop.urls&quot;))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>shop/urls.py</li>
+</ul>
+```python
+from django.urls import path
+
+from shop.views import buy_good, payfor
+
+# 分路由
+urlpatterns = [
+    path('buy_good/<int:year>', buy_good, {"good_name": "玩具"}, name="buy_good"),
+    path('shop/payfor/', payfor),
+]
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- shop/views.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def buy_good(request, *args, **kwargs):</span><br><span class="line">    print(args)  # ()</span><br><span class="line">    print(kwargs)  # &#123;&#x27;year&#x27;: 2, &#x27;good_name&#x27;: &#x27;玩具&#x27;&#125;</span><br><span class="line">    return HttpResponse(&#x27;buy_good&#x27;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>user/login.py</li>
+</ul>
+```python
+<p><a href="{% url "buy_good" "2" %}">buy</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【5】include分发携带额外参数</span><br><span class="line"></span><br><span class="line">- ***include,每一个分路由接口都会携带的参数***</span><br><span class="line"></span><br><span class="line">- shop/urls.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from django.urls import path</span><br><span class="line"></span><br><span class="line">from shop.views import buy_good, payfor</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;buy_good/&lt;int:year&gt;&#x27;, buy_good, &#123;&quot;good_name&quot;: &quot;玩具&quot;&#125;, name=&quot;buy_good&quot;),</span><br><span class="line">    path(&#x27;payfor/&#x27;, payfor, name=&quot;payfor&quot;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>shop/views.py：shop APP下的views</li>
+</ul>
+```python
+def payfor(request, *args, **kwargs):
+    print(args)  # ()
+    print(kwargs)  # {'tag': 'index'}
+    return HttpResponse('payfor')
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- user/login.py</span><br><span class="line">  - 访问payfor的时候，include分发 带了  &#123;&quot;tag&quot;: &quot;shop&quot;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">&lt;p&gt;&lt;a href=&quot;&#123;% url &quot;payfor&quot; %&#125;&quot;&gt;pay_for&lt;/a&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="http://xn--urls-zh5f.py">主urls.py</a></li>
+</ul>
+```python
+#include，每一个分路由接口都会携带的参数
+path('shop/', include("shop.urls"), {"tag": "index"})
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 名称空间</span><br><span class="line"></span><br><span class="line">## 【一】发生场景</span><br><span class="line"></span><br><span class="line">- 有两个APP</span><br><span class="line">  - APP1下有一个函数叫`index`</span><br><span class="line">  - APP2下有一个函数也叫`index`</span><br><span class="line"></span><br><span class="line">- 路径解析应该是谁的`index`函数</span><br><span class="line"></span><br><span class="line">### 【1】案例</span><br><span class="line"></span><br><span class="line">- user/urls.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">path(&#x27;index/&#x27;, index, name=&quot;index&quot;),</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>user/views.py</li>
+</ul>
+```python
+def index(request):
+    return HttpResponse("user_index")
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- shop/urls.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">path(&#x27;index/&#x27;, index, name=&quot;index&quot;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>shop/views.py</li>
+</ul>
+```python
+def index(request, *args, **kwargs):
+    return HttpResponse('shop_index')
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 主urls.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">	path(&#x27;&#x27;, login),</span><br><span class="line">    path(&#x27;user/&#x27;, include(&quot;user.urls&quot;)),</span><br><span class="line">    path(&#x27;shop/&#x27;, include(&quot;shop.urls&quot;))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>页面login.html</li>
+</ul>
+```html
+<p><a href="{% url "index" %}">user_index</a></p>
+<p><a href="{% url "index" %}">show_index</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 我们可以看到页面login.html中有两个a标签，一个属于user_index，一个是show_index，但是我们发现，当路由解析index的时候，都解析到了showAPP下的index</span><br><span class="line">- 我们现在看主urls.py</span><br><span class="line">  - 发现`path(&#x27;shop/&#x27;, include(&quot;shop.urls&quot;))`在下面</span><br><span class="line">    - 由此得出，谁在下面先解析谁</span><br><span class="line">    - 有点不太合理</span><br><span class="line"></span><br><span class="line">### 【2】解决方案</span><br><span class="line"></span><br><span class="line">- 给每个APP下面的urls.py增加一个配置项叫`app_name = &#x27;app名字&#x27;`</span><br><span class="line">- 发现报错了</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">#报错信息  Reverse for &#x27;buy_good&#x27; not found. &#x27;buy_good&#x27; is not a valid view function or pattern name.</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>解决方案
+<ul>
+<li>指定我们的a标签里面的信息</li>
+</ul>
+</li>
+</ul>
+```python
+<p><a href="{% url "user:index" %}">user_index</a></p>
+<p><a href="{% url "shop:index" %}">show_index</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 在每个index前面加APP的名字</span><br><span class="line"></span><br><span class="line">### 【3】解决方案二</span><br><span class="line"></span><br><span class="line">- 把你添加的`app_name = &#x27;app名字&#x27;`给删掉</span><br><span class="line"></span><br><span class="line">- 在你的总路由配 配置</span><br><span class="line">  - 总路由进行分发的时候指定APP的名字，以及namespace:名称空间</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">    path(&#x27;user/&#x27;, include((&quot;user.urls&quot;, &quot;user&quot;), namespace=&quot;user&quot;)),</span><br><span class="line">    path(&#x27;shop/&#x27;, include((&quot;shop.urls&quot;, &quot;shop&quot;), namespace=&quot;shop&quot;))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>就能正常运行了</li>
+</ul>
+<h1>虚拟环境</h1>
+<h2 id="【一】创建虚拟环境">【一】创建虚拟环境</h2>
+<h3 id="【1】三种方法">【1】三种方法</h3>
+<ul>
+<li>python自带你的venv工具</li>
+<li>python第三方模块virtualenv</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240620210821277.png" alt="image-20240620210821277"></p>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240620210932357.png" alt="image-20240620210932357"></p>
+<ul>
+<li>使用pycharm创建虚拟环境</li>
+</ul>
+<h2 id="【二】使用虚拟环境的目的">【二】使用虚拟环境的目的</h2>
+<ul>
+<li>目的就是：为了项目与项目之间模块的隔离</li>
+<li>不通过版本写的Django项目，项目之间会发生冲突，不同版本的Django，也会对应MySQL的版本，有的Django版本不兼容MySQL
+<ul>
+<li>为了解决这个问题，给各自的Django项目创建虚拟环境</li>
+<li>但是有个弊端，你自己的Django项目本地随便用</li>
+<li>你压缩给别人用，别人解压之后虚拟环境就会失效</li>
+</ul>
+</li>
+</ul>
+<h3 id="【1】解决不兼容虚拟环境的通用方法">【1】解决不兼容虚拟环境的通用方法</h3>
+<ul>
+<li>将模块批量导出和批量安装</li>
+</ul>
+<h4 id="（1）批量导出模块">（1）批量导出模块</h4>
+<ul>
+<li>在终端输入
+<ul>
+<li>回车之后你发现没反应，但是你看的Django项目里多了一个文件</li>
+<li>叫<code>requirements.txt</code></li>
+<li>导出成功</li>
+</ul>
+</li>
+</ul>
+```shell
+pip freeze > requirements.txt
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240620212326839](D:\pycharm\Temporary_notes\图片\image-20240620212326839.png)</span><br><span class="line"></span><br><span class="line">#### （2）批量安装</span><br><span class="line"></span><br><span class="line">- 在终端输入</span><br><span class="line">  - 读取到`requirements.txt`里面所有的模块</span><br><span class="line">  - 然后挨个安装所有的模块</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```shell</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<h1>路径转换器</h1>
+<h2 id="【一】什么是路径转换器">【一】什么是路径转换器</h2>
+<ul>
+<li>路径转换器（Path Converter）在Django框架中是为了解决URL路径中的参数问题</li>
+</ul>
+<h2 id="【二】Django2-x之前路径转换的语法">【二】Django2.x之前路径转换的语法</h2>
+<ul>
+<li>
+<p>2.x之前用佛如都是正则</p>
+</li>
+<li>
+<p>Django2.x版本的语法规范</p>
+</li>
+</ul>
+```python
+path("路由规则"，视图函数名，name="路由解析名")
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【三】Django的五种类型转换器</span><br><span class="line"></span><br><span class="line">### 【1】str</span><br><span class="line"></span><br><span class="line">- 匹配除了/之外的非空字符串</span><br><span class="line">- 如果表达式内不包含转换器，则会默认匹配字符串</span><br><span class="line"></span><br><span class="line">### 【2】int</span><br><span class="line"></span><br><span class="line">- 匹配 0 或任何正整数。返回一个 int </span><br><span class="line"></span><br><span class="line">### 【3】slug</span><br><span class="line"></span><br><span class="line">- 匹配任意由 ASCII 字母或数字以及连字符和下划线组成的短标签</span><br><span class="line">- 比如，building-your-1st-django-site </span><br><span class="line"></span><br><span class="line">### 【4】path</span><br><span class="line"></span><br><span class="line">- 匹配非空字段，包括路径分隔符 &#x27;/&#x27;</span><br><span class="line">- 它允许你匹配完整的 URL 路径而不是像 str 那样匹配 URL 的一部分</span><br><span class="line"></span><br><span class="line">### 【5】uuid</span><br><span class="line"></span><br><span class="line">- 匹配一个格式化的 UUID 。为了防止多个 URL 映射到同一个页面，必须包含破折号并且字符都为小写</span><br><span class="line">- 比如，075194d3-6885-417e-a8a8-6c931e272f00。返回一个 UUID 实例</span><br><span class="line"></span><br><span class="line">### 【6】五种转换器的案例</span><br><span class="line"></span><br><span class="line">- 子的shop/urls,py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">urlpatterns = [</span><br><span class="line">    #&lt;str:param&gt;：代表传的值是字符串类型，param与视图层的指定参数要想等</span><br><span class="line">    path(&quot;parse_str/&lt;str:param&gt;&quot;, parse_str, name=&quot;parse_str&quot;),</span><br><span class="line">    path(&quot;parse_int/&lt;int:param&gt;&quot;, parse_int, name=&quot;parse_int&quot;),</span><br><span class="line">    path(&quot;parse_uuid/&lt;uuid:param&gt;&quot;, parse_uuid, name=&quot;parse_uuid&quot;),</span><br><span class="line">    path(&quot;parse_path/&lt;path:param&gt;&quot;, parse_path, name=&quot;parse_path&quot;),</span><br><span class="line">    path(&quot;parse_slug/&lt;sulg:param&gt;&quot;, parse_slug, name=&quot;parse_slug&quot;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>定义视图</li>
+</ul>
+```python
+def parse_str(request, param, *args, **kwargs):
+    # http://127.0.0.1:9999/shop/param_str/2
+    print(param, type(param))  # 2 <class 'str'>
+    print(args)
+    print(kwargs)
+    return redirect(reverse("login"))
+
+
+def parse_int(request, param, *args, **kwargs):
+    # http://127.0.0.1:9999/shop/parse_int/1
+    print(param, type(param))  # 1 <class 'int'>
+    print(args)
+    print(kwargs)
+    return redirect(reverse("login"))
+
+
+def parse_uuid(request, param, *args, **kwargs):
+    # http://127.0.0.1:9999/shop/parse_uuid/1
+    print(param, type(param))
+    # 075194d3-6885-417e-a8a8-6c931e272f00 <class 'uuid.UUID'>
+    print(args)
+    print(kwargs)
+    return redirect(reverse("login"))
+
+
+def parse_slug(request, param, *args, **kwargs):
+    # http://127.0.0.1:9999/shop/parse_slug/1
+    print(param, type(param)) # building-your-1st-django-site <class 'str'> <class 'str'>
+    print(args)
+    print(kwargs)
+    return redirect(reverse("login"))
+
+
+def parse_path(request, param, *args, **kwargs):
+    #  http://127.0.0.1:9999/shop/parse_path/1
+    print(param, type(param)) # 1 <class 'str'>
+    print(args)
+    print(kwargs)
+    return redirect(reverse("login"))
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 主的urls.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">path(&#x27;&#x27;, login, name=&quot;login&quot;),</span><br><span class="line">path(&#x27;shop/&#x27;, include((&quot;shop.urls&quot;, &quot;shop&quot;), namespace=&quot;shop&quot;))</span><br></pre></td></tr></table></figure>
+
+<h2 id="【四】自定义转换器">【四】自定义转换器</h2>
+<h3 id="【1】创建自定义转换器">【1】创建自定义转换器</h3>
+<ul>
+<li>需要在APP下创建一个<code>path_converters.py</code>文件
+<ul>
+<li>提示路径中不能有空格</li>
+</ul>
+</li>
+<li>在文件中定义一下方法
+<ul>
+<li>to_python：将参数转换为python类型</li>
+<li>to_url：匹配路径上的参数</li>
+</ul>
+</li>
+</ul>
+```python
+class FourDigitYearConverter:
+    # 此属性名为正则表达式（regex），用于匹配四位数的年份字符串
+    regex = r'[0-9]{4}' 
+
+    def to_python(self, value):
+        """
+        将接收到的字符串值解析为Python整数类型表示四位数的年份。
+        示例：输入 "2024" 会转换为 2024
+        """
+        return int(value)
+
+    def to_url(self, value):
+        """
+        根据给定四位数年份（value）将其格式化为URL安全的四位数字形式，例如 "2024" -> "2024".
+        注意这里的 "匹配的regex是四个数字" 应更改为 "此方法针对四位数的年份字符串"
+        
+        例如：输入 "2024" 会返回 "2024", 保持四位数且无前导零。
+        """
+        return '%04d' % value
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【2】使用自定义转换器</span><br><span class="line"></span><br><span class="line">在视图函数中引入当前自定义转换器</span><br><span class="line"></span><br><span class="line">- 将自定义的转换器注册成Django的转换器,就要引入下面的方法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from django.urls import  register_converter</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>把转换器导入到视图层</li>
+</ul>
+```python
+from APP名字.path_converters import 类名
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 注册转换器</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">register_converter(类名, &#x27;自定义转换器名字&#x27;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在路由中使用转换器</li>
+</ul>
+```python
+path("self_parse/<自定义转换器名字:param>/", self_parse, name="self_parse")
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 视图层</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def self_parse(request, param, *args, **kwargs):</span><br><span class="line">    print(param, type(param)) # 9999 &lt;class &#x27;int&#x27;&gt;</span><br><span class="line">    print(args)</span><br><span class="line">    print(kwargs)</span><br><span class="line">    return redirect(reverse(&quot;login&quot;))</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/8.0JavaScript%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B,%E5%B8%B8%E9%87%8F%E5%92%8C%E5%8F%98%E9%87%8F/" rel="prev" title="8.0JavaScript数据类型,常量和变量">
+      <i class="fa fa-chevron-left"></i> 8.0JavaScript数据类型,常量和变量
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/6.0%E6%96%87%E6%A1%A3%E6%A0%91/" rel="next" title="6.0文档树">
+      6.0文档树 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Django路由系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AFURL%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">【一】什么是URL配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91Djnago%E7%9A%84%E8%AF%AD%E6%B3%95%E5%8F%98%E9%9D%A9"><span class="nav-number">1.1.1.</span> <span class="nav-text">【1】Djnago的语法变革</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89Django1-x%E7%89%88%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">（1）Django1.x版本语法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E8%B7%AF%E7%94%B1%E5%8C%B9%E9%85%8D"><span class="nav-number">1.1.2.</span> <span class="nav-text">【2】路由匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0%E7%9B%B8%E4%BC%BC%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">（1）路径参数相似及解决方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%90%E8%A1%A5%E5%85%85%E3%80%91"><span class="nav-number">1.1.3.</span> <span class="nav-text">【补充】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">反向解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8D%E5%90%91%E8%A7%A3%E6%9E%90"><span class="nav-number">2.1.</span> <span class="nav-text">【一】什么是反向解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E9%97%AE%E9%A2%98%E5%BC%95%E5%85%A5"><span class="nav-number">2.2.</span> <span class="nav-text">【二】问题引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%89%E3%80%91%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98"><span class="nav-number">2.3.</span> <span class="nav-text">【三】解决问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%9B%9B%E3%80%91%E5%8F%8D%E5%90%91%E8%A7%A3%E6%9E%90%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="nav-number">2.4.</span> <span class="nav-text">【四】反向解析的本质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%94%E3%80%91%E6%9C%89%E5%90%8D%E5%88%86%E7%BB%84%E5%92%8C%E6%97%A0%E5%90%8D%E5%88%86%E7%BB%84%E7%9A%84%E5%8F%8D%E5%90%91%E8%A7%A3%E6%9E%90"><span class="nav-number">2.5.</span> <span class="nav-text">【五】有名分组和无名分组的反向解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%97%A0%E5%90%8D%E5%88%86%E7%BB%84%E7%9A%84%E5%8F%8D%E5%90%91%E8%A7%A3%E6%9E%90"><span class="nav-number">2.5.1.</span> <span class="nav-text">【1】无名分组的反向解析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">路由分发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%AF%E7%94%B1%E5%88%86%E5%8F%91"><span class="nav-number">3.1.</span> <span class="nav-text">【一】什么是路由分发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E8%B7%AF%E7%94%B1%E5%88%86%E5%8F%91%E7%B3%BB%E7%BB%9F%E8%A7%A3%E6%9E%90"><span class="nav-number">3.2.</span> <span class="nav-text">【二】路由分发系统解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E7%AE%80%E5%8C%96"><span class="nav-number">3.2.1.</span> <span class="nav-text">【2】简化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">虚拟环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">4.1.</span> <span class="nav-text">【一】创建虚拟环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-number">4.1.1.</span> <span class="nav-text">【1】三种方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E4%BD%BF%E7%94%A8%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="nav-number">4.2.</span> <span class="nav-text">【二】使用虚拟环境的目的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E8%A7%A3%E5%86%B3%E4%B8%8D%E5%85%BC%E5%AE%B9%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E7%9A%84%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">4.2.1.</span> <span class="nav-text">【1】解决不兼容虚拟环境的通用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%89%B9%E9%87%8F%E5%AF%BC%E5%87%BA%E6%A8%A1%E5%9D%97"><span class="nav-number">4.2.1.1.</span> <span class="nav-text">（1）批量导出模块</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">路径转换器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%AF%E5%BE%84%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="nav-number">5.1.</span> <span class="nav-text">【一】什么是路径转换器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91Django2-x%E4%B9%8B%E5%89%8D%E8%B7%AF%E5%BE%84%E8%BD%AC%E6%8D%A2%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="nav-number">5.2.</span> <span class="nav-text">【二】Django2.x之前路径转换的语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%9B%9B%E3%80%91%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="nav-number">5.3.</span> <span class="nav-text">【四】自定义转换器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="nav-number">5.3.1.</span> <span class="nav-text">【1】创建自定义转换器</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

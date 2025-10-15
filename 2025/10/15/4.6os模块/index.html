@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="os模块 【一】什么是os模块   os模块可以操作本地的文件夹及文件   创建删除文件夹&#x2F;文件   执行本地的cmd命令   拼接路径   __file__表示当前文件   【二】文件路径相关操作(path) 【1】获取当前绝对路径（abspath） &#96;&#96;&#96;python import os  #获取当前路径 os_path &#x3D; os.path.abspath(__file__) print(os">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4.6os模块">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/4.6os%E6%A8%A1%E5%9D%97/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="os模块 【一】什么是os模块   os模块可以操作本地的文件夹及文件   创建删除文件夹&#x2F;文件   执行本地的cmd命令   拼接路径   __file__表示当前文件   【二】文件路径相关操作(path) 【1】获取当前绝对路径（abspath） &#96;&#96;&#96;python import os  #获取当前路径 os_path &#x3D; os.path.abspath(__file__) print(os">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.250Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/4.6os%E6%A8%A1%E5%9D%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>4.6os模块 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.6os%E6%A8%A1%E5%9D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          4.6os模块
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>os模块</h1>
+<h1>【一】什么是os模块</h1>
+<ul>
+<li>
+<p>os模块可以操作本地的文件夹及文件</p>
+</li>
+<li>
+<p>创建删除文件夹/文件</p>
+</li>
+<li>
+<p>执行本地的cmd命令</p>
+</li>
+<li>
+<p>拼接路径</p>
+</li>
+<li>
+<h2 id="file-表示当前文件">__file__表示当前文件</h2>
+</li>
+</ul>
+<h1>【二】文件路径相关操作(path)</h1>
+<h2 id="【1】获取当前绝对路径（abspath）">【1】获取当前绝对路径（abspath）</h2>
+```python
+import os
+
+#获取当前路径
+os_path = os.path.abspath(__file__)
+print(os_path)#输出：D:\pycharm\project\DAY01\作业\笔记练习.py
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】获得当前文件所在文件路径(dirname)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">#获得当前文件所在文件路径</span><br><span class="line">os_path = os.path.dirname(__file__)</span><br><span class="line">print(os_path)#D:\pycharm\project\DAY01\作业</span><br></pre></td></tr></table></figure>
+
+<h2 id="【3】判断当前文件路径是否存在-》文件夹-文件-exists">【3】判断当前文件路径是否存在----》文件夹/文件(exists)</h2>
+```python
+file_name = r"D:\pycharm\project\DAY01\作业\tom_log.text"#先给一个路径
+print(os.path.exists(path=file_name))#输出True    说明这个路径存在，不存在返回False
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【4】拼接文件路径（join）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">BASE_DIR = os.path.dirname(__file__)#当前路径</span><br><span class="line">print(BASE_DIR)#D:\pycharm\project\DAY01\作业</span><br><span class="line"></span><br><span class="line">file_name = &#x27;img&#x27;</span><br><span class="line"># join 后面可以跟多个路径</span><br><span class="line">file_path = os.path.join(BASE_DIR, file_name)#拼接</span><br><span class="line">print(file_path)#D:\pycharm\project\DAY01\作业\img</span><br></pre></td></tr></table></figure>
+
+<h2 id="【5】切割文件路径">【5】切割文件路径</h2>
+<ul>
+<li>切后得到一个元组里面有两个元素，两个元素分别是（其他路径，最后一个文件夹/文件夹名）</li>
+</ul>
+```python
+import os
+
+#获得当前路径
+BASE_DIR = os.path.abspath(__file__)
+print(BASE_DIR)#D:\pycharm\project\DAY01\作业\笔记练习.py
+#拆分
+file_path = os.path.split(BASE_DIR)
+print(file_path)#('D:\\pycharm\\project\\DAY01\\作业', '笔记练习.py')
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【6】获取文件结尾的文件/文件夹名（basename）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">file_path = os.path.dirname(__file__)</span><br><span class="line">print(file_path)#D:\pycharm\project\DAY01\作业</span><br><span class="line">filen_name_basename = os.path.basename(file_path)</span><br><span class="line">print(filen_name_basename)#笔记练习.py</span><br></pre></td></tr></table></figure>
+
+<h2 id="【7】判断当前文件是不是文件夹-文件（isdir-isfile）">【7】判断当前文件是不是文件夹/文件（isdir,isfile）</h2>
+<ul>
+<li>判断是否是文件isfile</li>
+</ul>
+```python
+file_path = os.path.dirname(__file__)
+print(file_path)#D:\pycharm\project\DAY01\作业
+file_path_two = os.path.isfile(file_path)
+print(file_path_two)#False
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 判断是否是文件夹isdir</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">file_path = os.path.dirname(__file__)</span><br><span class="line">print(file_path)#D:\pycharm\project\DAY01\作业</span><br><span class="line">file_path_two = os.path.isdir(file_path)</span><br><span class="line">print(file_path_two)#True</span><br></pre></td></tr></table></figure>
+
+<h2 id="【8】判断当前路径是否是绝对路径-isabs">【8】判断当前路径是否是绝对路径(isabs)</h2>
+```python
+file_path = r"作业/01.txt"
+print(os.path.isabs(file_path))#False
+
+file_path = r"D:\pycharm\project\DAY01\作业\01.txt"
+print(os.path.isabs(file_path))#True
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【9】获取当前文件或目录的最后访问时间（getatime）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">file_path = os.path.abspath(__file__)</span><br><span class="line">print(file_path)#D:\pycharm\project\DAY01\作业\笔记练习.py</span><br><span class="line">file_time =os.path.getatime(file_path)</span><br><span class="line">print(file_time)#1713527506.5012364</span><br></pre></td></tr></table></figure>
+
+<h2 id="【10】获取当前文件或目录的最后修改时间（getmtime）">【10】获取当前文件或目录的最后修改时间（getmtime）</h2>
+```python
+file_path = r'D:\pycharm\project'
+file_time = os.path.getmtime(file_path)
+print(time.strftime("%Y-%m-%d  %H-%M-%S", time.localtime(file_time)))#2024-03-28  19-34-18
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【11】获取当前文件或者目录的创建时间(getctime)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">file_path = r&#x27;D:\pycharm\project&#x27;</span><br><span class="line">file_time = os.path.getctime(file_path)</span><br><span class="line">print(time.strftime(&quot;%Y-%m-%d  %H-%M-%S&quot;, time.localtime(file_time)))#2024-03-27  16-30-42</span><br></pre></td></tr></table></figure>
+
+<h2 id="【12】获取当前文件的大小（getsize）">【12】获取当前文件的大小（getsize）</h2>
+```python
+import os
+
+file_path = r'D:\pycharm\project\DAY01\作业\ATMuser_pass.py'
+file_time = os.path.getsize(file_path)
+print(file_time)#18283
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【三】文件和文件夹操作</span><br><span class="line"></span><br><span class="line">## 【1】创建文件夹（mkdir）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">BASE_DIR = os.path.dirname(__file__)</span><br><span class="line">print(BASE_DIR)#D:\pycharm\project\DAY01\作业</span><br><span class="line">file_path = os.path.join(BASE_DIR,&quot;py&quot;)#先判断它存在不存在</span><br><span class="line">print(os.path.exists(file_path))#False</span><br><span class="line">if not os.path.exists(file_path):</span><br><span class="line">    os.mkdir(file_path)</span><br><span class="line">print(os.path.exists(file_path))#True创建成功</span><br></pre></td></tr></table></figure>
+
+<h2 id="【2】创建多级文件夹-makedirs">【2】创建多级文件夹(makedirs)</h2>
+```python
+BASE_DIR = os.path.dirname(__file__)
+print(BASE_DIR)#D:\pycharm\project\DAY01\作业
+file_path = os.path.join(BASE_DIR,"py","user","log")#先判断它存在不存在
+print(os.path.exists(file_path))#False
+if not os.path.exists(file_path):
+    os.makedirs(file_path)
+print(os.path.exists(file_path))#True创建成功
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【3】删除单级文件夹(rmdir)</span><br><span class="line"></span><br><span class="line">- 只能删除空的文件夹 即使文件夹内有空文件夹也不算空的</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">#D:\pycharm\project\DAY01\作业\py</span><br><span class="line">print(os.path.exists(py))#检验路径是否存在</span><br><span class="line">os.rmdir(py)#删除文件夹</span><br><span class="line">print(os.path.exists(py))#检验路径是否删除</span><br></pre></td></tr></table></figure>
+
+<h2 id="【4】删除多级文件夹-removedirs">【4】删除多级文件夹(removedirs)</h2>
+<ul>
+<li>删除多级文件夹目录 路径一定是到最里面那一层并且每个文件夹必须是空的</li>
+</ul>
+```python
+#D:\pycharm\project\DAY01\作业
+print(os.path.exists())#检验路径是否存在
+os.removedirs(py)#删除文件夹
+print(os.path.exists())#检验路径是否删除
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【5】列出当前文件夹下所有文件名(listdir)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">BASE_DIR = os.path.dirname(__file__)</span><br><span class="line">print(os.listdir(BASE_DIR))</span><br></pre></td></tr></table></figure>
+
+<h2 id="【6】删除指定文件-remove">【6】删除指定文件(remove)</h2>
+```python
+#D:\pycharm\project\DAY01\作业
+BASE_DIR = os.path.dirname(__file__)
+file_path = "11.py"
+data = os.path.join(BASE_DIR,file_path)
+print(os.remove(data))#None  说明已经删除
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【7】给指定文件夹和文件重命名（rename）</span><br><span class="line"></span><br><span class="line">- 给两个绝对路径</span><br><span class="line">  - 一个是之前的绝对路径</span><br><span class="line">  - 一个是重命名后的绝对路径</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import os</span><br><span class="line">BASE_DIR = os.path.dirname(__file__)</span><br><span class="line">print(BASE_DIR)#D:\pycharm\project\DAY01\练习模块</span><br><span class="line">old_path = os.path.join(BASE_DIR,&#x27;img&#x27;)</span><br><span class="line">print(old_path)#D:\pycharm\project\DAY01\练习模块\img</span><br><span class="line">new_path = os.path.join(BASE_DIR,&#x27;new_img&#x27;)</span><br><span class="line">print(new_path)#D:\pycharm\project\DAY01\练习模块\new_img</span><br><span class="line">os.rename(old_path)</span><br></pre></td></tr></table></figure>
+
+<h2 id="【8】获取当前文件-文件夹详细信息，元信息（stat）">【8】获取当前文件/文件夹详细信息，元信息（stat）</h2>
+```python
+import os
+BASE_DIR = os.path.dirname(__file__)
+print(BASE_DIR)#D:\pycharm\project\DAY01\练习模块
+print(os.stat(BASE_DIR))#os.stat_result(st_mode=16895, st_ino=21673573206763848, st_dev=1718800474, st_nlink=1, st_uid=0, st_gid=0, st_size=0, st_atime=1713531542, st_mtime=1713531541, st_ctime=1713531157)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【9】获取当前工作目录(getcwd)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">print(os.getcwd())#D:\pycharm\project\DAY01\练习模块</span><br></pre></td></tr></table></figure>
+
+<h2 id="【10】切换工作-chdir">【10】切换工作(chdir)</h2>
+```python
+BASE_DIR = os.path.dirname(__file__)
+# 获取当前工作目录，即当前python脚本工作的目录路径
+file_path = os.getcwd()
+print(file_path)#D:\pycharm\project\DAY01\练习模块
+# E:\PythonProjects\07常用模块学习
+
+img_file_path = os.path.join(BASE_DIR, 'img')
+os.chdir(img_file_path)
+
+file_path_new = os.getcwd()
+print(file_path_new)#D:\pycharm\project\DAY01\练习模块\img
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【补充】执行shell命令</span><br><span class="line"></span><br><span class="line">- 执行cmd命令</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">print(os.system(&quot;dir&quot;))</span><br><span class="line"></span><br><span class="line">print(os.popen(&quot;dir&quot;)）</span><br></pre></td></tr></table></figure>
+
+<h2 id="【补充】获取当前系统所对行的默认分隔符">【补充】获取当前系统所对行的默认分隔符</h2>
+```python
+# win \
+# mac / linux  /
+# 输出操作系统特定的路径分隔符
+print(os.sep) # \
+# 输出当前平台使用的行终止符
+print(os.linesep) # 
+# 输出用于分割文件路径的字符串
+print(os.pathsep)# ;
+# 输出字符串指示当前使用平台
+print(os.name) # nt
+# win下为 'nt'
+# Linux下为 'posix'
+```
+
+<h2 id="【记住重点】">【记住重点】</h2>
+<ul>
+<li>os.path.join() 拼接路径</li>
+<li>os.path.dirname(	<code>__file__	</code>) 获取当前文件所在的文件夹路径</li>
+<li>os.path.abspath(<code>__file__	</code>)获取当前文件所在的文件路径</li>
+<li>os.path.exists() 判断路径是否存在</li>
+<li>os.mkdir() 创建单级文件夹</li>
+<li>os.makedirs() 创建多级文件夹</li>
+<li>os.makedirs(path, exist_ok=True) 自动创建不存在的多级文件夹路径</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/4.8logging%E6%A8%A1%E5%9D%97/" rel="prev" title="4.8logging模块">
+      <i class="fa fa-chevron-left"></i> 4.8logging模块
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/4%E6%9C%8821%E5%A4%A7%E6%80%BB%E7%BB%93/" rel="next" title="4月21大总结">
+      4月21大总结 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">os模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">【一】什么是os模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#file-%E8%A1%A8%E7%A4%BA%E5%BD%93%E5%89%8D%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">__file__表示当前文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">【二】文件路径相关操作(path)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84%EF%BC%88abspath%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">【1】获取当前绝对路径（abspath）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%88%A4%E6%96%AD%E5%BD%93%E5%89%8D%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8-%E3%80%8B%E6%96%87%E4%BB%B6%E5%A4%B9-%E6%96%87%E4%BB%B6-exists"><span class="nav-number">3.2.</span> <span class="nav-text">【3】判断当前文件路径是否存在----》文件夹&#x2F;文件(exists)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%905%E3%80%91%E5%88%87%E5%89%B2%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="nav-number">3.3.</span> <span class="nav-text">【5】切割文件路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%907%E3%80%91%E5%88%A4%E6%96%AD%E5%BD%93%E5%89%8D%E6%96%87%E4%BB%B6%E6%98%AF%E4%B8%8D%E6%98%AF%E6%96%87%E4%BB%B6%E5%A4%B9-%E6%96%87%E4%BB%B6%EF%BC%88isdir-isfile%EF%BC%89"><span class="nav-number">3.4.</span> <span class="nav-text">【7】判断当前文件是不是文件夹&#x2F;文件（isdir,isfile）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%908%E3%80%91%E5%88%A4%E6%96%AD%E5%BD%93%E5%89%8D%E8%B7%AF%E5%BE%84%E6%98%AF%E5%90%A6%E6%98%AF%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84-isabs"><span class="nav-number">3.5.</span> <span class="nav-text">【8】判断当前路径是否是绝对路径(isabs)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%9010%E3%80%91%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95%E7%9A%84%E6%9C%80%E5%90%8E%E4%BF%AE%E6%94%B9%E6%97%B6%E9%97%B4%EF%BC%88getmtime%EF%BC%89"><span class="nav-number">3.6.</span> <span class="nav-text">【10】获取当前文件或目录的最后修改时间（getmtime）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%9012%E3%80%91%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%96%87%E4%BB%B6%E7%9A%84%E5%A4%A7%E5%B0%8F%EF%BC%88getsize%EF%BC%89"><span class="nav-number">3.7.</span> <span class="nav-text">【12】获取当前文件的大小（getsize）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%88%9B%E5%BB%BA%E5%A4%9A%E7%BA%A7%E6%96%87%E4%BB%B6%E5%A4%B9-makedirs"><span class="nav-number">3.8.</span> <span class="nav-text">【2】创建多级文件夹(makedirs)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%904%E3%80%91%E5%88%A0%E9%99%A4%E5%A4%9A%E7%BA%A7%E6%96%87%E4%BB%B6%E5%A4%B9-removedirs"><span class="nav-number">3.9.</span> <span class="nav-text">【4】删除多级文件夹(removedirs)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%906%E3%80%91%E5%88%A0%E9%99%A4%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6-remove"><span class="nav-number">3.10.</span> <span class="nav-text">【6】删除指定文件(remove)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%908%E3%80%91%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%96%87%E4%BB%B6-%E6%96%87%E4%BB%B6%E5%A4%B9%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF%EF%BC%8C%E5%85%83%E4%BF%A1%E6%81%AF%EF%BC%88stat%EF%BC%89"><span class="nav-number">3.11.</span> <span class="nav-text">【8】获取当前文件&#x2F;文件夹详细信息，元信息（stat）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%9010%E3%80%91%E5%88%87%E6%8D%A2%E5%B7%A5%E4%BD%9C-chdir"><span class="nav-number">3.12.</span> <span class="nav-text">【10】切换工作(chdir)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E8%A1%A5%E5%85%85%E3%80%91%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E7%B3%BB%E7%BB%9F%E6%89%80%E5%AF%B9%E8%A1%8C%E7%9A%84%E9%BB%98%E8%AE%A4%E5%88%86%E9%9A%94%E7%AC%A6"><span class="nav-number">3.13.</span> <span class="nav-text">【补充】获取当前系统所对行的默认分隔符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E8%AE%B0%E4%BD%8F%E9%87%8D%E7%82%B9%E3%80%91"><span class="nav-number">3.14.</span> <span class="nav-text">【记住重点】</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

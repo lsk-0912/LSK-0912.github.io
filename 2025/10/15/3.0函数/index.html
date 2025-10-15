@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="函数 【一】函数定义  函数就是将我们某一块代码封装起来后可以在某处直接使用的代码块。 前提条件：只有先定函数才能调用  先定义在调用    【二】函数的语法  循环结构有关键字：while，if，else，elif… 函数的关键词就是：def return值 : 定义函数的返回值，return用的时候就写，不用的时候可以不写（可有可无） pass：表示什么都不做  【1】标准函数结构  定义">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3.0函数">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/3.0%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="函数 【一】函数定义  函数就是将我们某一块代码封装起来后可以在某处直接使用的代码块。 前提条件：只有先定函数才能调用  先定义在调用    【二】函数的语法  循环结构有关键字：while，if，else，elif… 函数的关键词就是：def return值 : 定义函数的返回值，return用的时候就写，不用的时候可以不写（可有可无） pass：表示什么都不做  【1】标准函数结构  定义">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.126Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/3.0%E5%87%BD%E6%95%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>3.0函数 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/3.0%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          3.0函数
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>函数</h1>
+<h1>【一】函数定义</h1>
+<ul>
+<li>函数就是将我们某一块代码封装起来后可以在某处直接使用的代码块。</li>
+<li>前提条件：只有先定函数才能调用
+<ul>
+<li>先定义在调用</li>
+</ul>
+</li>
+</ul>
+<h1>【二】函数的语法</h1>
+<ul>
+<li>循环结构有关键字：while，if，else，elif…</li>
+<li>函数的关键词就是：def</li>
+<li>return值 : 定义函数的返回值，return用的时候就写，不用的时候可以不写（可有可无）</li>
+<li>pass：表示什么都不做</li>
+</ul>
+<h2 id="【1】标准函数结构">【1】标准函数结构</h2>
+<ul>
+<li>定义</li>
+</ul>
+```python
+'''
+def 函数名（）
+    代码体
+#调用
+函数名（）
+
+'''
+#什么是代码体：代码体可能包含各种语句、表达式、函数、类等
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】定义函数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">#定义</span><br><span class="line">def name():</span><br><span class="line">    print(f&quot;当前用户已登入！&quot;)</span><br><span class="line">#调用（定义完之后使用）</span><br><span class="line">name()#输出：当前用户已登入！</span><br></pre></td></tr></table></figure>
+
+<h2 id="【3】函数的内部原理">【3】函数的内部原理</h2>
+<ul>
+<li>在函数定义阶段
+<ul>
+<li>def表示在内存空间中开启一个内存空间地址</li>
+<li>name给这块内存地址取名字</li>
+<li>（）函数可能会接收到参数</li>
+<li>代码体 函数可以执行的代码块</li>
+</ul>
+</li>
+</ul>
+<h1>【三】函数的类型</h1>
+<h2 id="【1】有参函数，无参函数（定义函数的时候）">【1】有参函数，无参函数（定义函数的时候）</h2>
+<h3 id="（1）无参函数">（1）无参函数</h3>
+<ul>
+<li>（）里面没有放变量</li>
+<li>函数内部可以直接使用外部头顶上面的参数</li>
+</ul>
+```python
+#方式一 在函数头顶上指定参数
+username = "tom"
+password = "710"
+def login():
+    #函数内部可以做直接使用外部头顶的参数
+    if username == "tom" and password == "710":
+        print("当前用户登入成功！")
+    else:
+        print("当前用户登入失败！")
+login()
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (2)有参函数</span><br><span class="line"></span><br><span class="line">- （）里面放变量</span><br><span class="line">- 函数内部可以直接使用外部头顶上面的参数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">#方式二 有参函数在（）的里面放变量名即可</span><br><span class="line">def login(username,password):</span><br><span class="line">    if username == &quot;tom&quot; and password == &quot;710&quot;:</span><br><span class="line">        print(&quot;当前用户登入成功！&quot;)#调用login(&quot;tom&quot;,&quot;710&quot;)正确的用户名密码</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;当前用户登入失败！&quot;)#调用login(&quot;dream&quot;,&quot;521&quot;)错误的用户名密码</span><br><span class="line">login(&quot;tom&quot;,&quot;710&quot;)</span><br><span class="line"></span><br><span class="line">#（1）按照位置传递参数，参数位置不能随意改变</span><br><span class="line">#用户名在前密码在后login(&quot;tom&quot;,&quot;710&quot;)</span><br><span class="line">#（2）按照关键词传参数，位置可以变动</span><br><span class="line">#login(username=&quot;tom&quot;,password=&quot;710&quot;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>区分有参函数和无参函数就看（）里面有没有变量名</li>
+<li>无参函数不需要参数传递直接就可以用</li>
+<li>有参函数调用的时候需要传递参数</li>
+<li>传递参数可以按照位置传递参数，函数定义的那个变量在前就先传哪个</li>
+<li>user_input（username,password）
+<ul>
+<li>login(“tom”,“710”)</li>
+</ul>
+</li>
+<li>传递参数也可以按照关键字传参，函数定义的时候那个参数在前没影响</li>
+<li>user_input（username,password）
+<ul>
+<li>login(username=“tom”,password=“710”)</li>
+</ul>
+</li>
+</ul>
+<h1>【四】有返回值函数和无返回值函数</h1>
+<ul>
+<li>函数的返回值是元组（ 不懂）</li>
+</ul>
+```python
+def get_user_pwd():#输出填写用户名和密码的信息
+    username = input("请输入用户名 :>>>>> ").strip()
+    password = input("请输入密 码 :>>>>> ").strip()
+    return username, password
+#元组的特性   解压赋值
+
+def login(username, password):
+    if username == 'dream' and password == '521':#判断密码用户名是否正确
+        print(f"登录成功")
+    else:
+        print('登录失败')
+
+def register(username, password):#登入的用户名密码
+    # 模拟打开了文件并写入内容
+    data = f'{username}|{password}'
+    print(data)
+
+    def main():
+        print(f"当前功能如下 : 1 登录 2 注册")
+        func_id = input("请输入功能ID ").strip()
+        func_id = int(func_id)
+        if func_id == 1:
+            username, password = get_user_pwd()
+            login(username=username, password=password)
+        elif func_id == 2:
+            username, password = get_user_pwd()
+            register(username=username, password=password)
+
+    main()
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># [五]文本文件登入系统优化)作业</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 【全局异常捕获】</span><br><span class="line"># 在指定位置添加异常捕获机制</span><br><span class="line"># 如果遇到异常和报错要捕获异常信息并做定制化输出</span><br><span class="line"></span><br><span class="line"># 【总需求】</span><br><span class="line"># 【1】打印功能菜单供用户选择</span><br><span class="line"># 【2】校验功能ID是否存在并且符合数字格式</span><br><span class="line"># 【3】根据指定功能ID进入到指定的功能中</span><br><span class="line"></span><br><span class="line"># 【注册功能】</span><br><span class="line"># 【1】用户输入用户名和密码</span><br><span class="line"># 【2】校验用户名是否存在，如果已经存在则禁止注册，否则允许注册</span><br><span class="line"># 【3】使用文本文件作为数据存储位置</span><br><span class="line"># 【4】用户注册时指定默认锁定状态为未锁定</span><br><span class="line"></span><br><span class="line"># 【登录功能】</span><br><span class="line"># 【1】用户输入用户名和密码</span><br><span class="line"># 【2】校验用户名是否存在，如果不存在则提示注册</span><br><span class="line"># 【3】校验用户状态是否是锁定状态，如果锁定不允许登录并提示管理员解除</span><br><span class="line"># 【4】未锁定用户允许重试输入密码，最大重试次数为3次并提示剩余尝试次数</span><br><span class="line"># 【5】用户输入密码错误次数达最大尝试次数后修改默认锁定状态为锁定</span><br><span class="line"></span><br><span class="line"># 【文件拷贝功能】</span><br><span class="line"># 【1】用户登录成功后允许使用文件拷贝程序</span><br><span class="line"># 【2】用户输入指定的路径(源文件)</span><br><span class="line"># （1）打开文件 (文本文件w 二进制是wb)</span><br><span class="line"># （2）对文件类型做区分</span><br><span class="line"># 【3】用户输入指定的路径(新文件)</span><br><span class="line"># （1）复制当前文件到新位置</span><br><span class="line"># （2）按照指定文件类型赋值新文件(可重命名或者使用原本的文件名)</span><br></pre></td></tr></table></figure>
+
+```python
+ get_username_password():
+    username_input = input("请输入用户名 :>>>> ").strip()
+    password_input = input("请输入密 码 :>>>> ").strip()
+    return username_input, password_input
+
+# 保存数据
+def save_data(data, file='user_data.text'):
+    # 打开文件
+    with open(file=file, mode='a', encoding='utf-8') as fp:
+        # 写数据
+        fp.write(data + '\n')
+# 读取数据
+# 第五步 读取用户数据
+def read_data(file='user_data.text'):
+    # 第六步 打开文件 ---> 将文件内容切割 拼成字典
+    try:
+        user_data_dict = {}
+        # 打开文件
+        with open(file=file, mode='r', encoding='utf-8') as fp:
+            for line in fp:
+                username, password, lock = line.strip().split(':')
+                user_data_dict[username] = {
+                    'username': username,
+                    'password': password,
+                    'is_locked': bool(int(lock))
+                }
+        # 第七步 用户文件存在并且已经做好了定制 然后返回给代用的函数使用
+        return user_data_dict
+    except:
+        # 可能会遇到第一次进来文件不存在 直接返回空的字典
+        return {}
+
+# 公共的函数：用来校验当前用户是否存在
+# 第三步 进入到校验用户是否存在的函数中
+def exist_user(username):
+    # 第四步 从文件中读取用户数据
+    # 第八步 从读取数据的函数中获取到了 拼接号的数据字典
+    # {'dream': {'username': 'dream', 'password': '521', 'is_locked': False}}
+    user_data_dict = read_data()
+    # 第九步：从数据字典中获取得到当前用户名所对应的数据 如果有 没有就是 None
+    user_data = user_data_dict.get(username)
+    if not user_data:
+        # None不存在 返回False
+        return False
+    else:
+        # 如果存在则返回 True
+        return True
+
+
+def register():
+    print("当前是注册功能")
+    # 第一步 输入用户名和密码
+    username_input, password_input = get_username_password()
+    # 第二步 先校验当前用户是否存在
+    # 第十步 接收到函数判断出来的结果 是存在True 还是不存在False
+    is_exist = exist_user(username_input)
+    # 第十一步 已经判断出存在了 不让注册
+    if is_exist:
+        return False, f"当前用户 {username_input} 已存在不允许注册"
+    else:
+        # 第十二步 用户不存在 允许注册
+        # 拼成指定的数据格式
+        data = f'{username_input}:{password_input}:0'
+        # 第十三步 调用保存数据的函数方法 保存数据
+        save_data(data)
+        return True, f"当前用户 {username_input} 注册成功!"
+
+def login():
+    print(f"当前是登录功能")
+    return True, f'登录成功'
+
+
+def copy_file():
+    print("当前是文件拷贝功能")
+
+
+# print(type(copy_file))  # <class 'function'>
+# print(id(copy_file))  # 2198084305104
+func_menu = '''
+########################## 功能菜单 ########################## 
+                            1.注册
+                            2.登录
+                            3.文件拷贝
+                            q.退出
+'''
+
+func_dict = {
+    '1': register,
+    '2': login,
+    '3': copy_file
+}
+
+def main():
+    while True:
+        # 【一】打印功能菜单
+        print(func_menu)
+        # 【二】输入功能ID
+        func_id = input("请输入功能ID :>>>> ").strip()
+        if not func_id.isdigit():
+            print(f"当前功能ID不是数字，不合法!")
+
+        func = func_dict.get(func_id)
+        tag, msg = func()
+        if tag:
+            print(msg)
+            break
+        else:
+            print(msg)
+            continue
+
+
+main()
+
+# def login(username='dream'):
+#     if username == 'dream':
+#         print("登录成功")
+#
+# login(username='opp')
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【六】作业</span><br><span class="line"></span><br><span class="line">- 使用函数完善剩下功能</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```pascal</span><br><span class="line"># 【全局异常捕获】</span><br><span class="line"># 在指定位置添加异常捕获机制</span><br><span class="line"># 如果遇到异常和报错要捕获异常信息并做定制化输出</span><br><span class="line"></span><br><span class="line"># 【总需求】</span><br><span class="line"># 【1】打印功能菜单供用户选择</span><br><span class="line"># 【2】校验功能ID是否存在并且符合数字格式</span><br><span class="line"># 【3】根据指定功能ID进入到指定的功能中</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/3.0HTML%E8%BF%9B%E9%98%B6/" rel="prev" title="3.0HTML进阶">
+      <i class="fa fa-chevron-left"></i> 3.0HTML进阶
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/3.0GIL%E5%85%A8%E5%B1%80%E8%A7%A3%E9%87%8A%E5%99%A8%E9%94%81/" rel="next" title="3.0GIL全局解释器锁">
+      3.0GIL全局解释器锁 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">【一】函数定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">【二】函数的语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%A0%87%E5%87%86%E5%87%BD%E6%95%B0%E7%BB%93%E6%9E%84"><span class="nav-number">3.1.</span> <span class="nav-text">【1】标准函数结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%87%BD%E6%95%B0%E7%9A%84%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">【3】函数的内部原理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">【三】函数的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%9C%89%E5%8F%82%E5%87%BD%E6%95%B0%EF%BC%8C%E6%97%A0%E5%8F%82%E5%87%BD%E6%95%B0%EF%BC%88%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">【1】有参函数，无参函数（定义函数的时候）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%97%A0%E5%8F%82%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.1.</span> <span class="nav-text">（1）无参函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">【四】有返回值函数和无返回值函数</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

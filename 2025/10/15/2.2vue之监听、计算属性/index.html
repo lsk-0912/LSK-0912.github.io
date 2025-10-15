@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="【一】计算属性  计算属性本质就是一个函数，但是你当属性用  &#96;&#96;&#96;&#96;python # 计算属性：computed # 我们使用计算属性的时候感觉和使用普通函数没有区别 # 它们是有很大的区别的 - 如果使用计算属性，只有计算属性中使用的变量，发生变化时，计算属性才重新运算 - 如果使用函数，只要页面发生变化，函数就会重新运算 - 计算属性当属性用，可以被for循环，可以被v-if判断 12345">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2.2vue之监听、计算属性">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/2.2vue%E4%B9%8B%E7%9B%91%E5%90%AC%E3%80%81%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="【一】计算属性  计算属性本质就是一个函数，但是你当属性用  &#96;&#96;&#96;&#96;python # 计算属性：computed # 我们使用计算属性的时候感觉和使用普通函数没有区别 # 它们是有很大的区别的 - 如果使用计算属性，只有计算属性中使用的变量，发生变化时，计算属性才重新运算 - 如果使用函数，只要页面发生变化，函数就会重新运算 - 计算属性当属性用，可以被for循环，可以被v-if判断 12345">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-15T03:34:54.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.065Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/2.2vue%E4%B9%8B%E7%9B%91%E5%90%AC%E3%80%81%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2.2vue之监听、计算属性 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/2.2vue%E4%B9%8B%E7%9B%91%E5%90%AC%E3%80%81%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2.2vue之监听、计算属性
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:54 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:54+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>【一】计算属性</h1>
+<ul>
+<li>计算属性本质就是一个函数，但是你当属性用</li>
+</ul>
+````python
+# 计算属性：computed
+# 我们使用计算属性的时候感觉和使用普通函数没有区别
+# 它们是有很大的区别的
+- 如果使用计算属性，只有计算属性中使用的变量，发生变化时，计算属性才重新运算
+- 如果使用函数，只要页面发生变化，函数就会重新运算
+- 计算属性当属性用，可以被for循环，可以被v-if判断
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【1】基本的使用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;./js2/vue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;h1&gt;用户输入英文名-首字母转大写&lt;/h1&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; v-model=&quot;username&quot;&gt;--&gt;&#123;&#123;getUser()&#125;&#125;</span><br><span class="line">    &lt;!--    &lt;input type=&quot;text&quot; v-model=&quot;username&quot;&gt;&amp;#45;&amp;#45;》&#123;&#123;this.username.substring(0,1).toUpperCase()+this.username.substring(1)&#125;&#125;--&gt;</span><br><span class="line">&lt;!--        &lt;input type=&quot;text&quot; v-model=&quot;username&quot;&gt;&amp;#45;&amp;#45;》&#123;&#123;new_name&#125;&#125;--&gt;</span><br><span class="line"></span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; v-model=&quot;age&quot;&gt;--》&#123;&#123;age&#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            username:&#x27;&#x27;,</span><br><span class="line">            age:&#x27;&#x27;</span><br><span class="line">        &#125;,</span><br><span class="line">        methods:&#123;</span><br><span class="line">            // 页面发生了改变就会执行</span><br><span class="line">            getUser()&#123;</span><br><span class="line">                console.log(&#x27;-----执行了&#x27;)</span><br><span class="line">                return this.username.substring(0,1).toUpperCase()+this.username.substring(1)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        computed:&#123; //里面的值，当属性用</span><br><span class="line">            new_name()&#123;</span><br><span class="line">                // 里面的变量发生了改边才会执行</span><br><span class="line">                console.log(&#x27;执行了&#x27;)</span><br><span class="line">                return this.username.substring(0,1).toUpperCase()+this.username.substring(1)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="【2】使用计算属性重写过滤案例">【2】使用计算属性重写过滤案例</h2>
+````html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>过滤案例</title>
+    <script src="./js2/vue.js"></script>
+
+</head>
+<body>
+<div class="app">
+    <input type="text" v-model="myText">
+    <ul>
+        <li v-for="item in newDataList">{{item}}</li>
+    </ul>
+
+</div>
+</body>
+<script>
+    var vm = new Vue({
+        el: '.app',
+        data: {
+            myText: '',
+            dataList: ['a', 'at', 'atom', 'atommon', 'be', 'beyond', 'cs', 'csrf'],
+        },
+        methods: {
+        },
+        computed: {
+            newDataList() {
+                // filter：过滤的党法，每次取一个值，进行过滤
+                return this.dataList.filter(item => {
+                    // item.indexOf 是用来查找指定元素在数组或字符串中的位置。它返回元素第一次出现的位置的索引，如果元素不存在，则返回 。-1
+                    // 存在的话存到dataList里面
+                    if (item.indexOf(this.myText) >= 0) {
+                        return true
+                    } else {
+                        return false
+                    }
+
+                })
+            }
+        }
+    })
+</script>
+</html>
+````
+
+<h1>【二】监听属性</h1>
+```python
+# 监听属性：watch
+# 监听一个属性的变化吗，只要属性发生了变化，就执行 某个代码
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;监听属性&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;./js2/vue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div class=&quot;app&quot;&gt;</span><br><span class="line">    &lt;h1&gt;监听属性&lt;/h1&gt;</span><br><span class="line"></span><br><span class="line">    &lt;button @click=&quot;goods_type=&#x27;食品&#x27;&quot;&gt;食品&lt;/button&gt;</span><br><span class="line">    &lt;button @click=&quot;goods_type=&#x27;蔬菜&#x27;&quot;&gt;蔬菜&lt;/button&gt;</span><br><span class="line">    &lt;button @click=&quot;goods_type=&#x27;冷藏&#x27;&quot;&gt;冷藏&lt;/button&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &#123;&#123;goods_type&#125;&#125;</span><br><span class="line"></span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        el: &#x27;.app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            goods_type: &#x27;所有数据&#x27;</span><br><span class="line">        &#125;,</span><br><span class="line">        watch: &#123;</span><br><span class="line">            // new_val：这个是新值</span><br><span class="line">            // old_val：这个是老值</span><br><span class="line">            goods_type(new_val,old_val)&#123;</span><br><span class="line">                console.log(old_val)</span><br><span class="line">                console.log(new_val)</span><br><span class="line">                console.log(&#x27;向后端发送请求，过滤数据了&#x27;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/2.4%E5%8F%AF%E5%8F%98%E4%B8%8E%E4%B8%8D%E5%8F%AF%E5%8F%98%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="prev" title="2.4可变与不可变数据类型">
+      <i class="fa fa-chevron-left"></i> 2.4可变与不可变数据类型
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/2.3%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/" rel="next" title="2.3深浅拷贝">
+      2.3深浅拷贝 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">【一】计算属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E4%BD%BF%E7%94%A8%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E9%87%8D%E5%86%99%E8%BF%87%E6%BB%A4%E6%A1%88%E4%BE%8B"><span class="nav-number">1.1.</span> <span class="nav-text">【2】使用计算属性重写过滤案例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">【二】监听属性</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

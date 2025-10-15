@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="【一】理论题(60) 【1】计算机基础(3) （1）五大组成部分有哪些 &#96;&#96;&#96;python ### （1）控制器  - **功能：** 控制器相当于计算机的大脑，负责指挥和协调其他部件的工作。 - **类比：** 人的大脑，负责指挥身体各部分协同工作。  ### （2）运算器  - **功能：** 运算器执行各种算术和逻辑运算，实现计算机的计算功能。   - 算术运算：数字之间的运算，例如 + -">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阶段性考试一【解释版】">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/%E9%98%B6%E6%AE%B5%E6%80%A7%E8%80%83%E8%AF%95%E4%B8%80%E3%80%90%E8%A7%A3%E9%87%8A%E7%89%88%E3%80%91/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="【一】理论题(60) 【1】计算机基础(3) （1）五大组成部分有哪些 &#96;&#96;&#96;python ### （1）控制器  - **功能：** 控制器相当于计算机的大脑，负责指挥和协调其他部件的工作。 - **类比：** 人的大脑，负责指挥身体各部分协同工作。  ### （2）运算器  - **功能：** 运算器执行各种算术和逻辑运算，实现计算机的计算功能。   - 算术运算：数字之间的运算，例如 + -">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-15T03:34:56.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.495Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/%E9%98%B6%E6%AE%B5%E6%80%A7%E8%80%83%E8%AF%95%E4%B8%80%E3%80%90%E8%A7%A3%E9%87%8A%E7%89%88%E3%80%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>阶段性考试一【解释版】 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/%E9%98%B6%E6%AE%B5%E6%80%A7%E8%80%83%E8%AF%95%E4%B8%80%E3%80%90%E8%A7%A3%E9%87%8A%E7%89%88%E3%80%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          阶段性考试一【解释版】
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:56 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:56+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>【一】理论题(60)</h1>
+<h2 id="【1】计算机基础-3">【1】计算机基础(3)</h2>
+<h3 id="（1）五大组成部分有哪些">（1）五大组成部分有哪些</h3>
+```python
+### （1）控制器
+
+- **功能：** 控制器相当于计算机的大脑，负责指挥和协调其他部件的工作。
+- **类比：** 人的大脑，负责指挥身体各部分协同工作。
+
+### （2）运算器
+
+- **功能：** 运算器执行各种算术和逻辑运算，实现计算机的计算功能。
+  - 算术运算：数字之间的运算，例如 + - * /
+  - 逻辑运算：根据某个条件是否成立，决定是否要做事情
+- **类比：** 人的大脑皮层，负责思考和计算的任务。
+  - 控制器+运算器=CPU
+  - cpu相当于人的大脑
+
+### （3）存储器
+
+- **功能：** 存储器用于存储计算机运行时所需的数据和指令。
+- **类比：** 人的记忆系统，分为短时记忆（内存）和长时记忆（外存）。
+
+#### [1]内存
+
+- **功能：** 内存是计算机用于临时存储数据和程序的地方，是CPU能够直接访问的存储介质。
+- **类比：** 相当于人的短时记忆，用于存储当前正在进行的任务和运行的程序。
+- **特点**：
+  - 断电数据丢失：内存是一种易失性存储器，断电后存储在其中的数据将丢失。
+  - 读取速度快：由于内存是直接与CPU相连的，因此读取速度非常快。
+- **作用：** 在运行程序时，数据必须先加载到内存中，CPU才能够快速访问和处理这些数据。
+
+#### [2]外存
+
+- **功能：** 外存用于永久存储数据，即使在断电的情况下数据也不会丢失。
+- **类比：** 相当于人的长时记忆，用于存储更为持久的信息，如文件、照片等。
+- **特点**：
+  - 断电数据不会丢失：外存是一种非易失性存储器，数据在断电后依然保持。
+  - 读取速度慢：与内存相比，外存的读取速度较慢，因为需要通过外部设备进行读取。
+- **形式：** 包括磁带、光盘、U盘、硬盘等形式。
+
+> 内存的读取和存取速率远远高于外存
+>
+> 存储器如内存、磁盘等，既是输入设备又是输出设备，统称为IO设备
+
+### （4）输入设备（input）
+
+- **功能：** 输入设备用于将外部信息输入到计算机，让计算机能够处理。
+- **类比：** 人的感官器官，如眼睛、耳朵，用于感知外界信息；如键盘、鼠标、麦克风、扫描仪。
+
+### （5）输出设备（output）
+
+- **功能：** 输出设备将计算机处理后的结果呈现给用户或其他设备。
+- **类比：** 人的口鼻，人说的话，写出的文章，用于表达和输出信息；如显示器、打印机。
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）三大核心硬件有哪些</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 处理器（CPU）</span><br><span class="line">负责执行计算和逻辑操作，是计算机的“大脑”。</span><br><span class="line"></span><br><span class="line"># 内存（RAM）</span><br><span class="line">提供快速访问的临时数据存储空间，影响程序运行速度和多任务处理能力。</span><br><span class="line"></span><br><span class="line"># 存储器（如硬盘驱动器或固态硬盘SSD）</span><br><span class="line">用于长期存储操作系统、程序、文件和数据，是计算机数据持久化的关键部件。</span><br></pre></td></tr></table></figure>
+
+<h3 id="（3）三大核心硬件各自的作用">（3）三大核心硬件各自的作用</h3>
+```python
+### **（1）CPU（中央处理器）**
+
+- 由控制器和运算器组成。
+- **用于计算数据，执行程序的指令**。
+- 负责控制计算机的操作。
+- 计算机的"大脑"，决定程序执行的顺序和过程。
+
+### **（2）内存**
+
+- 读取速度快，基于电工作。
+- **用于存储正在运行的程序和临时数据**。
+- 断电后数据立即丢失，是一种易失性存储器。
+- 作为CPU直接访问的存储介质，提供了高速的数据读写能力。
+
+### **（3）硬盘**
+
+- 读取速度相对较慢。
+- **用于永久保存数据，包括操作系统、应用程序和用户数据等**。
+- 断电后数据不会丢失，是一种非易失性存储器。
+- 作为长期存储的主要设备，容量通常较大。
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】变量和常量(5)</span><br><span class="line"></span><br><span class="line">### （1）什么是变量</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">- 变量是用于存储数据值的标识符，可以通过变量名访问和操作这些数据。</span><br><span class="line">  - 在程序中，变量就像一个容器，用于存储和管理数据。</span><br><span class="line"></span><br><span class="line">- 变量就是可以变化的量，量指的是事物的状态</span><br><span class="line">  - 比如人的年龄、性别，游戏角色的等级、金钱等等</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）什么是常量">（2）什么是常量</h3>
+```python
+常量指在程序运行过程中不会改变的量,在程序运行过程中，有些值是固定的、不应该被改变
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （3）变量和常量有什么区别？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 变量（Variable）</span><br><span class="line">1. 定义：变量是一个在程序中声明的存储位置，其值可以在程序执行期间发生改变。</span><br><span class="line">2. 用途：主要用于存储那些可能随程序运行而变化的数据，比如用户输入、计数器、计算结果等。</span><br><span class="line">3. 灵活性：变量赋予了程序动态性，使得程序能够根据不同的条件或输入做出相应的变化。</span><br><span class="line">4. 命名规则：变量名需要遵循编程语言的命名规范，并且通常要求在使用前进行声明和初始化。</span><br><span class="line"></span><br><span class="line"># 常量（Constant）</span><br><span class="line">1. 定义：常量是在程序中设定的一个固定值，一旦被定义后，在程序执行过程中其值不能被改变。</span><br><span class="line">2. 用途：常量用来存储程序中不会改变的值，如π的近似值(3.14159)、重力加速度(9.8m/s²)、特定的配置参数或是固定的文本字符串等。</span><br><span class="line">3. 稳定性与安全：通过使用常量，可以增加程序的可读性和稳定性，减少因误改重要数值导致的错误。</span><br><span class="line">4. 命名规则：常量的命名往往有更严格的规范，通常采用全大写加上下划线的方式以示区别，表示其不可变性。</span><br><span class="line"></span><br><span class="line"># 简而言之</span><br><span class="line">变量的值是可以变化的，而常量的值一旦设定就不可更改，这决定了它们在程序设计中的不同应用场景和重要性。</span><br></pre></td></tr></table></figure>
+
+<h3 id="（4）变量的三大特性分别是什么">（4）变量的三大特性分别是什么</h3>
+```python
+### （1）id (内存地址 - 内存编号)
+
+- 反应的是变量在内存中的唯一编号，内存地址不同id肯定不同
+
+### （2）type （数据类型）
+
+- 变量值的类型
+
+### （3）value （变量值）
+
+- 变量值
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （5）如何查看变量的三大特性？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 定义变量</span><br><span class="line">x = &#x27;Info Dream:18&#x27;</span><br><span class="line"></span><br><span class="line"># id (内存地址 - 内存编号)  ： 反应的是变量在内存中的唯一编号，内存地址不同id肯定不同</span><br><span class="line">print(id(x))  # 2304891956272</span><br><span class="line"></span><br><span class="line"># type （数据类型） ： 变量值的类型</span><br><span class="line">print(type(x))  # &lt;class &#x27;str&#x27;&gt;</span><br><span class="line"></span><br><span class="line"># value （变量值） ： 变量值</span><br><span class="line">print(x)  # Info Dream:18</span><br></pre></td></tr></table></figure>
+
+<h2 id="【3】-和is的区别-1">【3】==和is的区别(1)</h2>
+```python
+== 双等号比较的是value是否相等
+
+is用于比较两个对象的标识id（内存地址）是否相同
+
+在实际应用中，特别是对于可变对象，==通常更适合用于比较值，而is更适合用于比较对象的身份。
+
+id相同，内存地址必定相同，意味着type和value必定相同
+
+value相同type肯定相同，但id可能不同
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【4】进制转换(2)</span><br><span class="line"></span><br><span class="line">### （1）如何将字符串转成utf8的二进制格式？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 由字符转换成内存中的unicode，以及由unicode转换成其他编码的过程，都称为编码encode</span><br><span class="line"></span><br><span class="line">x = &#x27;上&#x27;  # 在python3在&#x27;上&#x27;被存成unicode</span><br><span class="line">res = x.encode(&#x27;utf-8&#x27;)</span><br><span class="line">print(res, type(res))  # unicode编码成了utf-8格式，而编码的结果为bytes类型，可以当作直接当作二进制去使用</span><br><span class="line"># b&#x27;\xe4\xb8\x8a&#x27; &lt;class &#x27;bytes&#x27;&gt;</span><br><span class="line"></span><br><span class="line"># 只有英文字符和数字，要想编码的话，直接使用前缀b --- 字节对象没有encode方法</span><br><span class="line">s = b&#x27;Dream123&#x27;</span><br><span class="line">print(s, type(s))</span><br><span class="line"># b&#x27;Dream123&#x27; &lt;class &#x27;bytes&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）如何将utf8的二进制格式转成字符串？">（2）如何将utf8的二进制格式转成字符串？</h3>
+```python
+# 由内存中的unicode转换成字符，以及由其他编码转换成unicode的过程，都称为解码decode
+
+# 在诸多文件类型中，只有文本文件的内存是由字符组成的，因而文本文件的存取也涉及到字符编码的问题
+
+x = b'\xe4\xb8\x8a'
+res = x.decode('utf-8')
+print(res, type(res))
+# 上 <class 'str'>
+
+
+s = b'Dream123'
+res = s.decode('utf-8')
+print(res, type(res))
+# Dream123 <class 'str'>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【5】基本数据类型(3)</span><br><span class="line"></span><br><span class="line">### （1）Python的基本数据类型有哪些？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">数字类型</span><br><span class="line">整数类型(int)</span><br><span class="line">浮点类型(float)</span><br><span class="line">字符串类型(str)</span><br><span class="line">列表类型(list)</span><br><span class="line">字典类型(dict)</span><br><span class="line">布尔类型(bool)</span><br><span class="line">元祖类型(tuple)</span><br><span class="line">集合类型(set)</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）分别有什么特点？">（2）分别有什么特点？</h3>
+<h3 id="（3）容器类型和序列类型有哪些？">（3）容器类型和序列类型有哪些？</h3>
+```python
+### 容器类型（Container Types）
+
+容器类型是一种数据结构，它能容纳多个元素，每个元素可以是不同类型的数据。容器类型的主要目的是组织和管理数据集合。以下是一些典型的容器类型：
+
+1. **列表（List）**：序列类型的一种，可以存储有序的、可重复的元素，元素可以是任意数据类型，支持插入、删除和修改操作。
+2. **集合（Set）**：无序的、不包含重复元素的容器。主要用于去重、成员关系测试等操作。
+3. **字典（Dictionary/Map）**：一种键值对（Key-Value Pair）的映射结构，每个键对应一个值，键通常是唯一的，而值可以重复。适用于快速查找和关联数据。
+
+### 序列类型（Sequential Types）
+
+序列类型是一种特殊的容器类型，其中的元素具有一定的顺序，支持按照这个顺序进行索引访问。以下是几种常见的序列类型：
+
+1. **字符串（String）**：由字符组成的序列，每个字符对应一个索引位置。
+2. **数组（Array）**：固定大小的连续内存空间，存储相同类型的元素，支持随机访问。
+3. **元组（Tuple）**：不可变的序列类型，一旦创建，其中的元素就不能修改。元组可以包含不同类型的数据。
+4. **列表（List）**：虽然已经提到过，但列表也是序列类型的一种，强调的是它的有序性和可变性。
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【6】数据类型的内置方法(1)</span><br><span class="line"></span><br><span class="line">### （1）尽可能多的分别写出八大基本数据类型内置方法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````python</span><br><span class="line">### 3. str 字符串</span><br><span class="line"></span><br><span class="line">字符串有很多内置方法，包括：</span><br><span class="line"></span><br><span class="line">- **`lower()`**：转小写</span><br><span class="line">- **`upper()`**：转大写</span><br><span class="line">- **`split(sep=None)`**：按分隔符分割字符串为列表</span><br><span class="line">- **`join(iterable)`**：连接序列中的元素，生成一个字符串</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python<br>
+s = “Hello, World!”<br>
+print(s.lower()) # 输出 hello, world!</p>
+```
+
+
+
+### 4. bool 布尔型
+
+布尔型只有两个实例，True和False，它们主要是用于逻辑运算，没有特别的内置方法。
+
+### 5. list 列表
+
+列表是Python中最常用的数据结构之一，它有很多内置方法：
+
+- **`append(x)`**：在列表末尾添加一个元素
+- **`extend(iterable)`**：将一个可迭代对象的所有元素添加到列表末尾
+- **`pop([index])`**：移除列表中的一个元素（默认最后一个），并返回它
+- **`sort(key=None, reverse=False)`**：对列表就地排序
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">l = [1, 2, 3]</span><br><span class="line">l.append(4)</span><br><span class="line">print(l) # 输出 [1, 2, 3, 4]</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 6. tuple 元组</span><br><span class="line"></span><br><span class="line">元组是不可变的列表，因此它的方法较少，主要涉及到索引和切片操作，没有像列表那样丰富的修改方法。</span><br><span class="line"></span><br><span class="line">### 7. set 集合</span><br><span class="line"></span><br><span class="line">集合用于无序且不重复的元素存储，其内置方法包括：</span><br><span class="line"></span><br><span class="line">- **`add(element)`**：添加元素</span><br><span class="line">- **`remove(element)`**：移除元素</span><br><span class="line">- **`union(other_set)`**：返回两个集合的并集</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python<br>
+s1 = {1, 2, 3}<br>
+s2 = {3, 4, 5}<br>
+print(s1.union(s2)) # 输出 {1, 2, 3, 4, 5}</p>
+```
+
+
+
+### 8. dict 字典
+
+字典存储键值对，内置方法有：
+
+- **`keys()`**：返回一个视图对象，包含字典所有的键
+- **`values()`**：返回一个视图对象，包含字典所有的值
+- **`get(key[, default])`**：获取指定键的值，如果键不存在，则返回默认值
+- **`update([other])`**：更新字典，添加或替换字典的键值对
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">d = &#123;&#x27;name&#x27;: &#x27;Alice&#x27;, &#x27;age&#x27;: 30&#125;</span><br><span class="line">print(d.get(&#x27;age&#x27;)) # 输出 30</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【7】堆和栈(2)</span><br><span class="line"></span><br><span class="line">### （1）什么是堆和栈？</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># **堆（Heap）**：</span><br><span class="line">堆是一种特殊的树形数据结构，通常是一个完全二叉树。堆的特点是父节点的值总是大于或小于其子节点的值，具体取决于它是最大堆还是最小堆。在计算机科学中，堆常被用作动态内存分配的数据结构，操作系统管理的“堆”区域，或者作为实现优先队列的一种方式。在很多编程语言中，程序员直接管理的堆内存允许在运行时动态地分配和释放内存。</span><br><span class="line"></span><br><span class="line"># v**栈（Stack）**：</span><br><span class="line">栈是一种线性数据结构，遵循后进先出（LIFO, Last In First Out）原则，就像一堆盘子，最后放上去的盘子最先被拿下来。栈主要有两种基本操作：`push`（压栈，将元素放入栈顶）和`pop`（弹栈，从栈顶取出元素）。栈可用于函数调用、表达式求值、撤销操作等功能。</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）用Python代码模拟堆和栈">（2）用Python代码模拟堆和栈</h3>
+````python
+# 堆的操作是先进先出（FIFO）
+list_queue = []
+for i in range(0, 5):
+    print(f'{i} 已入堆(队列)')
+    list_queue.append(i)
+print('------入堆完毕--------')
+while list_queue:
+    print(f'{list_queue.pop(0)} 已出堆(队列)')
+print('------出堆完毕--------')
+
+# 栈的操作是先进后出（LIFO）
+list_stack = []
+for i in range(0, 5):
+    print(f'{i} 已入栈')
+    list_stack.append(i)
+print('------入栈完毕--------')
+while list_stack:
+    print(f'{list_stack.pop()} 已出栈')
+print('------出栈完毕--------')
+````````
+
+<p>python<br>
+<strong>模拟栈：</strong></p>
+```python
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def is_empty(self):
+        return not bool(self.items)
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        if not self.is_empty():
+            return self.items.pop()
+
+    def peek(self):
+        if not self.is_empty():
+            return self.items[-1]
+
+    def size(self):
+        return len(self.items)
+
+# 使用示例
+stack = Stack()
+stack.push(1)
+stack.push(2)
+print(stack.pop())  # 输出 2
+print(stack.peek())  # 输出 1
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">**模拟堆（简单版本，只实现了最小堆的一个基本功能）：**</span><br><span class="line"></span><br><span class="line">这里我们简要实现一个最小堆，只包括插入元素和获取最小元素的基本操作。真正的堆实现会更复杂，包括删除元素和调整堆结构等。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">class MinHeap:</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.heap = []</span><br><span class="line"></span><br><span class="line">    def insert(self, val):</span><br><span class="line">        self.heap.append(val)</span><br><span class="line">        self._percolate_up(len(self.heap) - 1)</span><br><span class="line"></span><br><span class="line">    def _percolate_up(self, index):</span><br><span class="line">        parent = (index - 1) // 2</span><br><span class="line">        if index &gt; 0 and self.heap[parent] &gt; self.heap[index]:</span><br><span class="line">            self.heap[parent], self.heap[index] = self.heap[index], self.heap[parent]</span><br><span class="line">            self._percolate_up(parent)</span><br><span class="line"></span><br><span class="line">    def get_min(self):</span><br><span class="line">        if self.heap:</span><br><span class="line">            return self.heap[0]</span><br><span class="line">        else:</span><br><span class="line">            raise Exception(&quot;Heap is empty&quot;)</span><br><span class="line"></span><br><span class="line"># 使用示例</span><br><span class="line">heap = MinHeap()</span><br><span class="line">heap.insert(3)</span><br><span class="line">heap.insert(1)</span><br><span class="line">heap.insert(5)</span><br><span class="line">print(heap.get_min())  # 输出 1</span><br></pre></td></tr></table></figure>
+
+````
+
+## 【8】字符编码(4)
+
+### （1）什么是字符编码？
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">字符编码是一套规则，它将字符（字母、数字、符号等）映射到特定的数字或者其他符号上，以便计算机能够存储和处理文本信息。</span><br><span class="line"></span><br><span class="line">每个字符在编码系统中都有一个唯一的编码，这样计算机就可以通过这些编码来区分不同的字符并进行处理。</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）字符编码的发展史？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python</p>
+<ul>
+<li>
+<p><strong>ASCII（American Standard Code for Information Interchange， ** 信息交换标准代码）</strong>：诞生于1963年，最初包含128个字符，使用7位二进制数表示，覆盖了英文字母、数字、标点符号及一些控制字符。这是最早的字符编码标准之一。</p>
+</li>
+<li>
+<p><strong>扩展ASCII</strong>：随着技术发展，ASCII被扩展到使用8位，总共能表示256个字符，但扩展部分没有统一的标准，不同系统可能有不同的实现。</p>
+</li>
+<li>
+<p><strong>ISO-8859系列</strong>：为了解决不同语言的需求，ISO推出了多个基于8位的字符集，如ISO-8859-1用于西欧语言。</p>
+</li>
+<li>
+<p><strong>GB2312,GBK,GB18030</strong>：为中国字符设计的一系列编码标准，其中GB2312支持简体中文，GBK在此基础上增加了更多的汉字和符号，GB18030则兼容了GBK并增加了更多字符，包括少数民族文字等。</p>
+</li>
+<li>
+<p><strong>Unicode</strong>：为了解决全球各种语言字符编码不统一的问题，提出了Unicode标准。它为每一个字符定义了一个唯一的数字码位，涵盖了世界上大多数已知的文字和符号。Unicode有多种实现方式，UTF-8是最常见的编码形式之一。</p>
+</li>
+<li>
+<p><strong>UTF-8</strong>：UTF-8是Unicode的一种可变长度字符编码，使用1到4个字节表示一个字符，根据字符的不同，字节数也随之变化。对于ASCII字符集中的字符，它仍使用单字节编码，保持了与ASCII的兼容性。</p>
+</li>
+</ul>
+```
+
+
+
+### （3）unicode，utf-8，gbk，ascii用几个字节表示英文？
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">- **ASCII**: 1字节</span><br><span class="line">- **UTF-8**: 1字节</span><br><span class="line">- **GBK**: 1字节（虽然主要针对中文，但对于ASCII范围内的字符也是1字节）</span><br><span class="line">- **Unicode**: 标准上是2字节或以上，但具体到UTF-8编码表示英文时也是1字节。</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （4）unicode，utf-8，gbk，ascii用几个字节表示中文？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python</p>
+<ul>
+<li><strong>Unicode</strong>: 通常至少需要2字节，但具体到实现如UCS-2是2字节，而UCS-4是4字节。</li>
+<li><strong>UTF-8</strong>: 通常使用3字节来表示一个中文字符。</li>
+<li><strong>GBK</strong>: 2字节</li>
+<li><strong>ASCII</strong>: 不支持中文字符。</li>
+</ul>
+```
+
+
+
+## 【9】文件操作(2)
+
+### （1）操作文件的模式有哪些？
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">- **&#x27;r&#x27; (Read)**: 以读取模式打开文件。文件必须存在，否则会抛出错误。</span><br><span class="line">- **&#x27;w&#x27; (Write)**: 以写入模式打开文件。如果文件已存在，则会被截断为零长度，即原有内容会被删除；如果文件不存在，则会创建新文件。</span><br><span class="line">- **&#x27;a&#x27; (Append)**: 以追加模式打开文件。如果文件已存在，则在文件末尾追加内容；如果文件不存在，则创建新文件。</span><br><span class="line">- **&#x27;r+&#x27; (Read and Write)**: 以读写模式打开文件。文件必须存在。</span><br><span class="line">- **&#x27;w+&#x27; (Write and Read)**: 以读写模式打开文件。如果文件已存在，会被截断；如果文件不存在，则创建新文件。</span><br><span class="line">- **&#x27;a+&#x27; (Append and Read)**: 以追加和读取模式打开文件。如果文件已存在，则在文件末尾追加内容并可读取；如果文件不存在，则创建新文件。</span><br><span class="line">- **&#x27;b&#x27; (Binary Mode)**: 在上述模式后加上&#x27;b&#x27;，表示以二进制模式打开文件，主要用于非文本文件，如图片、音频等。例如，&#x27;rb&#x27; 表示以二进制读取模式打开。</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）文件的操作方法有哪些？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python</p>
+<ul>
+<li>
+<p><strong>open()</strong>: 用于打开一个文件，并返回一个文件对象。这是进行所有其他文件操作的基础。</p>
+</li>
+<li>
+<p><strong>read(size)</strong>: 从文件中读取指定数量的字符（默认是读取到文件结束）。</p>
+</li>
+<li>
+<p><strong>readline()</strong>: 读取一行内容。</p>
+</li>
+<li>
+<p><strong>readlines()</strong>: 读取所有行并返回一个列表，每行元素是一个字符串。</p>
+</li>
+<li>
+<p><strong>write(string)</strong>: 将字符串写入文件。</p>
+</li>
+<li>
+<p><strong>writelines(list_of_strings)</strong>: 将字符串列表写入文件，不会自动添加换行符。</p>
+</li>
+<li>
+<p><strong>tell()</strong>: 返回文件指针当前的位置（偏移量）。</p>
+</li>
+<li>
+<p><strong>seek(offset, from_what)</strong>: 移动文件指针到指定位置。<code>from_what</code> 可以是0（文件开头），1（当前位置），2（文件结尾）。</p>
+</li>
+<li>
+<p><strong>close()</strong>: 关闭文件。这通常是推荐的做法，尽管在使用 <code>with</code> 语句管理文件时会自动关闭。</p>
+</li>
+<li>
+<p><strong>flush()</strong>: 立即将缓冲区的内容写入磁盘。通常在直接写入重要数据时使用。</p>
+</li>
+<li>
+<p><strong>truncate(size)</strong>: 截断文件到指定大小。如果不提供参数，默认截断到当前文件指针位置。</p>
+</li>
+</ul>
+<p>以上方法提供了基本的文件读写能力，不同的编程语言可能还会有额外的高级特性或特定的API调用来处理文件。</p>
+```
+
+
+
+## 【10】函数基础(2)
+
+### （1）什么是函数？
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">函数是编程语言中的基本构建块之一，它是一段可重用的代码，执行特定任务并可能接受输入参数并返回结果。</span><br><span class="line"></span><br><span class="line">函数使得程序更加模块化和易于维护，因为它允许将复杂的操作封装起来，通过简单的函数调用来实现。</span><br><span class="line"></span><br><span class="line">这样可以减少重复代码，提高代码的清晰度和效率。</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）函数的语法结构及各部分的含义？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python<br>
+def function_name(parameters):<br>
+“”&quot;<br>
+docstring: 函数的描述，说明其功能、参数和返回值等信息。<br>
+“”&quot;<br>
+# 执行语句：函数体内的代码，实现具体功能<br>
+result = some_operation(parameters)<br>
+return result  # 返回值</p>
+<ul>
+<li><strong>def</strong>: 是定义函数的关键字，表明下面是要定义一个函数。</li>
+</ul>
+<h1>function_name:</h1>
+<h1>函数名，应遵循变量命名规则，用于标识和调用函数。</h1>
+<h1>良好的命名习惯能够帮助理解函数的用途。</h1>
+<h1>parameters:</h1>
+<h1>参数列表，放在圆括号内，可以有零个、一个或多个参数，参数之间以逗号分隔。</h1>
+<h1>参数是传递给函数的输入值，函数基于这些输入执行操作。</h1>
+<h1>“:”:</h1>
+<h1>参数列表后面的冒号，标志着函数定义的开始。</h1>
+<h1>docstring:</h1>
+<h1>函数定义之后紧跟的多行字符串（通常被三对引号包围），用于描述函数的功能、参数类型、返回值类型等信息，有助于代码的文档化和可读性。</h1>
+<h1>执行语句:</h1>
+<h1>函数体内的实际代码，这部分实现了函数的具体逻辑。</h1>
+<h1>return result:</h1>
+<h1><code>return</code>语句用于从函数返回计算结果。如果没有返回值，可以省略此行，函数默认返回<code>None</code>。</h1>
+<h1><code>result</code>是函数根据输入参数计算得到的值，这个名称可以根据实际情况替换。</h1>
+```
+
+
+
+## 【11】函数参数(2)
+
+### （1）函数参数的两大分类及两者关系
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">函数参数主要分为两大类：位置参数和关键字参数。它们之间的关系体现在函数调用时参数的传递方式上。</span><br><span class="line"></span><br><span class="line">- **位置参数**：调用函数时，按照参数在函数定义 ** 现的顺序依次提供值。调用者必须确保提供的值与函数定义中的参数位置严格对应。</span><br><span class="line"></span><br><span class="line">- **关键字参数**：允许调用者直接指定参数名和对应的值，这样就不必关注参数的顺序。这对于参数较多或者想明确指定某些参数的情况特别有用。</span><br><span class="line"></span><br><span class="line">两者关系在于，函数调用时可以混合使用这两种参数类型，但位置参数必须出现在关键字参数之前。这意味着，一旦开始使用关键字参数，其后的所有参数都必须以关键字形式指定，即使它们原本是位置参数。</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）函数的参数的种类及各自的特征</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python</p>
+<ol>
+<li>
+<p><strong>必需参数（Positional Arguments）</strong>：</p>
+<ul>
+<li>特征：函数调用时必须提供的参数，没有默认值。</li>
+<li>使用场景：当函数执行需要明确的输入时使用。</li>
+</ul>
+</li>
+<li>
+<p><strong>默认参数（Default Arguments）</strong>：</p>
+<ul>
+<li>特征：在函数定义时为参数指定默认值，调用时若未提供，则使用默认值。</li>
+<li>使用场景：使得函数调用更加灵活，某些参数在大多数情况下保持不变时非常有用。</li>
+</ul>
+</li>
+<li>
+<p><strong>可变位置参数（Variable Positional Arguments, *args）</strong>：</p>
+<ul>
+<li>特征：使用星号<code>*</code>前缀标识，允许传入任意数量的位置参数，这些参数在函数内部作为元组处理。</li>
+<li>使用场景：适用于不确定数量的输入，如收集一系列数据项。</li>
+</ul>
+</li>
+<li>
+<p><strong>关键字参数（Keyword Arguments）</strong>：</p>
+<ul>
+<li>特征：调用时直接指定参数名，提供值，不依赖于位置。</li>
+<li>使用场景：提高代码可读性和灵活性，特别是在参数多且意图需明确表达时。</li>
+</ul>
+</li>
+<li>
+<p>**可变关键字参数（Variable Keyword Arguments, <strong>kwargs）</strong>：</p>
+<ul>
+<li>特征：使用两个星号<code>**</code>前缀标识，允许传入任意数量的关键字参数，这些参数在函数内部作为字典处理。</li>
+<li>使用场景：适用于接收任意数量的键值对，常见于配置或设置参数的场景。</li>
+</ul>
+</li>
+</ol>
+```
+
+
+
+## 【12】函数进阶之装饰器(13)
+
+### （1）函数的使用方式有哪些？
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">1. **函数定义**：</span><br><span class="line">   - 这是创建函数的第一步，包括指定函数名称、参数列表、函数体（即执行的代码块）以及可能的返回值。</span><br><span class="line">   - 基本语法通常为：`def function_name(parameters):` 后跟一个冒号，接下来是缩进的代码块。</span><br><span class="line"></span><br><span class="line">2. **函数调用**：</span><br><span class="line">   - 定义完函数后，通过函数名加上圆括号（并根据需要传入参数）来调用它，执行其内部代码。</span><br><span class="line">   - 调用格式：`function_name(arguments)`，这里的`arguments`可以是位置参数、关键字参数或两者组合。</span><br><span class="line"></span><br><span class="line">3. **参数传递**：</span><br><span class="line">   - 包括上述提到的位置参数、关键字参数、默认参数、可变位置参数(*args)和可变关键字参数(**kwargs)的使用。</span><br><span class="line">   - 参数传递方式决定了如何向函数传递数据和控制函数的行为。</span><br><span class="line"></span><br><span class="line">4. **返回值处理**：</span><br><span class="line">   - 函数可以通过`return`语句返回一个或多个计算结果给调用者。</span><br><span class="line">   - 如果没有`return`语句或者`return`后面没有表达式，函数默认返回`None`。</span><br><span class="line"></span><br><span class="line">5. **嵌套调用**：</span><br><span class="line">   - 一个函数内部调用另一个函数。这可用于复杂逻辑分层或复用已有功能。</span><br><span class="line">   </span><br><span class="line">6. **递归调用**：</span><br><span class="line">   - 函数直接或间接地调用自身。适用于解决具有重复子问题的问题，如阶乘、斐波那契数列等。</span><br><span class="line">   </span><br><span class="line">7. **作为变量或数据结构的元素**：</span><br><span class="line">   - 在一些动态语言中，函数可以被赋值给变量，也可以作为列表、字典等数据结构的元素，这称为一等公民（First-class Citizen）特性。</span><br><span class="line">   </span><br><span class="line">8. **作为其他函数的参数或返回值**：</span><br><span class="line">   - 高阶函数的概念，即函数可以接受其他函数作为参数，或返回一个函数作为结果。这种机制在函数式编程中尤为重要。</span><br><span class="line">   </span><br><span class="line">9. **装饰器（Decorators）的使用**：</span><br><span class="line">   - 通过@符号，可以在不修改原有函数代码的情况下，给函数添加额外的功能，比如日志记录、性能测试、权限校验等。</span><br><span class="line">   </span><br><span class="line">10. **Lambda函数与匿名函数**：</span><br><span class="line">    - 在一些场合，可以使用lambda表达式定义简单的、单行的匿名函数，常用于需要短小函数的上下文，如列表排序的key参数。</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）闭包函数</span><br><span class="line"></span><br><span class="line">#### [1]什么是闭包函数？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">闭包（Closure）是一个具有访问其自身作用域、外部函数作用域以及全局作用域变量的函数。简而言之，当一个内部函数引用了外部函数的变量时，就形成了闭包。闭包使得内部函数可以“记住”并访问其外部作用域中的变量，即使外部函数已经执行完毕。</span><br><span class="line"></span><br><span class="line">闭包的核心特征是：</span><br><span class="line">- 内部函数可以访问外部函数的局部变量。</span><br><span class="line">- 外部函数执行结束后，其局部变量不会被立即销毁，因为内部函数仍然保持着对外部变量的引用。</span><br><span class="line">- 闭包通常通过返回内部函数的方式来使用。</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### [2]闭包函数的应用场景</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python<br>
+闭包函数在多种编程情境下非常有用，常见应用场景包括：</p>
+<ul>
+<li><strong>数据封装与隐藏</strong>：闭包允许将数据（通常是外部函数的变量）隐藏起来，只暴露操作这些数据的接口（内部函数），实现信息隐藏和封装。</li>
+<li><strong>状态保持</strong>：在处理事件回调、定时任务等场景时，闭包能帮助维持函数调用间的状态信息。</li>
+<li><strong>函数工厂</strong>：通过参数化外部函数，可以创建定制化的内部函数，每个内部函数拥有不同的行为或配置。</li>
+<li><strong>迭代器和生成器</strong>：实现迭代功能时，闭包可以用来保存迭代状态。</li>
+<li><strong>缓存计算结果</strong>：用于实现记忆化搜索或计算结果缓存，避免重复计算。</li>
+</ul>
+```
+
+
+
+#### [3]最经典的应用是？
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">闭包最经典的示例之一就是实现计数器功能。</span><br><span class="line">通过闭包，可以让一个内部函数每次调用时都能够访问并更新外部函数的局部变量，从而实现计数器自增：</span><br><span class="line"></span><br><span class="line">def make_counter():</span><br><span class="line">    count = 0  # 这个变量被内部函数&#x27;counter&#x27;记住</span><br><span class="line">    def counter():</span><br><span class="line">        nonlocal count  # 使用nonlocal关键字表明是在外部函数中找寻变量count</span><br><span class="line">        count += 1</span><br><span class="line">        return count</span><br><span class="line">    return counter</span><br><span class="line"></span><br><span class="line"># 创建计数器实例</span><br><span class="line">counter_a = make_counter()</span><br><span class="line"></span><br><span class="line"># 调用计数器</span><br><span class="line">print(counter_a())  # 输出 1</span><br><span class="line">print(counter_a())  # 输出 2</span><br><span class="line"></span><br><span class="line"># 创建另一个计数器实例，互不影响</span><br><span class="line">counter_b = make_counter()</span><br><span class="line">print(counter_b())  # 输出 1</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （3）装饰器</span><br><span class="line"></span><br><span class="line">#### [1]什么是装饰器？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python<br>
+装饰器（Decorator）是Python等编程语言中的一种高级功能，它允许用户在不修改原有函数定义的情况下，给函数添加额外的功能。</p>
+<p>装饰器本质上是一个 callable 对象（通常是函数），它接受一个函数作为参数，并返回一个新的函数，这个新函数通常会在执行原始函数之前或之后增加一些附加操作，但最终调用原始函数的功能。</p>
+```
+
+
+
+#### [2]装饰器的分类？
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">装饰器没有严格的分类体系，但可以根据其特性和用途进行以下划分：</span><br><span class="line"></span><br><span class="line">- **无参装饰器**：不接受额外参数的装饰器，直接作用于待装饰的函数。</span><br><span class="line">- **有参装饰器**：接受额外参数的装饰器，为装饰过程提供更多的灵活性。</span><br><span class="line">- **类装饰器**：使用类作为装饰器，通过类的实例来扩展函数或类的行为。</span><br><span class="line">- **函数签名保留装饰器**：这类装饰器会使用 `functools.wraps` 来保持原函数的元信息，如名称、文档字符串等。</span><br><span class="line">- **多重装饰器**：一个函数可以被多个装饰器依次装饰，形成装饰器链。</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### [3]无参装饰器的模版？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python<br>
+def simple_decorator(func):<br>
+“”“无参装饰器的基本模板”“”<br>
+def wrapper():<br>
+# 在这里添加装饰器的功能代码<br>
+print(“Before calling the original function”)<br>
+result = func()<br>
+# 可以在这里添加更多功能，比如处理结果<br>
+print(“After calling the original function”)<br>
+return result<br>
+return wrapper</p>
+<p>@simple_decorator<br>
+def example_function():<br>
+“”“示例函数”“”<br>
+print(“Inside the original function”)</p>
+<p>example_function()</p>
+```
+
+
+
+#### [4]有参装饰器的模版？
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">def simple_decorator(func):</span><br><span class="line">    &quot;&quot;&quot;无参装饰器的基本模板&quot;&quot;&quot;</span><br><span class="line">    def wrapper(*args, **kwargs):</span><br><span class="line">        # 在这里添加装饰器的功能代码</span><br><span class="line">        print(&quot;Before calling the original function&quot;)</span><br><span class="line">        result = func(*args, **kwargs)</span><br><span class="line">        # 可以在这里添加更多功能，比如处理结果</span><br><span class="line">        print(&quot;After calling the original function&quot;)</span><br><span class="line">        return result</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line">@simple_decorator</span><br><span class="line">def example_function():</span><br><span class="line">    &quot;&quot;&quot;示例函数&quot;&quot;&quot;</span><br><span class="line">    print(&quot;Inside the original function&quot;)</span><br><span class="line"></span><br><span class="line">example_function()</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （4）如何修复装饰器？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python<br>
+from functools import wraps</p>
+<p>def arg_decorator(arg1):<br>
+“”“有参装饰器的基本模板”“”<br>
+def decorator(func):<br>
+@wraps(func)  # 使用wraps保留原函数的元信息<br>
+def wrapper(*args, **kwargs):<br>
+# 在这里可以使用装饰器参数arg1<br>
+print(f&quot;Decorator argument: {arg1}&quot;)<br>
+print(“Before calling the original function”)<br>
+result = func(*args, **kwargs)<br>
+print(“After calling the original function”)<br>
+return result<br>
+return wrapper<br>
+return decorator</p>
+<p>@arg_decorator(“Hello, World!”)<br>
+def example_function_with_arg():<br>
+“”“示例函数，带有装饰器参数”“”<br>
+print(“Inside the original function with argument”)</p>
+<p>example_function_with_arg()</p>
+```
+
+
+
+### （5）语法糖
+
+#### [1]什么是语法糖？
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">语法糖（Syntactic Sugar），也称为糖衣语法，是在计算机科学中对编程语言中一种特定语法结构的非正式称呼。它是一种在不改变程序语义的前提下，为了增加代码可读性和编写便捷性而设计的较为简短和直观的语法形式。换句话说，语法糖让程序员能够以更加简洁明了的方式表达复杂的逻辑，这些表达方式在编译或解释阶段会被转换成更基础的结构，即其底层实现。语法糖并不增加语言的表达能力，只是让代码更加易于理解和书写。</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### [2]语法糖的继承关系是？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python</p>
+<p>def dec_b(func):<br>
+print(‘aaa’)</p>
+<pre><code>def wrapper(*args, **kw):
+    print('bbb')
+    func(*args, **kw)
+    print('ccc')
+
+return wrapper
+</code></pre>
+<p>@dec_a<br>
+@dec_b<br>
+def test():<br>
+print(‘test’)</p>
+<h1>调用 dec_b(test) 传进去 外部 test 的内存地址 拿到 返回的内存空间地址 赋给变量 test（返回的内存空间地址）</h1>
+```
+
+
+
+#### [3]语法糖的调用关系是？
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">下一步的前提是已经过了一遍 装饰器 了 ，那也就是走完一遍装饰器内的函数了。也就是拿到了一个打印的 aaa</span><br><span class="line">调用 test（返回的内存空间地址） 得到 bbb</span><br><span class="line">遇到 func 执行外部的 test函数 得到 test</span><br><span class="line">执行剩下的函数 得到 ccc</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### [4]有参语法糖的模版？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">from functools import wraps</span><br><span class="line"></span><br><span class="line">def arg_decorator(arg1):</span><br><span class="line">    &quot;&quot;&quot;有参装饰器的基本模板&quot;&quot;&quot;</span><br><span class="line">    def decorator(func):</span><br><span class="line">        @wraps(func)  # 使用wraps保留原函数的元信息</span><br><span class="line">        def wrapper(*args, **kwargs):</span><br><span class="line">            # 在这里可以使用装饰器参数arg1</span><br><span class="line">            print(f&quot;Decorator argument: &#123;arg1&#125;&quot;)</span><br><span class="line">            print(&quot;Before calling the original function&quot;)</span><br><span class="line">            result = func(*args, **kwargs)</span><br><span class="line">            print(&quot;After calling the original function&quot;)</span><br><span class="line">            return result</span><br><span class="line">        return wrapper</span><br><span class="line">    return decorator</span><br><span class="line"></span><br><span class="line">@arg_decorator(&quot;Hello, World!&quot;)</span><br><span class="line">def example_function_with_arg():</span><br><span class="line">    &quot;&quot;&quot;示例函数，带有装饰器参数&quot;&quot;&quot;</span><br><span class="line">    print(&quot;Inside the original function with argument&quot;)</span><br><span class="line"></span><br><span class="line">example_function_with_arg()</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【13】函数进阶之迭代器(3)</span><br><span class="line"></span><br><span class="line">### （1）什么是可迭代对象</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python</p>
+<h1>从语法形式上讲，内置有__iter__方法的对象都是可迭代对象</h1>
+```
+
+
+
+### （2）什么是迭代器对象？
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">调用obj.__iter__()方法返回的结果就是一个迭代器对象(Iterator)。</span><br><span class="line"></span><br><span class="line">迭代器对象是内置有iter和next方法的对象，打开的文件本身就是一个迭代器对象</span><br><span class="line"></span><br><span class="line">执行迭代器对象.iter()方法得到的仍然是迭代器本身</span><br><span class="line"></span><br><span class="line">而执行迭代器.next()方法就会计算出迭代器中的下一个值。</span><br><span class="line"></span><br><span class="line">迭代器是Python提供的一种统一的、不依赖于索引的迭代取值方式，只要存在多个“值”，无论序列类型还是非序列类型都可以按照迭代器的方式取值</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （3）两者的关系？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line"># 迭代器对象一定是可迭代对象</span><br><span class="line"># 可迭代对象不一定是迭代器对象</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【14】函数进阶之生成器(3)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">在Python中，生成器（Generator）是一种特殊的迭代器，可以用来创建迭代器对象。</span><br><span class="line"></span><br><span class="line">生成器允许你在迭代数据时惰性求值，也就是说，数据在需要时才产生，而不是一次性生成所有数据存放在内存中。</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （1）生成器创建的两种方式</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">#### 方式一：使用函数定义和`yield`关键字</span><br><span class="line"></span><br><span class="line"># 当你在函数中使用`yield`关键字而不是`return`时，该函数就变成了一个生成器函数。</span><br><span class="line"># 当调用这个函数时，它返回的是一个生成器对象。</span><br><span class="line"></span><br><span class="line">def simple_generator():</span><br><span class="line">    yield 1</span><br><span class="line">    yield 2</span><br><span class="line">    yield 3</span><br><span class="line"></span><br><span class="line">gen = simple_generator()</span><br><span class="line"></span><br><span class="line">#### 方式二：使用生成器表达式</span><br><span class="line"></span><br><span class="line"># 生成器表达式类似于列表推导式，但用圆括号`()`而非方括号`[]`包围。</span><br><span class="line"># 这样定义的表达式不会立即计算出结果列表，而是每次迭代时计算下一个值。</span><br><span class="line"></span><br><span class="line">gen_expr = (x for x in range(3))</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）简述yield和return的异同点</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line"># - **相同点**：</span><br><span class="line">  - 它们都可以用来从函数中输出值。</span><br><span class="line">  </span><br><span class="line"># - **不同点**：</span><br><span class="line">  - **执行流程**：`return`会导致函数立即终止并返回一个值给调用者。而`yield`则会暂停函数的执行，并记住当前的执行状态，下次调用时从上次暂停的地方继续执行。</span><br><span class="line">  - **多次调用**：在生成器函数中，每次调用`next()`或其他迭代方法时，`yield`后的代码可以从上次停止的地方继续执行，可以多次产出值。而`return`在函数中只能调用一次，并且调用后函数结束，不能再次产出值。</span><br><span class="line">  - **用途**：`return`通常用于常规函数，返回最终计算结果。而`yield`用于生成器，可以逐个产生一系列值，非常适合处理大量数据流或实现迭代协议。</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （3）生成器取值的方式</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python</p>
+<h4 id="使用next-函数">使用<code>next()</code>函数</h4>
+<p>next(gen)  # 取出生成器的下一个值</p>
+<h4 id="在for循环中迭代">在for循环中迭代</h4>
+<p>for value in gen:<br>
+print(value)</p>
+<h4 id="使用send-方法">使用<code>send()</code>方法</h4>
+<h1>除了使用<code>next()</code>获取生成器的下一个值，还可以使用<code>send()</code>方法向生成器传递值，并接收生成器产出的下一个值。</h1>
+<h1>首次调用<code>send()</code>之前需要用<code>next()</code>或在for循环中启动生成器。</h1>
+<p>gen = simple_generator()  # 确保生成器已经启动<br>
+gen.send(None)  # 首次调用需要发送None<br>
+value = gen.send(10)  # 向生成器发送值，并获取下一个产出值</p>
+```
+
+
+
+## 【15】名称空间(5)
+
+### （1）什么是名称空间
+
+
+
+`````
+
+<p>python<br>
+名称空间（Namespace）在Python中是一个存储变量名（标识符）到对象映射的容器。</p>
+<p>每个变量名在这个映射中都有一个唯一的对象与之关联。</p>
+<p>Python使用名称空间来确保不同的代码部分不会因为使用相同的变量名而发生冲突。</p>
+<p>简而言之，名称空间就是一组名字到对象的映射关系，帮助Python解析变量、函数、类等的引用。</p>
+`````
+
+
+
+### （2）名称空间的加载顺序
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">名称空间的加载顺序通常指的是在解释执行Python程序时，各层次名称空间的初始化顺序。</span><br><span class="line"></span><br><span class="line">这个过程大致遵循LEGB规则</span><br><span class="line"></span><br><span class="line">代表Local（局部） -&gt; Enclosing（封闭） -&gt; Global（全局） -&gt; Built-in（内置）的顺序进行查找。</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （3）名称空间的查找顺序？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python</p>
+<ol>
+<li><strong>Local（局部）</strong>: 查找当前函数或类的方法内部的名称空间。</li>
+<li><strong>Enclosing（封闭）</strong>: 如果当前作用域是嵌套的（如在一个函数内部定义了另一个函数），并且变量在局部名称空间未找到，解释器会向上查找最近的外层非全局、非内置的作用域。</li>
+<li><strong>Global（全局）</strong>: 当前模块的全局名称空间。如果变量既不在局部也不在任何封闭的作用域中，解释器会在全局名称空间中查找。</li>
+<li><strong>Built-in（内置）</strong>: 如果上述所有作用域都没有找到该变量，最后会在内置名称空间中查找。这是Python预定义函数和异常所在的名称空间。</li>
+</ol>
+```
+
+
+
+### （4）修改全局不可变数据类型的方法
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">不可变数据类型如字符串、数字、元组等，其内容一旦创建就不能更改。</span><br><span class="line">但是，你可以通过重新赋值的方式“修改”全局不可变数据类型的变量，实际上是创建了一个新的对象并让变量名指向它。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">s = &quot;hello&quot;  # 全局变量</span><br><span class="line"></span><br><span class="line">def modify_string():</span><br><span class="line">    global s  # 声明使用全局变量s</span><br><span class="line">    s = s + &quot; world&quot;  # 创建新字符串并重新赋值给全局变量s</span><br><span class="line"></span><br><span class="line">modify_string()</span><br><span class="line">print(s)  # 输出: hello world</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （5）修改内嵌局部不可变数据类型的方法？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python<br>
+对于内嵌的局部不可变数据类型，若想“修改”它们，同样不能直接改变原对象的内容，而是要创建一个新的对象并重新绑定。<br>
+如果是可变数据类型（如列表、字典）作为局部变量，可以通过修改其内部元素间接达到“修改”的效果。<br>
+但对于不可变数据类型，做法类似全局变量的处理：</p>
+<p>def outer():<br>
+s = “original”  # 局部变量</p>
+<pre><code>def inner():
+    nonlocal s  # 使用nonlocal关键字声明使用外部非全局变量s
+    s = s + &quot; modified&quot;  # 创建新字符串并重新绑定给s
+
+inner()
+print(s)  # 输出: original modified
+</code></pre>
+<p>outer()</p>
+<p>这里使用<code>nonlocal</code>关键字表明我们想要修改的是外部函数中的局部变量，而不是创建一个新的局部变量。<br>
+注意，这仍然是通过创建新对象并重新绑定实现的“修改”。</p>
+```
+
+
+
+## 【16】异常捕获(4)
+
+### （1）什么是异常？
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">异常是在程序执行过程中发生的事件，它打断了正常的指令流程。</span><br><span class="line"></span><br><span class="line">通常，异常是由于某些错误条件未被正常处理导致的，比如文件不存在却尝试打开、除数为零、内存不足等。</span><br><span class="line"></span><br><span class="line">Python 使用异常对象来表示这些错误情况，当 Python 遇到无 ** 常处理的情形时，就会生成一个异常对象，并将其传递给当前的调用栈，这个过程称为抛出（raise）异常。</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）程序中遇到异常该如何解决？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">1. **捕获异常**：使用 `try`...`except` 语句块来捕获并处理异常。在 `try` 块中编写可能引发异常的代码，在一个或多个 `except` 块中处理相应的异常。</span><br><span class="line">2. **忽视异常**：在某些情况下，你可能确定异常对程序影响不大，可以选择忽略它，但这通常不推荐，除非你有充分的理由这样做。可以通过 `try`...`except:`（不指定异常类型）来实现。</span><br><span class="line">3. **finally 语句块**：无论是否发生异常，`finally` 块中的代码都会被执行，常用来执行清理工作，如关闭文件或释放资源。</span><br><span class="line">4. **使用 else 子句**：如果 `try` 块没有引发异常，`else` 块中的代码将被执行，这适用于需要在成功完成某些操作后执行的代码。</span><br><span class="line">5. **具体问题具体分析**：根据异常类型和错误信息，找出问题所在并修复代码逻辑。</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （3）异常处理相关语法有哪些？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python</p>
+<ul>
+<li>
+<p><strong>try</strong>…<strong>except</strong>：基础的异常捕获结构。</p>
+  ```python
+    try:
+        # 可能引发异常的代码
+    except ExceptionType:
+        # 处理特定类型的异常
+    except AnotherExceptionType as e:
+        # 处理另一种异常，同时可以通过 'as' 关键字获取异常实例
+    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- **try**...**except**...**else**：如果 `try` 块没有异常，则执行 `else` 块。</span><br><span class="line">    &#123;% raw %&#125;```python</span><br><span class="line">    try:</span><br><span class="line">        # 尝试执行的代码</span><br><span class="line">    except SomeException:</span><br><span class="line">        # 处理异常</span><br><span class="line">    else:</span><br><span class="line">        # 没有异常时执行</span><br></pre></td></tr></table></figure>
+
+</li>
+<li>
+<p><strong>try</strong>…<strong>finally</strong>：无论是否发生异常，都执行 <code>finally</code> 块。</p>
+  ```python
+    try:
+        # 尝试执行的代码
+    finally:
+        # 总是执行的清理代码
+    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- **raise**：手动抛出异常。</span><br><span class="line">    &#123;% raw %&#125;```python</span><br><span class="line">    raise ValueError(&quot;An error message&quot;)</span><br></pre></td></tr></table></figure>
+
+</li>
+<li>
+<p><strong>assert</strong>：用于调试的断言，如果条件为假，则抛出 <code>AssertionError</code>。</p>
+  ```python
+    assert x > 0, "x must be positive"
+    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （4）如何主动抛出异常</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">使用 `raise` 语句可以主动抛出一个指定的异常。可以抛出内置的异常类型，也可以定义自定义异常类。</span><br><span class="line"></span><br><span class="line">抛出内置异常示例：</span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">raise ValueError(&quot;参数错误&quot;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>定义并抛出自定义异常示例：</p>
+```python
+class MyCustomError(Exception):
+    pass
+
+raise MyCustomError("发生了自定义错误")
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line">## 【17】模块与包(4)</span><br><span class="line"></span><br><span class="line">### （1）什么是模块？</span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">模块是Python程序结构的一个基本单元，它是包含Python定义和语句的文件，通常以`.py`为扩展名。</span><br><span class="line"></span><br><span class="line">模块使得代码重用、分隔关注点以及组织代码变得更加容易。</span><br><span class="line"></span><br><span class="line">在一个模块中定义的函数、类和变量可以在其他模块中导入和使用，从而促进了功能的 ** 开发和维护。</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）模块的来源？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python</p>
+<ul>
+<li>
+<p><strong>内置模块</strong>：Python安装时自带的模块，如<code>sys</code>, <code>os</code>, <code>math</code>等，这些模块提供了基础的功能和工具。</p>
+</li>
+<li>
+<p><strong>第三方模块</strong>：由社区开发的，可通过Python包管理器（如pip）安装的模块。这些模块覆盖了从网络编程、数据库访问到机器学习、Web框架等各种功能。</p>
+</li>
+<li>
+<p><strong>自定义模块</strong>：用户自己编写的模块，用于满足特定项目需求。这些模块通常保存在项目的某个目录下或者系统的特定模块路径中。</p>
+</li>
+</ul>
+```
+
+
+
+### （3）什么是包
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">包是Python中一种组织模块的方式，它是一个包含多个模块和一个特殊文件`__init__.py`的目录。</span><br><span class="line"></span><br><span class="line">`__init__.py`文件可以为空，但必须存在，因为它标志着该目录被视为一个Python包，而不是普通的目录。</span><br><span class="line"></span><br><span class="line">包允许我们对相关的模块进行分组，便于管理和导入，同时也支持更深层次的命名空间层次。</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （4）如何自定义包</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">1. **创建目录结构**：首先，创建一个包含`__init__.py`文件的目录。例如，创建一个名为`my_package`的包，其中包含两个模块`module1.py`和`module2.py`，目录结构如下：</span><br><span class="line"></span><br><span class="line">    &#123;% raw %&#125;```</span><br><span class="line">    my_package/</span><br><span class="line">    ├── __init__.py</span><br><span class="line">    ├── module1.py</span><br><span class="line">    └── module2.py</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>
+<p><strong>编写模块内容</strong>：在<code>module1.py</code>和<code>module2.py</code>中编写你的Python代码，定义函数、类或其他你需要的元素。</p>
+</li>
+<li>
+<p><strong><strong>init</strong>.py</strong>：虽然<code>__init__.py</code>可以为空，但它也允许执行初始化代码或者定义包级别的变量、函数等。例如，你可以在里面导入模块以便用户通过包名直接访问其内容：</p>
+ ```python
+    # my_package/__init__.py
+    from .module1 import some_function
+    from .module2 import AnotherClass
+    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">4. **安装和使用**：对于个人项目，确保Python解释器能够找到这个包的路径。如果是团队协作或发布到PyPI，需要创建`setup.py`文件并使用打包工具进行打包和发布。</span><br><span class="line"></span><br><span class="line">5. **导入包或模块**：在其他Python脚本中，你可以像这样导入自定义包或模块：</span><br><span class="line"></span><br><span class="line">    &#123;% raw %&#125;```python</span><br><span class="line">    import my_package</span><br><span class="line">    from my_package.module1 import some_function</span><br><span class="line"></span><br><span class="line">    # 或者如果在__init__.py中做了相应导入</span><br><span class="line">    from my_package import some_function, AnotherClass</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+````
+
+
+
+## 【18】什么是深浅拷贝？(1)
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line"># 浅拷贝（Shallow Copy）</span><br><span class="line">浅拷贝是指创建一个新的数据结构，并且递归地将原数据结构中的每个元素赋值给新结构中的对应位置。但是，对于复合数据类型的元素（如子列表、子字典），浅拷贝仅复制其引用，而非实际的数据内容。这意味着，如果原数据结构中的复合数据元素被修改，这种修改会反映到浅拷制的新结构中，因为两者共享同一块内存地址。</span><br><span class="line">import copy</span><br><span class="line"></span><br><span class="line"># 原对象</span><br><span class="line">original_list = [1, 2, [3, 4]]</span><br><span class="line"># 使用深拷贝创建拷贝对象</span><br><span class="line">copied_list = copy.deepcopy(original_list)</span><br><span class="line"></span><br><span class="line"># 修改原对象中的可变数据类型</span><br><span class="line">original_list[2].append(5)</span><br><span class="line"></span><br><span class="line">print(&quot;原对象：&quot;, original_list)</span><br><span class="line">print(&quot;拷贝对象：&quot;, copied_list)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 深拷贝（Deep Copy）</span><br><span class="line">深拷贝则是递归地创建原数据结构中所有元素的副本，无论这些元素是基本数据类型还是复合数据类型。这样一来，新旧数据结构之间完全没有共享任何内存空间，即使修改原数据结构中的任何一个部分，都不会影响到深拷贝后的新结构。</span><br><span class="line">from copy import deepcopy</span><br><span class="line"></span><br><span class="line">list_original = [1, 2, 3, [4, 5, 6, ]]</span><br><span class="line">list_deep_copy = deepcopy(list_original)</span><br><span class="line">list_deep_copy[3][1] = 888</span><br><span class="line">print(list_original)</span><br><span class="line"># [1, 2, 3, [4, 5, 6]]</span><br><span class="line">print(list_deep_copy)</span><br><span class="line"># [1, 2, 3, [4, 888, 6]]</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【二】练习题(10)</span><br><span class="line"></span><br><span class="line">## 【1】比大小(2)</span><br><span class="line"></span><br><span class="line">- 用一行代码实现比较两个值，并打印较大的那个值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python</p>
+<ol>
+<li>
+<p>使用三元条件表达式（最常见的方法）:</p>
+```python
+   print(value1 if value1 > value2 else value2)
+   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2. 使用`max()`函数:</span><br><span class="line">   &#123;% raw %&#125;```python</span><br><span class="line">   print(max(value1, value2))</span><br></pre></td></tr></table></figure>
+
+</li>
+<li>
+<p>利用逻辑运算符（这种方式较为独特，较少见于直接比较打印的情景）:</p>
+```python
+   print(value2) if value1 < value2 else print(value1)
+   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">4. 通过列表推导和`max()`的结合（这种方式更为复杂，仅作演示不推荐使用）:</span><br><span class="line">   &#123;% raw %&#125;```python</span><br><span class="line">   print(max([value1, value2]))</span><br></pre></td></tr></table></figure>
+
+</li>
+<li>
+<p>使用生成器表达式配合<code>next()</code>和<code>itertools.filterfalse()</code>（高级技巧，展示Python的迭代器特性）:</p>
+```python
+   from itertools import filterfalse
+   print(next(filterfalse(lambda x: x <= value2, [value1, value2])))
+   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line">   注意：此方法较为复杂，通常用于更复杂的数据处理场景，对于简单的比较并不推荐。</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】大小写转换(4)</span><br><span class="line"></span><br><span class="line">### （0）给定列表如下</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>python<br>
+names = [‘Dream’, ‘Justin’, ‘egon’, ‘tank’]</p>
+```
+
+
+
+### （1）列表中名字全转大写(0.5)
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">names_upper = [name.upper() for name in names]</span><br><span class="line">print(names_upper)</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）列表中名字全转为小写(0.5)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">names_lower = [name.lower() for name in names]</span><br><span class="line">print(names_lower)</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （3）首字母大写其余小写(1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">names_title = [name.title() for name in names]</span><br><span class="line">print(names_title)</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （4）反转名字顺序(1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">names_reversed = names[::-1]</span><br><span class="line">print(names_reversed)</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （5）删除指定名字`Dream`(1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">names.remove(&#x27;Dream&#x27;)</span><br><span class="line">print(names)</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【3】特殊字符处理(4)</span><br><span class="line"></span><br><span class="line">### （0）给定列表如下</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python<br>
+names = [‘dream_NB’, ‘NB_Justin’, ‘egon’, ‘tank’]</p>
+```
+
+
+
+### （1）删除以特定后缀结尾`_NB`的名字后缀并保存长度(字典)(1)
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">modified_names = &#123;name[:-3]: len(name[:-3]) for name in names if name.endswith(&#x27;_NB&#x27;)&#125;</span><br><span class="line">print(modified_names)</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）过滤掉以特定后缀结尾`_NB`的名字为大写并保存长度(字典)(1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python<br>
+filtered_names = {name.upper(): len(name) for name in names if not name.endswith(‘_NB’)}<br>
+print(filtered_names)</p>
+````
+
+
+
+### （3）添加新名字并按长度排序(1)
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">new_names = [&#x27;max&#x27;, &#x27;longestNameEver&#x27;, &#x27;z&#x27;]</span><br><span class="line">&#123;% raw %&#125;``````python</span><br><span class="line">new_names = [&#x27;max&#x27;, &#x27;longestNameEver&#x27;, &#x27;z&#x27;]</span><br><span class="line">names.extend(new_names)</span><br><span class="line">names_sorted_by_length = sorted(names, key=len)</span><br><span class="line">print(names_sorted_by_length)</span><br></pre></td></tr></table></figure>
+
+<h3 id="（4）统计每一个名字中每个字符出现的次数-1">（4）统计每一个名字中每个字符出现的次数(1)</h3>
+````python
+char_counts = {name: {char: name.count(char) for char in name} for name in names}
+print(char_counts)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【二】思考题(20)</span><br><span class="line"></span><br><span class="line">## 【1】下述为什么会报错(5)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">with open(&#x27;a.txt&#x27;) as f:</span><br><span class="line"></span><br><span class="line">  g=(len(line) for line in f)</span><br><span class="line"></span><br><span class="line">print(sum(g)) #为何报错？</span><br><span class="line">```````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">    该代码段使用了生成器表达式来遍历文件&#x27;a.txt&#x27;中的每一行，并计算每行的长度。生成器`(len(line) for line in f)`会逐行读取文件并产出每一行的长度，而不会一次性加载整个文件内容到内存中，这是处理大文件时的一种高效方式。</span><br><span class="line"></span><br><span class="line">但是，在代码执行到`print(sum(g))`这一行时，如果之前已经遍历过生成器`g`（即在`with open...`的上下文中），那么当尝试再次遍历时，生成器已经消耗完毕，无法再次提供数据。这是因为生成器只能迭代一次：一旦遍历完成，它的状态就会保持在结束位置，无法重新开始。</span><br><span class="line"></span><br><span class="line">具体到这段代码，`with open...`语句块执行完毕后，文件对象`f`会被自动关闭。尽管Python的垃圾回收机制最终也会关闭文件，但在某些情况下（尤其是在较旧的Python版本或特定的执行环境中），文件可能已经被关闭，导致在尝试通过生成器`g`进一步访问文件内容时出现问题。</span><br><span class="line"></span><br><span class="line">解决方法是确保在文件仍打开且生成器未完全迭代完时进行求和操作，即把`print(sum(g))`放进`with`语句块内：</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">with open(&#x27;a.txt&#x27;) as f:</span><br><span class="line">    g = (len(line) for line in f)</span><br><span class="line">    print(sum(g))  # 这样就不会报错了，因为此时文件尚未关闭，且立即对生成器进行了求和操作</span><br><span class="line">```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">这样修改后，生成器`g`在文件`f`仍然打开并且可以读取数据的时候就被完全遍历并计算总和，避免了因文件关闭或生成器状态问题导致的错误。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line">## 【2】计算题(5)</span><br><span class="line"></span><br><span class="line">### （1）求总共花了多少钱？(3)</span><br><span class="line"></span><br><span class="line">- 购物清单 shopping.txt 信息如下，计算出总计花费的金额。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python<br>
+mac,20000,3<br>
+iphone,1000,3<br>
+lenovo,3000,10<br>
+tesla,1000000,10<br>
+chicken,200,1</p>
+```````python
+total_cost = 0
+with open('shopping.txt', 'r') as file:
+    for line in file:
+        item_info = line.strip().split(',')
+        cost = int(item_info[1]) * int(item_info[2])
+        total_cost += cost
+print(f"总共花费了：{total_cost}元")
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）打印出所有商品的信息(1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">格式为[&#123;&#x27;name&#x27;:&#x27;xxx&#x27;,&#x27;price&#x27;:333,&#x27;count&#x27;:3&#125;,...]</span><br></pre></td></tr></table></figure>
+
+```python
+all_items = []
+with open('shopping.txt', 'r') as file:
+    for line in file:
+        item_name, price, count = line.strip().split(',')
+        all_items.append({'name': item_name, 'price': int(price), 'count': int(count)})
+print(all_items)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （3）打印单价大于1000的商品信息,格式同上(1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">expensive_items = [item for item in all_items if item[&#x27;price&#x27;] &gt; 1000]</span><br><span class="line">print(expensive_items)</span><br></pre></td></tr></table></figure>
+
+<h2 id="【3】比较题-5">【3】比较题(5)</h2>
+<ul>
+<li>有一个员工薪资表如下</li>
+</ul>
+```python
+salaries={
+
+  'Justin':3000000,
+
+  'dream':1000000,
+
+  'tony':10000,
+
+  'tank':2000
+
+}
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （1）求薪资最高的那名员工姓名(2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">highest_salary_employee = max(salaries, key=salaries.get)</span><br><span class="line">print(highest_salary_employee)</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）将字典映射成一个列表-2">（2）将字典映射成一个列表(2)</h3>
+<ul>
+<li>列表内每一个元素是员工姓名、员工的年薪</li>
+</ul>
+```python
+salary_list = [[name, salary] for name, salary in salaries.items()]
+print(salary_list)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （3）过滤出薪资大于10000的员工姓名(1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">well_paid_employees = [name for name, salary in salaries.items() if salary &gt; 10000]</span><br><span class="line">print(well_paid_employees)</span><br></pre></td></tr></table></figure>
+
+<h2 id="【4】默写指定位数的随机验证码生成器-5">【4】默写指定位数的随机验证码生成器(5)</h2>
+<ul>
+<li>利用所学知识将我们课上所写的验证码生成器默写出来，不要看你以前的笔记，尽可能默写出来</li>
+</ul>
+````python
+import random
+
+'''生成六位随机 （数字 + 大小写） 验证码'''
+
+
+def get_verify_code(n):
+    code = ''
+    for i in range(n):
+        random_int = str(random.randint(0, 9))  # 0-9之间的整数
+        random_upper = chr(random.randint(65, 90))  # A-Z之间的字母
+        random_lower = chr(random.randint(97, 122))  # a-z之间的字母
+        temp = random.choice([random_int, random_upper, random_lower])
+        code += temp
+    return code
+````
+
+<h1>【三】代码题(60)</h1>
+<h2 id="【0】要求说明">【0】要求说明</h2>
+<h3 id="（1）版本选择">（1）版本选择</h3>
+<ul>
+<li>以下三个版本任选一个版本，有能力的挑难的，觉得自己不行的别硬撑，能把最基础的写出来也行</li>
+<li><strong>建议大家在函数版本或者面向对象上写，面条版本就有点太 low 了</strong></li>
+</ul>
+<h3 id="（2）开发要求">（2）开发要求</h3>
+<ul>
+<li>新建项目，整个编程期间，pycharm窗口最大化，尽量不要切换窗口
+<ul>
+<li><strong>再次强调！！！考试期间不允许切换窗口，不允许窗口最小化！！！！</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="（3）项目要求">（3）项目要求</h3>
+<ul>
+<li>项目中用到的变量名，函数名，文件名，模块名都需要跟老师的不一样</li>
+<li>项目数据的存储方式自己定，可以用文本文件可以用JSON文件也可以用pickle</li>
+<li>加入自己的名字作为前缀（非常丑陋，但为了防止作弊）</li>
+</ul>
+<h3 id="（4）所有功能需要正常运行">（4）所有功能需要正常运行</h3>
+<h3 id="（5）可以选择分工合作">（5）可以选择分工合作</h3>
+<ul>
+<li>如果是一个人写只需要写一个完整的项目即可</li>
+<li>如果是三个人合力一起写
+<ul>
+<li>每一个人负责一个版块的功能</li>
+<li>但是要把两个项目都给我写出来</li>
+</ul>
+</li>
+</ul>
+<h2 id="【1】项目一：ATM-Shopping">【1】项目一：ATM_Shopping</h2>
+<h3 id="（0）功能说明">（0）功能说明</h3>
+```python
+user_menu = '''
+===================用户功能菜单=====================
+                  1.注册
+                  2.登陆
+                  3.激活银行卡
+                  4.取款
+                  5.转账
+                  6.充值余额
+                  7.查看流水
+                  8.查看日志
+                  9.查看银行信息(查看自己的卡号、余额、流水等信息)
+                  q:退出
+======================欢迎使用=======================
+'''
+
+admin_menu = '''
+===================管理员功能菜单=====================
+                  1.登陆
+                  2.注册用户
+                  3.修改用户权限
+                  4.修改用户状态
+                  5.查看所有用户信息
+                  6.查看指定用户信息
+                  7.修改额度
+                  8.初识化商品信息
+                  9.添加商品
+                  10.删除商品
+                  11.修改商品信息
+                  12.查看所有商品信息
+                  13.查看指定商品信息
+                  14.生成充值激活码
+                  q:退出
+======================欢迎使用=======================
+'''
+
+shop_menu = '''
+========================= 购物车功能菜单 ==========================
+                            1.查看商品信息
+                            2.选择商品下单
+                            3.清空购物车
+                            4.删除指定商品信息
+                            5.下单商品(付款)
+                            6.查看购物车商品
+                            q:退出系统
+========================= 购物车功能菜单 ==========================
+'''
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （1）ATM面条版本</span><br><span class="line"></span><br><span class="line">- 选择这个版本的给 40分</span><br><span class="line"></span><br><span class="line">### （2）ATM函数版本</span><br><span class="line"></span><br><span class="line">- 选择这个版本的给 50 分</span><br><span class="line"></span><br><span class="line">### （3）ATM函数分层版本</span><br><span class="line"></span><br><span class="line">- 选择这个的给 60 分</span><br><span class="line"></span><br><span class="line">### （4）ATM现象对象分层版本</span><br><span class="line"></span><br><span class="line">- 选择这个的给 60 分</span><br><span class="line"></span><br><span class="line">## 【2】项目二：Select_Course_System</span><br><span class="line"></span><br><span class="line">### （0）功能说明</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">admin_menu = &#x27;&#x27;&#x27;</span><br><span class="line">=====================管理员功能菜单=====================</span><br><span class="line">                        1.注册</span><br><span class="line">                        2.登录</span><br><span class="line">                        3.创建学校</span><br><span class="line">                        4.创建课程</span><br><span class="line">                        5.创建讲师</span><br><span class="line">                        6.学校绑定课程</span><br><span class="line">                        7.修改讲师密码</span><br><span class="line">                        8.查看所有课程信息</span><br><span class="line">                        9.查看所有学校信息</span><br><span class="line">                        10.查看所有讲师信息</span><br><span class="line">                        11.指定讲师授课课程</span><br><span class="line">                        q:退出系统               </span><br><span class="line">==========================菜单结束==========================</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">student_menu = &#x27;&#x27;&#x27;</span><br><span class="line">=====================学生功能菜单=====================</span><br><span class="line">                        1.注册</span><br><span class="line">                        2.登录</span><br><span class="line">                        3.查看课程信息</span><br><span class="line">                        4.选择课程</span><br><span class="line">                        5.查看成绩</span><br><span class="line">                        q:退出系统               </span><br><span class="line">==========================菜单结束==========================</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">teacher_menu = &#x27;&#x27;&#x27;</span><br><span class="line">=====================讲师功能菜单=====================</span><br><span class="line">                        1.登录</span><br><span class="line">                        2.查看指定课程下学生和分数</span><br><span class="line">                        3.选择课程</span><br><span class="line">                        4.查看教授课程信息</span><br><span class="line">                        5.修改学生的分数</span><br><span class="line">                        q:退出系统               </span><br><span class="line">==========================菜单结束==========================</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="（1）ATM面条版本">（1）ATM面条版本</h3>
+<ul>
+<li>选择这个版本的给 40分</li>
+</ul>
+<h3 id="（2）ATM函数版本">（2）ATM函数版本</h3>
+<ul>
+<li>选择这个版本的给 50 分</li>
+</ul>
+<h3 id="（3）ATM函数分层版本">（3）ATM函数分层版本</h3>
+<ul>
+<li>选择这个的给 60 分</li>
+</ul>
+<h3 id="（4）ATM现象对象分层版本">（4）ATM现象对象分层版本</h3>
+<ul>
+<li>选择这个的给 60 分</li>
+</ul>
+<h1>【四】评分标准</h1>
+<ul>
+<li><strong>不许夹带私人感情</strong></li>
+<li><strong>考得差不会批评你们，而是咱们要针对性的解决问题，如果大家都没问题，这种情况是最理想但是不现实</strong></li>
+<li><strong>如果一旦有人将自己的问题藏起来，总是不爆漏出来，积少成多，后果就是可能会影响到后续学习</strong></li>
+<li><strong>所以尽自己努力去答，别打假赛！</strong></li>
+</ul>
+<h2 id="【1】理论题">【1】理论题</h2>
+<h3 id="（1）别太离谱就给分">（1）别太离谱就给分</h3>
+<ul>
+<li>只要思想和意思对，别太离谱就给分</li>
+</ul>
+<h3 id="（2）尽量给整分">（2）尽量给整分</h3>
+<ul>
+<li>一个题尽量给整分，别给小数分</li>
+</ul>
+<h3 id="（3）纯去想试试">（3）纯去想试试</h3>
+<ul>
+<li>尽力去回忆你学过的知识，别打开pycharm，就靠自己纯去想试试</li>
+<li>在你们面试的时候，面试官不会说，让你打开pycharm试试，就让你一张嘴，框框说</li>
+</ul>
+<h3 id="（4）基础打好">（4）基础打好</h3>
+<ul>
+<li>如果面试官提前让你写代码题了，那也会给你时间提前准备</li>
+<li>用到的技术也不会是现在这么基础的东西</li>
+<li>但是你基础打不好，后面学起来你就会越来越没思路</li>
+</ul>
+<h2 id="【2】思考题">【2】思考题</h2>
+<ul>
+<li>好好理解其中的意思，组织好的语言，别太离谱</li>
+</ul>
+<h2 id="【3】代码题">【3】代码题</h2>
+<ul>
+<li>只要思想和意思对，别太离谱就给分</li>
+<li>代码题酌情给分，根据功能给分</li>
+</ul>
+<h2 id="【4】时间安排">【4】时间安排</h2>
+<h3 id="【1】上午时间">【1】上午时间</h3>
+<ul>
+<li>写理论 + 思考</li>
+</ul>
+<h3 id="（2）下午时间">（2）下午时间</h3>
+<ul>
+<li>
+<p>上午没写完的，接着写</p>
+</li>
+<li>
+<p>写完的开始写代码题</p>
+</li>
+</ul>
+<h1>【五】分数汇总</h1>
+<h3 id="（1）评分时间">（1）评分时间</h3>
+<ul>
+<li>20:30组长开始判卷子，21:00 ~ 21:30 统计出来上面题的结果，总共是150分</li>
+</ul>
+<h3 id="（2）上报成绩">（2）上报成绩</h3>
+<ul>
+<li>然后在组长群汇报成绩，格式如下</li>
+</ul>
+```python
+几组
+组长：xxx(xx分)
+组员：xxx(xx分)|xxx(xx分)
+总分：上面所有人的成绩加起来
+均分：上面所有人的总成绩/你们组的人数
+```
+
+<h3 id="（3）统计成绩">（3）统计成绩</h3>
+<ul>
+<li>班长负责统计所有组的成绩</li>
+<li>统计到一个Excel表格中</li>
+<li>有两份
+<ul>
+<li>一份是全班不分组，按照分数从高到低排</li>
+<li>一份是按照每组的平均分排，按照分数从高到低排</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/10.0selenium%E6%A1%86%E6%9E%B6%E4%B9%8B%E6%B5%8F%E8%A7%88%E5%99%A8%E6%93%8D%E4%BD%9C/" rel="prev" title="10.0selenium框架之浏览器操作">
+      <i class="fa fa-chevron-left"></i> 10.0selenium框架之浏览器操作
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/%E9%98%B6%E6%AE%B5%E6%80%A7%E8%80%83%E8%AF%95%E4%B8%80%E3%80%90%E4%B9%A0%E9%A2%98%E7%89%88%E3%80%91/" rel="next" title="阶段性考试一【习题版】">
+      阶段性考试一【习题版】 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">【一】理论题(60)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80-3"><span class="nav-number">1.1.</span> <span class="nav-text">【1】计算机基础(3)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E4%BA%94%E5%A4%A7%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-number">1.1.1.</span> <span class="nav-text">（1）五大组成部分有哪些</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E4%B8%89%E5%A4%A7%E6%A0%B8%E5%BF%83%E7%A1%AC%E4%BB%B6%E5%90%84%E8%87%AA%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">（3）三大核心硬件各自的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E4%BB%80%E4%B9%88%E6%98%AF%E5%B8%B8%E9%87%8F"><span class="nav-number">1.1.3.</span> <span class="nav-text">（2）什么是常量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E5%8F%98%E9%87%8F%E7%9A%84%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.4.</span> <span class="nav-text">（4）变量的三大特性分别是什么</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%903%E3%80%91-%E5%92%8Cis%E7%9A%84%E5%8C%BA%E5%88%AB-1"><span class="nav-number">1.2.</span> <span class="nav-text">【3】&#x3D;&#x3D;和is的区别(1)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%A6%82%E4%BD%95%E5%B0%86utf8%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%88%90%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%9F"><span class="nav-number">1.2.1.</span> <span class="nav-text">（2）如何将utf8的二进制格式转成字符串？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%88%86%E5%88%AB%E6%9C%89%E4%BB%80%E4%B9%88%E7%89%B9%E7%82%B9%EF%BC%9F"><span class="nav-number">1.2.2.</span> <span class="nav-text">（2）分别有什么特点？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BA%8F%E5%88%97%E7%B1%BB%E5%9E%8B%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">1.2.3.</span> <span class="nav-text">（3）容器类型和序列类型有哪些？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E7%94%A8Python%E4%BB%A3%E7%A0%81%E6%A8%A1%E6%8B%9F%E5%A0%86%E5%92%8C%E6%A0%88"><span class="nav-number">1.2.4.</span> <span class="nav-text">（2）用Python代码模拟堆和栈</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">function_name:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">函数名，应遵循变量命名规则，用于标识和调用函数。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">良好的命名习惯能够帮助理解函数的用途。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">parameters:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">参数列表，放在圆括号内，可以有零个、一个或多个参数，参数之间以逗号分隔。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">参数是传递给函数的输入值，函数基于这些输入执行操作。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">“:”:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">9.</span> <span class="nav-text">参数列表后面的冒号，标志着函数定义的开始。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">10.</span> <span class="nav-text">docstring:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">11.</span> <span class="nav-text">函数定义之后紧跟的多行字符串（通常被三对引号包围），用于描述函数的功能、参数类型、返回值类型等信息，有助于代码的文档化和可读性。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">12.</span> <span class="nav-text">执行语句:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">13.</span> <span class="nav-text">函数体内的实际代码，这部分实现了函数的具体逻辑。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">14.</span> <span class="nav-text">return result:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">15.</span> <span class="nav-text">return语句用于从函数返回计算结果。如果没有返回值，可以省略此行，函数默认返回None。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">16.</span> <span class="nav-text">result是函数根据输入参数计算得到的值，这个名称可以根据实际情况替换。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">17.</span> <span class="nav-text">调用 dec_b(test) 传进去 外部 test 的内存地址 拿到 返回的内存空间地址 赋给变量 test（返回的内存空间地址）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">18.</span> <span class="nav-text">从语法形式上讲，内置有__iter__方法的对象都是可迭代对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8next-%E5%87%BD%E6%95%B0"><span class="nav-number">18.0.0.1.</span> <span class="nav-text">使用next()函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8for%E5%BE%AA%E7%8E%AF%E4%B8%AD%E8%BF%AD%E4%BB%A3"><span class="nav-number">18.0.0.2.</span> <span class="nav-text">在for循环中迭代</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8send-%E6%96%B9%E6%B3%95"><span class="nav-number">18.0.0.3.</span> <span class="nav-text">使用send()方法</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">19.</span> <span class="nav-text">除了使用next()获取生成器的下一个值，还可以使用send()方法向生成器传递值，并接收生成器产出的下一个值。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">20.</span> <span class="nav-text">首次调用send()之前需要用next()或在for循环中启动生成器。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E7%BB%9F%E8%AE%A1%E6%AF%8F%E4%B8%80%E4%B8%AA%E5%90%8D%E5%AD%97%E4%B8%AD%E6%AF%8F%E4%B8%AA%E5%AD%97%E7%AC%A6%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0-1"><span class="nav-number">20.0.1.</span> <span class="nav-text">（4）统计每一个名字中每个字符出现的次数(1)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%903%E3%80%91%E6%AF%94%E8%BE%83%E9%A2%98-5"><span class="nav-number">20.1.</span> <span class="nav-text">【3】比较题(5)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%B0%86%E5%AD%97%E5%85%B8%E6%98%A0%E5%B0%84%E6%88%90%E4%B8%80%E4%B8%AA%E5%88%97%E8%A1%A8-2"><span class="nav-number">20.1.1.</span> <span class="nav-text">（2）将字典映射成一个列表(2)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%904%E3%80%91%E9%BB%98%E5%86%99%E6%8C%87%E5%AE%9A%E4%BD%8D%E6%95%B0%E7%9A%84%E9%9A%8F%E6%9C%BA%E9%AA%8C%E8%AF%81%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8-5"><span class="nav-number">20.2.</span> <span class="nav-text">【4】默写指定位数的随机验证码生成器(5)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">21.</span> <span class="nav-text">【三】代码题(60)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%900%E3%80%91%E8%A6%81%E6%B1%82%E8%AF%B4%E6%98%8E"><span class="nav-number">21.1.</span> <span class="nav-text">【0】要求说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E7%89%88%E6%9C%AC%E9%80%89%E6%8B%A9"><span class="nav-number">21.1.1.</span> <span class="nav-text">（1）版本选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%BC%80%E5%8F%91%E8%A6%81%E6%B1%82"><span class="nav-number">21.1.2.</span> <span class="nav-text">（2）开发要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E9%A1%B9%E7%9B%AE%E8%A6%81%E6%B1%82"><span class="nav-number">21.1.3.</span> <span class="nav-text">（3）项目要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E6%89%80%E6%9C%89%E5%8A%9F%E8%83%BD%E9%9C%80%E8%A6%81%E6%AD%A3%E5%B8%B8%E8%BF%90%E8%A1%8C"><span class="nav-number">21.1.4.</span> <span class="nav-text">（4）所有功能需要正常运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%885%EF%BC%89%E5%8F%AF%E4%BB%A5%E9%80%89%E6%8B%A9%E5%88%86%E5%B7%A5%E5%90%88%E4%BD%9C"><span class="nav-number">21.1.5.</span> <span class="nav-text">（5）可以选择分工合作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E9%A1%B9%E7%9B%AE%E4%B8%80%EF%BC%9AATM-Shopping"><span class="nav-number">21.2.</span> <span class="nav-text">【1】项目一：ATM_Shopping</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%880%EF%BC%89%E5%8A%9F%E8%83%BD%E8%AF%B4%E6%98%8E"><span class="nav-number">21.2.1.</span> <span class="nav-text">（0）功能说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89ATM%E9%9D%A2%E6%9D%A1%E7%89%88%E6%9C%AC"><span class="nav-number">21.2.2.</span> <span class="nav-text">（1）ATM面条版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89ATM%E5%87%BD%E6%95%B0%E7%89%88%E6%9C%AC"><span class="nav-number">21.2.3.</span> <span class="nav-text">（2）ATM函数版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89ATM%E5%87%BD%E6%95%B0%E5%88%86%E5%B1%82%E7%89%88%E6%9C%AC"><span class="nav-number">21.2.4.</span> <span class="nav-text">（3）ATM函数分层版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89ATM%E7%8E%B0%E8%B1%A1%E5%AF%B9%E8%B1%A1%E5%88%86%E5%B1%82%E7%89%88%E6%9C%AC"><span class="nav-number">21.2.5.</span> <span class="nav-text">（4）ATM现象对象分层版本</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">22.</span> <span class="nav-text">【四】评分标准</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E7%90%86%E8%AE%BA%E9%A2%98"><span class="nav-number">22.1.</span> <span class="nav-text">【1】理论题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E5%88%AB%E5%A4%AA%E7%A6%BB%E8%B0%B1%E5%B0%B1%E7%BB%99%E5%88%86"><span class="nav-number">22.1.1.</span> <span class="nav-text">（1）别太离谱就给分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%B0%BD%E9%87%8F%E7%BB%99%E6%95%B4%E5%88%86"><span class="nav-number">22.1.2.</span> <span class="nav-text">（2）尽量给整分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E7%BA%AF%E5%8E%BB%E6%83%B3%E8%AF%95%E8%AF%95"><span class="nav-number">22.1.3.</span> <span class="nav-text">（3）纯去想试试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E5%9F%BA%E7%A1%80%E6%89%93%E5%A5%BD"><span class="nav-number">22.1.4.</span> <span class="nav-text">（4）基础打好</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E6%80%9D%E8%80%83%E9%A2%98"><span class="nav-number">22.2.</span> <span class="nav-text">【2】思考题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%903%E3%80%91%E4%BB%A3%E7%A0%81%E9%A2%98"><span class="nav-number">22.3.</span> <span class="nav-text">【3】代码题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%904%E3%80%91%E6%97%B6%E9%97%B4%E5%AE%89%E6%8E%92"><span class="nav-number">22.4.</span> <span class="nav-text">【4】时间安排</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%B8%8A%E5%8D%88%E6%97%B6%E9%97%B4"><span class="nav-number">22.4.1.</span> <span class="nav-text">【1】上午时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E4%B8%8B%E5%8D%88%E6%97%B6%E9%97%B4"><span class="nav-number">22.4.2.</span> <span class="nav-text">（2）下午时间</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">23.</span> <span class="nav-text">【五】分数汇总</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E8%AF%84%E5%88%86%E6%97%B6%E9%97%B4"><span class="nav-number">23.0.1.</span> <span class="nav-text">（1）评分时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E4%B8%8A%E6%8A%A5%E6%88%90%E7%BB%A9"><span class="nav-number">23.0.2.</span> <span class="nav-text">（2）上报成绩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E7%BB%9F%E8%AE%A1%E6%88%90%E7%BB%A9"><span class="nav-number">23.0.3.</span> <span class="nav-text">（3）统计成绩</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

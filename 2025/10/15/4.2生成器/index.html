@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="【一】生成器 【1】什么是生成器  在py中生成器是一种特殊的迭代器，可以在需要时生成数据，不必提前从内存中生成并储存整个数据集 通过生成器，可以逐个生成序列中的元素，而无需一次性生成整个序列 生成器在处理大数据时，具有节约内存，提高效率的特点  【2】生成器的创建方式 【1】生成器的表达式  使用列表推到式时，可以将列表推导式的方括号改为圆括号，即可创建一个生成器  &#96;&#96;&#96;python #推导式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4.2生成器">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/4.2%E7%94%9F%E6%88%90%E5%99%A8/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="【一】生成器 【1】什么是生成器  在py中生成器是一种特殊的迭代器，可以在需要时生成数据，不必提前从内存中生成并储存整个数据集 通过生成器，可以逐个生成序列中的元素，而无需一次性生成整个序列 生成器在处理大数据时，具有节约内存，提高效率的特点  【2】生成器的创建方式 【1】生成器的表达式  使用列表推到式时，可以将列表推导式的方括号改为圆括号，即可创建一个生成器  &#96;&#96;&#96;python #推导式">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.236Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/4.2%E7%94%9F%E6%88%90%E5%99%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>4.2生成器 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.2%E7%94%9F%E6%88%90%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          4.2生成器
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>【一】生成器</h1>
+<h2 id="【1】什么是生成器">【1】什么是生成器</h2>
+<ul>
+<li>在py中生成器是一种特殊的迭代器，可以在需要时生成数据，不必提前从内存中生成并储存整个数据集</li>
+<li>通过生成器，可以逐个生成序列中的元素，而无需一次性生成整个序列</li>
+<li>生成器在处理大数据时，具有节约内存，提高效率的特点</li>
+</ul>
+<h2 id="【2】生成器的创建方式">【2】生成器的创建方式</h2>
+<h3 id="【1】生成器的表达式">【1】生成器的表达式</h3>
+<ul>
+<li>使用列表推到式时，可以将列表推导式的方括号改为圆括号，即可创建一个生成器</li>
+</ul>
+```python
+#推导式生成列表
+data_list = [i for i in range(6)]
+print(data_list)#[0, 1, 2, 3, 4, 5]
+
+
+#将列表改成元祖，看起来像元祖推导式，其实是一个生成器对象
+data_list = (i for i in range(6))  # 这个可不是元组，是生成器的表达式
+print(data_list)#<generator object <genexpr> at 0x000001D8A3A48350>
+#生成器对象可以强转成列表
+print(list(data_list))#[0, 1, 2, 3, 4, 5]
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 生成器的保存算法（for循环遍历）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">data_list = (i for i in range(6))</span><br><span class="line">for x in data_list:</span><br><span class="line">    print(x)</span><br><span class="line">#输出 0</span><br><span class="line"># 1</span><br><span class="line"># 2</span><br><span class="line"># 3</span><br><span class="line"># 4</span><br><span class="line"># 5</span><br></pre></td></tr></table></figure>
+
+<h3 id="【2】yield关键字">【2】yield关键字</h3>
+<ul>
+<li>使用yield关键字定义一个生成器函数时，生成器函数中的yield语句会暂停函数执行并返回一个值，下一次调用该函数时会继续执行并返回下一个值。</li>
+</ul>
+```python
+def add(i):
+    yield i
+
+# add(6) 会进入到add函数将原本的函数对象转换为生成器对象
+res = add(6)  # <generator object add at 0x000002AD9BBDCBA0>
+# 想取值只能是 next 迭代取值
+print(res.__next__())
+``````
+
+<p>python<br>
+def add(i):<br>
+# i = 1<br>
+while True:<br>
+yield i # 第一次 next<br>
+res = add(1)<br>
+print(res)  # &lt;generator object add at 0x000002810B67CBA0&gt;<br>
+print(next(res))  # 1<br>
+print(next(res))  # 1<br>
+res = add(2)<br>
+print(next(res))  # 2<br>
+print(next(res))  # 2</p>
+```
+
+
+
+## 【3】生成器案例
+
+- 生成器传值.send()
+
+### [1]调用函数
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">def eater():</span><br><span class="line">    print(&#x27;开始吃饭 ovo &#x27;)</span><br><span class="line">    while True:</span><br><span class="line">        food = yield</span><br><span class="line">        print(f&#x27;得到的食物是 :&gt;&gt;&gt;&gt; &#123;food&#125;, 开始吃饭喽 :&gt;&gt;&gt;&gt; &#123;food&#125;&#x27;)</span><br><span class="line">        </span><br><span class="line">res = eater()</span><br><span class="line">print(res)  # &lt;generator object eater at 0x000002094832AAC0&gt;</span><br><span class="line">print(res.__next__())</span><br><span class="line"># 打印开始吃饭</span><br><span class="line"># None   原因就是在生成器内部的 yield 中没有返回值</span><br><span class="line">print(res.__next__())</span><br><span class="line"># 打印 得到的食物是 :&gt;&gt;&gt;&gt; None, 开始吃饭喽 :&gt;&gt;&gt;&gt; None</span><br><span class="line"># None  原因就是在生成器内部的走完了上面的 又回到了 yield 中结果 yield 没有返回值</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### [2]向生成器中传值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python<br>
+def eater():<br>
+print('开始吃饭 ovo ‘)<br>
+while True:<br>
+food = yield<br>
+print(f’得到的食物是 :&gt;&gt;&gt;&gt; {food}, 开始吃饭喽 :&gt;&gt;&gt;&gt; {food}’)</p>
+<p>res = eater()<br>
+print(res)  # &lt;generator object eater at 0x00000227125F67A0&gt;<br>
+print(res.<strong>next</strong>())<br>
+#开始吃饭 ovo<br>
+#None<br>
+res.send(“鱼香肉丝”)  # 想yield 传值并且让生成器向下走一下<br>
+#得到的食物是 :&gt;&gt;&gt;&gt; 鱼香肉丝, 开始吃饭喽 :&gt;&gt;&gt;&gt; 鱼香肉丝<br>
+print(res.<strong>next</strong>())</p>
+<h1>得到的食物是 :&gt;&gt;&gt;&gt; None, 开始吃饭喽 :&gt;&gt;&gt;&gt; None</h1>
+<h1>None</h1>
+<p>print(res.send(“宫保鸡丁”))</p>
+<h1>得到的食物是 :&gt;&gt;&gt;&gt; None, 开始吃饭喽 :&gt;&gt;&gt;&gt; None</h1>
+<h1>None</h1>
+<p>print(res.send(“宫保鸡丁”))</p>
+<h1>得到的食物是 :&gt;&gt;&gt;&gt; None, 开始吃饭喽 :&gt;&gt;&gt;&gt; None</h1>
+<h1>None</h1>
+```
+
+
+
+## 【4】装饰器+生成器
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">def init_iter(func):</span><br><span class="line">    # func 我的生成器函数</span><br><span class="line">    def inner(*args, **kwargs):</span><br><span class="line">        # g 得到的生成器对象</span><br><span class="line">        g = func(*args, **kwargs)</span><br><span class="line">        # 调用自己生成器向下走</span><br><span class="line">        next(g)</span><br><span class="line">        # 走回来的返回值返回出去</span><br><span class="line">        return g</span><br><span class="line"></span><br><span class="line">    return inner</span><br><span class="line"></span><br><span class="line">@init_iter</span><br><span class="line">def eater():</span><br><span class="line">    print(&#x27;开始吃饭 ovo &#x27;)</span><br><span class="line">    while True:</span><br><span class="line">        food = yield</span><br><span class="line">        print(f&#x27;得到的食物是 :&gt;&gt;&gt;&gt; &#123;food&#125;, 开始吃饭喽 :&gt;&gt;&gt;&gt; &#123;food&#125;&#x27;)</span><br><span class="line"></span><br><span class="line">res = eater()</span><br><span class="line">res.send(&quot;鱼香肉丝&quot;)</span><br><span class="line">res.send(&quot;宫保鸡丁&quot;)</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【5】生成器内部修改可变数据类型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python<br>
+def init_iter(func):<br>
+# func 我的生成器函数<br>
+def inner(*args, **kwargs):<br>
+# g 得到的生成器对象<br>
+g = func(*args, **kwargs)<br>
+# 调用自己生成器向下走<br>
+next(g)<br>
+# 走回来的返回值返回出去<br>
+return g</p>
+<pre><code>return inner
+</code></pre>
+<p>@init_iter<br>
+def eater():<br>
+print(‘开始吃饭 ovo ‘)<br>
+food_list = []<br>
+while True:<br>
+food = yield<br>
+food_list.append(food)<br>
+print(f’得到的食物是 :&gt;&gt;&gt;&gt; {food}, 开始吃饭喽 :&gt;&gt;&gt;&gt; {food}’)<br>
+print(f’当前后厨已经做好了 :&gt;&gt;&gt;&gt; {food_list}’)</p>
+<p>res = eater()<br>
+res.send(“鱼香肉丝”)<br>
+res.send(“宫保鸡丁”)</p>
+<h1>鱼香肉丝            1  1</h1>
+<h1>宫保鸡丁            1  1</h1>
+<h1>宫保鸡丁 + 鱼香肉丝  1  1</h1>
+```
+
+
+
+
+
+## 【6】yield + next 搭配着使用
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">&#x27;&#x27;&#x27;for i in range(5):    </span><br><span class="line">	print(i)&#x27;&#x27;&#x27;</span><br><span class="line"># 仿照for循环自己构建循环函数</span><br><span class="line">&#123;% raw %&#125;``````python</span><br><span class="line">def my_range(start, stop, step):</span><br><span class="line">    &#x27;&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">    :param start: 0</span><br><span class="line">    :param stop: 5</span><br><span class="line">    :param step: 1</span><br><span class="line">    :return:</span><br><span class="line">    &#x27;&#x27;&#x27;</span><br><span class="line">    print(&quot;start&quot;)</span><br><span class="line">    while start &lt; stop:</span><br><span class="line">        yield start</span><br><span class="line">        start += step</span><br><span class="line">    print(&quot;end&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">res = my_range(0, 5, 1)</span><br><span class="line">print(res)  # &lt;generator object my_range at 0x000002DF0361CBA0&gt;</span><br><span class="line">print(res.__next__())</span><br><span class="line">print(res.__next__())</span><br><span class="line">print(res.__next__())</span><br><span class="line">print(res.__next__())</span><br><span class="line">print(res.__next__())</span><br><span class="line"># 这里会报错 ---》 把我掏空了 --- 没有可迭代的值可以被获取了</span><br><span class="line">print(res.__next__())  # StopIteration</span><br></pre></td></tr></table></figure>
+
+```python
+def init_iter(func):
+    def inner(*args, **kwargs):
+        try:
+            generator = func(*args, **kwargs)
+            next(generator)
+            return generator
+        except StopIteration:
+            pass
+
+    return inner
+
+def range_(start, stop, step):
+    while start < stop:
+        yield start
+        start += step
+
+# for 循环内部做了异常捕获
+for i in range_(0,5,1):
+    print(i)
+
+def my_range(start, stop, step):
+    def range_(start, stop, step):
+        while start < stop:
+            yield start
+            start += step
+
+    res = range_(start, stop, step)
+    while True:
+        try:
+            print(res.__next__())
+        except StopIteration:
+            break
+
+res = my_range(start=1, stop=5, step=1)
+res
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【7】生成器的特点</span><br><span class="line"></span><br><span class="line">1. 节约内存</span><br><span class="line">2. 迭代到下一次的调用时，所使用的参数都是第一次所保留的</span><br><span class="line">3. 在整个所有函数调用的参数都是第一次所调用时保留的，而不是新创建的</span><br><span class="line"></span><br><span class="line">## ATM转账和查看信息</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># # ATM ： 提款姬</span><br><span class="line"></span><br><span class="line"># 【1】注册 ：</span><br><span class="line"># （1）存储到文件中</span><br><span class="line"># （2）存储数据格式：用户名 - 登录密码 - 年龄 - 银行卡号(1314) - 取款密码 - 余额(1000)  默认余额 1000</span><br><span class="line"># （3）校验用户名存在不允许注册</span><br><span class="line"># （4）校验密码，必须是 6 位 ，并且字母和数据混合 ---&gt; 提高数据的安全等级</span><br><span class="line"># （5）取款密码，必须是数字且 是三位</span><br><span class="line"></span><br><span class="line"># 【2】登录 ：</span><br><span class="line"># （1）直接将用户信息从文件中取出</span><br><span class="line"># （2）对用户进行核对，用户存在的情况下允许登录，否则不允许登录</span><br><span class="line"># （3）登录的时候的还是要校验密码 ： 必须是 6 位 ，并且字母和数据混合 ---&gt; 提高数据的安全等级</span><br><span class="line"></span><br><span class="line"># 定义全局登录字典</span><br><span class="line">login_dict = &#123;</span><br><span class="line">    &#x27;username&#x27;: None,</span><br><span class="line">    &#x27;bank_id&#x27;: None,</span><br><span class="line">    &#x27;bank_password&#x27;: None,</span><br><span class="line">    &quot;bank_balance&quot;: None,</span><br><span class="line">    &quot;role&quot;: None,</span><br><span class="line">    &quot;is_locked&quot;: None,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_username_password():</span><br><span class="line">    username = input(&quot;请输入用户名 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    password = input(&quot;请输入密 码 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    return username, password</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def read_data(file=&#x27;user_data.text&#x27;, tag=None):</span><br><span class="line">    if not tag:</span><br><span class="line">        # 【一】第一次进来的时候文件是不存在的 ---&gt; 异常捕获</span><br><span class="line">        user_data_all_dict = &#123;&#125;</span><br><span class="line">        # &#123;&#x27;dream&#x27;:&#123;&#125;&#125;</span><br><span class="line">        # 【二】第二次进来的时候要对数据进行读取和切分</span><br><span class="line">        try:</span><br><span class="line">            with open(file=file, mode=&#x27;r&#x27;, encoding=&#x27;utf-8&#x27;) as fp:</span><br><span class="line">                # dream|666aaa|18|1234|666|1000|admin|0</span><br><span class="line">                for line in fp:</span><br><span class="line">                    username, password, age, bank_id, bank_password, bank_balance, role, is_locked = line.strip().split(</span><br><span class="line">                        &#x27;|&#x27;)</span><br><span class="line">                    user_data_all_dict[username] = &#123;</span><br><span class="line">                        &#x27;username&#x27;: username,</span><br><span class="line">                        &#x27;password&#x27;: password,</span><br><span class="line">                        &#x27;age&#x27;: int(age),</span><br><span class="line">                        &#x27;bank_id&#x27;: int(bank_id),</span><br><span class="line">                        &#x27;bank_password&#x27;: bank_password,</span><br><span class="line">                        &#x27;bank_balance&#x27;: int(bank_balance),</span><br><span class="line">                        &#x27;is_locked&#x27;: True if is_locked == &#x27;1&#x27; else False,</span><br><span class="line">                        &#x27;role&#x27;: role,</span><br><span class="line">                    &#125;</span><br><span class="line">            return user_data_all_dict</span><br><span class="line">        except Exception as e:</span><br><span class="line">            return user_data_all_dict</span><br><span class="line">    else:</span><br><span class="line">        try:</span><br><span class="line">            # file = dream_log.text</span><br><span class="line">            file = &#x27;log\\&#x27; + file</span><br><span class="line">            with open(file=file, mode=&#x27;r&#x27;, encoding=&#x27;utf8&#x27;) as fp:</span><br><span class="line">                log_list = [line.strip() for line in fp]</span><br><span class="line">            return log_list</span><br><span class="line">        except Exception as e:</span><br><span class="line">            return []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def exist_user(username: str) -&gt; bool:</span><br><span class="line">    # 【一】获取到全局的用户信息</span><br><span class="line">    user_data_all_dict = read_data()</span><br><span class="line">    user_data_dict = user_data_all_dict.get(username)</span><br><span class="line">    if not user_data_dict:</span><br><span class="line">        return False</span><br><span class="line">    else:</span><br><span class="line">        return True</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def check_type(username, password=None, age=None, bank_id=None, bank_password=None, bank_balance=None):</span><br><span class="line">    if password:</span><br><span class="line">        # 必须是 6 位 ，并且字母和数据混合</span><br><span class="line">        if len(password) != 6:</span><br><span class="line">            return False, f&#x27;当前用户 &#123;username&#125; 密码长度不正确!&#x27;</span><br><span class="line">        # 字母和数据混合</span><br><span class="line">        letter_list = [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;, &#x27;e&#x27;, &#x27;f&#x27;, &#x27;g&#x27;, &#x27;h&#x27;, &#x27;i&#x27;, &#x27;j&#x27;, &#x27;k&#x27;, &#x27;l&#x27;, &#x27;m&#x27;, &#x27;n&#x27;, &#x27;o&#x27;, &#x27;p&#x27;, &#x27;q&#x27;, &#x27;r&#x27;, &#x27;s&#x27;,</span><br><span class="line">                       &#x27;t&#x27;, &#x27;u&#x27;, &#x27;v&#x27;, &#x27;w&#x27;, &#x27;x&#x27;, &#x27;y&#x27;, &#x27;z&#x27;]</span><br><span class="line">        num_list = [&#x27;0&#x27;, &#x27;1&#x27;, &#x27;2&#x27;, &#x27;3&#x27;, &#x27;4&#x27;, &#x27;5&#x27;, &#x27;6&#x27;, &#x27;7&#x27;, &#x27;8&#x27;, &#x27;9&#x27;]</span><br><span class="line">        tag_dict = &#123;</span><br><span class="line">            &#x27;is_letter&#x27;: [],</span><br><span class="line">            &quot;is_number&quot;: []</span><br><span class="line">        &#125;</span><br><span class="line">        for item in password:</span><br><span class="line">            if item in letter_list:</span><br><span class="line">                tag_dict[&#x27;is_letter&#x27;].append(item)</span><br><span class="line">            elif item in num_list:</span><br><span class="line">                tag_dict[&#x27;is_number&#x27;].append(item)</span><br><span class="line">        if len(tag_dict[&#x27;is_letter&#x27;]) + len(tag_dict[&#x27;is_number&#x27;]) != 6 or len(tag_dict[&#x27;is_number&#x27;]) == 0 or len(</span><br><span class="line">                tag_dict[&#x27;is_letter&#x27;]) == 0:</span><br><span class="line">            return False, f&#x27;当前用户 &#123;username&#125; 密码格式不正确!必须是数字+字母混合!&#x27;</span><br><span class="line">    if age:</span><br><span class="line">        # 判断年龄是数字类型</span><br><span class="line">        if not age.isdigit():</span><br><span class="line">            return False, f&#x27;当前年龄不符合数据格式!&#x27;</span><br><span class="line">        age = int(age)</span><br><span class="line">        # 年龄大于 18 小于 100</span><br><span class="line">        if 18 &gt; age or age &gt; 100:</span><br><span class="line">            return False, f&#x27;当前年龄超出正常人!&#x27;</span><br><span class="line">    if bank_id:</span><br><span class="line">        if not bank_id.isdigit():</span><br><span class="line">            return False, f&#x27;当前银行卡号非法，必须是数字!&#x27;</span><br><span class="line">        if len(bank_id) != 4:</span><br><span class="line">            return False, f&#x27;当前银行卡号非法,必须是 4 位 !&#x27;</span><br><span class="line">    if bank_password:</span><br><span class="line">        # 取款密码，必须是数字且 是三位</span><br><span class="line">        if len(bank_password) != 3:</span><br><span class="line">            return False, f&#x27;当前银行密码必须是 3 位 !&#x27;</span><br><span class="line">        if not bank_password.isdigit():</span><br><span class="line">            return False, f&#x27;当前银行密码格式错误必须是数字!&#x27;</span><br><span class="line">    if bank_balance:</span><br><span class="line">        # 校验余额大于 0 并且是数字</span><br><span class="line">        if not bank_balance.isdigit():</span><br><span class="line">            return False, f&#x27;当前银行余额非法!&#x27;</span><br><span class="line">        bank_balance = int(bank_balance)</span><br><span class="line">        if bank_balance &lt; 0:</span><br><span class="line">            return False, f&#x27;当前银行余额必须大于0!&#x27;</span><br><span class="line">    return True, &#x27;&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def save_data(data, file=&#x27;user_data.text&#x27;, tag=None):</span><br><span class="line">    # 如果不给 tag 默认是存储用户的数据</span><br><span class="line">    if not tag:</span><br><span class="line">        data_list = []</span><br><span class="line">        for username, user_data_dict in data.items():</span><br><span class="line">            is_locked = user_data_dict.pop(&#x27;is_locked&#x27;)</span><br><span class="line">            if is_locked:</span><br><span class="line">                is_locked = &#x27;1&#x27;</span><br><span class="line">            else:</span><br><span class="line">                is_locked = &#x27;0&#x27;</span><br><span class="line">            data = &#x27;|&#x27;.join([str(value) for value in user_data_dict.values()]) + &#x27;|&#x27; + is_locked + &#x27;\n&#x27;</span><br><span class="line">            data_list.append(data)</span><br><span class="line">        with open(file=file, mode=&#x27;w&#x27;, encoding=&#x27;utf8&#x27;) as fp:</span><br><span class="line">            fp.writelines(data_list)</span><br><span class="line">    # 如果给了 tag 就是存储的取款日志信息</span><br><span class="line">    else:</span><br><span class="line">        # file : dream_log.text</span><br><span class="line">        # log\dream_log.text</span><br><span class="line">        # 根据原本的文件名拼接新的路径 放到指定文件夹下</span><br><span class="line">        file = &quot;log\\&quot; + file</span><br><span class="line">        # 打开文件追加文件数据</span><br><span class="line">        with open(file=file, mode=&#x27;a&#x27;, encoding=&#x27;utf-8&#x27;) as fp:</span><br><span class="line">            fp.write(data + &#x27;\n&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 注册函数</span><br><span class="line">def register():</span><br><span class="line">    print(f&quot;欢迎来到注册功能&quot;)</span><br><span class="line">    # 【一】获取用户名和密码</span><br><span class="line">    username, password = get_username_password()</span><br><span class="line">    # 【二】校验当前用户是否存在</span><br><span class="line">    is_exist = exist_user(username)</span><br><span class="line">    if is_exist:</span><br><span class="line">        return False, f&#x27;当前用户 &#123;username&#125; 已存在,请登录!&#x27;</span><br><span class="line">    password_flag, password_data = check_type(username=username, password=password)</span><br><span class="line">    user_data_all_dict = read_data()</span><br><span class="line">    if not password_flag:</span><br><span class="line">        return password_flag, password_data</span><br><span class="line">    # 【三】输入注册信息</span><br><span class="line">    #  年龄</span><br><span class="line">    age = input(&quot;请输入年龄 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    age_flag, age_data = check_type(username=username, age=age)</span><br><span class="line">    if not age_flag:</span><br><span class="line">        return age_flag, age_data</span><br><span class="line">    #  银行卡号(1314)</span><br><span class="line">    bank_id = input(&quot;请输入银行卡号 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    bank_id_flag, bank_id_data = check_type(username=username, bank_id=bank_id)</span><br><span class="line">    # 从总的数据字典中提取出每一个 字典中 bank_id</span><br><span class="line">    # &#123;&#x27;dream&#x27;:&#123;&#x27;username&#x27;:&quot;dream&quot;,&quot;bank_id&quot;:1234 &#125;&#125;</span><br><span class="line">    # &#123;&#x27;username&#x27;:&quot;dream&quot;,&quot;bank_id&quot;:1234 &#125;</span><br><span class="line">    bank_id_list = [str(user_data_dict.get(&#x27;bank_id&#x27;)) for user_data_dict in user_data_all_dict.values()]</span><br><span class="line">    if bank_id in bank_id_list:</span><br><span class="line">        return False, f&#x27;当前银行账号已存在!&#x27;</span><br><span class="line">    if not bank_id_flag:</span><br><span class="line">        return bank_id_flag, bank_id_data</span><br><span class="line">    #  取款密码</span><br><span class="line">    bank_password = input(&quot;请输入取款密码 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    bank_password_flag, bank_password_data = check_type(username=username, bank_password=bank_password)</span><br><span class="line">    if not bank_password_flag:</span><br><span class="line">        return bank_password_flag, bank_password_data</span><br><span class="line">    #  余额(1000)  默认余额 1000</span><br><span class="line">    bank_balance = &#x27;1000&#x27;</span><br><span class="line">    bank_balance_flag, bank_balance_data = check_type(username=username, bank_balance=bank_balance)</span><br><span class="line">    if not bank_balance_flag:</span><br><span class="line">        return bank_balance_flag, bank_balance_data</span><br><span class="line">    # 拼接数据格式</span><br><span class="line">    if username == &#x27;dream&#x27;:</span><br><span class="line">        role = &#x27;admin&#x27;</span><br><span class="line">    else:</span><br><span class="line">        role = &#x27;user&#x27;</span><br><span class="line">    user_data_all_dict[username] = &#123;</span><br><span class="line">        &#x27;username&#x27;: username,</span><br><span class="line">        &#x27;password&#x27;: password,</span><br><span class="line">        &#x27;age&#x27;: age,</span><br><span class="line">        &#x27;bank_id&#x27;: bank_id,</span><br><span class="line">        &#x27;bank_password&#x27;: bank_password,</span><br><span class="line">        &#x27;bank_balance&#x27;: bank_balance,</span><br><span class="line">        &#x27;is_locked&#x27;: False,</span><br><span class="line">        &#x27;role&#x27;: role,</span><br><span class="line">    &#125;</span><br><span class="line">    save_data(data=user_data_all_dict)</span><br><span class="line">    return True, f&quot;当前用户 &#123;username&#125; 注册成功!&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 登录函数</span><br><span class="line">def login():</span><br><span class="line">    print(f&quot;欢迎来到登录功能&quot;)</span><br><span class="line">    # 【一】获取用户名和密码</span><br><span class="line">    username, password = get_username_password()</span><br><span class="line">    # 【二】校验用户是否存在</span><br><span class="line">    is_exist = exist_user(username=username)</span><br><span class="line">    user_data_dict_all = read_data()</span><br><span class="line">    user_data_dict = user_data_dict_all.get(username)</span><br><span class="line">    if not is_exist and not user_data_dict:</span><br><span class="line">        return False, f&#x27;当前用户 &#123;username&#125; 不存在&#x27;</span><br><span class="line">    password_flag, password_ = check_type(username, password=password)</span><br><span class="line">    if not password_flag:</span><br><span class="line">        return password_flag, password_</span><br><span class="line">    # 【三】校验当前用户的锁定状态</span><br><span class="line">    if user_data_dict.get(&#x27;is_locked&#x27;):</span><br><span class="line">        return False, f&#x27;当前用户 &#123;username&#125; 已被锁定!&#x27;</span><br><span class="line">    # 【四】正常登陆校验用户名和密码</span><br><span class="line">    if password != user_data_dict.get(&#x27;password&#x27;):</span><br><span class="line">        return False, f&#x27;当前用户 &#123;username&#125; 密码错误!&#x27;</span><br><span class="line">    # 更新登录字典</span><br><span class="line">    login_dict.update(&#123;</span><br><span class="line">        &#x27;username&#x27;: username,</span><br><span class="line">        &#x27;bank_id&#x27;: user_data_dict.get(&quot;bank_id&quot;),</span><br><span class="line">        &#x27;bank_password&#x27;: user_data_dict.get(&quot;bank_password&quot;),</span><br><span class="line">        &quot;bank_balance&quot;: user_data_dict.get(&quot;bank_balance&quot;),</span><br><span class="line">        &quot;role&quot;: user_data_dict.get(&quot;role&quot;),</span><br><span class="line">        &quot;is_locked&quot;: user_data_dict.get(&quot;is_locked&quot;),</span><br><span class="line">    &#125;)</span><br><span class="line">    return True, f&#x27;当前用户 &#123;username&#125; 登录成功&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import time</span><br><span class="line"># 【3】取款 :</span><br><span class="line"># （1）验证当前用户已经登录</span><br><span class="line"># （2）取款的时候要验证取款金额 必须合法：大于0并且是数字</span><br><span class="line"># （3）验证取款密码，必须是数字且 是三位 并且和你的数据存的一样</span><br><span class="line"># （3）取款的时候记录取款信息 ： 取款金额 + 取款时间(百度搜)</span><br><span class="line"># （4）取款的时候把不要忘了把自己文件数据改掉</span><br><span class="line">from functools import wraps</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 登录认证装饰器</span><br><span class="line">def decorator(tag):</span><br><span class="line">    if tag == &#x27;login&#x27;:</span><br><span class="line">        # 登录认证装饰器</span><br><span class="line">        def outer(func):</span><br><span class="line">            @wraps(func)</span><br><span class="line">            def inner(*args, **kwargs):</span><br><span class="line">                # 校验当前用户是否登录</span><br><span class="line">                if not login_dict.get(&quot;username&quot;):</span><br><span class="line">                    return False, f&quot;当前用户未登录!&quot;</span><br><span class="line">                return func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">            return inner</span><br><span class="line"></span><br><span class="line">        return outer</span><br><span class="line">    elif tag == &#x27;lock&#x27;:</span><br><span class="line">        # 校验是否被冻结装饰器</span><br><span class="line">        def outer(func):</span><br><span class="line">            @wraps(func)</span><br><span class="line">            def inner(*args, **kwargs):</span><br><span class="line">                # 校验当前用户是否被冻结</span><br><span class="line">                if login_dict.get(&quot;is_locked&quot;):</span><br><span class="line">                    return False, f&#x27;当前用户已被冻结!&#x27;</span><br><span class="line">                return func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">            return inner</span><br><span class="line"></span><br><span class="line">        return outer</span><br><span class="line">    elif tag == &#x27;admin&#x27;:</span><br><span class="line">        # 校验当前用户是否是管理员身份</span><br><span class="line">        def outer(func):</span><br><span class="line">            @wraps(func)</span><br><span class="line">            def inner(*args, **kwargs):</span><br><span class="line">                # 校验当前用户是否是管理员</span><br><span class="line">                if login_dict.get(&quot;role&quot;) == &quot;user&quot;:</span><br><span class="line">                    return False, f&#x27;当前用户无权访问！&#x27;</span><br><span class="line">                return func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">            return inner</span><br><span class="line"></span><br><span class="line">        return outer</span><br><span class="line">    else:</span><br><span class="line">        assert not tag, f&quot;tag 标志位必须传，否则不允许使用&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@decorator(tag=&#x27;login&#x27;)</span><br><span class="line">def withdrawal():</span><br><span class="line">    print(f&quot;欢迎来到取款功能&quot;)</span><br><span class="line">    # 校验当前用户是否登录并且是否被冻结</span><br><span class="line">    # 【一】从登录字典中获取得到当前用户名</span><br><span class="line">    username = login_dict.get(&#x27;username&#x27;)</span><br><span class="line">    user_data_dict_all = read_data()</span><br><span class="line">    # 【二】输入取款金额</span><br><span class="line">    bank_balance = input(&quot;请输入取款金额 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    # 【三】校验金额是否合法</span><br><span class="line">    bank_balance_flag, bank_balance_data = check_type(username=username, bank_balance=bank_balance)</span><br><span class="line">    if not bank_balance_flag:</span><br><span class="line">        return bank_balance_flag, bank_balance_data</span><br><span class="line">    # 【四】将金额转换为整数类型</span><br><span class="line">    bank_balance = int(bank_balance)</span><br><span class="line">    # 【五】输入银行取款密码</span><br><span class="line">    bank_password = input(&quot;请输入银行取款密码 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    # 【六】校验当前银行取款密码是否符合规范</span><br><span class="line">    bank_password_flag, bank_password_data = check_type(username=username, bank_password=bank_password)</span><br><span class="line">    if not bank_password_flag:</span><br><span class="line">        return bank_password_flag, bank_password_data</span><br><span class="line">    # 【七】校验取款密码是否一致</span><br><span class="line">    if bank_password != user_data_dict_all[username][&#x27;bank_password&#x27;]:</span><br><span class="line">        return False, f&#x27;当前 用户 &#123;username&#125; 取款密码错误!&#x27;</span><br><span class="line">    # 【八】取款 ---&gt; 将自己的余额减少 记住这里是减少总字典中的小字典</span><br><span class="line">    user_data_dict_all[username][&#x27;bank_balance&#x27;] -= bank_balance</span><br><span class="line">    # 【九】记录日志</span><br><span class="line">    # 有一条日志信息</span><br><span class="line">    log = f&quot;当前用户 &#123;username&#125; 于 &#123;time.strftime(&#x27;%Y-%m-%d %H:%M:%S&#x27;)&#125; 取款 &#123;bank_balance&#125; 元!&quot;</span><br><span class="line">    # 【十】保存日志信息</span><br><span class="line">    save_data(data=log, file=f&#x27;&#123;username&#125;_log.text&#x27;, tag=&quot;bank&quot;)</span><br><span class="line">    # 【十一】保存用户数据 ---&gt; 持久化保存到本地的文件中</span><br><span class="line">    save_data(data=user_data_dict_all)</span><br><span class="line">    # 【十二】返回取款成功的信息</span><br><span class="line">    return True, log</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【4】转账 ：</span><br><span class="line"># （1）验证当前用户已经登录</span><br><span class="line"># （2）转账的时候要验证转账金额 必须合法：大于0并且是数字</span><br><span class="line"># （3）转账的时候记录转账信息 ： 取款金额 + 取款时间(百度搜)  ---》 你自己有一个转出的信息 / 对方要有一个入账的信息</span><br><span class="line"># （4）目标账户的账户名(用户名) 和 银行卡号 进行转账</span><br><span class="line"># （5）放到两个文件中 -- 每个人的日志是在各自的文件中</span><br><span class="line">@decorator(tag=&#x27;login&#x27;)</span><br><span class="line">def transform():</span><br><span class="line">    print(f&quot;欢迎来到转账功能!&quot;)</span><br><span class="line">    # 【一】从登录字典中获取到当前登录的用户名</span><br><span class="line">    username = login_dict.get(&#x27;username&#x27;)</span><br><span class="line">    # 【二】获取到所有人的数据字典</span><br><span class="line">    user_data_dict_all = read_data()</span><br><span class="line">    # 【三】输入转账金额</span><br><span class="line">    transform_money = input(&quot;请输入转账金额 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    # 【四】转账金额校验</span><br><span class="line">    transform_money_flag, transform_money_data = check_type(username=username, bank_balance=transform_money)</span><br><span class="line">    if not transform_money_flag:</span><br><span class="line">        return transform_money_flag, transform_money_data</span><br><span class="line">    # 【五】输入目标账户名</span><br><span class="line">    transform_to_username = input(&quot;请输入对方账户名 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    # 【六】校验目标账户名是否存在</span><br><span class="line">    if transform_to_username not in user_data_dict_all:</span><br><span class="line">        return False, f&#x27;对方账户名 :&gt;&gt;&gt; &#123;transform_to_username&#125; 不存在!&#x27;</span><br><span class="line">    # 【七】输入目标账户银行卡号</span><br><span class="line">    transform_to_bank_id = input(&quot;请输入对方银行账号 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    # 【八】校验银行卡号格式是否正确</span><br><span class="line">    transform_to_bank_id_flag, transform_to_bank_id_data = check_type(username=username, bank_id=transform_to_bank_id)</span><br><span class="line">    if not transform_to_bank_id_flag:</span><br><span class="line">        return transform_to_bank_id_flag, transform_to_bank_id_data</span><br><span class="line">    # 【九】输入自己的转账密码</span><br><span class="line">    transform_my_bank_password = input(&quot;请输入取款密码 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    # 【十】校验取款密码格式是否正确</span><br><span class="line">    transform_my_bank_password_flag, transform_my_bank_password_data = check_type(username=username,</span><br><span class="line">                                                                                  bank_password=transform_my_bank_password)</span><br><span class="line">    if not transform_my_bank_password_flag:</span><br><span class="line">        return transform_my_bank_password_flag, transform_my_bank_password_data</span><br><span class="line">    # 【十一】校验自己的取款密码是否正确</span><br><span class="line">    if transform_my_bank_password != user_data_dict_all[username][&#x27;bank_password&#x27;]:</span><br><span class="line">        return False, f&#x27;当前取款密码错误！&#x27;</span><br><span class="line">    # 【十二】验证对方的银行卡号一致</span><br><span class="line">    if int(transform_to_bank_id) != user_data_dict_all[transform_to_username][&#x27;bank_id&#x27;]:</span><br><span class="line">        return False, f&quot;与目标账户银行卡号不一致!&quot;</span><br><span class="line">    # 【十三】修改数据</span><br><span class="line">    # 自己的金额 - 取款金额</span><br><span class="line">    # 对方的金额 + 取款金额</span><br><span class="line">    transform_money = int(transform_money)</span><br><span class="line">    if transform_money &gt;= user_data_dict_all[username][&#x27;bank_balance&#x27;]:</span><br><span class="line">        return False, f&#x27;当前账户余额不足!&#x27;</span><br><span class="line">    user_data_dict_all[username][&#x27;bank_balance&#x27;] -= transform_money</span><br><span class="line">    user_data_dict_all[transform_to_username][&#x27;bank_balance&#x27;] += transform_money</span><br><span class="line">    # 【十四】生成日志</span><br><span class="line">    my_username_log = f&quot;当前账户 &#123;username&#125; 于 &#123;time.strftime(&#x27;%Y-%m-%d %H:%M:%S&#x27;)&#125; 向 目标账户 &#123;transform_to_username&#125; 转账 &#123;transform_money&#125; 元 余额 &#123;user_data_dict_all[username][&#x27;bank_balance&#x27;]&#125; 元&quot;</span><br><span class="line">    to_username_log = f&quot;当前账户 &#123;transform_to_username&#125; 于 &#123;time.strftime(&#x27;%Y-%m-%d %H:%M:%S&#x27;)&#125; 收到 目标账户 &#123;username&#125; 转账 &#123;transform_money&#125; 元 余额 &#123;user_data_dict_all[transform_to_username][&#x27;bank_balance&#x27;]&#125; 元&quot;</span><br><span class="line">    # 【十五】更新数据信息</span><br><span class="line">    # 【1】更新各自的用户数据</span><br><span class="line">    save_data(data=user_data_dict_all)</span><br><span class="line">    # 【2】保存日志信息</span><br><span class="line">    save_data(data=my_username_log, file=f&#x27;&#123;username&#125;_log.text&#x27;, tag=&#x27;log&#x27;)</span><br><span class="line">    save_data(data=to_username_log, file=f&#x27;&#123;transform_to_username&#125;_log.text&#x27;, tag=&#x27;log&#x27;)</span><br><span class="line">    # 【十六】返回成功信息</span><br><span class="line">    return True, my_username_log</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@decorator(tag=&#x27;login&#x27;)</span><br><span class="line">def check_info_user():</span><br><span class="line">    username = login_dict.get(&#x27;username&#x27;, None)</span><br><span class="line">    user_data_dict_all = read_data()</span><br><span class="line">    user_data_dict = user_data_dict_all.get(username)</span><br><span class="line">    print(f&#x27;&#x27;&#x27;</span><br><span class="line">    --------------  当前用户银行信息如下 --------------  </span><br><span class="line">                 用户名 :&gt;&gt;&gt;&gt; &#123;username&#125;</span><br><span class="line">                 年龄 :&gt;&gt;&gt;&gt; &#123;user_data_dict[&#x27;age&#x27;]&#125;</span><br><span class="line">                 级别 :&gt;&gt;&gt;&gt; &#123;&#x27;VIP用户&#x27; if user_data_dict[&#x27;role&#x27;] == &#x27;admin&#x27; else &quot;普通用户&quot;&#125;</span><br><span class="line">                 锁定 :&gt;&gt;&gt;&gt; &#123;&#x27;锁定&#x27; if user_data_dict[&#x27;is_locked&#x27;] == &#x27;admin&#x27; else &quot;正常&quot;&#125;</span><br><span class="line">                 银行账号 :&gt;&gt;&gt;&gt; &#123;user_data_dict[&#x27;bank_id&#x27;]&#125;</span><br><span class="line">                 银行余额 :&gt;&gt;&gt;&gt; &#123;user_data_dict[&#x27;bank_balance&#x27;]&#125; $</span><br><span class="line">    --------------  当前用户银行信息如上 --------------</span><br><span class="line">     &#x27;&#x27;&#x27;)</span><br><span class="line">    return True, f&#x27;当前用户 &#123;username&#125; 于 &#123;time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)&#125; 查看信息成功!&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@decorator(tag=&#x27;login&#x27;)</span><br><span class="line">def check_bank_log():</span><br><span class="line">    username = login_dict.get(&#x27;username&#x27;)</span><br><span class="line">    bank_log_list = read_data(tag=&#x27;bank&#x27;, file=f&#x27;&#123;username&#125;_log.text&#x27;)</span><br><span class="line">    if not bank_log_list:</span><br><span class="line">        return False, f&#x27;当前无日志生成!&#x27;</span><br><span class="line"></span><br><span class="line">    for line in bank_log_list:</span><br><span class="line">        print(line)</span><br><span class="line">    return True, f&#x27;当前用户 &#123;username&#125; 于 &#123;time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)&#125; 查看银行日志成功!&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func_menu = f&#x27;&#x27;&#x27;</span><br><span class="line">################## 功能菜单 ################## </span><br><span class="line">                    1. 注册</span><br><span class="line">                    2. 登录</span><br><span class="line">                    3. 取款</span><br><span class="line">                    4. 转账</span><br><span class="line">                    5. 查看账户信息</span><br><span class="line">                    6. 查看银行日志</span><br><span class="line">                    q. 退出</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">func_dict = &#123;</span><br><span class="line">    1: register,</span><br><span class="line">    2: login,</span><br><span class="line">    3: withdrawal,</span><br><span class="line">    4: transform,</span><br><span class="line">    5: check_info_user,</span><br><span class="line">    6: check_bank_log,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    # while 循环</span><br><span class="line">    while True:</span><br><span class="line">        # 【一】打印功能菜单</span><br><span class="line">        print(func_menu)</span><br><span class="line">        # 【二】输入功能 id</span><br><span class="line">        func_id = input(&quot;请输入功能ID :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">        if not func_id.isdigit():</span><br><span class="line">            print(f&quot;当前功能ID格式错误!&quot;)</span><br><span class="line">            continue</span><br><span class="line">        try:</span><br><span class="line">            func_id = int(func_id)</span><br><span class="line">        except Exception as e:</span><br><span class="line">            print(f&quot;当前功能ID格式错误!&quot;)</span><br><span class="line">            continue</span><br><span class="line">        # 【三】从功能字典中查找当前ID锁对应的函数</span><br><span class="line">        func = func_dict.get(func_id)</span><br><span class="line">        # 【四】嗲用函数获取返回值</span><br><span class="line">        flag, message = func()</span><br><span class="line">        if flag:</span><br><span class="line">            print(message)</span><br><span class="line">        else:</span><br><span class="line">            print(message)</span><br><span class="line">            continue</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/4.7random%E6%A8%A1%E5%9D%97/" rel="prev" title="4.7random模块">
+      <i class="fa fa-chevron-left"></i> 4.7random模块
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/4.3%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%8C%85/" rel="next" title="4.3模块与包">
+      4.3模块与包 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">【一】生成器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AF%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">1.1.</span> <span class="nav-text">【1】什么是生成器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E7%94%9F%E6%88%90%E5%99%A8%E7%9A%84%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">【2】生成器的创建方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E7%94%9F%E6%88%90%E5%99%A8%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.2.1.</span> <span class="nav-text">【1】生成器的表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91yield%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.2.2.</span> <span class="nav-text">【2】yield关键字</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">得到的食物是 :&gt;&gt;&gt;&gt; None, 开始吃饭喽 :&gt;&gt;&gt;&gt; None</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">None</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">得到的食物是 :&gt;&gt;&gt;&gt; None, 开始吃饭喽 :&gt;&gt;&gt;&gt; None</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">None</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">得到的食物是 :&gt;&gt;&gt;&gt; None, 开始吃饭喽 :&gt;&gt;&gt;&gt; None</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">None</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">鱼香肉丝            1  1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">9.</span> <span class="nav-text">宫保鸡丁            1  1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">10.</span> <span class="nav-text">宫保鸡丁 + 鱼香肉丝  1  1</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

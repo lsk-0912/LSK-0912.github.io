@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="【一】ref属性 &#96;&#96;&#96;python # ref也可以做组件间的通信 # ref是vue提供的属性，可以放在任意标签或组件上 	- 如果放在标签上     	-通过  this.$refs.标签上的名字   拿到的值是 标签 对象         -我们可以通过标签对象，修改 标签的属性。。。src属性，value属性               - 如果放在组件上     	-通过  this.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4.0vue高级">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/4.0vue%E9%AB%98%E7%BA%A7/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="【一】ref属性 &#96;&#96;&#96;python # ref也可以做组件间的通信 # ref是vue提供的属性，可以放在任意标签或组件上 	- 如果放在标签上     	-通过  this.$refs.标签上的名字   拿到的值是 标签 对象         -我们可以通过标签对象，修改 标签的属性。。。src属性，value属性               - 如果放在组件上     	-通过  this.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aurora-lsk.asia/2025/10/15/4.0vue%E9%AB%98%E7%BA%A7/img">
+<meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.198Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://aurora-lsk.asia/2025/10/15/4.0vue%E9%AB%98%E7%BA%A7/img">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/4.0vue%E9%AB%98%E7%BA%A7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>4.0vue高级 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.0vue%E9%AB%98%E7%BA%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          4.0vue高级
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>【一】ref属性</h1>
+```python
+# ref也可以做组件间的通信
+# ref是vue提供的属性，可以放在任意标签或组件上
+	- 如果放在标签上
+    	-通过  this.$refs.标签上的名字   拿到的值是 标签 对象
+        -我们可以通过标签对象，修改 标签的属性。。。src属性，value属性
+        
+     - 如果放在组件上
+    	-通过  this.$refs.标签上的名字   拿到的值是 组件 对象
+        -我们可以通过 组件对象，直接修改对象中得数据，直接调用对象中得方法
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【1】使用</span><br><span class="line"></span><br><span class="line">### （1）放在普通标签上</span><br><span class="line"></span><br><span class="line">- 使用`this.$refs.ref对应的值`，就可以得到这个标签对象</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````vue</span><br><span class="line">&lt;template&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;h1&gt;ref的使用&lt;/h1&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;img :src=&quot;img&quot; ref=&quot;my_img&quot; style=&quot;height: 200px;width: 200px&quot;&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; ref=&quot;my_input&quot;&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;button @click=&quot;handleSon&quot;&gt;点击看控制台&lt;/button&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name:&#x27;one&#x27;,</span><br><span class="line">  data()&#123;</span><br><span class="line">    return&#123;</span><br><span class="line">      // 这里他会检测不到这是个路径，需要一个方法require</span><br><span class="line">      img:require(&#x27;../assets/img/1.png&#x27;),</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods:&#123;</span><br><span class="line">    handleSon()&#123;</span><br><span class="line">      // 获得img标签</span><br><span class="line">      console.log(this.$refs.my_img);</span><br><span class="line">      // 可以获得img的属性值</span><br><span class="line">      console.log(this.$refs.my_img.src);</span><br><span class="line">      // 还可以属性值</span><br><span class="line">      this.$refs.my_img.src=require(&#x27;../assets/logo.png&#x27;)</span><br><span class="line">      // 赋值</span><br><span class="line">      this.$refs.my_input.value=&#x27;xxxx&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】ref属性之父传子</span><br><span class="line"></span><br><span class="line">- 父传子是自定义属性</span><br><span class="line"></span><br><span class="line">- 父组件：`HOMEView.vue`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```vue</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;home&quot;&gt;</span><br><span class="line">&lt;h1&gt;首页&lt;/h1&gt;</span><br><span class="line">    &lt;one :msg=&quot;my_data&quot;&gt;&lt;/one&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import one from &#x27;@/components/one&#x27;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;HomeView&#x27;,</span><br><span class="line">  data()&#123;</span><br><span class="line">    return&#123;</span><br><span class="line">      my_data:&#x27;father&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  components:&#123;</span><br><span class="line">    one</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>子组件：<code>one.vue</code></li>
+</ul>
+````vue
+<template>
+<div>
+  <h1>ref的使用</h1>
+  <div>
+    <img :src="img" ref="my_img" style="height: 200px;width: 200px">
+  </div>
+  <!--  使用父亲传过来的值  -->
+  <h2>{{msg}}</h2>
+</div>
+</template>
+
+<script>
+export default {
+  name:'one',
+  data(){
+    return{
+      // 这里他会检测不到这是个路径，需要一个方法require
+      img:require('../assets/img/1.png'),
+    }
+  },
+  props:["msg"]
+
+}
+</script>
+
+<style scoped>
+
+</style>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">【3】ref属性之子传父</span><br><span class="line"></span><br><span class="line">- 子传父是自定义事件：子的东西传给父亲，子里面肯定要有东西触发，在可以传给父</span><br><span class="line">- 子传父：子组件中用到了，事件：`this.$emit(&quot;自定义事件名&quot;,传给父组件的值)`，父组件要接受这个值</span><br><span class="line"></span><br><span class="line">- 父组件：`HOMEView.vue`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```vue</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;home&quot;&gt;</span><br><span class="line">&lt;h1&gt;首页&lt;/h1&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &lt;one  :msg=&quot;my_data&quot; @son=&quot;my_father&quot;&gt;&lt;/one&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &lt;h1&gt;&#123;&#123;res&#125;&#125;&lt;/h1&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import one from &#x27;@/components/one&#x27;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;HomeView&#x27;,</span><br><span class="line">  data()&#123;</span><br><span class="line">    return&#123;</span><br><span class="line">      my_data:&#x27;father&#x27;,</span><br><span class="line">      res:&#x27;&#x27;,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods:&#123;</span><br><span class="line">    // 这里接受到子传过来的username</span><br><span class="line">    my_father(username)&#123;</span><br><span class="line">      this.res=username</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  components:&#123;</span><br><span class="line">    one</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 子组件：`one.vue`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````vue</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;h1&gt;ref的使用&lt;/h1&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;img :src=&quot;img&quot; ref=&quot;my_img&quot; style=&quot;height: 200px;width: 200px&quot;&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;!--  使用父亲传过来的值  --&gt;</span><br><span class="line">  &lt;h2&gt;&#123;&#123;msg&#125;&#125;&lt;/h2&gt;</span><br><span class="line">&lt;!--  子传父--&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; v-model=&quot;username&quot;&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;button @click=&quot;handleSon&quot;&gt;子传父&lt;/button&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name:&#x27;one&#x27;,</span><br><span class="line">  data()&#123;</span><br><span class="line">    return&#123;</span><br><span class="line">      // 这里他会检测不到这是个路径，需要一个方法require</span><br><span class="line">      img:require(&#x27;../assets/img/1.png&#x27;),</span><br><span class="line">     username:&#x27;&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods:&#123;</span><br><span class="line">    handleSon()&#123;</span><br><span class="line">      // 子传父</span><br><span class="line">      this.$emit(&quot;son&quot;,this.username)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  props:[&quot;msg&quot;]</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="【补充】-父子通信的方式">【补充】 父子通信的方式</h2>
+````python
+# 子组件中拿到父组件对象
+this.$parent
+
+# 父子通信的方式
+# 1 自定义属性
+# 2 自定义事件
+# 3 通过ref属性:this.$refs
+# 4 子组件中通过 this.$parent
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【二】props</span><br><span class="line"></span><br><span class="line">- 功能：让组件接收外部传过来的数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># props配置项是：子传父，自定义属性的时候用来接收父组件传给子组件的属性的，对应一个数组</span><br><span class="line"># 方法一：</span><br><span class="line">props=[&#x27;msg&#x27;]</span><br><span class="line"># 方法二</span><br><span class="line">	- 这个意思是尽量的接收String类型的数据，会报错，但是不影响操作</span><br><span class="line">props: &#123;myname: String&#125;,</span><br><span class="line"># 方法三</span><br><span class="line">props: &#123;</span><br><span class="line">    myname: &#123;</span><br><span class="line">        type: String, //类型</span><br><span class="line">        required: true, //必要性</span><br><span class="line">        default: &#x27;老王&#x27; //默认值</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【三】混入`（mixin）`</span><br><span class="line"></span><br><span class="line">- 前言（js文件）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 混入的意思是：抽取公共的代码</span><br><span class="line">	- 多个组件都在用的方法和属性，抽出来，做成公共的</span><br><span class="line">    - 那个组件用，使用mixin引入即可</span><br><span class="line"># 有两种方式：我们可以叫做，局部使用和全局使用</span><br><span class="line">```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 使用</span><br><span class="line">- 公共的组件</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````js</span><br><span class="line">export default &#123;</span><br><span class="line">    data() &#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            username: &#x27;王一博&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        handleName(name) &#123;</span><br><span class="line">            this.username = name</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在其他组件中<code>局部</code>使用</li>
+</ul>
+```vue
+<script>
+// 可以使用多个
+import m1 from '../mixin'
+export default {
+  name: 'HomeView',
+    // 一定要写
+  data(){
+    return{
+    }
+  },
+    //一定要写
+  methods:{
+  },
+  mixins:[m1]
+}
+</script>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 全局使用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 全局使用 定义在main.js</span><br><span class="line">import m1 from &#x27;@/mixin&#x27;</span><br><span class="line">import m2 from &#x27;@/mixin2&#x27;</span><br><span class="line">Vue.mixin(m1)</span><br><span class="line">Vue.mixin(m2)</span><br></pre></td></tr></table></figure>
+
+<h1>【四】插件</h1>
+<ul>
+<li>前言</li>
+</ul>
+```python
+# 插件的功能就是增强vue
+
+													# 插件使用者的意思就是：使用插件的时候串的值
+    												Vue.user(ElementUI,'lsk')
+# 本质就是：包含install方法的一个对象，install的第一个参数是Vue，第二个以后的参数是插件使用者传递的数据
+
+# 我们使用了：vue-router插件，vuex插件，elementui插件
+	- 有了这些插件，我们就可以使用：
+    this.$router
+    this.$store
+    # 弹框
+    this.$alert
+    this.$message
+
+# 使用别人写好的插件：
+	- 首先记得引入
+    import ElementUI from 'element-ui';
+	Vue.user(ElementUI)
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 使用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 存放到原型类中:prototype</span><br><span class="line">	- 注册</span><br><span class="line">    import m1 from &#x27;@/mixin&#x27;</span><br><span class="line">    import aaa from &#x27;./pulgin&#x27;</span><br><span class="line">    Vue.use(aaa)</span><br><span class="line">	- 插件</span><br><span class="line">    export default &#123;</span><br><span class="line">    install(Vue)&#123;</span><br><span class="line">        console.log(Vue)</span><br><span class="line">        // prototype原型类：就好比，你放在了一个最底层的代码中，别人用的时候他没有，就会往下		查，就会查到你定制进去的</span><br><span class="line">        // $age：名字随便定义，但是必须带$</span><br><span class="line">        Vue.prototype.$age=&#x27;xxx&#x27;</span><br><span class="line">        // 你也可以将axios存放到原型类中</span><br><span class="line">        Vue.prototype.$ajax=&#x27;axios&#x27;</span><br><span class="line">        // 你也可以添加路由</span><br><span class="line">        Vue.prototype.$BASE_URL=&#x27;http://192.168.1.69:8080/&#x27;</span><br><span class="line">        	&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    - 在其他组件中使用</span><br><span class="line">    methods:&#123;</span><br><span class="line">    handleName()&#123;</span><br><span class="line">      // 就可以直接使用</span><br><span class="line">      // 就会渲染上去</span><br><span class="line">      this.age=this.$age</span><br><span class="line">       // 你发送axios请求，就可以这样</span><br><span class="line">       this.$ajax.get(this.$BASE_URL+&#x27;/login&#x27;).then()</span><br><span class="line">        # 使用混入，这样我们就不用在main.js里面写了</span><br><span class="line">        Vue.mixin(m1)</span><br><span class="line">        </span><br><span class="line">        #自定义指令---》可能会有第三方插件，在项目中使用后，会有没见过的指令</span><br><span class="line">//定义全局指令：跟v-model一样，获取焦点</span><br><span class="line">        Vue.directive(&quot;fbind&quot;, &#123;</span><br><span class="line">            //指令与元素成功绑定时（一上来）</span><br><span class="line">            bind(element, binding) &#123;</span><br><span class="line">                element.value = binding.value;</span><br><span class="line">            &#125;,</span><br><span class="line">            //指令所在元素被插入页面时</span><br><span class="line">            inserted(element, binding) &#123;</span><br><span class="line">                element.focus();</span><br><span class="line">            &#125;,</span><br><span class="line">            //指令所在的模板被重新解析时</span><br><span class="line">            update(element, binding) &#123;</span><br><span class="line">                element.value = binding.value;</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;);</span><br><span class="line">        # 定义全局组件</span><br><span class="line">		- 好比elementui---》全局组件   &lt;el-button&gt;</span><br><span class="line">        - vue-router----&gt;全局组件   &lt;router-view/&gt;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">        </span><br><span class="line"># 在main.js中使用，可以传参数</span><br><span class="line"># 1 使用自定义插件</span><br><span class="line">import my from &#x27;@/plugins&#x27;</span><br><span class="line">Vue.use(my,&#x27;lsk&#x27;) // 内部本质会执行install</span><br><span class="line">	- 你一旦传了参数</span><br><span class="line">   export default &#123;</span><br><span class="line">    install(Vue,a)&#123;</span><br><span class="line">        console.log(a) # 就是lsk</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 咱们需要掌握的;</span><br><span class="line">	-有些第三方插件，用了以后，增强了vue功能</span><br><span class="line">    -this.$router</span><br><span class="line">    -全局组件 ：el-button</span><br><span class="line">    -this.$message---&gt;</span><br><span class="line">    -this.$http.get</span><br></pre></td></tr></table></figure>
+
+<h1>【五】插槽</h1>
+<ul>
+<li>前言</li>
+</ul>
+```python
+# 让父组件可以向子组件指定位置插入html结构，也是一种组件间通信的方式，适用于 父组件 ===> 子组件
+# 在小组件中使用：solt来显示你传的html结构的标签
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 使用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````vue</span><br><span class="line">##########自定义的小组件</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;hello&quot;&gt;</span><br><span class="line">    &lt;slot name=&#x27;one&#x27;&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;h1&gt;小组件HelloWorld&lt;/h1&gt;</span><br><span class="line">    &lt;slot name=&#x27;two&#x27;&gt;&lt;/slot&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;HelloWorld&#x27;,</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">############使用</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;about&quot;&gt;</span><br><span class="line">    &lt;h1&gt;About组件&lt;/h1&gt;</span><br><span class="line">    &lt;HelloWorld&gt;</span><br><span class="line">        &lt;!-- 在小组件中使用：solt，就会显示这张图片。这个你可以看作是传给小组件的图片，但是必须放在小组件中 --&gt;</span><br><span class="line">      &lt;div name=&#x27;one&#x27;&gt;</span><br><span class="line">          &lt;img src=&quot;https://ts1.cn.mm.bing.net/th/id/R-C.987f582c510be58755c4933cda68d525?rik=C0D21hJDYvXosw&amp;riu=http%3a%2f%2fimg.pconline.com.cn%2fimages%2fupload%2fupc%2ftx%2fwallpaper%2f1305%2f16%2fc4%2f20990657_1368686545122.jpg&amp;ehk=netN2qzcCVS4ALUQfDOwxAwFcy41oxC%2b0xTFvOYy5ds%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0&quot; alt=&quot;&quot; style=&quot;height: 400px;width: 400px&quot;&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div name=&#x27;two&#x27;&gt;</span><br><span class="line">   lllll</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;/HelloWorld&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import HelloWorld from &quot;@/components/HelloWorld.vue&quot;;</span><br><span class="line">export default &#123;</span><br><span class="line">  template:&#x27;AboutView&#x27;,</span><br><span class="line">  components:&#123;</span><br><span class="line">    HelloWorld</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【六】vuex</span><br><span class="line"></span><br><span class="line">- 前言</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># vuex是一个第三方插件：它叫状态管理器：统一位置管理变量---》也能实现组件间通信：页面刷新，会重置</span><br><span class="line">- vue：vuex</span><br><span class="line">- vue3：vuex，也有pina：用的多</span><br><span class="line"></span><br><span class="line"># 使用vuex---》vuex的新版本支持vue3</span><br><span class="line">	-我们在创建项目时候，已经装了</span><br><span class="line">        -项目依赖有了</span><br><span class="line">            -项目中有个 store文件夹--&gt;index.js</span><br><span class="line">            -main.js 中，引入且使用了</span><br><span class="line">    </span><br><span class="line">    - 在创建项目时，没装</span><br><span class="line">    	-我们要安装：</span><br><span class="line">        - 指定版本 cnpm install vuex@3.6.2 -S---&gt;S是安装到你这个项目中，不加S的话，就是全局，别人用的时候，就会没有</span><br><span class="line">        - 在项目中新建 store包--》index.js文件</span><br><span class="line">        - 在index.js中写入代码</span><br><span class="line">        	import Vue from &#x27;vue&#x27;</span><br><span class="line">            import Vuex from &#x27;vuex&#x27;</span><br><span class="line">            Vue.use(Vuex)</span><br><span class="line">            export default new Vuex.Store(&#123;</span><br><span class="line">                state: &#123;</span><br><span class="line">                    # 放变量</span><br><span class="line">                &#125;,</span><br><span class="line">                mutations: &#123;</span><br><span class="line">                    # 提交，修改就会触发（commit）</span><br><span class="line">                &#125;,</span><br><span class="line">                actions: &#123;</span><br><span class="line">                    # 调度就会触发（dispatch）</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">            </span><br><span class="line">        - 在main.js中使用</span><br><span class="line">        	- 先引入</span><br><span class="line">            	- import store from &#x27;./store&#x27;</span><br><span class="line">            - 使用</span><br><span class="line">            	new Vue(&#123;</span><br><span class="line">                    store,</span><br><span class="line">                    render: h =&gt; h(App)</span><br><span class="line">                &#125;).$mount(&#x27;#app&#x27;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用</li>
+</ul>
+````vue
+#####在组件中使用
+<template>
+  <div>
+<h1>首页</h1>
+<h2>我们在state文件中的vuex插件中的count：{{$store.state.count}}</h2>
+    <button @click="handleCount">点击加1</button>
+
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'HomeView',
+  methods:{
+    handleCount(){
+      // 方式一
+      // 我们之间进行加1--->这样写不太安全
+      // this.$store.state.count++
+      // 方式二
+      // 我们先通知dispatch在通知commit,进行一系列操作
+      // dataAdd你定义在actions里面的方法
+      this.$store.dispatch('dataAdd')
+      //  this.$store.commit('dataAdd')
+    }
+  }
+}
+</script>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- vuex插件</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````js</span><br><span class="line">##############在store/index.js中代码</span><br><span class="line"></span><br><span class="line">import Vue from &#x27;vue&#x27;</span><br><span class="line">import Vuex from &#x27;vuex&#x27;</span><br><span class="line"></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line">export default new Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    count:0</span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    // 这里面做加1</span><br><span class="line">    // 定义一个函数，随便起名字</span><br><span class="line">    // 这里回传一个变量</span><br><span class="line">    add(two)&#123;</span><br><span class="line">      two.count+=1</span><br><span class="line">    &#125;</span><br><span class="line">    // 也可以在这里进行判断</span><br><span class="line">  &#125;,</span><br><span class="line">  actions: &#123;</span><br><span class="line">    // 定义一个函数，随便起名字</span><br><span class="line">    // 这里回传一个变量</span><br><span class="line">    dataAdd(one)&#123;</span><br><span class="line">      // 通知mutations里面的对象add加1</span><br><span class="line">      // one.commit(&#x27;add&#x27;)</span><br><span class="line"></span><br><span class="line">      // 我们还可以进行判断</span><br><span class="line">      // one也可以拿到count</span><br><span class="line">      if (one.state.count &gt;=5)&#123;</span><br><span class="line">        alert(&quot;太大了&quot;)</span><br><span class="line">      &#125;else&#123;</span><br><span class="line">          // 通知mutations里面的对象add加1</span><br><span class="line">          one.commit(&#x27;add&#x27;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="【1】重点">【1】重点</h2>
+```python
+# 为什么经过 actions和mutations 
+	- 可以跟后端交互，可以做数据验证
+#  getters
+	- 可以通过getters获取数据--》对state中的数据，再做处理
+    $store.getters.里面的方法
+# modules
+	- 分到不同模块中，不同模块有自己的state，actions
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240814104538278](D:\pycharm\Temporary_notes\图片\image-20240814104538278.png)</span><br><span class="line"></span><br><span class="line"># 【七】本地储存</span><br><span class="line"></span><br><span class="line">- 前言</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 1 能存储数据的位置，登录成功---》token存储</span><br><span class="line">	vuex: 页面重新加载--》数据会恢复</span><br><span class="line">    # 过期时间</span><br><span class="line">	cookie：登录信息放这里，有过期时间，一旦过期，就没了</span><br><span class="line">    # 会话储存</span><br><span class="line">    sessionStorage：当前浏览器生效---》关闭浏览器，数据就没了</span><br><span class="line">    # 本地储存</span><br><span class="line">    localStorage：永久生效，除非代码删除或清空浏览器缓存</span><br><span class="line">    	-未登录，加购物车</span><br><span class="line">        </span><br><span class="line">#2 vue中操作cookie 需要下载 vue-cookies</span><br><span class="line">cnpm install vue-cookies -S</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用</li>
+</ul>
+```vue
+<template>
+  <div>
+    <h1>首页</h1>
+
+    <h2>localStorage</h2>
+    <button @click="handleSaveLocalStorage">存储到localStorage</button>
+    <button @click="handleGetLocalStorage">从localStorage取出</button>
+    <button @click="handleDeleteLocalStorage">删除localStorage</button>
+
+    <h2>sessionStorage使用</h2>
+    <button @click="handleSavesessionStorage">存储到sessionStorage</button>
+    <button @click="handleGetsessionStorage">从sessionStorage取出</button>
+    <button @click="handleDeletesessionStorage">删除sessionStorage</button>
+    <h2>cookie使用</h2>
+    <button @click="handleSaveCookie">存储到cookie</button>
+    <button @click="handleGetCookie">从cookie取出</button>
+    <button @click="handleDeleteCookie">删除cookie</button>
+
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'HomeView',
+  methods: {
+    // 存储到localStorage中
+    handleSaveLocalStorage() {
+      localStorage.setItem("name", 'lqz')
+      let user = {
+        name: 'xxx',
+        age: 19
+      }
+      localStorage.setItem("user", JSON.stringify(user)) // 不要放对象
+
+    },
+    handleGetLocalStorage() {
+      let name = localStorage.getItem("name")
+      let user = localStorage.getItem('user')
+      console.log(name)
+      console.log(user)
+      console.log(typeof user)
+
+    },
+    handleDeleteLocalStorage() {
+      // 只会删除name
+      // localStorage.removeItem('name')
+      // 删除所有
+      localStorage.clear()
+
+    },
+
+    // 存储到sessionStorage中
+    handleSavesessionStorage() {
+      sessionStorage.setItem("name", '彭于晏')
+    },
+    handleGetsessionStorage() {
+      let name = sessionStorage.getItem('name')
+      console.log(name)
+    },
+    handleDeletesessionStorage() {
+      sessionStorage.removeItem('name')
+      // sessionStorage.clear()
+    },
+
+    // 存储到cookies中
+    // 必须下载 cnpm i vue-cookies -S
+    // 我们必须在main.js中引入
+    //import cookies from 'vue-cookies'
+    // 放在原型里
+    // Vue.prototype.$cookie = cookies;
+    handleSaveCookie() {
+      // 过期时间可以写1d，1h，1m
+      this.$cookies.set('name', 'zzzz', '100s')
+    },
+    handleGetCookie() {
+      let name = this.$cookies.get('name')
+      console.log(name)
+    },
+    handleDeleteCookie() {
+      this.$cookies.remove('name')
+      // 不可以删除所有，只可以指定
+      // this.$cookies.clear()
+    },
+  }
+}
+</script>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【八】`vue-router`</span><br><span class="line"></span><br><span class="line">## 【1】router插件</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 1 如果我们创建项目时，已经安装了</span><br><span class="line">	-router--》index.js</span><br><span class="line">    -main.js 引入了</span><br><span class="line">    -后期在组件中使用：</span><br><span class="line">    	-js中：</span><br><span class="line">            this.$router # 用来跳转路径</span><br><span class="line">            this.$route   # 目前没学</span><br><span class="line">        -template中：</span><br><span class="line">        	&lt;router-view/&gt;  # 当访问某个路径时，会把页面组件替换到这</span><br><span class="line">            &lt;router-link&gt;&lt;/router-link&gt;</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line"># 2 创建项目没有安装，自行引入</span><br><span class="line">	- 安装：cnpm install vue-router -S</span><br><span class="line">	-创建文件夹router---index.js</span><br><span class="line">    -index.js写代码</span><br><span class="line">    import Vue from &#x27;vue&#x27;</span><br><span class="line">    import VueRouter from &#x27;vue-router&#x27;</span><br><span class="line">    import HomeView from &quot;@/views/HomeView&quot;;</span><br><span class="line">    Vue.use(VueRouter)</span><br><span class="line">    const routes = [</span><br><span class="line">        &#123;</span><br><span class="line">            path: &#x27;/&#x27;,</span><br><span class="line">            name: &#x27;home&#x27;,</span><br><span class="line">            component: HomeView</span><br><span class="line">        &#125;,</span><br><span class="line">    ]</span><br><span class="line">    const router = new VueRouter(&#123;</span><br><span class="line">        mode: &#x27;history&#x27;,</span><br><span class="line">        base: process.env.BASE_URL,</span><br><span class="line">        routes</span><br><span class="line">    &#125;)</span><br><span class="line">    export default router</span><br><span class="line">    </span><br><span class="line">	-main.js中使用</span><br><span class="line">        import router from &#x27;./router&#x27;</span><br><span class="line">        new Vue(&#123;</span><br><span class="line">            router,</span><br><span class="line">            render: h =&gt; h(App)</span><br><span class="line">        &#125;).$mount(&#x27;#app&#x27;)</span><br><span class="line">        </span><br><span class="line">     -后续所有组件中</span><br><span class="line">	    -js中：</span><br><span class="line">            this.$router # 跳转路径</span><br><span class="line">            this.$route   # 目前没学</span><br><span class="line">        -template中：</span><br><span class="line">        	&lt;router-view/&gt;  # 当访问某个路径时，会把页面组件替换到这</span><br><span class="line">            &lt;router-link&gt;&lt;/router-link&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="【2】路由跳转">【2】路由跳转</h2>
+````python
+# 1 之前学过，在App.vue中放 
+  <div id="app">
+    <router-view/>
+  </div>
+
+# 2 在router---index.js中--》注册路径-->routes
+    const routes = [
+            {
+                path: '/',
+                name: 'home',
+                component: HomeView
+            },
+
+        ]
+ 
+# 3 以后访问某个路径，就会显示页面组件
+
+#4 重点：页面跳转两种方式
+	## 4.1 js跳转
+       # 1 传路径
+        // http://192.168.1.69:8080/about/
+      // this.$router.push('/about')
+      # 2 传对象
+        // http://192.168.1.69:8080/
+        // 这个name：就是你注册的时候的别名
+      // this.$router.push({'name': 'about'})
+    	// path：就是你访问的路由
+      // this.$router.push({'path': '/about'})
+
+      # 3 携带参数跳转
+        // 系带参数访问
+      // this.$router.push('/about?name=lqz&age=19')
+    	// 传对象，携带参数
+      // this.$router.push({'name': 'about',query:{name:'zhangsan',age:19}})
+    	// 传对象，携带参数
+      this.$router.push({'path': '/about',query:{name:'zhangsan',age:19}})
+    
+    	# 4 template中跳转：使用：router-link组件
+        <router-link to="/about">
+           <button>点我跳转到about页面-router-link</button>
+        </router-link>
+		// 使用：router-link组件，传入对象的格式，携带的参数放在query中
+        <router-link :to="{name:'about',query:{name:'xxx'}}">
+           <button>点我跳转到about页面-router-link</button>
+        </router-link>
+
+#5 重点 上个页面跳转时，携带数据(查询参数)---》下一个页面中取出来
+	-在下一个页面中写：AboutView.vue
+    -写在created中
+    created(){
+        # 比如你传的是id
+        this.book_id=this.$route.query['book_id']
+        #this.book_id=this.$route.query.book_id
+        #console.log(this.$router) // VueRouter 的对象
+        #console.log(this.$route)  // 当前路由对象
+    }
+    
+# 6 重点 上个页面跳转时，携带数据(查询参数)---》下一个页面中取出来》》》转换器
+	6.1 路由写法变了
+    	 {
+            path: '/:pk/lqz',
+            name: 'lqz',
+            component: LQZView
+        },
+   6.2 传递数据
+		-js：
+    		this.$router.push("/99/lqz")
+        	this.$router.push({name:'lqz',params:{pk:666}})
+    	-router-link:
+          <router-link to="/99/lqz">
+    	  <router-link :to="{name:'lqz',params:{pk:666}}">
+            
+  6.3 另一个页面获取数据
+	this.$route.params.pk
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【3】相关`API--》router方法`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">1 指的是：this.$router---&gt;方法</span><br><span class="line">2 常用的</span><br><span class="line">this.$router.push(path): 相当于点击路由链接(可以返回到当前路由界面)</span><br><span class="line">this.$router.replace(path): 用新路由替换当前路由(不可以返回到当前路由界面)</span><br><span class="line">this.$router.back(): 请求(返回)上一个记录路由</span><br><span class="line">this.$router.go(-1): 请求(返回)上一个记录路由</span><br><span class="line">this.$router.go(1): 请求下一个记录路由</span><br><span class="line">```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【4】多级路由</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 就是可以分很多层的路由</span><br><span class="line">```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```js</span><br><span class="line">import Vue from &#x27;vue&#x27;</span><br><span class="line">import VueRouter from &#x27;vue-router&#x27;</span><br><span class="line"></span><br><span class="line">import HomeView from &quot;@/views/HomeView&quot;;</span><br><span class="line">import AboutView from &quot;@/views/AboutView&quot;;</span><br><span class="line">import LQZView from &quot;@/views/LQZView&quot;;</span><br><span class="line">import MulRouterView from &quot;@/views/MulRouterView&quot;;</span><br><span class="line">import IndexView from &quot;../../src_昨日/views/pages/IndexView&quot;;</span><br><span class="line">import OrderView from &quot;../../src_昨日/views/pages/OrderView&quot;;</span><br><span class="line">import GoodsView from &quot;../../src_昨日/views/pages/GoodsView&quot;;</span><br><span class="line">Vue.use(VueRouter,)</span><br><span class="line"></span><br><span class="line">const routes = [</span><br><span class="line">    &#123;</span><br><span class="line">        path: &#x27;/&#x27;,</span><br><span class="line">        name: &#x27;home&#x27;,</span><br><span class="line">        component: HomeView</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        path: &#x27;/mul&#x27;,</span><br><span class="line">        name: &#x27;mul&#x27;,</span><br><span class="line">        component: MulRouterView,</span><br><span class="line">        children: [ //通过children配置子级路由</span><br><span class="line">            &#123;</span><br><span class="line">                path: &#x27;&#x27;, //此处一定不要写：/news</span><br><span class="line">                name:&#x27;index&#x27;,</span><br><span class="line">                component: IndexView</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                path: &#x27;order&#x27;,</span><br><span class="line">                name:&#x27;order&#x27;,</span><br><span class="line">                component: OrderView</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                path: &#x27;goods&#x27;,</span><br><span class="line">                component: GoodsView</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">const router = new VueRouter(&#123;</span><br><span class="line">    mode: &#x27;history&#x27;,</span><br><span class="line">    base: process.env.BASE_URL,</span><br><span class="line">    routes</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export default router</span><br><span class="line"></span><br><span class="line">MulRouterView.vue</span><br><span class="line">    pages</span><br><span class="line">    GoodsView.vue</span><br><span class="line">    IndexView.vue</span><br><span class="line">    OrderView.vue</span><br><span class="line">```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- **MulRouterView.vue**</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```vue</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;div style=&quot;height: 80px;background-color: pink&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;el-container&gt;</span><br><span class="line">      &lt;el-aside width=&quot;200px&quot;&gt;</span><br><span class="line">        &lt;div style=&quot;background-color:greenyellow;height:700px &quot;&gt;</span><br><span class="line">           &lt;!-- 多级路由--&gt; </span><br><span class="line">          &lt;p&gt;&lt;router-link to=&quot;/mul&quot;&gt;首页&lt;/router-link&gt;&lt;/p&gt;</span><br><span class="line">            &lt;!-- 多级路由---也可以指定别名--&gt; </span><br><span class="line">          &lt;p&gt;&lt;router-link :to=&quot;&#123;name:&#x27;order&#x27;&#125;&quot;&gt;订单&lt;/router-link&gt;&lt;/p&gt;</span><br><span class="line">            &lt;!-- 多级路由---直接锁定根路由--&gt; </span><br><span class="line">          &lt;p&gt;&lt;router-link to=&quot;/mul/goods&quot;&gt;商品&lt;/router-link&gt;&lt;/p&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/el-aside&gt;</span><br><span class="line">      &lt;el-container&gt;</span><br><span class="line">        &lt;el-header&gt;</span><br><span class="line">          &lt;div style=&quot;background-color:rebeccapurple&quot;&gt;&lt;/div&gt;</span><br><span class="line">        &lt;/el-header&gt;</span><br><span class="line">        &lt;el-main&gt;</span><br><span class="line">          &lt;div style=&quot;height:500px;background-color: aqua&quot;&gt;</span><br><span class="line"></span><br><span class="line">            &lt;router-view&gt;&lt;/router-view&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">          &lt;/div&gt;</span><br><span class="line">        &lt;/el-main&gt;</span><br><span class="line">        &lt;el-footer&gt;</span><br><span class="line">          &lt;div style=&quot;background-color: pink;height:50px&quot;&gt;&lt;/div&gt;</span><br><span class="line">        &lt;/el-footer&gt;</span><br><span class="line">      &lt;/el-container&gt;</span><br><span class="line">    &lt;/el-container&gt;</span><br><span class="line"></span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &quot;MulRouterView&quot;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br><span class="line">```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">**pages-- GoodsView.vue**</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```vue</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h1&gt;商品&lt;/h1&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &quot;GoodsView&quot;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br><span class="line">```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">**pages-- IndexView.vue**</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```vue</span><br><span class="line">&lt;template&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;h1&gt;后台首页&lt;/h1&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &quot;IndexView&quot;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br><span class="line">```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">**pages--OrderView.vue**</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```vue</span><br><span class="line">&lt;template&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;h1&gt;订单&lt;/h1&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &quot;OrderView&quot;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br><span class="line">```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【5】路由守护</span><br><span class="line"></span><br><span class="line">- 前言</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 路由守护：就是字面的意思，守护路由</span><br><span class="line"># 就比如：你需要登才可以访问的页面</span><br><span class="line"></span><br><span class="line"># 守护路由：全局守护，独享守护，组件内守护</span><br><span class="line"># 我们用到的最多的就是全局守护</span><br><span class="line">```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 使用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```js</span><br><span class="line">//////// router/index.js</span><br><span class="line"></span><br><span class="line">// 配置全局的路由守卫</span><br><span class="line">router.beforeEach((to, from, next) =&gt; &#123;</span><br><span class="line">    // to:要去的路由的对象，from:来自那个路由的对象，next：跳转到那个路径</span><br><span class="line">    // 要去的路径，如果不是登入路径和/根路径，要判断有没有登入，登录的token存入到localStorage中</span><br><span class="line">    // 这里的name就是你路由中的别名，path就是你路由中的真正路由地址</span><br><span class="line">    if (to.name == &#x27;login&#x27; || to.path == &#x27;/&#x27;) &#123;</span><br><span class="line">        // 直接跳转</span><br><span class="line">        next()</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        // 判断有没有登录,取token</span><br><span class="line">        let token = localStorage.getItem(&#x27;token&#x27;)</span><br><span class="line">        // 在进行判断token</span><br><span class="line">        if (token)&#123;</span><br><span class="line">            // 存在直接跳转</span><br><span class="line">            next()</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            // 使用Message需要导入Element</span><br><span class="line">            // 这是一个好看的弹框</span><br><span class="line">            Element.Message.error(&#x27;请先登录！！&#x27;)</span><br><span class="line">            // 跳转到等于页面</span><br><span class="line">            next(&#123;name:&#x27;login&#x27;&#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【6】路由的两种工作模式</span><br><span class="line"></span><br><span class="line">-  Hash模式</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````js</span><br><span class="line">// URL 示例: http://192.168.1.69:8080/#/login</span><br><span class="line">//  特点: 使用 URL 的 hash (#) 部分来表示路由。浏览器不会发送 hash 部分到服务器，所以页面刷新时不会向服务器发起请求。</span><br><span class="line"></span><br><span class="line">import Vue from &#x27;vue&#x27;</span><br><span class="line">import VueRouter from &#x27;vue-router&#x27;</span><br><span class="line">import HomeView from &#x27;../views/HomeView.vue&#x27;</span><br><span class="line">import Element from &#x27;element-ui&#x27;</span><br><span class="line"></span><br><span class="line">Vue.use(VueRouter)</span><br><span class="line"></span><br><span class="line">// 路由配置</span><br><span class="line">const routes = [</span><br><span class="line">    &#123;</span><br><span class="line">        path: &#x27;/&#x27;,</span><br><span class="line">        name: &#x27;home&#x27;,</span><br><span class="line">        component: HomeView</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">const router = new VueRouter(&#123;</span><br><span class="line">    mode: &#x27;hash&#x27;,   // 使用 hash 模式</span><br><span class="line">    base: process.env.BASE_URL, // 基础路径</span><br><span class="line">    routes // 路由配置</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// 配置全局的路由守卫</span><br><span class="line">router.beforeEach((to, from, next) =&gt; &#123;</span><br><span class="line">    ....</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export default router</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>History 模式</strong>:</li>
+</ul>
+```js
+// URL 示例: http://192.168.1.69:8080/login
+
+// 特点: 使用 HTML5 History API 来管理 URL，使 URL 看起来更干净和自然。需要服务器支持，通常需配置服务器以处理所有请求并返回应用的入口 HTML 文件。
+
+// 配置方式:
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import HomeView from '../views/HomeView.vue'
+import Element from 'element-ui'
+
+Vue.use(VueRouter)
+
+// 路由配置
+const routes = [
+    {
+        path: '/',
+        name: 'home',
+        component: HomeView
+    },
+]
+
+const router = new VueRouter({
+    mode: 'history',   // 使用 history 模式
+    base: process.env.BASE_URL, // 基础路径
+    routes // 路由配置
+})
+
+// 配置全局的路由守卫
+router.beforeEach((to, from, next) => {
+    ....
+})
+
+export default router
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 总结</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````python</span><br><span class="line">选择哪一个：</span><br><span class="line"></span><br><span class="line">如果你希望 URL 更加干净和现代，并且可以配置服务器来支持此模式，则选择 history 模式。</span><br><span class="line">如果你需要兼容旧浏览器或无法配置服务器，则选择 hash 模式。</span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【九】scoped样式</span><br><span class="line"></span><br><span class="line"> &#123;% raw %&#125;```python</span><br><span class="line"> # 作用：让样式在局部生效，防止冲突。</span><br><span class="line"> # 写法：&lt;style scoped&gt;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/4.13%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0/" rel="prev" title="4.13匿名函数">
+      <i class="fa fa-chevron-left"></i> 4.13匿名函数
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/4.0%E4%BB%80%E4%B9%88%E6%98%AF%E8%A3%85%E9%A5%B0%E5%99%A8/" rel="next" title="4.0什么是装饰器">
+      4.0什么是装饰器 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">【一】ref属性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">ref的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text">{{msg}}</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E8%A1%A5%E5%85%85%E3%80%91-%E7%88%B6%E5%AD%90%E9%80%9A%E4%BF%A1%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">【补充】 父子通信的方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">【四】插件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">【五】插槽</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">首页</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.1.</span> <span class="nav-text">我们在state文件中的vuex插件中的count：{{$store.state.count}}</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E9%87%8D%E7%82%B9"><span class="nav-number">5.2.</span> <span class="nav-text">【1】重点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">首页</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">6.1.</span> <span class="nav-text">localStorage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">6.2.</span> <span class="nav-text">sessionStorage使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">6.3.</span> <span class="nav-text">cookie使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E8%B7%AF%E7%94%B1%E8%B7%B3%E8%BD%AC"><span class="nav-number">6.4.</span> <span class="nav-text">【2】路由跳转</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

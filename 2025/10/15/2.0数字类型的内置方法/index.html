@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="回顾 &#96;&#96;&#96; # len() -- 计算长度 # len()  + range 关键字 迭代取值 name_list &#x3D; [1, 2, 3, 4, 5, 6] for i in range(len(name_list)):     print(name_list[i]) 输出结果# 1 2 3 4 5 6      name_list &#x3D; [1, 2, 3, 4, 5, 6] for i in r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2.0数字类型的内置方法">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/2.0%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="回顾 &#96;&#96;&#96; # len() -- 计算长度 # len()  + range 关键字 迭代取值 name_list &#x3D; [1, 2, 3, 4, 5, 6] for i in range(len(name_list)):     print(name_list[i]) 输出结果# 1 2 3 4 5 6      name_list &#x3D; [1, 2, 3, 4, 5, 6] for i in r">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-15T03:34:54.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.041Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/2.0%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2.0数字类型的内置方法 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/2.0%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2.0数字类型的内置方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:54 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:54+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>回顾</p>
+```
+# len() -- 计算长度
+# len()  + range 关键字 迭代取值
+name_list = [1, 2, 3, 4, 5, 6]
+for i in range(len(name_list)):
+    print(name_list[i])
+输出结果#
+1
+2
+3
+4
+5
+6
+    
+name_list = [1, 2, 3, 4, 5, 6]
+for i in range(len(name_list)):
+    print(i)
+输出结果#
+0
+1
+2
+3
+4
+5
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 今日内容概要</span><br><span class="line"></span><br><span class="line">- 八大基本数据类型</span><br><span class="line">  - 数字类型</span><br><span class="line">    - 整型(int)</span><br><span class="line">    - 浮点型(float)</span><br><span class="line">  - 字符串(str)</span><br><span class="line">  - 列表(list)</span><br><span class="line">  - 元组(tuple)</span><br><span class="line">  - 布尔(bool)</span><br><span class="line">  - 字典(dict)</span><br><span class="line">  - 集合(set)</span><br><span class="line"></span><br><span class="line"># 【一】数字类型</span><br><span class="line"></span><br><span class="line">## 【1】整数类型（int）</span><br><span class="line"></span><br><span class="line">### （1）定义</span><br><span class="line"></span><br><span class="line">- 整数类型是Python中的一种基本数据类型，用于表示整数。</span><br><span class="line">- 在Python中，整数类型是不可变的，即一旦创建，其值不能被修改。</span><br><span class="line">- 证书可以直接使用数字进行定义</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num = 42</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-内置方法">(2)内置方法</h3>
+<ul>
+<li>
+```
+  int.bit_length()
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  - 返回整数的二进制表示中最高位的位数，不包括符号和前导零。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line">num = 42</span><br><span class="line">bit_length = num.bit_length()</span><br><span class="line">print(bit_length)</span><br><span class="line"># 输出：6</span><br></pre></td></tr></table></figure>
+
+</li>
+<li>
+```
+  int.to_bytes(length, byteorder, signed)
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  - 将整数转换为字节数组。</span><br><span class="line">  - 参数`length`指定生成的字节数组的长度，`byteorder`指定字节顺序，`signed`指定是否考虑整数的符号。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line">num = 42</span><br><span class="line">byte_array = num.to_bytes(2, byteorder=&#x27;big&#x27;, signed=False)</span><br><span class="line">print(byte_array)</span><br><span class="line"># 输出：b&#x27;\x00*&#x27;</span><br></pre></td></tr></table></figure>
+
+</li>
+<li>
+```
+  int.from_bytes(bytes, byteorder, signed)
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  - 将字节数组转换为整数。</span><br><span class="line">  - 参数`bytes`是输入的字节数组，`byteorder`指定字节顺序，`signed`指定是否考虑整数的符号。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line">byte_array = b&#x27;\x00*&#x27;</span><br><span class="line">num = int.from_bytes(byte_array, byteorder=&#x27;big&#x27;, signed=False)</span><br><span class="line">print(num)</span><br><span class="line"># 输出：42</span><br></pre></td></tr></table></figure>
+
+</li>
+<li>
+```
+  int.__add__(other)
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  - 可以实现整数的加法运算</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num1= 99</span><br><span class="line">num2=1</span><br><span class="line">result=num1.__add__(num2)</span><br><span class="line">print(result) #输出100</span><br></pre></td></tr></table></figure>
+
+</li>
+<li>
+```python
+  int.__sub__(other)
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  - 可以实现整数的减法运算</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num1=88</span><br><span class="line">num2=99</span><br><span class="line">result=num1.__sub__(num2)</span><br><span class="line">print(result)#输出-11</span><br></pre></td></tr></table></figure>
+
+</li>
+<li>
+```python
+  int.__mul__(other)
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  - 可以实现整数的乘法运算</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num1=8</span><br><span class="line">num2=4</span><br><span class="line">result=num1.__mul__(num2)</span><br><span class="line">print(result)#输出32</span><br></pre></td></tr></table></figure>
+
+</li>
+<li>
+```python
+  int.__truediv__(other)
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  - 可以实现整数的除法运算</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num1=8</span><br><span class="line">num2=4</span><br><span class="line">result=num1.__truediv__(num2)</span><br><span class="line">print(result)#输出2.0</span><br></pre></td></tr></table></figure>
+
+</li>
+<li>
+```python
+  int.__floordiv__(other)
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  - 可以实现整数的整除运算</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num1=78</span><br><span class="line">num2=5</span><br><span class="line">result=num1.__floordiv__(num2)</span><br><span class="line">print(result)#输出15</span><br></pre></td></tr></table></figure>
+
+</li>
+<li>
+```python
+  int.__mod__(other)
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  - 可以实现整数的取模运算（**寻找两个数相除的余数**）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num1=78</span><br><span class="line">num2=5</span><br><span class="line">result=num1.__mod__(num2)</span><br><span class="line">print(result)#输出3</span><br></pre></td></tr></table></figure>
+
+</li>
+<li>
+```python
+  int.__pow__(other)
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  - 可以实现整数的幂运算</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num1=3</span><br><span class="line">num2=3</span><br><span class="line">result=num1.__pow__(num2)</span><br><span class="line">print(result)#输出27</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="（3）类型强制转换">（3）类型强制转换</h3>
+<ul>
+<li>可以将由纯整数构成的字符串直接转为整数型
+<ul>
+<li>若包含非整数字符串会报错</li>
+</ul>
+</li>
+</ul>
+```python
+one = "710"#<class 'str'>
+two = int(one)
+print(two,type(two))#输出710 <class 'int'>
+
+错误演示
+print(int('1.3'))
+'''
+Traceback (most recent call last):
+  File "D:\pycharm\project\DAY01\作业\循环练习.py", line 175, in <module>
+    print(int('1.3'))
+ValueError: invalid literal for int() with base 10: '1.3'
+'''
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （4）进制转换</span><br><span class="line"></span><br><span class="line">- 涉及到：二进制转换、八进制换、十六进制转换。</span><br><span class="line"></span><br><span class="line">##### 【1】十进制转二进制：bin()</span><br><span class="line"></span><br><span class="line">- 将整数转化为二进制</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num1=999</span><br><span class="line">print(bin(num1))</span><br><span class="line">#0b1111100111</span><br></pre></td></tr></table></figure>
+
+<h5 id="【2】十进制转化为八进制：oct">【2】十进制转化为八进制：oct()</h5>
+<ul>
+<li>将整数转化为八进制</li>
+</ul>
+```python
+num1=999
+print(oct(num1))#输出0o1747
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">##### 【3】十进制转化为十六进制:hex()</span><br><span class="line"></span><br><span class="line">- 将整数转化为十六进制</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num1=999</span><br><span class="line">print(hex(num1))#输出0x3e7</span><br></pre></td></tr></table></figure>
+
+<h5 id="【4】其它进制转十进制：int（）">【4】其它进制转十进制：int（）</h5>
+<ul>
+<li>
+<p>int（）函数支持将不同进制的字符串转换为十进制整数，主要的进制包括：</p>
+<ul>
+<li>二进制（以&quot;Ob&quot;或&quot;oB&quot;开头）</li>
+<li>八进制（以&quot;Oo&quot;或&quot;oO&quot;开头）</li>
+<li>十六进制（以&quot;ox&quot;或&quot;0X’&quot;开头）</li>
+</ul>
+</li>
+<li>
+<p>你可以根据需要选择不同的进制进行转换。</p>
+</li>
+</ul>
+```python
+binary_str = '0b1111100111'
+decimal_num = int(binary_str, 2)
+print(decimal_num)
+# 输出：999
+
+octal_str = '0o1747'
+decimal_num = int(octal_str, 8)
+print(decimal_num)
+# 输出：999
+
+hexadecimal_str = '0x3e7'
+decimal_num = int(hexadecimal_str, 16)
+print(decimal_num)
+# 输出：999
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】浮点类型（float）</span><br><span class="line"></span><br><span class="line">### （1）定义</span><br><span class="line"></span><br><span class="line">- 表示有小数部分的数字的数字类型。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">float_number = 13.14</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-内置方法-2">(2)内置方法</h3>
+<ul>
+<li>取整函数</li>
+</ul>
+```python
+rounded_number = round(3.14159)
+print(rounded_number)#取整3
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (3)类型强制转换</span><br><span class="line"></span><br><span class="line">- 强制转换就是将一个类型转换为另一个数据类型</span><br><span class="line">- 可以将内置函数强制转换类型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 将整数转换为浮点数</span><br><span class="line">integer_number = 42</span><br><span class="line">float_number = float(integer_number)</span><br><span class="line"></span><br><span class="line"># 将浮点数转换为整数</span><br><span class="line">float_number = 3.14</span><br><span class="line">integer_number = int(float_number)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>float()将整数类型转换为浮点数，而int（）将浮点数转换为整数</li>
+</ul>
+<h2 id="【3】判断数字类型">【3】判断数字类型</h2>
+<h3 id="（1）数字类型说明">（1）数字类型说明</h3>
+```
+num1 = b'4'  # bytes
+num2 = '4'   # unicode，Python 3 中不需要在字符串前加 'u'
+num3 = '四'  # 中文数字
+num4 = 'Ⅳ'   # 罗马数字
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）判断数字类型(***.isdigit***)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"># isdigit: bytes, unicode</span><br><span class="line">print(num1.isdigit())  # True</span><br><span class="line">print(num2.isdigit())  # True</span><br><span class="line">print(num3.isdigit())  # False</span><br><span class="line">print(num4.isdigit())  # False</span><br></pre></td></tr></table></figure>
+
+<h3 id="（3）判断小数类型-isdecimal">（3）判断小数类型(isdecimal)</h3>
+```
+# isdecimal: unicode（bytes 类型没有 isdecimal 方法）
+print(num2.isdecimal())  # True
+print(num3.isdecimal())  # False
+print(num4.isdecimal())  # False
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （4）判断数字类型(isnumeric)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"># isnumeric: unicode, 中文数字, 罗马数字（bytes 类型没有 isnumeric 方法）</span><br><span class="line">print(num2.isnumeric())  # True</span><br><span class="line">print(num3.isnumeric())  # True</span><br><span class="line">print(num4.isnumeric())  # True</span><br></pre></td></tr></table></figure>
+
+<h3 id="（5）无法判断浮点数">（5）无法判断浮点数</h3>
+```
+# 这三种方法无法判断浮点数
+num5 = '4.3'
+print(num5.isdigit())    # False
+print(num5.isdecimal())  # False
+print(num5.isnumeric())  # False
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【二】字符串类型（str）</span><br><span class="line"></span><br><span class="line">## 【1】字符串类型定义</span><br><span class="line"></span><br><span class="line">- 字符串是由字符组成的，可以包含字母、数字、标点符号、空格等字符等</span><br><span class="line"></span><br><span class="line">- 符串类型使用单引号或双引号来定义。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 使用单引号定义字符串</span><br><span class="line">single_quoted_str = &#x27;Hello, World!&#x27;</span><br><span class="line"></span><br><span class="line"># 使用双引号定义字符串</span><br><span class="line">double_quoted_str = &quot;Hello, Python!&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>字符串还可以使用三引号（单引号或双引号）定义多行字符串</li>
+</ul>
+```
+multi_line_str = '''
+This is a multi-line
+string in Python.
+'''
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】内置方法（优先）</span><br><span class="line"></span><br><span class="line">### （1）字符串拼接</span><br><span class="line"></span><br><span class="line">- 字符串拼接是将多个字符串连接在一起形成一个新的字符串。</span><br><span class="line"></span><br><span class="line">- 可以使用+运算符来实现字符</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">str1 = &#x27;Hello,&#x27;</span><br><span class="line">str2 = &#x27;World!&#x27;</span><br><span class="line">result_str = str1 + &#x27; &#x27; + str2</span><br><span class="line">print(result_str)</span><br><span class="line"># 输出: Hello, World!</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-索引取值">(2)索引取值</h3>
+<h4 id="【1】正索引取值">【1】正索引取值</h4>
+<ul>
+<li>字符串中的每个字符都有一个索引，正索引从左到右依次增加</li>
+</ul>
+```python
+text = 'Python'
+first_char = text[0]
+print(first_char)
+# 输出: P
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 【2】反索引取值</span><br><span class="line"></span><br><span class="line">- 反索引从右到左依次增加，最右边的字符索引为 -1。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">text = &#x27;Python&#x27;</span><br><span class="line">last_char = text[-1]</span><br><span class="line">print(last_char)</span><br><span class="line"># 输出: n</span><br></pre></td></tr></table></figure>
+
+<h4 id="【3】只能取值不能修改值">【3】只能取值不能修改值</h4>
+```python
+str1 = "hello word!"
+str[0] = "H"
+#它会报错
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （3）切片（顾头不顾尾）</span><br><span class="line"></span><br><span class="line">#### 【1】切片顾头不顾尾</span><br><span class="line"></span><br><span class="line">- 切片用于获取字符串的一部分，可以指定起索引和结束索引</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">text = &quot;python&quot;</span><br><span class="line">substring = text[1:4] # 从索引1到索引4（不包括4）</span><br><span class="line">print(substing)#输出 yth</span><br></pre></td></tr></table></figure>
+
+<h4 id="【2】步长">【2】步长</h4>
+```python
+text = 'Python'
+substring = text[1:4:2]  # 从索引1到索引4（不包括4） 步长为 2 ，所以 索引1为 y 和 索引3 为 h
+print(substring) # 输出: yh
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 【3】反向切片</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">text = &#x27;Python&#x27;</span><br><span class="line">substring = text[-1:-4:-2]  # 从索引-1到索引-4（不包括4） 步长为 2 ，所以 索引-1为 n 和 索引-3 为 h</span><br><span class="line">print(substring) # 输出: nh</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-计算长度（len）">(4)计算长度（len）</h3>
+<ul>
+<li>len()函数用于计算字符串的长度。</li>
+</ul>
+```python
+text = 'Hello, World!'
+length = len(text)
+print(length) # 输出: 13
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （5）成员运算</span><br><span class="line"></span><br><span class="line">- in 和  not in 用于检查一个字符串是否包含另一个字符串。</span><br><span class="line"></span><br><span class="line">#### 【1】in</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">age = &quot;18&quot;</span><br><span class="line">contains_age = &quot;1&quot; in age</span><br><span class="line">print(contains_age) # 输出True</span><br></pre></td></tr></table></figure>
+
+<h4 id="【2】not-in">【2】not in</h4>
+```python
+ge = "18"
+contains_age = "1" not in age
+print(contains_age) # 输出False
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (6)去除空格（strip）</span><br><span class="line"></span><br><span class="line">- strip()方法用于去除字符串首尾空格。</span><br><span class="line"></span><br><span class="line">#### 【1】默认 strip</span><br><span class="line"></span><br><span class="line">- 默认情况下，strip（）方法去除字符串开头和结尾的所有空格。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">text = &#x27;  Hello, World!  &#x27;</span><br><span class="line">stripped_text = text.strip()</span><br><span class="line">print(stripped_text)</span><br><span class="line"># Output(输出): Hello, World!</span><br></pre></td></tr></table></figure>
+
+<p>【2】 左去除 lstrip</p>
+<ul>
+<li><code>lstrip()</code> 方法用于去除字符串开头的空格。</li>
+</ul>
+```python
+text = '  Hello, World!  '
+left_stripped_text = text.lstrip()
+print(left_stripped_text)
+# Output: Hello, World!  
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### [3] 右去除 rstrip</span><br><span class="line"></span><br><span class="line">- `rstrip()` 方法用于去除字符串结尾的空格。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">text = &#x27;  Hello, World!  &#x27;</span><br><span class="line">right_stripped_text = text.rstrip()</span><br><span class="line">print(right_stripped_text)</span><br><span class="line"># Output:   Hello, World!</span><br></pre></td></tr></table></figure>
+
+<p>【4】去除指定字符串</p>
+<ul>
+<li>如果需要去除字符串开头和结尾的指定字符，可以传入一个字符串参数给 <code>strip()</code> 方法。</li>
+</ul>
+```python
+text = '<<Hello, World!>>'
+stripped_text = text.strip('<>')
+print(stripped_text) # Output: Hello, World!
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （7）切分</span><br><span class="line"></span><br><span class="line">- `split()` 方法用于将字符串切分成多个子字符串，并返回一个包含切分后子字符串的列表。</span><br><span class="line"></span><br><span class="line">#### 【1】默认切片</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">name_age = &quot;Tom|18&quot;</span><br><span class="line">split_y = name_age.split(&quot;|&quot;)</span><br><span class="line">print(split_y)#输出[&#x27;Tom&#x27;,&#x27;18&#x27;]</span><br><span class="line"></span><br><span class="line">name_age = &quot;Tom     18&quot;</span><br><span class="line">split_x = name_age.split()</span><br><span class="line">print(split_x)#输出[&#x27;Tom&#x27;,&#x27;18&#x27;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-遍历切片">(8)遍历切片</h3>
+<p>用for循环把里面的每个字符看一遍</p>
+```python
+name = "tom"
+for y in name:
+    print(y)
+#输出
+t
+o
+m
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （9）重复字符串</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">name = &quot;tom&quot;</span><br><span class="line">name_one = name*6</span><br><span class="line">print(name_one)</span><br><span class="line">#输出tomtomtomtomtomtom</span><br></pre></td></tr></table></figure>
+
+<h3 id="（10）大小写转换">（10）大小写转换</h3>
+<h4 id="【1】小写转大写（-upper-）">【1】小写转大写（.upper()）</h4>
+```python
+name = "tom"
+name_one = name.upper()
+print(name_one)#输出TOM
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 【2】大写转小写（lower（））</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">name = &quot;TOM&quot;</span><br><span class="line">name_one = name.lower()</span><br><span class="line">print(name_one)#输出tom</span><br></pre></td></tr></table></figure>
+
+```python
+案例
+name = "dream"
+print(name.islower())#True
+print(name.isupper())#False
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （11）首尾字符串判断</span><br><span class="line"></span><br><span class="line">#### 【1】判断字符串开头（startswith()）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">name = &quot;dream&quot;</span><br><span class="line">print(name.startswith(&quot;d&quot;))#True</span><br><span class="line">print(name.startswith(&quot;r&quot;))#False</span><br></pre></td></tr></table></figure>
+
+<h4 id="【2】判断字符串结尾（endswith-）">【2】判断字符串结尾（endswith()）</h4>
+```python
+name = "dream"
+print(name.endswith("m"))#True
+print(name.endswith("d"))#False
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (12)格式化输出语法</span><br><span class="line"></span><br><span class="line">- %占位</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">name = &quot;tom&quot;</span><br><span class="line">age = 18</span><br><span class="line">print(&quot;my name is %s,my age is %d&quot; %(name,age))</span><br><span class="line">#my name is tom,my age is 18</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>
+<p><code>%s</code>：字符串</p>
+</li>
+<li>
+<p><code>%d</code>：整数</p>
+</li>
+<li>
+<p><code>%f</code>：浮点数</p>
+</li>
+<li>
+<p><code>%x</code>：十六进制整数</p>
+</li>
+<li>
+<p>format输出</p>
+</li>
+</ul>
+```python
+name = "tom"
+age = 18
+print("my name  is {},my age is {}".format(name,age))
+#my name  is tom,my age is 18
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- &#123;&#125;是占位符</span><br><span class="line"></span><br><span class="line">- f+&#123;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">name = &quot;tom&quot;</span><br><span class="line">age = 18</span><br><span class="line">print(f&quot;my name is &#123;name&#125;,my age is &#123;age&#125;&quot;)</span><br><span class="line">#my name is tom,my age is 18</span><br></pre></td></tr></table></figure>
+
+<h3 id="13-拼接join">(13)拼接join</h3>
+```python
+name = "tom"
+print('?'.join("name"))
+#n?a?m?e
+
+age = 18
+name = "tom"
+print('?'.join(["name","age"]))
+#name?age
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (14)判断类型（isdigit）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````python</span><br><span class="line">#判断是否为纯数字组成</span><br><span class="line">rumber = &quot;88888&quot;</span><br><span class="line">rumber_one=&quot;999.&quot;</span><br><span class="line">print(rumber.isdigit())#True</span><br><span class="line">print(rumber_one.isdigit())#False</span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【3】内置方法（熟悉）</span><br><span class="line"></span><br><span class="line">### （1）查找</span><br><span class="line"></span><br><span class="line">#### [1]find</span><br><span class="line"></span><br><span class="line">- 从指定范围内查找子字符串的起始索引，**从左向右查找**，找得到则返回元素所在的索引位置，找不到则返回-1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">one = &#x27;tony say hello&#x27;</span><br><span class="line"></span><br><span class="line"># 在索引为1和2(顾头不顾尾)的字符中查找字符o的索引</span><br><span class="line">res = one.find(&#x27;o&#x27;, 1, 3)</span><br><span class="line">print(res) # 1</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-rfind">[2]rfind</h4>
+<ul>
+<li>从指定范围内查找子字符串的起始索引，<strong>从右向左查找</strong>，找得到则返回元素所在的索引位置，找不到则返回-1</li>
+</ul>
+```python
+msg = 'tony say hello'
+
+# 在整个字符串中查找字符o的最右边的索引
+res = msg.rfind('o')
+print(res) # 13
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 【3】index</span><br><span class="line"></span><br><span class="line">- index:同find,但在找不到时会报错</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line">msg = &#x27;tony say hello&#x27;</span><br><span class="line"></span><br><span class="line"># 在整个字符串中查找字符o的最左边的索引</span><br><span class="line">res = msg.index(&#x27;o&#x27;)</span><br><span class="line">print(res) # 1</span><br></pre></td></tr></table></figure>
+
+<h4 id="【4】rindex">【4】rindex</h4>
+<ul>
+<li>index:同rfind,但在找不到时会报错</li>
+</ul>
+```
+msg = 'tony say hello'
+
+# 在整个字符串中查找字符o的最右边的索引
+res = msg.rindex('o')
+print(res) # 13
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 【5】count</span><br><span class="line"></span><br><span class="line">- 统计指定字符在大字符串中出现的次数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line">msg = &#x27;tony say hello&#x27;</span><br><span class="line"></span><br><span class="line"># 统计字符串o在大字符串中出现的次数</span><br><span class="line">res = msg.count(&#x27;o&#x27;)</span><br><span class="line">print(res) # 2</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）填充">（2）填充</h3>
+<h4 id="【1】center">【1】center</h4>
+<ul>
+<li>偶数两边相同，奇数左少右多</li>
+</ul>
+```python
+one = "123"
+age_center=one.center(len(one)+3,".")
+print(age_center)#.123..
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 【2】ljust</span><br><span class="line"></span><br><span class="line">右</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">one = &quot;123&quot;</span><br><span class="line">age_center=one.ljust(len(one)+3,&quot;.&quot;)</span><br><span class="line">print(age_center)#123...</span><br></pre></td></tr></table></figure>
+
+<h4 id="【3】rjust">【3】rjust</h4>
+<ul>
+<li>左</li>
+</ul>
+```python
+one = "123"
+age_center=one.rjust(len(one)+3,".")
+print(age_center)#...123
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 【4】zfill</span><br><span class="line"></span><br><span class="line">- 用零填充</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">one = &quot;123&quot;</span><br><span class="line">age_center=one.zfill(len(one)+3)</span><br><span class="line">print(age_center)#000123</span><br></pre></td></tr></table></figure>
+
+<h3 id="（3）制表符">（3）制表符</h3>
+<ul>
+<li>expandtabs</li>
+</ul>
+```python
+aumber_one = "tom\tbanana"
+print(aumber_one)#tom	banana 默认四个字符
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （4）首字母大写（capitalize）</span><br><span class="line"></span><br><span class="line">- 只会将这一行的第一个单词的首字母大写，其他单词不变</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line">text = &#x27;hello world&#x27;</span><br><span class="line">capitalized_text = text.capitalize()</span><br><span class="line">print(capitalized_text)  # &#x27;Hello world&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="（5）大小写翻转-swapcase">（5）大小写翻转(swapcase)</h3>
+<ul>
+<li>大写变小写，小写变大写，进行颠倒</li>
+</ul>
+```
+mixed_case = 'HeLLo WoRLd'
+swapped_case = mixed_case.swapcase()
+print(swapped_case)  # 'hEllO wOrlD'
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （6）单词首字母大写(title)</span><br><span class="line"></span><br><span class="line">- 将给定句子的每一个单词的首字母大写</span><br><span class="line">- 要符合英文句子的语法规范，每个单词之间要有空格</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line">sentence = &#x27;the quick brown fox&#x27;</span><br><span class="line">title_case = sentence.title()</span><br><span class="line">print(title_case)  # &#x27;The Quick Brown Fox&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="【4】判断字符串类型">【4】判断字符串类型</h2>
+```python
+name = 'Dream123'
+print(name.isalnum())    # 字符串中既可以包含数字也可以包含字母，True
+print(name.isalpha())    # 字符串中只包含字母，False
+print(name.isidentifier())  # 字符串是否是合法标识符，True
+print(name.islower())    # 字符串是否是纯小写，True
+print(name.isupper())    # 字符串是否是纯大写，False
+print(name.isspace())    # 字符串是否全是空格，False
+print(name.istitle())    # 字符串中的单词首字母是否都是大写，False
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【三】列表类型（list）</span><br><span class="line"></span><br><span class="line">## 【1】列表类型定义</span><br><span class="line"></span><br><span class="line">- 列表可以包含多个元素，每个元素之间用逗号 `,` 隔开，并用方括号 `[]` 括起来。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">numbers = [1, 2, 3, 4, 5]</span><br><span class="line">names = [&#x27;Alice&#x27;, &#x27;Bob&#x27;, &#x27;Charlie&#x27;, &#x27;David&#x27;]</span><br><span class="line">mixed_list = [1, &#x27;two&#x27;, 3.0, &#x27;four&#x27;, 5]</span><br></pre></td></tr></table></figure>
+
+<h2 id="【2】内置方法（优先）">【2】内置方法（优先）</h2>
+<h3 id="（1）类型强转">（1）类型强转</h3>
+<ul>
+<li>字符串转换</li>
+</ul>
+```python
+name = "tom"
+print(list(name))#['t', 'o', 'm']
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 元组转换</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num_tuple = (1,2,3,4,5,6,7,8,9)</span><br><span class="line">print(list(num_tuple))#[1, 2, 3, 4, 5, 6, 7, 8, 9]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>字典转换</li>
+</ul>
+```python
+username_dict ={"name":"tom","password":"710"}
+print(list(username_dict))#['name', 'password']
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 集合转换</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num_set = &#123;12,45,62,66,66,66&#125;</span><br><span class="line">print(list(num_set))#[66, 12, 45, 62]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>range转换</li>
+</ul>
+```python
+print(list(range(0,3)))#[0, 1, 2]
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (2)索引取值</span><br><span class="line"></span><br><span class="line">- 取得的长度大于数据长度就会报错</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num = [1,2,3,4,5,6]</span><br><span class="line">print(num[4])</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-切片">(3)切片</h3>
+```python
+num_list = [1,2,3,4,5]
+print(num_list[1:4:1])
+#[2, 3, 4]
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (4)len(计算长度)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num_list = [1,2,3,4,5]</span><br><span class="line">print(len(num_list))</span><br><span class="line">#5</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-成员计算">(5)成员计算</h3>
+<ul>
+<li>看看自己要的数字在不在里面</li>
+</ul>
+```python
+num_list = [1,2,3,4,5]
+print(5 in num_list)
+#True
+print(6 in num_list)
+#False
+print(6 not in num_list)
+#True
+print(4 not in num_list)
+#False
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (6)增删查改</span><br><span class="line"></span><br><span class="line">- append()增加到末尾</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num_list = [1,2,3,4,5]</span><br><span class="line">num_list.append(66)</span><br><span class="line">print(num_list)#[1, 2, 3, 4, 5, 66]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>extend()一次性添加多个元素、合并列表</li>
+</ul>
+```python
+num_list = [1,2,3,4,5]
+num_list_one=[66,77,88]
+num_list.extend(num_list_one)
+print(num_list)#[1, 2, 3, 4, 5, 66, 77, 88]
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- insert()指定位置添加</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num_list = [1,2,3,4,5]</span><br><span class="line">num_list.insert(1,3)</span><br><span class="line">print(num_list)#[1, 3, 2, 3, 4, 5]</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-删除">(7)删除</h3>
+<ul>
+<li>del</li>
+</ul>
+```python
+num_list = [1,3,2,3,4,5]
+del num_list[1]
+print(num_list)#[1, 2, 3, 4, 5]
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- .pop()(删除的值会显示出来)(通过索引删除)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num_list = [1,2,3,4,5]</span><br><span class="line">print(num_list.pop(1))#2</span><br><span class="line">print(num_list)#[1, 3, 4, 5]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>.remove()（括号里必须放值，删除的值不显示）（通过值删除）</li>
+</ul>
+```python
+num_list = [1,2,3,4,5]
+num_list.remove(2)
+print(num_list)#[1, 3, 4, 5]
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （8）颠倒元素</span><br><span class="line"></span><br><span class="line">- .reverse()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num_list = [1,2,3,4,5]</span><br><span class="line">num_list.reverse()</span><br><span class="line">print(num_list)#[5, 4, 3, 2, 1]</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-元素排序">(9)元素排序</h3>
+<ul>
+<li>.sort()</li>
+</ul>
+```python
+num_list = [1,2,3,4,5,4,3,1]
+num_list.sort()
+print(num_list)#[1, 1, 2, 3, 3, 4, 4, 5]
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 倒序排序参数（reverse）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num_list = [1,2,3,4,5,4,3,1]</span><br><span class="line">num_list.sort(reverse=True)</span><br><span class="line">print(num_list)#[5, 4, 4, 3, 3, 2, 1, 1]</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-元素排序">(10)元素排序</h3>
+<ul>
+<li>.sorted()</li>
+</ul>
+```python
+num_list = [1,2,3,4,5,4,3,1]
+num_list_one=sorted(num_list)
+print(num_list_one)#[1, 1, 2, 3, 3, 4, 4, 5]
+print(num_list)#[1, 2, 3, 4, 5, 4, 3, 1]
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (11)循环遍历</span><br><span class="line"></span><br><span class="line">- for循环遍历</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">fruits =[&quot;apple&quot;,&quot;banana&quot;,&quot;orange&quot;]</span><br><span class="line">for fruit in fruits:</span><br><span class="line">    print(fruit)</span><br><span class="line">#</span><br><span class="line">apple</span><br><span class="line">banana</span><br><span class="line">orange</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>while循环遍历</li>
+</ul>
+```python
+fruits =["apple","banana","orange"]
+count=0
+while count<len(fruits):
+    print(fruits[count])
+    count +=1
+#
+apple
+banana
+orange
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- enumerate()(同时获得元素的索引和值)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">fruits = [&#x27;apple&#x27;, &#x27;banana&#x27;, &#x27;orange&#x27;]</span><br><span class="line">for index, fruit in enumerate(fruits):</span><br><span class="line">    print(f&quot;Index: &#123;index&#125;, Fruit: &#123;fruit&#125;&quot;)</span><br><span class="line"># 输出:</span><br><span class="line"># Index: 0, Fruit: apple</span><br><span class="line"># Index: 1, Fruit: banana</span><br><span class="line"># Index: 2, Fruit: orange</span><br></pre></td></tr></table></figure>
+
+<h3 id="12-列表的步长">(12)列表的步长</h3>
+```python
+num = [1,2,3,4,5,6]#从头到尾步长为2
+print(num[::2])#[1, 3, 5]
+
+print(num[::-2])#[6, 4, 2]#从头取到尾但是是倒着取
+
+print(num[::-1])#[6, 5, 4, 3, 2, 1]#列表反过来取
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【四】字典类型（dict）</span><br><span class="line"></span><br><span class="line">- 字典中都是k:v键值对，字典之间都是用,分隔。</span><br><span class="line">- 不支持索引取值，支持键值对取值。</span><br><span class="line">- dict</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">person_info = dict(name=&#x27;Dream&#x27;, age=25, gender=&#x27;male&#x27;)</span><br><span class="line">print(person_info)</span><br><span class="line">#&#123;&#x27;name&#x27;: &#x27;Dream&#x27;, &#x27;age&#x27;: 25, &#x27;gender&#x27;: &#x27;male&#x27;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-内置方法">[1]内置方法</h2>
+<h3 id="（1）取值">（1）取值</h3>
+<h4 id="【1】k取值">【1】k取值</h4>
+```python
+person_info = {'name': 'Dream', 'age': 25, 'gender': 'male'}
+print(person_info['name'])
+# 输出: Dream
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### [2].get方法取值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">one = &#123;&quot;name&quot;:&quot;tom&quot;,&quot;password&quot;:&quot;1314&quot;,&quot;gender&quot;:&quot;man&quot;&#125;</span><br><span class="line">print(one.get(&quot;password&quot;))#1314</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-计算长度（len）">(2)计算长度（len）</h3>
+```python
+one = {"name":"tom","password":"1314","gender":"man"}
+print(len(one))#3
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (3)成员运算（in，not  in）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">one = &#123;&quot;name&quot;:&quot;tom&quot;,&quot;password&quot;:&quot;1314&quot;,&quot;gender&quot;:&quot;man&quot;&#125;</span><br><span class="line">print(&quot;name&quot; in one)#True</span><br><span class="line">print(&quot;two&quot; in one)#False</span><br></pre></td></tr></table></figure>
+
+<h3 id="（4）增加">（4）增加</h3>
+<h4 id="1-新增键值对">[1]新增键值对</h4>
+```python
+# 示例
+person_info = {'name': 'Dream', 'age': 25, 'gender': 'male'}
+person_info['height'] = 175
+print(person_info)  # 输出: {'name': 'Dream', 'age': 25, 'gender': 'male', 'height': 175}
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### [2]批量新增键值对(update())</span><br><span class="line"></span><br><span class="line">- 使用`update`方法可以批量新增键值对，如果键已经存在，则更新对应的值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 示例</span><br><span class="line">person_info = &#123;&#x27;name&#x27;: &#x27;Dream&#x27;, &#x27;age&#x27;: 25, &#x27;gender&#x27;: &#x27;male&#x27;&#125;</span><br><span class="line">person_info.update(&#123;&#x27;height&#x27;: 175, &#x27;weight&#x27;: 70&#125;)</span><br><span class="line">print(person_info)  # 输出: &#123;&#x27;name&#x27;: &#x27;Dream&#x27;, &#x27;age&#x27;: 25, &#x27;gender&#x27;: &#x27;male&#x27;, &#x27;height&#x27;: 175, &#x27;weight&#x27;: 70&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-增加值并返回值-setdefault">[3]增加值并返回值(setdefault())</h4>
+<ul>
+<li><code>setdefault(key, default) </code>方法用于获取指定键的值，如果键不存在，则返回默认值，并在字典中添加键值对。</li>
+</ul>
+```python
+# 示例
+person_info = {'name': 'Tony', 'age': 25}
+
+# 使用setdefault()获取键值，如果键不存在，则添加新键值对
+gender = person_info.setdefault('gender', 'male')
+print(gender)        # 输出: male
+print(person_info)   # 输出: {'name': 'Tony', 'age': 25, 'gender': 'male'}
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 如果字典中存在键 &#x27;gender&#x27;，则 setdefault() 方法返回对应的值；</span><br><span class="line">- 如果不存在，则添加新键值对 &#x27;gender&#x27;: &#x27;male&#x27; 并返回默认值 &#x27;male&#x27;</span><br><span class="line"></span><br><span class="line">### (5)删除</span><br><span class="line"></span><br><span class="line">#### 【1】键删除（del()）</span><br><span class="line"></span><br><span class="line">- del(根据建删除字典中的键值对)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">one = &#123;&quot;name&quot;:&quot;tom&quot;,&quot;password&quot;:&quot;1314&quot;,&quot;gender&quot;:&quot;man&quot;&#125;</span><br><span class="line">del one[&quot;gender&quot;]</span><br><span class="line">print(one)</span><br><span class="line">#&#123;&#x27;name&#x27;: &#x27;tom&#x27;, &#x27;password&#x27;: &#x27;1314&#x27;&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【2】弹出键值对（pop-）">【2】弹出键值对（pop()）</h4>
+<ul>
+<li>.pop()(弹出值删除键值对)</li>
+</ul>
+```python
+one = {"name":"tom","password":"1314","gender":"man"}
+key = one.pop("gender")
+print(key)#man
+print(one)#{'name': 'tom', 'password': '1314'}
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 【3】清空键值对（.clear()）</span><br><span class="line"></span><br><span class="line">- .clear()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">one = &#123;&quot;name&quot;:&quot;tom&quot;,&quot;password&quot;:&quot;1314&quot;,&quot;gender&quot;:&quot;man&quot;&#125;</span><br><span class="line">key = one.clear()</span><br><span class="line">print(one)#&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-随机删除键值对-popitem">[4]随机删除键值对(popitem())</h4>
+<ul>
+<li><code>popitem()</code> 方法用于随机删除字典中的一个键值对，并以元组的形式返回被删除的键值对。</li>
+<li>字典是无序的，所以删除的是一个随机的键值对。</li>
+</ul>
+```python
+# 示例
+person_info = {'name': 'Tony', 'age': 25, 'gender': 'male'}
+
+# 随机删除一个键值对
+removed_item = person_info.popitem()
+print(removed_item)  # 输出: ('gender', 'male')
+print(person_info)   # 输出: {'name': 'Tony', 'age': 25}
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- `popitem()` 在 Python 3.7+ 中删除的是字典中的“末尾”键值对，但在旧版本的 Python 中，删除的并不是末尾的键值对。</span><br><span class="line">- 所以在使用 `popitem()` 时要注意版本兼容性。</span><br><span class="line"></span><br><span class="line">### (5)键对（.keys()）</span><br><span class="line"></span><br><span class="line">- .keys()(取出所有的键)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">one = &#123;&quot;name&quot;:&quot;tom&quot;,&quot;password&quot;:&quot;1314&quot;,&quot;gender&quot;:&quot;man&quot;&#125;</span><br><span class="line">keys=one.keys()</span><br><span class="line">print(keys)#dict_keys([&#x27;name&#x27;, &#x27;password&#x27;, &#x27;gender&#x27;])</span><br></pre></td></tr></table></figure>
+
+<h3 id="（6）值对（values-）">（6）值对（values()）</h3>
+<ul>
+<li>.values()(取出所有值)</li>
+</ul>
+```python
+one = {"name":"tom","password":"1314","gender":"man"}
+keys=one.values()
+print(keys)#dict_values(['tom', '1314', 'man'])
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （7）键值对（.items()）</span><br><span class="line"></span><br><span class="line">- .items(取出所有的键值对)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">one = &#123;&quot;name&quot;:&quot;tom&quot;,&quot;password&quot;:&quot;1314&quot;,&quot;gender&quot;:&quot;man&quot;&#125;</span><br><span class="line">keys=one.items()</span><br><span class="line">print(keys)</span><br><span class="line">#dict_items([(&#x27;name&#x27;, &#x27;tom&#x27;), (&#x27;password&#x27;, &#x27;1314&#x27;), (&#x27;gender&#x27;, &#x27;man&#x27;)])</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-循环遍历">(8)循环遍历</h3>
+<h4 id="【1】只遍历（key键值）">【1】只遍历（key键值）</h4>
+```python
+one = {"name":"tom","password":"1314","gender":"man"}
+for key in one:
+    print(key)
+#
+name
+password
+gender
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 【2】之遍历（value）</span><br><span class="line"></span><br><span class="line">- .value()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">one = &#123;&quot;name&quot;:&quot;tom&quot;,&quot;password&quot;:&quot;1314&quot;,&quot;gender&quot;:&quot;man&quot;&#125;</span><br><span class="line">for key in one.values():</span><br><span class="line">    print(key)</span><br><span class="line">#</span><br><span class="line">tom</span><br><span class="line">1314</span><br><span class="line">man</span><br></pre></td></tr></table></figure>
+
+<h4 id="【3】遍历（key）和（value）">【3】遍历（key）和（value）</h4>
+<ul>
+<li>.items()</li>
+</ul>
+```python
+one = {"name":"tom","password":"1314","gender":"man"}
+for key,value in one.items():
+    print(f"{key}:{value}")
+#
+name:tom
+password:1314
+gender:man
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (9）字典排序（sorted()）</span><br><span class="line"></span><br><span class="line">- sorted()是通过键来执行的</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">one = &#123;&quot;name&quot;:&quot;tom&quot;,&quot;password&quot;:&quot;1314&quot;,&quot;gender&quot;:&quot;man&quot;&#125;</span><br><span class="line">key=sorted(one.items())</span><br><span class="line">print(key)</span><br><span class="line">#[(&#x27;gender&#x27;, &#x27;man&#x27;), (&#x27;name&#x27;, &#x27;tom&#x27;), (&#x27;password&#x27;, &#x27;1314&#x27;)]</span><br></pre></td></tr></table></figure>
+
+<h1>【五】元组类型（tuple）</h1>
+<h2 id="【1】元组类型的定义">【1】元组类型的定义</h2>
+<ul>
+<li>有序，不可变</li>
+<li>（）中可以包含任何类型元素。</li>
+<li>用，来创建元组，小括号也可以去掉。</li>
+</ul>
+```python
+#使用都好
+my_tupel = 1,2,3
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【3】内置方法</span><br><span class="line"></span><br><span class="line">### （1）类型强转</span><br><span class="line"></span><br><span class="line">- 将可迭代对象转换为元组。</span><br><span class="line">- 但凡能被for循环遍历的数据类型都可以用tuple()转换成元组。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 示例</span><br><span class="line">numbers_list = [1, 2, 3, 4, 5]</span><br><span class="line">numbers_tuple = tuple(numbers_list)</span><br><span class="line">print(numbers_tuple)  # 输出: (1, 2, 3, 4, 5)</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）索引取值">（2）索引取值</h3>
+<ul>
+<li>元组也支持索引取值</li>
+</ul>
+<h4 id="（1）正索引取值">（1）正索引取值</h4>
+```python
+num = (1,2,3)
+print(num[0])
+#输出1
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### （2）负索引取值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num = (1,2,3)</span><br><span class="line">print(num[-1])</span><br><span class="line">#输出3</span><br></pre></td></tr></table></figure>
+
+<h4 id="（3）只能取值不能改值（如果索引不存在就会报错）">（3）只能取值不能改值（如果索引不存在就会报错）</h4>
+```python
+num = (1,2,3)
+print(num[])
+#就会报错
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （3）切片（顾头不顾尾）</span><br><span class="line"></span><br><span class="line">- 元组也支持切片</span><br><span class="line"></span><br><span class="line">#### （1）顾头不顾尾</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num = (1,2,3,4,5,6,7)</span><br><span class="line">print(num[1:5])</span><br><span class="line">#输出（2,3,4,5）</span><br></pre></td></tr></table></figure>
+
+<h4 id="（2）步长">（2）步长</h4>
+```python
+num = (1,2,3,4,5,6,7)
+print(num[1:6:2])
+#输出（2,4,6）
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (4)计算长度（len()）</span><br><span class="line"></span><br><span class="line">- 使用len()可以获取元组的长度</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num = (1,2,3,4,5,6,7)</span><br><span class="line">print(len(num)）</span><br><span class="line">#输出7</span><br></pre></td></tr></table></figure>
+
+<h3 id="（5）成员计算">（5）成员计算</h3>
+<ul>
+<li>元组也支持in和not in 运算符</li>
+</ul>
+<h4 id="（1）in">（1）in</h4>
+```python
+num = (1,2,3,4,5,6,7)
+print(1 in num)
+#True
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### （2）not in</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num = (1,2,3,4,5,6,7)</span><br><span class="line">print(1 not in num)</span><br><span class="line">#False</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-循环遍历">(6)循环遍历</h3>
+<ul>
+<li>用for循环可以遍历元组中每一个元素</li>
+</ul>
+```python
+num = (1,2,3,4,5,6,7)
+for i in num:
+    print(i)
+#1
+2
+3
+4
+5
+6
+7
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (7)元组拼接</span><br><span class="line"></span><br><span class="line">- 用“+”可以把两个元组拼接成一个新的元组</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num = (1,2,3,4,5,6,7)</span><br><span class="line">num1 = (1,9,8,&quot;a&quot;,&quot;c&quot;)</span><br><span class="line">i = num + num1</span><br><span class="line">print(i)</span><br><span class="line">#输出(1, 2, 3, 4, 5, 6, 7, 1, 9, 8, &#x27;a&#x27;, &#x27;c&#x27;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="（8）元组重复">（8）元组重复</h3>
+<ul>
+<li>用“*”运算符可以将元组重复指定次数</li>
+</ul>
+```python
+num = (1,2,3,4,5,6,7)
+num1 = num * 3
+print(num1)
+#输出(1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【六】布尔类型（bool）</span><br><span class="line"></span><br><span class="line">## 【1】强制类型转换</span><br><span class="line"></span><br><span class="line">- 为真是True，为假False</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num = 1  # 为真的情况能转为 True</span><br><span class="line">print(bool(num), type(bool(num)))  # True &lt;class &#x27;bool&#x27;&gt;</span><br><span class="line"></span><br><span class="line">name = &#x27;dream&#x27;  # 为真的情况能转为 True</span><br><span class="line">print(bool(name), type(bool(name)))  # True &lt;class &#x27;bool&#x27;&gt;</span><br><span class="line"></span><br><span class="line">num_one = 0  # 为假的情况能转为 False</span><br><span class="line">print(bool(num_one), type(bool(num_one)))  # False &lt;class &#x27;bool&#x27;&gt;</span><br><span class="line"></span><br><span class="line">name = &#x27;&#x27;  # 为假的情况能转为 False</span><br><span class="line">print(bool(name), type(bool(name)))  # False &lt;class &#x27;bool&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="【2】真">【2】真</h2>
+<ul>
+<li>布尔值为True:True本身就是真。</li>
+<li>非零数字：除了零之外整数和浮点数都为真</li>
+<li>非空字符串：非空字符串视为真</li>
+<li>非空列表、非空字典、非空集合等：如果容器类型中包含元素，被视为真。</li>
+</ul>
+<h2 id="【3】假">【3】假</h2>
+<ul>
+<li>布尔值为False：False本身就是假</li>
+<li>数字零为假：数字类型中的零都被视为假</li>
+<li>空字符串：空字符串&quot;&quot;被视为假</li>
+<li>空列表、空字典、空集合等：它们为空，被视为假。</li>
+</ul>
+<h1>【七】集合类型（set）</h1>
+<h2 id="【1】集合类型定义">【1】集合类型定义</h2>
+<ul>
+<li>无序且去重。</li>
+<li>用大括号{}定义，元素之间用，分隔。</li>
+</ul>
+<h2 id="【2】内置方法">【2】内置方法</h2>
+<h3 id="（1）类型强转-2">（1）类型强转</h3>
+<ul>
+<li>能被for循环遍历的数据类型（重点：遍历的每一个值都必须为不可变类型）都可以给set（）转换为集合类型</li>
+</ul>
+```python
+#(1)字符串类型可以强转成集合类型
+name_str = 'dream'
+name_str_set = set(name_str)
+print(name_str_set, type(name_str_set))
+#  {'m', 'r', 'd', 'a', 'e'} <class 'set'>
+#（2）字典也可以去重，一般我们只对字典的值去重，因为字典的键一般都是唯一的，不需要更改。
+#（2.1）默认字典的键转为集合
+ame_dict = {'name': "dream", "age": 18, "sex": 18}
+name_dict_set = set(name_dict)
+print(name_dict_set, type(name_dict_set))
+# {'name', 'age', 'sex'} <class 'set'>
+#（2.2）可以将字典的值转换为集合并去重
+name_dict_values = name_dict.values()#.values()
+name_dict_values_set = set(name_dict_values)
+print(name_dict_values_set, type(name_dict_values_set))
+# {18, 'dream'} <class 'set'>
+#(3)列表类型转集合类型。
+num_list = [1, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7]
+num_list_set = set(num_list)
+print(num_list_set, type(num_list_set))
+# {1, 2, 3, 4, 5, 6, 7} <class 'set'>
+#（4）元组转集合
+um_tuple = (1, 2, 3, 4, 5, 6, 6, 6, 6, 6)
+num_tuple_set = set(num_tuple)
+print(num_tuple_set, type(num_tuple_set))
+# {1, 2, 3, 4, 5, 6} <class 'set'>
+#（5）布尔类型不可以
+#（6）整数浮点数都不可以。
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### (2)添加元素</span><br><span class="line"></span><br><span class="line">##### 【1】添加单个元素（add（））</span><br><span class="line"></span><br><span class="line">- add(element)方法用于向集合中添加单个元素。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">set_num = &#123;1,2,3&#125;</span><br><span class="line">set_num.add(4)</span><br><span class="line">print(set_num)</span><br><span class="line">#输出&#123;1,2,3,4&#125;</span><br></pre></td></tr></table></figure>
+
+<p>【2】添加多个元素（update()）</p>
+<ul>
+<li>update(iterable)方法用于向集合中添加多个元素，参数是一个可迭代对象。</li>
+</ul>
+```python
+set_num = {1,2,3}
+set_num.update([3,4,5])
+print(set_num)
+#输出{1,2,3,4,5,}
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### （3）删除元素</span><br><span class="line"></span><br><span class="line">##### 【1】删除指定元素（remove()）</span><br><span class="line"></span><br><span class="line">- remove(element)方法用于移除集合中的指定元素，如果元素不存在就会报错。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">set_num = &#123;1,2,3,4,5&#125;</span><br><span class="line">set_num.remove(3)</span><br><span class="line">print(set_num)</span><br><span class="line">#输出&#123;1,2,4,5&#125;</span><br></pre></td></tr></table></figure>
+
+<p>【2】删除指定元素（discard()）</p>
+<ul>
+<li>discard(element)方法用于移除集合中的指定元素，如果元素不存在就会报错。</li>
+</ul>
+```python
+set_num = {1,2,3,4,5}
+set_num.discard(2)
+print(set_num)
+#输出{1,3,4,5}
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">【3】随机删除元素(pop())</span><br><span class="line"></span><br><span class="line">- pop()它总是[删除]集合中的[第一个元素]，由于集合是[无须]的，所以它看起来就像是[随机]删除元素。</span><br><span class="line">- pop（）用于随机删除集合中的一个元素，如果为空集合则会报错。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">set_num = &#123;1, 5, 3, 9, 2&#125;</span><br><span class="line">print(&quot;删前：&quot;，set_num)</span><br><span class="line">set_num.pop()</span><br><span class="line">print(&quot;删后：&quot;，set_num)</span><br><span class="line">#删前： &#123;1, 2, 3, 5, 9&#125;</span><br><span class="line">#删后： &#123;2, 3, 5,</span><br><span class="line"></span><br><span class="line"># 多执行几次，我们可以发现， pop() 每次都删除1，因为1是最小的，总是被排在第一个。 9&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当集合中的元素是[纯字符串]时，pop总是删除第一个元素，这种情况看起来就像随机删除的。</li>
+</ul>
+```python
+set1 = {'aaa', 'bbb', 'ccc', 'ddd'}
+
+print('删除前：', set1)
+set1.pop()
+print('删除后：', set1)
+
+# 第一次 ： 删除了 bbb
+# 删除前： {'bbb', 'ddd', 'aaa', 'ccc'}
+# 删除后： {'ddd', 'aaa', 'ccc'}
+
+# 第二次 ： 删除了 ccc
+# 删除前： {'ccc', 'ddd', 'bbb', 'aaa'}
+# 删除后： {'ddd', 'bbb', 'aaa'}
+
+# 多次执行可以发现，每次集合中的元素排序都是随机的，而 pop() 也会 “随机” 的
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 当集合中的元素有字符串、整形、元组等「混合」组合时，元素的排序会变得随机，当然， pop() 仍然会固执地删除第一个元素。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">set1 = &#123;(1, 2), (5, 6), (9, 8), (3, 4), &#x27;aaa&#x27;, 1, 2&#125;</span><br><span class="line"></span><br><span class="line">print(&#x27;删除前：&#x27;, set1)</span><br><span class="line">set1.pop()</span><br><span class="line">print(&#x27;删除后：&#x27;, set1)</span><br><span class="line"></span><br><span class="line"># 删除前： &#123;1, 2, (1, 2), (3, 4), (9, 8), (5, 6), &#x27;aaa&#x27;&#125;</span><br><span class="line"># 删除后： &#123;2, (1, 2), (3, 4), (9, 8), (5, 6), &#x27;aaa&#x27;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用 pop() 的集合，必须有元素，「空集合」会报错 KeyError。</li>
+<li>实际上，这并不是集合，而是字典</li>
+</ul>
+```python
+set1 = {}
+
+# 实际上，这并不是集合，而是字典
+print(set1, type(set1))
+# {} <class 'dict'>
+set1.pop()
+
+# TypeError: pop expected at least 1 argument, got 0
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【3】集合操作</span><br><span class="line"></span><br><span class="line">### （1）并集（union（））</span><br><span class="line"></span><br><span class="line">- union（*others）方法返回当前集合与其他集合的并集。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">set1 = &#123;1, 2, 3&#125;</span><br><span class="line">set2 = &#123;3, 4, 5&#125;</span><br><span class="line">union_set = set1.union(set2)</span><br><span class="line">print(union_set)  # 输出: &#123;1, 2, 3, 4, 5&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-交集（intersection（））">(2)交集（intersection（））</h3>
+<ul>
+<li>intersection(*others)方法返回当前集合与其他集合的交集。</li>
+</ul>
+```python
+set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+intersection_set = set1.intersection(set2)
+print(intersection_set)  # 输出: {3}
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### [3] 差集(difference())</span><br><span class="line"></span><br><span class="line">- `difference(*others)` 方法返回当前集合与其他集合的差集。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 示例</span><br><span class="line">set1 = &#123;1, 2, 3&#125;</span><br><span class="line">set2 = &#123;3, 4, 5&#125;</span><br><span class="line">difference_set = set1.difference(set2)</span><br><span class="line">print(difference_set)  # 输出: &#123;1, 2&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-对称差集-symmetric-difference">[4] 对称差集(symmetric_difference())</h4>
+<ul>
+<li><code>symmetric_difference(other)</code> 方法返回当前集合与其他集合的对称差集。</li>
+</ul>
+```python
+# 示例
+set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+symmetric_difference_set = set1.symmetric_difference(set2)
+print(symmetric_difference_set)  # 输出: {1, 2, 4, 5}
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### [5]父集</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">set1 = &#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">set2 = &#123;2, 4&#125;</span><br><span class="line"></span><br><span class="line"># 判断 set1 是否是 set2 的父集</span><br><span class="line">is_superset = set1.issuperset(set2)</span><br><span class="line">print(is_superset)</span><br><span class="line"># 输出: True</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-子集">[6]子集</h4>
+```python
+set1 = {1, 2, 3, 4, 5}
+set2 = {2, 4}
+
+# 判断 set2 是否是 set1 的子集
+is_subset = set2.issubset(set1)
+print(is_subset)
+# 输出: True
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### [7]判断(`==`)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">set1 = &#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">set2 = &#123;2, 4&#125;</span><br><span class="line"></span><br><span class="line"># 判断两个集合是否相等</span><br><span class="line">is_equal = set1 == set2</span><br><span class="line">print(is_equal)</span><br><span class="line"># 输出: False</span><br></pre></td></tr></table></figure>
+
+<h2 id="【4】去重">【4】去重</h2>
+<ul>
+<li>只针对不可变类型，集合本身是无序的，去重之后无法保留原来的顺序</li>
+</ul>
+```python
+l_old = ['a', 'b', 1, 'a', 'a']
+s = set(l_old)  # 将列表转成了集合
+print(s)
+# {'b', 'a', 1}
+
+l_new = list(s)  # 再将集合转回列表
+print(l_new)  # 去除了重复，但是打乱了顺序
+# ['b', 'a', 1]
+
+
+# 针对不可变类型，并且保证顺序则需要我们自己写代码实现，例如
+l_second = [
+    {'name': 'lili', 'age': 18, 'sex': 'male'},
+    {'name': 'jack', 'age': 73, 'sex': 'male'},
+    {'name': 'tom', 'age': 20, 'sex': 'female'},
+    {'name': 'lili', 'age': 18, 'sex': 'male'},
+    {'name': 'lili', 'age': 18, 'sex': 'male'},
+]
+
+new_l_second = []
+
+for dic in l_second:
+    if dic not in new_l_second:
+        new_l_second.append(dic)#append追加到末尾
+
+print(new_l_second)
+# 结果：既去除了重复，又保证了顺序，而且是针对不可变类型的去重
+'''
+[
+{'name': 'lili', 'age': 18, 'sex': 'male'}, 
+{'name': 'jack', 'age': 73, 'sex': 'male'}, 
+{'name': 'tom', 'age': 20, 'sex': 'female'}
+]
+'''
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【5】计算长度（len()）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num = &#123;1,2,3,4,5&#125;</span><br><span class="line">print(len(num))</span><br><span class="line">#5</span><br></pre></td></tr></table></figure>
+
+<h2 id="【6】遍历循环（in）">【6】遍历循环（in）</h2>
+```python
+set_nun = {1,2,3,a,d,f}
+#遍历集合
+for i in set_num:
+    print(i)
+#输出：f
+1
+2
+3
+a
+s
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【7】成员运算（in，not in）</span><br><span class="line"></span><br><span class="line">### (1)in </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```p</span><br><span class="line">in_set = &#x27;a&#x27; in my_set</span><br><span class="line">print(in_set)</span><br><span class="line"># 输出: True</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-not-in">(3)not in</h3>
+```python
+not_in_set = 6 not in my_set
+print(not_in_set)
+# 输出: True
+```
+
+<h1>【八】数据类型总结</h1>
+<ul>
+<li>只能存在一个值的：数字类型和字符串</li>
+<li>可以存放多个值的：列表、元组、字典</li>
+<li>直接访问：只能通过变量名来访问变量整个值的是：数字类型</li>
+<li>顺序访问：可以通过索引访问指定的值，索引代表顺序，又称为序列类型：字符串、列表、元组</li>
+<li>key访问：可以用键访问指定的值，又称为映射类型：字典</li>
+<li>可变类型：列表，字典、布尔类型</li>
+<li>不可变类型：数字，字符串，元组</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/2.2UDP%E5%A5%97%E6%8E%A5%E5%AD%97/" rel="prev" title="2.2UDP套接字">
+      <i class="fa fa-chevron-left"></i> 2.2UDP套接字
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/2.1%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" rel="next" title="2.1文件操作">
+      2.1文件操作 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">(2)内置方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E7%B1%BB%E5%9E%8B%E5%BC%BA%E5%88%B6%E8%BD%AC%E6%8D%A2"><span class="nav-number">2.</span> <span class="nav-text">（3）类型强制转换</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%8D%81%E8%BF%9B%E5%88%B6%E8%BD%AC%E5%8C%96%E4%B8%BA%E5%85%AB%E8%BF%9B%E5%88%B6%EF%BC%9Aoct"><span class="nav-number">2.0.1.</span> <span class="nav-text">【2】十进制转化为八进制：oct()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E3%80%904%E3%80%91%E5%85%B6%E5%AE%83%E8%BF%9B%E5%88%B6%E8%BD%AC%E5%8D%81%E8%BF%9B%E5%88%B6%EF%BC%9Aint%EF%BC%88%EF%BC%89"><span class="nav-number">2.0.2.</span> <span class="nav-text">【4】其它进制转十进制：int（）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95-2"><span class="nav-number">3.</span> <span class="nav-text">(2)内置方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%88%A4%E6%96%AD%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B"><span class="nav-number"></span> <span class="nav-text">【3】判断数字类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">（1）数字类型说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E5%88%A4%E6%96%AD%E5%B0%8F%E6%95%B0%E7%B1%BB%E5%9E%8B-isdecimal"><span class="nav-number">2.</span> <span class="nav-text">（3）判断小数类型(isdecimal)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%885%EF%BC%89%E6%97%A0%E6%B3%95%E5%88%A4%E6%96%AD%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">（5）无法判断浮点数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%B4%A2%E5%BC%95%E5%8F%96%E5%80%BC"><span class="nav-number">4.</span> <span class="nav-text">(2)索引取值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%AD%A3%E7%B4%A2%E5%BC%95%E5%8F%96%E5%80%BC"><span class="nav-number">4.1.</span> <span class="nav-text">【1】正索引取值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%8F%AA%E8%83%BD%E5%8F%96%E5%80%BC%E4%B8%8D%E8%83%BD%E4%BF%AE%E6%94%B9%E5%80%BC"><span class="nav-number">4.2.</span> <span class="nav-text">【3】只能取值不能修改值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%902%E3%80%91%E6%AD%A5%E9%95%BF"><span class="nav-number">4.3.</span> <span class="nav-text">【2】步长</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E8%AE%A1%E7%AE%97%E9%95%BF%E5%BA%A6%EF%BC%88len%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">(4)计算长度（len）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%902%E3%80%91not-in"><span class="nav-number">5.1.</span> <span class="nav-text">【2】not in</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E9%81%8D%E5%8E%86%E5%88%87%E7%89%87"><span class="nav-number">6.</span> <span class="nav-text">(8)遍历切片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%8810%EF%BC%89%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E6%8D%A2"><span class="nav-number">7.</span> <span class="nav-text">（10）大小写转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%B0%8F%E5%86%99%E8%BD%AC%E5%A4%A7%E5%86%99%EF%BC%88-upper-%EF%BC%89"><span class="nav-number">7.1.</span> <span class="nav-text">【1】小写转大写（.upper()）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%BB%93%E5%B0%BE%EF%BC%88endswith-%EF%BC%89"><span class="nav-number">7.2.</span> <span class="nav-text">【2】判断字符串结尾（endswith()）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-%E6%8B%BC%E6%8E%A5join"><span class="nav-number">8.</span> <span class="nav-text">(13)拼接join</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-rfind"><span class="nav-number">8.1.</span> <span class="nav-text">[2]rfind</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%904%E3%80%91rindex"><span class="nav-number">8.2.</span> <span class="nav-text">【4】rindex</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%A1%AB%E5%85%85"><span class="nav-number">9.</span> <span class="nav-text">（2）填充</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%901%E3%80%91center"><span class="nav-number">9.1.</span> <span class="nav-text">【1】center</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%903%E3%80%91rjust"><span class="nav-number">9.2.</span> <span class="nav-text">【3】rjust</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E5%88%B6%E8%A1%A8%E7%AC%A6"><span class="nav-number">10.</span> <span class="nav-text">（3）制表符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%885%EF%BC%89%E5%A4%A7%E5%B0%8F%E5%86%99%E7%BF%BB%E8%BD%AC-swapcase"><span class="nav-number">11.</span> <span class="nav-text">（5）大小写翻转(swapcase)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%904%E3%80%91%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B"><span class="nav-number"></span> <span class="nav-text">【4】判断字符串类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95%EF%BC%88%E4%BC%98%E5%85%88%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">【2】内置方法（优先）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E7%B1%BB%E5%9E%8B%E5%BC%BA%E8%BD%AC"><span class="nav-number">1.</span> <span class="nav-text">（1）类型强转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%88%87%E7%89%87"><span class="nav-number">2.</span> <span class="nav-text">(3)切片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%88%90%E5%91%98%E8%AE%A1%E7%AE%97"><span class="nav-number">3.</span> <span class="nav-text">(5)成员计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E5%88%A0%E9%99%A4"><span class="nav-number">4.</span> <span class="nav-text">(7)删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-%E5%85%83%E7%B4%A0%E6%8E%92%E5%BA%8F"><span class="nav-number">5.</span> <span class="nav-text">(9)元素排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-%E5%85%83%E7%B4%A0%E6%8E%92%E5%BA%8F"><span class="nav-number">6.</span> <span class="nav-text">(10)元素排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-%E5%88%97%E8%A1%A8%E7%9A%84%E6%AD%A5%E9%95%BF"><span class="nav-number">7.</span> <span class="nav-text">(12)列表的步长</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-number"></span> <span class="nav-text">[1]内置方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E5%8F%96%E5%80%BC"><span class="nav-number">1.</span> <span class="nav-text">（1）取值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%901%E3%80%91k%E5%8F%96%E5%80%BC"><span class="nav-number">1.1.</span> <span class="nav-text">【1】k取值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%AE%A1%E7%AE%97%E9%95%BF%E5%BA%A6%EF%BC%88len%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">(2)计算长度（len）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E5%A2%9E%E5%8A%A0"><span class="nav-number">3.</span> <span class="nav-text">（4）增加</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%96%B0%E5%A2%9E%E9%94%AE%E5%80%BC%E5%AF%B9"><span class="nav-number">3.1.</span> <span class="nav-text">[1]新增键值对</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%A2%9E%E5%8A%A0%E5%80%BC%E5%B9%B6%E8%BF%94%E5%9B%9E%E5%80%BC-setdefault"><span class="nav-number">3.2.</span> <span class="nav-text">[3]增加值并返回值(setdefault())</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%BC%B9%E5%87%BA%E9%94%AE%E5%80%BC%E5%AF%B9%EF%BC%88pop-%EF%BC%89"><span class="nav-number">3.3.</span> <span class="nav-text">【2】弹出键值对（pop()）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E9%9A%8F%E6%9C%BA%E5%88%A0%E9%99%A4%E9%94%AE%E5%80%BC%E5%AF%B9-popitem"><span class="nav-number">3.4.</span> <span class="nav-text">[4]随机删除键值对(popitem())</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%886%EF%BC%89%E5%80%BC%E5%AF%B9%EF%BC%88values-%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">（6）值对（values()）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86"><span class="nav-number">5.</span> <span class="nav-text">(8)循环遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%8F%AA%E9%81%8D%E5%8E%86%EF%BC%88key%E9%94%AE%E5%80%BC%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">【1】只遍历（key键值）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%903%E3%80%91%E9%81%8D%E5%8E%86%EF%BC%88key%EF%BC%89%E5%92%8C%EF%BC%88value%EF%BC%89"><span class="nav-number">5.2.</span> <span class="nav-text">【3】遍历（key）和（value）</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">【五】元组类型（tuple）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%85%83%E7%BB%84%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number"></span> <span class="nav-text">【1】元组类型的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E7%B4%A2%E5%BC%95%E5%8F%96%E5%80%BC"><span class="nav-number">1.</span> <span class="nav-text">（2）索引取值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%AD%A3%E7%B4%A2%E5%BC%95%E5%8F%96%E5%80%BC"><span class="nav-number">1.1.</span> <span class="nav-text">（1）正索引取值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E5%8F%AA%E8%83%BD%E5%8F%96%E5%80%BC%E4%B8%8D%E8%83%BD%E6%94%B9%E5%80%BC%EF%BC%88%E5%A6%82%E6%9E%9C%E7%B4%A2%E5%BC%95%E4%B8%8D%E5%AD%98%E5%9C%A8%E5%B0%B1%E4%BC%9A%E6%8A%A5%E9%94%99%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">（3）只能取值不能改值（如果索引不存在就会报错）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E6%AD%A5%E9%95%BF"><span class="nav-number">1.3.</span> <span class="nav-text">（2）步长</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%885%EF%BC%89%E6%88%90%E5%91%98%E8%AE%A1%E7%AE%97"><span class="nav-number">2.</span> <span class="nav-text">（5）成员计算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89in"><span class="nav-number">2.1.</span> <span class="nav-text">（1）in</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86"><span class="nav-number">3.</span> <span class="nav-text">(6)循环遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%888%EF%BC%89%E5%85%83%E7%BB%84%E9%87%8D%E5%A4%8D"><span class="nav-number">4.</span> <span class="nav-text">（8）元组重复</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E7%9C%9F"><span class="nav-number"></span> <span class="nav-text">【2】真</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%81%87"><span class="nav-number"></span> <span class="nav-text">【3】假</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">【七】集合类型（set）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B%E5%AE%9A%E4%B9%89"><span class="nav-number"></span> <span class="nav-text">【1】集合类型定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-number"></span> <span class="nav-text">【2】内置方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E7%B1%BB%E5%9E%8B%E5%BC%BA%E8%BD%AC-2"><span class="nav-number">1.</span> <span class="nav-text">（1）类型强转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BA%A4%E9%9B%86%EF%BC%88intersection%EF%BC%88%EF%BC%89%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">(2)交集（intersection（））</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%AF%B9%E7%A7%B0%E5%B7%AE%E9%9B%86-symmetric-difference"><span class="nav-number">2.1.</span> <span class="nav-text">[4] 对称差集(symmetric_difference())</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%AD%90%E9%9B%86"><span class="nav-number">2.2.</span> <span class="nav-text">[6]子集</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%904%E3%80%91%E5%8E%BB%E9%87%8D"><span class="nav-number"></span> <span class="nav-text">【4】去重</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%906%E3%80%91%E9%81%8D%E5%8E%86%E5%BE%AA%E7%8E%AF%EF%BC%88in%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">【6】遍历循环（in）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-not-in"><span class="nav-number">1.</span> <span class="nav-text">(3)not in</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">【八】数据类型总结</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

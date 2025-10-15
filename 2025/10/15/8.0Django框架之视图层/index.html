@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Django框架之视图层 【一】三板斧  HttpResponse能返回字符串形式的数据 render返回一个页面进行渲染 redirect重定向至新的路由地址 还有一个reverse解析路由的别名  &#96;&#96;&#96;python from django.shortcuts import HttpResponse, render, redirect, reverse 12345678910111213141">
+<meta property="og:type" content="article">
+<meta property="og:title" content="8.0Django框架之视图层">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/8.0Django%E6%A1%86%E6%9E%B6%E4%B9%8B%E8%A7%86%E5%9B%BE%E5%B1%82/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="Django框架之视图层 【一】三板斧  HttpResponse能返回字符串形式的数据 render返回一个页面进行渲染 redirect重定向至新的路由地址 还有一个reverse解析路由的别名  &#96;&#96;&#96;python from django.shortcuts import HttpResponse, render, redirect, reverse 12345678910111213141">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.354Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/8.0Django%E6%A1%86%E6%9E%B6%E4%B9%8B%E8%A7%86%E5%9B%BE%E5%B1%82/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>8.0Django框架之视图层 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/8.0Django%E6%A1%86%E6%9E%B6%E4%B9%8B%E8%A7%86%E5%9B%BE%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          8.0Django框架之视图层
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>Django框架之视图层</h1>
+<h2 id="【一】三板斧">【一】三板斧</h2>
+<ul>
+<li>HttpResponse能返回字符串形式的数据</li>
+<li>render返回一个页面进行渲染</li>
+<li>redirect重定向至新的路由地址</li>
+<li>还有一个reverse解析路由的别名</li>
+</ul>
+```python
+from django.shortcuts import HttpResponse, render, redirect, reverse
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【二】json模块序列化</span><br><span class="line"></span><br><span class="line">### 【1】HttpResponse</span><br><span class="line"></span><br><span class="line">- 输出json格式的数据</span><br><span class="line">  - `content_type=&quot;application/json&quot;`加上这个方法</span><br><span class="line">  - 不加这个方法，显示的是`Content-Type: text/html; charset=utf-8`</span><br><span class="line"></span><br><span class="line">- 视图函数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def index(request):</span><br><span class="line">    user_dict = &#123;</span><br><span class="line">        &quot;user&quot;: &quot;tom&quot;,</span><br><span class="line">        &quot;password&quot;: &quot;123456&quot;,</span><br><span class="line">        &quot;age&quot;: &quot;22&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    user_json = json.dumps(user_dict)</span><br><span class="line">    return HttpResponse(user_json, content_type=&quot;application/json&quot;)</span><br><span class="line">    # 网页上显示 &#123;&quot;user&quot;: &quot;tom&quot;, &quot;password&quot;: &quot;123456&quot;, &quot;age&quot;: &quot;22&quot;&#125;</span><br><span class="line">    # 显示为json</span><br><span class="line">    # Content-Type: application/json</span><br></pre></td></tr></table></figure>
+
+<h3 id="【2】render">【2】render</h3>
+<ul>
+<li>render 函数是 Django 的模板渲染机制的一部分，通常与模板引擎（如 Django 的默认模板引擎 - Jinja2 或者其它支持的模板引擎）一起使用。</li>
+<li>当你想要返回带有动态内容的 HTML 页面时，可以使用 render 函数将请求的数据与预定义的 HTML 模板结合起来：</li>
+</ul>
+```python
+from django.shortcuts import render
+from .models import MyModel  # 假设有一个名为 MyModel 的模型
+
+def detail_view(request, pk):
+    obj = MyModel.objects.get(pk=pk)
+    context = {'object': obj}  # 将模型实例添加到上下文（context）
+    return render(request, 'my_template.html', context)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 在这个例子中，视图函数 detail_view 使用 render 函数从数据库获取 MyModel 实例，并将其作为参数传递给名为 my_template.html 的 HTML 模板进行渲染，最终返回给客户端。</span><br><span class="line"></span><br><span class="line">### 【3】redirect</span><br><span class="line"></span><br><span class="line">- redirect 函数用于实现网页间的重定向，即将用户从当前 URL 引导向另一个 URL。</span><br><span class="line">- 它不返回任何内容，而是引发一个 HTTP Redirection 错误，迫使客户端发送一个新的请求到指定地址：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from django.shortcuts import redirect</span><br><span class="line"></span><br><span class="line">def login_required_view(request):</span><br><span class="line">    if not request.user.is_authenticated:</span><br><span class="line">        return redirect(&#x27;login&#x27;)  # 重定向到登录页面</span><br><span class="line">    # 如果已登录，继续执行后续操作...</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在这个例子中，如果用户未登录，login_required_view 视图会调用 redirect 函数将用户重定向至名为 ‘login’ 的URL对应的视图（通常是登录页面）。</li>
+<li>如果用户已登录，则继续执行原视图中的其他逻辑。</li>
+</ul>
+<h3 id="【4】JsonResponse对象">【4】JsonResponse对象</h3>
+<h4 id="（1）问题引入">（1）问题引入</h4>
+<ul>
+<li>返回的页面展示的数据中，中文字符被强制编码了，如何解决？</li>
+<li>导入大神们帮我们写好的方法，我们直接用就行</li>
+</ul>
+```python
+from django.http import JsonResponse
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 源码分析</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">class JsonResponse(HttpResponse):</span><br><span class="line"></span><br><span class="line">    def __init__(self, data, encoder=DjangoJSONEncoder, safe=True,</span><br><span class="line">                 json_dumps_params=None, **kwargs):</span><br><span class="line">        if safe and not isinstance(data, dict):</span><br><span class="line">            raise TypeError(</span><br><span class="line">                &#x27;In order to allow non-dict objects to be serialized set the &#x27;</span><br><span class="line">                &#x27;safe parameter to False.&#x27;</span><br><span class="line">            )</span><br><span class="line">        if json_dumps_params is None:</span><br><span class="line">            json_dumps_params = &#123;&#125;</span><br><span class="line">        kwargs.setdefault(&#x27;content_type&#x27;, &#x27;application/json&#x27;)</span><br><span class="line">        # 数据序列化发生在这里</span><br><span class="line">        data = json.dumps(data, cls=encoder, **json_dumps_params)</span><br><span class="line">        super(JsonResponse, self).__init__(content=data, **kwargs)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>
+<p>通过分析源码我们可以发现数据表被序列化的位置</p>
+</li>
+<li>
+<p>其中 有一个参数 **json_dumps_params—》就好比</p>
+</li>
+<li>
+<ul>
+<li>这个参数意思是将数据打散传入到前面的方法中</li>
+</ul>
+</li>
+</ul>
+<h4 id="（2）解决方案">（2）解决方案</h4>
+```python
+def ab_json(request):
+    user_dict = {
+        "username": "dream你好",
+        'age': 18,
+        'password': 123123,
+    }
+    return JsonResponse(user_dict, json_dumps_params={'ensure_ascii': False})
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 将我们需要的参数以字典的形式传进去</span><br><span class="line"></span><br><span class="line">#### （3）其他数据类型序列化</span><br><span class="line"></span><br><span class="line">- 我们不仅有字典格式的数据可以被序列化也有其他操作</span><br><span class="line">- 例如列表</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def ab_json(request):</span><br><span class="line">    user_dict = &#123;</span><br><span class="line">        &quot;username&quot;: &quot;dream你好&quot;,</span><br><span class="line">        &#x27;age&#x27;: 18,</span><br><span class="line">        &#x27;password&#x27;: 123123,</span><br><span class="line">    &#125;</span><br><span class="line">    user_list = [11, 22, 33, 44, 55, 66, 77, 88, 99]</span><br><span class="line"></span><br><span class="line">    return JsonResponse(user_list, json_dumps_params=&#123;&#x27;ensure_ascii&#x27;: False&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>我们在访问数据的时候会提示下面的错误</li>
+</ul>
+```python
+In order to allow non-dict objects to be serialized set the safe parameter to False.
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 我们按照提示加上需要的参数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def ab_json(request):</span><br><span class="line">    user_dict = &#123;</span><br><span class="line">        &quot;username&quot;: &quot;dream你好&quot;,</span><br><span class="line">        &#x27;age&#x27;: 18,</span><br><span class="line">        &#x27;password&#x27;: 123123,</span><br><span class="line">    &#125;</span><br><span class="line">    user_list = [11, 22, 33, 44, 55, 66, 77, 88, 99]</span><br><span class="line"></span><br><span class="line">    return JsonResponse(user_list, safe=False, json_dumps_params=&#123;&#x27;ensure_ascii&#x27;: False&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>JsonResponse在序列化字典以外的数据格式时，会有一个安全设置，我们将参数修改即可修改数据</li>
+</ul>
+<h2 id="【三】form表单的下载和上传">【三】form表单的下载和上传</h2>
+<h3 id="【1】form标签属性的方法解析">【1】form标签属性的方法解析</h3>
+<ul>
+<li>
+<p>form标签里面的<code>enctype</code>属性</p>
+<ul>
+<li><code>enctype</code>对应的有三个方法</li>
+</ul>
+</li>
+<li>
+<p>方法一：<code>enctype = multipart/form-data</code></p>
+<ul>
+<li>键值对还是会按照原来的方式进行提交，文件对象会被单独处理</li>
+<li>数据到了后端提取的时候，键值对数据直接get</li>
+</ul>
+</li>
+<li>
+<p>方法二：<code>enctype = application/x-www-form-urlencodeda</code></p>
+<ul>
+<li>默认enctype属性的值</li>
+<li>默认按照键值对进行处理数据，不会对键值对以外的数据进行额外的处理，比如文件数据，只能传入文件的名字</li>
+</ul>
+</li>
+<li>
+<p>方法三很少用：<code>enctype = text/plain</code></p>
+<ul>
+<li>表单数据将不会被进行特定的编码或处理，而是直接作为纯文本发送</li>
+<li>能会导致解析问题或数据损坏</li>
+</ul>
+</li>
+</ul>
+<h3 id="【2】from下载数据案例">【2】from下载数据案例</h3>
+<ul>
+<li>前端HTML数据<code>login.html</code></li>
+</ul>
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>主界面</h1>
+{#参数enctype介绍#}
+{#提交文件数据#}
+{#multipart/form-data#}
+{#到了后端提取数据的时候 键值对数据直接 get，文件数据就要用 request.FILES 提取#}
+{#application/x-www-form-urlencoded#}
+{#默认按照键值对提交数据，不会对键值对以外的数据进行额外的处理，比如文件数据，只能传入文件名#}
+<form action="" method="post" enctype="multipart/form-data">
+    <p>username:<input type="text" name="username" placeholder="username" value="username"></p>
+    <p>password:<input type="text" name="password" placeholder="password"></p>
+    <p>
+        music:<input type="checkbox" name="hobby" value="music">
+        dance:<input type="checkbox" name="hobby" value="dance">
+        piano:<input type="checkbox" name="hobby" value="piano">
+    </p>
+    {# display:none  隐藏input框 #}
+    <p><input type="text" style="display: none"></p>
+    <p>
+        <input type="file" name="file">
+    </p>
+    <p>
+        <input type="submit">
+    </p>
+</form>
+<p><a href="{% url 'login' %}">原地刷新</a></p>
+</body>
+</html>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 后端数据`views.py`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from django.shortcuts import render, redirect, reverse</span><br><span class="line"></span><br><span class="line">def login(request):</span><br><span class="line">    if request.method == &#x27;POST&#x27;:</span><br><span class="line">        print(request.FILES)</span><br><span class="line">        # &lt;MultiValueDict: &#123;&#x27;file&#x27;: [&lt;InMemoryUploadedFile: 微信图片_20220329164047.jpg (image/jpeg)&gt;]&#125;&gt;</span><br><span class="line">        </span><br><span class="line">        username = request.POST.get(&#x27;username&#x27;)</span><br><span class="line">        password = request.POST.get(&#x27;password&#x27;)</span><br><span class="line">        hobby = request.POST.getlist(&#x27;hobby&#x27;)</span><br><span class="line">        file_data = request.POST.getlist(&#x27;file&#x27;)</span><br><span class="line">        print(username)  # jack</span><br><span class="line">        print(password)  # 912</span><br><span class="line">        print(hobby)  # [&#x27;music&#x27;, &#x27;dance&#x27;, &#x27;piano&#x27;]</span><br><span class="line">        # 想获取文件名字的话就要用from标签里面的enctype=application/x-www-form-urlencoded方法</span><br><span class="line">        print(file_data)  # []</span><br><span class="line">        </span><br><span class="line">        # FILES获取数据传输中的文件数据，前提是你要在form表单中加入 enctype=&quot;multipart/form-data&quot; 属性</span><br><span class="line">        # request.FILES提取数据</span><br><span class="line">        file_obj = request.FILES</span><br><span class="line">        print(file_obj)</span><br><span class="line">        # &lt;MultiValueDict: &#123;&#x27;file&#x27;: [&lt;InMemoryUploadedFile: 微信图片_20220329164047.jpg (image/jpeg)&gt;]&#125;&gt;</span><br><span class="line">        </span><br><span class="line">        file_obj_data = file_obj.get(&#x27;file&#x27;)</span><br><span class="line">        print(file_obj_data, type(file_obj_data))</span><br><span class="line">        # 微信图片_20220329164047.jpg &lt;class &#x27;django.core.files.uploadedfile.InMemoryUploadedFile&#x27;&gt;</span><br><span class="line"></span><br><span class="line">        #file_obj_data.name作为文件名（这通常是客户端提供的原始文件名</span><br><span class="line">        with open(file_obj_data.name, &quot;wb&quot;) as fp:</span><br><span class="line">            # Django文件对象的内置方法.chunks()</span><br><span class="line">            # 提取文件对象中的二进制数据，参数line是每次提取多少数据</span><br><span class="line">            for line in file_obj_data.chunks():</span><br><span class="line">                # 会将你提交的数据保存到你的Django文件目录下</span><br><span class="line">                fp.write(line)</span><br><span class="line">        # 返回到登入页面</span><br><span class="line">        return redirect(reverse(&quot;login&quot;))</span><br><span class="line">    # locals()：局部名称空间</span><br><span class="line">    return render(request, &quot;login.html&quot;, locals())</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>路由文件数据<code>urls.py</code></li>
+</ul>
+```python
+    path('', login, name="login")
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【3】总结</span><br><span class="line"></span><br><span class="line">- form表格数据，提交数据通过type = submit把你输入的数据提交给后端，进行处理</span><br><span class="line">- `enctype = multipart/form-data`方法为了有效的处理文件，下载和保存数据之前记得先`request.FILES`提取数据,得到一个对象，从而进行对文件数据的处理</span><br><span class="line"></span><br><span class="line">## 【四】对request方法的补充</span><br><span class="line"></span><br><span class="line">### 【1】request.GET的方法</span><br><span class="line"></span><br><span class="line">- 用于接收通过HTTP GET方法发送到服务器的查询参数</span><br><span class="line">- 查询参数通常附加在URL的末尾，并使用问号（`?`）与URL的路径部分分隔，然后使用等号（`=`）将参数名和参数值分隔，不同的参数对之间使用和号（`&amp;`）分隔</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">http://example.com/foo/bar/?page=2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以在后端通过<code>request.GET.get(&quot;page&quot;)</code>获取参数2</li>
+</ul>
+<h3 id="【2】request-POST的方法">【2】request.POST的方法</h3>
+<ul>
+<li>用于接收通过HTTP POST方法发送到服务器的数据</li>
+<li>用户通过HTML表单提交数据（通常是通过点击一个<code>&lt;input type=&quot;submit&quot;&gt;</code>按钮或类似的机制），并且表单的<code>method</code>属性设置为<code>&quot;POST&quot;</code>时，这些数据就会被发送到服务器</li>
+<li>可以在后端通过<code>request.POST.get(&quot;键&quot;)</code>获取值参数</li>
+<li>get不出来值返回None</li>
+</ul>
+```python
+http://example.com/foo/bar/?page=2
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- request.POST得到</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">&lt;QueryDict: &#123;[&#x27;page&#x27;:&#x27;2&#x27;]&#125;&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="【3】request-path的方法">【3】request.path的方法</h3>
+<ul>
+<li>只能获取到路由地址，无法获取到参数</li>
+</ul>
+```python
+http://example.com/foo/bar/
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- foo/bar/</span><br><span class="line"></span><br><span class="line">### 【4】request.path_info的方法</span><br><span class="line"></span><br><span class="line">- 只能获取到路由地址，无法获取到参数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">http://example.com/foo/bar/?page=2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>foo/bar/</li>
+</ul>
+<h3 id="【5】request-get-full-path-的方法">【5】request.get_full_path()的方法</h3>
+<ul>
+<li>
+<p>该方法返回请求URL的完整路径，包括路径部分和任何查询参数</p>
+</li>
+<li>
+<p>即能获取到路由地址又能获取到完整的路由地址后面的参数</p>
+</li>
+</ul>
+```python
+http://example.com/foo/bar/?page=2
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- /foo/bar/?page=2</span><br><span class="line"></span><br><span class="line">### 【6】request.get_full_path_info()的方法</span><br><span class="line"></span><br><span class="line">- 即能获取到路由地址又能获取到完整的路由地址后面的参数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">http://example.com/foo/bar/?page=2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>/foo/bar/?page=2</li>
+</ul>
+<h3 id="【7】request-method的方法">【7】request.method的方法</h3>
+<ul>
+<li>该方法返回客户端用于发起请求的HTTP方法</li>
+<li>返回的是&quot;GET、POST…&quot;请求</li>
+<li>定义请求的类型</li>
+</ul>
+<h3 id="【8】request-FILES的方法">【8】request.FILES的方法</h3>
+<ul>
+<li>
+<p>该属性是一个类似字典的对象，包含了请求中通过文件上传组件发送的所有文件</p>
+</li>
+<li>
+<p>通过<code>request.FILES</code>访问上传的文件</p>
+</li>
+<li>
+<p>通过<code>request.FILES.get(&quot;键&quot;)</code>访问单个值</p>
+</li>
+</ul>
+<h3 id="【9】总的练习">【9】总的练习</h3>
+```python
+def login(request):
+    # 得到的是响应头
+    print(request.method)
+    # GET
+
+    # 得到前端传输到后端所有的额数据
+    print(request.GET)
+    # <QueryDict: {'username': ['ikijkh'], 'password': ['2882'], 'hobby': ['dance'], 'file': ['57fbb5835a3246d586a9036c977797a2.jpeg']}>
+
+    # 得到路由
+    print(request.path)
+    # /login/
+
+    # 得到路由
+    print(request.path_info)
+    # /login/
+
+    # 得到完整的地址
+    print(request.get_full_path())
+    # /login/?username=ikijkh&password=2882&hobby=dance&file=57fbb5835a3246d586a9036c977797a2.jpeg
+    hobby_data = request.get_full_path().split("&")
+    print(hobby_data[-1].split("=")[-1])
+    # 57fbb5835a3246d586a9036c977797a2.jpeg
+    # 得到完整的地址
+    print(request.get_full_path_info())
+    # /login/?username=ikijkh&password=2882&hobby=dance&file=57fbb5835a3246d586a9036c977797a2.jpeg
+    
+    file_obj = request.FILES
+    print(file_obj)
+    # <MultiValueDict: {'file': [<InMemoryUploadedFile: 微信图片_20220329164047.jpg (image/jpeg)>]}>
+    file_obj_data = file_obj.get('file')
+    print(file_obj_data, type(file_obj_data))
+    # 微信图片_20220329164047.jpg <class 'django.core.files.uploadedfile.InMemoryUploadedFile'>
+    
+    return render(request, "login.html", locals())
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【五】CBV引入</span><br><span class="line"></span><br><span class="line">### 【1】CBV视图</span><br><span class="line"></span><br><span class="line">- CBV类的视图函数语法，基于类写的语法</span><br><span class="line"></span><br><span class="line">### 【2】使用CBV</span><br><span class="line"></span><br><span class="line">- 路由层</span><br><span class="line">  - 类名.as_view()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">path(&#x27;login/&#x27;, LoginViews.as_view(), name=&#x27;login&#x27;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>
+<p>视图层</p>
+<ul>
+<li>首先引入一个类</li>
+</ul>
+```python
+  from django.views import View
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  - 创建一个类继承一引入的类</span><br><span class="line"></span><br><span class="line">  &#123;% raw %&#125;```python</span><br><span class="line">  class 类名(View):</span><br><span class="line">  ``````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">from django.views import View</span><br><span class="line"></span><br><span class="line">class UserLogin(View):</span><br><span class="line">    # GET请求</span><br><span class="line">    def get(self, request):</span><br><span class="line">        print(&quot;接收到的是get请求！！！！！&quot;)</span><br><span class="line">        return render(request, &quot;login.html&quot;, locals())</span><br><span class="line">    </span><br><span class="line">	# POST请求</span><br><span class="line">    def post(self, request):</span><br><span class="line">        print(&quot;接收到的是post请求！！！！！&quot;)</span><br><span class="line">        return render(request, &quot;login.html&quot;, locals())</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【六】FBV引入</span><br><span class="line"></span><br><span class="line">### 【1】FBV视图</span><br><span class="line"></span><br><span class="line">- 是使用函数处理Django中视图(views.py)的一种方式</span><br><span class="line"></span><br><span class="line">### 【2】使用FBV</span><br><span class="line"></span><br><span class="line">- FBV全称：Function-Based Views</span><br><span class="line">- 用函数作为处理视图的处理逻辑，函数里面都会放一个request对象参数，表示用户发送的HTTP请求</span><br><span class="line">- 函数内部可以根据请求方式、参数、数据等进行相应的处理，并返回HttpResponse对象作为响应</span><br><span class="line"></span><br><span class="line">案例</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>python<br>
+def index(request, *ages, **kwargs):<br>
+# 处理请求<br>
+return HttpResponse(“接收到了GET请求！”)</p>
+``````python
+def index(request, *ages, **kwargs):
+    if request.method == 'POST':
+        # 要是得到的是POST请求，要在if判断语句里面写
+    	# 处理请求
+    return HttpResponse("接收到了GET请求！")
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【七】CBV和FBV总结</span><br><span class="line"></span><br><span class="line">- 使用CBV和FBV取决一个人，都行</span><br><span class="line">- FBV 相对简单直观，适合编写简单的视图逻辑；</span><br><span class="line">- 而 CBV 可以通过继承和重写类来实现代码复用和可扩展性，适用于复杂的视图处理场景</span><br><span class="line">- 在实际开发中，可以根据需求选择适合的方式来编写视图处理函数或类</span><br><span class="line"></span><br><span class="line">## 【八】CBV源码解析</span><br><span class="line"></span><br><span class="line">- 当我们启动Django项目时</span><br><span class="line">- 会自动触发路由中的方法，调用 as_view 方法并自动执行</span><br><span class="line">- 在执行后我们查看 as_view 方法的源码 发现 </span><br><span class="line"></span><br><span class="line">- - 在依次给我们的对象赋值后，最终返回了一个自执行的 dispatch 方法</span><br><span class="line"></span><br><span class="line">- 于是我们又去查看了 dispatch 方法 </span><br><span class="line"></span><br><span class="line">- - 在 dispatch 内部 ，先是将请求方式转换并进行校验</span><br><span class="line">  - 然后开始校验需要调用的方法的调用位置，校验成功并拿到需要执行的方法执行</span><br><span class="line"></span><br><span class="line">- 在自己写的类中如果有相关的方法，会首先调用我们重写的类方法，并返回执行结果 </span><br><span class="line"></span><br><span class="line">- - 如果自己的类里面没有该方法 会去自己的父类中调用 父类的方法 </span><br><span class="line"></span><br><span class="line">- - - 如果父类 以及 基类 都找不到则报错，抛出异常</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 【1】入口是你调用UserLogin.as_view()方法时，在自己的方法里卖弄找有没有as_view()这个方法</span><br><span class="line"># 没有的话去父类里面找</span><br><span class="line"># 类.方法---&gt;可以猜是类的绑定方法或者是静态方法</span><br><span class="line">@classonlymethod</span><br><span class="line"># 【2】进入函数</span><br><span class="line">    def as_view(cls, **initkwargs):</span><br><span class="line">        &quot;&quot;&quot;Main entry point for a request-response process.&quot;&quot;&quot;</span><br><span class="line">        # 【3】因为我们没有传数据，所以不走这里</span><br><span class="line">        for key in initkwargs:</span><br><span class="line">            if key in cls.http_method_names:</span><br><span class="line">                raise TypeError(</span><br><span class="line">                    &#x27;The method name %s is not accepted as a keyword argument &#x27;</span><br><span class="line">                    &#x27;to %s().&#x27; % (key, cls.__name__)</span><br><span class="line">                )</span><br><span class="line">            if not hasattr(cls, key):</span><br><span class="line">                raise TypeError(&quot;%s() received an invalid keyword %r. as_view &quot;</span><br><span class="line">                                &quot;only accepts arguments that are already &quot;</span><br><span class="line">                                &quot;attributes of the class.&quot; % (cls.__name__, key))</span><br><span class="line">        # 【4】走到这里启动view函数</span><br><span class="line">        def view(request, *args, **kwargs):</span><br><span class="line">            # 【5】lei加括号的到的是对象</span><br><span class="line">            self = cls(**initkwargs)</span><br><span class="line">            # 【6】因为对象中没有这个方法，点击setup，进入到setup函数</span><br><span class="line">            # 【8】setup里面进行了初始化对象的属性方法</span><br><span class="line">            self.setup(request, *args, **kwargs)</span><br><span class="line">            # 【9】hasattr方法是面向对象的反射方法，判断当前属性是否存在</span><br><span class="line">            # 我们在setup函数里面已经做了self.request = request初始化属性</span><br><span class="line">            # 所以存在，不进入if判断</span><br><span class="line">            if not hasattr(self, &#x27;request&#x27;):</span><br><span class="line">                raise AttributeError(</span><br><span class="line">                    &quot;%s instance has no &#x27;request&#x27; attribute. Did you override &quot;</span><br><span class="line">                    &quot;setup() and forget to call super()?&quot; % cls.__name__</span><br><span class="line">                )</span><br><span class="line">            # 【10】对象self没有dispatch属性，所以他应该是个函数，点击进入dispatch函数</span><br><span class="line">            # 这里就返回self.get()调用你定义的类里面的get方法</span><br><span class="line">            return self.dispatch(request, *args, **kwargs)</span><br><span class="line">        view.view_class = cls</span><br><span class="line">        view.view_initkwargs = initkwargs</span><br><span class="line"></span><br><span class="line">        # take name and docstring from class</span><br><span class="line">        update_wrapper(view, cls, updated=())</span><br><span class="line"></span><br><span class="line">        # and possible attributes set by decorators</span><br><span class="line">        # like csrf_exempt from dispatch</span><br><span class="line">        update_wrapper(view, cls.dispatch, assigned=())</span><br><span class="line">        return view</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    # 【7】来到setup函数</span><br><span class="line">    def setup(self, request, *args, **kwargs):</span><br><span class="line">        &quot;&quot;&quot;Initialize attributes shared by all view methods.&quot;&quot;&quot;</span><br><span class="line">        # hasattr是面向对象类的反射方法，判断当前属性是否存在</span><br><span class="line">        # 下面是当get属性存在，head属性不存在，继续执行</span><br><span class="line">        # 因为sef里面有这个get方法</span><br><span class="line">        if hasattr(self, &#x27;get&#x27;) and not hasattr(self, &#x27;head&#x27;):</span><br><span class="line">            # 将get方法换成head方法</span><br><span class="line">            self.head = self.get</span><br><span class="line">        # 初始化对象属性</span><br><span class="line">        self.request = request</span><br><span class="line">        self.args = args</span><br><span class="line">        self.kwargs = kwargs</span><br><span class="line"></span><br><span class="line">    #【11】来到dispatch函数</span><br><span class="line">    def dispatch(self, request, *args, **kwargs):</span><br><span class="line">        # request.method获得请求方式，lower()将请求方式全部小写</span><br><span class="line">        # http_method_names = [&#x27;get&#x27;, &#x27;post&#x27;, &#x27;put&#x27;, &#x27;patch&#x27;, &#x27;delete&#x27;, &#x27;head&#x27;, &#x27;options&#x27;, &#x27;trace&#x27;]</span><br><span class="line">        # （1）当request.method.lower()在http_method_names在里面时进入if判断语句里面</span><br><span class="line">        if request.method.lower() in self.http_method_names:</span><br><span class="line">            # getattr是面向对象反射方法，获得属性的方法</span><br><span class="line">            # （2）self.http_method_not_allowed是默认参数，没有request.method.lower()这个属性的时候走默认值</span><br><span class="line">            # handler得到的是self.get，就相当于handler = self.get</span><br><span class="line">            handler = getattr(self, request.method.lower(), self.http_method_not_allowed)</span><br><span class="line">        else:</span><br><span class="line">            handler = self.http_method_not_allowed</span><br><span class="line">            # （3）这里相当于是handler，就等同于self.get()</span><br><span class="line">        return handler(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">    def http_method_not_allowed(self, request, *args, **kwargs):</span><br><span class="line">        logger.warning(</span><br><span class="line">            &#x27;Method Not Allowed (%s): %s&#x27;, request.method, request.path,</span><br><span class="line">            extra=&#123;&#x27;status_code&#x27;: 405, &#x27;request&#x27;: request&#125;</span><br><span class="line">        )</span><br><span class="line">        return HttpResponseNotAllowed(self._allowed_methods())</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/7.0PyMySQL%E6%A8%A1%E5%9D%97%E5%92%8C%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" rel="prev" title="7.0PyMySQL模块和使用方法">
+      <i class="fa fa-chevron-left"></i> 7.0PyMySQL模块和使用方法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/8.1JavaScript%E4%B9%8B%E8%BF%90%E7%AE%97%E7%AC%A6/" rel="next" title="8.1JavaScript之运算符">
+      8.1JavaScript之运算符 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Django框架之视图层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E4%B8%89%E6%9D%BF%E6%96%A7"><span class="nav-number">1.1.</span> <span class="nav-text">【一】三板斧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91render"><span class="nav-number">1.1.1.</span> <span class="nav-text">【2】render</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91JsonResponse%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.1.2.</span> <span class="nav-text">【4】JsonResponse对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E9%97%AE%E9%A2%98%E5%BC%95%E5%85%A5"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">（1）问题引入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">（2）解决方案</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%89%E3%80%91form%E8%A1%A8%E5%8D%95%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%92%8C%E4%B8%8A%E4%BC%A0"><span class="nav-number">1.2.</span> <span class="nav-text">【三】form表单的下载和上传</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91form%E6%A0%87%E7%AD%BE%E5%B1%9E%E6%80%A7%E7%9A%84%E6%96%B9%E6%B3%95%E8%A7%A3%E6%9E%90"><span class="nav-number">1.2.1.</span> <span class="nav-text">【1】form标签属性的方法解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91from%E4%B8%8B%E8%BD%BD%E6%95%B0%E6%8D%AE%E6%A1%88%E4%BE%8B"><span class="nav-number">1.2.2.</span> <span class="nav-text">【2】from下载数据案例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">主界面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91request-POST%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.0.1.</span> <span class="nav-text">【2】request.POST的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91request-path%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.0.2.</span> <span class="nav-text">【3】request.path的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%905%E3%80%91request-get-full-path-%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.0.3.</span> <span class="nav-text">【5】request.get_full_path()的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%907%E3%80%91request-method%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.0.4.</span> <span class="nav-text">【7】request.method的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%908%E3%80%91request-FILES%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.0.5.</span> <span class="nav-text">【8】request.FILES的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%909%E3%80%91%E6%80%BB%E7%9A%84%E7%BB%83%E4%B9%A0"><span class="nav-number">2.0.6.</span> <span class="nav-text">【9】总的练习</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

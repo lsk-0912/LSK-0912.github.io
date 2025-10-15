@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Django框架之CSRF跨站请求 【一】引入  我么们每次注释掉的中间件django.middleware.csrf.CsrfViewMiddleware Django 的 CsrfViewMiddleware 中间件保护你的网站免受 CSRF 攻击 中间件是用于在 Django 应用中处理跨站请求伪造（Cross-Site Request Forgery, CSRF）的中间件  【二】什么是C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSRF跨站请求和Auth模块">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E5%92%8CAuth%E6%A8%A1%E5%9D%97/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="Django框架之CSRF跨站请求 【一】引入  我么们每次注释掉的中间件django.middleware.csrf.CsrfViewMiddleware Django 的 CsrfViewMiddleware 中间件保护你的网站免受 CSRF 攻击 中间件是用于在 Django 应用中处理跨站请求伪造（Cross-Site Request Forgery, CSRF）的中间件  【二】什么是C">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.393Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E5%92%8CAuth%E6%A8%A1%E5%9D%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CSRF跨站请求和Auth模块 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E5%92%8CAuth%E6%A8%A1%E5%9D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CSRF跨站请求和Auth模块
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>Django框架之CSRF跨站请求</h1>
+<h2 id="【一】引入">【一】引入</h2>
+<ul>
+<li>我么们每次注释掉的中间件<code>django.middleware.csrf.CsrfViewMiddleware</code></li>
+<li>Django 的 <code>CsrfViewMiddleware</code> 中间件保护你的网站免受 CSRF 攻击</li>
+<li>中间件是用于在 Django 应用中处理跨站请求伪造（Cross-Site Request Forgery, CSRF）的中间件</li>
+</ul>
+<h2 id="【二】什么是CSRF">【二】什么是CSRF</h2>
+<ul>
+<li>
+<p>CSRF跨站请求伪装是一种常见的网络攻击方式</p>
+</li>
+<li>
+<p>攻击者通过诱导受害者访问恶意网站或点击恶意链接</p>
+</li>
+<li>
+<ul>
+<li>将恶意请求发送到目标网站上</li>
+<li>利用受害者在目标网站中已登录的身份来执行某些操作</li>
+<li>从而达到攻击的目的</li>
+</ul>
+</li>
+</ul>
+<h2 id="【三】保护措施">【三】保护措施</h2>
+<h3 id="【1】使用CSRF令牌">【1】使用CSRF令牌</h3>
+<ul>
+<li>在用户的请求中添加随机生成的令牌，并将该令牌保存到用户会话中</li>
+<li>每次提交请求时都会验证该令牌，确保请求是合法的</li>
+</ul>
+<h3 id="【2】严格验证请求的来源">【2】严格验证请求的来源</h3>
+<ul>
+<li>服务端可以验证请求的来源是否来源于预期的网站域名</li>
+<li>比如检查HTTP Referer头部</li>
+</ul>
+<h3 id="【3】使用验证码">【3】使用验证码</h3>
+<ul>
+<li>在敏感的操作上使用手机验证码等</li>
+<li>增加用户身份验证的防护</li>
+</ul>
+<h2 id="【四】CSRF令牌验证">【四】CSRF令牌验证</h2>
+<h3 id="【1】介绍">【1】介绍</h3>
+<ul>
+<li>csrf校验是一种用于防止跨站请求伪造（Cross-Site Request Forgery）攻击的安全措施</li>
+</ul>
+<h3 id="【2】签发令牌">【2】签发令牌</h3>
+<ul>
+<li>在前端html上添加{% csrf_token %} --》他会在前端自动生成一个<code>csrfmiddlewaretoken</code> 的input标签</li>
+</ul>
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="" method="post">
+    {% csrf_token %}
+    <p>username:<input type="text" name="username"></p>
+    <p>username:<input type="text" name="password"></p>
+    <p><input type="submit"></p>
+</form>
+
+</body>
+</html>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240703212520474](D:\pycharm\Temporary_notes\图片\image-20240703212520474.png)</span><br><span class="line"></span><br><span class="line">### 【3】from表单验证令牌</span><br><span class="line"></span><br><span class="line">- csrfmiddlewaretoken会随着我们携带的数据发送过来（就像username,password）</span><br><span class="line"></span><br><span class="line">- 这个数据就会被`django.middleware.csrf.CsrfViewMiddleware`中间件捕获到</span><br><span class="line">- 验证，正常进去，但是不正常拦截到</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from django.shortcuts import render</span><br><span class="line"></span><br><span class="line">def login(request):</span><br><span class="line">    if request.method == &#x27;POST&#x27;:</span><br><span class="line">        username = request.POST.get(&#x27;username&#x27;)</span><br><span class="line">        password = request.POST.get(&#x27;password&#x27;)</span><br><span class="line">        print(f&#x27;用户&#123;username&#125;的密码是&#123;password&#125;&#x27;)</span><br><span class="line">        # 用户tom的密码是710</span><br><span class="line">    return render(request, &#x27;login.html&#x27;, locals())</span><br><span class="line"></span><br><span class="line">``````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;</span><br><span class="line">    &#123;% raw %&#125;&#123;% csrf_token %&#125;&#123;% endraw %&#125;</span><br><span class="line">    &lt;p&gt;username:&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;username:&lt;input type=&quot;text&quot; name=&quot;password&quot;&gt;&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;&lt;input type=&quot;submit&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 惊奇的发现我们把中间件`CsrfViewMiddleware`注释掉，也完成了请求和响应</span><br><span class="line"></span><br><span class="line">### 【4】Ajax验证令牌</span><br><span class="line"></span><br><span class="line">#### （1）方式一</span><br><span class="line"></span><br><span class="line">- 在form表单遍历每一个标签获取到 键和值拼接到对象里面</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>html</p>
+<h1>这是真正的转账页面</h1>
+<form id="transform_form">
+    {% csrf_token %}
+    <p>bank_card
+        <input type="text" name="bank_card">
+    </p>
+    <p>password
+        <input type="text" name="password">
+    </p>
+    <p>to_bank_card
+        <input type="text" name="to_bank_card">
+    </p>
+    <p>money
+        <input type="text" name="money">
+    </p>
+    <p>
+        <input type="button" value="点我转账" id="btn_click">
+    </p>
+</form>
+<script>
+
+    $(document).ready(
+        $("#btn_click").click(function () {
+            let data = {}
+            $("#transform_form").serializeArray().forEach(
+                // 第一个参数 是当前标签的name 和 value
+                // 第二个参数 当前元素的索引
+                // 第三个参数 原本的数组
+                function (a) {
+                    data[a.name] = a.value
+                })
+
+            $.ajax({
+                url: "",
+                type: "post",
+                data: data,
+                success: function (response) {
+                    alert(response.msg)
+                }
+            })
+        })
+    )
+</script>
+```
+
+
+
+#### (2)方式二
+
+- 获取到制定的 input 标签 提取 val
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">html</span><br><span class="line">&lt;h1&gt;这是真正的转账页面&lt;/h1&gt;</span><br><span class="line">&lt;form id=&quot;transform_form&quot;&gt;</span><br><span class="line">    &#123;% raw %&#125;&#123;% csrf_token %&#125;&#123;% endraw %&#125;</span><br><span class="line">    &lt;p&gt;bank_card</span><br><span class="line">        &lt;input type=&quot;text&quot; name=&quot;bank_card&quot;&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;p&gt;password</span><br><span class="line">        &lt;input type=&quot;text&quot; name=&quot;password&quot;&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;p&gt;to_bank_card</span><br><span class="line">        &lt;input type=&quot;text&quot; name=&quot;to_bank_card&quot;&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;p&gt;money</span><br><span class="line">        &lt;input type=&quot;text&quot; name=&quot;money&quot;&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">        &lt;input type=&quot;button&quot; value=&quot;点我转账&quot; id=&quot;btn_click&quot;&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"></span><br><span class="line">    $(document).ready(</span><br><span class="line">        $(&quot;#btn_click&quot;).click(function () &#123;</span><br><span class="line">            let data = &#123;&#125;</span><br><span class="line">						data[&quot;csrfmiddlewaretoken&quot;]= $(&quot;input[name=&#x27;csrfmiddlewaretoken&#x27;]&quot;).val()</span><br><span class="line"></span><br><span class="line">            $.ajax(&#123;</span><br><span class="line">                url: &quot;&quot;,</span><br><span class="line">                type: &quot;post&quot;,</span><br><span class="line">                data: data,</span><br><span class="line">                success: function (response) &#123;</span><br><span class="line">                    alert(response.msg)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    )</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### (3)方式三</span><br><span class="line"></span><br><span class="line">- Django的模版语法系统自动加载</span><br><span class="line">- &#123;% csrf_token %&#125;```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">html</span><br><span class="line">&lt;h1&gt;这是真正的转账页面&lt;/h1&gt;</span><br><span class="line">&lt;form id=&quot;transform_form&quot;&gt;</span><br><span class="line">    &#123;% raw %&#125;&#123;% csrf_token %&#125;&#123;% endraw %&#125;</span><br><span class="line">    &lt;p&gt;bank_card</span><br><span class="line">        &lt;input type=&quot;text&quot; name=&quot;bank_card&quot;&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;p&gt;password</span><br><span class="line">        &lt;input type=&quot;text&quot; name=&quot;password&quot;&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;p&gt;to_bank_card</span><br><span class="line">        &lt;input type=&quot;text&quot; name=&quot;to_bank_card&quot;&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;p&gt;money</span><br><span class="line">        &lt;input type=&quot;text&quot; name=&quot;money&quot;&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">        &lt;input type=&quot;button&quot; value=&quot;点我转账&quot; id=&quot;btn_click&quot;&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"></span><br><span class="line">    $(document).ready(</span><br><span class="line">        $(&quot;#btn_click&quot;).click(function () &#123;</span><br><span class="line">            let data = &#123;&#125;</span><br><span class="line">						data[&quot;csrfmiddlewaretoken&quot;] = &quot;&#123;% raw %&#125;&#123;&#123; csrf_token &#125;&#125;&#123;% endraw %&#125;&quot;</span><br><span class="line"></span><br><span class="line">            $.ajax(&#123;</span><br><span class="line">                url: &quot;&quot;,</span><br><span class="line">                type: &quot;post&quot;,</span><br><span class="line">                data: data,</span><br><span class="line">                success: function (response) &#123;</span><br><span class="line">                    alert(response.msg)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    )</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### (4)方式四</span><br><span class="line"></span><br><span class="line">- 引入 js 脚本跨过 csrf 验证</span><br><span class="line"></span><br><span class="line">- `static/csrf.js`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>js<br>
+function getCookie(name) {<br>
+var cookieValue = null;<br>
+if (document.cookie &amp;&amp; document.cookie !== ‘’) {<br>
+var cookies = document.cookie.split(‘;’);<br>
+for (var i = 0; i &lt; cookies.length; i++) {<br>
+var cookie = jQuery.trim(cookies[i]);<br>
+// Does this cookie string begin with the name we want?<br>
+if (cookie.substring(0, name.length + 1) === (name + ‘=’)) {<br>
+cookieValue = decodeURIComponent(cookie.substring(name.length + 1));<br>
+break;<br>
+}<br>
+}<br>
+}<br>
+return cookieValue;<br>
+}<br>
+var csrftoken = getCookie(‘csrftoken’);</p>
+<p>function csrfSafeMethod(method) {<br>
+// these HTTP methods do not require CSRF protection<br>
+return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));<br>
+}</p>
+<p>$.ajaxSetup({<br>
+beforeSend: function (xhr, settings) {<br>
+if (!csrfSafeMethod(settings.type) &amp;&amp; !this.crossDomain) {<br>
+xhr.setRequestHeader(“X-CSRFToken”, csrftoken);<br>
+}<br>
+}<br>
+});</p>
+``````html
+<h1>这是真正的转账页面</h1>
+<form id="transform_form">
+    {% csrf_token %}
+    <p>bank_card
+        <input type="text" name="bank_card">
+    </p>
+    <p>password
+        <input type="text" name="password">
+    </p>
+    <p>to_bank_card
+        <input type="text" name="to_bank_card">
+    </p>
+    <p>money
+        <input type="text" name="money">
+    </p>
+    <p>
+        <input type="button" value="点我转账" id="btn_click">
+    </p>
+</form>
+
+<script src="{% static 'csrf.js' %}"></script>
+<script>
+
+    $(document).ready(
+        $("#btn_click").click(function () {
+            let data = {}
+
+            // 方式四 ： jQuery 官方文档 通过给我们一个解决方案
+            // ？我们可以借助 官方提供的 js 脚本文件将 csrf 跨过去
+
+            $.ajax({
+                url: "",
+                type: "post",
+                data: data,
+                success: function (response) {
+                    alert(response.msg)
+                }
+            })
+        })
+    )
+</script>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### (5)后端</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from django.http import JsonResponse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def transform(request):</span><br><span class="line">    if request.is_ajax():</span><br><span class="line">        print(request.POST)</span><br><span class="line">        # 自己的账户和取款密码</span><br><span class="line">        bank_card = request.POST.get(&quot;bank_card&quot;)</span><br><span class="line">        password = request.POST.get(&quot;password&quot;)</span><br><span class="line">        # 目标账户</span><br><span class="line">        to_bank_card = request.POST.get(&quot;to_bank_card&quot;)</span><br><span class="line">        money = request.POST.get(&quot;money&quot;)</span><br><span class="line">        message = f&quot;当前账户 &#123;bank_card&#125; 向目标账户 &#123;to_bank_card&#125; 转账了 &#123;money&#125;&quot;</span><br><span class="line">        back_dict = &#123;</span><br><span class="line">            &quot;code&quot;: 200,</span><br><span class="line">            &quot;msg&quot;: message</span><br><span class="line">        &#125;</span><br><span class="line">        return JsonResponse(back_dict)</span><br><span class="line">    return render(request, &quot;transform.html&quot;, locals())</span><br></pre></td></tr></table></figure>
+
+<h2 id="【五】CSRF装饰器">【五】CSRF装饰器</h2>
+<h3 id="【1】全局开启，局部禁用">【1】全局开启，局部禁用</h3>
+<ul>
+<li>
+<p>只有在 CBV 视图中的 dispatch 生效 其他不生效</p>
+<ul>
+<li>
+<p>其他的都不生效</p>
+</li>
+<li>
+```python
+    # csrf_protect 增加 csrf 验证保护
+    # csrf_exempt 取消 csrf 验证保护
+    ``````
+
+</li>
+</ul>
+</li>
+</ul>
+<p>python<br>
+from django.views import View<br>
+from django.views.decorators.csrf import csrf_protect, csrf_exempt</p>
+<h1>csrf_protect 增加 csrf 验证保护</h1>
+<h1>csrf_exempt 取消 csrf 验证保护</h1>
+<p>from django.utils.decorators import method_decorator</p>
+<h1>方式二 加载了类上面 — 不生效</h1>
+<h1>@method_decorator(csrf_protect, name=‘post’)</h1>
+<p>class CSRFView(View):<br>
+def get(self, request):<br>
+return render(request, “csrf_index.html”, locals())</p>
+<pre><code># 方式一 ： 局部增加装饰器 取消验证 --- 不生效
+# @method_decorator(csrf_exempt)
+def post(self, request):
+    return HttpResponse(&quot;post&quot;)
+
+@method_decorator(csrf_exempt) # --- 可以取消
+def dispatch(self, request, *args, **kwargs):
+    # Try to dispatch to the right method; if a method doesn't exist,
+    # defer to the error handler. Also defer to the error handler if the
+    # request method isn't on the approved list.
+    if request.method.lower() in self.http_method_names:
+        handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
+    else:
+        handler = self.http_method_not_allowed
+    return handler(request, *args, **kwargs)
+</code></pre>
+```
+
+
+
+### 【2】全局关闭，局部开启
+
+- 每一个方法都会生效
+
+- 全局关闭
+
+  - ```
+
+<p>python<br>
+django.middleware.csrf.CsrfViewMiddleware<br>
+```
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">from django.views import View</span><br><span class="line">from django.views.decorators.csrf import csrf_protect, csrf_exempt</span><br><span class="line"></span><br><span class="line"># csrf_protect 增加 csrf 验证保护</span><br><span class="line"># csrf_exempt 取消 csrf 验证保护</span><br><span class="line">from django.utils.decorators import method_decorator</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 方式二 加载了类上面 --- 生效</span><br><span class="line"># @method_decorator(csrf_protect, name=&#x27;post&#x27;)</span><br><span class="line">class CSRFView(View):</span><br><span class="line">    def get(self, request):</span><br><span class="line">        return render(request, &quot;csrf_index.html&quot;, locals())</span><br><span class="line"></span><br><span class="line">    # 方式一 ： 局部增加装饰器 取消验证 --- 生效</span><br><span class="line">    # @method_decorator(csrf_protect)</span><br><span class="line">    def post(self, request):</span><br><span class="line">        return HttpResponse(&quot;post&quot;)</span><br><span class="line"></span><br><span class="line">    @method_decorator(csrf_protect) # --- 生效</span><br><span class="line">    def dispatch(self, request, *args, **kwargs):</span><br><span class="line">        # Try to dispatch to the right method; if a method doesn&#x27;t exist,</span><br><span class="line">        # defer to the error handler. Also defer to the error handler if the</span><br><span class="line">        # request method isn&#x27;t on the approved list.</span><br><span class="line">        if request.method.lower() in self.http_method_names:</span><br><span class="line">            handler = getattr(self, request.method.lower(), self.http_method_not_allowed)</span><br><span class="line">        else:</span><br><span class="line">            handler = self.http_method_not_allowed</span><br><span class="line">        return handler(request, *args, **kwargs)</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【七】Auth模块</span><br><span class="line"></span><br><span class="line">- Auth模块他是Django提供的默认的用户模块</span><br><span class="line"></span><br><span class="line">- 包括我们后端 Django的admin 后台的用户校验都是从 auth 模块里面验证的</span><br><span class="line"></span><br><span class="line">### 【1】创建超级管理员</span><br><span class="line"></span><br><span class="line">- 终端：python manage.py createsuperuser</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<br>
+python<br>
+from django.contrib import auth</p>
+<h1>Django的 auth 模块的模型表</h1>
+<p>from django.contrib.auth.models import User</p>
+```
+
+
+
+### 【2】验证注册
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">class RegisterView(View):</span><br><span class="line">    def get(self, request):</span><br><span class="line">        return render(request, &quot;register.html&quot;, locals())</span><br><span class="line"></span><br><span class="line">    def post(self, request):</span><br><span class="line">        username = request.POST.get(&quot;username&quot;)</span><br><span class="line">        password = request.POST.get(&quot;password&quot;)</span><br><span class="line">        # 用户注册 ：</span><br><span class="line">        # 数据库里面存的是密文的密码 不知道加密方式</span><br><span class="line">        # 操作数据库模型表需要模型表 没有模型表</span><br><span class="line">        # 不能直接创建用户 因为创建完的用户信息中 用户的密码是明文数据而不是密文数据</span><br><span class="line">        # User.objects.create(username=username, password=password)</span><br><span class="line">        User.objects.create_user(username=username, password=password)</span><br><span class="line">        return redirect(reverse(&quot;home&quot;))</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【3】验证登录及保存登陆状态</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">class LoginView(View):</span><br><span class="line">    def get(self, request):</span><br><span class="line">        return render(request, &quot;login.html&quot;, locals())</span><br><span class="line"></span><br><span class="line">    def post(self, request):</span><br><span class="line">        username = request.POST.get(&quot;username&quot;)</span><br><span class="line">        password = request.POST.get(&quot;password&quot;)</span><br><span class="line">        # 用户登陆</span><br><span class="line">        # 验证当前用户的用户名和密码</span><br><span class="line">        # 验证用户名没问题</span><br><span class="line">        # 密码是明文的 数据库是密文</span><br><span class="line">        user_obj = auth.authenticate(username=username, password=password)</span><br><span class="line">        # print(user_obj, type(user_obj))  # dream1 &lt;class &#x27;django.contrib.auth.models.User&#x27;&gt;</span><br><span class="line">        # print(user_obj.username) # dream1</span><br><span class="line">        print(dir(request))</span><br><span class="line">        print(request.user)  # AnonymousUser 匿名用户</span><br><span class="line">        # 保存用户的登陆状态</span><br><span class="line">        # 以前的使用Cookie和 session</span><br><span class="line">        if user_obj:</span><br><span class="line">            auth.login(request, user_obj)  # 起始就是将request 里面的 user 属性替换成当前验证过的用户对象</span><br><span class="line">            # print(request.user,type(request.user))</span><br><span class="line">            return redirect(reverse(&quot;home&quot;))</span><br><span class="line">        else:</span><br><span class="line">            return redirect(reverse(&quot;login&quot;))</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【4】修改密码</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">class UpdateView(View):</span><br><span class="line">    def get(self, request):</span><br><span class="line">        return render(request, &quot;update.html&quot;, locals())</span><br><span class="line"></span><br><span class="line">    def post(self, request):</span><br><span class="line">        username = request.POST.get(&quot;username&quot;)</span><br><span class="line">        old_password = request.POST.get(&quot;old_password&quot;)</span><br><span class="line">        new_password = request.POST.get(&quot;new_password&quot;)</span><br><span class="line">        # 用户修改密码</span><br><span class="line">        # 明文的密码 将密码转换成密文</span><br><span class="line">        # 校验原来的密码是否正确</span><br><span class="line">        if request.user.check_password(old_password):</span><br><span class="line">            # 旧密码正确修改新密码</span><br><span class="line">            request.user.set_password(new_password)</span><br><span class="line">            # 没有触发保存</span><br><span class="line">            request.user.save()</span><br><span class="line">            return redirect(reverse(&quot;home&quot;))</span><br><span class="line">        else:</span><br><span class="line">            return redirect(reverse(&quot;update&quot;))</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【5】注销登录</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">def logout(request):</span><br><span class="line">    # 注销登录</span><br><span class="line">    auth.logout(request)</span><br><span class="line">    return redirect(reverse(&quot;home&quot;))</span><br><span class="line">&#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【6】校验登陆</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>python</p>
+<h1>校验登陆</h1>
+<p>def index(request):<br>
+# 校验当前用户是否登录<br>
+if request.user.is_authenticated:<br>
+return render(request, “index.html”, locals())<br>
+else:<br>
+return redirect(reverse(“home”))</p>
+```
+
+
+
+### 【7】登陆认证装饰器
+
+
+
+````
+
+<p>python</p>
+<h1>登陆认证装饰器</h1>
+<p>from django.contrib.auth.decorators import login_required</p>
+<p>‘’’<br>
+Decorator for views that checks that the user is logged in, redirecting<br>
+to the log-in page if necessary.<br>
+‘’’</p>
+<h1>【方案一】：直接在装饰器上面 login_url</h1>
+<h1>没有登陆过的用户访问某个页面 —&gt; 跳转到登陆页面让用户去登录</h1>
+<h1>@login_required(login_url=“/login/”)</h1>
+<h1>【方案二】：在全局的 settings 里面配置参数</h1>
+<h1>LOGIN_URL = ‘/login/’</h1>
+<p>@login_required<br>
+def index_decorators(request):<br>
+# 校验当前用户是否登录<br>
+return render(request, “index.html”, locals())<br>
+````</p>
+<h3 id="【8】扩展Auth表">【8】扩展Auth表</h3>
+<ul>
+<li>扩展Auth表需要在settings里面配置<code>AUTH_USER_MODEL = 'user.UserInfo'</code>你写的类</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">from django.db import models</span><br><span class="line"></span><br><span class="line"># Create your models here.</span><br><span class="line">from django.contrib.auth.models import User,AbstractUser</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 扩展 auth模块的 User表</span><br><span class="line"># 方式一 ： 继承 AbstractUser 扩写字段</span><br><span class="line">class UserInfo(AbstractUser):</span><br><span class="line">    &#x27;&#x27;&#x27;</span><br><span class="line">    原本有很多字段 原来的字段我不做更改！</span><br><span class="line">    基于原本的字段进行扩充</span><br><span class="line">    扩充字段 手机号 地址</span><br><span class="line">    &#x27;&#x27;&#x27;</span><br><span class="line">    phone = models.CharField(max_length=11, null=True, blank=True)</span><br><span class="line">    addr = models.CharField(max_length=100, null=True, blank=True)</span><br><span class="line"></span><br><span class="line"># 配置参数 在settings 里面 有一个参数项</span><br><span class="line"># AUTH_USER_MODEL = &#x27;user.UserInfo&#x27;</span><br><span class="line"></span><br><span class="line"># 方式二 ： 在新表中关联旧表</span><br><span class="line">class UserDetail(models.Model):</span><br><span class="line">    phone = models.CharField(max_length=11, null=True, blank=True)</span><br><span class="line">    user = models.OneToOneField(</span><br><span class="line">        to=&quot;User&quot;</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/Django%E6%A1%86%E6%9E%B6Form%E7%BB%84%E4%BB%B6%E4%B9%8B%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0%EF%BC%88Hook%EF%BC%89/" rel="prev" title="Django框架Form组件之钩子函数（Hook）">
+      <i class="fa fa-chevron-left"></i> Django框架Form组件之钩子函数（Hook）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/9.0Django%E6%A1%86%E6%9E%B6%E4%B9%8B%E6%A8%A1%E6%9D%BF%E5%B1%82/" rel="next" title="9.0Django框架之模板层">
+      9.0Django框架之模板层 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Django框架之CSRF跨站请求</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E5%BC%95%E5%85%A5"><span class="nav-number">1.1.</span> <span class="nav-text">【一】引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AFCSRF"><span class="nav-number">1.2.</span> <span class="nav-text">【二】什么是CSRF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%89%E3%80%91%E4%BF%9D%E6%8A%A4%E6%8E%AA%E6%96%BD"><span class="nav-number">1.3.</span> <span class="nav-text">【三】保护措施</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%BD%BF%E7%94%A8CSRF%E4%BB%A4%E7%89%8C"><span class="nav-number">1.3.1.</span> <span class="nav-text">【1】使用CSRF令牌</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E4%B8%A5%E6%A0%BC%E9%AA%8C%E8%AF%81%E8%AF%B7%E6%B1%82%E7%9A%84%E6%9D%A5%E6%BA%90"><span class="nav-number">1.3.2.</span> <span class="nav-text">【2】严格验证请求的来源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E4%BD%BF%E7%94%A8%E9%AA%8C%E8%AF%81%E7%A0%81"><span class="nav-number">1.3.3.</span> <span class="nav-text">【3】使用验证码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%9B%9B%E3%80%91CSRF%E4%BB%A4%E7%89%8C%E9%AA%8C%E8%AF%81"><span class="nav-number">1.4.</span> <span class="nav-text">【四】CSRF令牌验证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.4.1.</span> <span class="nav-text">【1】介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E7%AD%BE%E5%8F%91%E4%BB%A4%E7%89%8C"><span class="nav-number">1.4.2.</span> <span class="nav-text">【2】签发令牌</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">这是真正的转账页面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">这是真正的转账页面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%94%E3%80%91CSRF%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">3.1.</span> <span class="nav-text">【五】CSRF装饰器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%85%A8%E5%B1%80%E5%BC%80%E5%90%AF%EF%BC%8C%E5%B1%80%E9%83%A8%E7%A6%81%E7%94%A8"><span class="nav-number">3.1.1.</span> <span class="nav-text">【1】全局开启，局部禁用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">csrf_protect 增加 csrf 验证保护</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">csrf_exempt 取消 csrf 验证保护</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">方式二 加载了类上面 — 不生效</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">@method_decorator(csrf_protect, name&#x3D;‘post’)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">Django的 auth 模块的模型表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">9.</span> <span class="nav-text">校验登陆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">10.</span> <span class="nav-text">登陆认证装饰器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">11.</span> <span class="nav-text">【方案一】：直接在装饰器上面 login_url</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">12.</span> <span class="nav-text">没有登陆过的用户访问某个页面 —&gt; 跳转到登陆页面让用户去登录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">13.</span> <span class="nav-text">@login_required(login_url&#x3D;“&#x2F;login&#x2F;”)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">14.</span> <span class="nav-text">【方案二】：在全局的 settings 里面配置参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">15.</span> <span class="nav-text">LOGIN_URL &#x3D; ‘&#x2F;login&#x2F;’</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%908%E3%80%91%E6%89%A9%E5%B1%95Auth%E8%A1%A8"><span class="nav-number">15.0.1.</span> <span class="nav-text">【8】扩展Auth表</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

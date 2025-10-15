@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="模块与包 【一】模块 【1】什么是模块  在python中，一个py文件就是一个模块，文件名为xxx.py模块名则是xxx，导入模块可以引用模块中已经写好的功能。 将程序模块化会使得程序的组织结构清晰，维护起来更加方便。 使用模块既保证了代码的重要性，有增加了程序的结构性和可维护性。 除了自定义模块外，我们还可以导入使用内置或第三方模块提供的现成功能，这种“拿来主义”极大地提高了程序员的开发效率。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4.3模块与包">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/4.3%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%8C%85/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="模块与包 【一】模块 【1】什么是模块  在python中，一个py文件就是一个模块，文件名为xxx.py模块名则是xxx，导入模块可以引用模块中已经写好的功能。 将程序模块化会使得程序的组织结构清晰，维护起来更加方便。 使用模块既保证了代码的重要性，有增加了程序的结构性和可维护性。 除了自定义模块外，我们还可以导入使用内置或第三方模块提供的现成功能，这种“拿来主义”极大地提高了程序员的开发效率。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.240Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/4.3%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%8C%85/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>4.3模块与包 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.3%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%8C%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          4.3模块与包
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>模块与包</h1>
+<h1>【一】模块</h1>
+<h2 id="【1】什么是模块">【1】什么是模块</h2>
+<ul>
+<li>在python中，一个py文件就是一个模块，文件名为xxx.py模块名则是xxx，导入模块可以引用模块中已经写好的功能。</li>
+<li>将程序模块化会使得程序的组织结构清晰，维护起来更加方便。</li>
+<li>使用模块既保证了代码的重要性，有增加了程序的结构性和可维护性。</li>
+<li>除了自定义模块外，我们还可以导入使用内置或第三方模块提供的现成功能，这种“拿来主义”极大地提高了程序员的开发效率。</li>
+</ul>
+<h2 id="【2】模块的来源">【2】模块的来源</h2>
+<ul>
+<li>内置的：python自带的，直接拿来用</li>
+<li>第三方的：别人写好的，直接拿来用，但是要先下载</li>
+<li>自定义的：就是自己写的</li>
+</ul>
+<h2 id="【3】模块的存在形式">【3】模块的存在形式</h2>
+<ul>
+<li>我们自己写的py文件（一个py文件就是一个模块）</li>
+<li>包：一系列py文件的集合。包也是一个文件夹</li>
+<li>一个包里面有一个.<strong>init</strong>.py文件</li>
+</ul>
+<h2 id="【4】模块的优点">【4】模块的优点</h2>
+<ul>
+<li>增加程序的健壮性和可读性</li>
+<li>大大增加了开发效率</li>
+</ul>
+<h1>【二】模块的使用方法</h1>
+<h2 id="【1】准备工作就是">【1】准备工作就是</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://xn--settings-z09lrny8eu7kn0c9v6e1su.py">先创建一个文件settings.py</a></li>
+</ul>
+```python
+# 定义一个变量
+name = "dream"
+
+
+# 定义一个函数 函数的功能是打印name
+def show_name():
+    print(name)
+
+
+# 定义一个函数修改name
+def change_name():
+    global name#global改变全局的name
+    name = 'opp'
+    print(name)
+
+
+# 内嵌函数
+def outer():
+    def inner():
+        print(f"这是 outer 内部 的 inner")
+
+    return inner
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 使用模块中的属性</span><br><span class="line">  - 想要使用settings.py里面的name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">这个例子是再创建一个.py文件，来调用刚刚上面settings.py这个模块。</span><br><span class="line">import settings</span><br><span class="line"></span><br><span class="line">#打印当前模块对象位置</span><br><span class="line">print（settings）</span><br><span class="line">#打印模块中的name的值</span><br><span class="line">print（settings.name）</span><br><span class="line">#调动模块中更改name值的方法修改全局的name</span><br><span class="line">settings.change_name()</span><br><span class="line">#更新全局的name影响了全局的name</span><br><span class="line">print(settings.name)</span><br><span class="line">#调用内嵌函数</span><br><span class="line">func = settings.outer（）</span><br><span class="line">func</span><br></pre></td></tr></table></figure>
+
+<h2 id="【1】import语句发生的内部原理">【1】import语句发生的内部原理</h2>
+<p><strong>自己理解的是import后面跟谁就是调用谁里面的程序</strong></p>
+<ul>
+<li>前提是先创建一个自己写的xxx.py文件，在这个py文件有自己的名称空间</li>
+<li>在面脚板上输入</li>
+</ul>
+```python
+import xxx
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 这样就把xxx导入了当前模块</span><br><span class="line">- 如果没有调用函数则不会调用而是检索到所有函数地址</span><br><span class="line">- 会自动创建一个xxx.py文件的名称空间</span><br><span class="line">- 将xxx.py文件的名称空间和自己的名称空间合并</span><br><span class="line">- 通过模块名.属性名</span><br><span class="line"></span><br><span class="line">## 【2】支持导入多个模块</span><br><span class="line"></span><br><span class="line">- 单独导入多个模块</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import 模块名1</span><br><span class="line">import 模块名2</span><br><span class="line">import 模块名3</span><br><span class="line">。。。。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>一次性导入多个模块（用，隔开）</li>
+</ul>
+```python
+import 模块名1，模块名2，模块名3。。。
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【3】详细导入语法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from 模块名 import 属性名</span><br></pre></td></tr></table></figure>
+
+<h2 id="【4】导入指定参数或者方法">【4】导入指定参数或者方法</h2>
+```python
+#比如
+#就想要settings里面的show_name其它的都不要
+from settings import shoe_name
+show_name
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【5】导入所有参数和方法</span><br><span class="line"></span><br><span class="line">- 就想要模块里的所有参数和方法</span><br><span class="line">  - 前提是你模快里有那么多参数</span><br><span class="line"></span><br><span class="line">- import后面跟个*</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from settings import *</span><br><span class="line">show_name()</span><br><span class="line">print(name)</span><br><span class="line">change_name()</span><br><span class="line">outer = outer()</span><br><span class="line">outer()</span><br></pre></td></tr></table></figure>
+
+<h2 id="【6】重命名模块">【6】重命名模块</h2>
+<ul>
+<li>对导入的模块进行重命名</li>
+<li>import 模块名 as 新模块名</li>
+</ul>
+```python
+#案例
+import 模块名 as 新模块名
+# 导入模块 模块名叫 settings
+from 包名 import 模块名 as 新模块名
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【三】循环导入问题</span><br><span class="line"></span><br><span class="line">- 在文件中调用了另一个文件</span><br><span class="line">- 另一个文件在调用当前文件</span><br><span class="line"></span><br><span class="line">## 【1】问题来源</span><br><span class="line"></span><br><span class="line">- bar.py这是一个py文件</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">print(&quot;正在导入foo&quot;)</span><br><span class="line">from foo import name_foo#这是第三步：执行foo.py文件它们会来回跳  最后报错</span><br><span class="line">name_bar = &#x27;bar&#x27;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="http://foo.py#%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AApy%E6%96%87%E4%BB%B6">foo.py#这是一个py文件</a></li>
+</ul>
+```python
+print('正在导入bar')
+from bar import name_bar#这是第二步：执行bar.py文件它们会来回跳  最后报错
+name_foo = 'foo'
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- main.py#这又是一个py文件</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># import foo</span><br><span class="line">import bar #第一步执行的这里</span><br><span class="line">#  (most likely due to a circular import)</span><br></pre></td></tr></table></figure>
+
+<h2 id="【2】解决方法">【2】解决方法</h2>
+<h3 id="（1）方法一">（1）方法一</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://bar.py">bar.py</a></li>
+</ul>
+```python
+print('导入foo 开始')#第五步：打印 导入foo 开始
+name_bar = 'bar'#第六步：
+
+from foo import name_foo#第七步：
+print('导入foo 结束')#第八步：打印 导入foo 结束
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- foo.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">print(&#x27;导入bar 开始&#x27;)#这是第二步：打印 导入bar 开始</span><br><span class="line">name_foo = &#x27;foo&#x27;#这是第三步</span><br><span class="line"></span><br><span class="line">from bar import name_bar#这是第四步：跳到bar.py文件中</span><br><span class="line">print(&#x27;导入bar 结束&#x27;)#第九步：打印导入bar 结束</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="http://main.py">main.py</a></li>
+</ul>
+```python
+# 第一种 ：将导入模块的语法放到最后的位置
+# 导入模块就是为了使用模块 ，仿造最后面
+ import foo#第一步：执行的这里
+# import bar
+#输出
+# 导入bar 开始
+# 导入foo 开始
+# 导入foo 结束
+# 导入bar 结束
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）方法二</span><br><span class="line"></span><br><span class="line">- 在每个文本中创建函数</span><br><span class="line">- bar.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">print(&#x27;导入foo 开始&#x27;)</span><br><span class="line"></span><br><span class="line">name_bar = &#x27;bar&#x27;</span><br><span class="line"></span><br><span class="line">def show_name_bar():</span><br><span class="line">    from foo import name_foo</span><br><span class="line">    print(name_foo)</span><br><span class="line"></span><br><span class="line">print(&#x27;导入foo 结束&#x27;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="http://foo.py">foo.py</a></li>
+</ul>
+````python
+print('导入bar 开始')
+name_foo = 'foo'
+
+
+def show_name_foo():
+    from bar import name_bar
+    print(name_bar)
+
+
+print('导入bar 结束')
+````
+
+<ul>
+<li><a target="_blank" rel="noopener" href="http://main.py">main.py</a></li>
+</ul>
+```python
+# 第二种放到指定的函数内部，只要函数不调用就不会触发导入语句
+# 建议使用
+import bar#引用
+bar.show_name_bar()#直接调用的文件bar.py里面的函数show_name_bar()函数
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【四】模块加载和搜索顺序</span><br><span class="line"></span><br><span class="line">## 【1】模块的分类</span><br><span class="line"></span><br><span class="line">- 纯python编写的自己定义的模块</span><br><span class="line">- 内置的一系列模块 (python解释器自带的和你安装 pip install )</span><br><span class="line">- 使用c语言编写的底层代码</span><br><span class="line">- c 和 c++ 扩展出去的模块</span><br><span class="line"></span><br><span class="line">## 【2】加载顺序</span><br><span class="line"></span><br><span class="line">- 先c 和 c++ 扩展出去的模块</span><br><span class="line">- 使用c语言编写的底层代码</span><br><span class="line">- 内置的一系列模块 (python解释器自带的和你安装 pip install )</span><br><span class="line">- 纯python编写的自己定义的模块</span><br><span class="line"></span><br><span class="line">## 【3】查找顺序</span><br><span class="line"></span><br><span class="line">- 先从自己的局部查</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def func（）：</span><br><span class="line">    import 模块名</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>再从全局查</li>
+</ul>
+```python
+import 模块名
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 再去内建查</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">python解释器自带的模块和你安装的模块中查，查出对应的模块再使用</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>再去底层c语言查
+<ul>
+<li>有些功能你点进去看源码发现只要一个 pass使用c语言写的，但是不想让你看到所有就省略掉了</li>
+</ul>
+</li>
+</ul>
+<h1>【五】绝对路径和相对路径</h1>
+<h2 id="【1】相对路径">【1】相对路径</h2>
+<ul>
+<li>
+<p>你所在的文件夹就是相对路径</p>
+</li>
+<li>
+<p>./表示当前同目录下下载</p>
+</li>
+<li>
+<p>…/表示当前目录的上一级目录下载</p>
+</li>
+<li>
+<p>默认的话就是在当前目录下</p>
+</li>
+</ul>
+```python
+#案例
+with open("../data.text",'w', encoding='utf-8') as fp:
+    fp.write('111')
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】绝对路径</span><br><span class="line"></span><br><span class="line">- 在python内部查找的顺序就是绝对路径</span><br><span class="line">- D:\Python\PythonProjects\PythonProjects29\day17</span><br><span class="line">  - 就是带盘符的就是绝对路径</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import sys</span><br><span class="line">print(sys.path)</span><br><span class="line"># [</span><br><span class="line"># &#x27;D:\\Python\\PythonProjects\\PythonProjects29\\day17&#x27;,</span><br><span class="line"># &#x27;D:\\Python\\PythonProjects\\PythonProjects29\\day17&#x27;,</span><br><span class="line"># &#x27;D:\\PyCharm\\plugins\\python\\helpers\\pycharm_display&#x27;,</span><br><span class="line"># &#x27;D:\\Python38\\python38.zip&#x27;,</span><br><span class="line"># &#x27;D:\\Python38\\DLLs&#x27;,  # 这里放的就是c语言源码编译后的扩展包</span><br><span class="line"># &#x27;D:\\Python38\\lib&#x27;, # 放的是内置的模块或者安装的模块</span><br><span class="line"># &#x27;D:\\Python38&#x27;, # 安装python解释器的路径</span><br><span class="line"># &#x27;D:\\Python38\\lib\\site-packages&#x27;, # 这里面也有部分安装的的包 ，默认安装到 site-packages</span><br><span class="line"># &#x27;D:\\PyCharm\\plugins\\python\\helpers\\pycharm_matplotlib_backend&#x27;# 回到pycharm</span><br><span class="line"># ]</span><br></pre></td></tr></table></figure>
+
+<h1>【六】包</h1>
+<h2 id="【1】什么是包">【1】什么是包</h2>
+<ul>
+<li>包是一个模块的集合，它可以将多个模块的功能组合在一起。</li>
+<li>包可以按照其功能和作用进行分类，方便用户查找和使用。</li>
+<li>包是在Python标准库中定义的一种特殊类型的模块，可以通过import语句引用和使用。</li>
+<li>Python的包分为标准库包和第三方库包。
+<ul>
+<li>标准库包是Python内置的包，包含了一些基本的模块和函数，如os、sys、random等；</li>
+<li>第三方库包是第三方开发的包，通常提供了更加丰富和高级的功能。</li>
+</ul>
+</li>
+</ul>
+<h2 id="【2】如何创建包">【2】如何创建包</h2>
+<h3 id="（1）方法一-2">（1）方法一</h3>
+<ul>
+<li>
+<p>创建一个文件夹</p>
+</li>
+<li>
+<p>在文件夹内部创建一个__init__.py文件</p>
+</li>
+<li>
+<p>这个文件夹就叫包</p>
+</li>
+</ul>
+<h3 id="（2）方法二">（2）方法二</h3>
+<ul>
+<li>在pycharm右键文件新建package</li>
+<li>内部会自动生成__init__.py文件</li>
+</ul>
+<h2 id="【3】使用包">【3】使用包</h2>
+<h3 id="（1）方法一-3">（1）方法一</h3>
+<p>#它们都是在一个文件夹内的</p>
+<ul>
+<li><code>__init__.py</code>#这个文本可以为空，但是必须要有</li>
+</ul>
+```python
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- add.py</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def add(x, y):</span><br><span class="line">    print(&quot;加法功能&quot;)</span><br><span class="line">    if not x.isdigit() or not y.isdigit():</span><br><span class="line">        return False, f&#x27;当前数字格式错误&#x27;</span><br><span class="line">    return True, int(x) + int(y)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="http://multy.py">multy.py</a></li>
+</ul>
+```python
+def multy(x, y):
+    print(f"乘法功能")
+    if not x.isdigit() or not y.isdigit():
+        return False, f'当前数字格式错误'
+    return True, int(x) * int(y)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- main.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from calculator import add,multy#直接引用两个，想用哪个直接用</span><br><span class="line"></span><br><span class="line">print(add)</span><br><span class="line">#输出： &lt;module &#x27;calculator.add&#x27; from &#x27;D:\\Python\\PythonProjects\\PythonProjects29\\day17\\calculator\\add.py&#x27;&gt;</span><br><span class="line"></span><br><span class="line">print(add.add(&#x27;1&#x27;,&#x27;2&#x27;)) # 这里的 add 是模块名</span><br><span class="line">#输出（True，3）</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-方法二">(2)方法二</h3>
+<ul>
+<li><code>__init__.py</code>#直接全部在本 文件文本中执行了</li>
+</ul>
+```python
+# 符合初始化当前包的名称空间
+
+# 如果不在这里注册 就只能导入 模块名
+
+from .add import add
+from .multy import multy
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- main.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from calculator import add,multy</span><br><span class="line"># print(add) # &lt;function add at 0x000001764FC3C8B0&gt;</span><br><span class="line">x = &#x27;2&#x27;</span><br><span class="line">y = &#x27;9&#x27;</span><br><span class="line"></span><br><span class="line">print(add(x, y)) # 这里的add是方法名</span><br><span class="line">#输出 ：11</span><br><span class="line">print(multy(x, y))  # 这里的add是方法名</span><br><span class="line">#输出 ：18</span><br></pre></td></tr></table></figure>
+
+<h1>【七】导入语法总结</h1>
+<ul>
+<li>import  模块名 --》语法，只会检索当前模块内的所有变量名</li>
+<li>import 包名–》语法，会先自动检索 <strong>init</strong>.py 文件内的所有变量名 然后再去检索 每个模块里面的变量名
+<ul>
+<li>加载的时候多加载了一层  <strong>init</strong>.py</li>
+<li>查找的时候也多查找了一层  <strong>init</strong>.py</li>
+</ul>
+</li>
+<li>不管是在模块还是包还是自己的文件中</li>
+<li>from 模块名 import 属性名</li>
+<li>from 包名 import 模块名</li>
+<li>只要检索到指定名字就会停止检索</li>
+</ul>
+<h1>作业</h1>
+```python
+# 写用户功能
+
+# 购物车功能
+# 【零】初始化商品信息
+# 【1】提前有一个字典 字典中存储这个案例的数据
+# 键是商品名 值是价格
+data = {
+    "梦梦抱枕": 180, "梦梦抱枕套装": 200,
+    "梦梦睡衣": 120, "梦梦笔记本": 40,
+    "梦梦水杯": 20, "梦梦毛绒玩具": 60,
+    "梦梦围巾": 30, "梦梦手链": 25,
+    "梦梦钥匙扣": 15, "梦梦手机壳": 35,
+}
+# 【2】用json序列化保存上述商品数据到指定目录
+
+# 【一】查看商品信息
+# 【1】从指定目录中读取出当前 所有的商品信息
+# 【2】打印所有的商品信息
+
+# 【二】选择商品下单
+# 【1】根据商品名称下单，可以根据商品索引下单
+# 【2】保存你的当前购物车数据
+# 【3】保存的时候不要忘记保存商品的数量和价格
+# 【4】校验当前库存是否充足
+
+# 【三】清空购物车
+# 将购物车数据全部清空
+
+# 【四】查看购物车商品
+# 可以查看购物车商品信息
+
+# 【五】删除购物车商品信息
+# 【1】根据自己的商品信息删除指定的商品数据
+# 【2】删除的时候校验当前是否有足够的删除
+
+
+# 【六】下单商品(付款)
+# 【1】将购物车所有的商品数据价格和单价计算出来做一个整合
+# 【2】随意付款
+# 【3】提示付款信息 每个商品多少个 单价是多少 总价是多少 ---> 付款总金额是多少
+
+# 【七】退出系统
+# 退出系统
+```
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/4.2%E7%94%9F%E6%88%90%E5%99%A8/" rel="prev" title="4.2生成器">
+      <i class="fa fa-chevron-left"></i> 4.2生成器
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/4.4time%E6%A8%A1%E5%9D%97/" rel="next" title="4.4time模块">
+      4.4time模块 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">模块与包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">【一】模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AF%E6%A8%A1%E5%9D%97"><span class="nav-number">2.1.</span> <span class="nav-text">【1】什么是模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E6%A8%A1%E5%9D%97%E7%9A%84%E6%9D%A5%E6%BA%90"><span class="nav-number">2.2.</span> <span class="nav-text">【2】模块的来源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%903%E3%80%91%E6%A8%A1%E5%9D%97%E7%9A%84%E5%AD%98%E5%9C%A8%E5%BD%A2%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text">【3】模块的存在形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%904%E3%80%91%E6%A8%A1%E5%9D%97%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">2.4.</span> <span class="nav-text">【4】模块的优点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">【二】模块的使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C%E5%B0%B1%E6%98%AF"><span class="nav-number">3.1.</span> <span class="nav-text">【1】准备工作就是</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91import%E8%AF%AD%E5%8F%A5%E5%8F%91%E7%94%9F%E7%9A%84%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">【1】import语句发生的内部原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%904%E3%80%91%E5%AF%BC%E5%85%A5%E6%8C%87%E5%AE%9A%E5%8F%82%E6%95%B0%E6%88%96%E8%80%85%E6%96%B9%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">【4】导入指定参数或者方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%906%E3%80%91%E9%87%8D%E5%91%BD%E5%90%8D%E6%A8%A1%E5%9D%97"><span class="nav-number">3.4.</span> <span class="nav-text">【6】重命名模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">3.5.</span> <span class="nav-text">【2】解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%96%B9%E6%B3%95%E4%B8%80"><span class="nav-number">3.5.1.</span> <span class="nav-text">（1）方法一</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">【五】绝对路径和相对路径</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-number">4.1.</span> <span class="nav-text">【1】相对路径</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">【六】包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AF%E5%8C%85"><span class="nav-number">5.1.</span> <span class="nav-text">【1】什么是包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E5%8C%85"><span class="nav-number">5.2.</span> <span class="nav-text">【2】如何创建包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%96%B9%E6%B3%95%E4%B8%80-2"><span class="nav-number">5.2.1.</span> <span class="nav-text">（1）方法一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="nav-number">5.2.2.</span> <span class="nav-text">（2）方法二</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%903%E3%80%91%E4%BD%BF%E7%94%A8%E5%8C%85"><span class="nav-number">5.3.</span> <span class="nav-text">【3】使用包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%96%B9%E6%B3%95%E4%B8%80-3"><span class="nav-number">5.3.1.</span> <span class="nav-text">（1）方法一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="nav-number">5.3.2.</span> <span class="nav-text">(2)方法二</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">【七】导入语法总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">作业</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="css之盒子模型和浮动 【一】盒子模型 【1】什么是盒子模型  盒子模型就是指在网页设计中，用于描述和布局元素的一种模型 将每个元素看作一个具有四边形的矩形盒子，分为：内容区域（content）、内边距（padding）、边框（border）、外边距（margin）   【2】盒子模型的组成部分  内容区域–》content  实际内容区域，比如文本，图片等   内边距–》padding  内容区">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6.0css之盒子模型和浮动">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/6.0css%E4%B9%8B%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B%E5%92%8C%E6%B5%AE%E5%8A%A8/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="css之盒子模型和浮动 【一】盒子模型 【1】什么是盒子模型  盒子模型就是指在网页设计中，用于描述和布局元素的一种模型 将每个元素看作一个具有四边形的矩形盒子，分为：内容区域（content）、内边距（padding）、边框（border）、外边距（margin）   【2】盒子模型的组成部分  内容区域–》content  实际内容区域，比如文本，图片等   内边距–》padding  内容区">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240607150101860.png">
+<meta property="og:image" content="https://aurora-lsk.asia/2025/10/15/6.0css%E4%B9%8B%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B%E5%92%8C%E6%B5%AE%E5%8A%A8/f3cc-knqqqmv1022303.jpg">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240609132411796.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240609145757263.png">
+<meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.325Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240607150101860.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/6.0css%E4%B9%8B%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B%E5%92%8C%E6%B5%AE%E5%8A%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>6.0css之盒子模型和浮动 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/6.0css%E4%B9%8B%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B%E5%92%8C%E6%B5%AE%E5%8A%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          6.0css之盒子模型和浮动
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>css之盒子模型和浮动</h1>
+<h2 id="【一】盒子模型">【一】盒子模型</h2>
+<h3 id="【1】什么是盒子模型">【1】什么是盒子模型</h3>
+<ul>
+<li>盒子模型就是指在网页设计中，用于描述和布局元素的一种模型</li>
+<li>将每个元素看作一个具有四边形的矩形盒子，分为：内容区域（content）、内边距（padding）、边框（border）、外边距（margin）</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240607150101860.png" alt="image-20240607150101860"></p>
+<h3 id="【2】盒子模型的组成部分">【2】盒子模型的组成部分</h3>
+<ol>
+<li>内容区域–》content
+<ul>
+<li>实际内容区域，比如文本，图片等</li>
+</ul>
+</li>
+<li>内边距–》padding
+<ul>
+<li>内容区域和边框之间的空间，控制内容与边框之间的距离</li>
+</ul>
+</li>
+<li>边框–》border
+<ul>
+<li>围绕内容区域与内边框的线条，用于给元素添加外观和样式</li>
+</ul>
+</li>
+<li>外边距–》margin
+<ul>
+<li>边框与其他元素之间的空间，用于控制元素与周围元素之间的距离</li>
+</ul>
+</li>
+</ol>
+<h3 id="【3】应用">【3】应用</h3>
+<ul>
+<li>margin ：auto–》居中</li>
+</ul>
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #d1{
+            /*content就是height和width*/
+            height: 200px;
+            width: 200px;
+        /*    背景颜色*/
+            background-color: red;
+
+        /*    定义边框的宽度*/
+            border: 2px solid black;
+
+            /*定义边框与外边框的宽度*/
+            margin: 20px;/*四面宽度一样*/
+            /*margin: 20px 10px;!*上下边 左右边 的外边框到边框的宽度*!*/
+            /*margin: 20px 10px 15px ; !*上边 左右边 下边 的外边框到边框的宽度*!*/
+            /*margin: 20px 10px 15px 25px; !*上边 右边 下边 左边 的外边框到边框的宽度*!*/
+
+            /*定义内边框与边框的宽度*/
+            /*padding: 5px 10px 20px 15px; !*上 右 下 左 内容区域与边框之间的空间*!*/
+            /*padding: 5px 10px 20px; !*上 右左 下 内容区域与边框之间的空间*!*/
+            /*padding: 5px 10px; !*上下 右左 内容区域与边框之间的空间*!*/
+            padding: 5px; /*四面一样 内容区域与边框之间的空间*/
+        }
+        #d2{
+            height: 100px;
+            width: 100px;
+            background-color: darkblue;
+            border: 1px solid black;
+            /*auto：居中*/
+            margin: auto;
+            padding: 10px;
+        }
+        body{
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="d1">
+    这是div标签d1
+</div>
+<p id="d2">这是p标签</p>
+<span>这是span标签</span>
+</body>
+</html>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【二】浮动</span><br><span class="line"></span><br><span class="line">### 【1】什么是浮动</span><br><span class="line"></span><br><span class="line">- 浮动是可以将块级标签浮动起来脱离正常的文档流并浮动起来</span><br><span class="line">  - 脱离文档流的意思：元素被设置为浮动后，它将不会在占据文档流的空间，其他会忽略浮动元素的存在，并填充原先的位置</span><br><span class="line"></span><br><span class="line">### 【2】浮动的作用</span><br><span class="line"></span><br><span class="line">- 当元素浮动时，它会尽量向页面的左侧或右侧移动，直到遇到其他浮动元素或文档边界，可以设置向左向右浮动</span><br><span class="line">- 多个块级标签可以在一行显示，全部飘在空中</span><br><span class="line">- 脱离页面，浮动在页面上</span><br><span class="line">  - 注意的是本身多大，浮起来之后就占多大</span><br><span class="line"></span><br><span class="line">### 【3】浮动的影响力</span><br><span class="line"></span><br><span class="line">- 浮动会影响父标签的塌陷</span><br><span class="line">- 浮动元素有时候会出现遮挡住地下的区域</span><br><span class="line"></span><br><span class="line">- 如果区域内有文本内容，那么浏览器会遵循文本内容优先展示的原则 会想法设法让文本展示出来</span><br><span class="line"></span><br><span class="line">### 【4】案例和问题解析</span><br><span class="line"></span><br><span class="line">- `左浮动：float：left;`</span><br><span class="line">- `右浮动：float：right;`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        #d1&#123;</span><br><span class="line">            height: 200px;</span><br><span class="line">            width: 200px;</span><br><span class="line">            /*背景颜色*/</span><br><span class="line">            background-color: red;</span><br><span class="line">            /*左浮动*/</span><br><span class="line">            float: left;</span><br><span class="line">        &#125;</span><br><span class="line">        #d2&#123;</span><br><span class="line">            height: 200px;</span><br><span class="line">            width: 200px;</span><br><span class="line">            /*背景颜色*/</span><br><span class="line">            background-color: deeppink;</span><br><span class="line">            /*右浮动*/</span><br><span class="line">            float: right;</span><br><span class="line">        &#125;</span><br><span class="line">        #d3&#123;</span><br><span class="line">            height: 200px;</span><br><span class="line">            width: 200px;</span><br><span class="line">            /*背景颜色*/</span><br><span class="line">            background-color: cyan;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        #d4&#123;</span><br><span class="line">            /*边框*/</span><br><span class="line">            border: 6px solid darkblue;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;d4&quot;&gt;</span><br><span class="line">    &lt;div id=&quot;d1&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div id=&quot;d2&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div id=&quot;d3&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这样会有一个问题，就是悬浮的两个标签的下一个标签就会消失</li>
+<li>标签div id=&quot;d3&quot;就会消失</li>
+<li>解决办法</li>
+</ul>
+```css
+/*可以写成公共属性*/
+            /*加一个属性clear：both，，，消除浮动*/
+            .c1{
+            clear:both ;
+        }
+/*clear:left 消除左边的浮动*/
+/*clear：right 消除右边的浮动*/
+``````
+
+<p>html</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+            /*可以写成公共属性*/
+            /*加一个属性clear：both，，，消除悬浮*/
+            .c1{
+            clear:both ;
+        }
+        #d1{
+            height: 200px;
+            width: 200px;
+            /*背景颜色*/
+            background-color: red;
+            /*左浮动*/
+            float: left;
+        }
+        #d2{
+            height: 200px;
+            width: 200px;
+            /*背景颜色*/
+            background-color: deeppink;
+            /*右浮动*/
+            float: right;
+        }
+        #d3{
+            height: 200px;
+            width: 200px;
+            /*背景颜色*/
+            background-color: cyan;
+        }
+        #d4{
+            /*边框*/
+            border: 6px solid darkblue;
+        }
+<pre><code>&lt;/style&gt;
+</code></pre>
+</head>
+<body>
+<div id="d4">
+    <div id="d1"></div>
+    <div id="d2"></div>
+    <div class="c1" id="d3"></div>
+</div>
+</body>
+</html>
+```
+
+
+
+## 【三】溢出属性
+
+### 【1】什么是溢出属性
+
+- 溢出属性就是标签给了一个范围，但是文本信息量太大，装不下，就会导致信息溢出
+
+### 【2】问题
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        p&#123;</span><br><span class="line">            height: 200px;</span><br><span class="line">            width: 200px;</span><br><span class="line">            background-color: deeppink;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;p&gt;古代文化常识：包括天文历法、地理、官职、科举礼仪、称谓名号等。</span><br><span class="line">文学作品及作家：涉及《三字经》《百家姓》《千字文》《四书》《五经》等经典作品，以及《三国演义》《水浒传》《西游记》《红楼梦》等四大名著。</span><br><span class="line">文学体裁及理论：包括诗歌、小说、散文、戏剧等四大类别，以及文学批评、文学理论等专著。</span><br><span class="line">文学史上的重要事件和人物：如文学的起源、发展，以及屈原、司马迁、李白、杜甫等文学史上的重要人物和作品</span><br><span class="line">&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240609122405042](D:\pycharm\Temporary_notes\图片\image-20240609122405042.png)</span><br><span class="line"></span><br><span class="line">### 【3】解决问题</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+css
+/* overflow: visable 默认是可见，溢出还是展示 */
+/*overflow: hidden; !* 溢出部分直接隐藏 *!*/
+/*overflow: scroll; !* 字体内容可以滚动 *!*/
+overflow: auto; /* 自动 */
+```````html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        p{
+            height: 200px;
+            width: 200px;
+            background-color: deeppink;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+<p>古代文化常识：包括天文历法、地理、官职、科举礼仪、称谓名号等。
+文学作品及作家：涉及《三字经》《百家姓》《千字文》《四书》《五经》等经典作品，以及《三国演义》《水浒传》《西游记》《红楼梦》等四大名著。
+文学体裁及理论：包括诗歌、小说、散文、戏剧等四大类别，以及文学批评、文学理论等专著。
+文学史上的重要事件和人物：如文学的起源、发展，以及屈原、司马迁、李白、杜甫等文学史上的重要人物和作品
+</p>
+
+</body>
+</html>
+````
+
+<h3 id="【4】头像案例">【4】头像案例</h3>
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            /*最外框为0，就是清楚最外框*/
+            margin: 0;
+        }
+        div{
+            height: 200px;
+            width: 200px;
+            /*边框*/
+            border: 2px solid red;
+            /*得到一个圆*/
+            border-radius: 50%;
+            /*背景颜色*/
+            background-color: deeppink;
+            /*最外围边框为零，auto左右边距相同*/
+            margin: 0 auto;
+            /*溢出部分直接隐藏*/
+            overflow: hidden;
+        }
+        img{
+            /*图片占据100%*/
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <img src="f3cc-knqqqmv1022303.jpg" alt="">
+</div>
+</body>
+</html>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【四】定位</span><br><span class="line"></span><br><span class="line">### 【1】定位的四种方式</span><br><span class="line"></span><br><span class="line">1. 相对定位（Relative Positioning）</span><br><span class="line">   - 元素相对于其正常位置进行定位。</span><br><span class="line">   - 根据上一个标签进行偏移</span><br><span class="line">2. 绝对定位（Absolute Positioning）</span><br><span class="line">   - 元素相对于最近的已定位祖先元素（而非通常的块父元素）进行定位，如果没有已定位的祖先元素，那么它会相对于最初的包含块（通常是HTML元素）进行定位。</span><br><span class="line">3. 固定定位（Fixed Positioning）</span><br><span class="line">   - 元素相对于浏览器窗口进行定位，即使页面滚动，它也会始终停留在同一的位置。</span><br><span class="line">4. 静态定位（Static Positioning）：默认值。</span><br><span class="line"></span><br><span class="line">### 【2】案例</span><br><span class="line"></span><br><span class="line">- 绝对定位和固定定位</span><br><span class="line">- 绝对定位就是好比浏览器页面，你滑动滚轮你定位的信息就会随着滑轮滑动而滑动</span><br><span class="line">  - 就是根据你的浏览器上面的边框定位的</span><br><span class="line">- 固定定位就是好比浏览器页面，你滑动滚轮你定位的信息就会定在哪里，不会改变，永远出现在你的视野里</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        body &#123;</span><br><span class="line">            margin: 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        #d1 &#123;</span><br><span class="line">            height: 100px;</span><br><span class="line">            width: 100px;</span><br><span class="line">            background-color: red;</span><br><span class="line">            left: 50px; /* 相较于原来的位置从左向右移动50px 如果是负数，方向则相反*/</span><br><span class="line">            top: 50px; /* 相较于原来的位置从上向下移动50px 如果是负数 方向则相反 */</span><br><span class="line">            /*position: static; !* 默认是 static 无法修改位置 *!*/</span><br><span class="line">            /*position: relative; !* 相对定位*!*/</span><br><span class="line">            /*绝对定位*/</span><br><span class="line">            /*position: absolute;*/</span><br><span class="line">            /*固定定位*/</span><br><span class="line">            position: fixed;</span><br><span class="line">        &#125;</span><br><span class="line">        #d2&#123;</span><br><span class="line">            height: 100px;</span><br><span class="line">            width: 100px;</span><br><span class="line">            background-color: brown;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;div id=&quot;d1&quot;&gt;这是绝对定位&lt;/div&gt;</span><br><span class="line">    &lt;div id=&quot;d2&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240609132411796.png" alt="image-20240609132411796"></p>
+<h2 id="【五】浮动和定位是否脱离文档流">【五】浮动和定位是否脱离文档流</h2>
+<ul>
+<li>
+<p>文档流</p>
+<ul>
+<li>在文档流中，元素按照其在HTML中出现的顺序依次排列，并且每个元素都占据一定的空间（包括内容、内边距和边框）。</li>
+</ul>
+</li>
+<li>
+<p>脱离文档流</p>
+<ul>
+<li>元素不再按照文档流的正常规则进行排列和定位，而是被从文档流中“移除”或“脱离”，不再占据文档流中的空间</li>
+</ul>
+</li>
+</ul>
+<h3 id="【1】不脱离文档流">【1】不脱离文档流</h3>
+<ul>
+<li>相对定位</li>
+</ul>
+<h3 id="【2】脱离文档流">【2】脱离文档流</h3>
+<ul>
+<li>浮动</li>
+<li>固定定位</li>
+<li>绝对定位</li>
+</ul>
+<h2 id="【六】z-index模态框">【六】z-index模态框</h2>
+<h3 id="【1】什么是z-index模态框">【1】什么是z-index模态框</h3>
+<ul>
+<li>动态弹出的分界层就是z-index模态框</li>
+</ul>
+<h3 id="【2】层级">【2】层级</h3>
+<ul>
+<li>比如：百度的登入界面，有三层
+<ol>
+<li>最底层就是正常的内容，最远的</li>
+<li>黑色的透明层，中间层</li>
+<li>最后才是白色的登入和注册层，最近的</li>
+</ol>
+</li>
+</ul>
+<h3 id="【3】案例">【3】案例</h3>
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*z-index模态框：控制当前页面的权重，数字越大权重越高*/
+        .c1{
+        /*    最底层定义背景色*/
+            background-color: azure;
+        }
+        .c2{
+        /*    给它一个定位*/
+        /*    相对于浏览器窗口定位*/
+            position: fixed;
+        /*    我们需要铺满屏幕所以把偏移数据全部设为零*/
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        /*   背景颜色,也可以填数值*/
+            background-color: rgb(127,127,127);
+        /*    z-index框的数值*/
+            z-index: 99;
+        }
+        .c3{
+        /*    数值*/
+            z-index: 100;
+            height: 200px;
+            width: 500px;
+        /*  背景颜色  */
+            background-color: snow;
+            /*相对于浏览器窗口定位*/
+            position: fixed;
+            /*水平居中块级元素*/
+            /*auto：表示元素的左外边距（margin-left）和右外边距（margin-right）是自动的。*/
+            /*margin: 0 auto;*/
+            /*修改四个角的弧度*/
+            border-top-left-radius: 55pt 25pt;
+            border-top-right-radius: 55pt 25pt;
+            border-bottom-right-radius: 55pt 25pt;
+            border-bottom-left-radius: 55pt 25pt;
+        }
+        #d1{
+        /*    居中对其*/
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<!--最低成的白色-->
+<div class="c1"></div>
+<!--中间层的灰色-->
+<div class="c2"></div>
+<!--最顶层的登入界面-->
+<div class="c3">
+    <p id="d1">登入界面</p>
+    <form action="">
+<!--        输入框-->
+        <p>用户名：<input type="text" name="username" placeholder="用户名"></p>
+        <p>密码：<input type="text" name="password" placeholder="密码" ></p>
+    </form>
+<!--    按钮-->
+    <p><input type="submit"></p>
+</div>
+</body>
+</html>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240609145042026](D:\pycharm\Temporary_notes\图片\image-20240609145042026.png)</span><br><span class="line"></span><br><span class="line">## 【七】透明度--》opacity</span><br><span class="line"></span><br><span class="line">### 【1】透明度的理解</span><br><span class="line"></span><br><span class="line">- 透明度不只是可以修改颜色的透明度，还可以修改文字的透明度</span><br><span class="line">- rgba：只能修改颜色的透明度</span><br><span class="line">- opacity：颜色，文字都可以修改</span><br><span class="line"></span><br><span class="line">### 【2】案例</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        #d1&#123;</span><br><span class="line">            background-color: deeppink;</span><br><span class="line">            opacity: 0.5;</span><br><span class="line">        &#125;</span><br><span class="line">        #d2&#123;</span><br><span class="line">            background-color: deeppink;</span><br><span class="line">            opacity: 0.1;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;p id=&quot;d1&quot;&gt;这是块级标签p&lt;/p&gt;</span><br><span class="line">&lt;div id=&quot;d2&quot;&gt;这是行级标签span&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240609145757263.png" alt="image-20240609145757263"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/7.0JavaScript%E5%BC%95%E5%85%A5/" rel="prev" title="7.0JavaScript引入">
+      <i class="fa fa-chevron-left"></i> 7.0JavaScript引入
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/7.0CSS%E9%80%89%E6%8B%A9%E5%99%A8/" rel="next" title="7.0CSS选择器">
+      7.0CSS选择器 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">css之盒子模型和浮动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">【一】盒子模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AF%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">【1】什么是盒子模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86"><span class="nav-number">1.1.2.</span> <span class="nav-text">【2】盒子模型的组成部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%BA%94%E7%94%A8"><span class="nav-number">1.1.3.</span> <span class="nav-text">【3】应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E5%A4%B4%E5%83%8F%E6%A1%88%E4%BE%8B"><span class="nav-number">1.1.4.</span> <span class="nav-text">【4】头像案例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%94%E3%80%91%E6%B5%AE%E5%8A%A8%E5%92%8C%E5%AE%9A%E4%BD%8D%E6%98%AF%E5%90%A6%E8%84%B1%E7%A6%BB%E6%96%87%E6%A1%A3%E6%B5%81"><span class="nav-number">1.2.</span> <span class="nav-text">【五】浮动和定位是否脱离文档流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%B8%8D%E8%84%B1%E7%A6%BB%E6%96%87%E6%A1%A3%E6%B5%81"><span class="nav-number">1.2.1.</span> <span class="nav-text">【1】不脱离文档流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E8%84%B1%E7%A6%BB%E6%96%87%E6%A1%A3%E6%B5%81"><span class="nav-number">1.2.2.</span> <span class="nav-text">【2】脱离文档流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%85%AD%E3%80%91z-index%E6%A8%A1%E6%80%81%E6%A1%86"><span class="nav-number">1.3.</span> <span class="nav-text">【六】z-index模态框</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AFz-index%E6%A8%A1%E6%80%81%E6%A1%86"><span class="nav-number">1.3.1.</span> <span class="nav-text">【1】什么是z-index模态框</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%B1%82%E7%BA%A7"><span class="nav-number">1.3.2.</span> <span class="nav-text">【2】层级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E6%A1%88%E4%BE%8B"><span class="nav-number">1.3.3.</span> <span class="nav-text">【3】案例</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

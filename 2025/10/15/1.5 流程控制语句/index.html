@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="【一】流程控制语句  用来控制程序执行的条件 控制条件的方式有很多 流程结构：  顺序结构(依次乡下执行) 分支结构(相当于给了两个条件来进行判断) 循环结构(直到条件为否才结束当前循环)    【1】顺序结构  程序按照顺序依次执行，直到报错或者程序条件为否的情况才会终 按照程序顺序从上依次向下逐行执行    顺序结构用于按照既定的顺序执行一系列的操作，这是程序执行的最基本模式。 通过良好的顺序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.5 流程控制语句">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/1.5%20%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="【一】流程控制语句  用来控制程序执行的条件 控制条件的方式有很多 流程结构：  顺序结构(依次乡下执行) 分支结构(相当于给了两个条件来进行判断) 循环结构(直到条件为否才结束当前循环)    【1】顺序结构  程序按照顺序依次执行，直到报错或者程序条件为否的情况才会终 按照程序顺序从上依次向下逐行执行    顺序结构用于按照既定的顺序执行一系列的操作，这是程序执行的最基本模式。 通过良好的顺序">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240330112840643.png">
+<meta property="og:image" content="c:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240330114936778.png">
+<meta property="og:image" content="c:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240330123818246.png">
+<meta property="article:published_time" content="2025-10-15T03:34:54.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:49.964Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240330112840643.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/1.5%20%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>1.5 流程控制语句 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/1.5%20%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          1.5 流程控制语句
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:54 / 修改时间：16:15:49" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:54+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>【一】流程控制语句</h1>
+<ul>
+<li>用来控制程序执行的条件</li>
+<li>控制条件的方式有很多</li>
+<li>流程结构：
+<ul>
+<li>顺序结构(依次乡下执行)</li>
+<li>分支结构(相当于给了两个条件来进行判断)</li>
+<li>循环结构(直到条件为否才结束当前循环)</li>
+</ul>
+</li>
+</ul>
+<h2 id="【1】顺序结构">【1】顺序结构</h2>
+<ul>
+<li>程序按照顺序依次执行，直到报错或者程序条件为否的情况才会终</li>
+<li>按照程序顺序从上依次向下逐行执行</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240330112840643.png" alt="image-20240330112840643"></p>
+<ul>
+<li>顺序结构用于按照既定的顺序执行一系列的操作，这是程序执行的最基本模式。</li>
+<li>通过良好的顺序结构，可以清晰地表达程序的逻辑流程，使代码易读易懂。</li>
+<li>这有助于开发者理解和维护代码，也方便调试。</li>
+</ul>
+<h2 id="【2】分支结构">【2】分支结构</h2>
+<ul>
+<li>分支结构是计算机程序中的一种控制结构，它根据条件的成立与否选择性地执行不同的代码块。</li>
+<li>在分支结构中，根据条件的判断结果，程序会有不同的执行路径。</li>
+</ul>
+<h3 id="（1）分支结构的作用">（1）分支结构的作用</h3>
+<ul>
+<li>分支结构的主要作用是根据不同的条件执行不同的代码，从而实现灵活的程序逻辑。</li>
+<li>通过分支结构，程序可以根据用户的输入、计算的结果等情况来选择执行不同的代码块，增加程序的智能性和适应性。</li>
+</ul>
+<h3 id="（2）单分支结构（if）">（2）单分支结构（if）</h3>
+<ul>
+<li>单分支条件指的是程序根据条件的成立与否，执行两个分支中的一个。</li>
+<li>常见的单分支语法是if</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240330114936778.png" alt="image-20240330114936778"></p>
+<h4 id="1-语法">{1}语法</h4>
+```python
+if 条件：
+    前面空四个空格#如果条件成立执行这里的代码体。
+    
+例子：
+age = 18
+if age >= 18:
+    print("你已成年，可以参加投票。")#你已成年，可以参加投票。
+    
+例子：
+score = 99
+if score > 90:
+    # 这里面的代码我们称之为代码体/代码块
+    print(f"当前成绩为 {score} ， 评级为优秀!")#如果成绩在90分以上，执行这里的代码块 #{当前成绩为 99 ， 评级为优秀!}
+print(f"当前成绩{score}不合格")#如果成绩在90分以下包括90分，执行这个代码块 #{当前成绩90不合格}
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 单分支结构会依次向下执行代码，并且在遇到条件时进行判断，如果条件为真则执行当前代码体</span><br><span class="line"></span><br><span class="line">#### &#123;2&#125;补充</span><br><span class="line"></span><br><span class="line">- Python用相同缩进(4个空格表示一个缩进)来标识一组代码块，同一组代码会自上而下依次运行</span><br><span class="line">- 条件可以是任意表达式，但执行结果**必须为布尔类型**</span><br><span class="line">- 在if判断中所有的数据类型也都会自动转换成布尔类型</span><br><span class="line">  - None，0，空（空字符串，空列表，空字典等）三种情况下转换成的布尔值为False</span><br><span class="line">  - 其余均为True</span><br><span class="line"></span><br><span class="line">### 【3】双分支结构（if-else）</span><br><span class="line"></span><br><span class="line">- 双分支结构也是根据条件的成立与否，选择性地执行不同的代码块。</span><br><span class="line">- 与单分支结构不同的是，双分支结构**有两个分支**，分别对应条件成立和条件不成立的情况。</span><br><span class="line"></span><br><span class="line">![image-20240330120403185](C:\Users\86177\AppData\Roaming\Typora\typora-user-images\image-20240330120403185.png)</span><br><span class="line"></span><br><span class="line">#### &#123;1&#125;语法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">if 条件:</span><br><span class="line">    # 如果条件成立，执行这里的代码块</span><br><span class="line">else:</span><br><span class="line">    # 如果条件不成立，执行这里的代码块</span><br><span class="line"></span><br><span class="line">例子：</span><br><span class="line">age = 16</span><br><span class="line">if age &gt;= 18:</span><br><span class="line">    print(&quot;你已成年，可以参加投票。&quot;) #age大于等于18的时候，执行这里的代码块 #你已成年，可以参加投票。</span><br><span class="line">else:</span><br><span class="line">    print(&quot;你还未成年，不能参加投票。&quot;) #age小于18的时候，执行这里的代码块 #你还未成年，不能参加投票。</span><br></pre></td></tr></table></figure>
+
+<h3 id="【4】多分支结构（if-elif-else）">【4】多分支结构（if-elif-else）</h3>
+<ul>
+<li>多分支结构是在双分支结构的基础上扩展，<strong>它包含多个分支</strong>，每个分支都对应<strong>不同的条件。</strong></li>
+<li>程序根据条件的成立情况选择性地执行相应的代码块。</li>
+</ul>
+<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240330123818246.png" alt="image-20240330123818246"></p>
+<h4 id="1-语法-2">{1}语法</h4>
+```python
+if 条件1:
+    # 如果条件1成立，执行这里的代码块
+elif 条件2:
+    # 如果条件1不成立且条件2成立，执行这里的代码块
+else:
+    # 如果条件1和条件2都不成立，执行这里的代码块
+    
+例子：
+score = 85
+if score >= 90:
+    print("优秀") #score大于等于90的时候执行这个代码体#优秀
+elif score >= 80:
+    print("良好") #score大于等于80的时候执行这个代码体#良好
+else:
+    print("一般")#低于80执行这个代码体#一般
+
+例子：
+score = 70
+if score >= 90:
+    print("优秀")  # score大于等于90的时候执行这个代码体#优秀
+elif score >= 80:
+    print("良好")  # score大于等于80的时候执行这个代码体#良好
+elif score >= 60:
+        print("一般")  # score大于等于60的时候执行这个代码块#一般
+else:
+    print("不及格")  # 低于60执行这个代码块#不及格
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【5】多层嵌套结构</span><br><span class="line"></span><br><span class="line">- 多层嵌套结构是将多个分支结构嵌套在一起形成的复杂结构。</span><br><span class="line">- 每一层的分支结构都可以根据不同的条件进行选择性的执行。</span><br><span class="line">- 多层嵌套结构的使用需要注意代码的可读性和维护性。</span><br><span class="line"></span><br><span class="line">### &#123;1&#125;语法</span><br><span class="line"></span><br><span class="line">- 多层嵌套结构是通过在不同层次上使用if语句嵌套形成的结构。</span><br><span class="line"></span><br><span class="line">- 多层嵌套结构可以根据多个条件的组合选择性地执行代码块。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">height = 181</span><br><span class="line">if height &gt;= 170:</span><br><span class="line">    if height &lt;= 180:</span><br><span class="line">        print(&quot;身高在170~180之间&quot;)</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;身高大于180&quot;)#身高高于180</span><br><span class="line">else:</span><br><span class="line">    print(&quot;身高太低&quot;)</span><br></pre></td></tr></table></figure>
+
+```python
+例题：
+#前提：创建一个字典存了用户的用户名和密码
+# 有一个输入框输入用户名和密码
+# 有了用户名以后去去字典中查密码
+# 有了用户名但是字典中不存在的情况，打印当前用户名不存在
+# 将字典中的密码和输入的密码进行比对
+# 一致打印登陆成功
+# 否则提示登录失败
+
+info = {"dream": "1314"}
+username = input("请输入用户名：>>>>")
+password = input("请输入密码:>>>")
+if username not in info:
+    print(f"用户名{username}不存在")
+if password == info.get(username):
+    print(f"密码正确")
+else:
+    print(f"密码错误")
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【3】循环结构</span><br><span class="line"></span><br><span class="line">### （1）什么是分支结构</span><br><span class="line"></span><br><span class="line">- 循环结构是一种程序控制结构，用于反复执行一组语句，直到满足某个条件为止。</span><br><span class="line">- 循环结构使得程序可以更有效地重复执行某段代码，节省了编写重复代码的工作。</span><br><span class="line"></span><br><span class="line">![image-20240330134120998](C:\Users\86177\AppData\Roaming\Typora\typora-user-images\image-20240330134120998.png)</span><br><span class="line"></span><br><span class="line">### （2）循环结构的作用</span><br><span class="line"></span><br><span class="line">- 循环结构的主要作用是重复执行一组语句，直到满足某个条件。</span><br><span class="line">- 这种重复执行的过程可以是固定次数的，也可以是根据条件动态确定的。</span><br><span class="line">- 循环结构使得程序可以更灵活、高效地处理需要重复执行的任务。</span><br><span class="line"></span><br><span class="line">### （3）while循环</span><br><span class="line"></span><br><span class="line">#### (1)语法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">while condition:</span><br><span class="line">    # 循环体</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>while是循环的关键字。</li>
+<li>condition是循环条件，当条件为真时，循环体会一直执行。</li>
+<li>循环体是重复执行的代码块。</li>
+</ul>
+```python
+列子：
+count = 0
+while count < 5:
+    print( count)
+    count +=1
+结果是：
+0
+1
+2
+3
+4
+
+例子：
+count = 0
+while count < 5:
+    print("number:", count)
+    count +=1
+print("Loop finished!")
+结果是：
+number: 0
+number: 1
+number: 2
+number: 3
+number: 4
+Loop finished!
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### （2）登入认证案例</span><br><span class="line"></span><br><span class="line">- 用户认证程序的基本逻辑就是接收用户输入的用户名密码然后与程序中存放的用户名密码进行判断，判断成功则登陆成功，判断失败则输出账号或密码错误</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">username = &quot;Tom&quot;</span><br><span class="line">password = &quot;710&quot;</span><br><span class="line">user_name = input(&quot;请输入用户名：》》》&quot;)</span><br><span class="line">pass_word = input(&quot;请输入密码：》》》》&quot;)</span><br><span class="line">if user_name == username and pass_word == password:</span><br><span class="line">    print(&quot;密码正确&quot;)</span><br><span class="line">else:</span><br><span class="line">    print(&quot;密码错误&quot;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通常认证失败的情况下，会要求用户重新输入用户名和密码进行验证</li>
+<li>如果我们想给用户三次试错机会，本质就是将上述代码重复运行三遍</li>
+<li>你总不会想着把代码复制3次吧</li>
+</ul>
+```python
+复杂方法
+username = "Tom"
+password = "710"
+
+#第一次验证
+user_name = input("请输入用户名：》》》")
+pass_word = input("请输入密码：》》》》")
+if user_name == username and pass_word == password:
+    print("密码正确")
+else:
+    print("密码错误")
+    
+#第二次验证
+user_name = input("请输入用户名：》》》")
+pass_word = input("请输入密码：》》》》")
+if user_name == username and pass_word == password:
+    print("密码正确")
+else:
+    print("密码错误")
+   
+#第三次验证
+user_name = input("请输入用户名：》》》")
+pass_word = input("请输入密码：》》》》")
+if user_name == username and pass_word == password:
+    print("密码正确")
+else:
+    print("密码错误")
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 上面的方法太麻烦</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">username = &quot;Tom&quot;</span><br><span class="line">password = &quot;710&quot;</span><br><span class="line">count=0</span><br><span class="line">while count &lt;3:</span><br><span class="line">    user_name = input(&quot;请输入用户名：》》》&quot;)</span><br><span class="line">    pass_word = input(&quot;请输入密码：》》》》&quot;)</span><br><span class="line">    if user_name == username and pass_word == password:</span><br><span class="line">        print(&quot;密码正确&quot;)</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;密码错误&quot;)</span><br><span class="line">        count +=1</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-for循环">(4)for循环</h2>
+<h3 id="（1）语法">（1）语法</h3>
+```python
+for variable in sequence:
+    #循环体
+    
+for 是循环的关键字。
+variable是循环变量，它会在每次循环中取sequence中的一个值。
+senqence是一个序列，可以是列表、元组、字符串等。
+
+案例
+
+fruits = ["apple","banana","cherry"]
+for fruit in fruits:
+    print(fruit)
+输出结果
+# apple
+# banana
+# cherry
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## （5）退出循环（break）</span><br><span class="line"></span><br><span class="line">### （1）语法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">while condition:</span><br><span class="line">    #循环体</span><br><span class="line">    if some_condition:</span><br><span class="line">        break#退出循环</span><br><span class="line">        </span><br><span class="line">例子</span><br><span class="line">oop = 0</span><br><span class="line">while loop &lt;4:</span><br><span class="line">    print(loop)</span><br><span class="line">    if loop == 2:</span><br><span class="line">        break#当loop等于2是退出循环</span><br><span class="line">    loop +=1</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）登入案例循环（while循环-break）">（2）登入案例循环（while循环-break）</h3>
+<ul>
+<li>使用了while循环后，代码确实精简多了</li>
+<li>但问题是用户输入正确的用户名密码以后无法结束循环</li>
+<li>那如何结束掉一个循环呢？
+<ul>
+<li>这就需要用到break了！</li>
+</ul>
+</li>
+</ul>
+```python
+username = "Tom"
+password = "710"
+loop = 0
+while loop < 3:#loop=3的时候结束循环
+    name = input("请输入用户的名字：》》》》")
+    pass_one = input("请输入用户密码：》》》")
+    if name == username and pass_one == password:
+        print("欢迎回家！")
+        break#密码用户名都正确结束循环
+    else:
+        print("密码或用户名错误。")
+        loop +=1#loop=3的时候结束循环
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （3）登入案例（while循环嵌套-break）</span><br><span class="line"></span><br><span class="line">- 如果while循环嵌套了很多层</span><br><span class="line">- 要想退出每一层循环则需要在每一层循环都有一个break</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">username = &quot;Dream&quot;</span><br><span class="line">password = &quot;123&quot;</span><br><span class="line">count = 0</span><br><span class="line">while count &lt; 3:  # 第一层循环</span><br><span class="line">    inp_name = input(&quot;请输入用户名：&quot;)</span><br><span class="line">    inp_pwd = input(&quot;请输入密码：&quot;)</span><br><span class="line">    if inp_name == username and inp_pwd == password:</span><br><span class="line">        print(&quot;登陆成功&quot;)</span><br><span class="line">        while True:  # 第二层循环</span><br><span class="line">            cmd = input(&#x27;&gt;&gt;: &#x27;)</span><br><span class="line">            if cmd == &#x27;quit&#x27;:</span><br><span class="line">                break  # 用于结束本层循环，即第二层循环</span><br><span class="line">            print(&#x27;run &lt;%s&gt;&#x27; % cmd)</span><br><span class="line">        break  # 用于结束本层循环，即第一层循环</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;输入的用户名或密码错误！&quot;)</span><br><span class="line">        count += 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-用户密码案例">(6)用户密码案例</h2>
+````python
+user_data_list = [
+    {"dream": "521"},
+    {"hope": "369"},
+    {"opp": "963"},
+]
+# 【二】循环开始校验用户名和密码
+tag_true = True
+while tag_true:
+    username_input = input("username :>>>> ")
+    password_input = input('password :>>>> ')
+
+    # 【三】校验当前用户名是否存在于上述列表中
+    for user_data_dict in user_data_list:
+        # user_data_dict : {"dream": "521"}
+        password = user_data_dict.get(username_input)
+        # 有值 521
+        if password and password == password_input:
+            print("登陆成功")
+            tag_true = False
+            break
+        elif password and password != password_input:
+            print(f"密码错误")
+````
+
+<h2 id="（6）continue-跳过当前当次循环">（6）continue : 跳过当前当次循环</h2>
+<ul>
+<li>语法</li>
+</ul>
+```python
+while condition:
+    # 循环体
+    if some_condition:
+        continue  # 跳过当前循环，继续下一次循环
+        
+案例
+count = 0
+
+while count < 5:#直到count=5是结束循环
+    count += 1
+    if count == 3:
+        continue  # 当 count 等于 3 时，跳过当前循环，继续下一次循环
+    print(count)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 这两个关键字在循环中的使用可以帮助你更灵活地控制循环的流程。</span><br><span class="line">- `break` 用于完全退出循环，而 `continue` 用于跳过当前循环的剩余部分，直接进入下一次循环。</span><br><span class="line"></span><br><span class="line">## （7）无限死循环</span><br><span class="line"></span><br><span class="line">- 有的时候，我们需要程序在满足某个条件时一直执行，这就需要用到无限死循环。</span><br><span class="line">- 最简单的无限死循环可以通过while语句来实行，条件为真。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">while True:</span><br><span class="line">    print(&quot;This is an infinite loop!&quot;)</span><br><span class="line">会无限循环&quot;This is an infinite loop!&quot;，因为whileTrue：的条件永远为真，所以循环不会停止。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>退出循环逻辑</li>
+</ul>
+```python
+
+while True:
+    user_input = input("Enter 'exit' to end the loop: ")
+    if user_input.lower() == 'exit':
+        break
+    else:
+        print("You entered:", user_input)
+#用户需要输入'exit'才能结束程序
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 例子中.lower()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">string = &quot;Hello World!&quot;</span><br><span class="line">string = string.lower()</span><br><span class="line">print(string)  # 输出 &quot;hello world!&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="【8】标志位">【8】标志位</h2>
+<h3 id="（1）语法-2">（1）语法</h3>
+```python
+flang = True  # 初始化标志位
+
+while flang:
+    # 循环体
+    if some_condition:
+        flag = False  # 修改标志位，退出循环
+        
+案例
+flag = 710  # 初始化标志位
+
+while flag:
+    user_input = input("请输入：")
+    if user_input == '710':
+        flag = False  # 当用户输入 '710' 时，修改标志位，退出循环
+    else:
+        print("用户输入：", user_input)#用户输入错误一直循环
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）登陆案例(while循环嵌套+tag标志位)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">user_list = [</span><br><span class="line">    &#123;&#x27;username&#x27;: &#x27;user1&#x27;, &#x27;password&#x27;: &#x27;123&#x27;&#125;,</span><br><span class="line">    &#123;&#x27;username&#x27;: &#x27;user2&#x27;, &#x27;password&#x27;: &#x27;456&#x27;&#125;,</span><br><span class="line">    &#123;&#x27;username&#x27;: &#x27;user3&#x27;, &#x27;password&#x27;: &#x27;789&#x27;&#125;,</span><br><span class="line">]</span><br><span class="line">loop = False</span><br><span class="line">while True:</span><br><span class="line">    username = input(&quot;请输入用户名：&quot;)</span><br><span class="line">    password = input(&quot;请输入密码：&quot;)</span><br><span class="line"></span><br><span class="line">    for user in user_list:</span><br><span class="line">        if username == user[&#x27;username&#x27;] and password == user[&#x27;password&#x27;]:</span><br><span class="line">            print(&quot;登陆成功！&quot;)</span><br><span class="line">            loop = True  # 修改登陆标志位为 True</span><br><span class="line">            break</span><br><span class="line"></span><br><span class="line">    if loop:</span><br><span class="line">        break  # 如果登陆标志位为 True，退出循环</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;用户名或密码错误，请重新输入。&quot;)</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">username = &quot;Dream&quot;</span><br><span class="line">password = &quot;123&quot;</span><br><span class="line">count = 0</span><br><span class="line"></span><br><span class="line">tag = True</span><br><span class="line">while tag: </span><br><span class="line">    inp_name = input(&quot;请输入用户名：&quot;)</span><br><span class="line">    inp_pwd = input(&quot;请输入密码：&quot;)</span><br><span class="line">    if inp_name == username and inp_pwd == password:</span><br><span class="line">        print(&quot;登陆成功&quot;)</span><br><span class="line">        while tag:  </span><br><span class="line">            cmd = input(&#x27;&gt;&gt;: &#x27;)</span><br><span class="line">            if cmd == &#x27;quit&#x27;:</span><br><span class="line">                tag = False  # tag变为False， 所有while循环的条件都变为False </span><br><span class="line">                break</span><br><span class="line">            print(&#x27;run &lt;%s&gt;&#x27; % cmd)</span><br><span class="line">        break  # 用于结束本层循环，即第一层循环</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;输入的用户名或密码错误！&quot;)</span><br><span class="line">        count += 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="【9】循环分支（else）">【9】循环分支（else）</h2>
+<ul>
+<li>在while循环的后面
+<ul>
+<li>我们可以跟else语句</li>
+</ul>
+</li>
+<li>当while 循环正常执行完并且中间没有被break 中止的话
+<ul>
+<li>就会执行else后面的语句</li>
+</ul>
+</li>
+<li>所以我们可以用else来验证
+<ul>
+<li>循环是否正常结束</li>
+</ul>
+</li>
+</ul>
+```python
+count = 0
+while count <= 5 :
+    count += 1
+    print("Loop",count)
+else:
+    print("循环正常执行完啦")
+print("-----out of while loop ------")
+输出
+Loop 1
+Loop 2
+Loop 3
+Loop 4
+Loop 5
+Loop 6
+循环正常执行完啦   #没有被break打断，所以执行了该行代码
+-----out of while loop ------
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 如果执行过程中被break终止</span><br><span class="line">  - 就不会执行else语句</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">count = 0</span><br><span class="line">while count &lt;= 5 :</span><br><span class="line">    count += 1</span><br><span class="line">    if count == 3:</span><br><span class="line">        break</span><br><span class="line">    print(&quot;Loop&quot;,count)</span><br><span class="line">else:</span><br><span class="line">    print(&quot;循环正常执行完啦&quot;)</span><br><span class="line">print(&quot;-----out of while loop ------&quot;)</span><br><span class="line">输出</span><br><span class="line">Loop 1</span><br><span class="line">Loop 2</span><br><span class="line">-----out of while loop ------ #由于循环被break打断了，所以不执行else后的输出语句</span><br></pre></td></tr></table></figure>
+
+<h2 id="10-range关键字">(10)range关键字</h2>
+<h3 id="（1）遍历数字系列">（1）遍历数字系列</h3>
+<ul>
+<li>语法</li>
+</ul>
+```python
+for i in range(stop):
+    # 循环体
+for i in range(start, stop):
+    # 循环体
+for i in range(start, stop, step):
+    # 循环体
+
+案例
+for i in range(5):
+    print(i)
+    #输出
+    0
+    1
+    2
+    3
+    4#顾头不顾尾
+for i in range(2, 6):
+    print(i)
+# 输出：
+# 2
+# 3
+# 4
+# 5#顾头不顾尾
+for i in range(1, 10, 2):#2代表隔一个输出一个，也是顾头不顾尾
+    print(i)
+# 输出：
+# 1
+# 3
+# 5
+# 7
+# 9
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）指定区间</span><br><span class="line"></span><br><span class="line">- 语法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">rangge(start,stop)</span><br><span class="line"></span><br><span class="line">案例</span><br><span class="line">for i in range(2, 6):</span><br><span class="line">    print(i)</span><br><span class="line"># 输出：</span><br><span class="line"># 2</span><br><span class="line"># 3</span><br><span class="line"># 4</span><br><span class="line"># 5</span><br></pre></td></tr></table></figure>
+
+<h3 id="（3）步长">（3）步长</h3>
+<ul>
+<li>语法</li>
+</ul>
+```python
+rangge(start,stop,step)
+
+案例
+for i in range(1, 10, 2):#2代表隔一个输出一个，也是顾头不顾尾
+    print(i)
+# 输出：
+# 1
+# 3
+# 5
+# 7
+# 9
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (4)range+len遍历序列(len计算长度)</span><br><span class="line"></span><br><span class="line">- 原理</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">my_list = [&#x27;apple&#x27;, &#x27;banana&#x27;, &#x27;orange&#x27;]</span><br><span class="line">for i in range(len(my_list)):</span><br><span class="line">    print(f&quot;Index &#123;i&#125;: &#123;my_list[i]&#125;&quot;)</span><br><span class="line"># 输出：</span><br><span class="line"># Index 0: apple</span><br><span class="line"># Index 1: banana</span><br><span class="line"># Index 2: orange</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-range创建">(5)range创建</h3>
+<h4 id="1-原理">[1]原理</h4>
+```python
+numbers = list(range(start, stop, step))
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### [2]使用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">numbers = list(range(1, 6))</span><br><span class="line">print(numbers)</span><br><span class="line"># 输出：[1, 2, 3, 4, 5]</span><br></pre></td></tr></table></figure>
+
+<h1>【二】循环分支嵌套</h1>
+<ul>
+<li>循环结构和分支结构可以嵌套在一起，形成复杂的程序逻辑。</li>
+</ul>
+```python
+for i in range(5):
+    print("Outer loop, current value:", i)
+
+    for j in range(3):
+        print("Inner loop, current value:", j)
+
+print("Nested loops finished!")
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 上述代码中，外层循环 `for i in range(5):` 执行五次，内层循环 `for j in range(3):` 每次外层循环执行时都会执行三次。这样就形成了嵌套的循环结构。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 案例2</span><br><span class="line">while 1:</span><br><span class="line">    score = input(&quot;请输入您的成绩&gt;&gt;&quot;)  # &quot;100&quot;</span><br><span class="line"></span><br><span class="line">    if score.isdigit():</span><br><span class="line">        score = int(score)  # 100</span><br><span class="line">        if score &gt; 100 or score &lt; 0:</span><br><span class="line">            print(&quot;您的输入有误！&quot;)</span><br><span class="line">        elif score &gt; 90:</span><br><span class="line">            print(&quot;成绩优秀&quot;)</span><br><span class="line">        elif score &gt; 70:  # else if</span><br><span class="line">            print(&quot;成绩良好&quot;)</span><br><span class="line">        elif score &gt; 60:</span><br><span class="line">            print(&quot;成绩及格&quot;)</span><br><span class="line">        else:</span><br><span class="line">            print(&quot;成绩不及格&quot;)</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;请输入一个数字&quot;)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/1.7TCP%E5%8D%8F%E8%AE%AE%E6%A8%A1%E5%9E%8B/" rel="prev" title="1.7TCP协议模型">
+      <i class="fa fa-chevron-left"></i> 1.7TCP协议模型
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/1.6%E7%B2%98%E5%8C%85%E9%97%AE%E9%A2%98/" rel="next" title="1.6粘包问题">
+      1.6粘包问题 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">【一】流程控制语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E9%A1%BA%E5%BA%8F%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">【1】顺序结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">【2】分支结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">（1）分支结构的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%8D%95%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84%EF%BC%88if%EF%BC%89"><span class="nav-number">1.2.2.</span> <span class="nav-text">（2）单分支结构（if）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%AF%AD%E6%B3%95"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">{1}语法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E5%A4%9A%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84%EF%BC%88if-elif-else%EF%BC%89"><span class="nav-number">1.2.3.</span> <span class="nav-text">【4】多分支结构（if-elif-else）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%AF%AD%E6%B3%95-2"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">{1}语法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-for%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.3.</span> <span class="nav-text">(4)for循环</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E8%AF%AD%E6%B3%95"><span class="nav-number">1.3.1.</span> <span class="nav-text">（1）语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E7%99%BB%E5%85%A5%E6%A1%88%E4%BE%8B%E5%BE%AA%E7%8E%AF%EF%BC%88while%E5%BE%AA%E7%8E%AF-break%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">（2）登入案例循环（while循环-break）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E6%A1%88%E4%BE%8B"><span class="nav-number">1.4.</span> <span class="nav-text">(6)用户密码案例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%886%EF%BC%89continue-%E8%B7%B3%E8%BF%87%E5%BD%93%E5%89%8D%E5%BD%93%E6%AC%A1%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.5.</span> <span class="nav-text">（6）continue : 跳过当前当次循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%908%E3%80%91%E6%A0%87%E5%BF%97%E4%BD%8D"><span class="nav-number">1.6.</span> <span class="nav-text">【8】标志位</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E8%AF%AD%E6%B3%95-2"><span class="nav-number">1.6.1.</span> <span class="nav-text">（1）语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%909%E3%80%91%E5%BE%AA%E7%8E%AF%E5%88%86%E6%94%AF%EF%BC%88else%EF%BC%89"><span class="nav-number">1.7.</span> <span class="nav-text">【9】循环分支（else）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-range%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.8.</span> <span class="nav-text">(10)range关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E9%81%8D%E5%8E%86%E6%95%B0%E5%AD%97%E7%B3%BB%E5%88%97"><span class="nav-number">1.8.1.</span> <span class="nav-text">（1）遍历数字系列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E6%AD%A5%E9%95%BF"><span class="nav-number">1.8.2.</span> <span class="nav-text">（3）步长</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-range%E5%88%9B%E5%BB%BA"><span class="nav-number">1.8.3.</span> <span class="nav-text">(5)range创建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%8E%9F%E7%90%86"><span class="nav-number">1.8.3.1.</span> <span class="nav-text">[1]原理</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">【二】循环分支嵌套</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

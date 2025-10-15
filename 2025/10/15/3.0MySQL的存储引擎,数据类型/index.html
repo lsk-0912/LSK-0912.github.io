@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="MySQL的存储引擎 【一】什么是存储引擎  存储引擎就是不同的处理机制–》不同的数据应该有不同的处理机制 存储引擎就好比–》针对不同的文件格式会有不同的存储方式和处理机制  【二】MySQL主要的引擎介绍  四个主要的引擎介绍  【1】Innodb  是MySQL5.5版本之后的默认存储引擎 支持事务&#x2F;行锁&#x2F;外键  【2】myisam  是MySQL5.5版本之前的默认存储引擎 速度比innod">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3.0MySQL的存储引擎,数据类型">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/3.0MySQL%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E,%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="MySQL的存储引擎 【一】什么是存储引擎  存储引擎就是不同的处理机制–》不同的数据应该有不同的处理机制 存储引擎就好比–》针对不同的文件格式会有不同的存储方式和处理机制  【二】MySQL主要的引擎介绍  四个主要的引擎介绍  【1】Innodb  是MySQL5.5版本之后的默认存储引擎 支持事务&#x2F;行锁&#x2F;外键  【2】myisam  是MySQL5.5版本之前的默认存储引擎 速度比innod">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528153839076.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528155114898.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528160116981.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528162021771.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528162617379.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528163312819.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528165400963.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528170811072.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528183828048.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528184151578.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528185701132.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528190454718.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528190911391.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528193314651.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528194122088.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528200936484.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528202352386.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528203502521.png">
+<meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.116Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528153839076.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/3.0MySQL%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E,%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>3.0MySQL的存储引擎,数据类型 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/3.0MySQL%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E,%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          3.0MySQL的存储引擎,数据类型
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>MySQL的存储引擎</h1>
+<h2 id="【一】什么是存储引擎">【一】什么是存储引擎</h2>
+<ul>
+<li>存储引擎就是不同的处理机制–》不同的数据应该有不同的处理机制</li>
+<li>存储引擎就好比–》针对不同的文件格式会有不同的存储方式和处理机制</li>
+</ul>
+<h2 id="【二】MySQL主要的引擎介绍">【二】MySQL主要的引擎介绍</h2>
+<ul>
+<li>四个主要的引擎介绍</li>
+</ul>
+<h3 id="【1】Innodb">【1】Innodb</h3>
+<ul>
+<li>是MySQL5.5版本之后的默认存储引擎</li>
+<li>支持事务/行锁/外键</li>
+</ul>
+<h3 id="【2】myisam">【2】myisam</h3>
+<ul>
+<li>是MySQL5.5版本之前的默认存储引擎</li>
+<li>速度比innodb快，但数据安全较弱</li>
+</ul>
+<h3 id="【3】memory">【3】memory</h3>
+<ul>
+<li>内存引擎</li>
+<li>数据全部放在内存中</li>
+<li>储存速度快，不能长时间保存，断电数据就会消失</li>
+</ul>
+<h3 id="【4】blackhole">【4】blackhole</h3>
+<ul>
+<li>黑洞引擎</li>
+<li>无论存储多少数据都会立刻消失</li>
+</ul>
+<h3 id="【5】查看所有的数据库引擎">【5】查看所有的数据库引擎</h3>
+<ul>
+<li>engines : 引擎</li>
+</ul>
+```sql
+show engines;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240528151758719](D:\pycharm\Temporary_notes\图片\image-20240528151758719.png)</span><br><span class="line"></span><br><span class="line">## 【三】不同的存储引擎存储数据的异同点</span><br><span class="line"></span><br><span class="line">### 【1】建表</span><br><span class="line"></span><br><span class="line">- 当前已经进入库时才能创建表</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">create table t1(id int) engine=innodb;</span><br><span class="line">create table t2(id int) engine=myisam;</span><br><span class="line">create table t3(id int) engine=blackhole;</span><br><span class="line">create table t4(id int) engine=memory;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528153839076.png" alt="image-20240528153839076"></p>
+<h3 id="【2】文件说明">【2】文件说明</h3>
+<h4 id="（1）Innodb">（1）Innodb</h4>
+<ul>
+<li>t1.frm
+<ul>
+<li>表结构</li>
+</ul>
+</li>
+<li>t2.ibd
+<ul>
+<li>存储表的数据</li>
+</ul>
+</li>
+<li>Innobd：默认的引擎‘</li>
+</ul>
+<h4 id="（2）myisam">（2）myisam</h4>
+<ul>
+<li>t2.frm
+<ul>
+<li>表结构</li>
+</ul>
+</li>
+<li>t2.MYD
+<ul>
+<li>表数据</li>
+</ul>
+</li>
+<li>t2.MYI
+<ul>
+<li>索引（index），类似于书 的目录，基于目录的查找速度会很快</li>
+</ul>
+</li>
+<li>myisam：数据具有索引，读取数据快</li>
+</ul>
+<h4 id="3-blackhole">(3)blackhole</h4>
+<ul>
+<li>t3.frm
+<ul>
+<li>表结构</li>
+</ul>
+</li>
+</ul>
+<h4 id="（4）memory">（4）memory</h4>
+<ul>
+<li>
+<p>t4.frm</p>
+<ul>
+<li>表结构</li>
+</ul>
+</li>
+<li>
+<p>memory：数据缓存到内存</p>
+</li>
+</ul>
+<h3 id="【3】存储数据">【3】存储数据</h3>
+<ul>
+<li>insert : 插入</li>
+<li>into ： 到</li>
+<li>values ： 值</li>
+</ul>
+```sql
+insert into t1 values(1);
+insert into t2 values(1);
+insert into t3 values(1);
+insert into t4 values(1);
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【4】查看数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select * from t1;</span><br><span class="line">select * from t2;</span><br><span class="line">select * from t3;</span><br><span class="line">select * from t4;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528155114898.png" alt="image-20240528155114898"></p>
+<ul>
+<li><code>insert into t3 values(1);</code>显示空集的原因是，他是黑洞引擎</li>
+</ul>
+<h4 id="（2）memory数据是存在内存中">（2）memory数据是存在内存中</h4>
+<ul>
+<li>重启一下mysql服务，memory表中的数据就会消失</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528160116981.png" alt="image-20240528160116981"></p>
+<ul>
+<li>查看表内容显示空集</li>
+</ul>
+<h1>MySQL约束条件，严格模式</h1>
+<h2 id="【一】创建表的完整语句">【一】创建表的完整语句</h2>
+```sql
+create table 表名（
+	字段名1 类型(宽度) 约束条件,
+	字段名2 类型(宽度) 约束条件,
+	...
+	字段名n 类型(宽度) 约束条件
+）
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 最后一个字段不要加,</span><br><span class="line">- 同一张表中字段名不能重复</span><br><span class="line">- 宽度和约束条件是可以选择的，可填可不填</span><br><span class="line">  - 宽度不填就是默认宽度</span><br><span class="line">- 约束条件可以写多个</span><br><span class="line"></span><br><span class="line">### （1）字段类型和字段名是必须的</span><br><span class="line"></span><br><span class="line">- 需要加字段类型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">create table t5(id);</span><br><span class="line"></span><br><span class="line">--报错</span><br><span class="line">--ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#x27;)&#x27; at line 1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>加字段类型</li>
+</ul>
+```sql
+create table t5(id int);
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 最后一行不能加逗号</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">create table t6(</span><br><span class="line">	id int,</span><br><span class="line">    name char,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">--出错</span><br><span class="line">--ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#x27;)&#x27; at line 4</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看详细的表信息</li>
+</ul>
+```sql
+desc 表名;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【二】宽度</span><br><span class="line"></span><br><span class="line">### 【1】默认宽度</span><br><span class="line"></span><br><span class="line">- 对储存数据的限制</span><br><span class="line">  - 默认宽度为1，只能存在一个字符</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">create table t7(name char);</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528162021771.png" alt="image-20240528162021771"></p>
+<h3 id="【2】宽度限制">【2】宽度限制</h3>
+<ul>
+<li>5.6版本默认没有开启严格模式，规定只能存一个字符，给多了字符就会自动截取一个字符</li>
+<li>5.7 版本及以上开启了严格模式，那么规定存几个就只能存几个，不能超出，一旦超出就会报上面的错误</li>
+<li>插入一个数据</li>
+</ul>
+```sql
+insert t7 values('dream');
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240528162310300](D:\pycharm\Temporary_notes\图片\image-20240528162310300.png)</span><br><span class="line"></span><br><span class="line">## 【三】约束条件（null/not null）</span><br><span class="line"></span><br><span class="line">- null ：空---》可以为空</span><br><span class="line">- not null ：非空---》不能为空，必须赋值</span><br><span class="line"></span><br><span class="line">### 【1】not null</span><br><span class="line"></span><br><span class="line">not null ：非空---》不可以为空</span><br><span class="line"></span><br><span class="line">- 创建一个表</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">create table one(id int,name int not null);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>不写约束条件默认为null</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528162617379.png" alt="image-20240528162617379"></p>
+<ul>
+<li>看图片可以看出</li>
+<li>name字段的null为 NO–》不可以为空</li>
+<li>只报错了 name不能为空，id可以为空</li>
+</ul>
+```sql
+insert t8 values(null,null);
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240528163116991](D:\pycharm\Temporary_notes\图片\image-20240528163116991.png)</span><br><span class="line"></span><br><span class="line">- name最多容纳11字节多传就会报错</span><br><span class="line">  - 我们自己设置的</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">insert one values(null,&#x27;1234567891112&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528163312819.png" alt="image-20240528163312819"></p>
+<h3 id="【2】null">【2】null</h3>
+<p>null ：空—》可以为空</p>
+<ul>
+<li>插入数据</li>
+</ul>
+```sql
+inter t7 values(null);
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 默认允许插入 空</span><br><span class="line"></span><br><span class="line">![image-20240528163838623](D:\pycharm\Temporary_notes\图片\image-20240528163838623.png)</span><br><span class="line"></span><br><span class="line">## 【四】宽度和约束条件之间的关系</span><br><span class="line"></span><br><span class="line">- 宽度是用来限制数据的储存</span><br><span class="line">- 约束条件是在宽度的基础上增加额外的约束</span><br><span class="line"></span><br><span class="line">## 【五】严格模式</span><br><span class="line"></span><br><span class="line">- 控制MySQL里面存储数据的一些限制规则</span><br><span class="line">- 控制超出长度不提示，控制超出长度提示报错</span><br><span class="line"></span><br><span class="line">### 【1】查看严格模式</span><br><span class="line"></span><br><span class="line">- variables : 变量</span><br><span class="line">- like ：像</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">show variables like &quot;%mode&quot;;</span><br><span class="line">-- 查看严格模式的两种方式</span><br><span class="line">-- like&quot;%mode&quot;%匹配任意字符串</span><br><span class="line">show variables like&quot;_mode&quot;;</span><br><span class="line">-- like&#x27;_mode&#x27;_只能匹配单个字符</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>sql_mode(严格模式)</li>
+</ul>
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528165400963.png" alt="image-20240528165400963"></p>
+<h3 id="【2】修改严格模式">【2】修改严格模式</h3>
+<ul>
+<li>临时修改–》只在本窗口有效</li>
+<li>退出客户端重新连接，还是会回到原来没改的严格模式</li>
+</ul>
+```sql
+set session sql_mode = 'STRICT_TRANS_TABLES'；
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 永久修改</span><br><span class="line">- 退出客户端重新连接，修改后的严格模式会一直生效</span><br><span class="line">- 修改完成后，重启服务端，即可生效</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">set session sql_mode = &#x27;STRICT_TRANS_TABLES&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528170811072.png" alt="image-20240528170811072"></p>
+<ul>
+<li>严格模式在5.7版本之后都是默认开启严格模式的</li>
+<li>尽量减轻数据库的负担，不给数据库增加格外的压力</li>
+</ul>
+<h1>MySQL基本数据类型</h1>
+<h2 id="【一】整数类型">【一】整数类型</h2>
+<ul>
+<li>
+<p>整型默认情况下都是带有符号的</p>
+</li>
+<li>
+<p>针对整型()内的符号到底是什么用？</p>
+</li>
+<li>
+<ul>
+<li>针对整型，括号内的宽度是用来限制存储数据的范围的</li>
+</ul>
+</li>
+</ul>
+<p><strong>特例：只有整型括号内的数字不是表示限制位数而是显示长度</strong></p>
+<h3 id="【1】分类">【1】分类</h3>
+<table>
+<thead>
+<tr>
+<th>整数类型</th>
+<th>字节</th>
+<th>无符号数的取值范围</th>
+<th>有符号数的取值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TINYINT</td>
+<td>1</td>
+<td>0~255</td>
+<td>-128~127</td>
+</tr>
+<tr>
+<td>SMALLINT</td>
+<td>2</td>
+<td>0~65535</td>
+<td>-32768~32767</td>
+</tr>
+<tr>
+<td>MEDIUMINT</td>
+<td>3</td>
+<td>0~16777215</td>
+<td>-8388608~8388607</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>4</td>
+<td>0~4294967295</td>
+<td>-2147483648~2147483647</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td>8</td>
+<td>0~18446744073709551615</td>
+<td>-9223372036854774808~9223372036854774807</td>
+</tr>
+</tbody>
+</table>
+<h3 id="【2】作用">【2】作用</h3>
+<ul>
+<li>用在储存的年龄，id，等级，电话等</li>
+</ul>
+<h3 id="【3】以TINYINT存储数据">【3】以TINYINT存储数据</h3>
+<ul>
+<li>是否有符号
+<ul>
+<li>默认情况下是带符号的</li>
+</ul>
+</li>
+<li>超出最大范围，只存在最大接收值</li>
+</ul>
+<h4 id="（1）TINYINT存储数据">（1）TINYINT存储数据</h4>
+<ul>
+<li>超出最大储存数据</li>
+<li>创建表–&gt;前提是在库里面</li>
+</ul>
+```sql
+create table two(id tinyint);
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240528183805342](D:\pycharm\Temporary_notes\图片\image-20240528183805342.png)</span><br><span class="line"></span><br><span class="line">- 查看表格</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">desc two;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528183828048.png" alt="image-20240528183828048"></p>
+<ul>
+<li>插入数据，错误示范，超出数据TINYINT存储数据</li>
+</ul>
+```sql
+insert into two values(-129),(256);
+
+-- 报错
+-- mysql> insert into two values(-129),(256);
+ERROR 1264 (22003): Out of range value for column 'id' at row 1
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240528184005930](D:\pycharm\Temporary_notes\图片\image-20240528184005930.png)</span><br><span class="line"></span><br><span class="line">- 插入数据成功</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">insert into two values(-128),(127);</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528184151578.png" alt="image-20240528184151578"></p>
+<ul>
+<li>默认情况下是带符号的</li>
+<li>超出限制只能保存最大接受值</li>
+</ul>
+<h4 id="（2）整数类型加约束条件（unsigned（无符号））">（2）整数类型加约束条件（<code>unsigned（无符号）</code>）</h4>
+<ul>
+<li>unsigned ：只能是正数和0</li>
+<li>创建表</li>
+</ul>
+```sql
+create table three(id tinyint unsigned);
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240528185717347](D:\pycharm\Temporary_notes\图片\image-20240528185717347.png)</span><br><span class="line"></span><br><span class="line">- 查看表</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">desc three;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528185701132.png" alt="image-20240528185701132"></p>
+<ul>
+<li>插入数据</li>
+</ul>
+```sql
+insert into t10 values(156);
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240528185818103](D:\pycharm\Temporary_notes\图片\image-20240528185818103.png)</span><br><span class="line"></span><br><span class="line">### 【4】针对整型（）内的符号的作用</span><br><span class="line"></span><br><span class="line">针对整型，括号内的宽度是用来限制存储数据的范围的</span><br><span class="line"></span><br><span class="line">- 创建表</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">create table four(id int(8));</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528190454718.png" alt="image-20240528190454718"></p>
+<ul>
+<li>插入数据
+<ul>
+<li>虽然没有报错但是还是要遵循最大范围</li>
+</ul>
+</li>
+</ul>
+```sql
+mysql> insert into four values(1234567891);
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240528190531402](D:\pycharm\Temporary_notes\图片\image-20240528190531402.png)</span><br><span class="line"></span><br><span class="line">- **特例：**</span><br><span class="line"></span><br><span class="line">  **只有整型括号内的数字不是表示限制位数而是显示长度**</span><br><span class="line"></span><br><span class="line">id int(8)</span><br><span class="line"></span><br><span class="line">- 如果数字没有超出 8 位 ，那么默认用 0 填充至 8 位</span><br><span class="line">- 如果数字超出 8 位 ，那么 有几位存几位（但是还是要遵循最大范围）</span><br><span class="line"></span><br><span class="line">### 【5】用零填充(约束条件zerofill)</span><br><span class="line"></span><br><span class="line">#### （1）没用zerofill之前</span><br><span class="line"></span><br><span class="line">- 插入数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">insert into four values(1);</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528190911391.png" alt="image-20240528190911391"></p>
+<h4 id="（2）用zerofill">（2）用zerofill</h4>
+<ul>
+<li>创建表</li>
+</ul>
+```sql
+create table five(id int(8) unsigned zerofill);
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 插入数据</span><br><span class="line"></span><br><span class="line">![image-20240528191329025](D:\pycharm\Temporary_notes\图片\image-20240528191329025.png)</span><br><span class="line"></span><br><span class="line">### 【6】总结</span><br><span class="line"></span><br><span class="line">- 针对整型字段无需指定宽度，因为它默认的宽度已经足够展示所有数据了</span><br><span class="line"></span><br><span class="line">## 【二】浮点型</span><br><span class="line"></span><br><span class="line">### 【1】分类</span><br><span class="line"></span><br><span class="line">- FLOAT    DOUBLE    DECIMAL</span><br><span class="line"></span><br><span class="line">| 数据类型 | 字节数           | 取值范围                                |</span><br><span class="line">| -------- | ---------------- | --------------------------------------- |</span><br><span class="line">| FLOAT    | 4                | -2^128~2 ^128，即-3.40E+38~+3.40E+38    |</span><br><span class="line">| DOUBLE   | 8                | -2^1024~ 2^1024，即-1.79E+308~1.79E+308 |</span><br><span class="line">| DECIMAL  | 设置位数和精度。 | 65 ~ 30                                 |</span><br><span class="line"></span><br><span class="line">### 【2】存储限制</span><br><span class="line"></span><br><span class="line">- 总共255位，小数部分占30位</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">float(255,30)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>总共255位，小数部分占30位</li>
+</ul>
+```sql
+double(255,30)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 总共65位，小数部分占30位</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">decimal(65,30)</span><br></pre></td></tr></table></figure>
+
+<h3 id="【3】精准度验证">【3】精准度验证</h3>
+<ul>
+<li>创建表</li>
+</ul>
+```sql
+create table t15(id float(255,30));
+create table t16(id double(255,30));
+create table t17(id decimal(65,30));
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240528193218767](D:\pycharm\Temporary_notes\图片\image-20240528193218767.png)</span><br><span class="line"></span><br><span class="line">- 插入数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">insert into t15 values(1.1111111111111111111111);</span><br><span class="line">insert into t16 values(1.1111111111111111111111);</span><br><span class="line">insert into t17 values(1.1111111111111111111111);</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528193314651.png" alt="image-20240528193314651"></p>
+```sql
+-- float : 从第八位开始错乱
+-- double ：从第16位数据开始错乱
+-- decimal 从第23数据开始错乱
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 可以很明显的发现每一个类型的精确度有明显的区别</span><br><span class="line">- float &lt; double &lt; decimal</span><br><span class="line">- 虽然每个类型的精确度不一，但是可以根据实际情况选择对应的数据类型</span><br><span class="line"></span><br><span class="line">## 【三】字符串类型</span><br><span class="line"></span><br><span class="line">### 【1】分类</span><br><span class="line"></span><br><span class="line">- CHAR</span><br><span class="line">  - 定长</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">char(4)</span><br><span class="line">--超过四个字符直接报错，不够四个字符空格补全</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>VARCHAR
+<ul>
+<li>边长</li>
+</ul>
+</li>
+</ul>
+```sql
+varchar(4)
+--超过四个字符直接报错，不够四个字符,有几个就存几个
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【2】char 与 varchar的比较</span><br><span class="line"></span><br><span class="line">- 创建表</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">create table t18(name char(4));</span><br><span class="line">create table t19(name varchar(4));</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528194122088.png" alt="image-20240528194122088"></p>
+<ul>
+<li>多传超过四个字节就会报错</li>
+</ul>
+<h3 id="【3】补充char-length">【3】补充char_length</h3>
+<p>char_length : 统计字段长度</p>
+```sql
+select char_length(name) from t18;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240528194439501](D:\pycharm\Temporary_notes\图片\image-20240528194439501.png)</span><br><span class="line"></span><br><span class="line">- char在硬盘上存的绝对是真正的数据，带有空格</span><br><span class="line">- 但是在现实的时候MySQL会自动将多余的空格删除</span><br><span class="line"></span><br><span class="line">#### （1）解决方法--取消方法</span><br><span class="line"></span><br><span class="line">修改sql_mode让MySQL不做自动提出操作</span><br><span class="line"></span><br><span class="line">- 查看命令</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">show variables like &quot;%mode&quot;;</span><br><span class="line">``````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">sql</span><br><span class="line">mysql&gt; show variables like &quot;%mode&quot;;</span><br><span class="line">+--------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+</span><br><span class="line">| Variable_name            | Value</span><br><span class="line">                       |</span><br><span class="line">+--------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+</span><br><span class="line">| block_encryption_mode    | aes-128-ecb</span><br><span class="line">                       |</span><br><span class="line">| gtid_mode                | OFF</span><br><span class="line">                       |</span><br><span class="line">| innodb_autoinc_lock_mode | 1</span><br><span class="line">                       |</span><br><span class="line">| innodb_strict_mode       | ON</span><br><span class="line">                       |</span><br><span class="line">| offline_mode             | OFF</span><br><span class="line">                       |</span><br><span class="line">| pseudo_slave_mode        | OFF</span><br><span class="line">                       |</span><br><span class="line">| rbr_exec_mode            | STRICT</span><br><span class="line">                       |</span><br><span class="line">| slave_exec_mode          | STRICT</span><br><span class="line">                       |</span><br><span class="line">| sql_mode                 | ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION |</span><br><span class="line">+--------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+</span><br><span class="line">9 rows in set, 8 warnings (0.00 sec)</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 修改命令</span><br><span class="line"></span><br><span class="line">- 要在原有的基础上进行替换，所以要带有原有的属性</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>sql<br>
+set global sql_mode = ‘ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,PAD_CHAR_TO_FULL_LENGTH’;</p>
+```
+
+
+
+- 再次运行查询命令
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line">sql</span><br><span class="line">select char_length(name) from t18;</span><br><span class="line">&#123;% raw %&#125;``````sql</span><br><span class="line">+-------------------+</span><br><span class="line">| char_length(name) |</span><br><span class="line">+-------------------+</span><br><span class="line">|                 4 |</span><br><span class="line">+-------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>char 在硬盘上存的绝对是真正的数据，带有空格</li>
+<li>但是在现实的时候MySQL会自动将多余的空格删除</li>
+</ul>
+<h3 id="【4】char与varchar的比较">【4】char与varchar的比较</h3>
+<h4 id="（1）char">（1）char</h4>
+<ul>
+<li>
+<p>缺点：浪费空间</p>
+</li>
+<li>
+<p>优点：存储简单</p>
+</li>
+<li>
+<ul>
+<li>直接按照固定的字符存储数据即可</li>
+</ul>
+</li>
+<li></li>
+</ul>
+<h4 id="（2）varchar">（2）varchar</h4>
+<ul>
+<li>
+<p>优点：节省空间</p>
+</li>
+<li>
+<p>缺点：存储麻烦</p>
+</li>
+<li>
+<ul>
+<li>存的时候，在真正数据的前面加报头（表示数据真正大小）</li>
+<li>取的时候，需要先读取报头，才能读取真实的数据</li>
+</ul>
+</li>
+</ul>
+<p>以前用 char 现在 varchar 使用较多</p>
+<h2 id="【四】时间类型">【四】时间类型</h2>
+<h3 id="【1】分类-2">【1】分类</h3>
+<ul>
+<li>
+<p>date：年月日</p>
+</li>
+<li>
+<p>datetime:年月日时分秒</p>
+</li>
+<li>
+<p>time：时分秒</p>
+</li>
+<li>
+<p>year：年</p>
+</li>
+</ul>
+<h3 id="【2】示例">【2】示例</h3>
+<ul>
+<li>创建表</li>
+</ul>
+```sql
+create table student(
+	id int,
+    name varchar(16),
+    born_year year,
+    birth date,
+    study_time time,
+    reg_time datetime
+);
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240528200922398](D:\pycharm\Temporary_notes\图片\image-20240528200922398.png)</span><br><span class="line"></span><br><span class="line">- 插入数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">insert into student values(</span><br><span class="line">		 1,</span><br><span class="line">    &#x27;dream&#x27;,</span><br><span class="line">    &#x27;2001&#x27;,</span><br><span class="line">    &#x27;2001-1-31&#x27;,</span><br><span class="line">    &#x27;11:11:11&#x27;,</span><br><span class="line">    &#x27;2023-6-30 11:11:11&#x27;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528200936484.png" alt="image-20240528200936484"></p>
+<h2 id="【五】枚举和集合类型">【五】枚举和集合类型</h2>
+<h3 id="【1】枚举和集合">【1】枚举和集合</h3>
+<h4 id="（1）枚举（enum）：多选一">（1）枚举（enum）：多选一</h4>
+<ul>
+<li>枚举类型存储数据只能从候选项中选取一个</li>
+</ul>
+<h4 id="（2）集合（set）：多选多">（2）集合（set）：多选多</h4>
+<ul>
+<li>集合类型存储数据可从候选项中选取多个</li>
+</ul>
+<h3 id="【2】使用">【2】使用</h3>
+<h4 id="（1）枚举">（1）枚举</h4>
+<ul>
+<li>创建表</li>
+</ul>
+```sql
+create table user(id int,
+                  name char(16),
+                  gender 			enum('male','female','other'));
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240528202220561](D:\pycharm\Temporary_notes\图片\image-20240528202220561.png)</span><br><span class="line"></span><br><span class="line">- 插入数据</span><br><span class="line">  - 插入的数据gender要从枚举里面选择，name也是</span><br><span class="line">  - 否则会报错</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">insert into user values(1,&#x27;dream&#x27;,&#x27;male&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528202352386.png" alt="image-20240528202352386"></p>
+<h4 id="2-集合（set）">(2)集合（set）</h4>
+<p>集合类型，可以多选，不可不选，选错就会报错</p>
+<ul>
+<li>创建表</li>
+</ul>
+```sql
+create table teacher(
+	id int,
+    name varchar(16),
+    gender enum('male','female','others'),
+    hobby set('read books','listen music','play games')
+);
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240528203335256](D:\pycharm\Temporary_notes\图片\image-20240528203335256.png)</span><br><span class="line"></span><br><span class="line">- 插入数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">insert into teacher values(</span><br><span class="line">	1,</span><br><span class="line">    &#x27;dream&#x27;,</span><br><span class="line">    &#x27;male&#x27;,</span><br><span class="line">    &#x27;read books&#x27;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>再插入数据</li>
+</ul>
+```sql
+insert into teacher values(
+	2,
+    'chimeng',
+    'female',
+    'read books,listen music'
+);
+```
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240528203502521.png" alt="image-20240528203502521"></p>
+<h2 id="【六】总结">【六】总结</h2>
+<h3 id="【1】整数类型">【1】整数类型</h3>
+<ul>
+<li>用于储存整数值</li>
+<li>BIGINT：大整数类型，可以存储更大范围的整数值</li>
+</ul>
+<h3 id="【2】浮点数">【2】浮点数</h3>
+<ul>
+<li>高精度浮点数，用于储存更精确的小数数值</li>
+</ul>
+<h3 id="【3】日期类型">【3】日期类型</h3>
+<ul>
+<li>
+<p>date : 存储年份</p>
+</li>
+<li>
+<p>time ：存储时分秒</p>
+</li>
+<li>
+<p>datetime : 存储年月日时分秒</p>
+</li>
+<li>
+<p>timestamp : 存储年月日时分秒，并自动记录修改的时间戳</p>
+</li>
+<li>
+<p>year ： 年</p>
+</li>
+</ul>
+<h3 id="【4】字符长类型">【4】字符长类型</h3>
+<ul>
+<li>
+<p>开启严格模式</p>
+</li>
+<li>
+<p>char：自动补全长度</p>
+</li>
+<li>
+<p>varchar：不会动不全</p>
+</li>
+</ul>
+<h3 id="【5】枚举和集合">【5】枚举和集合</h3>
+<ul>
+<li>枚举
+<ul>
+<li>只能选择定义好的数据，而且只能选择一个，负责报错</li>
+</ul>
+</li>
+<li>集合
+<ul>
+<li>只能选择定义好的数据，否则会报错，可以多选，多选之间用逗号隔开</li>
+</ul>
+</li>
+</ul>
+<h3 id="【6】约束条件">【6】约束条件</h3>
+<ul>
+<li>
+<p>unsigned 无符号</p>
+<ul>
+<li>unsigned约束条件用于指定某个字段只能包含非负数（正整数或零）。</li>
+<li>当将字段定义为unsigned时，它会限制该字段的取值范围为大于等于零的整数。</li>
+<li>这对于表示计数器、年龄、数量等非负数值的字段非常有用。</li>
+</ul>
+</li>
+<li>
+<p>null 可以为空</p>
+</li>
+<li>
+<p>not null 不可以为空</p>
+</li>
+<li>
+<p>zerofill 某个字段的数据以零填充</p>
+<ul>
+<li>
+<p>zerofill约束条件用于指定某个字段的数据以零填充。</p>
+</li>
+<li>
+<p>当使用zerofill约束时，如果字段被赋予较短的值，MySQL将使用来填充该字段的剩余空间。</p>
+</li>
+<li>
+<ul>
+<li>例如，如果一个字段定义为INT(5) ZEROFILL</li>
+<li>并且赋值为123</li>
+<li>则存储在数据库中的值将是00123。</li>
+<li>这样做可以确保字段的固定长度，方便进行比较和处理。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="【7】严格模式">【7】严格模式</h3>
+<ul>
+<li>查看所有的严格模式
+<ul>
+<li>show variables like ‘%mode’;</li>
+<li>%模糊查询任意长度</li>
+<li>_模糊查询一个长度</li>
+</ul>
+</li>
+<li>修改严格模式
+<ul>
+<li>全局永久性修改
+<ul>
+<li>set global sql_mode = ‘’;</li>
+</ul>
+</li>
+<li>局部临时性修改
+<ul>
+<li>set session sql_mode = ‘’;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/3.2%E4%BF%A1%E5%8F%B7%E9%87%8F%EF%BC%8C%E4%BA%8B%E4%BB%B6/" rel="prev" title="3.2信号量，事件">
+      <i class="fa fa-chevron-left"></i> 3.2信号量，事件
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/3.0session%E5%AF%B9%E8%B1%A1/" rel="next" title="3.0session对象">
+      3.0session对象 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">MySQL的存储引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AF%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-number">1.1.</span> <span class="nav-text">【一】什么是存储引擎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91MySQL%E4%B8%BB%E8%A6%81%E7%9A%84%E5%BC%95%E6%93%8E%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.</span> <span class="nav-text">【二】MySQL主要的引擎介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91Innodb"><span class="nav-number">1.2.1.</span> <span class="nav-text">【1】Innodb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91myisam"><span class="nav-number">1.2.2.</span> <span class="nav-text">【2】myisam</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91memory"><span class="nav-number">1.2.3.</span> <span class="nav-text">【3】memory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91blackhole"><span class="nav-number">1.2.4.</span> <span class="nav-text">【4】blackhole</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%905%E3%80%91%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%95%E6%93%8E"><span class="nav-number">1.2.5.</span> <span class="nav-text">【5】查看所有的数据库引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="nav-number">1.2.6.</span> <span class="nav-text">【2】文件说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89Innodb"><span class="nav-number">1.2.6.1.</span> <span class="nav-text">（1）Innodb</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89myisam"><span class="nav-number">1.2.6.2.</span> <span class="nav-text">（2）myisam</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-blackhole"><span class="nav-number">1.2.6.3.</span> <span class="nav-text">(3)blackhole</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%884%EF%BC%89memory"><span class="nav-number">1.2.6.4.</span> <span class="nav-text">（4）memory</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE"><span class="nav-number">1.2.7.</span> <span class="nav-text">【3】存储数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89memory%E6%95%B0%E6%8D%AE%E6%98%AF%E5%AD%98%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD"><span class="nav-number">1.2.7.1.</span> <span class="nav-text">（2）memory数据是存在内存中</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">MySQL约束条件，严格模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E5%88%9B%E5%BB%BA%E8%A1%A8%E7%9A%84%E5%AE%8C%E6%95%B4%E8%AF%AD%E5%8F%A5"><span class="nav-number">2.1.</span> <span class="nav-text">【一】创建表的完整语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%AE%BD%E5%BA%A6%E9%99%90%E5%88%B6"><span class="nav-number">2.1.1.</span> <span class="nav-text">【2】宽度限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91null"><span class="nav-number">2.1.2.</span> <span class="nav-text">【2】null</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E4%BF%AE%E6%94%B9%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.3.</span> <span class="nav-text">【2】修改严格模式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">MySQL基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">【一】整数类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%88%86%E7%B1%BB"><span class="nav-number">3.1.1.</span> <span class="nav-text">【1】分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E4%BD%9C%E7%94%A8"><span class="nav-number">3.1.2.</span> <span class="nav-text">【2】作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E4%BB%A5TINYINT%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE"><span class="nav-number">3.1.3.</span> <span class="nav-text">【3】以TINYINT存储数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89TINYINT%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE"><span class="nav-number">3.1.3.1.</span> <span class="nav-text">（1）TINYINT存储数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B%E5%8A%A0%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6%EF%BC%88unsigned%EF%BC%88%E6%97%A0%E7%AC%A6%E5%8F%B7%EF%BC%89%EF%BC%89"><span class="nav-number">3.1.3.2.</span> <span class="nav-text">（2）整数类型加约束条件（unsigned（无符号））</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E7%94%A8zerofill"><span class="nav-number">3.1.3.3.</span> <span class="nav-text">（2）用zerofill</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E7%B2%BE%E5%87%86%E5%BA%A6%E9%AA%8C%E8%AF%81"><span class="nav-number">3.1.4.</span> <span class="nav-text">【3】精准度验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E8%A1%A5%E5%85%85char-length"><span class="nav-number">3.1.5.</span> <span class="nav-text">【3】补充char_length</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91char%E4%B8%8Evarchar%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">3.1.6.</span> <span class="nav-text">【4】char与varchar的比较</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89char"><span class="nav-number">3.1.6.1.</span> <span class="nav-text">（1）char</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89varchar"><span class="nav-number">3.1.6.2.</span> <span class="nav-text">（2）varchar</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%9B%9B%E3%80%91%E6%97%B6%E9%97%B4%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.2.</span> <span class="nav-text">【四】时间类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%88%86%E7%B1%BB-2"><span class="nav-number">3.2.1.</span> <span class="nav-text">【1】分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.2.2.</span> <span class="nav-text">【2】示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%94%E3%80%91%E6%9E%9A%E4%B8%BE%E5%92%8C%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.3.</span> <span class="nav-text">【五】枚举和集合类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%9E%9A%E4%B8%BE%E5%92%8C%E9%9B%86%E5%90%88"><span class="nav-number">3.3.1.</span> <span class="nav-text">【1】枚举和集合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%9E%9A%E4%B8%BE%EF%BC%88enum%EF%BC%89%EF%BC%9A%E5%A4%9A%E9%80%89%E4%B8%80"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">（1）枚举（enum）：多选一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E9%9B%86%E5%90%88%EF%BC%88set%EF%BC%89%EF%BC%9A%E5%A4%9A%E9%80%89%E5%A4%9A"><span class="nav-number">3.3.1.2.</span> <span class="nav-text">（2）集合（set）：多选多</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E4%BD%BF%E7%94%A8"><span class="nav-number">3.3.2.</span> <span class="nav-text">【2】使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%9E%9A%E4%B8%BE"><span class="nav-number">3.3.2.1.</span> <span class="nav-text">（1）枚举</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E9%9B%86%E5%90%88%EF%BC%88set%EF%BC%89"><span class="nav-number">3.3.2.2.</span> <span class="nav-text">(2)集合（set）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%85%AD%E3%80%91%E6%80%BB%E7%BB%93"><span class="nav-number">3.4.</span> <span class="nav-text">【六】总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.4.1.</span> <span class="nav-text">【1】整数类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="nav-number">3.4.2.</span> <span class="nav-text">【2】浮点数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E6%97%A5%E6%9C%9F%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.4.3.</span> <span class="nav-text">【3】日期类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E5%AD%97%E7%AC%A6%E9%95%BF%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.4.4.</span> <span class="nav-text">【4】字符长类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%905%E3%80%91%E6%9E%9A%E4%B8%BE%E5%92%8C%E9%9B%86%E5%90%88"><span class="nav-number">3.4.5.</span> <span class="nav-text">【5】枚举和集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%906%E3%80%91%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6"><span class="nav-number">3.4.6.</span> <span class="nav-text">【6】约束条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%907%E3%80%91%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.4.7.</span> <span class="nav-text">【7】严格模式</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

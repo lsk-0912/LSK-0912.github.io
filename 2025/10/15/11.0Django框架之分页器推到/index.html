@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Django框架之分页器推到 【一】引入  前端展示的数据有时候会有很多 一页展示了很多数据，数据量很大，查找不方便  解决办法  做分页处理  【二】分页推到 【1】分析  get请求是可以携带参数的 由此我们可以在前端点击页数的时候，把这个页数一起发送给后端 queryset对象是支持索引取值和切片操作的  不支持负索引取值    【2】代码分析  后端代码分析  在后端通过model.obj">
+<meta property="og:type" content="article">
+<meta property="og:title" content="11.0Django框架之分页器推到">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/11.0Django%E6%A1%86%E6%9E%B6%E4%B9%8B%E5%88%86%E9%A1%B5%E5%99%A8%E6%8E%A8%E5%88%B0/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="Django框架之分页器推到 【一】引入  前端展示的数据有时候会有很多 一页展示了很多数据，数据量很大，查找不方便  解决办法  做分页处理  【二】分页推到 【1】分析  get请求是可以携带参数的 由此我们可以在前端点击页数的时候，把这个页数一起发送给后端 queryset对象是支持索引取值和切片操作的  不支持负索引取值    【2】代码分析  后端代码分析  在后端通过model.obj">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:49.987Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/11.0Django%E6%A1%86%E6%9E%B6%E4%B9%8B%E5%88%86%E9%A1%B5%E5%99%A8%E6%8E%A8%E5%88%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>11.0Django框架之分页器推到 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/11.0Django%E6%A1%86%E6%9E%B6%E4%B9%8B%E5%88%86%E9%A1%B5%E5%99%A8%E6%8E%A8%E5%88%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          11.0Django框架之分页器推到
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:15:49" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>Django框架之分页器推到</h1>
+<h2 id="【一】引入">【一】引入</h2>
+<ul>
+<li>前端展示的数据有时候会有很多</li>
+<li>一页展示了很多数据，数据量很大，查找不方便</li>
+</ul>
+<p>解决办法</p>
+<ul>
+<li>做分页处理</li>
+</ul>
+<h2 id="【二】分页推到">【二】分页推到</h2>
+<h3 id="【1】分析">【1】分析</h3>
+<ul>
+<li>get请求是可以携带参数的</li>
+<li>由此我们可以在前端点击页数的时候，把这个页数一起发送给后端</li>
+<li>queryset对象是支持索引取值和切片操作的
+<ul>
+<li>不支持负索引取值</li>
+</ul>
+</li>
+</ul>
+<h3 id="【2】代码分析">【2】代码分析</h3>
+<ul>
+<li>后端代码分析
+<ul>
+<li>在后端通过model.objects.all()得到所有数据的quertset对象</li>
+<li>queryset对象可以进行切分，但是不支持反向切分</li>
+</ul>
+</li>
+<li>前端展示数据
+<ul>
+<li>在前端需传入当前的页面</li>
+<li>在后端根据指定的页面进行切分</li>
+<li>在前端的url上声明当前的页码</li>
+<li><code>http://127.0.0.1:8000/?page=1</code></li>
+<li>后端的request.GET.get(‘page’)就可以拿到当前的页码</li>
+</ul>
+</li>
+<li>在后端处理
+<ul>
+<li>我们需要</li>
+<li>当前的页码curreny_page</li>
+<li>每一页展示的数据量size</li>
+<li>起始的页码 start_page</li>
+<li>结束的页码 end_page</li>
+<li>queryset对象[起始位置：结束位置]
+<ul>
+<li>列入<code> book_queryset = models.Book.objects.all()[start_page:end_page]</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="【3】代码分析">【3】代码分析</h3>
+<h4 id="1-页器组件参考bootstrap">(1)页器组件参考bootstrap</h4>
+<ul>
+<li>参考bootstrap官方文档，拷贝分页器代码进行优化</li>
+</ul>
+```html
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### (2)优化后的代码</span><br><span class="line"></span><br><span class="line">- 前端</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;link href=&quot;https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</span><br><span class="line">    &lt;script src=&quot;https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&#123;% for user_obj in user_queryset %&#125;</span><br><span class="line">    &lt;p&gt;&#123;&#123; user_obj.username &#125;&#125; : &#123;&#123; user_obj.password &#125;&#125;&lt;/p&gt;</span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line"></span><br><span class="line">&lt;nav aria-label=&quot;Page navigation&quot;&gt;</span><br><span class="line">    &lt;ul class=&quot;pagination&quot;&gt;</span><br><span class="line">        &lt;li&gt;</span><br><span class="line">            &lt;a href=&quot;#&quot; aria-label=&quot;Previous&quot;&gt;</span><br><span class="line">                &lt;span aria-hidden=&quot;true&quot;&gt;&amp;laquo;&lt;/span&gt;</span><br><span class="line">            &lt;/a&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">        &#123;# safe取消转义 - 将后端的html页面进行转义，转为前端页码/也可以后端做这件事  #&#125;</span><br><span class="line">        &#123;&#123; page_html|safe &#125;&#125;</span><br><span class="line">        &lt;li&gt;</span><br><span class="line">            &lt;a href=&quot;#&quot; aria-label=&quot;Next&quot;&gt;</span><br><span class="line">                &lt;span aria-hidden=&quot;true&quot;&gt;&amp;raquo;&lt;/span&gt;</span><br><span class="line">            &lt;/a&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">&lt;/nav&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>后端</li>
+</ul>
+```python
+from django.shortcuts import render
+
+from .models import UserInfo
+
+
+def index(request):
+    # 分页操作 推导
+
+    # （1） 支持切片models.Book.objects.all()[1:20] --- 展示前20条数据
+    # （2） 分页操作
+    # user对象
+    user_obj = UserInfo.objects.all()
+    # 想访问的页数
+    current_page = request.GET.get('page', 1)  # 如果获取不到当前页码就展示第一页
+    # 异常捕获
+    try:
+        current_page = int(current_page)
+    except Exception:
+        current_page = 1
+    # 每页展示多少条
+    per_page_num = 10
+    # 动态计算出需要的总页数
+    all_count = user_obj.count()
+    # divmod得到的是商和余数的元组
+    page_count, more = divmod(all_count, per_page_num)
+    # 要是有余数的话，页面也要加1
+    if more:
+        page_count += 1
+
+    # 纠正左侧负数页的问题
+    left_page_count = current_page
+    if current_page < 6:
+        current_page = 6
+    page_html = ''
+    # 前端动态页面展示 - 后端写好页面传给前端
+    for count in range(current_page - 5, current_page + 6):
+        if left_page_count == count:
+            # 第一页高亮显示
+            page_html += f'<li class="active"><a href="?page={count}" >{count}</a></li>'
+        else:
+            page_html += f'<li><a href="?page={count}" >{count}</a></li>'
+    # 起始位置
+    start_page = (current_page - 1) * per_page_num
+    # 终止位置
+    end_page = current_page * per_page_num
+    # 切片
+    user_queryset = user_obj[start_page:end_page]
+    '''
+    start_page = (current_page-1) * per_page_num
+    end_page = current_page * per_page_num
+    '''
+    return render(request, 'index.html', locals())
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【4】分页器模板</span><br><span class="line"></span><br><span class="line">- 创建一个py文件，把下面的代码放进去</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">class Pagination(object):</span><br><span class="line">    def __init__(self, current_page, all_count, per_page_num=2, pager_count=11):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        封装分页相关数据</span><br><span class="line">        :param current_page: 当前页</span><br><span class="line">        :param all_count:    数据库中的数据总条数</span><br><span class="line">        :param per_page_num: 每页显示的数据条数</span><br><span class="line">        :param pager_count:  最多显示的页码个数</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        try:</span><br><span class="line">            current_page = int(current_page)</span><br><span class="line">        except Exception as e:</span><br><span class="line">            current_page = 1</span><br><span class="line"> </span><br><span class="line">        if current_page &lt; 1:</span><br><span class="line">            current_page = 1</span><br><span class="line"> </span><br><span class="line">        self.current_page = current_page</span><br><span class="line"> </span><br><span class="line">        self.all_count = all_count</span><br><span class="line">        self.per_page_num = per_page_num</span><br><span class="line"> </span><br><span class="line">        # 总页码</span><br><span class="line">        all_pager, tmp = divmod(all_count, per_page_num)</span><br><span class="line">        if tmp:</span><br><span class="line">            all_pager += 1</span><br><span class="line">        self.all_pager = all_pager</span><br><span class="line"> </span><br><span class="line">        self.pager_count = pager_count</span><br><span class="line">        self.pager_count_half = int((pager_count - 1) / 2)</span><br><span class="line"> </span><br><span class="line">    @property</span><br><span class="line">    def start(self):</span><br><span class="line">        return (self.current_page - 1) * self.per_page_num</span><br><span class="line"> </span><br><span class="line">    @property</span><br><span class="line">    def end(self):</span><br><span class="line">        return self.current_page * self.per_page_num</span><br><span class="line"> </span><br><span class="line">    def page_html(self):</span><br><span class="line">        # 如果总页码 &lt; 11个：</span><br><span class="line">        if self.all_pager &lt;= self.pager_count:</span><br><span class="line">            pager_start = 1</span><br><span class="line">            pager_end = self.all_pager + 1</span><br><span class="line">        # 总页码  &gt; 11</span><br><span class="line">        else:</span><br><span class="line">            # 当前页如果&lt;=页面上最多显示11/2个页码</span><br><span class="line">            if self.current_page &lt;= self.pager_count_half:</span><br><span class="line">                pager_start = 1</span><br><span class="line">                pager_end = self.pager_count + 1</span><br><span class="line"> </span><br><span class="line">            # 当前页大于5</span><br><span class="line">            else:</span><br><span class="line">                # 页码翻到最后</span><br><span class="line">                if (self.current_page + self.pager_count_half) &gt; self.all_pager:</span><br><span class="line">                    pager_end = self.all_pager + 1</span><br><span class="line">                    pager_start = self.all_pager - self.pager_count + 1</span><br><span class="line">                else:</span><br><span class="line">                    pager_start = self.current_page - self.pager_count_half</span><br><span class="line">                    pager_end = self.current_page + self.pager_count_half + 1</span><br><span class="line"> </span><br><span class="line">        page_html_list = []</span><br><span class="line">        # 添加前面的nav和ul标签</span><br><span class="line">        page_html_list.append(&#x27;&#x27;&#x27;</span><br><span class="line">                    &lt;nav aria-label=&#x27;Page navigation&gt;&#x27;</span><br><span class="line">                    &lt;ul class=&#x27;pagination&#x27;&gt;</span><br><span class="line">                &#x27;&#x27;&#x27;)</span><br><span class="line">        first_page = &#x27;&lt;li&gt;&lt;a href=&quot;?page=%s&quot;&gt;首页&lt;/a&gt;&lt;/li&gt;&#x27; % (1)</span><br><span class="line">        page_html_list.append(first_page)</span><br><span class="line"> </span><br><span class="line">        if self.current_page &lt;= 1:</span><br><span class="line">            prev_page = &#x27;&lt;li class=&quot;disabled&quot;&gt;&lt;a href=&quot;#&quot;&gt;上一页&lt;/a&gt;&lt;/li&gt;&#x27;</span><br><span class="line">        else:</span><br><span class="line">            prev_page = &#x27;&lt;li&gt;&lt;a href=&quot;?page=%s&quot;&gt;上一页&lt;/a&gt;&lt;/li&gt;&#x27; % (self.current_page - 1,)</span><br><span class="line"> </span><br><span class="line">        page_html_list.append(prev_page)</span><br><span class="line"> </span><br><span class="line">        for i in range(pager_start, pager_end):</span><br><span class="line">            if i == self.current_page:</span><br><span class="line">                temp = &#x27;&lt;li class=&quot;active&quot;&gt;&lt;a href=&quot;?page=%s&quot;&gt;%s&lt;/a&gt;&lt;/li&gt;&#x27; % (i, i,)</span><br><span class="line">            else:</span><br><span class="line">                temp = &#x27;&lt;li&gt;&lt;a href=&quot;?page=%s&quot;&gt;%s&lt;/a&gt;&lt;/li&gt;&#x27; % (i, i,)</span><br><span class="line">            page_html_list.append(temp)</span><br><span class="line"> </span><br><span class="line">        if self.current_page &gt;= self.all_pager:</span><br><span class="line">            next_page = &#x27;&lt;li class=&quot;disabled&quot;&gt;&lt;a href=&quot;#&quot;&gt;下一页&lt;/a&gt;&lt;/li&gt;&#x27;</span><br><span class="line">        else:</span><br><span class="line">            next_page = &#x27;&lt;li&gt;&lt;a href=&quot;?page=%s&quot;&gt;下一页&lt;/a&gt;&lt;/li&gt;&#x27; % (self.current_page + 1,)</span><br><span class="line">        page_html_list.append(next_page)</span><br><span class="line"> </span><br><span class="line">        last_page = &#x27;&lt;li&gt;&lt;a href=&quot;?page=%s&quot;&gt;尾页&lt;/a&gt;&lt;/li&gt;&#x27; % (self.all_pager,)</span><br><span class="line">        page_html_list.append(last_page)</span><br><span class="line">        # 尾部添加标签</span><br><span class="line">        page_html_list.append(&#x27;&#x27;&#x27;</span><br><span class="line">                                           &lt;/nav&gt;</span><br><span class="line">                                           &lt;/ul&gt;</span><br><span class="line">                                       &#x27;&#x27;&#x27;)</span><br><span class="line">        return &#x27;&#x27;.join(page_html_list)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>前端</li>
+</ul>
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            {% for user in page_queryset %}
+            <p>{{ user.username }}</p>
+            {% endfor %}
+            {{ page_obj.page_html|safe }}
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 后端</span><br><span class="line"></span><br><span class="line">  - 使用引入创建的py文件</span><br><span class="line"></span><br><span class="line">  - &#123;% raw %&#125;```python</span><br><span class="line">    from user.paginations import Pagination</span><br><span class="line">    ``````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">from user.paginations import Pagination</span><br><span class="line"></span><br><span class="line">def index(request):</span><br><span class="line">    # 拿到模型表里面的所有数据</span><br><span class="line">    user_list = UserInfo.objects.all()</span><br><span class="line">    # 从路径里面拿到页面,默认第一页</span><br><span class="line">    current_page = request.GET.get(&#x27;page&#x27;, 1)</span><br><span class="line">    # 拿到总页数</span><br><span class="line">    all_count = user_list.count()</span><br><span class="line">    # current_page 得到的页码数，all_count总页数，per_page_num每个页面只能展示多少条数据</span><br><span class="line">    page_obj = Pagination(current_page =current_page, all_count=all_count, per_page_num=10)</span><br><span class="line">    # 对象进行切分</span><br><span class="line">    page_queryset = user_list[page_obj.start:page_obj.end]</span><br><span class="line">    return render(request, &#x27;index.html&#x27;, locals())</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【5】总结</span><br><span class="line"></span><br><span class="line">- 创建一个py文件</span><br><span class="line"></span><br><span class="line">- 将分页器源码放进去</span><br><span class="line"></span><br><span class="line">- 在视图函数中使用</span><br><span class="line"></span><br><span class="line">  - 再导入分页器类</span><br><span class="line"></span><br><span class="line">    - ```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">      from user.paginations import Pagination</span><br><span class="line">      &#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line">  - 查询模型表所有数据</span><br><span class="line"></span><br><span class="line">    - ```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">      user_list = UserInfo.objects.all()</span><br><span class="line">      &#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line">  - 获取当前页面</span><br><span class="line"></span><br><span class="line">    - ```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">      current_page = request.GET.get(&quot;page&quot;, 1)</span><br><span class="line">      &#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line">  - 创建分页器对象</span><br><span class="line"></span><br><span class="line">    - ```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">      all_count = user_list.count()</span><br><span class="line">      &#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line">    - ````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">      page_obj = Pagination(current_page=current_page, all_count=all_count, per_page_num=10)</span><br><span class="line">      &#123;% raw %&#125;````</span><br><span class="line"></span><br><span class="line">  - 对原始数据进行切片</span><br><span class="line"></span><br><span class="line">    - ```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">      page_queryset = user_list[page_obj.start:page_obj.end]</span><br><span class="line">      &#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line">  - 返回前端进行渲染</span><br><span class="line"></span><br><span class="line">    - ```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">python</span><br><span class="line">      return render(request,&#x27;index.html&#x27;, locals())</span><br><span class="line">      &#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line">- 前端使用</span><br><span class="line"></span><br><span class="line">  - ```</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line">html</span><br><span class="line">    &#123;# 遍历 切好的page_queryset进行渲染#&#125;</span><br><span class="line">    &#123;% raw %&#125;``````python</span><br><span class="line">&#123;% for user in page_queryset %&#125;</span><br><span class="line">    &lt;p&gt;&#123;&#123; user.username &#125;&#125;&lt;/p&gt;</span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>添加分页器
+<ul>
+<li>在下面添加分页器</li>
+</ul>
+</li>
+</ul>
+```python
+{{ page_obj.page_html|safe }}
+```
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/14.0Django%E6%A1%86%E6%9E%B6%E4%B9%8BCookie%E5%92%8CSession.m/" rel="prev" title="14.0Django框架之Cookie和Session.m">
+      <i class="fa fa-chevron-left"></i> 14.0Django框架之Cookie和Session.m
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/10.0selenium%E6%A1%86%E6%9E%B6%E4%B9%8B%E6%B5%8F%E8%A7%88%E5%99%A8%E6%93%8D%E4%BD%9C/" rel="next" title="10.0selenium框架之浏览器操作">
+      10.0selenium框架之浏览器操作 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Django框架之分页器推到</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E5%BC%95%E5%85%A5"><span class="nav-number">1.1.</span> <span class="nav-text">【一】引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E5%88%86%E9%A1%B5%E6%8E%A8%E5%88%B0"><span class="nav-number">1.2.</span> <span class="nav-text">【二】分页推到</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%88%86%E6%9E%90"><span class="nav-number">1.2.1.</span> <span class="nav-text">【1】分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">1.2.2.</span> <span class="nav-text">【2】代码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">1.2.3.</span> <span class="nav-text">【3】代码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E9%A1%B5%E5%99%A8%E7%BB%84%E4%BB%B6%E5%8F%82%E8%80%83bootstrap"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">(1)页器组件参考bootstrap</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

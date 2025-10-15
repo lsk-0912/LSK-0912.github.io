@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="MySQL之过滤条件 【一】过滤条件语法查询 &#96;&#96;&#96;sql select *&#x2F;字段名 from 表名 where 筛选的条件; 1234567891011121314151617181920212223&#123;% endraw %&#125;- *代表所有的内容，也可以换成其他内容- 查找的顺序  - from --》确定在那个表  - where --》确定一下是什么条件，在表中过滤  -">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5.0MySQL之过滤条件">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/5.0MySQL%E4%B9%8B%E8%BF%87%E6%BB%A4%E6%9D%A1%E4%BB%B6/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="MySQL之过滤条件 【一】过滤条件语法查询 &#96;&#96;&#96;sql select *&#x2F;字段名 from 表名 where 筛选的条件; 1234567891011121314151617181920212223&#123;% endraw %&#125;- *代表所有的内容，也可以换成其他内容- 查找的顺序  - from --》确定在那个表  - where --》确定一下是什么条件，在表中过滤  -">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530095357395.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530095434612.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530095504090.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530111453047.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530112051038.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530112841285.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530143459090.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530144008079.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530145033685.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530150012195.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530151630258.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530152911725.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530153532560.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530155128256.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530155630066.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530160414823.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530161306202.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530161835153.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530163119615.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530163310356.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530163921431.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530164500012.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530165437907.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530170150864.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530170724503.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530171758235.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530172103202.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530172353608.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530173051856.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530174046847.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530174448579.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530174707893.png">
+<meta property="og:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530174819609.png">
+<meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.277Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530095357395.png">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/5.0MySQL%E4%B9%8B%E8%BF%87%E6%BB%A4%E6%9D%A1%E4%BB%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>5.0MySQL之过滤条件 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/5.0MySQL%E4%B9%8B%E8%BF%87%E6%BB%A4%E6%9D%A1%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          5.0MySQL之过滤条件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>MySQL之过滤条件</h1>
+<h2 id="【一】过滤条件语法查询">【一】过滤条件语法查询</h2>
+```sql
+select */字段名 from 表名 where 筛选的条件;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- *代表所有的内容，也可以换成其他内容</span><br><span class="line">- 查找的顺序</span><br><span class="line">  - from --》确定在那个表</span><br><span class="line">  - where --》确定一下是什么条件，在表中过滤</span><br><span class="line">  - select--》过滤出自己想要的数据</span><br><span class="line"></span><br><span class="line">## 【二】数据准备</span><br><span class="line"></span><br><span class="line">### 【1】创建库</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">-- 先判断表是否存在，存在删除，不存在什么都不发生</span><br><span class="line">drop table if exists emp;</span><br><span class="line"></span><br><span class="line">-- 创建库</span><br><span class="line">create database emp;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530095357395.png" alt="image-20240530095357395"></p>
+<h3 id="【2】创建表">【2】创建表</h3>
+```sql
+-- 切换到库
+use data;
+
+-- 创建表
+create table emp(
+id int not null unique auto_increment,
+    name varchar(20) not null,
+    sex enum("male","female") not null default "male",
+    age int(3) unsigned not null default 28,
+    hire_date date not null,
+    post varchar(50),
+    post_comment varchar(100),
+    salary double(15,2),
+    office int,
+    depart_id int
+);
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530095411650](D:\pycharm\Temporary_notes\图片\image-20240530095411650.png)</span><br><span class="line"></span><br><span class="line">### 【3】查看表结构</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">desc emp;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530095434612.png" alt="image-20240530095434612"></p>
+<h3 id="【4】插入数据">【4】插入数据</h3>
+```sql
+insert into emp(name, sex, age, hire_date, post, salary, office, depart_id) values
+("dream", "male", 78, '20220306', "陌夜痴梦久生情", 730.33, 401, 1), # 以下是教学部
+("mengmeng", "female", 25, '20220102', "teacher", 12000.50, 401, 1),
+("xiaomeng", "male", 35, '20190607', "teacher", 15000.99, 401, 1),
+("xiaona", "female", 29, '20180906', "teacher", 11000.80, 401, 1),
+("xiaoqi", "female", 27, '20220806', "teacher", 13000.70, 401, 1),
+("suimeng", "male", 33, '20230306', "teacher", 14000.62, 401, 1), # 以下是销售部
+("娜娜", "female", 69, '20100307', "sale", 300.13, 402, 2),
+("芳芳", "male", 45, '20140518', "sale", 400.45, 402, 2),
+("小明", "male", 34, '20160103', "sale", 350.80, 402, 2),
+("亚洲", "female", 42, '20170227', "sale", 320.99, 402, 2),
+("华华", "female", 55, '20180319', "sale", 380.75, 402, 2),
+("田七", "male", 44, '20230808', "sale", 420.33, 402, 2), # 以下是运行部
+("大古", "female", 66, '20180509', "operation", 630.33, 403, 3),
+("张三", "male", 51, '20191001', "operation", 410.25, 403, 3),
+("李四", "male", 47, '20200512', "operation", 330.62, 403, 3),
+("王五", "female", 39, '20210203', "operation", 370.98, 403, 3),
+("赵六", "female", 36, '20220724', "operation", 390.15, 403, 3);
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530095451586](D:\pycharm\Temporary_notes\图片\image-20240530095451586.png)</span><br><span class="line"></span><br><span class="line">### 【5】查看插入的数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select * from emp;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530095504090.png" alt="image-20240530095504090"></p>
+<h3 id="【6】格式化美化数据">【6】格式化美化数据</h3>
+```sql
+selcet * from emp\G;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530095523427](D:\pycharm\Temporary_notes\图片\image-20240530095523427.png)</span><br><span class="line"></span><br><span class="line">## 【三】筛选条件where</span><br><span class="line"></span><br><span class="line">### 【1】作用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select * from * where *;</span><br><span class="line">-- 先走where 在走select</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对整体的数据进行筛选</li>
+</ul>
+<h3 id="【2】查询3-id-6的数据">【2】查询3&lt;=id&lt;=6的数据</h3>
+<ul>
+<li>用到查询条件 and（和）</li>
+</ul>
+```sql
+select id,name,age from emp where id>=3 and id<=6;
+
+select id,name,age from emp where id between 3 and 6;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530100403340](D:\pycharm\Temporary_notes\图片\image-20240530100403340.png)</span><br><span class="line"></span><br><span class="line">![image-20240530100557236](D:\pycharm\Temporary_notes\图片\image-20240530100557236.png)</span><br><span class="line"></span><br><span class="line">### 【3】查看薪水的1w2或者1w3或者730的数据</span><br><span class="line"></span><br><span class="line">- 用到查询条件in，or</span><br><span class="line">- in</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select * from emp where salary in (12000.50,13000.70,730.33);</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530111453047.png" alt="image-20240530111453047"></p>
+<ul>
+<li>or</li>
+</ul>
+```sql
+select * from emp where salary=12000.50 or salary = 13000.70 or salary = 730.33;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530111606807](D:\pycharm\Temporary_notes\图片\image-20240530111606807.png)</span><br><span class="line"></span><br><span class="line">### 【4】查询员工姓名中包含字母o的姓名和薪资</span><br><span class="line"></span><br><span class="line">- 用到模糊查询：like</span><br><span class="line">- %任意字符</span><br><span class="line">- _一个字符</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select name,salary from emp where name like &#x27;%o%&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530112051038.png" alt="image-20240530112051038"></p>
+<h3 id="【5】查询数据指定别名">【5】查询数据指定别名</h3>
+<ul>
+<li>在字段名后面： as ‘别名’</li>
+<li>比如：查询员工姓名中包含字母o的姓名和薪资</li>
+</ul>
+```sql
+select name as '员工名字',salary as '薪资' from emp where name like '%o%';
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530112553024](D:\pycharm\Temporary_notes\图片\image-20240530112553024.png)</span><br><span class="line"></span><br><span class="line">### 【6】查询员工是由六个字符组成的姓名和薪资(char_length)</span><br><span class="line"></span><br><span class="line">- 模糊查询 ：like &#x27;______&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select name as &#x27;员工名字&#x27;,salary as &#x27;薪资&#x27; from emp where name like &#x27;______&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530112841285.png" alt="image-20240530112841285"></p>
+<ul>
+<li>char_length : 查询长度</li>
+</ul>
+```sql
+select name as '员工名字',salary as '薪资' from emp where char_length(name)=6;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530113056326](D:\pycharm\Temporary_notes\图片\image-20240530113056326.png)</span><br><span class="line"></span><br><span class="line">### 【7】查询 id&lt;3 或者 id&gt;6 的数据</span><br><span class="line"></span><br><span class="line">- 用到关键字 ： between ：之间的</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select * from emp where id not between 3 and 6; </span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530143459090.png" alt="image-20240530143459090"></p>
+<h3 id="【8】查询岗位描述为空的员工名和岗位名">【8】查询岗位描述为空的员工名和岗位名</h3>
+<ul>
+<li>针对null不能用=，要用is</li>
+<li>=</li>
+</ul>
+```sql
+select name as '员工名',post as '部门' from emp where post_comment=null;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530143911735](D:\pycharm\Temporary_notes\图片\image-20240530143911735.png)</span><br><span class="line"></span><br><span class="line">- is</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select name as &#x27;员工名&#x27;,post as &#x27;部门&#x27; from emp where post_comment is null;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530144008079.png" alt="image-20240530144008079"></p>
+<h2 id="【四】筛选条件group-by-分组">【四】筛选条件group by(分组)</h2>
+```sql
+-- 语法
+select * from * group by *;
+-- 结合where
+select * from * where * group by *;
+-- group by 后面跟时通过那个字段进行分组
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【1】什么时候需要分组，分组的目的</span><br><span class="line"></span><br><span class="line">- 关键字：最高，最低，平均，每个</span><br><span class="line">- 目的：为了对分组内的数据进行处理</span><br><span class="line"></span><br><span class="line">### 【2】聚合函数</span><br><span class="line"></span><br><span class="line">- min ：最小值</span><br><span class="line">- max ：最大值</span><br><span class="line">- avg : 平均值</span><br><span class="line">- count : 计数</span><br><span class="line">- sun ：总和值</span><br><span class="line">- group_concat: 获得分组之后的具体值</span><br><span class="line">- concat : 查询数据，不分组也可以用</span><br><span class="line"></span><br><span class="line">### 【3】按照部门对所有员工进行分组，修改严格模式</span><br><span class="line"></span><br><span class="line">- 查询数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select * from emp group by post;</span><br><span class="line"></span><br><span class="line">-- 报错</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530145033685.png" alt="image-20240530145033685"></p>
+<ul>
+<li>解决办法
+<ul>
+<li>修改严格模式</li>
+</ul>
+</li>
+</ul>
+```sql
+-- 查看严格模式--》用模糊查询
+show variables like '%mode%';
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 删除严格模式--》ONLY_FULL_GROUP_BY</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">set global sql_mode = &#x27;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION&#x27;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>退出客户端重新进入</li>
+</ul>
+```sql
+select * from emp group by post;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530145722489](D:\pycharm\Temporary_notes\图片\image-20240530145722489.png)</span><br><span class="line"></span><br><span class="line">- 查询数据--》设置严格模式后，按照什么分组就只能拿到什么</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select post from emp group by post;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530150012195.png" alt="image-20240530150012195"></p>
+<h3 id="【4】获取每个部门的最高薪资">【4】获取每个部门的最高薪资</h3>
+<ul>
+<li>用到了聚合函数 max
+<ul>
+<li>取最大值</li>
+</ul>
+</li>
+<li>要看全部信息：把<code>post as '部门',max(salary) as '最高薪资'</code>换成*就好。</li>
+</ul>
+```sql
+select post as '部门',max(salary) as '最高薪资' from emp group by post;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530151402555](D:\pycharm\Temporary_notes\图片\image-20240530151402555.png)</span><br><span class="line"></span><br><span class="line">### 【5】获取每个部门的最低薪资</span><br><span class="line"></span><br><span class="line">- 用到了聚合函数min</span><br><span class="line">  - 取最小值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select post as &#x27;部门&#x27;,min(salary) as &#x27;最低薪资&#x27; from emp group by post;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530151630258.png" alt="image-20240530151630258"></p>
+<h3 id="【6】获取每个部门的平均薪资">【6】获取每个部门的平均薪资</h3>
+<ul>
+<li>用到了聚合函数的avg
+<ul>
+<li>获得平均薪资</li>
+</ul>
+</li>
+</ul>
+```sql
+select post as '部门',avg(salary) as '平均薪资' from emp group by post;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530152102132](D:\pycharm\Temporary_notes\图片\image-20240530152102132.png)</span><br><span class="line"></span><br><span class="line">### 【7】获得每个部门的工资总和</span><br><span class="line"></span><br><span class="line">- 用到了聚合函数sum</span><br><span class="line">  - 总和</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select post as &#x27;部门&#x27;,sum(salary) as &#x27;薪资综和&#x27; from emp group by post;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530152911725.png" alt="image-20240530152911725"></p>
+<h3 id="【8】获取每各部门的人数">【8】获取每各部门的人数</h3>
+<ul>
+<li>用到了聚合函数count
+<ul>
+<li>计数</li>
+</ul>
+</li>
+</ul>
+```sql
+-- 也可与根据年龄和id 进行查询，不能对null计数
+select post as '部门',count(salary) as '部门人数' from emp group by post; 
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530153230636](D:\pycharm\Temporary_notes\图片\image-20240530153230636.png)</span><br><span class="line"></span><br><span class="line">- null--》count</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select post as &#x27;部门&#x27;,count(post_comment) as &#x27;部门人数&#x27; from emp group by post; </span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530153532560.png" alt="image-20240530153532560"></p>
+<h3 id="【9】查询分组之后的部门名称和每个部门下所有的员工姓名-group-concat">【9】查询分组之后的部门名称和每个部门下所有的员工姓名(group_concat)</h3>
+<h4 id="（1）查询数据">（1）查询数据</h4>
+<ul>
+<li>用到了聚合函数：group_concat
+<ul>
+<li>获得分组之后的具体的值</li>
+<li>还支持拼接操作</li>
+</ul>
+</li>
+</ul>
+```sql
+select post as '部门',group_concat(name) as '员工名字' from emp group by post;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530154905731](D:\pycharm\Temporary_notes\图片\image-20240530154905731.png)</span><br><span class="line"></span><br><span class="line">#### （2）拼接数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select post as &#x27;部门&#x27;,group_concat(name,&#x27;_nb&#x27;) as &#x27;拼接的员工名字&#x27; from emp group by post;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530155128256.png" alt="image-20240530155128256"></p>
+<h4 id="（3）还可以添加多个字段进行拼接-查询">（3）还可以添加多个字段进行拼接 查询</h4>
+```sql
+select post as '部门',group_concat(name,'_nb','&',salary) as '拼接的员工名字和薪资' from emp group by post;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530155312713](D:\pycharm\Temporary_notes\图片\image-20240530155312713.png)</span><br><span class="line"></span><br><span class="line">#### （4）查询数据--》不分组之前用concat</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select concat(name) as &#x27;名字&#x27;,concat(age) as &#x27;年龄&#x27; from emp;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530155630066.png" alt="image-20240530155630066"></p>
+<h4 id="（5）as语句–》临时改表名">（5）as语句–》临时改表名</h4>
+<ul>
+<li>还可以给表改名字–》只是临时的</li>
+</ul>
+```sql
+select id,name from emp;
+
+select emp.id,emp.name from emp;
+
+-- 两个结果是一样的
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530160107792](D:\pycharm\Temporary_notes\图片\image-20240530160107792.png)</span><br><span class="line"></span><br><span class="line">- 改表名</span><br><span class="line">  - 改的时候也要把字段名前的表名一起改了</span><br><span class="line">  - 不一起改的话就会报错</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select new_emp.id,new_emp.name from emp as new_emp;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530160414823.png" alt="image-20240530160414823"></p>
+<p>【10】查询每个人的年薪</p>
+```sql
+select name as '名字',salary*12 as '年薪' from emp;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530160636311](D:\pycharm\Temporary_notes\图片\image-20240530160636311.png)</span><br><span class="line"></span><br><span class="line">### 【11】筛选条件group by(分组)的注意点</span><br><span class="line"></span><br><span class="line">- 关键字where和group by同时出现时</span><br><span class="line">  - where先对整条数据进行过滤</span><br><span class="line">  - group by在对数据进行分组</span><br><span class="line">- where不能使用聚合函数</span><br><span class="line">  - 不分组，一张表就是一组</span><br><span class="line">  - 用了就会报错</span><br><span class="line">- 集合函数只能在分组之后使用</span><br><span class="line"></span><br><span class="line">#### （1）统计各部门年龄在 30 岁以上的员工的平均薪资</span><br><span class="line"></span><br><span class="line">- 先过滤数据的到岁以上数据的员工信息</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select * from emp where age &gt; 30;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530161306202.png" alt="image-20240530161306202"></p>
+<ul>
+<li>在进行分组得到部门</li>
+</ul>
+```sql
+select * from emp where age > 30 group by post;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530161609582](D:\pycharm\Temporary_notes\图片\image-20240530161609582.png)</span><br><span class="line"></span><br><span class="line">- 将两个数据结合</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select post as &#x27;部门&#x27;,avg(salary) as &#x27;平均薪资&#x27; from emp where age &gt; 30 group by post;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530161835153.png" alt="image-20240530161835153"></p>
+<h2 id="【五】筛选条件之having-分组之后筛选">【五】筛选条件之having(分组之后筛选)</h2>
+<h3 id="【1】介绍">【1】介绍</h3>
+<ul>
+<li>having和where两个功能一样
+<ul>
+<li>一个是where是在分组前进行筛选</li>
+<li>一个是having是在分组后进行筛选</li>
+</ul>
+</li>
+<li>having可以直接使用聚合函数</li>
+</ul>
+<h3 id="【2】统计各部门年龄在-30-岁以上的员工的工资，并且保留平均薪资大于1w的部门">【2】统计各部门年龄在 30 岁以上的员工的工资，并且保留平均薪资大于1w的部门</h3>
+<ul>
+<li>分析：where 30年龄以上的员工</li>
+<li>group by 分组 port 平均薪资</li>
+<li>having 大于1w的部门</li>
+</ul>
+```sql
+-- where
+select * from emp where age>30;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530163057513](D:\pycharm\Temporary_notes\图片\image-20240530163057513.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">-- group by</span><br><span class="line">select post,salary from emp group by post;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530163119615.png" alt="image-20240530163119615"></p>
+```sql
+-- 结合 where，group by，having
+select post,avg(salary) from emp 
+where age>30  
+group by post 
+having avg(salary)>10000;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530163138931](D:\pycharm\Temporary_notes\图片\image-20240530163138931.png)</span><br><span class="line"></span><br><span class="line">- 还可以给字段名改名字</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">-- 针对聚合函数 如果还需要在其他地方作为条件使用 可以先起别名</span><br><span class="line">select post,avg(salary) as avg_salary from emp </span><br><span class="line">  where age&gt;30 </span><br><span class="line">  group by post</span><br><span class="line">  having avg_salary &gt; 10000</span><br><span class="line">  ;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530163310356.png" alt="image-20240530163310356"></p>
+<h2 id="【六】筛选条件之distinct-去重">【六】筛选条件之distinct(去重)</h2>
+<ul>
+<li>
+<p>distinct ： 去除重复的</p>
+</li>
+<li>
+<p>数据完全一样才可以去重</p>
+</li>
+<li>
+<p>一定义要注意主键</p>
+<ul>
+<li>主键存在是一定不可能重复的</li>
+<li>所以有主键用distinct无效</li>
+</ul>
+</li>
+</ul>
+<h3 id="【1】对表emp中的age和id去重">【1】对表emp中的age和id去重</h3>
+<ul>
+<li>id是主键约束，不可能重复</li>
+</ul>
+```sql
+select distinct id,age from emp;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530163818036](D:\pycharm\Temporary_notes\图片\image-20240530163818036.png)</span><br><span class="line"></span><br><span class="line">### 【2】对表emp中的age去重</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select distinct age from emp;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530163921431.png" alt="image-20240530163921431"></p>
+<h2 id="【七】筛选条件之order-by-排序">【七】筛选条件之order by(排序)</h2>
+<ul>
+<li>order by : 默认是升序</li>
+<li>asc 默认是修改升序，可省略不写</li>
+<li>desc 降序</li>
+</ul>
+<h3 id="【1】将表emp按照薪资排序–-升序">【1】将表emp按照薪资排序–&gt;升序</h3>
+```sql
+select * from emp order by salary;
+
+select * from emp order by salary asc;
+
+-- 两个数据一样
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530164347160](D:\pycharm\Temporary_notes\图片\image-20240530164347160.png)</span><br><span class="line"></span><br><span class="line">### 【2】将表emp按照薪资排序--&gt;降序</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select * from emp order by salary desc;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530164500012.png" alt="image-20240530164500012"></p>
+<h3 id="【3】将emp表中的数据按照日期-升序-和性别-降序-排序">【3】将emp表中的数据按照日期(升序)和性别(降序)排序</h3>
+<ul>
+<li>方法：order by 后面可以跟多个参数</li>
+</ul>
+```sql
+select  * from emp order by sex asc,hire_date desc;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530165230838](D:\pycharm\Temporary_notes\图片\image-20240530165230838.png)</span><br><span class="line"></span><br><span class="line">### 【4】混合排序</span><br><span class="line"></span><br><span class="line">统计各部门年龄在 10 岁以上的员工的工资，并且保留平均薪资大于1000的部门，对平均工资进行排序</span><br><span class="line"></span><br><span class="line">- 统计各部门年龄在 10 岁以上的员工</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">-- where</span><br><span class="line">select * from emp where age&gt;10;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530165437907.png" alt="image-20240530165437907"></p>
+<ul>
+<li>统计各部门年龄在 10 岁以上的员工的工资</li>
+</ul>
+```sql
+select name,salary from emp where age>10 group by salary;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530165641048](D:\pycharm\Temporary_notes\图片\image-20240530165641048.png)</span><br><span class="line"></span><br><span class="line">- 统计各部门年龄在 10 岁以上的员工的工资，并且保留平均薪资大于100的部门</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select post,avg(salary) from emp </span><br><span class="line">where age&gt;10 </span><br><span class="line">group by post</span><br><span class="line">having avg(salary)&gt;100;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530170150864.png" alt="image-20240530170150864"></p>
+<ul>
+<li>统计各部门年龄在 10 岁以上的员工的工资，并且保留平均薪资大于1000的部门，对平均工资进行排序</li>
+</ul>
+```sql
+select post,avg(salary) from emp 
+where age>10 
+group by post
+having avg(salary)>100
+order by avg(salary) desc;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530170157695](D:\pycharm\Temporary_notes\图片\image-20240530170157695.png)</span><br><span class="line"></span><br><span class="line">## 【八】筛选条件之limit（限制展示条数）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select * from * where * limit stare_index,number;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>
+<p>limit ：限制展示的条数</p>
+</li>
+<li>
+<p>第一个参数是o索引位置，第二个是打印的条数</p>
+</li>
+</ul>
+<h3 id="【1】查询数据：单个数字">【1】查询数据：单个数字</h3>
+<ul>
+<li>单个数字就是其实索引位置就是0+1，从零开始，打印打印10条</li>
+</ul>
+```sql
+select * from emp limit 10;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530170452839](D:\pycharm\Temporary_notes\图片\image-20240530170452839.png)</span><br><span class="line"></span><br><span class="line">### 【2】查询数据：多限制</span><br><span class="line"></span><br><span class="line">- 0，6：---》从0+1的位置开始打印，打印6条</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select * from emp limit 0,6;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530170724503.png" alt="image-20240530170724503"></p>
+<h3 id="【3】查询工资最高的人的详细信息">【3】查询工资最高的人的详细信息</h3>
+<ul>
+<li>升序–》在打印</li>
+</ul>
+```sql
+select * from emp order by salary limit 1;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530170952254](D:\pycharm\Temporary_notes\图片\image-20240530170952254.png)</span><br><span class="line"></span><br><span class="line">## 【九】筛选条件之正则</span><br><span class="line"></span><br><span class="line">- 定义正则表必须字母打字</span><br><span class="line"></span><br><span class="line">### 【1】语法</span><br><span class="line"></span><br><span class="line">- 属性名 ：查询的字段名称</span><br><span class="line">- 匹配方式 ：哪种方式来匹配查询</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">属性名 REGEXP &#x27;匹配方式&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="【2】匹配方式">【2】匹配方式</h3>
+<ul>
+<li>“匹配方式”中有很多的模式匹配字符，它们分别表示不同的意思。</li>
+<li>下表列出了 REGEXP 操作符中常用的匹配方式。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+<th>例子</th>
+<th>匹配值示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>^</td>
+<td>匹配文本的开始字符</td>
+<td>‘^b’ 匹配以字母 b 开头的字符串</td>
+<td>book、big、banana、bike</td>
+</tr>
+<tr>
+<td>$</td>
+<td>匹配文本的结束字符</td>
+<td>‘st$’ 匹配以 st 结尾的字符串</td>
+<td>test、resist、persist</td>
+</tr>
+<tr>
+<td>.</td>
+<td>匹配任何单个字符</td>
+<td>‘b.t’ 匹配任何 b 和 t 之间有一个字符</td>
+<td>bit、bat、but、bite</td>
+</tr>
+<tr>
+<td>*</td>
+<td>匹配前面的字符 0 次或多次</td>
+<td>‘f*n’ 匹配字符 n 前面有任意个字符 f</td>
+<td>fn、fan、faan、abcn</td>
+</tr>
+<tr>
+<td>+</td>
+<td>匹配前面的字符 1 次或多次</td>
+<td>‘ba+’ 匹配以 b 开头，后面至少紧跟一个 a</td>
+<td>ba、bay、bare、battle</td>
+</tr>
+<tr>
+<td>?</td>
+<td>匹配前面的字符 0 次或1次</td>
+<td>‘sa?’ 匹配0个或1个a字符</td>
+<td>sa、s</td>
+</tr>
+<tr>
+<td>字符串</td>
+<td>匹配包含指定字符的文本</td>
+<td>‘fa’ 匹配包含‘fa’的文本</td>
+<td>fan、afa、faad</td>
+</tr>
+<tr>
+<td>[字符集合]</td>
+<td>匹配字符集合中的任何一个字符</td>
+<td>‘[xz]’ 匹配 x 或者 z</td>
+<td>dizzy、zebra、x-ray、extra</td>
+</tr>
+<tr>
+<td>[^]</td>
+<td>匹配不在括号中的任何字符</td>
+<td>‘[^abc]’ 匹配任何不包含 a、b 或 c 的字符串</td>
+<td>desk、fox、f8ke</td>
+</tr>
+<tr>
+<td>字符串{n,}</td>
+<td>匹配前面的字符串至少 n 次</td>
+<td>‘b{2}’ 匹配 2 个或更多的 b</td>
+<td>bbb、bbbb、bbbbbbb</td>
+</tr>
+<tr>
+<td>字符串{n,m}</td>
+<td>匹配前面的字符串至少 n 次， 至多 m 次</td>
+<td>‘b{2,4}’ 匹配最少 2 个，最多 4 个 b</td>
+<td>bbb、bbbb</td>
+</tr>
+</tbody>
+</table>
+<h3 id="【3】案例">【3】案例</h3>
+<ul>
+<li>创建一个表</li>
+</ul>
+```sql
+DROP TABLE IF EXISTS `person`;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 创建表</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">CREATE TABLE `person`  (</span><br><span class="line">  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,</span><br><span class="line">  `age` int(40) NULL DEFAULT NULL,</span><br><span class="line">  `heigh` int(40) NULL DEFAULT NULL,</span><br><span class="line">  `sex` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL</span><br><span class="line">) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530171758235.png" alt="image-20240530171758235"></p>
+<ul>
+<li>插入数据</li>
+</ul>
+```sql
+INSERT INTO `person` VALUES ('Thomas ', 25, 168, '男');
+INSERT INTO `person` VALUES ('Tom ', 20, 172, '男');
+INSERT INTO `person` VALUES ('Dany', 29, 175, '男');
+INSERT INTO `person` VALUES ('Jane', 27, 171, '男');
+INSERT INTO `person` VALUES ('Susan', 24, 173, '女');
+INSERT INTO `person` VALUES ('Green', 25, 168, '女');
+INSERT INTO `person` VALUES ('Henry', 21, 160, '女');
+INSERT INTO `person` VALUES ('Lily', 18, 190, '男');
+INSERT INTO `person` VALUES ('LiMing', 19, 187, '男');
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530171816521](D:\pycharm\Temporary_notes\图片\image-20240530171816521.png)</span><br><span class="line"></span><br><span class="line">- 查看数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````sql</span><br><span class="line">select * from person:</span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530171918210](D:\pycharm\Temporary_notes\图片\image-20240530171918210.png)</span><br><span class="line"></span><br><span class="line">#### (1)查询 name 字段以j开头的记录</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select * from person where name REGEXP&#x27;^j&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530172103202.png" alt="image-20240530172103202"></p>
+<h4 id="（2）查询-name-字段以“y”结尾的记录">（2）查询 name 字段以“y”结尾的记录</h4>
+```sql
+select * from person where name REGEXP'y$';
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530172240305](D:\pycharm\Temporary_notes\图片\image-20240530172240305.png)</span><br><span class="line"></span><br><span class="line">#### (3)查询 name 字段值包含“a”和“y”，且两个字母之间只有一个字母的记录</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select * from person where name REGEXP&#x27;a.y&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530172353608.png" alt="image-20240530172353608"></p>
+<h4 id="4-查询-name-字段值包含字母“T”，且“T”后面出现字母“h”的记录">(4)查询 name 字段值包含字母“T”，且“T”后面出现字母“h”的记录</h4>
+<ul>
+<li>不区分大小写</li>
+</ul>
+```sql
+select * from person where name REGEXP'Th*';
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530172729607](D:\pycharm\Temporary_notes\图片\image-20240530172729607.png)</span><br><span class="line"></span><br><span class="line">#### (5)查询 name 字段值包含字母“T”，且“T”后面至少出现“h”一次的记录</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select * from person where name REGEXP&#x27;Th+&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530173051856.png" alt="image-20240530173051856"></p>
+<h4 id="6-查询-name-字段值包含字母“S”，且“S”后面出现“a”一次或零次的记录">(6)查询 name 字段值包含字母“S”，且“S”后面出现“a”一次或零次的记录</h4>
+```SQL
+select * from person where name REGEXP'Sa?';
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530173903011](D:\pycharm\Temporary_notes\图片\image-20240530173903011.png)</span><br><span class="line"></span><br><span class="line">#### (7)查询 name 字段值包含字符串“an”的记录</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select * from person where name REGEXP&#x27;an&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530174046847.png" alt="image-20240530174046847"></p>
+<h4 id="8-查询-name-字段值包含字符串“an”或“en”的记录">(8)查询 name 字段值包含字符串“an”或“en”的记录</h4>
+<ul>
+<li>指定多个字符串时，需要用|隔开。只要匹配这些字符串中的任意一个即可。</li>
+</ul>
+```sql
+select * from person where name REGEXP'an|en';
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530174202281](D:\pycharm\Temporary_notes\图片\image-20240530174202281.png)</span><br><span class="line"></span><br><span class="line">#### (9)查询 name 字段值包含字母“i”或“o”的记录</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### （10）方括号[ ]还可以指定集合的区间。</span><br><span class="line"></span><br><span class="line">- 例如，“[a-z]”表示从 a~z 的所有字母；</span><br><span class="line">- “[0-9]”表示从 0~9 的所有数字；</span><br><span class="line">- “[a-z0-9]”表示包含所有的小写字母和数字；</span><br><span class="line">- “[a-zA-Z]”表示匹配所有字符。</span><br><span class="line">- MySQL中的正则表达式匹配不区分大小写。</span><br><span class="line">- 为区分大小写，可使用BINARY关键字。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select * from person where name REGEXP BINARY&#x27;^[a-z]&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530174448579.png" alt="image-20240530174448579"></p>
+<h4 id="11-查询-name-字段值包含字母-a-t-以外的字符的记录">(11)查询 name 字段值包含字母 a~t 以外的字符的记录</h4>
+```sql
+select * from person where name REGEXP   '[^a-t]';
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![image-20240530174556290](D:\pycharm\Temporary_notes\图片\image-20240530174556290.png)</span><br><span class="line"></span><br><span class="line">#### (12)查询name字段值出现字母‘e’至少两次的记录</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```sql</span><br><span class="line">select * from person where name REGEXP  &#x27;e&#123;2,&#125;&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530174707893.png" alt="image-20240530174707893"></p>
+<h4 id="13-查询-name-字段值出现字符串“i”-最少-1-次，最多-3-次的记录">(13)查询 name 字段值出现字符串“i” 最少 1 次，最多 3 次的记录</h4>
+```sql
+select * from person where name REGEXP'i{1,3}';
+```
+
+<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240530174819609.png" alt="image-20240530174819609"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/5.17%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%8C%E5%8F%8D%E5%B0%84/" rel="prev" title="5.17面向对象，反射">
+      <i class="fa fa-chevron-left"></i> 5.17面向对象，反射
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/5.11%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%8C%E5%B0%81%E8%A3%85/" rel="next" title="5.11面向对象，封装">
+      5.11面向对象，封装 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">MySQL之过滤条件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E8%BF%87%E6%BB%A4%E6%9D%A1%E4%BB%B6%E8%AF%AD%E6%B3%95%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.1.</span> <span class="nav-text">【一】过滤条件语法查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%88%9B%E5%BB%BA%E8%A1%A8"><span class="nav-number">1.1.1.</span> <span class="nav-text">【2】创建表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.2.</span> <span class="nav-text">【4】插入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%906%E3%80%91%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%BE%8E%E5%8C%96%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.3.</span> <span class="nav-text">【6】格式化美化数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E6%9F%A5%E8%AF%A23-id-6%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.4.</span> <span class="nav-text">【2】查询3&lt;&#x3D;id&lt;&#x3D;6的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%905%E3%80%91%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%AB%E5%90%8D"><span class="nav-number">1.1.5.</span> <span class="nav-text">【5】查询数据指定别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%908%E3%80%91%E6%9F%A5%E8%AF%A2%E5%B2%97%E4%BD%8D%E6%8F%8F%E8%BF%B0%E4%B8%BA%E7%A9%BA%E7%9A%84%E5%91%98%E5%B7%A5%E5%90%8D%E5%92%8C%E5%B2%97%E4%BD%8D%E5%90%8D"><span class="nav-number">1.1.6.</span> <span class="nav-text">【8】查询岗位描述为空的员工名和岗位名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%9B%9B%E3%80%91%E7%AD%9B%E9%80%89%E6%9D%A1%E4%BB%B6group-by-%E5%88%86%E7%BB%84"><span class="nav-number">1.2.</span> <span class="nav-text">【四】筛选条件group by(分组)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E8%8E%B7%E5%8F%96%E6%AF%8F%E4%B8%AA%E9%83%A8%E9%97%A8%E7%9A%84%E6%9C%80%E9%AB%98%E8%96%AA%E8%B5%84"><span class="nav-number">1.2.1.</span> <span class="nav-text">【4】获取每个部门的最高薪资</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%906%E3%80%91%E8%8E%B7%E5%8F%96%E6%AF%8F%E4%B8%AA%E9%83%A8%E9%97%A8%E7%9A%84%E5%B9%B3%E5%9D%87%E8%96%AA%E8%B5%84"><span class="nav-number">1.2.2.</span> <span class="nav-text">【6】获取每个部门的平均薪资</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%908%E3%80%91%E8%8E%B7%E5%8F%96%E6%AF%8F%E5%90%84%E9%83%A8%E9%97%A8%E7%9A%84%E4%BA%BA%E6%95%B0"><span class="nav-number">1.2.3.</span> <span class="nav-text">【8】获取每各部门的人数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%909%E3%80%91%E6%9F%A5%E8%AF%A2%E5%88%86%E7%BB%84%E4%B9%8B%E5%90%8E%E7%9A%84%E9%83%A8%E9%97%A8%E5%90%8D%E7%A7%B0%E5%92%8C%E6%AF%8F%E4%B8%AA%E9%83%A8%E9%97%A8%E4%B8%8B%E6%89%80%E6%9C%89%E7%9A%84%E5%91%98%E5%B7%A5%E5%A7%93%E5%90%8D-group-concat"><span class="nav-number">1.2.4.</span> <span class="nav-text">【9】查询分组之后的部门名称和每个部门下所有的员工姓名(group_concat)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">（1）查询数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E8%BF%98%E5%8F%AF%E4%BB%A5%E6%B7%BB%E5%8A%A0%E5%A4%9A%E4%B8%AA%E5%AD%97%E6%AE%B5%E8%BF%9B%E8%A1%8C%E6%8B%BC%E6%8E%A5-%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">（3）还可以添加多个字段进行拼接 查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%885%EF%BC%89as%E8%AF%AD%E5%8F%A5%E2%80%93%E3%80%8B%E4%B8%B4%E6%97%B6%E6%94%B9%E8%A1%A8%E5%90%8D"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">（5）as语句–》临时改表名</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%94%E3%80%91%E7%AD%9B%E9%80%89%E6%9D%A1%E4%BB%B6%E4%B9%8Bhaving-%E5%88%86%E7%BB%84%E4%B9%8B%E5%90%8E%E7%AD%9B%E9%80%89"><span class="nav-number">1.3.</span> <span class="nav-text">【五】筛选条件之having(分组之后筛选)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.3.1.</span> <span class="nav-text">【1】介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E7%BB%9F%E8%AE%A1%E5%90%84%E9%83%A8%E9%97%A8%E5%B9%B4%E9%BE%84%E5%9C%A8-30-%E5%B2%81%E4%BB%A5%E4%B8%8A%E7%9A%84%E5%91%98%E5%B7%A5%E7%9A%84%E5%B7%A5%E8%B5%84%EF%BC%8C%E5%B9%B6%E4%B8%94%E4%BF%9D%E7%95%99%E5%B9%B3%E5%9D%87%E8%96%AA%E8%B5%84%E5%A4%A7%E4%BA%8E1w%E7%9A%84%E9%83%A8%E9%97%A8"><span class="nav-number">1.3.2.</span> <span class="nav-text">【2】统计各部门年龄在 30 岁以上的员工的工资，并且保留平均薪资大于1w的部门</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%85%AD%E3%80%91%E7%AD%9B%E9%80%89%E6%9D%A1%E4%BB%B6%E4%B9%8Bdistinct-%E5%8E%BB%E9%87%8D"><span class="nav-number">1.4.</span> <span class="nav-text">【六】筛选条件之distinct(去重)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%AF%B9%E8%A1%A8emp%E4%B8%AD%E7%9A%84age%E5%92%8Cid%E5%8E%BB%E9%87%8D"><span class="nav-number">1.4.1.</span> <span class="nav-text">【1】对表emp中的age和id去重</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%83%E3%80%91%E7%AD%9B%E9%80%89%E6%9D%A1%E4%BB%B6%E4%B9%8Border-by-%E6%8E%92%E5%BA%8F"><span class="nav-number">1.5.</span> <span class="nav-text">【七】筛选条件之order by(排序)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%B0%86%E8%A1%A8emp%E6%8C%89%E7%85%A7%E8%96%AA%E8%B5%84%E6%8E%92%E5%BA%8F%E2%80%93-%E5%8D%87%E5%BA%8F"><span class="nav-number">1.5.1.</span> <span class="nav-text">【1】将表emp按照薪资排序–&gt;升序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%B0%86emp%E8%A1%A8%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E6%8C%89%E7%85%A7%E6%97%A5%E6%9C%9F-%E5%8D%87%E5%BA%8F-%E5%92%8C%E6%80%A7%E5%88%AB-%E9%99%8D%E5%BA%8F-%E6%8E%92%E5%BA%8F"><span class="nav-number">1.5.2.</span> <span class="nav-text">【3】将emp表中的数据按照日期(升序)和性别(降序)排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE%EF%BC%9A%E5%8D%95%E4%B8%AA%E6%95%B0%E5%AD%97"><span class="nav-number">1.5.3.</span> <span class="nav-text">【1】查询数据：单个数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E6%9F%A5%E8%AF%A2%E5%B7%A5%E8%B5%84%E6%9C%80%E9%AB%98%E7%9A%84%E4%BA%BA%E7%9A%84%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF"><span class="nav-number">1.5.4.</span> <span class="nav-text">【3】查询工资最高的人的详细信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%8C%B9%E9%85%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">1.5.5.</span> <span class="nav-text">【2】匹配方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E6%A1%88%E4%BE%8B"><span class="nav-number">1.5.6.</span> <span class="nav-text">【3】案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E6%9F%A5%E8%AF%A2-name-%E5%AD%97%E6%AE%B5%E4%BB%A5%E2%80%9Cy%E2%80%9D%E7%BB%93%E5%B0%BE%E7%9A%84%E8%AE%B0%E5%BD%95"><span class="nav-number">1.5.6.1.</span> <span class="nav-text">（2）查询 name 字段以“y”结尾的记录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E6%9F%A5%E8%AF%A2-name-%E5%AD%97%E6%AE%B5%E5%80%BC%E5%8C%85%E5%90%AB%E5%AD%97%E6%AF%8D%E2%80%9CT%E2%80%9D%EF%BC%8C%E4%B8%94%E2%80%9CT%E2%80%9D%E5%90%8E%E9%9D%A2%E5%87%BA%E7%8E%B0%E5%AD%97%E6%AF%8D%E2%80%9Ch%E2%80%9D%E7%9A%84%E8%AE%B0%E5%BD%95"><span class="nav-number">1.5.6.2.</span> <span class="nav-text">(4)查询 name 字段值包含字母“T”，且“T”后面出现字母“h”的记录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E6%9F%A5%E8%AF%A2-name-%E5%AD%97%E6%AE%B5%E5%80%BC%E5%8C%85%E5%90%AB%E5%AD%97%E6%AF%8D%E2%80%9CS%E2%80%9D%EF%BC%8C%E4%B8%94%E2%80%9CS%E2%80%9D%E5%90%8E%E9%9D%A2%E5%87%BA%E7%8E%B0%E2%80%9Ca%E2%80%9D%E4%B8%80%E6%AC%A1%E6%88%96%E9%9B%B6%E6%AC%A1%E7%9A%84%E8%AE%B0%E5%BD%95"><span class="nav-number">1.5.6.3.</span> <span class="nav-text">(6)查询 name 字段值包含字母“S”，且“S”后面出现“a”一次或零次的记录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-%E6%9F%A5%E8%AF%A2-name-%E5%AD%97%E6%AE%B5%E5%80%BC%E5%8C%85%E5%90%AB%E5%AD%97%E7%AC%A6%E4%B8%B2%E2%80%9Can%E2%80%9D%E6%88%96%E2%80%9Cen%E2%80%9D%E7%9A%84%E8%AE%B0%E5%BD%95"><span class="nav-number">1.5.6.4.</span> <span class="nav-text">(8)查询 name 字段值包含字符串“an”或“en”的记录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-%E6%9F%A5%E8%AF%A2-name-%E5%AD%97%E6%AE%B5%E5%80%BC%E5%8C%85%E5%90%AB%E5%AD%97%E6%AF%8D-a-t-%E4%BB%A5%E5%A4%96%E7%9A%84%E5%AD%97%E7%AC%A6%E7%9A%84%E8%AE%B0%E5%BD%95"><span class="nav-number">1.5.6.5.</span> <span class="nav-text">(11)查询 name 字段值包含字母 a~t 以外的字符的记录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-%E6%9F%A5%E8%AF%A2-name-%E5%AD%97%E6%AE%B5%E5%80%BC%E5%87%BA%E7%8E%B0%E5%AD%97%E7%AC%A6%E4%B8%B2%E2%80%9Ci%E2%80%9D-%E6%9C%80%E5%B0%91-1-%E6%AC%A1%EF%BC%8C%E6%9C%80%E5%A4%9A-3-%E6%AC%A1%E7%9A%84%E8%AE%B0%E5%BD%95"><span class="nav-number">1.5.6.6.</span> <span class="nav-text">(13)查询 name 字段值出现字符串“i” 最少 1 次，最多 3 次的记录</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

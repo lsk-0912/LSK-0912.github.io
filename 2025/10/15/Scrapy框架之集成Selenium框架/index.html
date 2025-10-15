@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Scrapy框架之集成Selenium框架  scrapy中集成selenium：解析使用的是selenium拿回来的页面  【一】前言   使用scrapy默认下载器    类似于requests模块发送请求，不能执行js，有的页面拿回来数据不完整    想在scrapy中集成selenium    获取数据更完整，获取完后，自己组装成 Response对象 就会进爬虫解析，现在解析的是使用se">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scrapy框架之集成Selenium框架">
+<meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E9%9B%86%E6%88%90Selenium%E6%A1%86%E6%9E%B6/index.html">
+<meta property="og:site_name" content="坤博客">
+<meta property="og:description" content="Scrapy框架之集成Selenium框架  scrapy中集成selenium：解析使用的是selenium拿回来的页面  【一】前言   使用scrapy默认下载器    类似于requests模块发送请求，不能执行js，有的页面拿回来数据不完整    想在scrapy中集成selenium    获取数据更完整，获取完后，自己组装成 Response对象 就会进爬虫解析，现在解析的是使用se">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-15T03:34:56.000Z">
+<meta property="article:modified_time" content="2025-10-15T08:15:50.452Z">
+<meta property="article:author" content="坤">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aurora-lsk.asia/2025/10/15/Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E9%9B%86%E6%88%90Selenium%E6%A1%86%E6%9E%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Scrapy框架之集成Selenium框架 | 坤博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">坤博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E9%9B%86%E6%88%90Selenium%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="坤">
+      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坤博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Scrapy框架之集成Selenium框架
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-15 11:34:56 / 修改时间：16:15:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:56+08:00">2025-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>Scrapy框架之集成Selenium框架</h1>
+<ul>
+<li>scrapy中集成selenium：解析使用的是selenium拿回来的页面</li>
+</ul>
+<h2 id="【一】前言">【一】前言</h2>
+<ul>
+<li>
+<p>使用scrapy默认下载器</p>
+</li>
+<li>
+<ul>
+<li>类似于requests模块发送请求，不能执行js，有的页面拿回来数据不完整</li>
+</ul>
+</li>
+<li>
+<p>想在scrapy中集成selenium</p>
+</li>
+<li>
+<ul>
+<li>获取数据更完整，获取完后，自己组装成 Response对象</li>
+<li>就会进爬虫解析，现在<strong>解析的是使用selenium拿回来的页面</strong>，数据更完整</li>
+</ul>
+</li>
+</ul>
+<h2 id="【二】大概步骤">【二】大概步骤</h2>
+<h3 id="【1】在爬虫类里面写浏览器对象">【1】在爬虫类里面写浏览器对象</h3>
+```python
+from selenium.webdriver import Chrome
+from selenium.webdriver.chrome.service import Service
+import scrapy
+import os
+
+# 指定chromedriver.exe有效的路径
+base_url = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+driver_path = os.path.join(base_url, 'chromedriver.exe')
+
+class BlogSpider(scrapy.Spider):
+    name = "blog"
+    allowed_domains = ["www.cnblogs.com"]
+    start_urls = ["https://www.cnblogs.com"]
+
+    # 首先声明驱动的位置
+    service = Service(executable_path=driver_path)
+    # 创建浏览器的对象
+    browser = Chrome(service=service)
+    # 隐士等待
+    browser.implicitly_wait(10)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【2】在中间间里面处理</span><br><span class="line"></span><br><span class="line">- 下载中间件</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 拦截请求的所有对象</span><br><span class="line">    # 参数：request就是拦截到的请求对象，spider爬虫文件中爬虫类实例化的对象</span><br><span class="line">    # spider参数的作用可以实现类和中间类的数据交互</span><br><span class="line">    def process_request(self, request, spider):</span><br><span class="line">        # print(request.url)</span><br><span class="line">        # https://www.cnblogs.com</span><br><span class="line">        # 提取当前的url，找到含有&quot;/sitehome/p&quot;的地址</span><br><span class="line">        # 利用自己的selenium 访问并拿到源码交给Response</span><br><span class="line">        if &quot;/sitehome/p&quot; in request.url:</span><br><span class="line">            # 调用自己的selenium对象进行页面的抓取</span><br><span class="line">            spider.browser.get(request.url)</span><br><span class="line">            # 获取页面的响应源码</span><br><span class="line">            body = spider.browser.page_source</span><br><span class="line">            # 将页面源码转换为scrapy的response对象</span><br><span class="line">            # 引入一个方法</span><br><span class="line">            from scrapy.http.response.html import HtmlResponse</span><br><span class="line">            return HtmlResponse(</span><br><span class="line">                url=request.url,</span><br><span class="line">                body=bytes(body, encoding=&#x27;utf-8&#x27;)</span><br><span class="line">            )</span><br><span class="line">        else:</span><br><span class="line">            return None</span><br></pre></td></tr></table></figure>
+
+<h3 id="【3】再配置文件中开启中间件">【3】再配置文件中开启中间件</h3>
+```python
+# 是否启用下载器中间件
+DOWNLOADER_MIDDLEWARES = {
+   "SpiderNews.middlewares.SpiderNewsDownloaderMiddleware": 543,
+}
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【三】总的步骤</span><br><span class="line"></span><br><span class="line">- 爬虫程序</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import scrapy</span><br><span class="line">from scrapy import Request</span><br><span class="line">from selenium.webdriver import Chrome</span><br><span class="line">from selenium.webdriver.chrome.service import Service</span><br><span class="line">from SpiderNews.items import BoKeYuanItem</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">base_url = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))</span><br><span class="line">driver_path = os.path.join(base_url, &#x27;chromedriver.exe&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class BlogSpider(scrapy.Spider):</span><br><span class="line">    name = &quot;blog&quot;</span><br><span class="line">    allowed_domains = [&quot;www.cnblogs.com&quot;]</span><br><span class="line">    start_urls = [&quot;https://www.cnblogs.com&quot;]</span><br><span class="line"></span><br><span class="line">    # 首先声明驱动的位置</span><br><span class="line">    service = Service(executable_path=driver_path)</span><br><span class="line">    # 创建浏览器的对象</span><br><span class="line">    browser = Chrome(service=service)</span><br><span class="line">    # 隐士等待</span><br><span class="line">    browser.implicitly_wait(10)</span><br><span class="line"></span><br><span class="line">    def parse(self, response):</span><br><span class="line">        # 用Xpath语法爬取数据</span><br><span class="line">        article_list = response.xpath(&#x27;//*[@id=&quot;post_list&quot;]/article&#x27;)</span><br><span class="line">        # print(article_list)</span><br><span class="line">        for article in article_list:</span><br><span class="line">            # 创建一个管道类对象</span><br><span class="line">            item = BoKeYuanItem()</span><br><span class="line">            # 拿到头像</span><br><span class="line">            # //*[@id=&quot;post_list&quot;]/article[1]/section/div/p/a/img</span><br><span class="line">            head_img_url = article.xpath(&#x27;./section/div/p/a[1]/img/@src&#x27;).extract_first()</span><br><span class="line">            # 文章的作者</span><br><span class="line">            # //*[@id=&quot;post_list&quot;]/article[1]/section/footer/a[1]/span</span><br><span class="line">            article_author = article.xpath(&#x27;./section/footer/a[1]/span/text()&#x27;).extract_first()</span><br><span class="line">            # 文章标题</span><br><span class="line">            # //*[@id=&quot;post_list&quot;]/article[1]/section/div/a</span><br><span class="line">            article_title = article.xpath(&#x27;./section/div/a/text()&#x27;).extract_first().strip()</span><br><span class="line">            # 创建一个详情链接</span><br><span class="line">            # //*[@id=&quot;post_list&quot;]/article[1]/section/div/a</span><br><span class="line">            article_link = article.xpath(&#x27;./section/div/a/@href&#x27;).extract_first()</span><br><span class="line">            # 拿到文章内容</span><br><span class="line">            # //*[@id=&quot;post_list&quot;]/article[2]/section/div/p/text()</span><br><span class="line">            # //*[@id=&quot;post_list&quot;]/article[1]/section/div/p/text()</span><br><span class="line">            # /html/body/div/div[3]/div/div[2]/div[1]/div[4]/article[3]/section/div/p/text()</span><br><span class="line">            article_desc_list = article.xpath(&#x27;./section/div/p/text()&#x27;).extract()</span><br><span class="line">            article_desc = &#x27;&#x27;</span><br><span class="line">            for article_desc in article_desc_list:</span><br><span class="line">                if not article_desc:</span><br><span class="line">                    pass</span><br><span class="line">                else:</span><br><span class="line">                    article_desc = article_desc.strip()</span><br><span class="line">            # 文章更新时间</span><br><span class="line">            # //*[@id=&quot;post_list&quot;]/article[1]/section/footer/span[1]/span</span><br><span class="line">            article_update_time = article.xpath(&#x27;./section/footer/span[1]/span/text()&#x27;).extract_first().strip()</span><br><span class="line">            # print(article_update_time)</span><br><span class="line">            # itme是一个字典--&gt;用字典方便，可以update()更新数据，更新的时候，更新字段要和管道类里面的字段一摸一样</span><br><span class="line">            # print(f&quot;----&#123;article_desc&#125;---&quot;)</span><br><span class="line">            item.update(&#123;</span><br><span class="line">                &quot;head_img_url&quot;: head_img_url,</span><br><span class="line">                &quot;article_author&quot;: article_author,</span><br><span class="line">                &quot;article_title&quot;: article_title,</span><br><span class="line">                &quot;article_link&quot;: article_link,</span><br><span class="line">                &quot;article_desc&quot;: article_desc,</span><br><span class="line">                &quot;article_update_time&quot;: article_update_time</span><br><span class="line">            &#125;)</span><br><span class="line">            # 将itme对象返回出去</span><br><span class="line">            # return 会结束整个程序，不用它</span><br><span class="line">            # 我们用yield，yield可以保存item的状态，不会终止程序的执行</span><br><span class="line">            yield Request(</span><br><span class="line">                url=article_link,</span><br><span class="line">                callback=self.detail_parse,</span><br><span class="line">                meta=&#123;&quot;item&quot;: item&#125;</span><br><span class="line">            )</span><br><span class="line">        # 获取下一页的链接地址</span><br><span class="line">        # 这里的流程就是，for把所有的article遍历出来以后，就会走这里，走到这里就代表该爬下一页的数据了</span><br><span class="line">        # //*[@id=&quot;paging_block&quot;]/div/a[5]</span><br><span class="line">        next_url = &#x27;https://www.cnblogs.com&#x27; + response.xpath(</span><br><span class="line">            &#x27;//*[@id=&quot;paging_block&quot;]/div/a[last()]/@href&#x27;).extract_first()</span><br><span class="line">        yield Request(</span><br><span class="line">            url=next_url,</span><br><span class="line">            callback=self.parse</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    def detail_parse(self, response):</span><br><span class="line">        # 获取到传入的item对象</span><br><span class="line">        item = response.meta.get(&#x27;item&#x27;)</span><br><span class="line">        # 解析文章详情</span><br><span class="line">        content = str(response.xpath(&#x27;//*[@id=&quot;topics&quot;]&#x27;).extract_first())</span><br><span class="line">        # 继续向 item 对象中添加文章详情内容</span><br><span class="line">        item[&#x27;article_content&#x27;] = content</span><br><span class="line">        # 将完整的信息返回</span><br><span class="line">        yield item</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>中间件</li>
+</ul>
+```python
+# 下载中间件
+class SpiderNewsDownloaderMiddleware:
+# 拦截请求的所有对象
+    # 参数：request就是拦截到的请求对象，spider爬虫文件中爬虫类实例化的对象
+    # spider参数的作用可以实现类和中间类的数据交互
+    def process_request(self, request, spider):
+        # print(request.url)
+        # https://www.cnblogs.com
+        # 提取当前的url，找到含有"/sitehome/p"的地址
+        # 利用自己的selenium 访问并拿到源码交给Response
+        if "/sitehome/p" in request.url:
+            # 调用自己的selenium对象进行页面的抓取
+            spider.browser.get(request.url)
+            # 获取页面的响应源码
+            body = spider.browser.page_source
+            # 将页面源码转换为scrapy的response对象
+            # 引入一个方法
+            from scrapy.http.response.html import HtmlResponse
+            return HtmlResponse(
+                url=request.url,
+                body=bytes(body, encoding='utf-8')
+            )
+        else:
+            return None
+```
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/15/Xpath---JD%E6%A1%88%E4%BE%8B/" rel="prev" title="Xpath---JD案例">
+      <i class="fa fa-chevron-left"></i> Xpath---JD案例
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/15/Typora%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/" rel="next" title="Typora安装过程">
+      Typora安装过程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Scrapy框架之集成Selenium框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">【一】前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E5%A4%A7%E6%A6%82%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.2.</span> <span class="nav-text">【二】大概步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%9C%A8%E7%88%AC%E8%99%AB%E7%B1%BB%E9%87%8C%E9%9D%A2%E5%86%99%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.2.1.</span> <span class="nav-text">【1】在爬虫类里面写浏览器对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%86%8D%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E5%BC%80%E5%90%AF%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">【3】再配置文件中开启中间件</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">坤</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">坤</span>
+</div>
+  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
