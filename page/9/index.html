@@ -22,12 +22,12 @@
 
   <meta name="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
 <meta property="og:type" content="website">
-<meta property="og:title" content="坤博客">
+<meta property="og:title" content="Aurora博客">
 <meta property="og:url" content="https://aurora-lsk.asia/page/9/index.html">
-<meta property="og:site_name" content="坤博客">
+<meta property="og:site_name" content="Aurora博客">
 <meta property="og:description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:author" content="坤">
+<meta property="article:author" content="Aurora">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://aurora-lsk.asia/page/9/">
@@ -43,7 +43,7 @@
   };
 </script>
 
-  <title>坤博客</title>
+  <title>Aurora博客</title>
   
 
 
@@ -94,7 +94,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">坤博客</h1>
+      <h1 class="site-title">Aurora博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -141,2146 +141,236 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content index landing-home">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.10json%E6%A8%A1%E5%9D%97/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
+  <style>
+    :root {
+      --bg: #0b1022;
+      --surface: #0f162e;
+      --neon1: #00f3ff;
+      --neon2: #8b00ff;
+      --text: #e8f6ff;
+      --muted: #93a0b3;
+    }
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/4.10json%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">4.10json模块</a>
-        </h2>
+    /* 场景容器：星空 + 霓虹雾霭 + 未来感网格地面 */
+    .landing-scene {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      padding: 70px 28px 90px;
+      background: radial-gradient(1200px 600px at 10% 10%, #0d1327 0, #0d1327 60%, #080b18 100%);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    /* 星屑层 */
+    .landing-scene::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(#fff 1px, transparent 2px),
+        radial-gradient(#fff 1px, transparent 2px);
+      background-size: 3px 3px, 4px 4px;
+      background-position: 0 0, 20px 30px;
+      opacity: .08;
+      animation: starDrift 60s linear infinite;
+    }
+    /* 霓虹雾霭层 */
+    .landing-scene::after {
+      content: '';
+      position: absolute; inset: -40% -10% -40% -10%;
+      background: conic-gradient(from 0deg at 50% 50%, var(--neon1), var(--neon2), var(--neon1));
+      filter: blur(90px) saturate(120%);
+      opacity: .25;
+      transform: translateZ(0);
+      pointer-events: none;
+    }
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
+    @keyframes starDrift {
+      0%   { background-position: 0 0, 20px 30px; }
+      100% { background-position: -3000px -2000px, -1500px -1200px; }
+    }
 
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
+    /* 地面网格（赛博感） */
+    .grid-floor {
+      position: absolute; left: 0; right: 0; bottom: -35%; height: 360px;
+      background-image:
+        linear-gradient(var(--neon1)20, transparent 20),
+        linear-gradient(90deg, var(--neon1)20, transparent 20);
+      background-size: 42px 42px, 42px 42px;
+      opacity: .18;
+      transform: perspective(900px) rotateX(60deg) scale(1.2);
+      animation: gridScroll 12s linear infinite;
+      filter: drop-shadow(0 0 12px rgba(0,243,255,.25));
+    }
+    @keyframes gridScroll {
+      from { background-position: 0 0, 0 0; }
+      to   { background-position: 0 42px, 42px 0; }
+    }
 
-          
+    /* Hero 内容 */
+    .landing-hero { position: relative; z-index: 2; text-align: center; color: var(--text); }
+    .landing-hero h1 {
+      font-size: 2.6rem; margin: 0 0 12px;
+      letter-spacing: .5px;
+      text-shadow: 0 0 6px rgba(0,243,255,.6), 0 0 16px rgba(139,0,255,.35);
+    }
+    .landing-hero p { font-size: 1.05rem; color: var(--muted); margin: 0 0 24px; }
+    .landing-cta { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .landing-cta a { text-decoration: none; }
+    .landing-cta .btn-primary {
+      padding: 10px 18px; border-radius: 10px;
+      background: linear-gradient(90deg, var(--neon1), var(--neon2));
+      color: #021019; font-weight: 600;
+      box-shadow: 0 0 22px rgba(0,243,255,.35), inset 0 0 8px rgba(255,255,255,.25);
+    }
+    .landing-cta .btn-secondary {
+      padding: 10px 18px; border-radius: 10px;
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(8px);
+    }
 
-        </div>
-      </header>
+    .landing-section { margin-top: 28px; }
+    .landing-section h2 { font-size: 1.3rem; margin-bottom: 12px; }
+    .landing-section h2::after {
+      content: ''; display: inline-block; width: 36px; height: 10px; margin-left: 8px;
+      background: linear-gradient(90deg, var(--neon1), var(--neon2));
+      filter: blur(.6px); opacity: .6; border-radius: 12px;
+    }
+    .landing-more { text-align: center; margin-top: 10px; }
+    .landing-more a { text-decoration: none; color: var(--neon1); }
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+    /* 最近列表（霓虹点阵风） */
+    .recent-list { display: grid; grid-template-columns: 1fr; gap: 6px; }
+    .recent-item {
+      padding: 12px 14px; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: 0 0 14px rgba(0,0,0,.05);
+    }
+    .recent-title { font-size: 1.05rem; margin: 0 0 4px; }
+    .recent-title a { text-decoration: none; color: inherit; }
+    .recent-meta { color: #7f8aa3; font-size: .88rem; }
+  </style>
 
-      
-          <h1>【一】json模块</h1>
-<h2 id="【1】什么是序列化">【1】什么是序列化</h2>
-<ul>
-<li>将Python中的字典、列表、元组 … 转换成 字符串类型</li>
-<li>如果使用str强制转换数据类型，造成的后果就是转换后的字符串无法转回Python对象
-<ul>
-<li>意思就是把字典、列表、元组 … 转换成 字符串类型，就无法转回原来的类型了</li>
-<li><strong>无法转回Python对象的含义</strong>：尝试将一个非Python原生类型的对象转换为一个Python对象，但转换失败了。这可能是因为该对象并不直接对应于Python中的任何数据类型，或者没有提供适当的转换机制。</li>
-</ul>
-</li>
-</ul>
-<h2 id="【2】什么是反序列化">【2】什么是反序列化</h2>
-<ul>
-<li>将字符串类型的数据转换成Python对象的（字典、列表、元组 …）</li>
-<li>能将python对象转为字符串 --&gt; 字符串转回python对象
-<ul>
-<li>就是其他类型转为字符串，字符串还是可以转为原本的类型</li>
-</ul>
-</li>
-</ul>
-<h2 id="【3】json模块">【3】json模块</h2>
-<h3 id="（1）导入json模块">（1）导入json模块</h3>
-```python
-import json
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）保存和读取</span><br><span class="line"></span><br><span class="line">#### [1]序列化保存Python对象数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">#创建列表</span><br><span class="line">user_data_dict = &#123;</span><br><span class="line">    &#x27;username&#x27;: &quot;dream&quot;,</span><br><span class="line">    &quot;password&quot;: &quot;521&quot;</span><br><span class="line">&#125;</span><br><span class="line">#先存,后读</span><br><span class="line"># 保存到本地的文件中 &quot;保存进去是字典格式的字符串 独取出来也是字典格式的字典&quot;</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">with open(&quot;user_data.text&quot;, &#x27;w&#x27;, encoding=&#x27;utf-8&#x27;) as fp:</span><br><span class="line">    fp.write(str(user_data_dict))</span><br><span class="line"></span><br><span class="line">with open(&quot;user_data.text&quot;, &#x27;r&#x27;, encoding=&#x27;utf-8&#x27;) as fp:</span><br><span class="line">    data = fp.read()</span><br><span class="line">print(data)</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-存储为json文件数据">[2]存储为json文件数据</h4>
-<ul>
-<li>文本文件后缀变成json</li>
-</ul>
-```python
-user_data_dict={"name":"tom"}
-with open('user_data.json', 'w', encoding="utf-8") as fp:
-    json.dump(obj=user_data_dict={"name"}, fp=fp，ensuer_ascii=False)
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### [3]将json格式数据转换为Python对象</span><br><span class="line"></span><br><span class="line">- 定义完with open以后    下面的格式是json.load(句柄),写进去是什么类型读出来就是什么类型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">with open(&#x27;user_data.json&#x27;, &#x27;r&#x27;, encoding=&quot;utf-8&quot;) as fp:</span><br><span class="line">    data = json.load(fp)</span><br><span class="line">#print(data, type(data))#可以打印看一下</span><br></pre></td></tr></table></figure>
-
-<h3 id="（3）转换">（3）转换</h3>
-<ul>
-<li>反序列化和序列化方法之间的转换</li>
-<li>将一个字典转换为一个字符串，将一个字符串转换为字典</li>
-</ul>
-<p>[1]将字典转换为字符串格式</p>
-<ul>
-<li>json.dumps（）</li>
-</ul>
-```python
-import json
-
-user_data_dict = {
-    'username': "dream",
-    "password": "521"
-}
-    
-data_json_str = json.dumps(obj=user_data_dict)
-print(data_json_str, type(data_json_str))  # {"username": "dream", "password": "521"} <class 'str'>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[2]将字符串转换为字典格式</span><br><span class="line"></span><br><span class="line">- json.loads()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line">user_data_dict = &#123;</span><br><span class="line">    &#x27;username&#x27;: &quot;dream&quot;,</span><br><span class="line">    &quot;password&quot;: &quot;521&quot;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">data_json_str = json.dumps(obj=user_data_dict)</span><br><span class="line">print(data_json_str, type(data_json_str))  # &#123;&quot;username&quot;: &quot;dream&quot;, &quot;password&quot;: &quot;521&quot;&#125; &lt;class &#x27;str&#x27;&gt;</span><br><span class="line"></span><br><span class="line">data_json_dict = json.loads(data_json_str)</span><br><span class="line">print(data_json_dict, type(data_json_dict))  # &#123;&#x27;username&#x27;: &#x27;dream&#x27;, &#x27;password&#x27;: &#x27;521&#x27;&#125; &lt;class &#x27;dict&#x27;&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-保存中文数据">(4)保存中文数据</h3>
-```python
-user_data = {'name': "蚩梦", "age": 18}
-with open('data.json', 'w', encoding='utf-8') as fp:
-    json.dump(obj=user_data, fp=fp, ensure_ascii=False)
-
-# 编码和解码
-# 编码 encode(编码格式)
-# 解码 decode(编码格式)
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【二】json和python互转有哪些</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;````python</span><br><span class="line">from json import JSONEncoder</span><br><span class="line">+-------------------+---------------+</span><br><span class="line">    | Python            | JSON          |</span><br><span class="line">    +===================+===============+</span><br><span class="line">    | dict              | object        |</span><br><span class="line">    +-------------------+---------------+</span><br><span class="line">    | list, tuple       | array         |</span><br><span class="line">    +-------------------+---------------+</span><br><span class="line">    | str               | string        |</span><br><span class="line">    +-------------------+---------------+</span><br><span class="line">    | int, float        | number        |</span><br><span class="line">    +-------------------+---------------+</span><br><span class="line">    | True              | true          |</span><br><span class="line">    +-------------------+---------------+</span><br><span class="line">    | False             | false         |</span><br><span class="line">    +-------------------+---------------+</span><br><span class="line">    | None              | null          |</span><br><span class="line">    +-------------------+---------------+</span><br><span class="line">    </span><br><span class="line">from json import JSONDecoder</span><br><span class="line"> +---------------+-------------------+</span><br><span class="line">    | JSON          | Python            |</span><br><span class="line">    +===============+===================+</span><br><span class="line">    | object        | dict              |</span><br><span class="line">    +---------------+-------------------+</span><br><span class="line">    | array         | list              |</span><br><span class="line">    +---------------+-------------------+</span><br><span class="line">    | string        | str               |</span><br><span class="line">    +---------------+-------------------+</span><br><span class="line">    | number (int)  | int               |</span><br><span class="line">    +---------------+-------------------+</span><br><span class="line">    | number (real) | float             |</span><br><span class="line">    +---------------+-------------------+</span><br><span class="line">    | true          | True              |</span><br><span class="line">    +---------------+-------------------+</span><br><span class="line">    | false         | False             |</span><br><span class="line">    +---------------+-------------------+</span><br><span class="line">    | null          | None              |</span><br><span class="line">    +---------------+-------------------+</span><br><span class="line">````</span><br><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【三】作业</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 写用户功能</span><br><span class="line"></span><br><span class="line"># 购物车功能</span><br><span class="line"># 【零】初始化商品信息</span><br><span class="line"># 【1】提前有一个字典 字典中存储这个案例的数据</span><br><span class="line"># 键是商品名 值是价格</span><br><span class="line">data = &#123;</span><br><span class="line">    &quot;梦梦抱枕&quot;: 180, &quot;梦梦抱枕套装&quot;: 200,</span><br><span class="line">    &quot;梦梦睡衣&quot;: 120, &quot;梦梦笔记本&quot;: 40,</span><br><span class="line">    &quot;梦梦水杯&quot;: 20, &quot;梦梦毛绒玩具&quot;: 60,</span><br><span class="line">    &quot;梦梦围巾&quot;: 30, &quot;梦梦手链&quot;: 25,</span><br><span class="line">    &quot;梦梦钥匙扣&quot;: 15, &quot;梦梦手机壳&quot;: 35,</span><br><span class="line">&#125;</span><br><span class="line"># 【2】用json序列化保存上述商品数据到指定目录</span><br><span class="line"></span><br><span class="line"># 【一】查看商品信息</span><br><span class="line"># 【1】从指定目录中读取出当前 所有的商品信息</span><br><span class="line"># 【2】打印所有的商品信息</span><br><span class="line"></span><br><span class="line"># 【二】选择商品下单</span><br><span class="line"># 【1】根据商品名称下单，可以根据商品索引下单</span><br><span class="line"># 【2】保存你的当前购物车数据</span><br><span class="line"># 【3】保存的时候不要忘记保存商品的数量和价格</span><br><span class="line"># 【4】校验当前库存是否充足</span><br><span class="line"></span><br><span class="line"># 【三】清空购物车</span><br><span class="line"># 将购物车数据全部清空</span><br><span class="line"></span><br><span class="line"># 【四】查看购物车商品</span><br><span class="line"># 可以查看购物车商品信息</span><br><span class="line"></span><br><span class="line"># 【五】删除购物车商品信息</span><br><span class="line"># 【1】根据自己的商品信息删除指定的商品数据</span><br><span class="line"># 【2】删除的时候校验当前是否有足够的删除</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【六】下单商品(付款)</span><br><span class="line"># 【1】将购物车所有的商品数据价格和单价计算出来做一个整合</span><br><span class="line"># 【2】随意付款</span><br><span class="line"># 【3】提示付款信息 每个商品多少个 单价是多少 总价是多少 ---&gt; 付款总金额是多少</span><br><span class="line"></span><br><span class="line"># 【七】退出系统</span><br><span class="line"># 退出系统</span><br></pre></td></tr></table></figure>
-
-
-      
+  <section class="landing-scene">
+    <div class="landing-hero">
+      <h1>欢迎来到我的博客</h1>
+      <p>记录技术笔记、项目经验与个人思考。</p>
+      <div class="landing-cta">
+        <a class="btn-primary" href="/archives/">浏览全部文章</a>
+        <a class="btn-secondary" href="/categories/">按分类查看</a>
+      </div>
     </div>
+    <div class="grid-floor"></div>
+  </section>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+  <section class="landing-section">
+    <h2>最近更新</h2>
+    <style>
+      .recent-list { display: grid; grid-template-columns: 1fr; gap: 8px; }
+      .recent-item { padding: 12px 0; border-bottom: 1px solid #eee; }
+      .recent-title { font-size: 1.05rem; margin: 0 0 6px; }
+      .recent-title a { text-decoration: none; color: inherit; }
+      .recent-meta { color: #888; font-size: .9rem; }
+    </style>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.14%E4%BA%8C%E5%88%86%E6%B3%95%E5%92%8C%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/4.14%E4%BA%8C%E5%88%86%E6%B3%95%E5%92%8C%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/" class="post-title-link" itemprop="url">4.14二分法和冒泡排序</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>二分法和冒泡排序</h1>
-<h2 id="【1】介绍">【1】介绍</h2>
-<ul>
-<li>
-<p>二分法查找，也叫折半法，是一种在有序数组中查找特定元素的搜索算法。</p>
-</li>
-<li>
-<p>首先，从数组的中间元素开始搜索，如果该元素正好是目标元素，则搜索过程结束，否则执行下一步。</p>
-<p>如果目标元素大于/小于中间元素，则在数组大于/小于中间元素的那一半区域查找，然后重复步骤的操作。<br>
-如果某一步数组为空，则表示找不到目标元素。</p>
-</li>
-</ul>
-<h2 id="【2】模版">【2】模版</h2>
-<ul>
-<li>以下是二分法的模版，包括查找指定数，查找左边界和右边界</li>
-</ul>
-<h3 id="（1）查找指定数">（1）查找指定数</h3>
-<ul>
-<li>查找指定数是指只需要查找出指定数在数组中的索引即可，并不规定指定数在数组中所处的相对位置。</li>
-</ul>
-```python
-def binary_Search(nums, target):#nums总数据，target值
-    left, right = 0, len(nums) - 1  # 搜索区间两边为闭：0,8
-    while left <= right:  # 注意停止条件，停止条件为[left, left+1]
-        mid = (right + left) // 2 #mid是索引值
-        # 找到指定数并返回其索引
-        if nums[mid] == target:
-            return mid
-        elif nums[mid] < target: #nums的索引位置的数字小于target继续执行
-            left = mid + 1 
-        else:
-            right = mid - 1#nums的索引位置的数字大于target继续执行
-    return -1
-
-
-nums = [1, 8, 9, 7, 4, 5, 3, 1, 6]
-target = 6
-result = binary_Search(nums, target)
-print(result)  # 8
-# 6所在的索引位置正是 8
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 注意</span><br><span class="line">- while循环的条件`left &lt;= right`代表中止条件为`[left, left+1]`。</span><br><span class="line">- 如果不加等号，则中止条件为`[left,left]`此时left并没有被搜索，是不正确的。</span><br><span class="line"></span><br><span class="line">### （2）左边界查找</span><br><span class="line"></span><br><span class="line">- 左边界查找是指需要查找出指定数在数组中第一次出现的位置的索引。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def left_Search(nums, target):</span><br><span class="line">    left, right = 0, len(nums) - 1  # 搜索区间两边为闭</span><br><span class="line">    while left &lt;= right:</span><br><span class="line">        mid = (right + left) // 2</span><br><span class="line">        if nums[mid] &lt; target:</span><br><span class="line">            left = mid + 1</span><br><span class="line">        else:</span><br><span class="line">            right = mid - 1</span><br><span class="line">    if left &gt;= len(nums) or nums[left] != target:</span><br><span class="line">        return -1</span><br><span class="line">    return left</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">nums = [1, 8, 9, 7, 4, 5, 3, 1, 6]</span><br><span class="line">target = 6</span><br><span class="line">result = left_Search(nums, target)</span><br><span class="line">print(result)  # 8</span><br><span class="line"># 6所在的索引位置正是 8</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>注意</li>
-<li>主要是要理解左边界查找和查找指定数的区别，在查找指定数时<code>nums[mid] == target</code>表示已经找到指定数，则返回该数索引即为结果。</li>
-<li>而在左边界查找时<code>nums[mid] == target</code>并不能表示已经得到结果，因为我们不知道这个数是不是最左边的，所以当<code>nums[mid] == target</code>时我们要将右边界设置为<code>mid - 1</code>，再次进行循环。</li>
-</ul>
-<h3 id="3-右边界查找">(3)右边界查找</h3>
-<ul>
-<li>右边界查找跟左边界类似，只不过右边界需要的是查找出最后一次出现的位置的索引。</li>
-</ul>
-```python
-def left_Search(nums, target):
-    left, right = 0, len(nums) - 1  # 搜索区间两边为闭
-    while left <= right:
-        mid = (right + left) // 2
-        if nums[mid] <= target:
-            left = mid + 1
-        else:
-            right = mid - 1
-    if right < 0 or nums[right] != target:
-        return -1
-    return right
-
-
-nums = [1, 8, 9, 7, 4, 5, 3, 1, 6]
-target = 6
-result = left_Search(nums, target)
-print(result)  # 8
-# 6所在的索引位置正是 8
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 注意</span><br><span class="line"></span><br><span class="line">- 主要是要理解右边界查找和左边界查找的区别，在左边界查找时`nums[mid] == target`我们要去查找左边的区间是否有指定数，所以当`nums[mid] == target`时我们要将右边界设置为`mid - 1`，再次进行循环。</span><br><span class="line">- 而在右查找时我们要去查找右边的区间是否有指定数，所以当`nums[mid] == target`时我们要将左边界设置为`mid - 1`</span><br><span class="line"></span><br><span class="line"># 【二】冒泡算法</span><br><span class="line"></span><br><span class="line">## 【1】介绍</span><br><span class="line"></span><br><span class="line">- 两个数比较大小，较大的数</span><br><span class="line"></span><br><span class="line">## 【2】过程</span><br><span class="line"></span><br><span class="line">- 比较相邻的两个数据，如果第二个数小，就交换位置。</span><br><span class="line">- 从后向前两两比较，一直到比较最前两个数据。</span><br><span class="line">- 最终最小数被交换到起始的位置，这样第一个最小数的位置就排好了。</span><br><span class="line">- 继续重复上述过程，依次将第2.3...n-1个最小数排好位置。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def bubble_sort(data):</span><br><span class="line">    for i in range(len(data)):</span><br><span class="line">        print(f&#x27;这是后&#123;i&#125;趟&#x27;)</span><br><span class="line">        for j in range(len(data) - 1 - i):</span><br><span class="line">            if data[j] &gt; data[j + 1]:</span><br><span class="line">                data[j], data[j + 1] = data[j + 1], data[j]</span><br><span class="line">        print(&#x27;差的排序结果为:&gt;&gt;&gt;&#x27;, data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">start_list = [3, 9, 3, 1, 7, 7]</span><br><span class="line">bubble_sort(start_list)</span><br></pre></td></tr></table></figure>
-
-
-      
+    <div class="recent-list">
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/4.14%E4%BA%8C%E5%88%86%E6%B3%95%E5%92%8C%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/" itemprop="url">
+                <span itemprop="name">4.14二分法和冒泡排序</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/4.12re%E6%A8%A1%E5%9D%97/" itemprop="url">
+                <span itemprop="name">4.12re模块</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/4.16for%E5%BE%AA%E7%8E%AF%E5%86%85%E7%BD%AE%E6%9C%BA%E5%88%B6/" itemprop="url">
+                <span itemprop="name">4.16for循环内置机制</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/4.15%E9%97%AD%E5%8C%85%E5%87%BD%E6%95%B0/" itemprop="url">
+                <span itemprop="name">4.15闭包函数</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/4.1%E8%BF%AD%E4%BB%A3%E5%99%A8/" itemprop="url">
+                <span itemprop="name">4.1迭代器</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/4.17pickle%E6%A8%A1%E5%9D%97/" itemprop="url">
+                <span itemprop="name">4.17pickle模块</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/4.3%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%8C%85/" itemprop="url">
+                <span itemprop="name">4.3模块与包</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/4.2%E7%94%9F%E6%88%90%E5%99%A8/" itemprop="url">
+                <span itemprop="name">4.2生成器</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.16for%E5%BE%AA%E7%8E%AF%E5%86%85%E7%BD%AE%E6%9C%BA%E5%88%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/4.16for%E5%BE%AA%E7%8E%AF%E5%86%85%E7%BD%AE%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">4.16for循环内置机制</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>for循环内部机制</h1>
-<ul>
-<li>Python中，使用for循环可以迭代容器对象中的元素</li>
-<li>这里容器对象包括是列表（list）、元组（tuple）、字典（dict）、集合（set）等。</li>
-</ul>
-<h2 id="【一】迭代器">【一】迭代器</h2>
-<ul>
-<li>在可迭代的对象中，需要实现一个<code>__iter__</code>方法
-<ul>
-<li>而且这个方法的返回值需要是一个迭代器。</li>
-</ul>
-</li>
-<li>迭代器只需要实现<code>__next__</code>方法。</li>
-</ul>
-<h3 id="分析">{分析}</h3>
-<ul>
-<li>实现了<code>__iter__</code>方法，而且返回一个迭代器（iterator）</li>
-<li>迭代器中实现了<code>__next__</code>方法。</li>
-<li>在不断调用<code>__next__</code>的过程中，就是在不断返回元素，直到出现<code>StopIteration</code>的错误</li>
-</ul>
-<h2 id="【二】for循环内部机制">【二】for循环内部机制</h2>
-<ul>
-<li>其实，for语句的作用与此类似。</li>
-<li>for语句的内部机制为：
-<ul>
-<li>先判断对象是否为可迭代对象，即是否存在<code>__iter__</code>方法
-<ul>
-<li>如果存在则调用<code>__iter__</code>方法，返回一个迭代器；</li>
-<li>否则，直接抛出TypeError异常；</li>
-</ul>
-</li>
-<li>不断地调用迭代器的<code>__next__</code>方法，每次调用按顺序迭代获取当前的值；</li>
-<li>迭代完所有元素，就抛出异常 StopIteration，
-<ul>
-<li>这个异常 python 解释器自己会处理；</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>前面的 TestRange 报错是因为它没有实现迭代器协议里面的这两个方法，现在继续改进：</li>
-</ul>
-```python
-class TestRange:
-    def __init__(self, _max):
-        self.i = 0
-        self._max = _max
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.i < self._max:
-            i = self.i
-            self.i += 1
-            return i
-        else:
-            # 达到停止条件时，抛出此异常
-            raise StopIteration()
-
-
-# 进行测试
-for i in TestRange(3):
-    print(i)
-# 输出
-#  0
-#  1
-#  2
-```
-
-<ul>
-<li><strong>分析：</strong>
-<ul>
-<li>因为这个类中，已经实现了<code>__next__</code>方法，所以基于这个类所创建的对象，本身就是一个迭代器。</li>
-<li>又因为可迭代对象需要有<code>__iter__</code>方法，而且返回一个迭代器，所以<code>__iter__</code>返回对象本身<code>self</code>即可。</li>
-</ul>
-</li>
-</ul>
-<h2 id="【三】总结">【三】总结</h2>
-<ul>
-<li>
-<p>for循环内部其实也报错了，只不过错误没让我们看见，内部处理了</p>
-</li>
-<li>
-<p>for循环内部执行流程：</p>
-<ul>
-<li>把关键字in后面的数据类型转为了迭代器 <strong>iter</strong></li>
-<li>循环next取值</li>
-<li>next取值完毕之后也报错了，自动处理错误并且结束while循环</li>
-</ul>
-</li>
-</ul>
-
-      
+    <div class="landing-more">
+      <a href="/archives/">查看全部文章 →</a>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.1%E8%BF%AD%E4%BB%A3%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/4.1%E8%BF%AD%E4%BB%A3%E5%99%A8/" class="post-title-link" itemprop="url">4.1迭代器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>【一】迭代器</h1>
-<h2 id="【1】什么是迭代器">【1】什么是迭代器</h2>
-<ul>
-<li>迭代器就是用来迭代取值的工具，而迭代是重复反馈过程的活动</li>
-<li>每次迭代得到的返回值结果可就是下一次迭代开始的初始值</li>
-</ul>
-<h2 id="【2】可迭代对象">【2】可迭代对象</h2>
-<h3 id="【1】什么是可迭代对象">【1】什么是可迭代对象</h3>
-<ul>
-<li>
-<p>通过索引的方式进行迭代取值</p>
-</li>
-<li>
-<p>内置有**__iter**__方法的对象都是可迭代对象</p>
-</li>
-</ul>
-<h3 id="【2】八大数据类型">【2】八大数据类型</h3>
-<ul>
-<li>整数类型–不是</li>
-</ul>
-```python
-age_int = 18
-print(age.__iter__)#报错：'int' object has no attribute '__iter__'. Did you mean: '__str__'?
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 浮点数类型--不是</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num_float = 18.8</span><br><span class="line">print(num.__iter__)#报错：&#x27;float&#x27; object has no attribute &#x27;__iter__&#x27;. Did you mean: &#x27;__str__&#x27;?</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>布尔类型–不是</li>
-</ul>
-```python
-bool_is = True
-print(bool_is)#报错：'bool' object has no attribute '__iter__'. Did you mean: '__str__'?
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 字典类型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">dict_is = &#123;&quot;username&quot;:&quot;tom&quot;&#125;</span><br><span class="line">print(dict_is.__iter__)#&lt;method-wrapper &#x27;__iter__&#x27; of dict object at 0x00000242D8C01C00&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>字符串类型</li>
-</ul>
-```python
-str_is = "tom"
-print(str_is.__iter__)#<method-wrapper '__iter__' of str object at 0x00000127085548B0>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 元组类型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">tuple_is = (1,2,3,4,5,6,7,8,9,10)</span><br><span class="line">print(tuple_is.__iter__)#&lt;method-wrapper &#x27;__iter__&#x27; of tuple object at 0x000001FBE40963C0&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>列表类型</li>
-</ul>
-```python
-list_is = [1,2,3,4,5,6,7,8,9,10]
-print(list_is.__iter__)#<method-wrapper '__iter__' of list object at 0x000002B62FBC6B40>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 集合类型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">set_is = [1,2,3,4,5,6,7,8,9,10]</span><br><span class="line">print(set_is.__iter__)#&lt;method-wrapper &#x27;__iter__&#x27; of list object at 0x000002C234D46B40&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>总结
-<ul>
-<li>能.<strong>iter</strong>()不报错的就是可迭代类型，也是可迭代对象</li>
-<li>可迭代对象：字典，字符串，元组，集合，列表</li>
-<li>不可迭代对象：布尔，整数，浮点数</li>
-</ul>
-</li>
-</ul>
-<h2 id="【3】迭代器对象">【3】迭代器对象</h2>
-<h3 id="【1】什么是迭代器对象">【1】什么是迭代器对象</h3>
-<ul>
-<li>如果调用.<strong>iter</strong>()返回的是一个可迭代对象</li>
-<li>有的可迭代对象中还有.<strong>next</strong>()方法</li>
-<li>迭代器对象是在可迭代对象具有（.<strong>iter</strong>()）的基础上具有.<strong>next</strong>()的对象</li>
-</ul>
-<h3 id="【2】数据类型">【2】数据类型</h3>
-<ul>
-<li>字符串</li>
-</ul>
-```python
-name = 'dream'
-name_iter = name.__iter__() # <str_iterator object at 0x0000027750011340>
-print(name_iter)
-print(name_iter.__next__()) # d
-print(name_iter.__next__()) # r
-print(name_iter.__next__()) # e
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 字典</span><br><span class="line">  - 取到的是键</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">user_dict = &#123;&#x27;name&#x27;:&#x27;zhangsan&#x27;&#125;</span><br><span class="line">user_dict_iter = iter(user_dict)</span><br><span class="line">print(user_dict_iter.__next__())#name</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>列表</li>
-</ul>
-```python
-num_list = [1,2,3]
-num_list_iter = iter(num_list)
-print(next(num_list_iter))#1
-print(next(num_list_iter))#2
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 元组</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num_tuple = (1,2,3)</span><br><span class="line">num_tuple_iter = iter(num_tuple)</span><br><span class="line">print(num_tuple_iter.__next__())#1</span><br><span class="line">print(num_tuple_iter.__next__())#2</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>集合、</li>
-</ul>
-```python
-num_set = {1,2,3}
-num_set_iter = iter(num_set)
-print(num_set_iter.__next__())#1
-print(num_set_iter.__next__())#2
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 生成可迭代对象的两种方式</span><br><span class="line"></span><br><span class="line">[1]第一种__iter__（）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">name = &#x27;dream&#x27;</span><br><span class="line">name_iter = name.__iter__()</span><br><span class="line">print(name_iter) #  &lt;str_iterator object at 0x0000023D04091340&gt;</span><br></pre></td></tr></table></figure>
-
-<p>[2]第二种iter(数据)</p>
-```python
-name = 'dream'
-name_iter = iter(name)
-print(iter(name)) #<str_iterator object at 0x0000023D04091340>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 迭代器对象迭代的方法有两种</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">name = &#x27;dream&#x27;</span><br><span class="line">name_iter = name.__iter__()</span><br><span class="line">print(name_iter)</span><br><span class="line">一种</span><br><span class="line">print(name_iter.__next__()) #d</span><br><span class="line">二种</span><br><span class="line">print(next(name_iter))  # r</span><br></pre></td></tr></table></figure>
-
-<h3 id="【3】总结">【3】总结</h3>
-<ul>
-<li>具有 <strong>iter</strong>() 和 <strong>next</strong>() 的对象就是迭代器对象</li>
-<li>八大数据类型：整数，浮点数，布尔这三种不是，其它都是迭代器对象</li>
-<li>可迭代对象是 具有 <strong>iter</strong>() 的对象 —&gt; 生成一个可迭代对象</li>
-<li>迭代器对象是 具有 <strong>iter</strong>()  和 <strong>next</strong>() 的对象 --&gt; 调用上面可迭代对象的 next 方法</li>
-<li>所以迭代器对象一定是可迭代对象</li>
-</ul>
-<h2 id="【4】迭代器的优缺点">【4】迭代器的优缺点</h2>
-<h3 id="【1】优点">【1】优点</h3>
-<ul>
-<li>不使用索引进行取值</li>
-<li>字典是不支持索引取值的</li>
-<li>并且取到这个值的时候就会保存到当前的状态，下一次从这个位置开始向下取值</li>
-</ul>
-<h3 id="【2】缺点">【2】缺点</h3>
-<ul>
-<li>除非取值取到尽头，否则永远不知道终止索引在哪里</li>
-<li>只能取一次记一次位置，下一次的起始位置是上一次的终止位置，想回到开头，回不去</li>
-<li>调用 next 取值的前提是 已经生成并且得到了一个迭代器对象.<strong>iter</strong></li>
-<li>迭代同一个对象只能重新创建</li>
-</ul>
-```python
-name = 'dr'
-name_iter = name.__iter__()
-print(next(name_iter))#d
-print(next(name_iter))#r
-name_iter = name.__iter__()
-print(next(name_iter))#d
-```
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.17pickle%E6%A8%A1%E5%9D%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/4.17pickle%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">4.17pickle模块</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>pickle模块</h1>
-<ul>
-<li>用于python特有的类型 和 python的数据类型间进行转换</li>
-</ul>
-<h2 id="【1】序列化方法（dumps）">【1】序列化方法（dumps）</h2>
-```python
-#导入模块
-mport pickle
-
-dic = {'k1': 'v1', 'k2': 'v2', 'k3': 'v3'}
-str_dic = pickle.dumps(dic)
-print(str_dic)
-#返回一个二进制数据
-b'\x80\x04\x95#\x00\x00\x00\x00\x00\x00\x00}\x94(\x8c\x02k1\x94\x8c\x02v1\x94\x8c\x02k2\x94\x8c\x02v2\x94\x8c\x02k3\x94\x8c\x02v3\x94u.'
-print(type(str_dic))
-# <class 'bytes'>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】反序列化方法（loads）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">#导入模块</span><br><span class="line">import pickle</span><br><span class="line"></span><br><span class="line">dic = &#123;&#x27;k1&#x27;: &#x27;v1&#x27;, &#x27;k2&#x27;: &#x27;v2&#x27;, &#x27;k3&#x27;: &#x27;v3&#x27;&#125;</span><br><span class="line">#序列化得到一个二进制数据</span><br><span class="line">str_dic = pickle.dumps(dic)</span><br><span class="line">print(str_dic)</span><br><span class="line"># b&#x27;\x80\x04\x95#\x00\x00\x00\x00\x00\x00\x00&#125;\x94(\x8c\x02k1\x94\x8c\x02v1\x94\x8c\x02k2\x94\x8c\x02v2\x94\x8c\x02k3\x94\x8c\x02v3\x94u.&#x27;</span><br><span class="line">print(type(str_dic))</span><br><span class="line"># &lt;class &#x27;bytes&#x27;&gt;</span><br><span class="line"></span><br><span class="line">#反序列化的数据</span><br><span class="line">dic2 = pickle.loads(str_dic)</span><br><span class="line">print(dic2) </span><br><span class="line"># &#123;&#x27;k1&#x27;: &#x27;v1&#x27;, &#x27;k2&#x27;: &#x27;v2&#x27;, &#x27;k3&#x27;: &#x27;v3&#x27;&#125;</span><br><span class="line">print(type(dic2))</span><br><span class="line"># &lt;class &#x27;dict&#x27;&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="【3】写入文件（dump）">【3】写入文件（dump）</h2>
-```python
-import pickle
-import time
-
-struct_time = time.localtime()
-print(struct_time)
-# time.struct_time(tm_year=2023, tm_mon=11, tm_mday=25, tm_hour=20, tm_min=9, tm_sec=46, tm_wday=5, tm_yday=329, tm_isdst=0)
-
-# 打开文件，并将句柄给 f
-f = open('pickle_file', 'wb')
-# 向 pickle_file 文件中写入数据
-pickle.dump(struct_time, f)
-# 完成写入，关闭文件
-f.close()
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 写入到 pickle_file 文件里面的数据是一堆乱码，看不懂</span><br><span class="line"></span><br><span class="line">## 【4】读文件数据（load）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import pickle</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">struct_time = time.localtime()</span><br><span class="line">print(struct_time)</span><br><span class="line"># time.struct_time(tm_year=2024, tm_mon=5, tm_mday=9, tm_hour=16, tm_min=53, tm_sec=50, tm_wday=3, tm_yday=130, tm_isdst=0)</span><br><span class="line"># 打开文件，并将句柄给 f</span><br><span class="line">f = open(&#x27;pickle_file&#x27;, &#x27;wb&#x27;)</span><br><span class="line"># 向 pickle_file 文件中写入数据</span><br><span class="line">pickle.dump(struct_time, f)</span><br><span class="line"># 完成写入，关闭文件</span><br><span class="line">f.close()</span><br><span class="line"></span><br><span class="line"># 打开文件的句柄</span><br><span class="line">f = open(&#x27;pickle_file&#x27;, &#x27;rb&#x27;)</span><br><span class="line"># 将读出来的数据给 struct_time2</span><br><span class="line">struct_time2 = pickle.load(f)</span><br><span class="line"></span><br><span class="line"># 我们可以直接操作 struct_time2 --- 上面直接写入的时间元组对象</span><br><span class="line">print(struct_time2)</span><br><span class="line">#time.struct_time(tm_year=2024, tm_mon=5, tm_mday=9, tm_hour=16, tm_min=53, tm_sec=50, tm_wday=3, tm_yday=130, tm_isdst=0)</span><br><span class="line"></span><br><span class="line">print(type(struct_time2))</span><br><span class="line"># &lt;class &#x27;time.struct_time&#x27;&gt;</span><br><span class="line">print(struct_time2.tm_year)</span><br><span class="line"># 2024</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>先写数据—再读</li>
-</ul>
-<h2 id="【5】小结">【5】小结</h2>
-<ul>
-<li>这时候机智的你又要说了，既然pickle如此强大，为什么还要学json呢？</li>
-<li>这里我们要说明一下
-<ul>
-<li>json是一种所有的语言都可以识别的数据结构。</li>
-</ul>
-</li>
-<li>如果我们将一个字典或者序列化成了一个json存在文件里
-<ul>
-<li>那么java代码或者js代码也可以拿来用。</li>
-</ul>
-</li>
-<li>但是如果我们用pickle进行序列化
-<ul>
-<li>其他语言就不能读懂这是什么了～</li>
-</ul>
-</li>
-<li>所以，如果你序列化的内容是列表或者字典，我们非常推荐你使用json模块</li>
-<li>但<strong>如果出于某种原因你不得不序列化其他的数据类型，而未来你还会用python对这个数据进行反序列化的话，那么就可以使用pickle</strong></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.12re%E6%A8%A1%E5%9D%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/4.12re%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">4.12re模块</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>re模块</h1>
-<h1>【一】正则语法</h1>
-<ul>
-<li>
-<p><em>在线测试工具</em> <a target="_blank" rel="noopener" href="http://tool.chinaz.com/regex/">http://tool.chinaz.com/regex/</a></p>
-</li>
-<li>
-<p>正则就只和字符串相关</p>
-</li>
-<li>
-<p>正则：按照指定的匹配规则从字符串中匹配或者截取相应的内容</p>
-</li>
-</ul>
-<h2 id="【1】字符组">【1】字符组</h2>
-<ul>
-<li>[字符组] 在同一个位置可能出现的各种字符组成了一个字符组</li>
-<li>字符组用[]</li>
-<li>字符组的[备选项]字母/数字/特殊标点…</li>
-<li>语法re.findall(正则模式，文本)，基于正则模式查找所有匹配的文本内容</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">正则</th>
-<th style="text-align:left">待匹配字符</th>
-<th style="text-align:left">匹配结果</th>
-<th style="text-align:left">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">[0123456789]</td>
-<td style="text-align:left">8</td>
-<td style="text-align:left">True</td>
-<td style="text-align:left">在一个字符组里枚举合法的所有字符，字符组里的任意一个字符和&quot;待匹配字符&quot;相同都视为可以匹配</td>
-</tr>
-<tr>
-<td style="text-align:left">[0123456789]</td>
-<td style="text-align:left">a</td>
-<td style="text-align:left">False</td>
-<td style="text-align:left">由于字符组中没有&quot;a&quot;字符，所以不能匹配</td>
-</tr>
-<tr>
-<td style="text-align:left">[0-9]</td>
-<td style="text-align:left">7</td>
-<td style="text-align:left">True</td>
-<td style="text-align:left">也可以用-表示范围,[0-9]就和[0123456789]是一个意思</td>
-</tr>
-<tr>
-<td style="text-align:left">[a-z]</td>
-<td style="text-align:left">s</td>
-<td style="text-align:left">True</td>
-<td style="text-align:left">同样的如果要匹配所有的小写字母，直接用[a-z]就可以表示</td>
-</tr>
-<tr>
-<td style="text-align:left">[A-Z]</td>
-<td style="text-align:left">B</td>
-<td style="text-align:left">True</td>
-<td style="text-align:left">[A-Z]就表示所有的大写字母</td>
-</tr>
-<tr>
-<td style="text-align:left">[0-9a-fA-F]</td>
-<td style="text-align:left">e</td>
-<td style="text-align:left">True</td>
-<td style="text-align:left">可以匹配数字，大小写形式的a～f，用来验证十六进制字符</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>例题：re.findall(正则模式，文本)</li>
-</ul>
-```python
-import re
-
-
-ret2=re.findall("a","asdfgaa")
-print(ret2)#['a', 'a', 'a']
-
-ret3=re.findall("[4,6]","ad,gh,54,14")
-print(ret3)#[',', ',', '4', ',', '4']
-
-ret4=re.findall("[ace]", "a,b,c,d,e")
-print(ret4)#['a', 'c', 'e']
-#匹配a~z小写字母
-ret5 = re.findall("[a-z]", "a,b,c,d,e")
-print(ret5)#['a', 'b', 'c', 'd', 'e']
-#匹配0~9数字
-ret6 = re.findall("[0-9]", "1,2,3,4,5")
-print(ret6)#['1', '2', '3', '4', '5']
-#除了字母以外
-ret7 = re.findall("[^a-z]", "1,a,2,b,3")
-print(ret7)#['1', ',', ',', '2', ',', ',', '3']
-
-ret8 = re.findall("\d", "1,2,3,4,5")
-print(ret8)#['1', '2', '3', '4', '5']
-
-ret9 = re.findall("[0-9a-z]", "1,a,2,b,3")
-print(ret9)#['1', 'a', '2', 'b', '3']
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】元字符</span><br><span class="line"></span><br><span class="line">| 元字符 | 匹配内容                         |</span><br><span class="line">| :----- | -------------------------------- |</span><br><span class="line">| .      | 匹配除换行符以外的任意字符       |</span><br><span class="line">| \w     | 匹配字母或数字或下划线           |</span><br><span class="line">| \s     | 匹配任意的空白符                 |</span><br><span class="line">| \d     | 匹配数字                         |</span><br><span class="line">| \n     | 匹配一个换行符                   |</span><br><span class="line">| \t     | 匹配一个制表符                   |</span><br><span class="line">| \b     | 匹配一个单词的结尾               |</span><br><span class="line">| ^      | 匹配字符串的开始                 |</span><br><span class="line">| $      | 匹配字符串的结尾                 |</span><br><span class="line">| \W     | 匹配非字母或数字或下划线         |</span><br><span class="line">| \D     | 匹配非数字                       |</span><br><span class="line">| \S     | 匹配非空白符                     |</span><br><span class="line">| a\|b   | 匹配字符a或字符b                 |</span><br><span class="line">| ()     | 匹配括号内的表达式，也表示一个组 |</span><br><span class="line">| [...]  | 匹配字符组中的字符               |</span><br><span class="line">| [^...] | 匹配除了字符组中字符的所有字符   |</span><br><span class="line"></span><br><span class="line">- 匹配特殊字符</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">[1]. 代表除换行符以外的任意字符</span><br><span class="line">letter = &#x27;a b c d e f g h i j k A B C D E 1 2 3 4 5 , &#x27;</span><br><span class="line">pattern = &quot;.&quot;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"># （2）\w 代表数字或者字母或下划线</span><br><span class="line">letter = &#x27;a b c d e f g h i j k A B C D E 1 2 3 4 5 , _ . ; % &#x27;</span><br><span class="line">pattern = &quot;\w&quot;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"># （3）\s 代表任意的空白符 ---&gt; 空格</span><br><span class="line">letter = &#x27;a b c d e f g h i j k A B C D E 1 2 3 4 5 , _ . ; % &#x27;</span><br><span class="line">pattern = &quot;\s&quot;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"># （4）\d 只能匹配数字</span><br><span class="line">letter = &#x27;a b c d e f g h i j k A B C D E 1 2 3 4 5 , _ . ; % &#x27;</span><br><span class="line">pattern = &quot;\d&quot;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"># （5）\W 除了字母 或数字 或下滑线以外的任意字符</span><br><span class="line">letter = &#x27;a b c d e f g h i j k A B C D E 1 2 3 4 5 , _ . ; % &#x27;</span><br><span class="line">pattern = &quot;\W&quot;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"># （6）\n 只能匹配换行符</span><br><span class="line">letter = &#x27;&#x27;&#x27;</span><br><span class="line">&#x27; a </span><br><span class="line">b c </span><br><span class="line">d e f g h i j k A B C D E </span><br><span class="line">1 2 3 4 5 , _ . ; % </span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">pattern = &quot;\n&quot;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"># （7）\t 制表符</span><br><span class="line">letter = &#x27;&#x27;&#x27;a    b c d e f g h i j k A B C D E 1 2 3 4 5 , _ . ; % &#x27;&#x27;&#x27;</span><br><span class="line">pattern = &quot;\t&quot;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"># （8）\b 匹配一个单词的结尾</span><br><span class="line"></span><br><span class="line"># （9）^字符 以某个字符开头</span><br><span class="line">letter = &#x27;&#x27;&#x27;a    b c d e f g h i j k A B C D E 1 2 3 4 5 , _ . ; %&#x27;&#x27;&#x27;</span><br><span class="line">pattern = &quot;^a&quot;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)</span><br><span class="line"># （10） 字符$ 以某个字符结尾</span><br><span class="line">letter = &#x27;&#x27;&#x27;a    b c d e f g h i j k A B C D E 1 2 3 4 5 , _ . ; %&#x27;&#x27;&#x27;</span><br><span class="line">pattern = &quot;%$&quot;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)</span><br><span class="line"># （11）\D 匹配除数字以外的任意字符</span><br><span class="line">letter = &#x27;&#x27;&#x27;a    b c d e f g h i j k A B C D E 1 2 3 4 5 , _ . ; %&#x27;&#x27;&#x27;</span><br><span class="line">pattern = &quot;\D&quot;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)</span><br><span class="line"># （12）\S 匹配出了空格以外的所有字符</span><br><span class="line">letter = &#x27;&#x27;&#x27;a    b c d e f g h </span><br><span class="line">i j k A B C D E 1 2 3 4 5 , _ . ; %&#x27;&#x27;&#x27;</span><br><span class="line">pattern = &quot;\S&quot;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)</span><br><span class="line"># （13） 字符|字符 匹配任意一个字符</span><br><span class="line">letter = &#x27;&#x27;&#x27;a    b c d e f g h </span><br><span class="line">i j k A B C D E 1 2 3 4 5 , _ . ; %&#x27;&#x27;&#x27;</span><br><span class="line">pattern = &quot;a|b|1|%&quot;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)</span><br><span class="line"># （14） () 声明优先级</span><br><span class="line">letter = &#x27;&#x27;&#x27;a    b c d e f g hi j k A B C D E 12 aa 34 5a , _ . ; %&#x27;&#x27;&#x27;</span><br><span class="line">pattern = &quot;\d(\w)&quot;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)</span><br><span class="line"># （15）字符组[]</span><br><span class="line">letter = &#x27;&#x27;&#x27;a    b c d e f g hi j k A B C D E 12 aa 34 5a , _ . ; %&#x27;&#x27;&#x27;</span><br><span class="line">pattern = &quot;[a-z0-9A-Z][0-9]&quot; # [&#x27;12&#x27;, &#x27;34&#x27;]</span><br><span class="line"># pattern = &quot;[a-z0-9A-Z][a-z]&quot;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line">#(16)匹配除了字符组中字符的所有字符【有bag】</span><br><span class="line">letter = &#x27;&#x27;&#x27;a    b c d e $f _g hi j k A B C D E 12 aa 34 5a , _ . ; %&#x27;&#x27;&#x27;</span><br><span class="line"># 匹配除了字符组中字符的所有字符</span><br><span class="line"># $f _g hi 12 aa 34 5a#(首先是两位的)</span><br><span class="line">pattern = &quot;[^a-z0-9A-Z][0-9]&quot; </span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)# [&#x27; 1&#x27;, &#x27; 3&#x27;, &#x27; 5&#x27;]</span><br></pre></td></tr></table></figure>
-
-<h3 id="【3】重复元组字符-》">【3】重复元组字符-----》 +* {} ?</h3>
-```python
- ret2 = re.findall("[0-9a-zA-Z]", "apple,banana,orange,melon")#['a', 'p', 'p', 'l', 'e', 'b', 'a', 'n', 'a', 'n', 'a', 'o', 'r', 'a', 'n', 'g', 'e', 'm', 'e', 'l', 'o', 'n']
-
- ret2 = re.findall("\w", "apple,banana,orange,melon")#['a', 'p', 'p', 'l', 'e', 'b', 'a', 'n', 'a', 'n', 'a', 'o', 'r', 'a', 'n', 'g', 'e', 'm', 'e', 'l', 'o', 'n']
-
- ret2 = re.findall("\w+", "apple,banana,orange,melon")#['apple', 'banana', 'orange', 'melon']
-
- ret2 = re.findall("\w+?", "apple,banana,orange,melon")  # 取消贪婪匹配#['a', 'p', 'p', 'l', 'e', 'b', 'a', 'n', 'a', 'n', 'a', 'o', 'r', 'a', 'n', 'g', 'e', 'm', 'e', 'l', 'o', 'n']
-
- ret2 = re.findall("\w*", "apple,banana,orange,melon")#['apple', '', 'banana', '', 'orange', '', 'melon', '']
-
- ret2 = re.findall("\w{6}", "apple,banana,orange,melon")#['banana', 'orange']
-#{}里面的6代表的是单词是六位的输出
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【4】量词</span><br><span class="line"></span><br><span class="line">| 量词    | 用法说明         |</span><br><span class="line">| :------ | :--------------- |</span><br><span class="line">| `*`     | 重复零次或更多次 |</span><br><span class="line">| `+`     | 重复一次或更多次 |</span><br><span class="line">| `?`     | 重复零次或一次   |</span><br><span class="line">| `&#123;n&#125;`   | 重复n次          |</span><br><span class="line">| `&#123;n,&#125;`  | 重复n次或更多次  |</span><br><span class="line">| `&#123;n,m&#125;` | 重复n到m次       |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">(1)`*`重复零次或更多次</span><br><span class="line">pattern = &quot;[0-9][a-z]*&quot;  #数字开头</span><br><span class="line">letter = &#x27;&#x27;&#x27;a    b c d e $f _g hi j k A B C D E 12 aa 34 5a 111 6cs 9nb 6aaaa , _ . ; %&#x27;&#x27;&#x27;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)#[&#x27;1&#x27;, &#x27;2&#x27;, &#x27;3&#x27;, &#x27;4&#x27;, &#x27;5a&#x27;, &#x27;1&#x27;, &#x27;1&#x27;, &#x27;1&#x27;, &#x27;6cs&#x27;, &#x27;9nb&#x27;, &#x27;6aaaa&#x27;]</span><br><span class="line"></span><br><span class="line">（2） + 代表当前字符重读一次或更多次</span><br><span class="line">pattern = &quot;[0-9][a-z]+&quot;  #数字开头后缀都要是字母</span><br><span class="line">letter = &#x27;&#x27;&#x27;a    b c d e $f _g hi j k A B C D E 12 aa 34 5a 111 6cs 9nb  6aaaa , _ . ; %&#x27;&#x27;&#x27;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)#[&#x27;5a&#x27;, &#x27;6cs&#x27;, &#x27;9nb&#x27;, &#x27;6aaaa&#x27;]</span><br><span class="line"></span><br><span class="line">(3)? 重复零次或一次</span><br><span class="line">pattern = &quot;[0-9][a-z]?&quot;  #数字开头，后缀只能有一个字母</span><br><span class="line">letter = &#x27;&#x27;&#x27;a    b c d e $f _g hi j k A B C D E 12 aa 34 5a 111 6cs 9nb  6aaaa , _ . ; %&#x27;&#x27;&#x27;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)#[&#x27;1&#x27;, &#x27;2&#x27;, &#x27;3&#x27;, &#x27;4&#x27;, &#x27;5a&#x27;, &#x27;1&#x27;, &#x27;1&#x27;, &#x27;1&#x27;, &#x27;6c&#x27;, &#x27;9n&#x27;, &#x27;6a&#x27;]</span><br><span class="line"></span><br><span class="line">（4）&#123;n&#125; 重复n次</span><br><span class="line">pattern = &quot;[0-9][a-z]&#123;2&#125;&quot;  #数字开头，后缀只能有两个字母</span><br><span class="line">letter = &#x27;&#x27;&#x27;a    b c d e $f _g hi j k A B C D E 12 aa 34 5a 111 6cs 9nb  6aaaa , _ . ; %&#x27;&#x27;&#x27;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)#[&#x27;6cs&#x27;, &#x27;9nb&#x27;, &#x27;6aa&#x27;]</span><br><span class="line"></span><br><span class="line">（5）&#123;n,m&#125; 重复至少n次 至多m次</span><br><span class="line">pattern = &quot;[0-9][a-z]&#123;2,3&#125;&quot;  #数字开头，后缀是两个字母结尾，或者三个字母结尾</span><br><span class="line">letter = &#x27;&#x27;&#x27;a    b c d e $f _g hi j k A B C D E 12 aa 34 5a 111 6cs 9nb  6aaaa , _ . ; %&#x27;&#x27;&#x27;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)#[&#x27;6cs&#x27;, &#x27;9nb&#x27;, &#x27;6aaa&#x27;]</span><br></pre></td></tr></table></figure>
-
-<h3 id="【5】位置元字符">【5】位置元字符**<code>. ^ $</code>**</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">正则</th>
-<th style="text-align:left">待匹配字符</th>
-<th style="text-align:left">匹配 结果</th>
-<th style="text-align:left">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>海.</code></td>
-<td style="text-align:left">海燕海娇海东</td>
-<td style="text-align:left">海燕海娇海东</td>
-<td style="text-align:left">匹配所有&quot;海.&quot;的字符</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>^海.</code></td>
-<td style="text-align:left">海燕海娇海东</td>
-<td style="text-align:left">海燕</td>
-<td style="text-align:left">只从开头匹配&quot;海.&quot;</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>海.$</code></td>
-<td style="text-align:left">海燕海娇海东</td>
-<td style="text-align:left">海东</td>
-<td style="text-align:left">只匹配结尾的&quot;海.$&quot;</td>
-</tr>
-</tbody>
-</table>
-```python
-import re
-
-#  . 代表任意字符
-pattern = "海."#检测海这个字 后面只能跟一个字符
-letter = '''海燕海娇海东海冬梅'''
-res = re.findall(pattern, letter)
-print(res)# ['海燕', '海娇', '海东', '海冬']
-
-# . 代表任意字符
-# ^ 以 ... 开头
-pattern = "^海."#以海开头，并且后缀一个字符
-letter = '''海燕海娇海东海冬梅'''
-res = re.findall(pattern, letter)
-print(res)# # ['海燕']
-
-# #  . 代表任意字符
-# # $ 以 ... 结尾
-pattern = "海.$"#最后一个字节只能是海后面跟一个字节否则返回[]
-letter = '''海燕海娇海东海冬'''
-res = re.findall(pattern, letter)
-print(res)# ['海冬']
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【6】重复匹配**`\* + ? &#123; &#125;`**</span><br><span class="line"></span><br><span class="line">| 正则       | 待匹配字符             | 匹配 结果              | 说明                                                   |</span><br><span class="line">| :--------- | :--------------------- | :--------------------- | :----------------------------------------------------- |</span><br><span class="line">| `李.?`     | 李杰和李莲英和李二棍子 | 李杰 李莲 李二         | ?表示重复零次或一次，即只匹配&quot;李&quot;后面一个任意字符      |</span><br><span class="line">| `李.*`     | 李杰和李莲英和李二棍子 | 李杰和李莲英和李二棍子 | *表示重复零次或多次，即匹配&quot;李&quot;后面0或多个任意字符     |</span><br><span class="line">| `李.+`     | 李杰和李莲英和李二棍子 | 李杰和李莲英和李二棍子 | +表示重复一次或多次，即只匹配&quot;李&quot;后面1个或多个任意字符 |</span><br><span class="line">| `李.&#123;1,2&#125;` | 李杰和李莲英和李二棍子 | 李杰和 李莲英 李二棍   | &#123;1,2&#125;匹配1到2次任意字符                                |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># . 代表任意字符</span><br><span class="line"># ? 重复零次或一次</span><br><span class="line">pattern = &quot;李.?&quot;#李后面重复一次或只有一个李</span><br><span class="line">letter = &#x27;李 李杰李莲英和李二棍子&#x27;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)#[&#x27;李 &#x27;, &#x27;李杰&#x27;, &#x27;李莲&#x27;, &#x27;李二&#x27;]</span><br><span class="line"></span><br><span class="line"># . 代表任意字符</span><br><span class="line"># * 重复零次或更多次</span><br><span class="line">pattern = &quot;李.*&quot;#李后面的字符全部打印</span><br><span class="line">letter = &#x27;李杰李莲英和李二棍子&#x27;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)# [&#x27;李杰李莲英和李二棍子&#x27;]</span><br><span class="line"></span><br><span class="line"># . 代表任意字符</span><br><span class="line"># + 重复一次或更多次</span><br><span class="line">pattern = &quot;李.+&quot;#李后面的字符全部打印</span><br><span class="line">letter = &#x27;李杰李莲英和李二棍子&#x27;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)# [&#x27;李杰李莲英和李二棍子&#x27;]</span><br><span class="line"></span><br><span class="line"># . 代表任意字符</span><br><span class="line"># &#123;m,n&#125; 重复一次或更多次</span><br><span class="line">pattern = &quot;李.&#123;2,3&#125;&quot;#匹配2到3次任意字符</span><br><span class="line">letter = &#x27;李杰李莲英和李二棍子&#x27;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)# [&#x27;李杰李莲&#x27;, &#x27;李二棍子&#x27;]</span><br><span class="line"></span><br><span class="line"># . 代表任意字符</span><br><span class="line"># [] 字符组中的任意一个</span><br><span class="line">pattern = &quot;李[杰莲英二棍子]&quot;#李后面跟字符组中的任意一个</span><br><span class="line">letter = &#x27;李杰李莲英和李二棍子&#x27;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)# [&#x27;李杰&#x27;, &#x27;李莲&#x27;, &#x27;李二&#x27;]</span><br><span class="line"></span><br><span class="line"># . 代表任意字符</span><br><span class="line"># [] 字符组中的任意一个</span><br><span class="line"># ^和 除了和</span><br><span class="line"># * 任意</span><br><span class="line">pattern = &quot;李[^和]*&quot;#[^和]：意思是不要&quot;和&quot;这个字</span><br><span class="line">letter = &#x27;李杰李莲英和李二棍子&#x27;</span><br><span class="line">res = re.findall(pattern, letter)</span><br><span class="line">print(res)# [&#x27;李杰李莲英&#x27;, &#x27;李二棍子&#x27;]</span><br></pre></td></tr></table></figure>
-
-<h3 id="【7】字符集-［］［-］">【7】字符集**<code>［］［^］</code>**</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">正则</th>
-<th style="text-align:left">待匹配字符</th>
-<th style="text-align:left">匹配 结果</th>
-<th style="text-align:left">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>李[杰莲英二棍子]*</code></td>
-<td style="text-align:left">李杰和李莲英和李二棍子</td>
-<td style="text-align:left">李杰 李莲英 李二棍子</td>
-<td style="text-align:left">表示匹配&quot;李&quot;字后面[杰莲英二棍子]的字符任意次</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>李[^和]*</code></td>
-<td style="text-align:left">李杰和李莲英和李二棍子</td>
-<td style="text-align:left">李杰 李莲英 李二棍子</td>
-<td style="text-align:left">表示匹配一个不是&quot;和&quot;的字符任意次</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>[\d]</code></td>
-<td style="text-align:left">456bdha3</td>
-<td style="text-align:left">4 5 6 3</td>
-<td style="text-align:left">表示匹配任意一个数字，匹配到4个结果</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>[\d]+</code></td>
-<td style="text-align:left">456bdha3</td>
-<td style="text-align:left">456 3</td>
-<td style="text-align:left">表示匹配任意个数字，匹配到2个结果</td>
-</tr>
-</tbody>
-</table>
-```python
-# # . 代表任意字符
-# # [] 字符组中的任意一个
-pattern = "李[杰莲英二棍子]"#李后面跟字符组中的任意一个
-letter = '李杰李莲英和李二棍子'
-res = re.findall(pattern, letter)
-print(res)# ['李杰', '李莲', '李二']
-
-# . 代表任意字符
-# [] 字符组中的任意一个
-# ^和 除了和
-# * 任意
-pattern = "李[^和]*"#[^和]：意思是不要"和"这个字
-letter = '李杰李莲英和李二棍子'
-res = re.findall(pattern, letter)
-print(res)# ['李杰李莲英', '李二棍子']
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【8】分组匹配**`()与 或 ｜［^］`**</span><br><span class="line"></span><br><span class="line">- 身份证号码是一个长度为15或18个字符的字符串</span><br><span class="line">  - 如果是15位则全部🈶️数字组成，首位不能为0；</span><br><span class="line">  - 如果是18位，则前17位全部是数字，末位可能是数字或x，</span><br><span class="line">  - 下面我们尝试用正则来表示：</span><br><span class="line"></span><br><span class="line">| 正则                          | 待匹配字符         | 匹配 结果          | 说明                                                         |</span><br><span class="line">| :---------------------------- | :----------------- | :----------------- | :----------------------------------------------------------- |</span><br><span class="line">| `^[1-9]\d&#123;13,16&#125;[0-9x]$`      | 110101198001017032 | 110101198001017032 | 表示可以匹配一个正确的身份证号                               |</span><br><span class="line">| `^[1-9]\d&#123;13,16&#125;[0-9x]$`      | 1101011980010170   | 1101011980010170   | 表示也可以匹配这串数字，但这并不是一个正确的身份证号码，它是一个16位的数字 |</span><br><span class="line">| `^[1-9]\d&#123;14&#125;(\d&#123;2&#125;[0-9x])?$` | 1101011980010170   | False              | `现在不会匹配错误的身份证号了 ()表示分组，将\d&#123;2&#125;[0-9x]分成一组，就可以整体约束他们出现的次数为0-1次` |</span><br><span class="line">| `^([1-9]\d&#123;16&#125;[0-9x]          | [1-9]\d&#123;14&#125;)$`     | 110105199812067023 | 110105199812067023                                           |</span><br><span class="line"></span><br><span class="line">- 捕获选择</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># | 指定原子或正则模式进行二选一或多选一</span><br><span class="line"># () 具备模式捕获的能力，也就是优先提取数据的能力，通过(?:) 可以取消模式捕获</span><br><span class="line">ret4 = re.findall(&quot;,\w&#123;5&#125;,&quot;, &quot;,apple,banana,peach,orange,melon,&quot;)  # 筛选出5个字符的单词</span><br><span class="line">ret4 = re.findall(&quot;,(\w&#123;5&#125;),&quot;, &quot;,apple,banana,peach,orange,melon,&quot;)  # 筛选出5个字符的单词</span><br><span class="line">ret4 = re.findall(&quot;\w+@\w+\.com&quot;, &quot;123abc@163.com,....234xyz@qq.com,....&quot;)  # 筛选出5个字符的单词</span><br><span class="line">ret4 = re.findall(&quot;(\w+)@qq\.com&quot;, &quot;123abc@163.com,....234xyz@qq.com,....&quot;)  # 筛选出5个字符的单词</span><br><span class="line">ret4 = re.findall(&quot;(?:\w+)@(?:qq|163)\.com&quot;, &quot;123abc@163.com,....234xyz@qq.com,....&quot;)  # 筛选出5个字符的单词</span><br><span class="line">print(ret4)</span><br></pre></td></tr></table></figure>
-
-<h3 id="【9】贪婪匹配">【9】贪婪匹配</h3>
-<ul>
-<li>贪婪匹配：在满足匹配时，匹配尽可能长的字符串，默认情况下，采用贪婪匹配</li>
-<li>非贪婪匹配：在满足匹配时，匹配尽可能短的字符串</li>
-<li>几个常用的非贪婪匹配，Pattern</li>
-</ul>
-```python
-import re
-# . 代表任意字符
-pattern = "李.*?" #*? 重复任意次，但尽可能少重复 #['李', '李', '李']
-pattern = "李.+?" #+? 重复1次或更多次，但尽可能少重复 #['李杰', '李莲', '李二']
-pattern = "李.??" #?? 重复0次或1次，但尽可能少重复 #['李', '李', '李']
-pattern = "李.{2,3}?" #{n,m}? 重复n到m次，但尽可能少重复 #['李杰李', '李二棍']
-letter = '李杰李莲英和李二棍子'
-res = re.findall(pattern, letter)
-print(res)
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【10】方法</span><br><span class="line"></span><br><span class="line">#### （1）findall(查找结果)</span><br><span class="line"></span><br><span class="line">- 返回所有满足匹配条件的结果,放在列表里</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">name_str = &quot;Dream yuan Justin&quot;</span><br><span class="line">pattern = &#x27;a&#x27;</span><br><span class="line">result = re.findall(pattern, name_str)</span><br><span class="line">print(result)</span><br><span class="line"># 结果 : [&#x27;a&#x27;, &#x27;a&#x27;]</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-search（查找结果）">(2)search（查找结果）</h4>
-<ul>
-<li>只匹配到符合条件的一个字符</li>
-</ul>
-```python
-# 函数会在字符串内查找模式匹配,只到找到第一个匹配然后返回一个包含匹配信息的对象,该对象可以
-# 通过调用group()方法得到匹配的字符串,如果字符串没有匹配，则返回None。
-name_str = "Dream yuan Justin"
-pattern = 'a'
-result = re.search(pattern, name_str)
-print(result)  # <re.Match object; span=(3, 4), match='a'>#span=(3, 4)意思是a的位置在3，4的位置
-result = re.search(pattern, name_str).group()
-print(result)  # 结果 : 'a'
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### （3）match（查找结果）</span><br><span class="line"></span><br><span class="line">- 同search,不过尽在字符串开始处进行匹配</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 同search,不过尽在字符串开始处进行匹配</span><br><span class="line">pattern = &#x27;a&#x27;</span><br><span class="line">result = re.match(pattern, &#x27;abc&#x27;)</span><br><span class="line">print(result)  # &lt;re.Match object; span=(0, 1), match=&#x27;a&#x27;&gt;</span><br><span class="line">result = re.match(pattern, &#x27;abc&#x27;).group()</span><br><span class="line">print(result)</span><br><span class="line"># 结果 : &#x27;a&#x27;</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-split（切割）">(4)split（切割）</h4>
-<ul>
-<li>先按’a’分割得到’‘和’bcd’,在对’'和’bcd’分别按’b’分割</li>
-</ul>
-```python
-name_str = 'abcd'
-# 先按'a'分割得到''和'bcd',在对''和'bcd'分别按'b'分割
-pattern = '[ab]'
-result = re.split(pattern, name_str)
-print(result)  # ['', '', 'cd']
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### (5)sub(指定个数替换)</span><br><span class="line"></span><br><span class="line">-  默认替换所有匹配到的字符 可以用 count 控制替换次数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import re</span><br><span class="line"></span><br><span class="line">name_str = &#x27;eva3egon4yuan4&#x27;</span><br><span class="line"></span><br><span class="line"># 将数字替换成&#x27;H&#x27;，参数1表示只替换1个</span><br><span class="line"># 默认替换所有匹配到的字符</span><br><span class="line">result = re.sub(&#x27;\d&#x27;, &#x27;H&#x27;, name_str, 1)</span><br><span class="line">print(result)  # evaHegon4yuan4</span><br></pre></td></tr></table></figure>
-
-<h4 id="6-subn-全部替换">(6)subn(全部替换)</h4>
-<ul>
-<li>替换匹配到的所有字符并返回 替换成功的字符和替换次数</li>
-</ul>
-```python
-import re
-
-name_str = 'eva3egon4yuan4'
-# 将数字替换成'H'，返回元组(替换的结果,替换了多少次)
-result = re.subn('\d', 'H', 'eva3egon4yuan4')
-print(result)  # ('evaHegonHyuanH', 3)
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### (7)compile(编译正则表达式)</span><br><span class="line"></span><br><span class="line">- 预编译正则表达式</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 将正则表达式编译成为一个 正则表达式对象，规则要匹配的是3个数字</span><br><span class="line">obj = re.compile(&#x27;\d&#123;3&#125;&#x27;)</span><br><span class="line">print(obj)</span><br><span class="line"># 正则表达式对象调用search，参数为待匹配的字符串</span><br><span class="line">ret = obj.search(&#x27;abc1234eeee&#x27;)</span><br><span class="line">print(ret.group())  # 结果 ： 123</span><br><span class="line">print(re.findall(obj, &#x27;abc1234eeee&#x27;))</span><br></pre></td></tr></table></figure>
-
-<h3 id="【11】正则方法之优先级">【11】正则方法之优先级</h3>
-<h4 id="（1）findall的优先级查询">（1）findall的优先级查询</h4>
-```python
-pattern = 'www.(baidu|oldboy).com'
-pattern = re.compile(pattern)
-data = 'www.oldboy.com'
-ret = re.findall(pattern, data)
-# 这是因为findall会优先把匹配结果组里内容返回,如果想要匹配结果,取消权限即可
-print(ret)  # ['oldboy']
-
-ret = re.findall('www.(?:baidu|oldboy).com', 'www.baidu.com')
-print(ret)   #['www.baidu.com']
-
-
-data= "<dd>弱者声嘶力竭，亦无人在乎，强者轻声细语，却能深入人心。一棵熊熊燃烧的天赋树，每一片叶子都承载着不同的灵纹，宗门被灭，沦为矿奴的陆叶凭此成为修士，搅动九州风云......</dd>"
-pattern = '<dd>(.*)</dd>'
-pattern = re.compile(pattern)
-print(re.findall(pattern,data))#['弱者声嘶力竭，亦无人在乎，强者轻声细语，却能深入人心。一棵熊熊燃烧的天赋树，每一片叶子都承载着不同的灵纹，宗门被灭，沦为矿奴的陆叶凭此成为修士，搅动九州风云......']
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### (2)split的优先级查询</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">ret=re.split(&quot;\d+&quot;,&quot;eva3egon4yuan&quot;)</span><br><span class="line">print(ret) #结果 ： [&#x27;eva&#x27;, &#x27;egon&#x27;, &#x27;yuan&#x27;]</span><br><span class="line"></span><br><span class="line">ret=re.split(&quot;(\d+)&quot;,&quot;eva3egon4yuan&quot;)</span><br><span class="line">print(ret) #结果 ： [&#x27;eva&#x27;, &#x27;3&#x27;, &#x27;egon&#x27;, &#x27;4&#x27;, &#x27;yuan&#x27;]</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>在匹配部分加上（）之后所切出的结果是不同的，</li>
-<li>没有（）的没有保留所匹配的项，但是有（）的却能够保留了匹配的项，</li>
-<li>这个在某些需要保留匹配部分的使用过程是非常重要的。</li>
-</ul>
-<h3 id="【12】常用正则表达式">【12】常用正则表达式</h3>
-<table>
-<thead>
-<tr>
-<th>场景</th>
-<th>正则表达式</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>用户名</td>
-<td><code>^[a-z0-9_-]&#123;3,16&#125;$</code></td>
-</tr>
-<tr>
-<td>密码</td>
-<td><code>^[a-z0-9_-]&#123;6,18&#125;$</code></td>
-</tr>
-<tr>
-<td>手机号码</td>
-<td><code>^(?:\+86)?1[3-9]\d&#123;9&#125;$</code></td>
-</tr>
-<tr>
-<td>颜色的十六进制值</td>
-<td><code>^#?([a-f0-9]</code></td>
-</tr>
-<tr>
-<td>电子邮箱</td>
-<td><code>^[a-z\d]+(\.[a-z\d]+)*@([\da-z](-[\da-z])?)+\.[a-z]+$</code></td>
-</tr>
-<tr>
-<td>URL</td>
-<td><code>^(?:https://</code></td>
-</tr>
-<tr>
-<td>IP 地址</td>
-<td><code>((2[0-4]\d</code></td>
-</tr>
-<tr>
-<td><strong>HTML 标签</strong></td>
-<td><code>^&lt;([a-z]+)([^&lt;]+)*(?:&gt;(.*)&lt;\/\1&gt;</code></td>
-</tr>
-<tr>
-<td>utf-8编码下的汉字范围</td>
-<td><code>^[\u2E80-\u9FFF]+$</code></td>
-</tr>
-</tbody>
-</table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.4time%E6%A8%A1%E5%9D%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/4.4time%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">4.4time模块</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>time模块</h1>
-<h1>【一】表示时间的三种方式</h1>
-<ul>
-<li>时间戳表示时间
-<ul>
-<li>时间戳是指格林威治时间1970年01月01日00时00分00秒（北京时间1970年01月01日08时00分00秒）起至现在的总秒数</li>
-</ul>
-</li>
-<li>元组（struct_time）(年，月，日，时，分，秒，毫秒，微秒)</li>
-<li>格式化的时间字符串
-<ul>
-<li>xx年-xx月-xx日 时:分:秒</li>
-</ul>
-</li>
-</ul>
-<h1>【二】时间转换</h1>
-<h2 id="【1】导入时间模块">【1】导入时间模块</h2>
-```python
-import time
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】时间戳</span><br><span class="line"></span><br><span class="line">### （1）生成时间戳</span><br><span class="line"></span><br><span class="line">- 语句：time.time()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">#例子</span><br><span class="line">变量名 = time_time()</span><br><span class="line">print(变量名)#输出结果是这样的：1713512356.3627634</span><br><span class="line">#去掉多余的小数就直接转int类型</span><br></pre></td></tr></table></figure>
-
-<h3 id="（2）时间戳转换为时间元组">（2）时间戳转换为时间元组</h3>
-<ul>
-<li>国际时间：time.gmtime(time.time())</li>
-</ul>
-```python
-变量名 = time.gmtime(time.time())
-print(变量名)#输出结果是这样的：time.struct_time(tm_year=2024, tm_mon=4, tm_mday=19, tm_hour=7, tm_min=42, tm_sec=16, tm_wday=4, tm_yday=110, tm_isdst=0)
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 本地时间time.localtime(time.time())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">变量名 = time.localtime(time.time())</span><br><span class="line">print(变量名)#输出结果是这样的：time.struct_time(tm_year=2024, tm_mon=4, tm_mday=19, tm_hour=15, tm_min=45, tm_sec=53, tm_wday=4, tm_yday=110, tm_isdst=0)</span><br></pre></td></tr></table></figure>
-
-<h3 id="（3）转换为时间字符串">（3）转换为时间字符串</h3>
-<ul>
-<li>转换时间的格式在strftime里面执行的</li>
-</ul>
-```python
-#正常时间
-变量名 = time.strftime('%Y-%m-%d %H:%M:%S')
-print(变量名)#2024-04-19 15:51:18
-#正常时间
-变量名 = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
-print(变量名)#2024-04-19 15:51:18
-#国际时间
-变量名 = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())
-print(变量名)#2024-04-19 07:53:10
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （4）转换为时间元组</span><br><span class="line"></span><br><span class="line">- 从时间元组中获取指定的属性</span><br><span class="line">  - 取出年月日时分秒</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">变量名 = time.localtime()</span><br><span class="line">print(变量名.tm_year)#年</span><br><span class="line">print(变量名.tm_mon)#月</span><br><span class="line">print(变量名.tm_mday)  # 当前日</span><br><span class="line">print(变量名.tm_wday)  # 当前周</span><br><span class="line">print(变量名.tm_yday) #本年过了多少天</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Python中时间日期格式化符号</li>
-</ul>
-<p><img src="C:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240419160447973.png" alt="image-20240419160447973"></p>
-<h2 id="【3】结构化时间">【3】结构化时间</h2>
-<h3 id="（1）时间戳转换">（1）时间戳转换</h3>
-<ul>
-<li>time.mktime（）(时间戳–&gt;元组时间戳)</li>
-</ul>
-```python
-import time
-
-time_str = time.time()#生成时间戳：1713513953.0934687
-time_str = time.localtime(time_str)#本地时间
-time_str = time.mktime(time_str)#转换
-print(time_str)#输出结果是这样的：1713513731.0
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）结构化输出时间</span><br><span class="line"></span><br><span class="line">- time.strftime() : 格式化输出当前时间</span><br><span class="line"></span><br><span class="line">- 结构化时间参数若不传，则显示当前时间</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line"># 格式化当前时间</span><br><span class="line">time_str = time.strftime(&quot;%Y-%m-%d %X&quot;)</span><br><span class="line">print(time_str)  # 2024-04-19 16:08:22</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>格式化当前元组</li>
-</ul>
-```python
-import time
-
-print(time.localtime(time.time()))
-
-# 格式化当前时间元组
-time_local = time.strftime("%Y-%m-%d", time.localtime(time.time()))
-print(time_local)  # 2024-04-19
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (3)将字符串的时间格式转换为时间元组</span><br><span class="line"></span><br><span class="line">- time.strptime（）(时间字符串--&gt;时间元组)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 格式化当前时间</span><br><span class="line">time_str = time.strftime(&quot;%Y-%m-%d %X&quot;)</span><br><span class="line">print(time_str)  # 2024-04-19 16:08:22</span><br><span class="line"></span><br><span class="line">time_str = time.strptime(&quot;2023-11-24&quot;, &quot;%Y-%m-%d&quot;)#括号里可以改任意时间</span><br><span class="line">print(time_str)  #time.struct_time(tm_year=2023, tm_mon=11, tm_mday=24, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=4, tm_yday=328, tm_isdst=-1)</span><br><span class="line"></span><br><span class="line">time_local = time.strptime(&quot;11/24/2023&quot;, &quot;%m/%d/%Y&quot;)#括号里可以改任意时间</span><br><span class="line">print(time_local)  #time.struct_time(tm_year=2023, tm_mon=11, tm_mday=24, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=4, tm_yday=328, tm_isdst=-1)</span><br><span class="line"></span><br><span class="line">time_local = time.strptime(&quot;11:24:2023&quot;, &quot;%m:%d:%Y&quot;)#括号里可以改任意时间</span><br><span class="line">print(time_local)  #time.struct_time(tm_year=2023, tm_mon=11, tm_mday=24, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=4, tm_yday=328, tm_isdst=-1)</span><br></pre></td></tr></table></figure>
-
-<h3 id="（4）将时间元组转换为国际时间格斗">（4）将时间元组转换为国际时间格斗</h3>
-<ul>
-<li>time.asctime(结构化时间–&gt; %a %b %d %H:%M:%S %Y串)</li>
-</ul>
-```python
-import time
-
-time_str = time.asctime(time.localtime(time.time()))
-print(time_str)#Fri Apr 19 16:17:31 2024
-
-time_local = time.asctime()
-print(time_local)#Fri Apr 19 16:17:31 2024
-
-time_str = time.ctime(time.time())
-print(time_str)#Fri Apr 19 16:17:31 2024
-
-time_local = time.ctime()
-print(time_local)#Fri Apr 19 16:17:31 2024
-```
-
-<ul>
-<li>time.ctime（）(时间戳)
-<ul>
-<li>时间戳 --&gt; %a %b %d %H:%M:%S %Y串</li>
-<li>如果不传参数，直接返回当前时间的格式化串</li>
-</ul>
-</li>
-</ul>
-````python
-import time
-
-time_str = time.ctime(time.time())
-print(time_str)# Fri Apr 19 16:25:41 2024
-
-time_local = time.ctime()
-print(time_local)# Fri Apr 19 16:25:41 2024
-````
-
-<h2 id="【4】总结">【4】总结</h2>
-<ul>
-<li>
-<p>time.time() 		生成时间戳</p>
-</li>
-<li>
-<p>时间戳是计算机能够识别的时间；</p>
-</li>
-<li>
-<p>time.sleep() 		随机睡眠多长时间</p>
-</li>
-<li>
-<p>time.strftime()  时间字符串</p>
-<ul>
-<li>时间字符串是人能够看懂的时间</li>
-</ul>
-</li>
-<li>
-<p>time.strftime()	格式化输出当前时间</p>
-</li>
-<li>
-<p>time.strptime()   将时间字符串格式转换为时间元组</p>
-</li>
-<li>
-<p>元组则是用来操作时间的</p>
-</li>
-<li>
-<p>time.localtime()  拿到当前时间的时间元组格式</p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.3%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%8C%85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/4.3%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%8C%85/" class="post-title-link" itemprop="url">4.3模块与包</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>模块与包</h1>
-<h1>【一】模块</h1>
-<h2 id="【1】什么是模块">【1】什么是模块</h2>
-<ul>
-<li>在python中，一个py文件就是一个模块，文件名为xxx.py模块名则是xxx，导入模块可以引用模块中已经写好的功能。</li>
-<li>将程序模块化会使得程序的组织结构清晰，维护起来更加方便。</li>
-<li>使用模块既保证了代码的重要性，有增加了程序的结构性和可维护性。</li>
-<li>除了自定义模块外，我们还可以导入使用内置或第三方模块提供的现成功能，这种“拿来主义”极大地提高了程序员的开发效率。</li>
-</ul>
-<h2 id="【2】模块的来源">【2】模块的来源</h2>
-<ul>
-<li>内置的：python自带的，直接拿来用</li>
-<li>第三方的：别人写好的，直接拿来用，但是要先下载</li>
-<li>自定义的：就是自己写的</li>
-</ul>
-<h2 id="【3】模块的存在形式">【3】模块的存在形式</h2>
-<ul>
-<li>我们自己写的py文件（一个py文件就是一个模块）</li>
-<li>包：一系列py文件的集合。包也是一个文件夹</li>
-<li>一个包里面有一个.<strong>init</strong>.py文件</li>
-</ul>
-<h2 id="【4】模块的优点">【4】模块的优点</h2>
-<ul>
-<li>增加程序的健壮性和可读性</li>
-<li>大大增加了开发效率</li>
-</ul>
-<h1>【二】模块的使用方法</h1>
-<h2 id="【1】准备工作就是">【1】准备工作就是</h2>
-<ul>
-<li><a target="_blank" rel="noopener" href="http://xn--settings-z09lrny8eu7kn0c9v6e1su.py">先创建一个文件settings.py</a></li>
-</ul>
-```python
-# 定义一个变量
-name = "dream"
-
-
-# 定义一个函数 函数的功能是打印name
-def show_name():
-    print(name)
-
-
-# 定义一个函数修改name
-def change_name():
-    global name#global改变全局的name
-    name = 'opp'
-    print(name)
-
-
-# 内嵌函数
-def outer():
-    def inner():
-        print(f"这是 outer 内部 的 inner")
-
-    return inner
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 使用模块中的属性</span><br><span class="line">  - 想要使用settings.py里面的name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">这个例子是再创建一个.py文件，来调用刚刚上面settings.py这个模块。</span><br><span class="line">import settings</span><br><span class="line"></span><br><span class="line">#打印当前模块对象位置</span><br><span class="line">print（settings）</span><br><span class="line">#打印模块中的name的值</span><br><span class="line">print（settings.name）</span><br><span class="line">#调动模块中更改name值的方法修改全局的name</span><br><span class="line">settings.change_name()</span><br><span class="line">#更新全局的name影响了全局的name</span><br><span class="line">print(settings.name)</span><br><span class="line">#调用内嵌函数</span><br><span class="line">func = settings.outer（）</span><br><span class="line">func</span><br></pre></td></tr></table></figure>
-
-<h2 id="【1】import语句发生的内部原理">【1】import语句发生的内部原理</h2>
-<p><strong>自己理解的是import后面跟谁就是调用谁里面的程序</strong></p>
-<ul>
-<li>前提是先创建一个自己写的xxx.py文件，在这个py文件有自己的名称空间</li>
-<li>在面脚板上输入</li>
-</ul>
-```python
-import xxx
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 这样就把xxx导入了当前模块</span><br><span class="line">- 如果没有调用函数则不会调用而是检索到所有函数地址</span><br><span class="line">- 会自动创建一个xxx.py文件的名称空间</span><br><span class="line">- 将xxx.py文件的名称空间和自己的名称空间合并</span><br><span class="line">- 通过模块名.属性名</span><br><span class="line"></span><br><span class="line">## 【2】支持导入多个模块</span><br><span class="line"></span><br><span class="line">- 单独导入多个模块</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import 模块名1</span><br><span class="line">import 模块名2</span><br><span class="line">import 模块名3</span><br><span class="line">。。。。</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>一次性导入多个模块（用，隔开）</li>
-</ul>
-```python
-import 模块名1，模块名2，模块名3。。。
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【3】详细导入语法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from 模块名 import 属性名</span><br></pre></td></tr></table></figure>
-
-<h2 id="【4】导入指定参数或者方法">【4】导入指定参数或者方法</h2>
-```python
-#比如
-#就想要settings里面的show_name其它的都不要
-from settings import shoe_name
-show_name
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【5】导入所有参数和方法</span><br><span class="line"></span><br><span class="line">- 就想要模块里的所有参数和方法</span><br><span class="line">  - 前提是你模快里有那么多参数</span><br><span class="line"></span><br><span class="line">- import后面跟个*</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from settings import *</span><br><span class="line">show_name()</span><br><span class="line">print(name)</span><br><span class="line">change_name()</span><br><span class="line">outer = outer()</span><br><span class="line">outer()</span><br></pre></td></tr></table></figure>
-
-<h2 id="【6】重命名模块">【6】重命名模块</h2>
-<ul>
-<li>对导入的模块进行重命名</li>
-<li>import 模块名 as 新模块名</li>
-</ul>
-```python
-#案例
-import 模块名 as 新模块名
-# 导入模块 模块名叫 settings
-from 包名 import 模块名 as 新模块名
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【三】循环导入问题</span><br><span class="line"></span><br><span class="line">- 在文件中调用了另一个文件</span><br><span class="line">- 另一个文件在调用当前文件</span><br><span class="line"></span><br><span class="line">## 【1】问题来源</span><br><span class="line"></span><br><span class="line">- bar.py这是一个py文件</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">print(&quot;正在导入foo&quot;)</span><br><span class="line">from foo import name_foo#这是第三步：执行foo.py文件它们会来回跳  最后报错</span><br><span class="line">name_bar = &#x27;bar&#x27;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><a target="_blank" rel="noopener" href="http://foo.py#%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AApy%E6%96%87%E4%BB%B6">foo.py#这是一个py文件</a></li>
-</ul>
-```python
-print('正在导入bar')
-from bar import name_bar#这是第二步：执行bar.py文件它们会来回跳  最后报错
-name_foo = 'foo'
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- main.py#这又是一个py文件</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># import foo</span><br><span class="line">import bar #第一步执行的这里</span><br><span class="line">#  (most likely due to a circular import)</span><br></pre></td></tr></table></figure>
-
-<h2 id="【2】解决方法">【2】解决方法</h2>
-<h3 id="（1）方法一">（1）方法一</h3>
-<ul>
-<li><a target="_blank" rel="noopener" href="http://bar.py">bar.py</a></li>
-</ul>
-```python
-print('导入foo 开始')#第五步：打印 导入foo 开始
-name_bar = 'bar'#第六步：
-
-from foo import name_foo#第七步：
-print('导入foo 结束')#第八步：打印 导入foo 结束
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- foo.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">print(&#x27;导入bar 开始&#x27;)#这是第二步：打印 导入bar 开始</span><br><span class="line">name_foo = &#x27;foo&#x27;#这是第三步</span><br><span class="line"></span><br><span class="line">from bar import name_bar#这是第四步：跳到bar.py文件中</span><br><span class="line">print(&#x27;导入bar 结束&#x27;)#第九步：打印导入bar 结束</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><a target="_blank" rel="noopener" href="http://main.py">main.py</a></li>
-</ul>
-```python
-# 第一种 ：将导入模块的语法放到最后的位置
-# 导入模块就是为了使用模块 ，仿造最后面
- import foo#第一步：执行的这里
-# import bar
-#输出
-# 导入bar 开始
-# 导入foo 开始
-# 导入foo 结束
-# 导入bar 结束
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）方法二</span><br><span class="line"></span><br><span class="line">- 在每个文本中创建函数</span><br><span class="line">- bar.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">print(&#x27;导入foo 开始&#x27;)</span><br><span class="line"></span><br><span class="line">name_bar = &#x27;bar&#x27;</span><br><span class="line"></span><br><span class="line">def show_name_bar():</span><br><span class="line">    from foo import name_foo</span><br><span class="line">    print(name_foo)</span><br><span class="line"></span><br><span class="line">print(&#x27;导入foo 结束&#x27;)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><a target="_blank" rel="noopener" href="http://foo.py">foo.py</a></li>
-</ul>
-````python
-print('导入bar 开始')
-name_foo = 'foo'
-
-
-def show_name_foo():
-    from bar import name_bar
-    print(name_bar)
-
-
-print('导入bar 结束')
-````
-
-<ul>
-<li><a target="_blank" rel="noopener" href="http://main.py">main.py</a></li>
-</ul>
-```python
-# 第二种放到指定的函数内部，只要函数不调用就不会触发导入语句
-# 建议使用
-import bar#引用
-bar.show_name_bar()#直接调用的文件bar.py里面的函数show_name_bar()函数
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【四】模块加载和搜索顺序</span><br><span class="line"></span><br><span class="line">## 【1】模块的分类</span><br><span class="line"></span><br><span class="line">- 纯python编写的自己定义的模块</span><br><span class="line">- 内置的一系列模块 (python解释器自带的和你安装 pip install )</span><br><span class="line">- 使用c语言编写的底层代码</span><br><span class="line">- c 和 c++ 扩展出去的模块</span><br><span class="line"></span><br><span class="line">## 【2】加载顺序</span><br><span class="line"></span><br><span class="line">- 先c 和 c++ 扩展出去的模块</span><br><span class="line">- 使用c语言编写的底层代码</span><br><span class="line">- 内置的一系列模块 (python解释器自带的和你安装 pip install )</span><br><span class="line">- 纯python编写的自己定义的模块</span><br><span class="line"></span><br><span class="line">## 【3】查找顺序</span><br><span class="line"></span><br><span class="line">- 先从自己的局部查</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def func（）：</span><br><span class="line">    import 模块名</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>再从全局查</li>
-</ul>
-```python
-import 模块名
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 再去内建查</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">python解释器自带的模块和你安装的模块中查，查出对应的模块再使用</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>再去底层c语言查
-<ul>
-<li>有些功能你点进去看源码发现只要一个 pass使用c语言写的，但是不想让你看到所有就省略掉了</li>
-</ul>
-</li>
-</ul>
-<h1>【五】绝对路径和相对路径</h1>
-<h2 id="【1】相对路径">【1】相对路径</h2>
-<ul>
-<li>
-<p>你所在的文件夹就是相对路径</p>
-</li>
-<li>
-<p>./表示当前同目录下下载</p>
-</li>
-<li>
-<p>…/表示当前目录的上一级目录下载</p>
-</li>
-<li>
-<p>默认的话就是在当前目录下</p>
-</li>
-</ul>
-```python
-#案例
-with open("../data.text",'w', encoding='utf-8') as fp:
-    fp.write('111')
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】绝对路径</span><br><span class="line"></span><br><span class="line">- 在python内部查找的顺序就是绝对路径</span><br><span class="line">- D:\Python\PythonProjects\PythonProjects29\day17</span><br><span class="line">  - 就是带盘符的就是绝对路径</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import sys</span><br><span class="line">print(sys.path)</span><br><span class="line"># [</span><br><span class="line"># &#x27;D:\\Python\\PythonProjects\\PythonProjects29\\day17&#x27;,</span><br><span class="line"># &#x27;D:\\Python\\PythonProjects\\PythonProjects29\\day17&#x27;,</span><br><span class="line"># &#x27;D:\\PyCharm\\plugins\\python\\helpers\\pycharm_display&#x27;,</span><br><span class="line"># &#x27;D:\\Python38\\python38.zip&#x27;,</span><br><span class="line"># &#x27;D:\\Python38\\DLLs&#x27;,  # 这里放的就是c语言源码编译后的扩展包</span><br><span class="line"># &#x27;D:\\Python38\\lib&#x27;, # 放的是内置的模块或者安装的模块</span><br><span class="line"># &#x27;D:\\Python38&#x27;, # 安装python解释器的路径</span><br><span class="line"># &#x27;D:\\Python38\\lib\\site-packages&#x27;, # 这里面也有部分安装的的包 ，默认安装到 site-packages</span><br><span class="line"># &#x27;D:\\PyCharm\\plugins\\python\\helpers\\pycharm_matplotlib_backend&#x27;# 回到pycharm</span><br><span class="line"># ]</span><br></pre></td></tr></table></figure>
-
-<h1>【六】包</h1>
-<h2 id="【1】什么是包">【1】什么是包</h2>
-<ul>
-<li>包是一个模块的集合，它可以将多个模块的功能组合在一起。</li>
-<li>包可以按照其功能和作用进行分类，方便用户查找和使用。</li>
-<li>包是在Python标准库中定义的一种特殊类型的模块，可以通过import语句引用和使用。</li>
-<li>Python的包分为标准库包和第三方库包。
-<ul>
-<li>标准库包是Python内置的包，包含了一些基本的模块和函数，如os、sys、random等；</li>
-<li>第三方库包是第三方开发的包，通常提供了更加丰富和高级的功能。</li>
-</ul>
-</li>
-</ul>
-<h2 id="【2】如何创建包">【2】如何创建包</h2>
-<h3 id="（1）方法一-2">（1）方法一</h3>
-<ul>
-<li>
-<p>创建一个文件夹</p>
-</li>
-<li>
-<p>在文件夹内部创建一个__init__.py文件</p>
-</li>
-<li>
-<p>这个文件夹就叫包</p>
-</li>
-</ul>
-<h3 id="（2）方法二">（2）方法二</h3>
-<ul>
-<li>在pycharm右键文件新建package</li>
-<li>内部会自动生成__init__.py文件</li>
-</ul>
-<h2 id="【3】使用包">【3】使用包</h2>
-<h3 id="（1）方法一-3">（1）方法一</h3>
-<p>#它们都是在一个文件夹内的</p>
-<ul>
-<li><code>__init__.py</code>#这个文本可以为空，但是必须要有</li>
-</ul>
-```python
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- add.py</span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def add(x, y):</span><br><span class="line">    print(&quot;加法功能&quot;)</span><br><span class="line">    if not x.isdigit() or not y.isdigit():</span><br><span class="line">        return False, f&#x27;当前数字格式错误&#x27;</span><br><span class="line">    return True, int(x) + int(y)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><a target="_blank" rel="noopener" href="http://multy.py">multy.py</a></li>
-</ul>
-```python
-def multy(x, y):
-    print(f"乘法功能")
-    if not x.isdigit() or not y.isdigit():
-        return False, f'当前数字格式错误'
-    return True, int(x) * int(y)
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- main.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from calculator import add,multy#直接引用两个，想用哪个直接用</span><br><span class="line"></span><br><span class="line">print(add)</span><br><span class="line">#输出： &lt;module &#x27;calculator.add&#x27; from &#x27;D:\\Python\\PythonProjects\\PythonProjects29\\day17\\calculator\\add.py&#x27;&gt;</span><br><span class="line"></span><br><span class="line">print(add.add(&#x27;1&#x27;,&#x27;2&#x27;)) # 这里的 add 是模块名</span><br><span class="line">#输出（True，3）</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-方法二">(2)方法二</h3>
-<ul>
-<li><code>__init__.py</code>#直接全部在本 文件文本中执行了</li>
-</ul>
-```python
-# 符合初始化当前包的名称空间
-
-# 如果不在这里注册 就只能导入 模块名
-
-from .add import add
-from .multy import multy
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- main.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from calculator import add,multy</span><br><span class="line"># print(add) # &lt;function add at 0x000001764FC3C8B0&gt;</span><br><span class="line">x = &#x27;2&#x27;</span><br><span class="line">y = &#x27;9&#x27;</span><br><span class="line"></span><br><span class="line">print(add(x, y)) # 这里的add是方法名</span><br><span class="line">#输出 ：11</span><br><span class="line">print(multy(x, y))  # 这里的add是方法名</span><br><span class="line">#输出 ：18</span><br></pre></td></tr></table></figure>
-
-<h1>【七】导入语法总结</h1>
-<ul>
-<li>import  模块名 --》语法，只会检索当前模块内的所有变量名</li>
-<li>import 包名–》语法，会先自动检索 <strong>init</strong>.py 文件内的所有变量名 然后再去检索 每个模块里面的变量名
-<ul>
-<li>加载的时候多加载了一层  <strong>init</strong>.py</li>
-<li>查找的时候也多查找了一层  <strong>init</strong>.py</li>
-</ul>
-</li>
-<li>不管是在模块还是包还是自己的文件中</li>
-<li>from 模块名 import 属性名</li>
-<li>from 包名 import 模块名</li>
-<li>只要检索到指定名字就会停止检索</li>
-</ul>
-<h1>作业</h1>
-```python
-# 写用户功能
-
-# 购物车功能
-# 【零】初始化商品信息
-# 【1】提前有一个字典 字典中存储这个案例的数据
-# 键是商品名 值是价格
-data = {
-    "梦梦抱枕": 180, "梦梦抱枕套装": 200,
-    "梦梦睡衣": 120, "梦梦笔记本": 40,
-    "梦梦水杯": 20, "梦梦毛绒玩具": 60,
-    "梦梦围巾": 30, "梦梦手链": 25,
-    "梦梦钥匙扣": 15, "梦梦手机壳": 35,
-}
-# 【2】用json序列化保存上述商品数据到指定目录
-
-# 【一】查看商品信息
-# 【1】从指定目录中读取出当前 所有的商品信息
-# 【2】打印所有的商品信息
-
-# 【二】选择商品下单
-# 【1】根据商品名称下单，可以根据商品索引下单
-# 【2】保存你的当前购物车数据
-# 【3】保存的时候不要忘记保存商品的数量和价格
-# 【4】校验当前库存是否充足
-
-# 【三】清空购物车
-# 将购物车数据全部清空
-
-# 【四】查看购物车商品
-# 可以查看购物车商品信息
-
-# 【五】删除购物车商品信息
-# 【1】根据自己的商品信息删除指定的商品数据
-# 【2】删除的时候校验当前是否有足够的删除
-
-
-# 【六】下单商品(付款)
-# 【1】将购物车所有的商品数据价格和单价计算出来做一个整合
-# 【2】随意付款
-# 【3】提示付款信息 每个商品多少个 单价是多少 总价是多少 ---> 付款总金额是多少
-
-# 【七】退出系统
-# 退出系统
-```
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.5datetime%E6%A8%A1%E5%9D%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/4.5datetime%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">4.5datetime模块</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>datetime模块</h1>
-<h1>【一】导入模块</h1>
-```python
-import datetime
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【二】自定义日期并格式化</span><br><span class="line"></span><br><span class="line">## 【1】根据时间日期生成指定的格式</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import datetime</span><br><span class="line"></span><br><span class="line">time_str = datetime.date(2023,1,9)#括号里随意填写年月日</span><br><span class="line">print(time_str)#输出：2023-01-09</span><br></pre></td></tr></table></figure>
-
-<h2 id="【2】获取本地时间">【2】获取本地时间</h2>
-```python
-import datetime
-
-print(datetime.date.today())#年月日
-print(datetime.datetime.today().year)#年
-print(datetime.datetime.today().month)#月
-print(datetime.datetime.today().day)#日
-print(datetime.datetime.today().hour)#时
-print(datetime.datetime.today().minute)#分
-print(datetime.datetime.today().second)#秒
-print(datetime.datetime.today().weekday())#周几，一般都会少一天
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【3】timedelta对象</span><br><span class="line"></span><br><span class="line">- 对时间进行推迟和提前</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import datetime</span><br><span class="line"></span><br><span class="line">now_day = datetime.date.today()</span><br><span class="line">print(now_day)#输出当天日期：2024-04-19</span><br><span class="line"># 生成一个时间日期对象</span><br><span class="line">time_change = datetime.timedelta(days=8)#增加了八天</span><br><span class="line">print(now_day + time_change)#比当天天数增加了八天</span><br><span class="line">print(now_day - time_change)#比当天天数增减少了八天</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>
-<p>日期对象与timedelta之间的关系</p>
-<ul>
-<li>
-<p>py日期对象 = 日期对象 +/- timedelta对象</p>
-</li>
-<li>
-<p>timedelta对象 = 日期对象 +/- 日期对象</p>
-</li>
-</ul>
-</li>
-<li>
-<p>计算生日</p>
-<ul>
-<li>format格式</li>
-</ul>
-</li>
-</ul>
-```python
-import datetime
-
-birthday = datetime.date(2024, 9, 12)#输入生日
-now_date = datetime.date.today()
-today = datetime.date.today()
-days = birthday - now_date
-print('生日：{}'.format(birthday))#生日：2024-09-12
-print('今天的日期：{}'.format(today))#今天的日期：2024-04-19
-print('距离生日还有{}天'.format(days))#距离生日还有146 days, 0:00:00天
-```
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.6os%E6%A8%A1%E5%9D%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/4.6os%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">4.6os模块</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>os模块</h1>
-<h1>【一】什么是os模块</h1>
-<ul>
-<li>
-<p>os模块可以操作本地的文件夹及文件</p>
-</li>
-<li>
-<p>创建删除文件夹/文件</p>
-</li>
-<li>
-<p>执行本地的cmd命令</p>
-</li>
-<li>
-<p>拼接路径</p>
-</li>
-<li>
-<h2 id="file-表示当前文件">__file__表示当前文件</h2>
-</li>
-</ul>
-<h1>【二】文件路径相关操作(path)</h1>
-<h2 id="【1】获取当前绝对路径（abspath）">【1】获取当前绝对路径（abspath）</h2>
-```python
-import os
-
-#获取当前路径
-os_path = os.path.abspath(__file__)
-print(os_path)#输出：D:\pycharm\project\DAY01\作业\笔记练习.py
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】获得当前文件所在文件路径(dirname)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">#获得当前文件所在文件路径</span><br><span class="line">os_path = os.path.dirname(__file__)</span><br><span class="line">print(os_path)#D:\pycharm\project\DAY01\作业</span><br></pre></td></tr></table></figure>
-
-<h2 id="【3】判断当前文件路径是否存在-》文件夹-文件-exists">【3】判断当前文件路径是否存在----》文件夹/文件(exists)</h2>
-```python
-file_name = r"D:\pycharm\project\DAY01\作业\tom_log.text"#先给一个路径
-print(os.path.exists(path=file_name))#输出True    说明这个路径存在，不存在返回False
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【4】拼接文件路径（join）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">BASE_DIR = os.path.dirname(__file__)#当前路径</span><br><span class="line">print(BASE_DIR)#D:\pycharm\project\DAY01\作业</span><br><span class="line"></span><br><span class="line">file_name = &#x27;img&#x27;</span><br><span class="line"># join 后面可以跟多个路径</span><br><span class="line">file_path = os.path.join(BASE_DIR, file_name)#拼接</span><br><span class="line">print(file_path)#D:\pycharm\project\DAY01\作业\img</span><br></pre></td></tr></table></figure>
-
-<h2 id="【5】切割文件路径">【5】切割文件路径</h2>
-<ul>
-<li>切后得到一个元组里面有两个元素，两个元素分别是（其他路径，最后一个文件夹/文件夹名）</li>
-</ul>
-```python
-import os
-
-#获得当前路径
-BASE_DIR = os.path.abspath(__file__)
-print(BASE_DIR)#D:\pycharm\project\DAY01\作业\笔记练习.py
-#拆分
-file_path = os.path.split(BASE_DIR)
-print(file_path)#('D:\\pycharm\\project\\DAY01\\作业', '笔记练习.py')
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【6】获取文件结尾的文件/文件夹名（basename）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">file_path = os.path.dirname(__file__)</span><br><span class="line">print(file_path)#D:\pycharm\project\DAY01\作业</span><br><span class="line">filen_name_basename = os.path.basename(file_path)</span><br><span class="line">print(filen_name_basename)#笔记练习.py</span><br></pre></td></tr></table></figure>
-
-<h2 id="【7】判断当前文件是不是文件夹-文件（isdir-isfile）">【7】判断当前文件是不是文件夹/文件（isdir,isfile）</h2>
-<ul>
-<li>判断是否是文件isfile</li>
-</ul>
-```python
-file_path = os.path.dirname(__file__)
-print(file_path)#D:\pycharm\project\DAY01\作业
-file_path_two = os.path.isfile(file_path)
-print(file_path_two)#False
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 判断是否是文件夹isdir</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">file_path = os.path.dirname(__file__)</span><br><span class="line">print(file_path)#D:\pycharm\project\DAY01\作业</span><br><span class="line">file_path_two = os.path.isdir(file_path)</span><br><span class="line">print(file_path_two)#True</span><br></pre></td></tr></table></figure>
-
-<h2 id="【8】判断当前路径是否是绝对路径-isabs">【8】判断当前路径是否是绝对路径(isabs)</h2>
-```python
-file_path = r"作业/01.txt"
-print(os.path.isabs(file_path))#False
-
-file_path = r"D:\pycharm\project\DAY01\作业\01.txt"
-print(os.path.isabs(file_path))#True
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【9】获取当前文件或目录的最后访问时间（getatime）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">file_path = os.path.abspath(__file__)</span><br><span class="line">print(file_path)#D:\pycharm\project\DAY01\作业\笔记练习.py</span><br><span class="line">file_time =os.path.getatime(file_path)</span><br><span class="line">print(file_time)#1713527506.5012364</span><br></pre></td></tr></table></figure>
-
-<h2 id="【10】获取当前文件或目录的最后修改时间（getmtime）">【10】获取当前文件或目录的最后修改时间（getmtime）</h2>
-```python
-file_path = r'D:\pycharm\project'
-file_time = os.path.getmtime(file_path)
-print(time.strftime("%Y-%m-%d  %H-%M-%S", time.localtime(file_time)))#2024-03-28  19-34-18
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【11】获取当前文件或者目录的创建时间(getctime)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">file_path = r&#x27;D:\pycharm\project&#x27;</span><br><span class="line">file_time = os.path.getctime(file_path)</span><br><span class="line">print(time.strftime(&quot;%Y-%m-%d  %H-%M-%S&quot;, time.localtime(file_time)))#2024-03-27  16-30-42</span><br></pre></td></tr></table></figure>
-
-<h2 id="【12】获取当前文件的大小（getsize）">【12】获取当前文件的大小（getsize）</h2>
-```python
-import os
-
-file_path = r'D:\pycharm\project\DAY01\作业\ATMuser_pass.py'
-file_time = os.path.getsize(file_path)
-print(file_time)#18283
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【三】文件和文件夹操作</span><br><span class="line"></span><br><span class="line">## 【1】创建文件夹（mkdir）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">BASE_DIR = os.path.dirname(__file__)</span><br><span class="line">print(BASE_DIR)#D:\pycharm\project\DAY01\作业</span><br><span class="line">file_path = os.path.join(BASE_DIR,&quot;py&quot;)#先判断它存在不存在</span><br><span class="line">print(os.path.exists(file_path))#False</span><br><span class="line">if not os.path.exists(file_path):</span><br><span class="line">    os.mkdir(file_path)</span><br><span class="line">print(os.path.exists(file_path))#True创建成功</span><br></pre></td></tr></table></figure>
-
-<h2 id="【2】创建多级文件夹-makedirs">【2】创建多级文件夹(makedirs)</h2>
-```python
-BASE_DIR = os.path.dirname(__file__)
-print(BASE_DIR)#D:\pycharm\project\DAY01\作业
-file_path = os.path.join(BASE_DIR,"py","user","log")#先判断它存在不存在
-print(os.path.exists(file_path))#False
-if not os.path.exists(file_path):
-    os.makedirs(file_path)
-print(os.path.exists(file_path))#True创建成功
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【3】删除单级文件夹(rmdir)</span><br><span class="line"></span><br><span class="line">- 只能删除空的文件夹 即使文件夹内有空文件夹也不算空的</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">#D:\pycharm\project\DAY01\作业\py</span><br><span class="line">print(os.path.exists(py))#检验路径是否存在</span><br><span class="line">os.rmdir(py)#删除文件夹</span><br><span class="line">print(os.path.exists(py))#检验路径是否删除</span><br></pre></td></tr></table></figure>
-
-<h2 id="【4】删除多级文件夹-removedirs">【4】删除多级文件夹(removedirs)</h2>
-<ul>
-<li>删除多级文件夹目录 路径一定是到最里面那一层并且每个文件夹必须是空的</li>
-</ul>
-```python
-#D:\pycharm\project\DAY01\作业
-print(os.path.exists())#检验路径是否存在
-os.removedirs(py)#删除文件夹
-print(os.path.exists())#检验路径是否删除
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【5】列出当前文件夹下所有文件名(listdir)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">BASE_DIR = os.path.dirname(__file__)</span><br><span class="line">print(os.listdir(BASE_DIR))</span><br></pre></td></tr></table></figure>
-
-<h2 id="【6】删除指定文件-remove">【6】删除指定文件(remove)</h2>
-```python
-#D:\pycharm\project\DAY01\作业
-BASE_DIR = os.path.dirname(__file__)
-file_path = "11.py"
-data = os.path.join(BASE_DIR,file_path)
-print(os.remove(data))#None  说明已经删除
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【7】给指定文件夹和文件重命名（rename）</span><br><span class="line"></span><br><span class="line">- 给两个绝对路径</span><br><span class="line">  - 一个是之前的绝对路径</span><br><span class="line">  - 一个是重命名后的绝对路径</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import os</span><br><span class="line">BASE_DIR = os.path.dirname(__file__)</span><br><span class="line">print(BASE_DIR)#D:\pycharm\project\DAY01\练习模块</span><br><span class="line">old_path = os.path.join(BASE_DIR,&#x27;img&#x27;)</span><br><span class="line">print(old_path)#D:\pycharm\project\DAY01\练习模块\img</span><br><span class="line">new_path = os.path.join(BASE_DIR,&#x27;new_img&#x27;)</span><br><span class="line">print(new_path)#D:\pycharm\project\DAY01\练习模块\new_img</span><br><span class="line">os.rename(old_path)</span><br></pre></td></tr></table></figure>
-
-<h2 id="【8】获取当前文件-文件夹详细信息，元信息（stat）">【8】获取当前文件/文件夹详细信息，元信息（stat）</h2>
-```python
-import os
-BASE_DIR = os.path.dirname(__file__)
-print(BASE_DIR)#D:\pycharm\project\DAY01\练习模块
-print(os.stat(BASE_DIR))#os.stat_result(st_mode=16895, st_ino=21673573206763848, st_dev=1718800474, st_nlink=1, st_uid=0, st_gid=0, st_size=0, st_atime=1713531542, st_mtime=1713531541, st_ctime=1713531157)
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【9】获取当前工作目录(getcwd)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">print(os.getcwd())#D:\pycharm\project\DAY01\练习模块</span><br></pre></td></tr></table></figure>
-
-<h2 id="【10】切换工作-chdir">【10】切换工作(chdir)</h2>
-```python
-BASE_DIR = os.path.dirname(__file__)
-# 获取当前工作目录，即当前python脚本工作的目录路径
-file_path = os.getcwd()
-print(file_path)#D:\pycharm\project\DAY01\练习模块
-# E:\PythonProjects\07常用模块学习
-
-img_file_path = os.path.join(BASE_DIR, 'img')
-os.chdir(img_file_path)
-
-file_path_new = os.getcwd()
-print(file_path_new)#D:\pycharm\project\DAY01\练习模块\img
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【补充】执行shell命令</span><br><span class="line"></span><br><span class="line">- 执行cmd命令</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">print(os.system(&quot;dir&quot;))</span><br><span class="line"></span><br><span class="line">print(os.popen(&quot;dir&quot;)）</span><br></pre></td></tr></table></figure>
-
-<h2 id="【补充】获取当前系统所对行的默认分隔符">【补充】获取当前系统所对行的默认分隔符</h2>
-```python
-# win \
-# mac / linux  /
-# 输出操作系统特定的路径分隔符
-print(os.sep) # \
-# 输出当前平台使用的行终止符
-print(os.linesep) # 
-# 输出用于分割文件路径的字符串
-print(os.pathsep)# ;
-# 输出字符串指示当前使用平台
-print(os.name) # nt
-# win下为 'nt'
-# Linux下为 'posix'
-```
-
-<h2 id="【记住重点】">【记住重点】</h2>
-<ul>
-<li>os.path.join() 拼接路径</li>
-<li>os.path.dirname(	<code>__file__	</code>) 获取当前文件所在的文件夹路径</li>
-<li>os.path.abspath(<code>__file__	</code>)获取当前文件所在的文件路径</li>
-<li>os.path.exists() 判断路径是否存在</li>
-<li>os.mkdir() 创建单级文件夹</li>
-<li>os.makedirs() 创建多级文件夹</li>
-<li>os.makedirs(path, exist_ok=True) 自动创建不存在的多级文件夹路径</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
-
+  </section>
 
 
           </div>
@@ -2336,7 +426,7 @@ print(os.name) # nt
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">坤</p>
+  <p class="site-author-name" itemprop="name">Aurora</p>
   <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -2384,7 +474,7 @@ print(os.name) # nt
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">坤</span>
+  <span class="author" itemprop="copyrightHolder">Aurora</span>
 </div>
   <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

@@ -24,12 +24,12 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="3.3名称空间">
 <meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/3.3%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4/index.html">
-<meta property="og:site_name" content="坤博客">
+<meta property="og:site_name" content="Aurora博客">
 <meta property="og:description" content="名称空间 【一】什么是名称空间  存放函数名和函数值对应关系的地方 变量名&#x3D;变量值 先开辟一块内存空间，把函数值扔到内存空间中----》内存空间 然后将变量名和变量值进行绑定存放到名称空间中—》名称空间中  【二】名称空间的分类 【1】内建名称空间  伴随Python解释器的代码启动而生成，随着代码结束而关闭  第一个被加载的名称空间，用来存放一些内置的名字，比如内建函数名    &#96;&#96;&#96;pytho">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
-<meta property="article:modified_time" content="2025-10-15T08:19:13.152Z">
-<meta property="article:author" content="坤">
+<meta property="article:modified_time" content="2025-10-15T08:41:50.082Z">
+<meta property="article:author" content="Aurora">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
 
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>3.3名称空间 | 坤博客</title>
+  <title>3.3名称空间 | Aurora博客</title>
   
 
 
@@ -97,7 +97,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">坤博客</h1>
+      <h1 class="site-title">Aurora博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -155,12 +155,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
+      <meta itemprop="name" content="Aurora">
       <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
+      <meta itemprop="name" content="Aurora博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:41:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,7 +219,7 @@
 print(max)
 # <built-in function max>
 #翻译：max最大
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【2】全局名称空间</span><br><span class="line"></span><br><span class="line">- 随着内建名称空间加载完成</span><br><span class="line">- 伴随python文件的开始执行/执行完毕而产生/回收</span><br><span class="line">  - 是第二个被加载的名称空间，文件执行过程中产生的名字都会存放于该名称空间中，如下名字</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import sys #模块名sys</span><br><span class="line"></span><br><span class="line">x=1 #变量名x</span><br><span class="line"></span><br><span class="line">if x == 1:</span><br><span class="line">    y=2 #变量名y</span><br><span class="line"></span><br><span class="line">def foo(x): #函数名foo</span><br><span class="line">    y=1</span><br><span class="line">    def bar():</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">Class Bar: #类名Bar</span><br><span class="line">	pass</span><br><span class="line"></span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line"># 这个列表是全局的列表</span><br><span class="line"># 列表是可变数据类型 ---&gt; 列表被修改后id不变</span><br><span class="line">num_list = []</span><br><span class="line">print(id(num_list)) # 1200291395392</span><br><span class="line">def add_list(num):</span><br><span class="line">    num_list.append(num)</span><br><span class="line">    print(id(num_list)) # 1200291395392</span><br><span class="line">add_list(1)</span><br><span class="line">add_list(2)</span><br><span class="line">add_list(3)</span><br><span class="line">print(num_list) # [1, 2, 3]</span><br><span class="line">print(id(num_list)) # 1200291395392</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【2】全局名称空间</span><br><span class="line"></span><br><span class="line">- 随着内建名称空间加载完成</span><br><span class="line">- 伴随python文件的开始执行/执行完毕而产生/回收</span><br><span class="line">  - 是第二个被加载的名称空间，文件执行过程中产生的名字都会存放于该名称空间中，如下名字</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import sys #模块名sys</span><br><span class="line"></span><br><span class="line">x=1 #变量名x</span><br><span class="line"></span><br><span class="line">if x == 1:</span><br><span class="line">    y=2 #变量名y</span><br><span class="line"></span><br><span class="line">def foo(x): #函数名foo</span><br><span class="line">    y=1</span><br><span class="line">    def bar():</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">Class Bar: #类名Bar</span><br><span class="line">	pass</span><br><span class="line"></span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line"># 这个列表是全局的列表</span><br><span class="line"># 列表是可变数据类型 ---&gt; 列表被修改后id不变</span><br><span class="line">num_list = []</span><br><span class="line">print(id(num_list)) # 1200291395392</span><br><span class="line">def add_list(num):</span><br><span class="line">    num_list.append(num)</span><br><span class="line">    print(id(num_list)) # 1200291395392</span><br><span class="line">add_list(1)</span><br><span class="line">add_list(2)</span><br><span class="line">add_list(3)</span><br><span class="line">print(num_list) # [1, 2, 3]</span><br><span class="line">print(id(num_list)) # 1200291395392</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
 
 <h3 id="【3】局部名称空间">【3】局部名称空间</h3>
 <ul>
@@ -264,8 +264,8 @@ print(max)
       <i class="fa fa-chevron-left"></i> 3.4作用域
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/10/15/3.2%E4%BF%A1%E5%8F%B7%E9%87%8F%EF%BC%8C%E4%BA%8B%E4%BB%B6/" rel="next" title="3.2信号量，事件">
-      3.2信号量，事件 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/15/3.2%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E6%B3%A8%E8%A7%A3/" rel="next" title="3.2基本类型注解">
+      3.2基本类型注解 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -331,7 +331,7 @@ print(max)
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">坤</p>
+  <p class="site-author-name" itemprop="name">Aurora</p>
   <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -379,7 +379,7 @@ print(max)
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">坤</span>
+  <span class="author" itemprop="copyrightHolder">Aurora</span>
 </div>
   <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

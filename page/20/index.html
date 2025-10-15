@@ -22,12 +22,12 @@
 
   <meta name="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
 <meta property="og:type" content="website">
-<meta property="og:title" content="坤博客">
+<meta property="og:title" content="Aurora博客">
 <meta property="og:url" content="https://aurora-lsk.asia/page/20/index.html">
-<meta property="og:site_name" content="坤博客">
+<meta property="og:site_name" content="Aurora博客">
 <meta property="og:description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:author" content="坤">
+<meta property="article:author" content="Aurora">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://aurora-lsk.asia/page/20/">
@@ -43,7 +43,7 @@
   };
 </script>
 
-  <title>坤博客</title>
+  <title>Aurora博客</title>
   
 
 
@@ -94,7 +94,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">坤博客</h1>
+      <h1 class="site-title">Aurora博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -141,1424 +141,192 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content index landing-home">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/2.6%E4%BA%92%E6%96%A5%E9%94%81/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
+  <style>
+    :root {
+      --bg: #0b1022;
+      --surface: #0f162e;
+      --neon1: #00f3ff;
+      --neon2: #8b00ff;
+      --text: #e8f6ff;
+      --muted: #93a0b3;
+    }
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/2.6%E4%BA%92%E6%96%A5%E9%94%81/" class="post-title-link" itemprop="url">2.6互斥锁</a>
-        </h2>
+    /* 场景容器：星空 + 霓虹雾霭 + 未来感网格地面 */
+    .landing-scene {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      padding: 70px 28px 90px;
+      background: radial-gradient(1200px 600px at 10% 10%, #0d1327 0, #0d1327 60%, #080b18 100%);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    /* 星屑层 */
+    .landing-scene::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(#fff 1px, transparent 2px),
+        radial-gradient(#fff 1px, transparent 2px);
+      background-size: 3px 3px, 4px 4px;
+      background-position: 0 0, 20px 30px;
+      opacity: .08;
+      animation: starDrift 60s linear infinite;
+    }
+    /* 霓虹雾霭层 */
+    .landing-scene::after {
+      content: '';
+      position: absolute; inset: -40% -10% -40% -10%;
+      background: conic-gradient(from 0deg at 50% 50%, var(--neon1), var(--neon2), var(--neon1));
+      filter: blur(90px) saturate(120%);
+      opacity: .25;
+      transform: translateZ(0);
+      pointer-events: none;
+    }
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
+    @keyframes starDrift {
+      0%   { background-position: 0 0, 20px 30px; }
+      100% { background-position: -3000px -2000px, -1500px -1200px; }
+    }
 
-              <time title="创建时间：2025-10-15 11:34:54 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:54+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
+    /* 地面网格（赛博感） */
+    .grid-floor {
+      position: absolute; left: 0; right: 0; bottom: -35%; height: 360px;
+      background-image:
+        linear-gradient(var(--neon1)20, transparent 20),
+        linear-gradient(90deg, var(--neon1)20, transparent 20);
+      background-size: 42px 42px, 42px 42px;
+      opacity: .18;
+      transform: perspective(900px) rotateX(60deg) scale(1.2);
+      animation: gridScroll 12s linear infinite;
+      filter: drop-shadow(0 0 12px rgba(0,243,255,.25));
+    }
+    @keyframes gridScroll {
+      from { background-position: 0 0, 0 0; }
+      to   { background-position: 0 42px, 42px 0; }
+    }
 
-          
+    /* Hero 内容 */
+    .landing-hero { position: relative; z-index: 2; text-align: center; color: var(--text); }
+    .landing-hero h1 {
+      font-size: 2.6rem; margin: 0 0 12px;
+      letter-spacing: .5px;
+      text-shadow: 0 0 6px rgba(0,243,255,.6), 0 0 16px rgba(139,0,255,.35);
+    }
+    .landing-hero p { font-size: 1.05rem; color: var(--muted); margin: 0 0 24px; }
+    .landing-cta { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .landing-cta a { text-decoration: none; }
+    .landing-cta .btn-primary {
+      padding: 10px 18px; border-radius: 10px;
+      background: linear-gradient(90deg, var(--neon1), var(--neon2));
+      color: #021019; font-weight: 600;
+      box-shadow: 0 0 22px rgba(0,243,255,.35), inset 0 0 8px rgba(255,255,255,.25);
+    }
+    .landing-cta .btn-secondary {
+      padding: 10px 18px; border-radius: 10px;
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(8px);
+    }
 
-        </div>
-      </header>
+    .landing-section { margin-top: 28px; }
+    .landing-section h2 { font-size: 1.3rem; margin-bottom: 12px; }
+    .landing-section h2::after {
+      content: ''; display: inline-block; width: 36px; height: 10px; margin-left: 8px;
+      background: linear-gradient(90deg, var(--neon1), var(--neon2));
+      filter: blur(.6px); opacity: .6; border-radius: 12px;
+    }
+    .landing-more { text-align: center; margin-top: 10px; }
+    .landing-more a { text-decoration: none; color: var(--neon1); }
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+    /* 最近列表（霓虹点阵风） */
+    .recent-list { display: grid; grid-template-columns: 1fr; gap: 6px; }
+    .recent-item {
+      padding: 12px 14px; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: 0 0 14px rgba(0,0,0,.05);
+    }
+    .recent-title { font-size: 1.05rem; margin: 0 0 4px; }
+    .recent-title a { text-decoration: none; color: inherit; }
+    .recent-meta { color: #7f8aa3; font-size: .88rem; }
+  </style>
 
-      
-          <h1>互斥锁</h1>
-<ul>
-<li>进程与进程之间的资源是不共享的</li>
-</ul>
-<h2 id="【一】什么是互斥锁">【一】什么是互斥锁</h2>
-<ul>
-<li>我们可以成为互斥锁为一种机制</li>
-<li>互斥锁是一种用于多线程编程中
-<ul>
-<li>控制对共享资源访问的机制</li>
-</ul>
-</li>
-</ul>
-<h2 id="【二】互斥锁的作用">【二】互斥锁的作用</h2>
-<ul>
-<li>保证在同一时刻只有一个线程在访问共享资源，从而避免多个线程同时读取数据造成的问题</li>
-</ul>
-<h2 id="【三】互斥锁的原理">【三】互斥锁的原理</h2>
-<ul>
-<li>互斥锁的基本原理是在对共享资源进行访问前加锁，其他进程无法访问该资源，当访问完成后再解锁，使得其他进程可以进行访问</li>
-<li>这种方式，可以保证同一时间只有一个线程在执行关键代码段，从而保证了数据的安全性。</li>
-<li>互斥锁会带来额外的开销</li>
-</ul>
-<h2 id="【四】多个进程共享同一打印终端">【四】多个进程共享同一打印终端</h2>
-<ul>
-<li>进程之间数据不共享，但是共享同一套文件系统，所以访问同一个文件,或同一个打印终端,是没有问题的</li>
-</ul>
-<h3 id="【1】未加锁">【1】未加锁</h3>
-<ul>
-<li>并发运行，效率高，竞争同一个终端数据，打印的数据错乱</li>
-</ul>
-```python
-import multiprocessing
-import time
-
-#未加锁
-def work(name):
-    #running:运行
-    print(f"{name} is running")
-    #睡两秒
-    time.sleep(2)
-    #done:完成
-    print(f"{name} is done")
-
-
-def main():
-    for i in range(3):
-        #创建子进程
-        task = multiprocessing.Process(
-            target = work,
-            args = (i,)
-        )
-        task.start()
-  
-
-if __name__ == '__main__':
-    print(f"主进程开始")
-    main()
-    print("主进程结束")
-    # 主进程开始
-    # 主进程结束
-    # 0 is running
-    # 1 is running
-    # 2 is running
-    # 0 is done
-    # 1 is done
-    # 2 is done
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【2】加锁</span><br><span class="line"></span><br><span class="line">- 有并发能变成串行，运行效率变慢，避免了竞争</span><br><span class="line">- 用`from multiprocessing import Lock`里面的Lock</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import multiprocessing</span><br><span class="line">import time</span><br><span class="line">from multiprocessing import Lock</span><br><span class="line"></span><br><span class="line">#未加锁</span><br><span class="line">def work(name,lock):</span><br><span class="line">    #在启动子进程之前加锁，只能有一个进程使用</span><br><span class="line">    lock.acquire()</span><br><span class="line">    #running:运行</span><br><span class="line">    print(f&quot;&#123;name&#125; is running&quot;)</span><br><span class="line">    #睡两秒</span><br><span class="line">    time.sleep(2)</span><br><span class="line">    #done:完成</span><br><span class="line">    print(f&quot;&#123;name&#125; is done&quot;)</span><br><span class="line">    #运行完了 把锁打开</span><br><span class="line">    #子进程结束把锁打开</span><br><span class="line">    lock.release()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    #实例化的到一个锁对象</span><br><span class="line">    lock = Lock()</span><br><span class="line">    task_list = []</span><br><span class="line">    for i in range(3):</span><br><span class="line">        #创建子进程</span><br><span class="line">        task = multiprocessing.Process(</span><br><span class="line">            target = work,</span><br><span class="line">            args = (i,lock)</span><br><span class="line">        )</span><br><span class="line">        task.start()</span><br><span class="line">        task_list.append(task)</span><br><span class="line">        for task in task_list:</span><br><span class="line">            task.join()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    print(f&quot;主进程开始&quot;)</span><br><span class="line">    main()</span><br><span class="line">    print(&quot;主进程结束&quot;)</span><br><span class="line">    # 主进程开始</span><br><span class="line">    # 0 is running</span><br><span class="line">    # 0 is done</span><br><span class="line">    # 1 is running</span><br><span class="line">    # 1 is done</span><br><span class="line">    # 2 is running</span><br><span class="line">    # 2 is done</span><br><span class="line">    # 主进程结束</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>加锁解决了多个子进程共享终端打印粘连问题</li>
-<li>只有当前进程释放锁才能被下一个进程使用</li>
-<li>每个进程之间的数据是唯一的</li>
-</ul>
-<h2 id="【五】多个进程共享一个文件">【五】多个进程共享一个文件</h2>
-<ul>
-<li>模拟抢票系统</li>
-</ul>
-<h4 id="（1）未加锁">（1）未加锁</h4>
-```python
-import time
-import random
-import json
-import multiprocessing
-
-# 得到一个数据
-ticket_data = {"number": 2}
-
-
-# 初始化票的张数
-def init_ticket():
-    with open("ticket.json", "w") as fp:
-        json.dump(obj=ticket_data, fp=fp)
-
-
-# 读取票数
-def read_ticket():
-    with open("ticket.json", "r") as fp:
-        data = json.load(fp=fp)
-    return data
-
-
-# 买完票初始化数据
-def save_ticket(data):
-    with open("ticket.json", "w") as fp:
-        json.dump(obj=data, fp=fp)
-
-
-# 查看当前票的数量
-def search_ticket(name):
-    ticket_number = read_ticket().get("number")
-    print(f"now name is {name},now ticket number is {ticket_number}")
-
-
-# 买票过程
-def buy_ticket(name):
-    ticket_data = read_ticket()
-    # 睡多长时间
-    sleep_time = random.randint(1, 4)
-    time.sleep(sleep_time)
-    # 判断当前是否有票
-    if ticket_data['number'] > 0:
-        # 票数-1
-        ticket_data["number"] -= 1
-        # 保存数据
-        save_ticket(ticket_data)
-        print(f"now name is {name} , success buy a ticket")
-    else:
-        print(f"now name is {name} , failed buy a ticket")
-
-
-# 用户买票
-def main(name):
-    # 查票
-    search_ticket(name)
-    # 买票
-    buy_ticket(name)
-
-
-# 创建很对人
-def main_process():
-    task_list = []
-    for i in range(4):
-        task = multiprocessing.Process(
-            target=main,
-            args=(f"name_{i}",)
-        )
-        task.start()
-        task_list.append(task)
-    for task in task_list:
-        task.join()
-
-
-if __name__ == '__main__':
-    # init_ticket()
-    main_process()
-
-# now name is name_0,now ticket number is 2
-# now name is name_1,now ticket number is 2
-# now name is name_2,now ticket number is 2
-# now name is name_3,now ticket number is 2
-# now name is name_2 , success buy a ticket
-# now name is name_0 , success buy a ticket
-# now name is name_1 , success buy a ticket
-# now name is name_3 , success buy a ticket
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 可以看出在不加锁的情况下</span><br><span class="line">- 总共就两张票，四个人都买到了，不合理！</span><br><span class="line"></span><br><span class="line">### 【2】用互斥锁写</span><br><span class="line"></span><br><span class="line">- 模拟抢票系统</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import time</span><br><span class="line">import random</span><br><span class="line">import json</span><br><span class="line">import multiprocessing</span><br><span class="line"></span><br><span class="line"># 得到一个数据</span><br><span class="line">ticket_data = &#123;&quot;number&quot;: 2&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 初始化票的张数</span><br><span class="line">def init_ticket():</span><br><span class="line">    with open(&quot;ticket.json&quot;, &quot;w&quot;) as fp:</span><br><span class="line">        json.dump(obj=ticket_data, fp=fp)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 读取票数</span><br><span class="line">def read_ticket():</span><br><span class="line">    with open(&quot;ticket.json&quot;, &quot;r&quot;) as fp:</span><br><span class="line">        data = json.load(fp=fp)</span><br><span class="line">    return data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 买完票初始化数据</span><br><span class="line">def save_ticket(data):</span><br><span class="line">    with open(&quot;ticket.json&quot;, &quot;w&quot;) as fp:</span><br><span class="line">        json.dump(obj=data, fp=fp)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 查看当前票的数量</span><br><span class="line">def search_ticket(name):</span><br><span class="line">    ticket_number = read_ticket().get(&quot;number&quot;)</span><br><span class="line">    print(f&quot;now name is &#123;name&#125;,now ticket number is &#123;ticket_number&#125;&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 买票过程</span><br><span class="line">def buy_ticket(name,lock):</span><br><span class="line">    #在操作买票之前加锁</span><br><span class="line">    lock.acquire()</span><br><span class="line">    ticket_data = read_ticket()</span><br><span class="line">    # 睡多长时间</span><br><span class="line">    sleep_time = random.randint(1, 4)</span><br><span class="line">    time.sleep(sleep_time)</span><br><span class="line">    # 判断当前是否有票</span><br><span class="line">    if ticket_data[&#x27;number&#x27;] &gt; 0:</span><br><span class="line">        # 票数-1</span><br><span class="line">        ticket_data[&quot;number&quot;] -= 1</span><br><span class="line">        # 保存数据</span><br><span class="line">        save_ticket(ticket_data)</span><br><span class="line">        print(f&quot;now name is &#123;name&#125; , success buy a ticket&quot;)</span><br><span class="line">    else:</span><br><span class="line">        print(f&quot;now name is &#123;name&#125; , failed buy a ticket&quot;)</span><br><span class="line">    #买完之后解锁</span><br><span class="line">    lock.release()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 用户买票</span><br><span class="line">def main(name,lock):</span><br><span class="line">    # 查票</span><br><span class="line">    search_ticket(name)</span><br><span class="line">    # 买票</span><br><span class="line">    buy_ticket(name,lock)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 创建很对人</span><br><span class="line">def main_process():</span><br><span class="line">    #获得锁的对象</span><br><span class="line">    lock = multiprocessing.Lock()</span><br><span class="line">    task_list = []</span><br><span class="line">    for i in range(4):</span><br><span class="line">        task = multiprocessing.Process(</span><br><span class="line">            target=main,</span><br><span class="line">            args=(f&quot;name_&#123;i&#125;&quot;,lock)</span><br><span class="line">        )</span><br><span class="line">        task.start()</span><br><span class="line">        task_list.append(task)</span><br><span class="line">    for task in task_list:</span><br><span class="line">        task.join()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    # init_ticket()</span><br><span class="line">    main_process()</span><br><span class="line"></span><br><span class="line"># now name is name_0,now ticket number is 2</span><br><span class="line"># now name is name_1,now ticket number is 2</span><br><span class="line"># now name is name_3,now ticket number is 2</span><br><span class="line"># now name is name_2,now ticket number is 2</span><br><span class="line"># now name is name_0 , success buy a ticket</span><br><span class="line"># now name is name_1 , success buy a ticket</span><br><span class="line"># now name is name_3 , failed buy a ticket</span><br><span class="line"># now name is name_2 , failed buy a ticket</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>加过锁之后就很合理</li>
-<li>两张票只有两个人能购买到，剩下的人显示没票了</li>
-</ul>
-<h2 id="【六】互斥锁的优缺点">【六】互斥锁的优缺点</h2>
-<h3 id="【1】加锁的优点">【1】加锁的优点</h3>
-<ul>
-<li>加锁可以保证多个进程修改同一块数据</li>
-<li>同一时间只能有一个任务可以进行修改，既串行的修改</li>
-<li>程序的运行慢了，但是保证了数据的安全</li>
-</ul>
-<h3 id="【2】加锁的缺点">【2】加锁的缺点</h3>
-<ul>
-<li>虽然可以用文件共享数据实现进程间通信，但问题是
-<ul>
-<li>效率低
-<ul>
-<li>共享的数据基于文件，而文件是硬盘上的数据</li>
-</ul>
-</li>
-<li>需要自己加锁处理</li>
-</ul>
-</li>
-</ul>
-<h3 id="【3】优化方案">【3】优化方案</h3>
-<ul>
-<li>
-<p><strong>因此我们最好找寻一种解决方案能够兼顾：</strong></p>
-<ul>
-<li><strong>效率高（多个进程共享一块内存的数据）</strong></li>
-<li><strong>帮我们处理好锁问题。这就是mutiprocessing模块为我们提供的基于消息的IPC通信机制：队列和管道。</strong></li>
-</ul>
-</li>
-<li>
-<p>队列和管道都是将数据存放于内存中</p>
-</li>
-<li>
-<p>队列又是基于（管道+锁）实现的，可以让我们从复杂的锁问题中解脱出来，我们应该尽量避免使用共享数据，尽可能使用消息传递和队列，避免处理复杂的同步和锁问题，而且在进程数目增多时，往往可以获得更好的可获展性。</p>
-</li>
-</ul>
-<h2 id="【七】行锁和表锁">【七】行锁和表锁</h2>
-<ul>
-<li>行锁和表锁是数据库中常用的锁定机制</li>
-</ul>
-<h3 id="【1】什么是行锁">【1】什么是行锁</h3>
-<ul>
-<li>行锁是在对数据库表中的某个数据进行修改时
-<ul>
-<li>一次只允许一个用户操作该行</li>
-<li>其他用户如果需要修改该行数据就必须等待</li>
-</ul>
-</li>
-<li>通过行锁定可以避免多个用户同时修改同一行数据所导致的数据不一致问题。</li>
-</ul>
-<h3 id="【2】什么是表锁">【2】什么是表锁</h3>
-<ul>
-<li>
-<p>表锁则是当一个用户操作某个数据库表时</p>
-</li>
-<li>
-<ul>
-<li>会锁定整个表，其他用户同时不能操作该表。</li>
-</ul>
-</li>
-<li>
-<p>这在一些特殊场景下比如表维护、备份等是非常有用的。</p>
-</li>
-</ul>
-<p>总的来说</p>
-<ul>
-<li>
-<p>行锁定是比较细粒度的锁定</p>
-</li>
-<li>
-<p>而表锁定则是更为粗粒度的锁定方法。</p>
-</li>
-</ul>
-<h2 id="提醒">*提醒</h2>
-<ul>
-<li>锁不要轻易使用，容易造成死锁现象</li>
-<li>锁只在处理数据的部分加，用来保证数据的安全（<strong>只在争抢数据的环节加锁</strong>）</li>
-</ul>
-
-      
+  <section class="landing-scene">
+    <div class="landing-hero">
+      <h1>欢迎来到我的博客</h1>
+      <p>记录技术笔记、项目经验与个人思考。</p>
+      <div class="landing-cta">
+        <a class="btn-primary" href="/archives/">浏览全部文章</a>
+        <a class="btn-secondary" href="/categories/">按分类查看</a>
+      </div>
     </div>
+    <div class="grid-floor"></div>
+  </section>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+  <section class="landing-section">
+    <h2>最近更新</h2>
+    <style>
+      .recent-list { display: grid; grid-template-columns: 1fr; gap: 8px; }
+      .recent-item { padding: 12px 0; border-bottom: 1px solid #eee; }
+      .recent-title { font-size: 1.05rem; margin: 0 0 6px; }
+      .recent-title a { text-decoration: none; color: inherit; }
+      .recent-meta { color: #888; font-size: .9rem; }
+    </style>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/2.8%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%90%86%E8%AE%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/2.8%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%90%86%E8%AE%BA/" class="post-title-link" itemprop="url">2.8多线程理论</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:54 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:54+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>多线程理论</h1>
-<ul>
-<li>进程和线程都是抽象概念</li>
-</ul>
-<h2 id="【一】什么是线程">【一】什么是线程</h2>
-<ul>
-<li>
-<p>在传统操作系统中，每个进程有一个地址空间，而默认就有一个控制线程</p>
-</li>
-<li>
-<p>进程只是把所有的资源综合在一起（进程只是一个资源单位，或者说资源集合），而线程才是cpu上的执行单位</p>
-</li>
-<li>
-<p>多线程（即多个控制线程）是发生在一个进程中，多个线程共享该进程的地址空间，相当于一个车间内有多条流水线，是共用一个车间资源</p>
-</li>
-</ul>
-<h2 id="【二】例子">【二】例子</h2>
-<ul>
-<li>进程 ：资源单位</li>
-<li>线程：执行单位</li>
-<li>将操作系统比喻成大的工厂
-<ul>
-<li>进程相当于工厂里面的车间</li>
-<li>线程相当于车间里面的流水线</li>
-</ul>
-</li>
-</ul>
-<h2 id="【三】进程和线程的创建开销">【三】进程和线程的创建开销</h2>
-<ul>
-<li>
-<p><strong>进程的创建开销 <code>大于</code> 线程的创建开销</strong></p>
-</li>
-<li>
-<p>如果我们的软件是一个工厂</p>
-</li>
-<li>
-<p>该工厂有多条流水线</p>
-</li>
-<li>
-<p>流水线工作需要电源</p>
-</li>
-<li>
-<p>电源只有一个即cpu（单核cpu）</p>
-</li>
-<li>
-<ul>
-<li>一个车间就是一个进程</li>
-</ul>
-</li>
-<li>
-<ul>
-<li>
-<ul>
-<li>一个车间至少一条流水线（一个进程至少一个线程）</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<ul>
-<li>创建一个进程</li>
-</ul>
-</li>
-<li>
-<ul>
-<li>
-<ul>
-<li>就是创建一个车间（申请空间，在该空间内建至少一条流水线）</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<ul>
-<li>而建线程</li>
-</ul>
-</li>
-<li>
-<ul>
-<li>
-<ul>
-<li>就只是在一个车间内造一条流水线</li>
-<li>无需申请空间，所以创建开销小</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>进程之间是竞争关系，线程之间是协作关系</p>
-</li>
-</ul>
-<h2 id="【四】进程和线程的区别">【四】进程和线程的区别</h2>
-```
-# ● Threads share the address space of the process that created it; processes have their own address space.
-#   ○ 线程共享创建它的进程的地址空间； 进程具有自己的地址空间。
-# ● Threads have direct access to the data segment of its process; processes have their own copy of the data segment of the parent process.
-#   ○ 线程可以直接访问其进程的数据段； 进程具有其父进程数据段的副本。
-# ● Threads can directly communicate with other threads of its process; processes must use interprocess communication to communicate with sibling processes.
-#   ○ 线程可以直接与其进程中的其他线程通信； 进程必须使用进程间通信与同级进程进行通信。
-# ● New threads are easily created; new processes require duplication of the parent process.
-#   ○ 新线程很容易创建； 新进程需要复制父进程。
-# ● Threads can exercise considerable control over threads of the same process; processes can only exercise control over child processes.
-#   ○ 线程可以对同一进程的线程行使相当大的控制权。 进程只能控制子进程。
-# ● Changes to the main thread (cancellation, priority change, etc.) may affect the behavior of the other threads of the process; changes to the parent process does not affect child processes.
-#   ○ 对主线程的更改（取消，优先级更改等）可能会影响该进程其他线程的行为； 对父进程的更改不会影响子进程。
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【五】为何要有多线程</span><br><span class="line"></span><br><span class="line">### 【1】开设进程</span><br><span class="line"></span><br><span class="line">- 太耗资源</span><br><span class="line">- 开设进程需要在申请内存空间</span><br><span class="line"></span><br><span class="line">### 【2】开设线程</span><br><span class="line"></span><br><span class="line">- 一个进程内可以开设多个线程</span><br><span class="line">- 在进程内开设多个线程无需再申请内存地址及拷贝代码操作</span><br><span class="line"></span><br><span class="line">### 【3】线程优点</span><br><span class="line"></span><br><span class="line">- 减少资源的消耗</span><br><span class="line">- 同一个进程下的多个线程资源共享</span><br><span class="line"></span><br><span class="line">### 【4】什么是多线程</span><br><span class="line"></span><br><span class="line">- 多线程指的是 </span><br><span class="line"></span><br><span class="line">- - 在一个进程中开启多个线程</span><br><span class="line">  - 简单的讲：如果多个任务共用一块地址空间，那么必须在一个进程内开启多个线程。</span><br><span class="line"></span><br><span class="line">- 多线程共享一个进程的地址空间 </span><br><span class="line"></span><br><span class="line">- - 线程比进程更轻量级，线程比进程更容易创建可撤销，在许多操作系统中，创建一个线程比创建一个进程要快10-100倍，在有大量线程需要动态和快速修改时，这一特性很有用</span><br><span class="line"></span><br><span class="line">- 若多个线程都是cpu密集型的，那么并不能获得性能上的增强 </span><br><span class="line"></span><br><span class="line">- - 但是如果存在大量的计算和大量的I/O处理，拥有多个线程允许这些活动彼此重叠运行，从而会加快程序执行的速度。</span><br><span class="line"></span><br><span class="line">- 在多cpu系统中，为了最大限度的利用多核，可以开启多个线程，比开进程开销要小的多。（这一条并不适用于Python）</span><br><span class="line"></span><br><span class="line">## 【六】思考题</span><br><span class="line"></span><br><span class="line">### （1）案例需求：开发一款文字处理软件进程</span><br><span class="line"></span><br><span class="line">- 获取用户输入的功能--》线程</span><br><span class="line">- 实时展示到屏幕的功能--》线程</span><br><span class="line">- 自动保存数据到硬盘的功能--》线程</span><br><span class="line"></span><br><span class="line">### （2）针对上述功能进程合适还是线程合适？</span><br><span class="line"></span><br><span class="line">- 开启一个文字处理软件进程</span><br><span class="line">- 该进程肯定需要办不止一件事情，比如监听键盘输入，处理文字，定时自动将文字保存到硬盘</span><br><span class="line">- 这三个任务操作的都是同一块数据，因而不能用多进程。</span><br><span class="line">- 只能在一个进程里并发地开启三个线程</span><br><span class="line">- 如果是单线程，那就只能是，键盘输入时，不能处理文字和自动保存，自动保存时又不能输入和处理文字。</span><br><span class="line"></span><br><span class="line"># 多线程操作</span><br><span class="line"></span><br><span class="line">## 【一】threading模块介绍</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from threading import Thread</span><br><span class="line">threading = Thread（）</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>和multiprocessing模块非常相似，方法几乎一样</li>
-</ul>
-<h2 id="【二】方法">【二】方法</h2>
-<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5Cimage-20240522174004135.png" alt="image-20240522174004135"></p>
-<h2 id="【三】开启线程的两种方式">【三】开启线程的两种方式</h2>
-<ul>
-<li>对进程和多线程只有在遇到阻塞的时候才能体现初速度块</li>
-<li>如果没有阻塞就没有效率</li>
-<li>process:是<strong>进程</strong></li>
-</ul>
-```python
-import multiprocessing
-import time
-import random
-
-
-def worker(name):
-    print(f"{name} is starting")
-    print(f"worker {os.getpid()}   {os.getppid()}")
-    sleep_time = random.randint(1, 4)
-    print(f"{name} is start sleep time is {sleep_time} s")
-    time.sleep(sleep_time)
-    print(f"{name} is ending")
-
-
-def main():
-    task_list = []
-    for i in range(4):
-        task = multiprocessing.Process(target=worker, args=(f"tom_{i}",))
-        task.start()
-        task_list.append(task)
-    for task in task_list:
-        task.join()
-
-if __name__ == "__main__":
-    print(f"main {os.getpid()}   {os.getppid()}")
-    print("main thread starting")
-    start_time = time.time()
-    main()
-    end_time = time.time()
-    print(f"main thread ending")
-    print(f"总耗时：---{end_time - start_time}")
-
-# 输出
-# main 19980   23672
-# main thread starting
-# tom_0 is starting
-# tom_1 is starting
-# tom_2 is starting
-# worker 13332   19980
-# tom_0 is start sleep time is 3 s
-# worker 30000   19980
-# tom_1 is start sleep time is 3 s
-# tom_3 is starting
-# worker 11260   19980
-# tom_2 is start sleep time is 4 s
-# worker 29896   19980
-# tom_3 is start sleep time is 2 s
-# tom_3 is ending
-# tom_1 is ending
-# tom_0 is ending
-# 
-# tom_2 is ending
-# main thread ending
-# 总耗时：---4.2201855182647705
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- Thread：是**线程**</span><br><span class="line"></span><br><span class="line">### 【1】方式一：调用Thread方法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from threading import Thread</span><br><span class="line">import multiprocessing</span><br><span class="line">import time</span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def worker(name):</span><br><span class="line">    print(f&quot;&#123;name&#125; is starting&quot;)</span><br><span class="line">    print(f&quot;worker &#123;os.getpid()&#125;   &#123;os.getppid()&#125;&quot;)</span><br><span class="line">    sleep_time = random.randint(1, 4)</span><br><span class="line">    print(f&quot;&#123;name&#125; is start sleep time is &#123;sleep_time&#125; s&quot;)</span><br><span class="line">    time.sleep(sleep_time)</span><br><span class="line">    print(f&quot;&#123;name&#125; is ending&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    task_list = []</span><br><span class="line">    for i in range(4):</span><br><span class="line">        task = Thread(target=worker, args=(f&quot;tom_&#123;i&#125;&quot;,))</span><br><span class="line">        task.start()</span><br><span class="line">        task_list.append(task)</span><br><span class="line">    for task in task_list:</span><br><span class="line">        task.join()</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    print(f&quot;main &#123;os.getpid()&#125;   &#123;os.getppid()&#125;&quot;)</span><br><span class="line">    print(&quot;main thread starting&quot;)</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    main()</span><br><span class="line">    end_time = time.time()</span><br><span class="line">    print(f&quot;main thread ending&quot;)</span><br><span class="line">    print(f&quot;总耗时：---&#123;end_time - start_time&#125;&quot;)</span><br><span class="line"># 输出</span><br><span class="line"># main 27804   23672</span><br><span class="line"># main thread starting</span><br><span class="line"># tom_0 is starting</span><br><span class="line"># tom_1 is starting</span><br><span class="line"># worker 27804   23672</span><br><span class="line"># tom_0 is start sleep time is 3 s</span><br><span class="line">#</span><br><span class="line"># worker 27804   23672</span><br><span class="line"># tom_2 is starting</span><br><span class="line"># worker 27804   23672</span><br><span class="line">#</span><br><span class="line"># tom_1 is start sleep time is 1 s</span><br><span class="line"># tom_2 is start sleep time is 3 s</span><br><span class="line"># tom_3 is starting</span><br><span class="line"># worker 27804   23672</span><br><span class="line"># tom_3 is start sleep time is 4 s</span><br><span class="line"># tom_1 is ending</span><br><span class="line"># tom_0 is ending</span><br><span class="line"># tom_2 is ending</span><br><span class="line"># tom_3 is ending</span><br><span class="line"># main thread ending</span><br><span class="line"># 总耗时：---4.033250570297241</span><br></pre></td></tr></table></figure>
-
-<h3 id="【2】方式二：继承Thread基类">【2】方式二：继承Thread基类</h3>
-```python
-from threading import Thread
-import time
-import random
-class MyThread(Thread):
-    def __init__(self, name,*args, **kwargs):
-        #因为Thread里面也有__init__方法
-        super().__init__(*args, **kwargs)
-        self.name = name
-
-    def run(self):
-        print(f"{self.name} starting")
-        sleep_time = random.randint(1,4)
-        time.sleep(sleep_time)
-        print(f"{self.name} ending")
-def main():
-    task_list = []
-    for i in range(4):
-        #调用的类方法
-        task = MyThread(name=f"thread_{i}")
-        task.start()
-        task_list.append(task)
-    for task in task_list:
-        task.join()
-
-if __name__ == '__main__':
-    print(f"main is starting")
-    main()
-    print(f"main is ending")
-
-# 输出
-# main is starting
-# thread_0 starting
-# thread_1 starting
-# thread_2 starting
-# thread_3 starting
-# thread_3 ending
-# thread_2 ending
-# thread_0 ending
-# thread_1 ending
-# main is ending
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【四】线程之间共享数据</span><br><span class="line"></span><br><span class="line">- Thread（线程）</span><br><span class="line">- 线程数是共享的</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from threading import Thread</span><br><span class="line"></span><br><span class="line">nums = 66</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def worker(name):</span><br><span class="line">    global nums</span><br><span class="line">    print(f&quot;&#123;name&#125; 改之前&#123;nums&#125;&quot;)</span><br><span class="line">    nums += 1</span><br><span class="line">    print(f&quot;&#123;name&#125;改之后&#123;nums&#125;&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    task_list = []</span><br><span class="line">    for i in range(4):</span><br><span class="line">        task = Thread(</span><br><span class="line">            target=worker,</span><br><span class="line">            kwargs=&#123;&quot;name&quot;: f&quot;thread_&#123;i&#125;&quot;&#125;</span><br><span class="line">        )</span><br><span class="line">        task.start()</span><br><span class="line">        task_list.append(task)</span><br><span class="line">    for task in task_list:</span><br><span class="line">        task.join()</span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    main()</span><br><span class="line">#输出</span><br><span class="line"># thread_0 改之前66</span><br><span class="line"># thread_0改之后67</span><br><span class="line"># thread_1 改之前67</span><br><span class="line"># thread_1改之后68</span><br><span class="line"># thread_2 改之前68</span><br><span class="line"># thread_2改之后69</span><br><span class="line"># thread_3 改之前69</span><br><span class="line"># thread_3改之后70</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Process(进程)</li>
-<li>进程的数据不共享</li>
-</ul>
-```python
-from multiprocessing import Process
-nums = 66
-
-
-def worker(name):
-    global nums
-    print(f"{name} 改之前{nums}")
-    nums += 1
-    print(f"{name}改之后{nums}")
-
-
-def main():
-    task_list = []
-    for i in range(4):
-        task = Process(
-            target=worker,
-            kwargs={"name": f"thread_{i}"}
-        )
-        task.start()
-        task_list.append(task)
-    for task in task_list:
-        task.join()
-
-
-if __name__ == '__main__':
-    main()
-#输出
-# thread_0 改之前66
-# thread_0改之后67
-# thread_1 改之前66
-# thread_1改之后67
-# thread_2 改之前66
-# thread_2改之后67
-# thread_3 改之前66
-# thread_3改之后67
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 每个进程都是独立的</span><br><span class="line">- 进程之间不共享</span><br><span class="line"></span><br><span class="line">## 【五】多线程和多进程时间比较</span><br><span class="line"></span><br><span class="line">- 爬虫实现的</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line"># 【一】需要两个模块</span><br><span class="line"># 【1】模仿浏览器对网址发起请求</span><br><span class="line">import requests  # pip install requests</span><br><span class="line"># 【2】解析页面数据的模块</span><br><span class="line">from lxml import etree  # pip install lxml</span><br><span class="line"># 【3】模仿浏览器</span><br><span class="line">from fake_useragent import UserAgent  # pip install fake-useragent</span><br><span class="line"></span><br><span class="line">from multiprocessing import Process</span><br><span class="line">from threading import Thread</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【二】解析网页请求及数据</span><br><span class="line">class SpiderImg(object):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.base_area = &#x27;https://pic.netbian.com&#x27;</span><br><span class="line">        self.base_url = &#x27;https://pic.netbian.com/4kdongman/&#x27;</span><br><span class="line">        self.headers = &#123;</span><br><span class="line">            &#x27;User-Agent&#x27;: UserAgent().random</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    def spider_tag_url(self):</span><br><span class="line">        img_data_dict = &#123;&#125;</span><br><span class="line">        response = requests.get(self.base_url, headers=self.headers)</span><br><span class="line">        # response.encoding = &#x27;utf-8&#x27;</span><br><span class="line">        response.encoding = &#x27;gbk&#x27;</span><br><span class="line">        page_text = response.text</span><br><span class="line">        tree = etree.HTML(page_text)</span><br><span class="line">        li_list = tree.xpath(&#x27;//*[@id=&quot;main&quot;]/div[4]/ul/li&#x27;)</span><br><span class="line">        for li in li_list:</span><br><span class="line">            # //*[@id=&quot;main&quot;]/div[4]/ul/li[1]/a</span><br><span class="line">            # ./a</span><br><span class="line">            detail_href = self.base_area + li.xpath(&#x27;./a/@href&#x27;)[0]</span><br><span class="line">            response = requests.get(detail_href, headers=self.headers)</span><br><span class="line">            response.encoding = &#x27;gbk&#x27;</span><br><span class="line">            page_text = response.text</span><br><span class="line">            tree = etree.HTML(page_text)</span><br><span class="line">            img_url = self.base_area + tree.xpath(&#x27;//*[@id=&quot;img&quot;]/img/@src&#x27;)[0]</span><br><span class="line">            # https://pic.netbian.com/uploads/allimg/240521/232729-17163052491e1c.jpg</span><br><span class="line">            img_title = img_url.split(&#x27;/&#x27;)[-1]</span><br><span class="line">            # 240521/232729-17163052491e1c.jpg</span><br><span class="line">            img_data_dict[img_title] = img_url</span><br><span class="line">        return img_data_dict</span><br><span class="line"></span><br><span class="line">    def download_img(self, img_url, img_title):</span><br><span class="line">        # 获取到图片的二进制数据</span><br><span class="line">        response = requests.get(img_url, headers=self.headers)</span><br><span class="line">        img_data = response.content</span><br><span class="line">        with open(f&#x27;&#123;img_title&#125;&#x27;, &#x27;wb&#x27;) as fp:</span><br><span class="line">            fp.write(img_data)</span><br><span class="line">        print(f&#x27;当前下载 &#123;img_title&#125; 成功!&#x27;)</span><br><span class="line"></span><br><span class="line">    def main_process(self):</span><br><span class="line">        start_time = time.time()</span><br><span class="line">        img_data_dict = self.spider_tag_url()</span><br><span class="line">        end_time = time.time()</span><br><span class="line">        print(f&#x27;抓取所有图片连接数据 &#123;len(img_data_dict)&#125; 总耗时 :&gt;&gt;&gt;&gt; &#123;end_time - start_time&#125;s&#x27;)</span><br><span class="line">        task_list = []</span><br><span class="line">        for img_title, img_url in img_data_dict.items():</span><br><span class="line">            task = Process(</span><br><span class="line">                target=self.download_img,</span><br><span class="line">                kwargs=&#123;&#x27;img_url&#x27;: img_url, &#x27;img_title&#x27;: img_title&#125;</span><br><span class="line">            )</span><br><span class="line">            task.start()</span><br><span class="line">            task_list.append(task)</span><br><span class="line">        for task in task_list:</span><br><span class="line">            task.join()</span><br><span class="line"></span><br><span class="line">    def main_thread(self):</span><br><span class="line">        start_time = time.time()</span><br><span class="line">        img_data_dict = self.spider_tag_url()</span><br><span class="line">        end_time = time.time()</span><br><span class="line">        print(f&#x27;抓取所有图片连接数据  &#123;len(img_data_dict)&#125;  总耗时 :&gt;&gt;&gt;&gt; &#123;end_time - start_time&#125;s&#x27;)</span><br><span class="line">        task_list = []</span><br><span class="line">        for img_title, img_url in img_data_dict.items():</span><br><span class="line">            task = Thread(</span><br><span class="line">                target=self.download_img,</span><br><span class="line">                kwargs=&#123;&#x27;img_url&#x27;: img_url, &#x27;img_title&#x27;: img_title&#125;</span><br><span class="line">            )</span><br><span class="line">            task.start()</span><br><span class="line">            task_list.append(task)</span><br><span class="line">        for task in task_list:</span><br><span class="line">            task.join()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    spider = SpiderImg()</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    # spider.main_process()  # 下载所有图片总耗时 :&gt;&gt;&gt;&gt; 7.990673542022705s</span><br><span class="line">    spider.main_thread()  # 下载所有图片总耗时 :&gt;&gt;&gt;&gt; 5.58322811126709s</span><br><span class="line">    end_time = time.time()</span><br><span class="line">    print(f&#x27;下载所有图片总耗时 :&gt;&gt;&gt;&gt; &#123;end_time - start_time&#125;s&#x27;)</span><br></pre></td></tr></table></figure>
-
-
-      
+    <div class="recent-list">
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/2.8%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%E5%BC%8F/" itemprop="url">
+                <span itemprop="name">2.8列表推导式</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:54+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/2.8%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%90%86%E8%AE%BA/" itemprop="url">
+                <span itemprop="name">2.8多线程理论</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:54+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/1.0%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" itemprop="url">
+                <span itemprop="name">1.0 计算机基础</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:23:27+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/10/hello-world/" itemprop="url">
+                <span itemprop="name">hello-world</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-10T15:23:30+08:00">2025-10-10</time>
+                · Blog
+            </div>
+          </article>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/1.0%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/1.0%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">1.0 计算机基础</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:23:27 / 修改时间：16:19:12" itemprop="dateCreated datePublished" datetime="2025-10-15T11:23:27+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>计算机基础</h1>
-<h1>[一]编程语言和编程</h1>
-<h2 id="【1】什么是语言？">【1】什么是语言？</h2>
-<ul>
-<li>语言是一种人与人之间进行沟通的媒介，例如英语、汉语、俄语等。</li>
-</ul>
-<h2 id="2-什么是编程语言？">[2]什么是编程语言？</h2>
-<ul>
-<li>编程语言是一种人与计算机之间进行沟通的媒介。</li>
-</ul>
-<h2 id="【3】为什么会有编程语言">【3】为什么会有编程语言</h2>
-<ul>
-<li>是为了能够让人类与计算机能够进行有效的交流</li>
-<li>计算机在编程者的控制下按照指定的逻辑执行任务，从而实现自动化。</li>
-</ul>
-<blockquote>
-<p>通俗理解为在人与计算机的世界里，人是奴隶主，计算机是奴隶</p>
-<p>人与计算机沟通的目的就是为了奴役计算机，让计算机按照人类的思维逻辑自发地去工作，从而解放人力，节约成本。</p>
-</blockquote>
-<h2 id="4-什么是编程？">[4]什么是编程？</h2>
-<ul>
-<li>就是用人类的思维翻译成计算机能够理解和执行命令，将这些指令写入程序形成指令。</li>
-</ul>
-<h2 id="5-编程的目的">[5]编程的目的</h2>
-<ul>
-<li>为了让计算机按照人类的意愿完成特定的任务，实现自动化，提高工作效率，解放人力，以及创造各种应用和软件。</li>
-</ul>
-<h1>【二】计算机组成原理</h1>
-<h2 id="【1】什么是计算机？">【1】什么是计算机？</h2>
-<ul>
-<li>它是一个通电的设备，又叫做电脑，拥有处理数据、执行指令的能力</li>
-<li>能够批量处理人类的指令和数据</li>
-</ul>
-<h2 id="【2】为什么要有计算机">【2】为什么要有计算机</h2>
-<ul>
-<li>就是为了提高效率，可以24小时不间断的工作</li>
-<li>节约劳动成本，提高效益</li>
-</ul>
-<h2 id="【3】计算机的五大组成部分">【3】计算机的五大组成部分</h2>
-<h3 id="（1）控制器">（1）控制器</h3>
-<ul>
-<li>
-<p><strong>功能：</strong> 控制器相当于计算机的大脑，负责指挥和协调其他部件的工作。</p>
-</li>
-<li>
-<p>相当于人类的大脑，相互协调工作，完成工作（非常核心的部分）</p>
-</li>
-</ul>
-<h3 id="【2】运算器">【2】运算器</h3>
-<ul>
-<li>
-<p>功能：</p>
-<p>运算器执行各种算术和逻辑运算，实现计算机的计算功能。</p>
-<ul>
-<li>算术运算：数字之间的运算，例如 + - * /</li>
-<li>逻辑运算：根据某个条件是否成立，决定是否要做事情</li>
-</ul>
-</li>
-<li>
-<p>相当于我们的大脑进行逻辑运算和数字运算的功能</p>
-<ul>
-<li>逻辑运算包括与或非，如果，但是…</li>
-<li>数字运算包括加减乘除法…</li>
-</ul>
-</li>
-</ul>
-<h3 id="【3】存储器">【3】存储器</h3>
-<ul>
-<li>
-<p><strong>功能：</strong> 存储器用于存储计算机运行时所需的数据和指令。</p>
-</li>
-<li>
-<p>人类的记忆在于大脑中（海马体）</p>
-<ul>
-<li>分为长期和短期记忆
-<ul>
-<li>长期记忆就是你一直记得的事情</li>
-<li>短期记忆就是你睡一觉你就忘记啦</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>存储器也分为两种：内存和外存</p>
-</li>
-</ul>
-<h4 id="（1）内存">（1）内存</h4>
-<ul>
-<li>
-<p><strong>功能：</strong> 内存是计算机用于临时存储数据和程序的地方，是CPU能够直接访问的存储介质。</p>
-</li>
-<li>
-<p>就是短时间存储的数据</p>
-</li>
-<li>
-<p>断电或者重启电脑就会消失</p>
-<ul>
-<li>比如你写一篇作文几百字突然断电，所写的内容就会消失</li>
-</ul>
-</li>
-<li>
-<p>特点：</p>
-<ul>
-<li>断电数据丢失：内存是一种易失性存储器，断电后存储在其中的数据将丢失。</li>
-<li>读取速度快：由于内存是直接与CPU相连的，因此读取速度非常快。</li>
-</ul>
-</li>
-<li>
-<p><strong>作用：</strong> 在运行程序时，数据必须先加载到内存中，CPU才能够快速访问和处理这些数据。</p>
-</li>
-</ul>
-<h4 id="（2）外存">（2）外存</h4>
-<ul>
-<li>
-<p><strong>功能：</strong> 外存用于永久存储数据，即使在断电的情况下数据也不会丢失。</p>
-</li>
-<li>
-<p>外存又叫硬盘</p>
-</li>
-<li>
-<p>硬盘分两种</p>
-<ul>
-<li>机械硬盘
-<ul>
-<li>可以存储大量的数据，但是读取速度比较慢，并且价格很低</li>
-</ul>
-</li>
-<li>固态硬盘
-<ul>
-<li>可以存储大量的数据，读取速度非常快，但是价格太高</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>持久性的存储数据，并且断电不会消失</p>
-</li>
-<li>
-<p><strong>特点</strong>：</p>
-<ul>
-<li>断电数据不会丢失：外存是一种非易失性存储器，数据在断电后依然保持。</li>
-<li>读取速度慢：与内存相比，外存的读取速度较慢，因为需要通过外部设备进行读取</li>
-</ul>
-</li>
-</ul>
-<h3 id="【4】输入设备">【4】输入设备</h3>
-<ul>
-<li>
-<p><strong>功能：</strong> 输入设备用于将外部信息输入到计算机，让计算机能够处理。</p>
-</li>
-<li>
-<p>电脑输入内容的设备</p>
-</li>
-<li>
-<p>鼠标键盘，麦克风，手写笔…</p>
-</li>
-</ul>
-<h3 id="【5】输出设备">【5】输出设备</h3>
-<ul>
-<li>
-<p><strong>功能：</strong> 输出设备将计算机处理后的结果呈现给用户或其他设备。</p>
-</li>
-<li>
-<p>计算机展示信息的平台和设备</p>
-</li>
-<li>
-<p>投影仪和打印机，显示器…</p>
-</li>
-</ul>
-<h3 id="【6】总结">【6】总结</h3>
-<ul>
-<li>cpu是人的大脑，负责控制全身和计算</li>
-<li>内存是人的记忆，负责临时存储</li>
-<li>硬盘是人的笔记本，负责永久存储</li>
-<li>输入设备是耳朵或眼睛或嘴巴，负责接收外部的信息存入内存</li>
-<li>输出设备是你的脸部(表情)或者屁股，负责经过处理后输出的结果</li>
-<li>以上所有的设备都通过总线连接，总线相当于人的神经</li>
-</ul>
-<h2 id="【4】计算机三大核心硬件">【4】计算机三大核心硬件</h2>
-<h3 id="（1）cpu">（1）cpu</h3>
-<ul>
-<li>控制器+运算器=cpu</li>
-<li>中央控制处理器</li>
-<li>控制整个电脑的调度和运算的</li>
-</ul>
-<h3 id="（2）内存">（2）内存</h3>
-<ul>
-<li>临时存储数据的地方</li>
-<li>突然断电数据消失，数据安全性低，但是读取速度极快</li>
-</ul>
-<h3 id="（3）硬盘">（3）硬盘</h3>
-<ul>
-<li>持久化储存数据的地方</li>
-<li>断电了数据也不会消失，数据安全性能高，只要硬盘不发生损坏，就不会数据丢失，读取速度很慢。</li>
-</ul>
-<h2 id="【5】程序的执行过程">【5】程序的执行过程</h2>
-<ul>
-<li>数据准备
-<ul>
-<li>想用QQ，应该要下载 QQ 的应用程序</li>
-<li>QQ的文件夹内，你会看到很多的文件数据，这些数据就是QQ的启动程序</li>
-</ul>
-</li>
-<li>数据读取
-<ul>
-<li>从硬盘中将QQ的数据读取到内存中，进行临时存储</li>
-<li>双击QQ的图标，出现QQ登录界面这个操作就是数据从硬盘中读取到内存中的过程</li>
-</ul>
-</li>
-<li>数据写入
-<ul>
-<li>输入账号和密码，点击登陆进行登陆，</li>
-<li>进入到QQ聊天界面的过程就是CPU从内存中将数据读取出来进行调度和运算的过程</li>
-</ul>
-</li>
-<li>关闭QQ ，CPU负责调度当前程序进行杀死，杀死过后要释放当前的内内存资源
-<ul>
-<li>点击关闭QQ，慢慢的消失</li>
-<li>CPU将QQ的数据保存到内存中</li>
-<li>内存中的数据再写入到硬盘中，进行持久化存储</li>
-<li>QQ完全退出了</li>
-</ul>
-</li>
-</ul>
-<h1>【三】操作系统的概念</h1>
-<h2 id="【1】操作系统的历史">【1】操作系统的历史</h2>
-<ul>
-<li>它的出现是为了简化我们硬件的操作
-<ul>
-<li>最开始的时候电脑就是一堆零件拼凑的</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>计算机是属于电工作的，电流有正负，高低电频之分，0/1</p>
-</blockquote>
-<ul>
-<li>想要简化一系列操作指令，我们只能是找到这些指令的替代品</li>
-</ul>
-<h2 id="【2】操作系统">【2】操作系统</h2>
-<ul>
-<li>操作系统其实就是在一堆硬件的基础上实现功能和接口的封装，我们可以通过这些接口和程序进行硬件的调度</li>
-</ul>
-<h2 id="【3】开发一套操作系统">【3】开发一套操作系统</h2>
-<ul>
-<li>比如我们开发暴风影音
-<ul>
-<li>核心业务就是播放视频，输出音频</li>
-<li>你在公司里，有这个需求就要完成这个需求，将这个功能开发一套
-<ul>
-<li>将视频文件数据从硬盘中读取出来放到内存中，再经过播放器进行转码</li>
-<li>进行音视频输出</li>
-</ul>
-</li>
-<li>你的同桌在另一个公司，也需要开发这么一套功能
-<ul>
-<li>从零开发</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>所有开发者遵循共同的一套规范
-<ul>
-<li>我们共同研发出一个功能和接口
-<ul>
-<li>有一个所但是我们都有要是的副本</li>
-</ul>
-</li>
-<li>我们都遵循一个规范
-<ul>
-<li>核心业务就是播放视频，输出音频做成一个公共的</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>下次谁需要这个功能谁就来直接拿着用</li>
-</ul>
-<h2 id="【4】常见的操作系统">【4】常见的操作系统</h2>
-<h3 id="（1）Windows平台">（1）Windows平台</h3>
-<ul>
-<li>Window7</li>
-<li>Windowxp</li>
-<li>Window 8</li>
-<li>Window 10</li>
-<li>Window 11</li>
-</ul>
-<h3 id="（2）Mac平台">（2）Mac平台</h3>
-<ul>
-<li>IOS系统</li>
-<li>intel</li>
-</ul>
-<h3 id="（3）Linux平台">（3）Linux平台</h3>
-<ul>
-<li>centos</li>
-<li>蓝鲸</li>
-<li>…</li>
-</ul>
-<h3 id="（4）Andoraid">（4）Andoraid</h3>
-<h3 id="（5）IOS">（5）IOS</h3>
-<h3 id="（6）鸿蒙">（6）鸿蒙</h3>
-<h2 id="【5】系统软件和操作软件的区别">【5】系统软件和操作软件的区别</h2>
-<h3 id="（1）什么是系统软件">（1）什么是系统软件</h3>
-<ul>
-<li>系统软件是就是建立在硬件至上的软件，负责调度整个硬件</li>
-<li>Window、MacOS、Linux</li>
-<li>功能包括调度计算机服务，读取文件，进程管理</li>
-</ul>
-<h3 id="（2）什么是操作软件">（2）什么是操作软件</h3>
-<h4 id="1-系统软件">[1]系统软件</h4>
-<ul>
-<li>系统自带的服务 网卡服务、文件管理器</li>
-</ul>
-<h4 id="2-应用软件">[2]应用软件</h4>
-<ul>
-<li>就是我们基于Window系统至上安装的其他软件</li>
-<li>QQ、微信、QQ音乐、网易云、WeGame</li>
-</ul>
-<h2 id="【6】计算机系统的三层架构">【6】计算机系统的三层架构</h2>
-<ul>
-<li>底层叫硬件层
-<ul>
-<li>所有操作都属于硬件</li>
-</ul>
-</li>
-<li>中层叫操作系统层
-<ul>
-<li>所有的硬件调度服务都属于操作系统</li>
-</ul>
-</li>
-<li>顶层叫做应用层
-<ul>
-<li>进行工作和开发的软件</li>
-</ul>
-</li>
-</ul>
-<h2 id="【7】平台">【7】平台</h2>
-<ul>
-<li>平台就是你的操作系统+硬件</li>
-<li>Linux平台
-<ul>
-<li>用在服务器上</li>
-<li>只需要一个 CPU+显卡+内存+硬盘</li>
-</ul>
-</li>
-<li>Window平台
-<ul>
-<li>Window系统 + CPU + …</li>
-</ul>
-</li>
-<li>MacOS平台
-<ul>
-<li>macOS + Mac相关硬件</li>
-</ul>
-</li>
-</ul>
-<h1>【四】为啥要学python</h1>
-<ul>
-<li>
-<p>跨平台性高，学习成本低</p>
-<ul>
-<li>电脑配置低也可以使用</li>
-</ul>
-</li>
-<li>
-<p>window上能用，Linux上也能用（不建议）…</p>
-</li>
-<li>
-<p>java需要java虚拟机</p>
-</li>
-</ul>
-<h1>【五】编程语言</h1>
-<h2 id="【1】编程语言的分类">【1】编程语言的分类</h2>
-<ul>
-<li>编程语言的发展史，最开始的编程语言肯定不是我们现在学习的python（编程语言就是人与计算机之间的交流）</li>
-</ul>
-<h3 id="第一类：机器语言">第一类：机器语言</h3>
-<ul>
-<li>机器语言就是计算机可以理解的语言，操作计算机的系统硬件</li>
-<li>机器语言是最低级的语言，因为只有计算机能看懂。</li>
-</ul>
-<h4 id="机器指令">机器指令</h4>
-<ul>
-<li>控制高低电频的变化组成一系列的指令就叫机器指令，能控制电脑硬件</li>
-</ul>
-<h4 id="如何写机器指令">如何写机器指令</h4>
-<ul>
-<li>首先你得必须记住计算机的全部指令及核心代码的含义</li>
-<li>在编写机器指令程序的时候需要自己处理每一条数据，以及数据随时可可能会发生的意外情况</li>
-<li>这个过程是一件及其繁琐且耗费经历的工作</li>
-<li>一般发生在源头厂家中，原头厂家调控硬件内部设备的时候会用得到</li>
-</ul>
-<h4 id="机器语言的示例">机器语言的示例</h4>
-<ul>
-<li>机器语言及其繁琐且难以记忆</li>
-</ul>
-```python
-'''指令部份的示例'''
- 0000 代表 加载（LOAD）
- 0001 代表 存储（STORE）
- ...
- 
-LOAD 0000  # 加载寄存器A
-STORE 0001 # 存储到寄存器B
-
-'''暂存器部份的示例'''
-0000 代表暂存器 A 
-0001 代表暂存器 B 
-...
-
-'''存储器部份的示例'''
-000000000000 代表地址为 0 的存储器
-000000000001 代表地址为 1 的存储器 
-000000010000 代表地址为 16 的存储器
-100000000000 代表地址为 2^11 的存储器
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 机器语言的优缺点</span><br><span class="line"></span><br><span class="line">- 优点：执行效率高，可以直接操作底层硬件</span><br><span class="line">- 缺点：开发效率低，学习成本高</span><br><span class="line">  - 跨平台性差，更换系统硬件就会导致机器指令失效</span><br><span class="line">  - 理解原码、反码、补码、位运算（ &amp; | ）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">底层单位数据的换算</span><br><span class="line"></span><br><span class="line"># 00000001 表示1字节，有256种排列方式，从0到255。</span><br><span class="line"></span><br><span class="line"># 八个字节表示一个 bytes</span><br><span class="line"># 8 字节 = 1 bytes</span><br><span class="line"># 1024 bytes = 1 kB</span><br><span class="line"># 1024 kb = 1 MB </span><br><span class="line"># 1024 mb = 1GB</span><br><span class="line"># 1024 GB = 1 TB</span><br><span class="line"># 1024 TB = 1 ZB</span><br></pre></td></tr></table></figure>
-
-<h3 id="第二类：汇编语言">第二类：汇编语言</h3>
-<ul>
-<li>汇编语言仍然可以直接操作底层硬件，但是美国人可以用一个字母或者一串字母来声明这串机器指令代表的含义</li>
-<li>但是对比与机器语言来书，汇编语言就是一种进步，一定程度上降低了开发成本</li>
-</ul>
-<h4 id="什么是汇编语言">什么是汇编语言</h4>
-<ul>
-<li>是用一个英文字母或者一串单词来代表机器语言的语言</li>
-</ul>
-<h4 id="示例">示例</h4>
-```python
-; hello.asm 
-section .data            		; 数据段声明
-    msg db "Hello, world!", 0xA ; 要输出的字符串
-    len equ $ - msg             ; 字串长度
-section .text            		; 代码段声明
-    global _start            	; 指定入口函数
-_start:                			; 在屏幕上显示一个字符串
-    mov edx, len            	; 参数三：字符串长度
-    mov ecx, msg            	; 参数二：要显示的字符串
-    mov ebx, 1            		; 参数一：文件描述符(stdout) 
-    mov eax, 4            		; 系统调用号(sys_write) 
-    int 0x80            		; 调用内核功能
-                    			; 退出程序
-    mov ebx, 0            		; 参数一：退出代码
-    mov eax, 1            		; 系统调用号(sys_exit) 
-    int 0x80            		; 调用内核功能
-```
-
-<h4 id="优缺点">优缺点</h4>
-<ul>
-<li>优点：执行效率高，直接操作底层硬件
-<ul>
-<li>操作灵活，简化了一些机械指令何以让我们快速实现代码编程</li>
-<li>可执行文件很小</li>
-</ul>
-</li>
-<li>缺点：开发效率底，也需要记住很多指令
-<ul>
-<li>发杂度很高，一些代码还是需要记住很多指令</li>
-<li>跨平台型很差，直接操作底层硬盘</li>
-</ul>
-</li>
-</ul>
-<h3 id="第三类：高级语言">第三类：高级语言</h3>
-<ul>
-<li>高级语言就是从人类的角度出发，用人的思维将人的语言转换为计算机可以识别的语言
-<ul>
-<li>可以通过人类的指令实现操作计算机等硬件</li>
-</ul>
-</li>
-<li>我们不需要考虑底层硬件而是直接操作系统</li>
-<li>更贴近与人类</li>
-</ul>
-<h4 id="高级语言的分类">高级语言的分类</h4>
-<ul>
-<li>
-<p>按照编译方式分为：编译型和解释型语言</p>
-<ul>
-<li>
-<p>第一种编译型语言：就是将源代码一次性翻译成目标代码，然后生成一个可执行文件</p>
-<ul>
-<li>下次执行代码只需要执行 翻译过后的文件即可</li>
-<li>如果我觉得代码中某些代码需要修改和完善，修改完代码以后就需要再重新编译</li>
-</ul>
-</li>
-<li>
-<p>比如：一次性将整篇文献翻译成汉语，直接使用</p>
-<ul>
-<li>下次如果不改动，直接使用翻译稿即可</li>
-<li>一旦发生改动。整篇文章重新翻译</li>
-</ul>
-</li>
-<li>
-<p>优缺点</p>
-<ul>
-<li>
-<p>优点：一次编译处处执行，只需要编译一次，下一次可以直接拿过来用，效率很高</p>
-<ul>
-<li>缺点：但是修改过后需要重新编译，跨平台性很差
-<ul>
-<li>Window系统上编译出来的可执行文件</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>编译型语言的代表：c，c++,c#,java</p>
-</li>
-</ul>
-</li>
-<li>
-<p>第二种解释型语言：解释性语言就是在执行代码的过程中，不是一次性变异而是用到哪里就编译到哪里</p>
-<ul>
-<li>一点一点的进行编译后执行</li>
-<li>比如说我们拿到一篇英文文献
-<ul>
-<li>翻译一段就用一段，用到哪就翻译到哪</li>
-<li>效率就变低了</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>优缺点</p>
-<ul>
-<li>优点：不需要改动就可以编译，开发效率高，跨平台性强</li>
-<li>缺点：执行效率变慢啦</li>
-</ul>
-</li>
-<li>
-<p>编译语言的代表：go，python</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="【2】开发语言的对比">【2】开发语言的对比</h2>
-<h3 id="（1）执行效率">（1）执行效率</h3>
-<ul>
-<li>机器语言</li>
-<li>汇编语言</li>
-<li>高级语言
-<ul>
-<li>编译型</li>
-<li>解释型</li>
-</ul>
-</li>
-</ul>
-<h3 id="（2）开发效率">（2）开发效率</h3>
-<ul>
-<li>高级语言
-<ul>
-<li>解释型</li>
-<li>编译型</li>
-</ul>
-</li>
-<li>汇编型</li>
-<li>机器语言</li>
-</ul>
-<h3 id="（3）跨平台性">（3）跨平台性</h3>
-<ul>
-<li>高级语言
-<ul>
-<li>解释型</li>
-<li>编译型</li>
-</ul>
-</li>
-<li>汇编型</li>
-<li>机器语言</li>
-</ul>
-<h1>【六】python语言</h1>
-<h2 id="【1】创建人">【1】创建人</h2>
-<ul>
-<li>吉多·范罗苏姆（Guido van Rossum）。（俗称龟叔）</li>
-</ul>
-<h2 id="【2】名字的由来">【2】名字的由来</h2>
-<ul>
-<li>Python这个名字，来自Guido所挚爱的电视剧《Monty Python’s Flying Circus》，他希望这个新的叫做Python的语言，能符合他的理想：</li>
-<li>创造一种C和shell之间，语法能够像shell一样简洁，易学易用、可拓展性强，同时兼顾C的强大功能。</li>
-</ul>
-<h2 id="【3】全球语言排行榜">【3】全球语言排行榜</h2>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.tiobe.com/tiobe-index/">TIOBE Index - TIOBE</a></li>
-</ul>
-<p><img src="http://192.168.1.96:1314/d/Python%E5%85%A8%E6%A0%88%E8%AE%B2%E8%AF%BE%E8%B5%84%E6%BA%90/Python%E5%85%A8%E6%A0%8829%E6%9C%9F/%E3%80%901.0%E3%80%91Python/day02/%E7%AC%94%E8%AE%B0/day02.assets/image-20240326103955978.png" alt="image-20240326103955978"></p>
-<h2 id="【4】Python语言的应用领域">【4】Python语言的应用领域</h2>
-<ul>
-<li>人工智能、数据分析、爬虫、金融量化、云计算、WEB开发、自动化运维/测试、游戏开发、网络服务、图像处理等众多领域。</li>
-<li>图像处理比如人脸识别</li>
-<li>数据分析</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/dream-ze/p/17580119.html">【补充】Python全栈开发可从事方向 - Chimengmeng - 博客园 (cnblogs.com)</a></p>
-<h2 id="【5】国内大厂都在用">【5】国内大厂都在用</h2>
-<ul>
-<li>目前业内几乎所有大中型互联网企业都在使用Python
-<ul>
-<li>Youtube、Dropbox、BT、Quora（中国知乎）、豆瓣、知乎、Google、Yahoo!、Facebook、NASA、百度、腾讯、汽车之家、美团等。</li>
-</ul>
-</li>
-</ul>
-<h2 id="【6】Python解释器的发展史">【6】Python解释器的发展史</h2>
-<ul>
-<li>1989年，Guido开始写Python语言的编译器。</li>
-<li>1991年，第一个Python编译器诞生。
-<ul>
-<li>它是用C语言实现的，并能够调用C语言的库文件。</li>
-<li>从一出生，Python已经具有了：类，函数，异常处理，包含表和词典在内的核心数据类型，以及模块为基础的拓展系统。</li>
-</ul>
-</li>
-<li>Python 2.7 - July 3, 2010</li>
-<li>Python 3.6 - 2016-12-23 发布python3.6.0版</li>
-<li>Python3.10版本我们学</li>
-<li>最新版本的解释器不稳定存在bug</li>
-</ul>
-<h2 id="【7】Python的解释器的种类">【7】Python的解释器的种类</h2>
-<h3 id="（1）Cpython解释器">（1）Cpython解释器</h3>
-<ul>
-<li>基于C语言开发的解释器版本</li>
-<li>我们学习使用的解释器就是基于C语言开发出来的CPython解释器</li>
-<li>底层源码都是C语言，如果从Python代码开源码，看不到C代码</li>
-<li>从Python解释器的官网 GitHub</li>
-</ul>
-<h3 id="（2）jpython">（2）jpython</h3>
-<ul>
-<li>基于Java写的Python解释器，没人用</li>
-</ul>
-<h3 id="（3）ipython">（3）ipython</h3>
-<ul>
-<li>可以进行交互的解释器版本呢</li>
-</ul>
-
-      
+    <div class="landing-more">
+      <a href="/archives/">查看全部文章 →</a>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/10/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/10/hello-world/" class="post-title-link" itemprop="url">hello-world</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2025-10-10 15:23:30" itemprop="dateCreated datePublished" datetime="2025-10-10T15:23:30+08:00">2025-10-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-10-15 11:52:37" itemprop="dateModified" datetime="2025-10-15T11:52:37+08:00">2025-10-15</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span>
-  </nav>
-
+  </section>
 
 
           </div>
@@ -1614,7 +382,7 @@ _start:                			; 在屏幕上显示一个字符串
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">坤</p>
+  <p class="site-author-name" itemprop="name">Aurora</p>
   <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -1662,7 +430,7 @@ _start:                			; 在屏幕上显示一个字符串
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">坤</span>
+  <span class="author" itemprop="copyrightHolder">Aurora</span>
 </div>
   <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

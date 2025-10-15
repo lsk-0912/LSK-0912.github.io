@@ -24,12 +24,12 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="BBS项目之表分析（模仿博客园的项目）">
 <meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/BBS%E9%A1%B9%E7%9B%AE%E4%B9%8B%E8%A1%A8%E5%88%86%E6%9E%90%EF%BC%88%E6%A8%A1%E4%BB%BF%E5%8D%9A%E5%AE%A2%E5%9B%AD%E7%9A%84%E9%A1%B9%E7%9B%AE%EF%BC%89/index.html">
-<meta property="og:site_name" content="坤博客">
+<meta property="og:site_name" content="Aurora博客">
 <meta property="og:description" content="BBS项目之表分析（模仿博客园的项目） 【一】分析功能 【1】用户功能   登入和注册功能   修改密码，手机号，邮箱，等功能   注销账号功能   退出登入功能   收藏文章功能   【2】文章分享平台  添加文章功能 修改文章功能 删除文章功能 点赞和点踩功能 评论功能  【二】表分析 【1】用户表 【2】个人站点表（就是发文后台）  模仿这个写：https:&#x2F;&#x2F;www.cnblogs.com">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
-<meta property="article:modified_time" content="2025-10-15T08:19:13.392Z">
-<meta property="article:author" content="坤">
+<meta property="article:modified_time" content="2025-10-15T08:41:50.475Z">
+<meta property="article:author" content="Aurora">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
 
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>BBS项目之表分析（模仿博客园的项目） | 坤博客</title>
+  <title>BBS项目之表分析（模仿博客园的项目） | Aurora博客</title>
   
 
 
@@ -97,7 +97,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">坤博客</h1>
+      <h1 class="site-title">Aurora博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -155,12 +155,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
+      <meta itemprop="name" content="Aurora">
       <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
+      <meta itemprop="name" content="Aurora博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:41:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -384,7 +384,7 @@
 <li>
 ```mysql
     create database BBS_data;
-    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  - 会报错</span><br><span class="line"></span><br><span class="line">    - 解决报错</span><br><span class="line">      - 方法一：打补丁安装pymysql</span><br><span class="line">      - 方法二：直接安装mysqlclient	</span><br><span class="line"></span><br><span class="line">- 创建APP</span><br><span class="line">  - user用户</span><br><span class="line">  - article文章</span><br><span class="line">  - blog个人站点</span><br><span class="line">  - backend管理端</span><br><span class="line">- 创建的APP一定加载到settings.py的INSTALLED_APPS中</span><br><span class="line"></span><br><span class="line">## 【二】配置Django项目的settings</span><br><span class="line"></span><br><span class="line">- 创建一个静态文件&#x27;static&#x27;</span><br><span class="line"></span><br><span class="line">- 配置路径</span><br><span class="line"></span><br><span class="line">- &#123;% raw %&#125;```python</span><br><span class="line">  STATIC_URL = &#x27;static/&#x27;</span><br><span class="line">  import os</span><br><span class="line">  STATICFILES_DIRS = [</span><br><span class="line">      os.path.join(BASE_DIR, &#x27;static&#x27;)</span><br><span class="line">  ]</span><br></pre></td></tr></table></figure>
+    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  - 会报错</span><br><span class="line"></span><br><span class="line">    - 解决报错</span><br><span class="line">      - 方法一：打补丁安装pymysql</span><br><span class="line">      - 方法二：直接安装mysqlclient	</span><br><span class="line"></span><br><span class="line">- 创建APP</span><br><span class="line">  - user用户</span><br><span class="line">  - article文章</span><br><span class="line">  - blog个人站点</span><br><span class="line">  - backend管理端</span><br><span class="line">- 创建的APP一定加载到settings.py的INSTALLED_APPS中</span><br><span class="line"></span><br><span class="line">## 【二】配置Django项目的settings</span><br><span class="line"></span><br><span class="line">- 创建一个静态文件&#x27;static&#x27;</span><br><span class="line"></span><br><span class="line">- 配置路径</span><br><span class="line"></span><br><span class="line">- &#123;% raw %&#125;```python</span><br><span class="line">  STATIC_URL = &#x27;static/&#x27;</span><br><span class="line">  import os</span><br><span class="line">  STATICFILES_DIRS = [</span><br><span class="line">      os.path.join(BASE_DIR, &#x27;static&#x27;)</span><br><span class="line">  ]</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -538,12 +538,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/10/15/Django%E6%A1%86%E6%9E%B6Form%E7%BB%84%E4%BB%B6%E4%B9%8B%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0%EF%BC%88Hook%EF%BC%89/" rel="prev" title="Django框架Form组件之钩子函数（Hook）">
-      <i class="fa fa-chevron-left"></i> Django框架Form组件之钩子函数（Hook）
+    <a href="/2025/10/15/Django%E5%8E%9F%E7%94%9F%E6%93%8D%E4%BD%9Cmysql/" rel="prev" title="Django原生操作mysql">
+      <i class="fa fa-chevron-left"></i> Django原生操作mysql
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/10/15/CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E5%92%8CAuth%E6%A8%A1%E5%9D%97/" rel="next" title="CSRF跨站请求和Auth模块">
-      CSRF跨站请求和Auth模块 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/15/Ajax%E6%93%8D%E4%BD%9C/" rel="next" title="Ajax操作">
+      Ajax操作 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -609,7 +609,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">坤</p>
+  <p class="site-author-name" itemprop="name">Aurora</p>
   <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -657,7 +657,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">坤</span>
+  <span class="author" itemprop="copyrightHolder">Aurora</span>
 </div>
   <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

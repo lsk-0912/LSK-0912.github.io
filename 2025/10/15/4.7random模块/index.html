@@ -24,12 +24,12 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="4.7random模块">
 <meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/4.7random%E6%A8%A1%E5%9D%97/index.html">
-<meta property="og:site_name" content="坤博客">
+<meta property="og:site_name" content="Aurora博客">
 <meta property="og:description" content="random模块  随机生成整数&#x2F;小数&#x2F;指定列表中某一个元素 import random  【一】随机生成小数 【1】默认区间的小数是区间0-1之间的小数  print(random.random())  【2】指定区间 给定区间内的小数(uniform)  print（random.uniform(1,3)）  【二】随机生成小数（randint） 【1】指定区间的整数 给定区间内的整数 pri">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
-<meta property="article:modified_time" content="2025-10-15T08:19:13.245Z">
-<meta property="article:author" content="坤">
+<meta property="article:modified_time" content="2025-10-15T08:41:50.256Z">
+<meta property="article:author" content="Aurora">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
 
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>4.7random模块 | 坤博客</title>
+  <title>4.7random模块 | Aurora博客</title>
   
 
 
@@ -97,7 +97,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">坤博客</h1>
+      <h1 class="site-title">Aurora博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -155,12 +155,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
+      <meta itemprop="name" content="Aurora">
       <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
+      <meta itemprop="name" content="Aurora博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:41:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,7 +219,7 @@
 ```python
 print(random.randrange(1,10,2))#1 3 5 7 9
 print(random,randrange(1,10,3))#1 4 7
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【3】随机返回值</span><br><span class="line"></span><br><span class="line">### （1）返回一个元素(choice)</span><br><span class="line"></span><br><span class="line">- 给定一个可迭代类型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line">num_list = [i for i in range(1, 10)]</span><br><span class="line">num_list += [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;]</span><br><span class="line">print(random.choice(num_list))#输出：随机值</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【3】随机返回值</span><br><span class="line"></span><br><span class="line">### （1）返回一个元素(choice)</span><br><span class="line"></span><br><span class="line">- 给定一个可迭代类型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line">num_list = [i for i in range(1, 10)]</span><br><span class="line">num_list += [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;]</span><br><span class="line">print(random.choice(num_list))#输出：随机值</span><br></pre></td></tr></table></figure>
 
 <h3 id="（2）一次性返回多个值-k">（2）一次性返回多个值(k=)</h3>
 <ul>
@@ -229,7 +229,7 @@ print(random,randrange(1,10,3))#1 4 7
 num_list = [i for i in range(1, 10)]
 num_list += ['a', 'b', 'c', 'd']
 print(random.choice(num_list))#输出：随机返回一个值+里面的也算
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 可以指定关键字k指定返回的列表中的元素个数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">#默认是返回一个元素的列表</span><br><span class="line">print(random.choices(num_list))</span><br><span class="line"># 可以指定关键字 k 指定返回的列表中的元素个数</span><br><span class="line">print(random.choices(num_list, k=3))</span><br><span class="line">print(random.sample(num_list, 3))#这两个一样</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 可以指定关键字k指定返回的列表中的元素个数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">#默认是返回一个元素的列表</span><br><span class="line">print(random.choices(num_list))</span><br><span class="line"># 可以指定关键字 k 指定返回的列表中的元素个数</span><br><span class="line">print(random.choices(num_list, k=3))</span><br><span class="line">print(random.sample(num_list, 3))#这两个一样</span><br></pre></td></tr></table></figure>
 
 <h2 id="【4】打乱顺序-shuffle">【4】打乱顺序(shuffle)</h2>
 ```python
@@ -239,7 +239,7 @@ print(num_list)#[1, 2, 3, 4, 5, 6, 7, 8, 9]
 # 没有返回值，影响到的是原来的列表
 random.shuffle(num_list)
 print(num_list)#[4, 7, 3, 1, 2, 9, 6, 8, 5]
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【5】随机生成验证码</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 随机大小写字母 + 随机数字</span><br><span class="line"># 补充知识点 chr(数字) ---&gt; 返回指定ASCII码对应的字符</span><br><span class="line"># 做一个能生成 6 位的验证码</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_verify_code(n):</span><br><span class="line">    code = &#x27;&#x27;</span><br><span class="line">    for i in range(n):</span><br><span class="line">        random_int = str(random.randint(0, 9))  # 0-9之间的整数</span><br><span class="line">        random_upper = chr(random.randint(65, 90))  # A-Z之间的字母</span><br><span class="line">        random_lower = chr(random.randint(97, 122))  # a-z之间的字母</span><br><span class="line">        temp = random.choice([random_int, random_upper, random_lower])</span><br><span class="line">        code += temp</span><br><span class="line">    return code</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">res = get_verify_code(6)</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【5】随机生成验证码</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 随机大小写字母 + 随机数字</span><br><span class="line"># 补充知识点 chr(数字) ---&gt; 返回指定ASCII码对应的字符</span><br><span class="line"># 做一个能生成 6 位的验证码</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_verify_code(n):</span><br><span class="line">    code = &#x27;&#x27;</span><br><span class="line">    for i in range(n):</span><br><span class="line">        random_int = str(random.randint(0, 9))  # 0-9之间的整数</span><br><span class="line">        random_upper = chr(random.randint(65, 90))  # A-Z之间的字母</span><br><span class="line">        random_lower = chr(random.randint(97, 122))  # a-z之间的字母</span><br><span class="line">        temp = random.choice([random_int, random_upper, random_lower])</span><br><span class="line">        code += temp</span><br><span class="line">    return code</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">res = get_verify_code(6)</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -259,12 +259,12 @@ print(num_list)#[4, 7, 3, 1, 2, 9, 6, 8, 5]
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/10/15/5.0%20BeautifulSoup%E6%A8%A1%E5%9D%97%E4%B9%8B%E5%9B%9B%E7%A7%8D%E5%AF%B9%E8%B1%A1/" rel="prev" title="5.0 BeautifulSoup模块之四种对象">
-      <i class="fa fa-chevron-left"></i> 5.0 BeautifulSoup模块之四种对象
+    <a href="/2025/10/15/4.8logging%E6%A8%A1%E5%9D%97/" rel="prev" title="4.8logging模块">
+      <i class="fa fa-chevron-left"></i> 4.8logging模块
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/10/15/4.9hashlib%E6%A8%A1%E5%9D%97/" rel="next" title="4.9hashlib模块">
-      4.9hashlib模块 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/15/4.6os%E6%A8%A1%E5%9D%97/" rel="next" title="4.6os模块">
+      4.6os模块 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -330,7 +330,7 @@ print(num_list)#[4, 7, 3, 1, 2, 9, 6, 8, 5]
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">坤</p>
+  <p class="site-author-name" itemprop="name">Aurora</p>
   <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -378,7 +378,7 @@ print(num_list)#[4, 7, 3, 1, 2, 9, 6, 8, 5]
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">坤</span>
+  <span class="author" itemprop="copyrightHolder">Aurora</span>
 </div>
   <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

@@ -24,12 +24,12 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="5.0BeautifulSoup模块介绍(1)">
 <meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/5.0BeautifulSoup%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D(1)/index.html">
-<meta property="og:site_name" content="坤博客">
+<meta property="og:site_name" content="Aurora博客">
 <meta property="og:description" content="BeautifulSoup模块介绍 【一】BeautifulSoup模块 【1】介绍  BeautifulSoup是python的一个库 主要的功能就是从网页上抓取数据  【2】官方介绍   Beautiful Soup提供一些简单的、python式的函数用来处理导航、搜索、修改分析树等功能   它是一个工具箱，通过解析文档为用户提供需要抓取的数据，因为简单，所以不需要多少代码就可以写出一个完整的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
-<meta property="article:modified_time" content="2025-10-15T08:19:13.260Z">
-<meta property="article:author" content="坤">
+<meta property="article:modified_time" content="2025-10-15T08:41:50.286Z">
+<meta property="article:author" content="Aurora">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
 
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>5.0BeautifulSoup模块介绍(1) | 坤博客</title>
+  <title>5.0BeautifulSoup模块介绍(1) | Aurora博客</title>
   
 
 
@@ -97,7 +97,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">坤博客</h1>
+      <h1 class="site-title">Aurora博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -155,12 +155,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
+      <meta itemprop="name" content="Aurora">
       <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
+      <meta itemprop="name" content="Aurora博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:41:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -236,7 +236,7 @@
 <h2 id="【二】安装BeautifulSoup4模块">【二】安装BeautifulSoup4模块</h2>
 ```shell
 pip install BeautifulSoup4
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【三】解析器的介绍</span><br><span class="line"></span><br><span class="line">### 【1】导入模块</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from bs4 import BeautifulSoup</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【三】解析器的介绍</span><br><span class="line"></span><br><span class="line">### 【1】导入模块</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from bs4 import BeautifulSoup</span><br></pre></td></tr></table></figure>
 
 <h3 id="【2】解析器">【2】解析器</h3>
 <ul>
@@ -253,7 +253,7 @@ pip install BeautifulSoup4
 </ul>
 ```python
 soup = BeautifulSoup("页面源码","解析器类型")
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【4】解析器的优缺点</span><br><span class="line"></span><br><span class="line">| 解析器           | 使用方法                                                     | 优势                                                    | 劣势                                            |</span><br><span class="line">| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------- | ----------------------------------------------- |</span><br><span class="line">| Python标准库     | BeautifulSoup(markup, &quot;html.parser&quot;)                         | Python的内置标准库 执行速度适中 文档容错能力强          | Python 2.7.3 or 3.2.2)前 的版本中文档容错能力差 |</span><br><span class="line">| lxml HTML 解析器 | BeautifulSoup(markup, &quot;lxml&quot;)                                | 速度快 文档容错能力强                                   | 需要安装C语言库                                 |</span><br><span class="line">| lxml XML 解析器  | BeautifulSoup(markup, [&quot;lxml&quot;, &quot;xml&quot;]) 或BeautifulSoup(markup, &quot;xml&quot;) | 速度快 唯一支持XML的解析器                              | 需要安装C语言库                                 |</span><br><span class="line">| html5lib         | BeautifulSoup(markup, &quot;html5lib&quot;)                            | 最好的容错性 以浏览器的方式解析文档 生成HTML5格式的文档 | 速度慢 不依赖外部扩展                           |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【5】生成soup对象</span><br><span class="line"></span><br><span class="line">- 从一个soup对象开始，以下两种方式生成一个soup对象</span><br><span class="line"></span><br><span class="line">#### （1）方式一</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line"></span><br><span class="line"># 指定HTML源码文件，传入文件源码</span><br><span class="line">soup = BeautifulSoup(open(&quot;index.html&quot;))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【4】解析器的优缺点</span><br><span class="line"></span><br><span class="line">| 解析器           | 使用方法                                                     | 优势                                                    | 劣势                                            |</span><br><span class="line">| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------- | ----------------------------------------------- |</span><br><span class="line">| Python标准库     | BeautifulSoup(markup, &quot;html.parser&quot;)                         | Python的内置标准库 执行速度适中 文档容错能力强          | Python 2.7.3 or 3.2.2)前 的版本中文档容错能力差 |</span><br><span class="line">| lxml HTML 解析器 | BeautifulSoup(markup, &quot;lxml&quot;)                                | 速度快 文档容错能力强                                   | 需要安装C语言库                                 |</span><br><span class="line">| lxml XML 解析器  | BeautifulSoup(markup, [&quot;lxml&quot;, &quot;xml&quot;]) 或BeautifulSoup(markup, &quot;xml&quot;) | 速度快 唯一支持XML的解析器                              | 需要安装C语言库                                 |</span><br><span class="line">| html5lib         | BeautifulSoup(markup, &quot;html5lib&quot;)                            | 最好的容错性 以浏览器的方式解析文档 生成HTML5格式的文档 | 速度慢 不依赖外部扩展                           |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【5】生成soup对象</span><br><span class="line"></span><br><span class="line">- 从一个soup对象开始，以下两种方式生成一个soup对象</span><br><span class="line"></span><br><span class="line">#### （1）方式一</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line"></span><br><span class="line"># 指定HTML源码文件，传入文件源码</span><br><span class="line">soup = BeautifulSoup(open(&quot;index.html&quot;))</span><br></pre></td></tr></table></figure>
 
 <h4 id="2-方式二">(2)方式二</h4>
 ````python
@@ -316,8 +316,8 @@ print(a_href)
       <i class="fa fa-chevron-left"></i> 5.0BeautifulSoup模块介绍
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/10/15/4.8logging%E6%A8%A1%E5%9D%97/" rel="next" title="4.8logging模块">
-      4.8logging模块 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/15/5.0%20BeautifulSoup%E6%A8%A1%E5%9D%97%E4%B9%8B%E5%9B%9B%E7%A7%8D%E5%AF%B9%E8%B1%A1/" rel="next" title="5.0 BeautifulSoup模块之四种对象">
+      5.0 BeautifulSoup模块之四种对象 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -383,7 +383,7 @@ print(a_href)
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">坤</p>
+  <p class="site-author-name" itemprop="name">Aurora</p>
   <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -431,7 +431,7 @@ print(a_href)
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">坤</span>
+  <span class="author" itemprop="copyrightHolder">Aurora</span>
 </div>
   <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

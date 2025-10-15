@@ -22,12 +22,12 @@
 
   <meta name="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
 <meta property="og:type" content="website">
-<meta property="og:title" content="坤博客">
+<meta property="og:title" content="Aurora博客">
 <meta property="og:url" content="https://aurora-lsk.asia/page/10/index.html">
-<meta property="og:site_name" content="坤博客">
+<meta property="og:site_name" content="Aurora博客">
 <meta property="og:description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:author" content="坤">
+<meta property="article:author" content="Aurora">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://aurora-lsk.asia/page/10/">
@@ -43,7 +43,7 @@
   };
 </script>
 
-  <title>坤博客</title>
+  <title>Aurora博客</title>
   
 
 
@@ -94,7 +94,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">坤博客</h1>
+      <h1 class="site-title">Aurora博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -141,2150 +141,236 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content index landing-home">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.2%E7%94%9F%E6%88%90%E5%99%A8/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
+  <style>
+    :root {
+      --bg: #0b1022;
+      --surface: #0f162e;
+      --neon1: #00f3ff;
+      --neon2: #8b00ff;
+      --text: #e8f6ff;
+      --muted: #93a0b3;
+    }
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/4.2%E7%94%9F%E6%88%90%E5%99%A8/" class="post-title-link" itemprop="url">4.2生成器</a>
-        </h2>
+    /* 场景容器：星空 + 霓虹雾霭 + 未来感网格地面 */
+    .landing-scene {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      padding: 70px 28px 90px;
+      background: radial-gradient(1200px 600px at 10% 10%, #0d1327 0, #0d1327 60%, #080b18 100%);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    /* 星屑层 */
+    .landing-scene::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(#fff 1px, transparent 2px),
+        radial-gradient(#fff 1px, transparent 2px);
+      background-size: 3px 3px, 4px 4px;
+      background-position: 0 0, 20px 30px;
+      opacity: .08;
+      animation: starDrift 60s linear infinite;
+    }
+    /* 霓虹雾霭层 */
+    .landing-scene::after {
+      content: '';
+      position: absolute; inset: -40% -10% -40% -10%;
+      background: conic-gradient(from 0deg at 50% 50%, var(--neon1), var(--neon2), var(--neon1));
+      filter: blur(90px) saturate(120%);
+      opacity: .25;
+      transform: translateZ(0);
+      pointer-events: none;
+    }
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
+    @keyframes starDrift {
+      0%   { background-position: 0 0, 20px 30px; }
+      100% { background-position: -3000px -2000px, -1500px -1200px; }
+    }
 
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
+    /* 地面网格（赛博感） */
+    .grid-floor {
+      position: absolute; left: 0; right: 0; bottom: -35%; height: 360px;
+      background-image:
+        linear-gradient(var(--neon1)20, transparent 20),
+        linear-gradient(90deg, var(--neon1)20, transparent 20);
+      background-size: 42px 42px, 42px 42px;
+      opacity: .18;
+      transform: perspective(900px) rotateX(60deg) scale(1.2);
+      animation: gridScroll 12s linear infinite;
+      filter: drop-shadow(0 0 12px rgba(0,243,255,.25));
+    }
+    @keyframes gridScroll {
+      from { background-position: 0 0, 0 0; }
+      to   { background-position: 0 42px, 42px 0; }
+    }
 
-          
+    /* Hero 内容 */
+    .landing-hero { position: relative; z-index: 2; text-align: center; color: var(--text); }
+    .landing-hero h1 {
+      font-size: 2.6rem; margin: 0 0 12px;
+      letter-spacing: .5px;
+      text-shadow: 0 0 6px rgba(0,243,255,.6), 0 0 16px rgba(139,0,255,.35);
+    }
+    .landing-hero p { font-size: 1.05rem; color: var(--muted); margin: 0 0 24px; }
+    .landing-cta { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .landing-cta a { text-decoration: none; }
+    .landing-cta .btn-primary {
+      padding: 10px 18px; border-radius: 10px;
+      background: linear-gradient(90deg, var(--neon1), var(--neon2));
+      color: #021019; font-weight: 600;
+      box-shadow: 0 0 22px rgba(0,243,255,.35), inset 0 0 8px rgba(255,255,255,.25);
+    }
+    .landing-cta .btn-secondary {
+      padding: 10px 18px; border-radius: 10px;
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(8px);
+    }
 
-        </div>
-      </header>
+    .landing-section { margin-top: 28px; }
+    .landing-section h2 { font-size: 1.3rem; margin-bottom: 12px; }
+    .landing-section h2::after {
+      content: ''; display: inline-block; width: 36px; height: 10px; margin-left: 8px;
+      background: linear-gradient(90deg, var(--neon1), var(--neon2));
+      filter: blur(.6px); opacity: .6; border-radius: 12px;
+    }
+    .landing-more { text-align: center; margin-top: 10px; }
+    .landing-more a { text-decoration: none; color: var(--neon1); }
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+    /* 最近列表（霓虹点阵风） */
+    .recent-list { display: grid; grid-template-columns: 1fr; gap: 6px; }
+    .recent-item {
+      padding: 12px 14px; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: 0 0 14px rgba(0,0,0,.05);
+    }
+    .recent-title { font-size: 1.05rem; margin: 0 0 4px; }
+    .recent-title a { text-decoration: none; color: inherit; }
+    .recent-meta { color: #7f8aa3; font-size: .88rem; }
+  </style>
 
-      
-          <h1>【一】生成器</h1>
-<h2 id="【1】什么是生成器">【1】什么是生成器</h2>
-<ul>
-<li>在py中生成器是一种特殊的迭代器，可以在需要时生成数据，不必提前从内存中生成并储存整个数据集</li>
-<li>通过生成器，可以逐个生成序列中的元素，而无需一次性生成整个序列</li>
-<li>生成器在处理大数据时，具有节约内存，提高效率的特点</li>
-</ul>
-<h2 id="【2】生成器的创建方式">【2】生成器的创建方式</h2>
-<h3 id="【1】生成器的表达式">【1】生成器的表达式</h3>
-<ul>
-<li>使用列表推到式时，可以将列表推导式的方括号改为圆括号，即可创建一个生成器</li>
-</ul>
-```python
-#推导式生成列表
-data_list = [i for i in range(6)]
-print(data_list)#[0, 1, 2, 3, 4, 5]
-
-
-#将列表改成元祖，看起来像元祖推导式，其实是一个生成器对象
-data_list = (i for i in range(6))  # 这个可不是元组，是生成器的表达式
-print(data_list)#<generator object <genexpr> at 0x000001D8A3A48350>
-#生成器对象可以强转成列表
-print(list(data_list))#[0, 1, 2, 3, 4, 5]
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 生成器的保存算法（for循环遍历）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">data_list = (i for i in range(6))</span><br><span class="line">for x in data_list:</span><br><span class="line">    print(x)</span><br><span class="line">#输出 0</span><br><span class="line"># 1</span><br><span class="line"># 2</span><br><span class="line"># 3</span><br><span class="line"># 4</span><br><span class="line"># 5</span><br></pre></td></tr></table></figure>
-
-<h3 id="【2】yield关键字">【2】yield关键字</h3>
-<ul>
-<li>使用yield关键字定义一个生成器函数时，生成器函数中的yield语句会暂停函数执行并返回一个值，下一次调用该函数时会继续执行并返回下一个值。</li>
-</ul>
-```python
-def add(i):
-    yield i
-
-# add(6) 会进入到add函数将原本的函数对象转换为生成器对象
-res = add(6)  # <generator object add at 0x000002AD9BBDCBA0>
-# 想取值只能是 next 迭代取值
-print(res.__next__())
-``````
-
-<p>python<br>
-def add(i):<br>
-# i = 1<br>
-while True:<br>
-yield i # 第一次 next<br>
-res = add(1)<br>
-print(res)  # &lt;generator object add at 0x000002810B67CBA0&gt;<br>
-print(next(res))  # 1<br>
-print(next(res))  # 1<br>
-res = add(2)<br>
-print(next(res))  # 2<br>
-print(next(res))  # 2</p>
-```
-
-
-
-## 【3】生成器案例
-
-- 生成器传值.send()
-
-### [1]调用函数
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line">python</span><br><span class="line">def eater():</span><br><span class="line">    print(&#x27;开始吃饭 ovo &#x27;)</span><br><span class="line">    while True:</span><br><span class="line">        food = yield</span><br><span class="line">        print(f&#x27;得到的食物是 :&gt;&gt;&gt;&gt; &#123;food&#125;, 开始吃饭喽 :&gt;&gt;&gt;&gt; &#123;food&#125;&#x27;)</span><br><span class="line">        </span><br><span class="line">res = eater()</span><br><span class="line">print(res)  # &lt;generator object eater at 0x000002094832AAC0&gt;</span><br><span class="line">print(res.__next__())</span><br><span class="line"># 打印开始吃饭</span><br><span class="line"># None   原因就是在生成器内部的 yield 中没有返回值</span><br><span class="line">print(res.__next__())</span><br><span class="line"># 打印 得到的食物是 :&gt;&gt;&gt;&gt; None, 开始吃饭喽 :&gt;&gt;&gt;&gt; None</span><br><span class="line"># None  原因就是在生成器内部的走完了上面的 又回到了 yield 中结果 yield 没有返回值</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### [2]向生成器中传值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>python<br>
-def eater():<br>
-print('开始吃饭 ovo ‘)<br>
-while True:<br>
-food = yield<br>
-print(f’得到的食物是 :&gt;&gt;&gt;&gt; {food}, 开始吃饭喽 :&gt;&gt;&gt;&gt; {food}’)</p>
-<p>res = eater()<br>
-print(res)  # &lt;generator object eater at 0x00000227125F67A0&gt;<br>
-print(res.<strong>next</strong>())<br>
-#开始吃饭 ovo<br>
-#None<br>
-res.send(“鱼香肉丝”)  # 想yield 传值并且让生成器向下走一下<br>
-#得到的食物是 :&gt;&gt;&gt;&gt; 鱼香肉丝, 开始吃饭喽 :&gt;&gt;&gt;&gt; 鱼香肉丝<br>
-print(res.<strong>next</strong>())</p>
-<h1>得到的食物是 :&gt;&gt;&gt;&gt; None, 开始吃饭喽 :&gt;&gt;&gt;&gt; None</h1>
-<h1>None</h1>
-<p>print(res.send(“宫保鸡丁”))</p>
-<h1>得到的食物是 :&gt;&gt;&gt;&gt; None, 开始吃饭喽 :&gt;&gt;&gt;&gt; None</h1>
-<h1>None</h1>
-<p>print(res.send(“宫保鸡丁”))</p>
-<h1>得到的食物是 :&gt;&gt;&gt;&gt; None, 开始吃饭喽 :&gt;&gt;&gt;&gt; None</h1>
-<h1>None</h1>
-```
-
-
-
-## 【4】装饰器+生成器
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line">python</span><br><span class="line">def init_iter(func):</span><br><span class="line">    # func 我的生成器函数</span><br><span class="line">    def inner(*args, **kwargs):</span><br><span class="line">        # g 得到的生成器对象</span><br><span class="line">        g = func(*args, **kwargs)</span><br><span class="line">        # 调用自己生成器向下走</span><br><span class="line">        next(g)</span><br><span class="line">        # 走回来的返回值返回出去</span><br><span class="line">        return g</span><br><span class="line"></span><br><span class="line">    return inner</span><br><span class="line"></span><br><span class="line">@init_iter</span><br><span class="line">def eater():</span><br><span class="line">    print(&#x27;开始吃饭 ovo &#x27;)</span><br><span class="line">    while True:</span><br><span class="line">        food = yield</span><br><span class="line">        print(f&#x27;得到的食物是 :&gt;&gt;&gt;&gt; &#123;food&#125;, 开始吃饭喽 :&gt;&gt;&gt;&gt; &#123;food&#125;&#x27;)</span><br><span class="line"></span><br><span class="line">res = eater()</span><br><span class="line">res.send(&quot;鱼香肉丝&quot;)</span><br><span class="line">res.send(&quot;宫保鸡丁&quot;)</span><br><span class="line">&#123;% raw %&#125;```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【5】生成器内部修改可变数据类型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>python<br>
-def init_iter(func):<br>
-# func 我的生成器函数<br>
-def inner(*args, **kwargs):<br>
-# g 得到的生成器对象<br>
-g = func(*args, **kwargs)<br>
-# 调用自己生成器向下走<br>
-next(g)<br>
-# 走回来的返回值返回出去<br>
-return g</p>
-<pre><code>return inner
-</code></pre>
-<p>@init_iter<br>
-def eater():<br>
-print(‘开始吃饭 ovo ‘)<br>
-food_list = []<br>
-while True:<br>
-food = yield<br>
-food_list.append(food)<br>
-print(f’得到的食物是 :&gt;&gt;&gt;&gt; {food}, 开始吃饭喽 :&gt;&gt;&gt;&gt; {food}’)<br>
-print(f’当前后厨已经做好了 :&gt;&gt;&gt;&gt; {food_list}’)</p>
-<p>res = eater()<br>
-res.send(“鱼香肉丝”)<br>
-res.send(“宫保鸡丁”)</p>
-<h1>鱼香肉丝            1  1</h1>
-<h1>宫保鸡丁            1  1</h1>
-<h1>宫保鸡丁 + 鱼香肉丝  1  1</h1>
-```
-
-
-
-
-
-## 【6】yield + next 搭配着使用
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line">python</span><br><span class="line">&#x27;&#x27;&#x27;for i in range(5):    </span><br><span class="line">	print(i)&#x27;&#x27;&#x27;</span><br><span class="line"># 仿照for循环自己构建循环函数</span><br><span class="line">&#123;% raw %&#125;``````python</span><br><span class="line">def my_range(start, stop, step):</span><br><span class="line">    &#x27;&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">    :param start: 0</span><br><span class="line">    :param stop: 5</span><br><span class="line">    :param step: 1</span><br><span class="line">    :return:</span><br><span class="line">    &#x27;&#x27;&#x27;</span><br><span class="line">    print(&quot;start&quot;)</span><br><span class="line">    while start &lt; stop:</span><br><span class="line">        yield start</span><br><span class="line">        start += step</span><br><span class="line">    print(&quot;end&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">res = my_range(0, 5, 1)</span><br><span class="line">print(res)  # &lt;generator object my_range at 0x000002DF0361CBA0&gt;</span><br><span class="line">print(res.__next__())</span><br><span class="line">print(res.__next__())</span><br><span class="line">print(res.__next__())</span><br><span class="line">print(res.__next__())</span><br><span class="line">print(res.__next__())</span><br><span class="line"># 这里会报错 ---》 把我掏空了 --- 没有可迭代的值可以被获取了</span><br><span class="line">print(res.__next__())  # StopIteration</span><br></pre></td></tr></table></figure>
-
-```python
-def init_iter(func):
-    def inner(*args, **kwargs):
-        try:
-            generator = func(*args, **kwargs)
-            next(generator)
-            return generator
-        except StopIteration:
-            pass
-
-    return inner
-
-def range_(start, stop, step):
-    while start < stop:
-        yield start
-        start += step
-
-# for 循环内部做了异常捕获
-for i in range_(0,5,1):
-    print(i)
-
-def my_range(start, stop, step):
-    def range_(start, stop, step):
-        while start < stop:
-            yield start
-            start += step
-
-    res = range_(start, stop, step)
-    while True:
-        try:
-            print(res.__next__())
-        except StopIteration:
-            break
-
-res = my_range(start=1, stop=5, step=1)
-res
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【7】生成器的特点</span><br><span class="line"></span><br><span class="line">1. 节约内存</span><br><span class="line">2. 迭代到下一次的调用时，所使用的参数都是第一次所保留的</span><br><span class="line">3. 在整个所有函数调用的参数都是第一次所调用时保留的，而不是新创建的</span><br><span class="line"></span><br><span class="line">## ATM转账和查看信息</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># # ATM ： 提款姬</span><br><span class="line"></span><br><span class="line"># 【1】注册 ：</span><br><span class="line"># （1）存储到文件中</span><br><span class="line"># （2）存储数据格式：用户名 - 登录密码 - 年龄 - 银行卡号(1314) - 取款密码 - 余额(1000)  默认余额 1000</span><br><span class="line"># （3）校验用户名存在不允许注册</span><br><span class="line"># （4）校验密码，必须是 6 位 ，并且字母和数据混合 ---&gt; 提高数据的安全等级</span><br><span class="line"># （5）取款密码，必须是数字且 是三位</span><br><span class="line"></span><br><span class="line"># 【2】登录 ：</span><br><span class="line"># （1）直接将用户信息从文件中取出</span><br><span class="line"># （2）对用户进行核对，用户存在的情况下允许登录，否则不允许登录</span><br><span class="line"># （3）登录的时候的还是要校验密码 ： 必须是 6 位 ，并且字母和数据混合 ---&gt; 提高数据的安全等级</span><br><span class="line"></span><br><span class="line"># 定义全局登录字典</span><br><span class="line">login_dict = &#123;</span><br><span class="line">    &#x27;username&#x27;: None,</span><br><span class="line">    &#x27;bank_id&#x27;: None,</span><br><span class="line">    &#x27;bank_password&#x27;: None,</span><br><span class="line">    &quot;bank_balance&quot;: None,</span><br><span class="line">    &quot;role&quot;: None,</span><br><span class="line">    &quot;is_locked&quot;: None,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_username_password():</span><br><span class="line">    username = input(&quot;请输入用户名 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    password = input(&quot;请输入密 码 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    return username, password</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def read_data(file=&#x27;user_data.text&#x27;, tag=None):</span><br><span class="line">    if not tag:</span><br><span class="line">        # 【一】第一次进来的时候文件是不存在的 ---&gt; 异常捕获</span><br><span class="line">        user_data_all_dict = &#123;&#125;</span><br><span class="line">        # &#123;&#x27;dream&#x27;:&#123;&#125;&#125;</span><br><span class="line">        # 【二】第二次进来的时候要对数据进行读取和切分</span><br><span class="line">        try:</span><br><span class="line">            with open(file=file, mode=&#x27;r&#x27;, encoding=&#x27;utf-8&#x27;) as fp:</span><br><span class="line">                # dream|666aaa|18|1234|666|1000|admin|0</span><br><span class="line">                for line in fp:</span><br><span class="line">                    username, password, age, bank_id, bank_password, bank_balance, role, is_locked = line.strip().split(</span><br><span class="line">                        &#x27;|&#x27;)</span><br><span class="line">                    user_data_all_dict[username] = &#123;</span><br><span class="line">                        &#x27;username&#x27;: username,</span><br><span class="line">                        &#x27;password&#x27;: password,</span><br><span class="line">                        &#x27;age&#x27;: int(age),</span><br><span class="line">                        &#x27;bank_id&#x27;: int(bank_id),</span><br><span class="line">                        &#x27;bank_password&#x27;: bank_password,</span><br><span class="line">                        &#x27;bank_balance&#x27;: int(bank_balance),</span><br><span class="line">                        &#x27;is_locked&#x27;: True if is_locked == &#x27;1&#x27; else False,</span><br><span class="line">                        &#x27;role&#x27;: role,</span><br><span class="line">                    &#125;</span><br><span class="line">            return user_data_all_dict</span><br><span class="line">        except Exception as e:</span><br><span class="line">            return user_data_all_dict</span><br><span class="line">    else:</span><br><span class="line">        try:</span><br><span class="line">            # file = dream_log.text</span><br><span class="line">            file = &#x27;log\\&#x27; + file</span><br><span class="line">            with open(file=file, mode=&#x27;r&#x27;, encoding=&#x27;utf8&#x27;) as fp:</span><br><span class="line">                log_list = [line.strip() for line in fp]</span><br><span class="line">            return log_list</span><br><span class="line">        except Exception as e:</span><br><span class="line">            return []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def exist_user(username: str) -&gt; bool:</span><br><span class="line">    # 【一】获取到全局的用户信息</span><br><span class="line">    user_data_all_dict = read_data()</span><br><span class="line">    user_data_dict = user_data_all_dict.get(username)</span><br><span class="line">    if not user_data_dict:</span><br><span class="line">        return False</span><br><span class="line">    else:</span><br><span class="line">        return True</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def check_type(username, password=None, age=None, bank_id=None, bank_password=None, bank_balance=None):</span><br><span class="line">    if password:</span><br><span class="line">        # 必须是 6 位 ，并且字母和数据混合</span><br><span class="line">        if len(password) != 6:</span><br><span class="line">            return False, f&#x27;当前用户 &#123;username&#125; 密码长度不正确!&#x27;</span><br><span class="line">        # 字母和数据混合</span><br><span class="line">        letter_list = [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;, &#x27;e&#x27;, &#x27;f&#x27;, &#x27;g&#x27;, &#x27;h&#x27;, &#x27;i&#x27;, &#x27;j&#x27;, &#x27;k&#x27;, &#x27;l&#x27;, &#x27;m&#x27;, &#x27;n&#x27;, &#x27;o&#x27;, &#x27;p&#x27;, &#x27;q&#x27;, &#x27;r&#x27;, &#x27;s&#x27;,</span><br><span class="line">                       &#x27;t&#x27;, &#x27;u&#x27;, &#x27;v&#x27;, &#x27;w&#x27;, &#x27;x&#x27;, &#x27;y&#x27;, &#x27;z&#x27;]</span><br><span class="line">        num_list = [&#x27;0&#x27;, &#x27;1&#x27;, &#x27;2&#x27;, &#x27;3&#x27;, &#x27;4&#x27;, &#x27;5&#x27;, &#x27;6&#x27;, &#x27;7&#x27;, &#x27;8&#x27;, &#x27;9&#x27;]</span><br><span class="line">        tag_dict = &#123;</span><br><span class="line">            &#x27;is_letter&#x27;: [],</span><br><span class="line">            &quot;is_number&quot;: []</span><br><span class="line">        &#125;</span><br><span class="line">        for item in password:</span><br><span class="line">            if item in letter_list:</span><br><span class="line">                tag_dict[&#x27;is_letter&#x27;].append(item)</span><br><span class="line">            elif item in num_list:</span><br><span class="line">                tag_dict[&#x27;is_number&#x27;].append(item)</span><br><span class="line">        if len(tag_dict[&#x27;is_letter&#x27;]) + len(tag_dict[&#x27;is_number&#x27;]) != 6 or len(tag_dict[&#x27;is_number&#x27;]) == 0 or len(</span><br><span class="line">                tag_dict[&#x27;is_letter&#x27;]) == 0:</span><br><span class="line">            return False, f&#x27;当前用户 &#123;username&#125; 密码格式不正确!必须是数字+字母混合!&#x27;</span><br><span class="line">    if age:</span><br><span class="line">        # 判断年龄是数字类型</span><br><span class="line">        if not age.isdigit():</span><br><span class="line">            return False, f&#x27;当前年龄不符合数据格式!&#x27;</span><br><span class="line">        age = int(age)</span><br><span class="line">        # 年龄大于 18 小于 100</span><br><span class="line">        if 18 &gt; age or age &gt; 100:</span><br><span class="line">            return False, f&#x27;当前年龄超出正常人!&#x27;</span><br><span class="line">    if bank_id:</span><br><span class="line">        if not bank_id.isdigit():</span><br><span class="line">            return False, f&#x27;当前银行卡号非法，必须是数字!&#x27;</span><br><span class="line">        if len(bank_id) != 4:</span><br><span class="line">            return False, f&#x27;当前银行卡号非法,必须是 4 位 !&#x27;</span><br><span class="line">    if bank_password:</span><br><span class="line">        # 取款密码，必须是数字且 是三位</span><br><span class="line">        if len(bank_password) != 3:</span><br><span class="line">            return False, f&#x27;当前银行密码必须是 3 位 !&#x27;</span><br><span class="line">        if not bank_password.isdigit():</span><br><span class="line">            return False, f&#x27;当前银行密码格式错误必须是数字!&#x27;</span><br><span class="line">    if bank_balance:</span><br><span class="line">        # 校验余额大于 0 并且是数字</span><br><span class="line">        if not bank_balance.isdigit():</span><br><span class="line">            return False, f&#x27;当前银行余额非法!&#x27;</span><br><span class="line">        bank_balance = int(bank_balance)</span><br><span class="line">        if bank_balance &lt; 0:</span><br><span class="line">            return False, f&#x27;当前银行余额必须大于0!&#x27;</span><br><span class="line">    return True, &#x27;&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def save_data(data, file=&#x27;user_data.text&#x27;, tag=None):</span><br><span class="line">    # 如果不给 tag 默认是存储用户的数据</span><br><span class="line">    if not tag:</span><br><span class="line">        data_list = []</span><br><span class="line">        for username, user_data_dict in data.items():</span><br><span class="line">            is_locked = user_data_dict.pop(&#x27;is_locked&#x27;)</span><br><span class="line">            if is_locked:</span><br><span class="line">                is_locked = &#x27;1&#x27;</span><br><span class="line">            else:</span><br><span class="line">                is_locked = &#x27;0&#x27;</span><br><span class="line">            data = &#x27;|&#x27;.join([str(value) for value in user_data_dict.values()]) + &#x27;|&#x27; + is_locked + &#x27;\n&#x27;</span><br><span class="line">            data_list.append(data)</span><br><span class="line">        with open(file=file, mode=&#x27;w&#x27;, encoding=&#x27;utf8&#x27;) as fp:</span><br><span class="line">            fp.writelines(data_list)</span><br><span class="line">    # 如果给了 tag 就是存储的取款日志信息</span><br><span class="line">    else:</span><br><span class="line">        # file : dream_log.text</span><br><span class="line">        # log\dream_log.text</span><br><span class="line">        # 根据原本的文件名拼接新的路径 放到指定文件夹下</span><br><span class="line">        file = &quot;log\\&quot; + file</span><br><span class="line">        # 打开文件追加文件数据</span><br><span class="line">        with open(file=file, mode=&#x27;a&#x27;, encoding=&#x27;utf-8&#x27;) as fp:</span><br><span class="line">            fp.write(data + &#x27;\n&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 注册函数</span><br><span class="line">def register():</span><br><span class="line">    print(f&quot;欢迎来到注册功能&quot;)</span><br><span class="line">    # 【一】获取用户名和密码</span><br><span class="line">    username, password = get_username_password()</span><br><span class="line">    # 【二】校验当前用户是否存在</span><br><span class="line">    is_exist = exist_user(username)</span><br><span class="line">    if is_exist:</span><br><span class="line">        return False, f&#x27;当前用户 &#123;username&#125; 已存在,请登录!&#x27;</span><br><span class="line">    password_flag, password_data = check_type(username=username, password=password)</span><br><span class="line">    user_data_all_dict = read_data()</span><br><span class="line">    if not password_flag:</span><br><span class="line">        return password_flag, password_data</span><br><span class="line">    # 【三】输入注册信息</span><br><span class="line">    #  年龄</span><br><span class="line">    age = input(&quot;请输入年龄 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    age_flag, age_data = check_type(username=username, age=age)</span><br><span class="line">    if not age_flag:</span><br><span class="line">        return age_flag, age_data</span><br><span class="line">    #  银行卡号(1314)</span><br><span class="line">    bank_id = input(&quot;请输入银行卡号 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    bank_id_flag, bank_id_data = check_type(username=username, bank_id=bank_id)</span><br><span class="line">    # 从总的数据字典中提取出每一个 字典中 bank_id</span><br><span class="line">    # &#123;&#x27;dream&#x27;:&#123;&#x27;username&#x27;:&quot;dream&quot;,&quot;bank_id&quot;:1234 &#125;&#125;</span><br><span class="line">    # &#123;&#x27;username&#x27;:&quot;dream&quot;,&quot;bank_id&quot;:1234 &#125;</span><br><span class="line">    bank_id_list = [str(user_data_dict.get(&#x27;bank_id&#x27;)) for user_data_dict in user_data_all_dict.values()]</span><br><span class="line">    if bank_id in bank_id_list:</span><br><span class="line">        return False, f&#x27;当前银行账号已存在!&#x27;</span><br><span class="line">    if not bank_id_flag:</span><br><span class="line">        return bank_id_flag, bank_id_data</span><br><span class="line">    #  取款密码</span><br><span class="line">    bank_password = input(&quot;请输入取款密码 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    bank_password_flag, bank_password_data = check_type(username=username, bank_password=bank_password)</span><br><span class="line">    if not bank_password_flag:</span><br><span class="line">        return bank_password_flag, bank_password_data</span><br><span class="line">    #  余额(1000)  默认余额 1000</span><br><span class="line">    bank_balance = &#x27;1000&#x27;</span><br><span class="line">    bank_balance_flag, bank_balance_data = check_type(username=username, bank_balance=bank_balance)</span><br><span class="line">    if not bank_balance_flag:</span><br><span class="line">        return bank_balance_flag, bank_balance_data</span><br><span class="line">    # 拼接数据格式</span><br><span class="line">    if username == &#x27;dream&#x27;:</span><br><span class="line">        role = &#x27;admin&#x27;</span><br><span class="line">    else:</span><br><span class="line">        role = &#x27;user&#x27;</span><br><span class="line">    user_data_all_dict[username] = &#123;</span><br><span class="line">        &#x27;username&#x27;: username,</span><br><span class="line">        &#x27;password&#x27;: password,</span><br><span class="line">        &#x27;age&#x27;: age,</span><br><span class="line">        &#x27;bank_id&#x27;: bank_id,</span><br><span class="line">        &#x27;bank_password&#x27;: bank_password,</span><br><span class="line">        &#x27;bank_balance&#x27;: bank_balance,</span><br><span class="line">        &#x27;is_locked&#x27;: False,</span><br><span class="line">        &#x27;role&#x27;: role,</span><br><span class="line">    &#125;</span><br><span class="line">    save_data(data=user_data_all_dict)</span><br><span class="line">    return True, f&quot;当前用户 &#123;username&#125; 注册成功!&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 登录函数</span><br><span class="line">def login():</span><br><span class="line">    print(f&quot;欢迎来到登录功能&quot;)</span><br><span class="line">    # 【一】获取用户名和密码</span><br><span class="line">    username, password = get_username_password()</span><br><span class="line">    # 【二】校验用户是否存在</span><br><span class="line">    is_exist = exist_user(username=username)</span><br><span class="line">    user_data_dict_all = read_data()</span><br><span class="line">    user_data_dict = user_data_dict_all.get(username)</span><br><span class="line">    if not is_exist and not user_data_dict:</span><br><span class="line">        return False, f&#x27;当前用户 &#123;username&#125; 不存在&#x27;</span><br><span class="line">    password_flag, password_ = check_type(username, password=password)</span><br><span class="line">    if not password_flag:</span><br><span class="line">        return password_flag, password_</span><br><span class="line">    # 【三】校验当前用户的锁定状态</span><br><span class="line">    if user_data_dict.get(&#x27;is_locked&#x27;):</span><br><span class="line">        return False, f&#x27;当前用户 &#123;username&#125; 已被锁定!&#x27;</span><br><span class="line">    # 【四】正常登陆校验用户名和密码</span><br><span class="line">    if password != user_data_dict.get(&#x27;password&#x27;):</span><br><span class="line">        return False, f&#x27;当前用户 &#123;username&#125; 密码错误!&#x27;</span><br><span class="line">    # 更新登录字典</span><br><span class="line">    login_dict.update(&#123;</span><br><span class="line">        &#x27;username&#x27;: username,</span><br><span class="line">        &#x27;bank_id&#x27;: user_data_dict.get(&quot;bank_id&quot;),</span><br><span class="line">        &#x27;bank_password&#x27;: user_data_dict.get(&quot;bank_password&quot;),</span><br><span class="line">        &quot;bank_balance&quot;: user_data_dict.get(&quot;bank_balance&quot;),</span><br><span class="line">        &quot;role&quot;: user_data_dict.get(&quot;role&quot;),</span><br><span class="line">        &quot;is_locked&quot;: user_data_dict.get(&quot;is_locked&quot;),</span><br><span class="line">    &#125;)</span><br><span class="line">    return True, f&#x27;当前用户 &#123;username&#125; 登录成功&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import time</span><br><span class="line"># 【3】取款 :</span><br><span class="line"># （1）验证当前用户已经登录</span><br><span class="line"># （2）取款的时候要验证取款金额 必须合法：大于0并且是数字</span><br><span class="line"># （3）验证取款密码，必须是数字且 是三位 并且和你的数据存的一样</span><br><span class="line"># （3）取款的时候记录取款信息 ： 取款金额 + 取款时间(百度搜)</span><br><span class="line"># （4）取款的时候把不要忘了把自己文件数据改掉</span><br><span class="line">from functools import wraps</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 登录认证装饰器</span><br><span class="line">def decorator(tag):</span><br><span class="line">    if tag == &#x27;login&#x27;:</span><br><span class="line">        # 登录认证装饰器</span><br><span class="line">        def outer(func):</span><br><span class="line">            @wraps(func)</span><br><span class="line">            def inner(*args, **kwargs):</span><br><span class="line">                # 校验当前用户是否登录</span><br><span class="line">                if not login_dict.get(&quot;username&quot;):</span><br><span class="line">                    return False, f&quot;当前用户未登录!&quot;</span><br><span class="line">                return func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">            return inner</span><br><span class="line"></span><br><span class="line">        return outer</span><br><span class="line">    elif tag == &#x27;lock&#x27;:</span><br><span class="line">        # 校验是否被冻结装饰器</span><br><span class="line">        def outer(func):</span><br><span class="line">            @wraps(func)</span><br><span class="line">            def inner(*args, **kwargs):</span><br><span class="line">                # 校验当前用户是否被冻结</span><br><span class="line">                if login_dict.get(&quot;is_locked&quot;):</span><br><span class="line">                    return False, f&#x27;当前用户已被冻结!&#x27;</span><br><span class="line">                return func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">            return inner</span><br><span class="line"></span><br><span class="line">        return outer</span><br><span class="line">    elif tag == &#x27;admin&#x27;:</span><br><span class="line">        # 校验当前用户是否是管理员身份</span><br><span class="line">        def outer(func):</span><br><span class="line">            @wraps(func)</span><br><span class="line">            def inner(*args, **kwargs):</span><br><span class="line">                # 校验当前用户是否是管理员</span><br><span class="line">                if login_dict.get(&quot;role&quot;) == &quot;user&quot;:</span><br><span class="line">                    return False, f&#x27;当前用户无权访问！&#x27;</span><br><span class="line">                return func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">            return inner</span><br><span class="line"></span><br><span class="line">        return outer</span><br><span class="line">    else:</span><br><span class="line">        assert not tag, f&quot;tag 标志位必须传，否则不允许使用&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@decorator(tag=&#x27;login&#x27;)</span><br><span class="line">def withdrawal():</span><br><span class="line">    print(f&quot;欢迎来到取款功能&quot;)</span><br><span class="line">    # 校验当前用户是否登录并且是否被冻结</span><br><span class="line">    # 【一】从登录字典中获取得到当前用户名</span><br><span class="line">    username = login_dict.get(&#x27;username&#x27;)</span><br><span class="line">    user_data_dict_all = read_data()</span><br><span class="line">    # 【二】输入取款金额</span><br><span class="line">    bank_balance = input(&quot;请输入取款金额 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    # 【三】校验金额是否合法</span><br><span class="line">    bank_balance_flag, bank_balance_data = check_type(username=username, bank_balance=bank_balance)</span><br><span class="line">    if not bank_balance_flag:</span><br><span class="line">        return bank_balance_flag, bank_balance_data</span><br><span class="line">    # 【四】将金额转换为整数类型</span><br><span class="line">    bank_balance = int(bank_balance)</span><br><span class="line">    # 【五】输入银行取款密码</span><br><span class="line">    bank_password = input(&quot;请输入银行取款密码 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    # 【六】校验当前银行取款密码是否符合规范</span><br><span class="line">    bank_password_flag, bank_password_data = check_type(username=username, bank_password=bank_password)</span><br><span class="line">    if not bank_password_flag:</span><br><span class="line">        return bank_password_flag, bank_password_data</span><br><span class="line">    # 【七】校验取款密码是否一致</span><br><span class="line">    if bank_password != user_data_dict_all[username][&#x27;bank_password&#x27;]:</span><br><span class="line">        return False, f&#x27;当前 用户 &#123;username&#125; 取款密码错误!&#x27;</span><br><span class="line">    # 【八】取款 ---&gt; 将自己的余额减少 记住这里是减少总字典中的小字典</span><br><span class="line">    user_data_dict_all[username][&#x27;bank_balance&#x27;] -= bank_balance</span><br><span class="line">    # 【九】记录日志</span><br><span class="line">    # 有一条日志信息</span><br><span class="line">    log = f&quot;当前用户 &#123;username&#125; 于 &#123;time.strftime(&#x27;%Y-%m-%d %H:%M:%S&#x27;)&#125; 取款 &#123;bank_balance&#125; 元!&quot;</span><br><span class="line">    # 【十】保存日志信息</span><br><span class="line">    save_data(data=log, file=f&#x27;&#123;username&#125;_log.text&#x27;, tag=&quot;bank&quot;)</span><br><span class="line">    # 【十一】保存用户数据 ---&gt; 持久化保存到本地的文件中</span><br><span class="line">    save_data(data=user_data_dict_all)</span><br><span class="line">    # 【十二】返回取款成功的信息</span><br><span class="line">    return True, log</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【4】转账 ：</span><br><span class="line"># （1）验证当前用户已经登录</span><br><span class="line"># （2）转账的时候要验证转账金额 必须合法：大于0并且是数字</span><br><span class="line"># （3）转账的时候记录转账信息 ： 取款金额 + 取款时间(百度搜)  ---》 你自己有一个转出的信息 / 对方要有一个入账的信息</span><br><span class="line"># （4）目标账户的账户名(用户名) 和 银行卡号 进行转账</span><br><span class="line"># （5）放到两个文件中 -- 每个人的日志是在各自的文件中</span><br><span class="line">@decorator(tag=&#x27;login&#x27;)</span><br><span class="line">def transform():</span><br><span class="line">    print(f&quot;欢迎来到转账功能!&quot;)</span><br><span class="line">    # 【一】从登录字典中获取到当前登录的用户名</span><br><span class="line">    username = login_dict.get(&#x27;username&#x27;)</span><br><span class="line">    # 【二】获取到所有人的数据字典</span><br><span class="line">    user_data_dict_all = read_data()</span><br><span class="line">    # 【三】输入转账金额</span><br><span class="line">    transform_money = input(&quot;请输入转账金额 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    # 【四】转账金额校验</span><br><span class="line">    transform_money_flag, transform_money_data = check_type(username=username, bank_balance=transform_money)</span><br><span class="line">    if not transform_money_flag:</span><br><span class="line">        return transform_money_flag, transform_money_data</span><br><span class="line">    # 【五】输入目标账户名</span><br><span class="line">    transform_to_username = input(&quot;请输入对方账户名 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    # 【六】校验目标账户名是否存在</span><br><span class="line">    if transform_to_username not in user_data_dict_all:</span><br><span class="line">        return False, f&#x27;对方账户名 :&gt;&gt;&gt; &#123;transform_to_username&#125; 不存在!&#x27;</span><br><span class="line">    # 【七】输入目标账户银行卡号</span><br><span class="line">    transform_to_bank_id = input(&quot;请输入对方银行账号 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    # 【八】校验银行卡号格式是否正确</span><br><span class="line">    transform_to_bank_id_flag, transform_to_bank_id_data = check_type(username=username, bank_id=transform_to_bank_id)</span><br><span class="line">    if not transform_to_bank_id_flag:</span><br><span class="line">        return transform_to_bank_id_flag, transform_to_bank_id_data</span><br><span class="line">    # 【九】输入自己的转账密码</span><br><span class="line">    transform_my_bank_password = input(&quot;请输入取款密码 :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    # 【十】校验取款密码格式是否正确</span><br><span class="line">    transform_my_bank_password_flag, transform_my_bank_password_data = check_type(username=username,</span><br><span class="line">                                                                                  bank_password=transform_my_bank_password)</span><br><span class="line">    if not transform_my_bank_password_flag:</span><br><span class="line">        return transform_my_bank_password_flag, transform_my_bank_password_data</span><br><span class="line">    # 【十一】校验自己的取款密码是否正确</span><br><span class="line">    if transform_my_bank_password != user_data_dict_all[username][&#x27;bank_password&#x27;]:</span><br><span class="line">        return False, f&#x27;当前取款密码错误！&#x27;</span><br><span class="line">    # 【十二】验证对方的银行卡号一致</span><br><span class="line">    if int(transform_to_bank_id) != user_data_dict_all[transform_to_username][&#x27;bank_id&#x27;]:</span><br><span class="line">        return False, f&quot;与目标账户银行卡号不一致!&quot;</span><br><span class="line">    # 【十三】修改数据</span><br><span class="line">    # 自己的金额 - 取款金额</span><br><span class="line">    # 对方的金额 + 取款金额</span><br><span class="line">    transform_money = int(transform_money)</span><br><span class="line">    if transform_money &gt;= user_data_dict_all[username][&#x27;bank_balance&#x27;]:</span><br><span class="line">        return False, f&#x27;当前账户余额不足!&#x27;</span><br><span class="line">    user_data_dict_all[username][&#x27;bank_balance&#x27;] -= transform_money</span><br><span class="line">    user_data_dict_all[transform_to_username][&#x27;bank_balance&#x27;] += transform_money</span><br><span class="line">    # 【十四】生成日志</span><br><span class="line">    my_username_log = f&quot;当前账户 &#123;username&#125; 于 &#123;time.strftime(&#x27;%Y-%m-%d %H:%M:%S&#x27;)&#125; 向 目标账户 &#123;transform_to_username&#125; 转账 &#123;transform_money&#125; 元 余额 &#123;user_data_dict_all[username][&#x27;bank_balance&#x27;]&#125; 元&quot;</span><br><span class="line">    to_username_log = f&quot;当前账户 &#123;transform_to_username&#125; 于 &#123;time.strftime(&#x27;%Y-%m-%d %H:%M:%S&#x27;)&#125; 收到 目标账户 &#123;username&#125; 转账 &#123;transform_money&#125; 元 余额 &#123;user_data_dict_all[transform_to_username][&#x27;bank_balance&#x27;]&#125; 元&quot;</span><br><span class="line">    # 【十五】更新数据信息</span><br><span class="line">    # 【1】更新各自的用户数据</span><br><span class="line">    save_data(data=user_data_dict_all)</span><br><span class="line">    # 【2】保存日志信息</span><br><span class="line">    save_data(data=my_username_log, file=f&#x27;&#123;username&#125;_log.text&#x27;, tag=&#x27;log&#x27;)</span><br><span class="line">    save_data(data=to_username_log, file=f&#x27;&#123;transform_to_username&#125;_log.text&#x27;, tag=&#x27;log&#x27;)</span><br><span class="line">    # 【十六】返回成功信息</span><br><span class="line">    return True, my_username_log</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@decorator(tag=&#x27;login&#x27;)</span><br><span class="line">def check_info_user():</span><br><span class="line">    username = login_dict.get(&#x27;username&#x27;, None)</span><br><span class="line">    user_data_dict_all = read_data()</span><br><span class="line">    user_data_dict = user_data_dict_all.get(username)</span><br><span class="line">    print(f&#x27;&#x27;&#x27;</span><br><span class="line">    --------------  当前用户银行信息如下 --------------  </span><br><span class="line">                 用户名 :&gt;&gt;&gt;&gt; &#123;username&#125;</span><br><span class="line">                 年龄 :&gt;&gt;&gt;&gt; &#123;user_data_dict[&#x27;age&#x27;]&#125;</span><br><span class="line">                 级别 :&gt;&gt;&gt;&gt; &#123;&#x27;VIP用户&#x27; if user_data_dict[&#x27;role&#x27;] == &#x27;admin&#x27; else &quot;普通用户&quot;&#125;</span><br><span class="line">                 锁定 :&gt;&gt;&gt;&gt; &#123;&#x27;锁定&#x27; if user_data_dict[&#x27;is_locked&#x27;] == &#x27;admin&#x27; else &quot;正常&quot;&#125;</span><br><span class="line">                 银行账号 :&gt;&gt;&gt;&gt; &#123;user_data_dict[&#x27;bank_id&#x27;]&#125;</span><br><span class="line">                 银行余额 :&gt;&gt;&gt;&gt; &#123;user_data_dict[&#x27;bank_balance&#x27;]&#125; $</span><br><span class="line">    --------------  当前用户银行信息如上 --------------</span><br><span class="line">     &#x27;&#x27;&#x27;)</span><br><span class="line">    return True, f&#x27;当前用户 &#123;username&#125; 于 &#123;time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)&#125; 查看信息成功!&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@decorator(tag=&#x27;login&#x27;)</span><br><span class="line">def check_bank_log():</span><br><span class="line">    username = login_dict.get(&#x27;username&#x27;)</span><br><span class="line">    bank_log_list = read_data(tag=&#x27;bank&#x27;, file=f&#x27;&#123;username&#125;_log.text&#x27;)</span><br><span class="line">    if not bank_log_list:</span><br><span class="line">        return False, f&#x27;当前无日志生成!&#x27;</span><br><span class="line"></span><br><span class="line">    for line in bank_log_list:</span><br><span class="line">        print(line)</span><br><span class="line">    return True, f&#x27;当前用户 &#123;username&#125; 于 &#123;time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)&#125; 查看银行日志成功!&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func_menu = f&#x27;&#x27;&#x27;</span><br><span class="line">################## 功能菜单 ################## </span><br><span class="line">                    1. 注册</span><br><span class="line">                    2. 登录</span><br><span class="line">                    3. 取款</span><br><span class="line">                    4. 转账</span><br><span class="line">                    5. 查看账户信息</span><br><span class="line">                    6. 查看银行日志</span><br><span class="line">                    q. 退出</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">func_dict = &#123;</span><br><span class="line">    1: register,</span><br><span class="line">    2: login,</span><br><span class="line">    3: withdrawal,</span><br><span class="line">    4: transform,</span><br><span class="line">    5: check_info_user,</span><br><span class="line">    6: check_bank_log,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    # while 循环</span><br><span class="line">    while True:</span><br><span class="line">        # 【一】打印功能菜单</span><br><span class="line">        print(func_menu)</span><br><span class="line">        # 【二】输入功能 id</span><br><span class="line">        func_id = input(&quot;请输入功能ID :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">        if not func_id.isdigit():</span><br><span class="line">            print(f&quot;当前功能ID格式错误!&quot;)</span><br><span class="line">            continue</span><br><span class="line">        try:</span><br><span class="line">            func_id = int(func_id)</span><br><span class="line">        except Exception as e:</span><br><span class="line">            print(f&quot;当前功能ID格式错误!&quot;)</span><br><span class="line">            continue</span><br><span class="line">        # 【三】从功能字典中查找当前ID锁对应的函数</span><br><span class="line">        func = func_dict.get(func_id)</span><br><span class="line">        # 【四】嗲用函数获取返回值</span><br><span class="line">        flag, message = func()</span><br><span class="line">        if flag:</span><br><span class="line">            print(message)</span><br><span class="line">        else:</span><br><span class="line">            print(message)</span><br><span class="line">            continue</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
-
-
-      
+  <section class="landing-scene">
+    <div class="landing-hero">
+      <h1>欢迎来到我的博客</h1>
+      <p>记录技术笔记、项目经验与个人思考。</p>
+      <div class="landing-cta">
+        <a class="btn-primary" href="/archives/">浏览全部文章</a>
+        <a class="btn-secondary" href="/categories/">按分类查看</a>
+      </div>
     </div>
+    <div class="grid-floor"></div>
+  </section>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+  <section class="landing-section">
+    <h2>最近更新</h2>
+    <style>
+      .recent-list { display: grid; grid-template-columns: 1fr; gap: 8px; }
+      .recent-item { padding: 12px 0; border-bottom: 1px solid #eee; }
+      .recent-title { font-size: 1.05rem; margin: 0 0 6px; }
+      .recent-title a { text-decoration: none; color: inherit; }
+      .recent-meta { color: #888; font-size: .9rem; }
+    </style>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.9hashlib%E6%A8%A1%E5%9D%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/4.9hashlib%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">4.9hashlib模块</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>hashlib模块</h1>
-<ul>
-<li>摘要算法：只能加密不能解密</li>
-<li>加密算法：用方法加密，加密后的字符串可以解密</li>
-</ul>
-<h1>【一】摘要算法</h1>
-<ul>
-<li>
-<p>Python的hashlib提供了常见的摘要算法</p>
-<ul>
-<li>如MD5,SHA1</li>
-</ul>
-</li>
-<li>
-<p>摘要算法又称哈希算法、散列算法。</p>
-</li>
-<li>
-<p>它通过一个函数，把任意长度的数据转换为一个长度固定的数据串（通常用16进制的字符串表示）。</p>
-</li>
-<li>
-<p>摘要算法就是通过摘要函数f()对任意长度的数据data计算出固定长度的摘要digest</p>
-</li>
-<li>
-<p>目的是为了发现原始数据是否被人篡改过。</p>
-</li>
-<li>
-<p>摘要算法之所以能指出数据是否被篡改过，就是因为摘要函数是一个单向函数</p>
-</li>
-<li>
-<p>计算f(data)很容易，但通过digest反推data却非常困难。</p>
-</li>
-<li>
-<p>而且，对原始数据做一个bit的修改，都会导致计算出的摘要完全不同。</p>
-</li>
-</ul>
-```python
-import hashlib
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【二】基础</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import hashlib</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def one():</span><br><span class="line">    # 给原始数据</span><br><span class="line">    data = &#x27;my name is dream&#x27;</span><br><span class="line">    # 转成二进制数据</span><br><span class="line">    data = data.encode(&#x27;utf-8&#x27;)</span><br><span class="line">    # 创建一个md5对象</span><br><span class="line">    md5 = hashlib.md5()</span><br><span class="line">    # 把原始数据给 md5 对象加密</span><br><span class="line">    md5.update(data)</span><br><span class="line">    # 返回加密后的结果</span><br><span class="line">    # 一种是加密后的 16 进制的 32 长度的字符串</span><br><span class="line">    print(md5.hexdigest())  </span><br><span class="line">   #a9824cf2cad8240003dd8071a4b315d3</span><br><span class="line">    # 一种是二进制数据</span><br><span class="line">    print(md5.digest())</span><br><span class="line">#b&#x27;\xa9\x82L\xf2\xca\xd8$\x00\x03\xdd\x80q\xa4\xb3\x15\xd3&#x27;</span><br><span class="line">    # 把常见的这种字符 用md5加密 ---&gt; 扔到数据库里面</span><br><span class="line">    # 数据库中查 又返回</span><br><span class="line">    return md5.hexdigest()</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>md5只能对二进制数据进行加密</li>
-</ul>
-<h1>【三】加盐</h1>
-<ul>
-<li>如果以明文保存用户口令，如果数据库泄露，所有用户的口令就落入黑客的手里。</li>
-<li>此外，网站运维人员是可以访问数据库的，也就是能获取到所有用户的口令。</li>
-<li>正确的保存口令的方式是不存储用户的明文口令，而是存储用户口令的摘要</li>
-<li>由于常用口令的MD5值很容易被计算出来
-<ul>
-<li>所以，要确保存储的用户口令不是那些已经被计算出来的常用口令的MD5</li>
-<li>这一方法通过对原始口令加一个复杂字符串来实现，俗称“加盐”</li>
-</ul>
-</li>
-</ul>
-```python
-import random
-
-
-def get_verify_code(n):
-    code = ''
-    for i in range(n):
-        random_int = str(random.randint(0, 9))  # 0-9之间的整数
-        random_upper = chr(random.randint(65, 90))  # A-Z之间的字母
-        random_lower = chr(random.randint(97, 122))  # a-z之间的字母
-        temp = random.choice([random_int, random_upper, random_lower])
-        code += temp
-    return code
-
-
-def two():
-    code = get_verify_code(6)
-    # 给原始数据
-    data = 'my name is dream'
-    # data = data + code
-    # data = code + data
-    # 转成二进制数据
-    data = data.encode('utf-8')
-    code = code.encode('utf-8')
-    # 创建一个md5对象
-    md5 = hashlib.md5()
-    # 把原始数据给 md5 对象加密
-    md5.update(code)
-    md5.update(data)
-    # 返回加密后的结果
-    # 一种是加密后的 16 进制的 32 长度的字符串
-    print(md5.hexdigest())  # c4ca4238a0b923820dcc509a6f75849b
-    # 一种是二进制数据
-    print(md5.digest())
-
-    # 把常见的这种字符 用md5加密 ---> 扔到数据库里面
-    # 数据库中查 又返回
-
-    return md5.hexdigest()
-
-
-'''
-one = one()
-two = two()
-print(one)  # a9824cf2cad8240003dd8071a4b315d3
-print(two)
-# 78e3b0d87878746c81a6aee148139459
-# c0cd81c3993a68867f1ebeeb7e0b2535
-# df200c13893926f399290212fbf8dc26
-# b44c1a5212b71ee2bde885dfd8e0484e
-'''
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- chr将对应的ASRII表转换成对应的数据</span><br><span class="line"></span><br><span class="line"># 【四】案例</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def save_data(data):</span><br><span class="line">    with open(&#x27;user_data.json&#x27;, &#x27;w&#x27;) as fp:</span><br><span class="line">        json.dump(obj=data, fp=fp)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def read_data():</span><br><span class="line">    with open(&#x27;user_data.json&#x27;, &#x27;r&#x27;) as fp:</span><br><span class="line">        data = json.load(fp=fp)</span><br><span class="line"></span><br><span class="line">    return data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_username_password():</span><br><span class="line">    username = input(&quot;username :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    password = input(&quot;password :&gt;&gt;&gt;&gt; &quot;).strip()</span><br><span class="line">    return username, password</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def encrypt_password(password, salt):</span><br><span class="line">    data = password + salt</span><br><span class="line">    data = data.encode()</span><br><span class="line">    md5 = hashlib.md5()</span><br><span class="line">    md5.update(data)</span><br><span class="line">    return md5.hexdigest()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def register():</span><br><span class="line">    username, password = get_username_password()</span><br><span class="line">    print(password)</span><br><span class="line">    salt = get_verify_code(6)</span><br><span class="line">    password = encrypt_password(password, salt)</span><br><span class="line">    save_data(&#123;&#x27;username&#x27;: username, &quot;password&quot;: password,&#x27;salt&#x27;:salt&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def login():</span><br><span class="line">    username, password = get_username_password()</span><br><span class="line">    user_data_dict = read_data()</span><br><span class="line">    print(password)</span><br><span class="line">    salt = user_data_dict[&#x27;salt&#x27;]</span><br><span class="line">    password = encrypt_password(password, salt)</span><br><span class="line">    if username == user_data_dict[&#x27;username&#x27;] and password == user_data_dict[&#x27;password&#x27;]:</span><br><span class="line">        print(f&quot;登录成功!&quot;)</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;登录失败&quot;)</span><br><span class="line">register()</span><br><span class="line">login()</span><br></pre></td></tr></table></figure>
-
-
-      
+    <div class="recent-list">
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/4.6os%E6%A8%A1%E5%9D%97/" itemprop="url">
+                <span itemprop="name">4.6os模块</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/4.7random%E6%A8%A1%E5%9D%97/" itemprop="url">
+                <span itemprop="name">4.7random模块</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/4.8logging%E6%A8%A1%E5%9D%97/" itemprop="url">
+                <span itemprop="name">4.8logging模块</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/4.9hashlib%E6%A8%A1%E5%9D%97/" itemprop="url">
+                <span itemprop="name">4.9hashlib模块</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/4%E6%9C%8821%E5%A4%A7%E6%80%BB%E7%BB%93/" itemprop="url">
+                <span itemprop="name">4月21大总结</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/5.0%20BeautifulSoup%E6%A8%A1%E5%9D%97%E4%B9%8B%E5%9B%9B%E7%A7%8D%E5%AF%B9%E8%B1%A1/" itemprop="url">
+                <span itemprop="name">5.0 BeautifulSoup模块之四种对象</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/5.0BeautifulSoup%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D(1)/" itemprop="url">
+                <span itemprop="name">5.0BeautifulSoup模块介绍(1)</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/5.0BeautifulSoup%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/" itemprop="url">
+                <span itemprop="name">5.0BeautifulSoup模块介绍</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.7random%E6%A8%A1%E5%9D%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/4.7random%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">4.7random模块</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>random模块</h1>
-<ul>
-<li>随机生成整数/小数/指定列表中某一个元素</li>
-<li>import random</li>
-</ul>
-<h1>【一】随机生成小数</h1>
-<h2 id="【1】默认区间的小数是区间0-1之间的小数">【1】默认区间的小数是区间0-1之间的小数</h2>
-<ul>
-<li>print(random.random())</li>
-</ul>
-<h2 id="【2】指定区间-给定区间内的小数-uniform">【2】指定区间 给定区间内的小数(uniform)</h2>
-<ul>
-<li>print（random.uniform(1,3)）</li>
-</ul>
-<h1>【二】随机生成小数（randint）</h1>
-<h2 id="【1】指定区间的整数-给定区间内的整数">【1】指定区间的整数 给定区间内的整数</h2>
-<p>print（random.randint(1,5)）</p>
-<h2 id="【2】随机区间内的奇偶数（randrange）">【2】随机区间内的奇偶数（randrange）</h2>
-```python
-print(random.randrange(1,10,2))#1 3 5 7 9
-print(random,randrange(1,10,3))#1 4 7
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【3】随机返回值</span><br><span class="line"></span><br><span class="line">### （1）返回一个元素(choice)</span><br><span class="line"></span><br><span class="line">- 给定一个可迭代类型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line">num_list = [i for i in range(1, 10)]</span><br><span class="line">num_list += [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;]</span><br><span class="line">print(random.choice(num_list))#输出：随机值</span><br></pre></td></tr></table></figure>
-
-<h3 id="（2）一次性返回多个值-k">（2）一次性返回多个值(k=)</h3>
-<ul>
-<li>默认返回一个值</li>
-</ul>
-```python
-num_list = [i for i in range(1, 10)]
-num_list += ['a', 'b', 'c', 'd']
-print(random.choice(num_list))#输出：随机返回一个值+里面的也算
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 可以指定关键字k指定返回的列表中的元素个数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">#默认是返回一个元素的列表</span><br><span class="line">print(random.choices(num_list))</span><br><span class="line"># 可以指定关键字 k 指定返回的列表中的元素个数</span><br><span class="line">print(random.choices(num_list, k=3))</span><br><span class="line">print(random.sample(num_list, 3))#这两个一样</span><br></pre></td></tr></table></figure>
-
-<h2 id="【4】打乱顺序-shuffle">【4】打乱顺序(shuffle)</h2>
-```python
-import _random
-num_list = [i for i in range(1, 10)]
-print(num_list)#[1, 2, 3, 4, 5, 6, 7, 8, 9]
-# 没有返回值，影响到的是原来的列表
-random.shuffle(num_list)
-print(num_list)#[4, 7, 3, 1, 2, 9, 6, 8, 5]
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【5】随机生成验证码</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 随机大小写字母 + 随机数字</span><br><span class="line"># 补充知识点 chr(数字) ---&gt; 返回指定ASCII码对应的字符</span><br><span class="line"># 做一个能生成 6 位的验证码</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_verify_code(n):</span><br><span class="line">    code = &#x27;&#x27;</span><br><span class="line">    for i in range(n):</span><br><span class="line">        random_int = str(random.randint(0, 9))  # 0-9之间的整数</span><br><span class="line">        random_upper = chr(random.randint(65, 90))  # A-Z之间的字母</span><br><span class="line">        random_lower = chr(random.randint(97, 122))  # a-z之间的字母</span><br><span class="line">        temp = random.choice([random_int, random_upper, random_lower])</span><br><span class="line">        code += temp</span><br><span class="line">    return code</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">res = get_verify_code(6)</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
-
-
-      
+    <div class="landing-more">
+      <a href="/archives/">查看全部文章 →</a>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/5.0%20BeautifulSoup%E6%A8%A1%E5%9D%97%E4%B9%8B%E5%9B%9B%E7%A7%8D%E5%AF%B9%E8%B1%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/5.0%20BeautifulSoup%E6%A8%A1%E5%9D%97%E4%B9%8B%E5%9B%9B%E7%A7%8D%E5%AF%B9%E8%B1%A1/" class="post-title-link" itemprop="url">5.0 BeautifulSoup模块之四种对象</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1><strong>BeautifulSoup模块之四种对象</strong></h1>
-<h2 id="【一】前言">【一】前言</h2>
-<ul>
-<li>
-<p>在生成的soup中存在四种取值方式</p>
-<ul>
-<li>
-<p>BeautifulSoup</p>
-</li>
-<li>
-<p>Tag</p>
-</li>
-<li>
-<p>NavigableString</p>
-</li>
-<li>
-<p>Comment</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="【二】介绍四种对象">【二】介绍四种对象</h2>
-<h3 id="【1】BeautifulSoup对象">【1】BeautifulSoup对象</h3>
-<ul>
-<li>代表解析后的HTML文档，是最顶层的对象</li>
-<li>它包含了整个文档的全部内容，并提供了操作HTML文档的方法和属性</li>
-</ul>
-```python
-from bs4 import BeautifulSoup  
-  
-# 假设html_doc是一个包含HTML内容的字符串  
-html_doc = """  
-<html><head><title>The Dormouse's story</title></head>  
-<body>  
-<p class="title"><b>The Dormouse's story</b></p>  
-<p class="story">Once upon a time there were three little sisters; and their names were  
-<a target="_blank" rel="noopener" href="http://example.com/elsie" class="sister" id="link1">Elsie</a>,  
-<a target="_blank" rel="noopener" href="http://example.com/lacie" class="sister" id="link2">Lacie</a> and  
-<a target="_blank" rel="noopener" href="http://example.com/tillie" class="sister" id="link3">Tillie</a>;  
-and they lived at the bottom of a well.</p>  
-<p class="story">...</p>  
-"""  
-  
-# 使用html.parser解析器创建一个BeautifulSoup对象  
-soup = BeautifulSoup(html_doc, 'html.parser') 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【2】Tag对象</span><br><span class="line"></span><br><span class="line">- 标识HTML中的标签，不如&lt;p&gt;,&lt;a&gt;等</span><br><span class="line">- Tag对象包含了标签的名称和对应的属性，并可以通过Tag对象来获取标签内的内容或进行进一步的操作</span><br><span class="line"></span><br><span class="line">- 可以通过传递HTML文档给BeautifulSoup类初始化的方式创建Tag对象</span><br><span class="line"></span><br><span class="line">练习.html</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```html</span><br><span class="line">&lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse&#x27;s story&lt;/title&gt;&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    测试div</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    div标签</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;p class=&quot;title&quot;&gt;&lt;b&gt;The Dormouse&#x27;s story&lt;/b&gt;&lt;/p&gt;</span><br><span class="line">&lt;p class=&quot;story&quot;&gt;Once upon a time there were three little sisters; and their names were</span><br><span class="line">&lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;,</span><br><span class="line">&lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt; and</span><br><span class="line">&lt;a class=&quot;sister&quot; href=&quot;http://example.com/tillie&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;;</span><br><span class="line">and they lived at the bottom of a well.&lt;/p&gt;</span><br><span class="line">&lt;p class=&quot;story&quot;&gt;...&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-
-<h4 id="（1）查看tag对象">（1）查看tag对象</h4>
-<ul>
-<li>通过soup.tag获取到指定标签对象</li>
-</ul>
-```python
-from bs4 import BeautifulSoup
-
-# 读取html文档
-with open("练习.html", "r", encoding="utf") as fp:
-    data = fp.read()
-
-# 生成soup对象
-soup = BeautifulSoup(data, "lxml")
-
-# 指定标签名查找指定的标签对象
-# 输出head标签及其属性
-head = soup.head
-print(head, type(head))  # <class 'bs4.element.Tag'>
-
-# 输出title标签及其类型
-title = soup.title
-print(title, type(title))  # <class 'bs4.element.Tag'>
-
-# 输出第一个a标签和类型
-a = soup.a
-print(a, type(a))  # <class 'bs4.element.Tag'>
-
-# 输出第一个p标签下的第一个a标签
-b = soup.p.b
-print(b, type(b))  # <class 'bs4.element.Tag'>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### (2)查找tag对象的标签名和属性</span><br><span class="line"></span><br><span class="line">- 通过soup.tag名.属性名获取到指定标签属性名对应的属性值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line"></span><br><span class="line"># 读取html文档</span><br><span class="line">with open(&quot;练习.html&quot;, &quot;r&quot;, encoding=&quot;utf&quot;) as fp:</span><br><span class="line">    data = fp.read()</span><br><span class="line">    </span><br><span class="line"># 生成soup对象</span><br><span class="line">soup = BeautifulSoup(data, &quot;lxml&quot;)</span><br><span class="line"></span><br><span class="line"># 输出a标签下的name属性</span><br><span class="line">print(soup.a.name)  # a</span><br><span class="line"></span><br><span class="line"># 输出第一个p标签下的第一个b标签的name属性值</span><br><span class="line">print(soup.p.b.name)  # b</span><br><span class="line"></span><br><span class="line"># 输出第一个a标签的href属性值</span><br><span class="line">print(soup.a[&quot;href&quot;])  # http://example.com/elsie</span><br><span class="line"></span><br><span class="line"># 得到第一个a标签的属性值</span><br><span class="line">print(soup.a.attrs)  # &#123;&#x27;href&#x27;: &#x27;http://example.com/elsie&#x27;, &#x27;class&#x27;: [&#x27;sister&#x27;], &#x27;id&#x27;: &#x27;link1&#x27;&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="（3）返回多值的属性">（3）返回多值的属性</h4>
-<ul>
-<li>常见的多值的属性是 class (一个tag可以有多个CSS的class)</li>
-<li>在BeautifulSoup多值属性的返回类型都是list</li>
-</ul>
-```python
-from bs4 import BeautifulSoup
-
-# 读取html文档
-with open("练习.html", "r", encoding="utf") as fp:
-    data = fp.read()
-    
-# 生成soup对象
-soup = BeautifulSoup(data, "lxml")
-
-# 返回当前标签的class属性值
-print(soup.a["class"], type(soup.a["class"]))  # ['sister'] <class 'list'>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### （4）曾，删，改，查  tag的属性</span><br><span class="line"></span><br><span class="line">- tag的属性可以被、曾，删，改</span><br><span class="line">- 操作的方法和字典一样</span><br><span class="line"></span><br><span class="line">曾</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 给div标签添加一个类属性值，只给你的第一个div标签添加class属性，</span><br><span class="line">soup.div[&quot;class&quot;] = [&quot;aaa&quot;]</span><br><span class="line">print(souop) # 可以发现已经增加上去</span><br></pre></td></tr></table></figure>
-
-<p>删</p>
-<ul>
-<li>方式一</li>
-</ul>
-```python
-# 删除第一个a标签的id属性值
-del soup.a["id"]
-
-print(souop) # 可以发现已经删除
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 方式二</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 获取到当前的标签的所有属性名和属性值，然后再根据键 删除掉指定的值</span><br><span class="line">print(soup.p.attrs)</span><br><span class="line">print(soup.p.attrs.pop(&quot;class&quot;))</span><br><span class="line">print(souop) # 可以发现已经删除</span><br></pre></td></tr></table></figure>
-
-<p>改</p>
-```python
-# 修改第一个a标签的class属性值
-soup.a["class"] = ["sister c1"]
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">查</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">print(soup.p[&quot;class&quot;])  # [&#x27;title&#x27;]</span><br></pre></td></tr></table></figure>
-
-<h4 id="（5）获取标签对象的文本内容">（5）获取标签对象的文本内容</h4>
-```python
-# 获取p标签的第一个标签中的文本内容
-text = soup.p.get_text()
-print(text)
-
-# 获取标签中间内容的生成器对象
-strings = soup.p.strings
-print(strings)  # <generator object Tag._all_strings at 0x000001BCA80C71B0>
-# 遍历生成器对象
-texts = [i for i in strings]
-# 得到p标签下所有的文本内容
-print(texts)
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- string和strings的区别</span><br><span class="line"></span><br><span class="line">- 如果tag包含了多个子节点,tag就无法确定 </span><br><span class="line"></span><br><span class="line">- - .string 方法应该调用哪个子节点的内容,</span><br><span class="line">  - .string 的输出结果是 None</span><br><span class="line"></span><br><span class="line">- 如果只有一个子节点那么就输出该子节点的文本， </span><br><span class="line"></span><br><span class="line">- - 比如下面的这种结构</span><br><span class="line">  - soup.p.string 返回为None</span><br><span class="line">  - 但soup.p.strings就可以找到所有文本</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 如果标签里面是多层级的情况，使用.string不生效，返回None</span><br><span class="line">print(soup.p.string)  # None</span><br><span class="line"></span><br><span class="line"># 想要获取当前标签下的文本</span><br><span class="line">print(soup.p.a.string)  # Elsie</span><br><span class="line"></span><br><span class="line">data = soup.find_all(&quot;p&quot;)[1]</span><br><span class="line">print(data.string)  # None</span><br><span class="line"></span><br><span class="line">data = soup.find_all(&quot;p&quot;)[1]</span><br><span class="line"># print(data.strings)</span><br><span class="line"></span><br><span class="line">data = [a for a in data.strings]</span><br><span class="line">print(data)</span><br><span class="line"># [&#x27;Once upon a time there were three little sisters; and their names were\n&#x27;, &#x27;Elsie&#x27;, &#x27;,\n&#x27;, &#x27;Lacie&#x27;, &#x27; and\n&#x27;, &#x27;Tillie&#x27;, &#x27;;\nand they lived at the bottom of a well.&#x27;]</span><br></pre></td></tr></table></figure>
-
-<h3 id="【3】NavigableString对象">【3】NavigableString对象</h3>
-<ul>
-<li>表示标签内的文本内容，或者是非标签字符串</li>
-<li>当tag只包含单一的字符串时，可以使用tag.string或tag.text来获取该字符串</li>
-</ul>
-```python
-from bs4 import BeautifulSoup
-# 生成soup对象
-with open("练习.html", "r", encoding="utf8") as fp:
-    data = fp.read()
-
-soup = BeautifulSoup(data, "lxml")
-
-# 或群单一标签的文本内容
-text = soup.title.string
-print(text)
-# 获得p标签下所有的文本信息
-p_text = soup.p.strings
-print(p_text)  # The Dormouse's story
-# <generator object Tag._all_strings at 0x0000028BBF5371B0>
-for p in p_text:
-    print(p)  # The Dormouse's story
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【4】Comment对象</span><br><span class="line"></span><br><span class="line">- 代表HTML文档中的注释内容</span><br><span class="line">- 当解析遇到HTML文档中的注释时，BeautifulSoup会将注释封装成Comment对象</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line"></span><br><span class="line"># 生成soup对象</span><br><span class="line">with open(&quot;练习.html&quot;, &quot;r&quot;, encoding=&quot;utf8&quot;) as fp:</span><br><span class="line">    data = fp.read()</span><br><span class="line"></span><br><span class="line">soup = BeautifulSoup(data, &quot;lxml&quot;)</span><br><span class="line"></span><br><span class="line">text = soup.span.b.string</span><br><span class="line">print(text, type(text))</span><br><span class="line"># 猪头！！ &lt;class &#x27;bs4.element.NavigableString&#x27;&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4.8logging%E6%A8%A1%E5%9D%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/4.8logging%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">4.8logging模块</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>logging模块</h1>
-```python
-# logging 模块 记录 log 记录日志的模块
-
-import logging
-import logging.config
-import os
-import sys
-
-try:
-    # 想要给日志上色就安装这个模块
-    # pip install coloredlogs :::>>> 给日志上个色
-    import coloredlogs
-except Exception as e:
-    if str(e) == "No module named 'coloredlogs'":
-        pass
-    
-# 自定义日志级别
-CONSOLE_LOG_LEVEL = "INFO"
-FILE_LOG_LEVEL = "DEBUG"
-
-# 自定义日志格式
-# 打印在文件里的格式：时间戳 + 线程名 + 线程ID + 任务ID + 发出日志调用的源文件名 + 发出日志调用的源代码行号 + 日志级别 + 日志消息正文
-# [2023-06-04 15:16:05][MainThread:22896][task_id:root][调用.py:12][INFO][这是注册功能]
-STANDARD_FORMAT = '[%(asctime)s][%(threadName)s:%(thread)d][task_id:%(name)s][%(filename)s:%(lineno)d][%(levelname)s][%(message)s]'
-# 打印在控制台的格式：日志级别 + 时间戳 + 发出日志调用的源文件名 + 发出日志调用的源代码行号 + 日志消息正文
-# [INFO][2023-06-04 15:37:28,019][调用.py:12]这是注册功能
-
-SIMPLE_FORMAT = '[%(levelname)s][%(asctime)s][%(filename)s:%(lineno)d]%(message)s'
-'''
-参数详解:
--1.%(asctime)s: 时间戳，表示记录时间
--2.%(threadName)s: 线程名称
--3.%(thread)d: 线程ID
--4.task_id:%(name)s: 任务ID，即日志记录器的名称
--5.%(filename)s: 发出日志调用的源文件名
--6.%(lineno)d: 发出日志调用的源代码行号
--7.%(levelname)s: 日志级别，如DEBUG、INFO、WARNING、ERROR、CRITICAL等
--8.%(message)s: 日志消息正文
-'''
-
-# 日志文件路径
-BASE_DIR = os.path.dirname(__file__)
-# os.getcwd() : 获取当前工作目录，即当前python脚本工作的目录路径
-# 拼接日志文件路径 : 当前工作路径 + “logs”(日志文件路径)
-LOG_PATH = os.path.join(BASE_DIR, "logs")
-# OS模块 ： 创建多层文件夹
-# exist_ok=True 的意思是如果该目录已经存在，则不会抛出异常。
-os.makedirs(LOG_PATH, exist_ok=True)
-# log日志文件路径 ： 路径文件夹路径 + 日志文件
-LOG_FILE_PATH = os.path.join(LOG_PATH, 'Logs.log')
-
-# 日志配置字典
-LOGGING_DIC = {
-    # 日志版本
-    'version': 1,
-    # 表示是否要禁用已经存在的日志记录器（loggers）。
-    # 如果设为 False，则已经存在的日志记录器将不会被禁用，而是可以继续使用。
-    # 如果设为 True，则已经存在的日志记录器将会被禁用，不能再被使用。
-    'disable_existing_loggers': False,
-    # 格式化程序：用于将日志记录转换为字符串以便于处理和存储。
-    # 格式化程序定义了每个日志记录的输出格式，并可以包括日期、时间、日志级别和其他自定义信息。
-    'formatters': {
-        # 自定义格式一：年-月-日 时:分:秒
-        'standard': {
-            # 自定义日志格式 ：时间戳 + 线程名 + 线程ID + 任务ID + 发出日志调用的源文件名 + 发出日志调用的源代码行号 + 日志级别 + 日志消息正文
-            # 这里要对应全局的 STANDARD_FORMAT 配置
-            'format': STANDARD_FORMAT,
-            # 时间戳格式：年-月-日 时:分:秒
-            'datefmt': '%Y-%m-%d %H:%M:%S'  # 时间戳格式
-        },
-        # 自定义格式二：
-        'simple': {
-            # 自定义日志格式：# 日志级别 + 时间戳 + 发出日志调用的源文件名 + 发出日志调用的源代码行号 + 日志消息正文
-            # 这里要对应全局的 SIMPLE_FORMAT 配置
-            'format': SIMPLE_FORMAT
-        },
-    },
-    # 过滤器
-    'filters': {},
-    # 日志处理器
-    'handlers': {
-        # 自定义处理器名称 - 输出到控制台屏幕
-        'console': {
-            # 设置日志等级 为INFO
-            'level': CONSOLE_LOG_LEVEL,
-            # 表示该处理器将输出日志到流（stream）：日志打印到控制台
-            'class': 'logging.StreamHandler',
-            # 日志打印格式：日志级别 + 时间戳 + 发出日志调用的源文件名 + 发出日志调用的源代码行号 + 日志消息正文
-            # 这里的配置要对应 formatters 中的 simple 配置
-            'formatter': 'simple'
-        },
-        # 自定义处理器名称 - 输出到文件
-        'default': {
-            # 自定义日志等级
-            'level': FILE_LOG_LEVEL,
-            # 标准输出到文件
-            'class': 'logging.handlers.RotatingFileHandler',
-            # 日志打印格式：年-月-日 时:分:秒
-            # 这里的配置要对应 formatters 中的 standard 配置
-            'formatter': 'standard',
-            # 这里 要注意声明配置文件输出端的文件路径
-            'filename': LOG_FILE_PATH,
-            # 限制文件大小：1024 * 1024 * 5 = 5242880，意味着这个变量的值是 5MB（兆字节）
-            'maxBytes': 1024 * 1024 * 5,
-            # 表示保留最近的5个日志文件备份。
-            # 当日志文件达到最大大小限制时，将会自动轮转并且保留最新的5个备份文件，以便查看先前的日志记录。
-            # 当日志文件达到最大大小限制时，会自动进行轮转，后续的文件名将会以数字进行命名，
-            # 例如，第一个备份文件将被重命名为原始日志文件名加上".1"的后缀，
-            # 第二个备份文件将被重命名为原始日志文件名加上“.2”的后缀，
-            # 以此类推，直到保留的备份数量达到设定的最大值。
-            'backupCount': 5,
-            # 日志存储文件格式
-            'encoding': 'utf-8',
-        },
-    },
-    # 日志记录器，用于记录应用程序的运行状态和错误信息。
-    'loggers': {
-        # 空字符串作为键 能够兼容所有的日志(当没有找到对应的日志记录器时默认使用此配置)
-        # 默认日志配置
-        '': {
-            # 日志处理器 类型：打印到控制台输出 + 写入本地日志文件
-            'handlers': ['default', 'console'],
-            # 日志等级 ： DEBUG
-            'level': 'DEBUG',
-            # 默认情况下，当一个日志消息被发送到一个Logger对象且没有被处理时，该消息会被传递给它的父Logger对象，以便在更高层次上进行处理。
-            # 这个传递过程称为“传播(propagation)”，而propagate参数指定了是否要使日志消息向上传播。
-            # 将其设置为True表示应该传播消息到上一级的Logger对象；如果设置为False则不传播。
-            # 表示异常将会在程序中继续传播
-            # 也就是说，如果一个异常在当前的代码块中没有被处理，它将会在上级代码块或调用函数中继续向上传递，直到被某个代码块捕获或者程序退出。
-            # 这是 Python 中异常处理机制的默认行为。
-            # 如果将 'propagate' 设置为 False，则异常不会被传播，即使在上级代码块中没有处理异常的语句，程序也会忽略异常并继续执行。
-            'propagate': True,
-        },
-    },
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def set_logging_color(name='', ):
-    # 初始化日志处理器 - 使用配置字典初始化日志处理器(将自定义配置加载到日志处理器中)
-    # logging.basicConfig(level=logging.WARNING)
-    logging.config.dictConfig(LOGGING_DIC)
-    # 实例化日志处理器对象 - 并赋予日志处理器等级
-    logger = logging.getLogger(name)
-    # 将logger对象传递给coloredlogs.install()函数，并执行该函数以安装彩色日志记录器，使日志信息在控制台上呈现为带有颜色的格式。
-    # 具体来说，该函数会使用ANSI转义序列在终端上输出日志级别、时间戳和消息等信息，并按日志级别使用不同的颜色来区分它们。这可以让日志信息更易于阅读和理解。
-    coloredlogs.install(logger=logger)
-    # 禁止日志消息向更高级别的父记录器(如果存在)传递。
-    # 通常情况下，当一个记录器发送一条日志消息时，该消息会被传递给其所有祖先记录器，直到传递到根记录器为止。但是，通过将logger.propagate设置为False，就可以阻止该记录器的消息向上层传递。
-    # 换句话说，该记录器的消息只会被发送到该记录器的处理程序（或子记录器）中，而不会传递给祖先记录器，即使祖先记录器的日志级别比该记录器要低。
-    # 这种方法通常适用于需要对特定记录器进行控制，并希望完全独立于其祖先记录器的情况。
-    # 确保 coloredlogs 不会将我们的日志事件传递给根 logger，这可以防止我们重复记录每个事件
-    logger.propagate = False
-    # 配置 日志颜色
-    # 这段代码定义了一个名为coloredFormatter的变量，并将其赋值为coloredlogs.ColoredFormatter。
-    # 这是一个Python库中的类，用于创建带有彩色日志级别和消息的格式化器。
-    # 该变量可以用作日志记录器或处理程序的格式化程序，以使日志输出更易于阅读和理解。
-    coloredFormatter = coloredlogs.ColoredFormatter(
-        # fmt表示格式字符串，它包含了一些占位符，用于在记录日志时动态地填充相关信息。
-        # [%(name)s]表示打印日志时将记录器的名称放在方括号内，其中name是一个变量名，将被记录器名称所替换。
-        # %(asctime)s表示打印日志时将时间戳（格式化为字符串）插入到消息中，其中asctime是时间的字符串表示形式。
-        # %(funcName)s表示打印日志时将函数名插入到消息中，其中funcName是函数的名称。
-        # %(lineno)-3d表示打印日志时将行号插入到消息中，并且将其格式化为3位数字，其中lineno表示行号。
-        # %(message)s表示打印日志时将消息本身插入到消息中。
-        # 综合起来，这个格式字符串将在记录日志时输出以下信息：记录器名称、时间戳、函数名称、行号和日志消息。
-        # 记录器名称 + 时间戳 + 函数名称 + 行号 + 日志消息
-        # [root] 2023-06-04 16:00:57 register 15   this is an info message
-        fmt='[%(name)s] %(asctime)s %(funcName)s %(lineno)-3d  %(message)s',
-        # 级别颜色字典
-        level_styles=dict(
-            # debug 颜色：白色
-            debug=dict(color='white'),
-            # info 颜色：蓝色
-            info=dict(color='blue'),
-            # warning 颜色：黄色 且 高亮
-            warning=dict(color='yellow', bright=True),
-            # error 颜色：红色 且 高亮 且 加粗
-            error=dict(color='red', bold=True, bright=True),
-            # critical 颜色：灰色 且 高亮 且 背景色为红色
-            critical=dict(color='black', bold=True, background='red'),
-        ),
-        # 这段代码定义了一个名为field_styles的字典 , 其中包含四个键值对。
-        # 每个键代表日志记录中的不同字段，而每个值是一个字典，它指定了与该字段相关联的样式选项。
-        # 具体来说，这些字段和样式选项如下：
-        # name：指定记录器的名称，将使用白色颜色。
-        # asctime：指定日志记录的时间戳，将使用白色颜色。
-        # funcName：指定记录消息的函数名称，将使用白色颜色。
-        # lineno：指定记录消息的源代码行号，将使用白色颜色。
-        field_styles=dict(
-            name=dict(color='white'),
-            asctime=dict(color='white'),
-            funcName=dict(color='white'),
-            lineno=dict(color='white'),
-        )
-    )
-
-    ## 配置 StreamHandler：终端打印界面
-    # 这行代码定义了一个名为ch的日志处理器。
-    # 具体来说，它是logging.StreamHandler类的一个实例，用于将日志输出到标准输出流（即控制台）中。
-    # 在创建StreamHandler对象时，需要指定要使用的输出流
-    # 因此stream=sys.stdout参数指定了该对象将把日志写入到标准输出流中.
-    ch = logging.StreamHandler(stream=sys.stdout)
-    # 这段代码是 Python 中用于设置日志输出格式的语句。
-    # 它使用了一个名为 coloredFormatter 的格式化器对象，并将其传递给 ch.setFormatter() 方法来指定输出日志的样式。
-    # 具体来说，ch 是一个 Logger 对象，它代表了整个日志系统中的一个记录器。
-    # 可以通过该对象来控制日志的级别、输出位置等行为。而 setFormatter() 方法则用于设置该 Logger 输出日志的格式化方式
-    # 这里传递的是 coloredFormatter 格式化器对象。
-    # 在实际应用中，coloredFormatter 可以是自定义的 Formatter 类或者已经存在的 Formatter 对象。
-    # 这里 将 coloredFormatter - 彩色输出日志信息的格式化器 传入进去。
-    ch.setFormatter(fmt=coloredFormatter)
-    # 这段代码是在Python中添加一个日志记录器（logger）的处理器（handler）。其中，hdlr参数是指定要添加到记录器(logger)中的处理器(handler)对象，ch是一个代表控制台输出的处理器对象。
-    # 这行代码的作用是将控制台输出的信息添加到日志记录器中。
-    logger.addHandler(hdlr=ch)
-    # 这段代码用于设置日志级别为DEBUG，也就是最低级别的日志记录。
-    # 意思是在程序运行时，只有DEBUG级别及以上的日志信息才会被记录并输出，而比DEBUG级别更低的日志信息则不会被记录或输出。
-    # DEBUG（调试）、INFO（信息）、WARNING（警告）、ERROR（错误）和CRITICAL（严重错误）。
-    logger.setLevel(level=logging.DEBUG)
-    # 返回日志生成对象
-    return logger
-
-
-def get_logger(name='', ):
-    '''
-    :param name: 日志等级
-    :return:
-    '''
-    # 初始化日志处理器 - 使用配置字典初始化日志处理器(将自定义配置加载到日志处理器中)
-    logging.config.dictConfig(LOGGING_DIC)
-    # 实例化日志处理器对象 - 并赋予日志处理器等级
-    logger = logging.getLogger(name)
-    # 返回日志生成对象
-    return logger
-
-if __name__ == "__main__":
-    # # 示例：
-    # # （1）初始化日志处理器 - 使用配置字典初始化日志处理器(将自定义配置加载到日志处理器中)
-    # logging.config.dictConfig(LOGGING_DIC)
-    # # （2）实例化日志处理器对象 - 并赋予日志处理器等级
-    # # # logger1 = logging.getLogger('') # 默认为 '' 即以默认配置进行实例化
-    # logger1 = logging.getLogger('')
-    # # （3）当日志发生时，打印的提示语
-    # logger1.debug('这是日志生成语句')
-    logger_nor = get_logger(name='user')
-    logger_nor.info(msg="this is a info message")
-    logger_col = set_logging_color()
-    logger_col.info(msg="this is a debug message")
-```
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/5.0BeautifulSoup%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D(1)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/5.0BeautifulSoup%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D(1)/" class="post-title-link" itemprop="url">5.0BeautifulSoup模块介绍(1)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>BeautifulSoup模块介绍</h1>
-<h2 id="【一】BeautifulSoup模块">【一】BeautifulSoup模块</h2>
-<h3 id="【1】介绍">【1】介绍</h3>
-<ul>
-<li>BeautifulSoup是python的一个库</li>
-<li>主要的功能就是从网页上抓取数据</li>
-</ul>
-<h3 id="【2】官方介绍">【2】官方介绍</h3>
-<ul>
-<li>
-<p>Beautiful Soup提供一些简单的、python式的函数用来处理导航、搜索、修改分析树等功能</p>
-</li>
-<li>
-<p>它是一个工具箱，通过解析文档为用户提供需要抓取的数据，因为简单，所以不需要多少代码就可以写出一个完整的应用程序</p>
-</li>
-</ul>
-<h3 id="【3】小结">【3】小结</h3>
-<ul>
-<li>
-<p>BeautifulSoup是一个可以从HTML或XML文件中提取数据的python库</p>
-</li>
-<li>
-<p>它能够通过喜欢的转换器实现惯用的文档导航，查询，修改文档方式</p>
-</li>
-<li>
-<p>Beautiful Soup会帮你节省数小时甚至数天的工作时间</p>
-</li>
-<li>
-<p>你可能在寻找 Beautiful Soup3 的文档,Beautiful Soup 3 目前已经停止开发</p>
-<ul>
-<li>官网推荐在现在的项目中使用Beautiful Soup 4</li>
-<li>官方文档: <a target="_blank" rel="noopener" href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/">https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/</a></li>
-</ul>
-</li>
-</ul>
-<h2 id="【二】安装BeautifulSoup4模块">【二】安装BeautifulSoup4模块</h2>
-```shell
-pip install BeautifulSoup4
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【三】解析器的介绍</span><br><span class="line"></span><br><span class="line">### 【1】导入模块</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from bs4 import BeautifulSoup</span><br></pre></td></tr></table></figure>
-
-<h3 id="【2】解析器">【2】解析器</h3>
-<ul>
-<li>能够解析当前页面生成页面的dom对象</li>
-</ul>
-<ol>
-<li>内置的解析器：<code>&quot;html.parser&quot;</code></li>
-<li>第三方解释器：<code>&quot;lxml&quot;</code>–&gt;<code>pip install lxml</code></li>
-<li>第三方解释器：<code>&quot;html5lib&quot;</code>–&gt;<code>pip install html5lib</code></li>
-</ol>
-<h3 id="【3】使用">【3】使用</h3>
-<ul>
-<li>不写解析器：就使用默认的解析器<code>html.parser</code></li>
-</ul>
-```python
-soup = BeautifulSoup("页面源码","解析器类型")
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【4】解析器的优缺点</span><br><span class="line"></span><br><span class="line">| 解析器           | 使用方法                                                     | 优势                                                    | 劣势                                            |</span><br><span class="line">| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------- | ----------------------------------------------- |</span><br><span class="line">| Python标准库     | BeautifulSoup(markup, &quot;html.parser&quot;)                         | Python的内置标准库 执行速度适中 文档容错能力强          | Python 2.7.3 or 3.2.2)前 的版本中文档容错能力差 |</span><br><span class="line">| lxml HTML 解析器 | BeautifulSoup(markup, &quot;lxml&quot;)                                | 速度快 文档容错能力强                                   | 需要安装C语言库                                 |</span><br><span class="line">| lxml XML 解析器  | BeautifulSoup(markup, [&quot;lxml&quot;, &quot;xml&quot;]) 或BeautifulSoup(markup, &quot;xml&quot;) | 速度快 唯一支持XML的解析器                              | 需要安装C语言库                                 |</span><br><span class="line">| html5lib         | BeautifulSoup(markup, &quot;html5lib&quot;)                            | 最好的容错性 以浏览器的方式解析文档 生成HTML5格式的文档 | 速度慢 不依赖外部扩展                           |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【5】生成soup对象</span><br><span class="line"></span><br><span class="line">- 从一个soup对象开始，以下两种方式生成一个soup对象</span><br><span class="line"></span><br><span class="line">#### （1）方式一</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line"></span><br><span class="line"># 指定HTML源码文件，传入文件源码</span><br><span class="line">soup = BeautifulSoup(open(&quot;index.html&quot;))</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-方式二">(2)方式二</h4>
-````python
-from bs4 import BeautifulSoup
-
-# 直接放入 HTML 源码
-soup = BeautifulSoup("<html>data</html>")
-````
-
-<ul>
-<li>构造soup对象时，可以传入解析器参数</li>
-<li>如果不传入的话，会以最好的方式去解析</li>
-</ul>
-<h3 id="【6】使用案例">【6】使用案例</h3>
-```python
-from bs4 import BeautifulSoup
-
-# 读取html页面
-with open("练习.html", "r", encoding="utf") as fp:
-    data = fp.read()
-
-# 要用lxml首先安装
-# pip install lxml
-
-# 生成一个soup解析器对象
-soup = BeautifulSoup(
-    data,"lxml"
-)
-
-# 获取文章的所有文本内容
-text = soup.get_text()
-print(text)
-
-# 获取文章的a标签
-a_tags = soup.find_all("a")
-# 提取每个a标签的href属性
-a_href = [a.get("href") for a in a_tags]
-print(a_href)
-```
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/5.0BeautifulSoup%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/5.0BeautifulSoup%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">5.0BeautifulSoup模块介绍</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>BeautifulSoup模块介绍</h1>
-<h2 id="【一】BeautifulSoup模块">【一】BeautifulSoup模块</h2>
-<h3 id="【1】介绍">【1】介绍</h3>
-<ul>
-<li>BeautifulSoup是python的一个库</li>
-<li>主要的功能就是从网页上抓取数据</li>
-</ul>
-<h3 id="【2】官方介绍">【2】官方介绍</h3>
-<ul>
-<li>
-<p>Beautiful Soup提供一些简单的、python式的函数用来处理导航、搜索、修改分析树等功能</p>
-</li>
-<li>
-<p>它是一个工具箱，通过解析文档为用户提供需要抓取的数据，因为简单，所以不需要多少代码就可以写出一个完整的应用程序</p>
-</li>
-</ul>
-<h3 id="【3】小结">【3】小结</h3>
-<ul>
-<li>
-<p>BeautifulSoup是一个可以从HTML或XML文件中提取数据的python库</p>
-</li>
-<li>
-<p>它能够通过喜欢的转换器实现惯用的文档导航，查询，修改文档方式</p>
-</li>
-<li>
-<p>Beautiful Soup会帮你节省数小时甚至数天的工作时间</p>
-</li>
-<li>
-<p>你可能在寻找 Beautiful Soup3 的文档,Beautiful Soup 3 目前已经停止开发</p>
-<ul>
-<li>官网推荐在现在的项目中使用Beautiful Soup 4</li>
-<li>官方文档: <a target="_blank" rel="noopener" href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/">https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/</a></li>
-</ul>
-</li>
-</ul>
-<h2 id="【二】安装BeautifulSoup4模块">【二】安装BeautifulSoup4模块</h2>
-```shell
-pip install BeautifulSoup4
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【三】解析器的介绍</span><br><span class="line"></span><br><span class="line">### 【1】导入模块</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from bs4 import BeautifulSoup</span><br></pre></td></tr></table></figure>
-
-<h3 id="【2】解析器">【2】解析器</h3>
-<ul>
-<li>能够解析当前页面生成页面的dom对象</li>
-</ul>
-<ol>
-<li>内置的解析器：<code>&quot;html.parser&quot;</code></li>
-<li>第三方解释器：<code>&quot;lxml&quot;</code>–&gt;<code>pip install lxml</code></li>
-<li>第三方解释器：<code>&quot;html5lib&quot;</code>–&gt;<code>pip install html5lib</code></li>
-</ol>
-<h3 id="【3】使用">【3】使用</h3>
-<ul>
-<li>不写解析器：就使用默认的解析器<code>html.parser</code></li>
-</ul>
-```python
-soup = BeautifulSoup("页面源码","解析器类型")
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【4】解析器的优缺点</span><br><span class="line"></span><br><span class="line">| 解析器           | 使用方法                                                     | 优势                                                    | 劣势                                            |</span><br><span class="line">| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------- | ----------------------------------------------- |</span><br><span class="line">| Python标准库     | BeautifulSoup(markup, &quot;html.parser&quot;)                         | Python的内置标准库 执行速度适中 文档容错能力强          | Python 2.7.3 or 3.2.2)前 的版本中文档容错能力差 |</span><br><span class="line">| lxml HTML 解析器 | BeautifulSoup(markup, &quot;lxml&quot;)                                | 速度快 文档容错能力强                                   | 需要安装C语言库                                 |</span><br><span class="line">| lxml XML 解析器  | BeautifulSoup(markup, [&quot;lxml&quot;, &quot;xml&quot;]) 或BeautifulSoup(markup, &quot;xml&quot;) | 速度快 唯一支持XML的解析器                              | 需要安装C语言库                                 |</span><br><span class="line">| html5lib         | BeautifulSoup(markup, &quot;html5lib&quot;)                            | 最好的容错性 以浏览器的方式解析文档 生成HTML5格式的文档 | 速度慢 不依赖外部扩展                           |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【5】生成soup对象</span><br><span class="line"></span><br><span class="line">- 从一个soup对象开始，以下两种方式生成一个soup对象</span><br><span class="line"></span><br><span class="line">#### （1）方式一</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line"></span><br><span class="line"># 指定HTML源码文件，传入文件源码</span><br><span class="line">soup = BeautifulSoup(open(&quot;index.html&quot;))</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-方式二">(2)方式二</h4>
-````python
-from bs4 import BeautifulSoup
-
-# 直接放入 HTML 源码
-soup = BeautifulSoup("<html>data</html>")
-````
-
-<ul>
-<li>构造soup对象时，可以传入解析器参数</li>
-<li>如果不传入的话，会以最好的方式去解析</li>
-</ul>
-<h3 id="【6】使用案例">【6】使用案例</h3>
-```python
-from bs4 import BeautifulSoup
-
-# 读取html页面
-with open("练习.html", "r", encoding="utf") as fp:
-    data = fp.read()
-
-# 要用lxml首先安装
-# pip install lxml
-
-# 生成一个soup解析器对象
-soup = BeautifulSoup(
-    data,"lxml"
-)
-
-# 获取文章的所有文本内容
-text = soup.get_text()
-print(text)
-
-# 获取文章的a标签
-a_tags = soup.find_all("a")
-# 提取每个a标签的href属性
-a_href = [a.get("href") for a in a_tags]
-print(a_href)
-```
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/4%E6%9C%8821%E5%A4%A7%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/4%E6%9C%8821%E5%A4%A7%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">4月21大总结</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>4.21大总结</h1>
-<h2 id="【一】函数">【一】函数</h2>
-<ul>
-<li>
-<p>什么是函数</p>
-<ul>
-<li>就是把一个复杂的需求拆分，然后做成单个功能的，在全局都能用（前提是在调用函数的下面使用）</li>
-</ul>
-</li>
-<li>
-<p>函数的标志-----》 def打头</p>
-</li>
-<li>
-<p>函数的调用方式</p>
-<ul>
-<li>直接掉调用
-<ul>
-<li>def name_age(name,age)#调用的时候别忘记给参数</li>
-</ul>
-</li>
-<li>表达式调用
-<ul>
-<li>data = age(2,3) + 6#age()是函数</li>
-</ul>
-</li>
-<li>函数作返回值
-<ul>
-<li>函数的返回值作为参数，给其他参数使用</li>
-<li>函数的内存地址可以作为参数</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>函数的形参</p>
-<ul>
-<li>就是在定义函数（）里面的参数名</li>
-</ul>
-</li>
-<li>
-<p>函数的实参</p>
-<ul>
-<li>就是函数被调用阶段进去的参数</li>
-</ul>
-</li>
-<li>
-<p>传参</p>
-<ul>
-<li>位置传参</li>
-<li>关键字传参</li>
-<li>默认值传参</li>
-</ul>
-</li>
-<li>
-<p>可变长位置擦参数</p>
-<ul>
-<li>*ages</li>
-</ul>
-</li>
-<li>
-<p>可变长关键字参数</p>
-<ul>
-<li>**kwargs</li>
-</ul>
-</li>
-</ul>
-<h1>【二】名称空间</h1>
-<ul>
-<li>
-<p>内建名称空间：python自带的</p>
-</li>
-<li>
-<p>全局名称空间：自己定义的</p>
-</li>
-<li>
-<p>局部名称空间：定义在函数/类 里面的函数名…</p>
-</li>
-<li>
-<p>程序启动的加载顺序–</p>
-<ul>
-<li>先内-再全-最后局</li>
-</ul>
-</li>
-<li>
-<p>寻找变量名的加载顺序</p>
-<ul>
-<li>先局-在全-最后内</li>
-</ul>
-</li>
-</ul>
-<h1>【三】作用域</h1>
-<ul>
-<li>
-<p>局部作用域（Local）</p>
-<ul>
-<li>函数亡，局部变量亡</li>
-<li>范围：整个函数体范围</li>
-<li>查看局部变量：locals</li>
-</ul>
-</li>
-<li>
-<p>嵌套作用域(Enclosed)</p>
-<ul>
-<li>范围：闭包函数</li>
-</ul>
-</li>
-<li>
-<p>全局作用域（Global）</p>
-<ul>
-<li>在模块文件最顶层生命的变量，具有全局性</li>
-<li>修改全局变量我们可以用globals</li>
-</ul>
-</li>
-<li>
-<p>内建作用域（Built）</p>
-<ul>
-<li>随着python启动自己加载的名称空间</li>
-</ul>
-</li>
-<li>
-<p>查找顺序legb</p>
-</li>
-<li>
-<p>全局变量和局部变量重名时，采用就近原则</p>
-</li>
-</ul>
-<h1>【四】函数对象</h1>
-<ul>
-<li>python中一切皆对象</li>
-<li>函数可以直接被引用
-<ul>
-<li>定义一个函数用一个新的变量来存，用新的变量名调用</li>
-</ul>
-</li>
-<li>可以做为元组被储存</li>
-<li>函数可以作为一个参数传给另一个参数</li>
-<li>函数的返回值可以是一个参数传给另一个参数</li>
-<li>函数的返回值可以是一个函数
-<ul>
-<li>直接将函数的内存地址返回</li>
-</ul>
-</li>
-</ul>
-<h1>【五】装饰器</h1>
-<ul>
-<li>在不修改被装饰对象源代码和调用方式的前提下为被装饰对象添加额外的功能。</li>
-<li>分类
-<ul>
-<li>有参函数</li>
-<li>无参函数</li>
-</ul>
-</li>
-<li>原理
-<ul>
-<li>闭包函数和函数对象的组合使用</li>
-</ul>
-</li>
-<li>无参装饰器
-<ul>
-<li>没有参数的装饰器</li>
-</ul>
-</li>
-<li>模板</li>
-</ul>
-```python
-# 无参装饰器的模板
-def outer(func):
-    ''' 
-    :param func: 每一次需要调用传递的函数
-    :return:返回值是内嵌函数 inner 的函数内存地址 
-    '''
-    def inner():
-        # 可以加逻辑校验
-        # 当符合指定条件后，可以允许执行传递进来的函数
-        # 不符合条件的时候不执行函数
-        func()
-        # 做逻辑校验，func 函数执行后的逻辑
-
-    return inner
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 有参装饰器</span><br><span class="line">  - 根据指定的位置传递参数</span><br><span class="line">- 优化</span><br><span class="line">  - 用可变长位置参数和可变长关键字参数接收函数所需要的所有参数</span><br><span class="line"></span><br><span class="line">- 模板</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">#无参模版</span><br><span class="line">def outer(func):</span><br><span class="line">    def inner():</span><br><span class="line">        func()</span><br><span class="line"></span><br><span class="line">    return inner</span><br><span class="line"></span><br><span class="line">#有参模版</span><br><span class="line">def outer_yes(func):</span><br><span class="line">    def inner(*args, **kwargs):</span><br><span class="line">        func(*args, **kwargs)</span><br><span class="line">    return inner</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>
-<p>装饰器语法糖</p>
-</li>
-<li>
-<p>标志@</p>
-</li>
-<li>
-<p>无参装饰器语法糖</p>
-<ul>
-<li>无参数</li>
-</ul>
-</li>
-<li>
-<p>有参语法糖</p>
-<ul>
-<li>有参数</li>
-<li>但语法糖：就@</li>
-<li>多语法糖：多个@</li>
-</ul>
-</li>
-</ul>
-<h1>【六】迭代器</h1>
-<ul>
-<li>每次迭代得到的返回值结果可就是下一次迭代开始的初始值</li>
-<li>可迭代对象
-<ul>
-<li>内置有.__iter__方法的对象都是可迭代对象</li>
-<li>不可迭代的：布尔，整数，浮点数，剩下都的可以</li>
-</ul>
-</li>
-</ul>
-<h1>【七】迭代器对象</h1>
-<ul>
-<li>
-<p>内置有.__iter__和.__next__就是迭代器对象</p>
-</li>
-<li>
-<p>.__next__挨个取值一次只能取一个，下次从你上一次的取值结果继续开始</p>
-</li>
-<li>
-<p>也可以直接写成next（），iter（）</p>
-</li>
-<li>
-<p>缺点：除非取值取到尽头，否则永远不知道终止索引在哪里</p>
-<ul>
-<li>只能取一次记一次位置，下一次的起始位置是上一次的终止位置，想回到开头，回不去</li>
-</ul>
-</li>
-</ul>
-<h1>【八】生成器</h1>
-<ul>
-<li>
-<p>在python中生成器就是一种特殊的迭代器</p>
-</li>
-<li>
-<p>创建方式</p>
-<ul>
-<li>
-<p>可以将列表推导式的方括号改为圆括号，即可创建一个生成器</p>
-</li>
-<li>
-<p>yield关键字</p>
-<ul>
-<li>生成器函数中的yield语句会暂停函数执行并返回一个值，下一次调用该函数时会继续执行并返回下一个值</li>
-<li>send（）传值</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1>【九】模块与包</h1>
-<ul>
-<li>
-<p>模块</p>
-<ul>
-<li>一个py文件就是一个模块</li>
-</ul>
-</li>
-<li>
-<p>from 模块名 import 属性名</p>
-</li>
-<li>
-<p>import 模块名</p>
-</li>
-<li>
-<p>支持导入多个模块</p>
-</li>
-<li>
-<p>重命名模块—》import 模块名 as 新模块名</p>
-</li>
-<li>
-<p>模块分类</p>
-<ul>
-<li>纯python编写的自己定义的模块</li>
-<li>内置的一系列模块 (python解释器自带的和你安装 pip install )</li>
-<li>使用c语言编写的底层代码</li>
-<li>c和c++扩展出来的模块</li>
-</ul>
-</li>
-<li>
-<p>加载顺序</p>
-<ul>
-<li>跟上面反过来</li>
-</ul>
-</li>
-<li>
-<p>查找顺序</p>
-<ul>
-<li>跟加载顺序相反</li>
-</ul>
-</li>
-<li>
-<p>包</p>
-<ul>
-<li>模块的聚集地</li>
-<li>里面有.__init__文件的就是包</li>
-</ul>
-</li>
-<li>
-<p>from 模块名 import 属性名</p>
-</li>
-<li>
-<p>from 包名 import 模块名</p>
-</li>
-</ul>
-<h1>【十】绝对路径</h1>
-<ul>
-<li>在python查找的顺序就是绝对路径
-<ul>
-<li>D:\Python\PythonProjects\PythonProjects29\day17</li>
-</ul>
-</li>
-</ul>
-<h1>【十一】相对路径</h1>
-<ul>
-<li>你所在的文件夹就是相对历经</li>
-<li>./当前同目录下载</li>
-<li>.//当前目录上一级目录下载</li>
-<li>默认就是当前目录下载</li>
-</ul>
-<h1>【十二】json模块</h1>
-<ul>
-<li>
-<p>json是 你存进去是什么类型读出来就是什么类型</p>
-</li>
-<li>
-<p>导入模块</p>
-<ul>
-<li>import json模块</li>
-</ul>
-</li>
-<li>
-<p>保存为json文件</p>
-<ul>
-<li>with open…</li>
-<li>写入用json.dump(存数据的变量名，句柄= 句柄)</li>
-</ul>
-</li>
-<li>
-<p>读出来转为python对象</p>
-<ul>
-<li>with open…</li>
-<li>读出用json.load(句柄)</li>
-</ul>
-</li>
-<li>
-<p>将字典转换为字符串</p>
-<ul>
-<li>json.dumps(变量名)</li>
-</ul>
-</li>
-<li>
-<p>字符串转换为字典</p>
-<ul>
-<li>json.loads</li>
-</ul>
-</li>
-</ul>
-<h1>【十二】time模块</h1>
-<ul>
-<li>
-<p>生成时间戳：time.time()</p>
-</li>
-<li>
-<p>time.sleep():睡眠时间</p>
-</li>
-<li>
-<p>生成时间戳转为时间元组</p>
-<ul>
-<li>国际时间time.gmtime(time.time)</li>
-<li>本地时间time.localtime(time.time)</li>
-</ul>
-</li>
-<li>
-<p>转换为时间字符串time.strftime(‘%Y-%m-%d %H:%M:%S’)</p>
-</li>
-<li>
-<p>从时间元组中获取指定的元素</p>
-<ul>
-<li>年：变量名.tm_year</li>
-<li>月：变量名.tm_mon</li>
-<li>…</li>
-</ul>
-</li>
-<li>
-<p>time.strptime(“2023-11-24”, “%Y-%m-%d”)括号里可以改任意时间</p>
-<ul>
-<li>将时间字符串格式转换为时间元组</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/5.0Django%E8%AF%B7%E6%B1%82%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/5.0Django%E8%AF%B7%E6%B1%82%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="post-title-link" itemprop="url">5.0Django请求生命周期</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：11:52:36" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>Django请求生命周期</h1>
-<h3 id="【1】Django生命周期流程图">【1】Django生命周期流程图</h3>
-<p><img src="D:%5Cpycharm%5CTemporary_notes%5C%E5%9B%BE%E7%89%87%5C0528db72-2b1a-4af7-87d8-9d0bb613a239.png" alt="0528db72-2b1a-4af7-87d8-9d0bb613a239"></p>
-<h3 id="【2】回想一下wsgiref模块-的请求周期">【2】回想一下wsgiref模块 的请求周期</h3>
-<ul>
-<li>前端发起请求 —&gt;</li>
-<li>wsgiref 模块的 Request 上 —&gt;</li>
-<li>获取 路径 —</li>
-<li><a target="_blank" rel="noopener" href="http://urls.py">urls.py</a> 中映射视图函数—</li>
-<li>进入到视图函数中 —</li>
-<li>读取前端模版 / 读取数据库数据 ----</li>
-<li>经过 wsgiref 模块的 response 对象封装—</li>
-<li>交给前端页面 渲染数据</li>
-</ul>
-<h3 id="【3】Django的请求生命周期">【3】Django的请求生命周期</h3>
-<ol>
-<li>从前端入手 前端发送请求</li>
-<li>wsgiref 模块上对 Request 进行分装</li>
-<li>Django框架上 中间件 （相当于你的公司的保安 你的第一道防线）</li>
-<li>Django框架上的 路由映射  <a target="_blank" rel="noopener" href="http://urls.py">urls.py</a> 去根据路径映射制定的视图函数</li>
-<li>Django框架上的 视图函数 <a target="_blank" rel="noopener" href="http://views.py">views.py</a> 中
-<ul>
-<li>获取前端页面 (模版语法渲染)</li>
-<li>读取数据库数据 (增删改查)</li>
-<li>记录你的操作日志 (记录日志)</li>
-<li>返回 response对象</li>
-</ul>
-</li>
-<li>Django框架上的 <a target="_blank" rel="noopener" href="http://urls.py">urls.py</a> 根据制定路径回去</li>
-<li>回到了 wsgiref 模块上 对Django的 response 对象进行封装</li>
-<li>回到前端解包渲染</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aurora-lsk.asia/2025/10/15/5.0Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
-      <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/10/15/5.0Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">5.0Scrapy框架之配置文件介绍</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>Scrapy框架之配置文件介绍</h1>
-```python
-
-from fake_useragent import UserAgent
-
-# 当前项目的项目名字
-BOT_NAME = "SpiderNews"
-
-# 当前爬虫项目所在的位置
-SPIDER_MODULES = ["SpiderNews.spiders"]
-# 当前爬虫项目所在的位置
-NEWSPIDER_MODULE = "SpiderNews.spiders"
-
-# 指定那个日志级别，达到了你设置的日志级别才会显示日志
-# 指定输出日志的类型：
-LOG_LEVEL = "WARNING"
-
-# 自定义请求头
-# 我们也可以写成：
-USER_AGENT = UserAgent().random
-#USER_AGENT = "SpiderNews (+http://www.yourdomain.com)"
-
-# Obey robots.txt rules
-# 是否遵循robots.txt协议
-ROBOTSTXT_OBEY = False
-
-# 最大请求数量
-#CONCURRENT_REQUESTS = 32
-
-
-# 下载延迟，如果下载三秒中还没反应，会直接抛出异常
-#DOWNLOAD_DELAY = 3
-
-# 并发请求的最大数量
-#CONCURRENT_REQUESTS_PER_DOMAIN = 16
-# 并发请求的ip最大数量
-#CONCURRENT_REQUESTS_PER_IP = 16
-
-# 是否启用cookie
-#COOKIES_ENABLED = False
-
-# 禁用控制台输出
-#TELNETCONSOLE_ENABLED = False
-
-# 默认的请求头参数
-#DEFAULT_REQUEST_HEADERS = {
-#    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-#    "Accept-Language": "en",
-#}
-
-# 是否启用爬虫中间件
-#SPIDER_MIDDLEWARES = {
-#    "SpiderNews.middlewares.SpidernewsSpiderMiddleware": 543,
-#}
-
-# 是否启用下载器中间件
-#DOWNLOADER_MIDDLEWARES = {
-#    "SpiderNews.middlewares.SpidernewsDownloaderMiddleware": 543,
-#}
-
-# 调度引擎
-#EXTENSIONS = {
-#    "scrapy.extensions.telnet.TelnetConsole": None,
-#}
-
-# 管道类
-ITEM_PIPELINES = {
-    # 项目默认的处理类，没有任何操作
-   "SpiderNews.pipelines.SpidernewsPipeline": 300,
-    # 自己写的注册的处理类，后面你的数字越小优先级越高，根据优先级一次执行管道处理类
-   "SpiderNews.pipelines.BoKeYuanPipeline": 300,
-}
-
-# 自动限速
-#AUTOTHROTTLE_ENABLED = True
-# 下载延迟
-#AUTOTHROTTLE_START_DELAY = 5
-# 最大并发数延迟
-#AUTOTHROTTLE_MAX_DELAY = 60
-# The average number of requests Scrapy should be sending in parallel to
-# each remote server
-#AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
-# Enable showing throttling stats for every response received:
-#AUTOTHROTTLE_DEBUG = False
-
-# Enable and configure HTTP caching (disabled by default)
-# See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-#HTTPCACHE_ENABLED = True
-#HTTPCACHE_EXPIRATION_SECS = 0
-#HTTPCACHE_DIR = "httpcache"
-#HTTPCACHE_IGNORE_HTTP_CODES = []
-#HTTPCACHE_STORAGE = "scrapy.extensions.httpcache.FilesystemCacheStorage"
-
-# Set settings whose default value is deprecated to a future-proof value
-REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
-TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
-FEED_EXPORT_ENCODING = "utf-8"
-
-```
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
-
+  </section>
 
 
           </div>
@@ -2340,7 +426,7 @@ FEED_EXPORT_ENCODING = "utf-8"
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">坤</p>
+  <p class="site-author-name" itemprop="name">Aurora</p>
   <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -2388,7 +474,7 @@ FEED_EXPORT_ENCODING = "utf-8"
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">坤</span>
+  <span class="author" itemprop="copyrightHolder">Aurora</span>
 </div>
   <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

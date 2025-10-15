@@ -24,12 +24,12 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="4.14二分法和冒泡排序">
 <meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/4.14%E4%BA%8C%E5%88%86%E6%B3%95%E5%92%8C%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/index.html">
-<meta property="og:site_name" content="坤博客">
+<meta property="og:site_name" content="Aurora博客">
 <meta property="og:description" content="二分法和冒泡排序 【1】介绍   二分法查找，也叫折半法，是一种在有序数组中查找特定元素的搜索算法。   首先，从数组的中间元素开始搜索，如果该元素正好是目标元素，则搜索过程结束，否则执行下一步。 如果目标元素大于&#x2F;小于中间元素，则在数组大于&#x2F;小于中间元素的那一半区域查找，然后重复步骤的操作。 如果某一步数组为空，则表示找不到目标元素。   【2】模版  以下是二分法的模版，包括查找指定数，查找左">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
-<meta property="article:modified_time" content="2025-10-15T08:19:13.214Z">
-<meta property="article:author" content="坤">
+<meta property="article:modified_time" content="2025-10-15T08:41:50.196Z">
+<meta property="article:author" content="Aurora">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
 
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>4.14二分法和冒泡排序 | 坤博客</title>
+  <title>4.14二分法和冒泡排序 | Aurora博客</title>
   
 
 
@@ -97,7 +97,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">坤博客</h1>
+      <h1 class="site-title">Aurora博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -155,12 +155,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="坤">
+      <meta itemprop="name" content="Aurora">
       <meta itemprop="description" content="选择有时候比努力更重要，但是你不努力，选择就只是空谈">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坤博客">
+      <meta itemprop="name" content="Aurora博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:19:13" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:41:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -238,7 +238,7 @@ target = 6
 result = binary_Search(nums, target)
 print(result)  # 8
 # 6所在的索引位置正是 8
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 注意</span><br><span class="line">- while循环的条件`left &lt;= right`代表中止条件为`[left, left+1]`。</span><br><span class="line">- 如果不加等号，则中止条件为`[left,left]`此时left并没有被搜索，是不正确的。</span><br><span class="line"></span><br><span class="line">### （2）左边界查找</span><br><span class="line"></span><br><span class="line">- 左边界查找是指需要查找出指定数在数组中第一次出现的位置的索引。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def left_Search(nums, target):</span><br><span class="line">    left, right = 0, len(nums) - 1  # 搜索区间两边为闭</span><br><span class="line">    while left &lt;= right:</span><br><span class="line">        mid = (right + left) // 2</span><br><span class="line">        if nums[mid] &lt; target:</span><br><span class="line">            left = mid + 1</span><br><span class="line">        else:</span><br><span class="line">            right = mid - 1</span><br><span class="line">    if left &gt;= len(nums) or nums[left] != target:</span><br><span class="line">        return -1</span><br><span class="line">    return left</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">nums = [1, 8, 9, 7, 4, 5, 3, 1, 6]</span><br><span class="line">target = 6</span><br><span class="line">result = left_Search(nums, target)</span><br><span class="line">print(result)  # 8</span><br><span class="line"># 6所在的索引位置正是 8</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 注意</span><br><span class="line">- while循环的条件`left &lt;= right`代表中止条件为`[left, left+1]`。</span><br><span class="line">- 如果不加等号，则中止条件为`[left,left]`此时left并没有被搜索，是不正确的。</span><br><span class="line"></span><br><span class="line">### （2）左边界查找</span><br><span class="line"></span><br><span class="line">- 左边界查找是指需要查找出指定数在数组中第一次出现的位置的索引。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def left_Search(nums, target):</span><br><span class="line">    left, right = 0, len(nums) - 1  # 搜索区间两边为闭</span><br><span class="line">    while left &lt;= right:</span><br><span class="line">        mid = (right + left) // 2</span><br><span class="line">        if nums[mid] &lt; target:</span><br><span class="line">            left = mid + 1</span><br><span class="line">        else:</span><br><span class="line">            right = mid - 1</span><br><span class="line">    if left &gt;= len(nums) or nums[left] != target:</span><br><span class="line">        return -1</span><br><span class="line">    return left</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">nums = [1, 8, 9, 7, 4, 5, 3, 1, 6]</span><br><span class="line">target = 6</span><br><span class="line">result = left_Search(nums, target)</span><br><span class="line">print(result)  # 8</span><br><span class="line"># 6所在的索引位置正是 8</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>注意</li>
@@ -268,7 +268,7 @@ target = 6
 result = left_Search(nums, target)
 print(result)  # 8
 # 6所在的索引位置正是 8
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 注意</span><br><span class="line"></span><br><span class="line">- 主要是要理解右边界查找和左边界查找的区别，在左边界查找时`nums[mid] == target`我们要去查找左边的区间是否有指定数，所以当`nums[mid] == target`时我们要将右边界设置为`mid - 1`，再次进行循环。</span><br><span class="line">- 而在右查找时我们要去查找右边的区间是否有指定数，所以当`nums[mid] == target`时我们要将左边界设置为`mid - 1`</span><br><span class="line"></span><br><span class="line"># 【二】冒泡算法</span><br><span class="line"></span><br><span class="line">## 【1】介绍</span><br><span class="line"></span><br><span class="line">- 两个数比较大小，较大的数</span><br><span class="line"></span><br><span class="line">## 【2】过程</span><br><span class="line"></span><br><span class="line">- 比较相邻的两个数据，如果第二个数小，就交换位置。</span><br><span class="line">- 从后向前两两比较，一直到比较最前两个数据。</span><br><span class="line">- 最终最小数被交换到起始的位置，这样第一个最小数的位置就排好了。</span><br><span class="line">- 继续重复上述过程，依次将第2.3...n-1个最小数排好位置。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def bubble_sort(data):</span><br><span class="line">    for i in range(len(data)):</span><br><span class="line">        print(f&#x27;这是后&#123;i&#125;趟&#x27;)</span><br><span class="line">        for j in range(len(data) - 1 - i):</span><br><span class="line">            if data[j] &gt; data[j + 1]:</span><br><span class="line">                data[j], data[j + 1] = data[j + 1], data[j]</span><br><span class="line">        print(&#x27;差的排序结果为:&gt;&gt;&gt;&#x27;, data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">start_list = [3, 9, 3, 1, 7, 7]</span><br><span class="line">bubble_sort(start_list)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 注意</span><br><span class="line"></span><br><span class="line">- 主要是要理解右边界查找和左边界查找的区别，在左边界查找时`nums[mid] == target`我们要去查找左边的区间是否有指定数，所以当`nums[mid] == target`时我们要将右边界设置为`mid - 1`，再次进行循环。</span><br><span class="line">- 而在右查找时我们要去查找右边的区间是否有指定数，所以当`nums[mid] == target`时我们要将左边界设置为`mid - 1`</span><br><span class="line"></span><br><span class="line"># 【二】冒泡算法</span><br><span class="line"></span><br><span class="line">## 【1】介绍</span><br><span class="line"></span><br><span class="line">- 两个数比较大小，较大的数</span><br><span class="line"></span><br><span class="line">## 【2】过程</span><br><span class="line"></span><br><span class="line">- 比较相邻的两个数据，如果第二个数小，就交换位置。</span><br><span class="line">- 从后向前两两比较，一直到比较最前两个数据。</span><br><span class="line">- 最终最小数被交换到起始的位置，这样第一个最小数的位置就排好了。</span><br><span class="line">- 继续重复上述过程，依次将第2.3...n-1个最小数排好位置。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">def bubble_sort(data):</span><br><span class="line">    for i in range(len(data)):</span><br><span class="line">        print(f&#x27;这是后&#123;i&#125;趟&#x27;)</span><br><span class="line">        for j in range(len(data) - 1 - i):</span><br><span class="line">            if data[j] &gt; data[j + 1]:</span><br><span class="line">                data[j], data[j + 1] = data[j + 1], data[j]</span><br><span class="line">        print(&#x27;差的排序结果为:&gt;&gt;&gt;&#x27;, data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">start_list = [3, 9, 3, 1, 7, 7]</span><br><span class="line">bubble_sort(start_list)</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -288,12 +288,12 @@ print(result)  # 8
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/10/15/4.16for%E5%BE%AA%E7%8E%AF%E5%86%85%E7%BD%AE%E6%9C%BA%E5%88%B6/" rel="prev" title="4.16for循环内置机制">
-      <i class="fa fa-chevron-left"></i> 4.16for循环内置机制
+    <a href="/2025/10/15/4.12re%E6%A8%A1%E5%9D%97/" rel="prev" title="4.12re模块">
+      <i class="fa fa-chevron-left"></i> 4.12re模块
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/10/15/4.10json%E6%A8%A1%E5%9D%97/" rel="next" title="4.10json模块">
-      4.10json模块 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/15/4.13%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0/" rel="next" title="4.13匿名函数">
+      4.13匿名函数 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -359,7 +359,7 @@ print(result)  # 8
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">坤</p>
+  <p class="site-author-name" itemprop="name">Aurora</p>
   <div class="site-description" itemprop="description">选择有时候比努力更重要，但是你不努力，选择就只是空谈</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -407,7 +407,7 @@ print(result)  # 8
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">坤</span>
+  <span class="author" itemprop="copyrightHolder">Aurora</span>
 </div>
   <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
