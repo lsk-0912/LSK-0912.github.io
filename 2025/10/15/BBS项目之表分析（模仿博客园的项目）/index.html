@@ -28,7 +28,7 @@
 <meta property="og:description" content="BBS项目之表分析（模仿博客园的项目） 【一】分析功能 【1】用户功能   登入和注册功能   修改密码，手机号，邮箱，等功能   注销账号功能   退出登入功能   收藏文章功能   【2】文章分享平台  添加文章功能 修改文章功能 删除文章功能 点赞和点踩功能 评论功能  【二】表分析 【1】用户表 【2】个人站点表（就是发文后台）  模仿这个写：https:&#x2F;&#x2F;www.cnblogs.com">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
-<meta property="article:modified_time" content="2025-10-15T08:41:50.475Z">
+<meta property="article:modified_time" content="2025-10-15T09:06:32.913Z">
 <meta property="article:author" content="Aurora">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:41:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：17:06:32" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -382,10 +382,14 @@
 <p>首选创建一个新的库</p>
 </li>
 <li>
-```mysql
-    create database BBS_data;
-    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  - 会报错</span><br><span class="line"></span><br><span class="line">    - 解决报错</span><br><span class="line">      - 方法一：打补丁安装pymysql</span><br><span class="line">      - 方法二：直接安装mysqlclient	</span><br><span class="line"></span><br><span class="line">- 创建APP</span><br><span class="line">  - user用户</span><br><span class="line">  - article文章</span><br><span class="line">  - blog个人站点</span><br><span class="line">  - backend管理端</span><br><span class="line">- 创建的APP一定加载到settings.py的INSTALLED_APPS中</span><br><span class="line"></span><br><span class="line">## 【二】配置Django项目的settings</span><br><span class="line"></span><br><span class="line">- 创建一个静态文件&#x27;static&#x27;</span><br><span class="line"></span><br><span class="line">- 配置路径</span><br><span class="line"></span><br><span class="line">- &#123;% raw %&#125;```python</span><br><span class="line">  STATIC_URL = &#x27;static/&#x27;</span><br><span class="line">  import os</span><br><span class="line">  STATICFILES_DIRS = [</span><br><span class="line">      os.path.join(BASE_DIR, &#x27;static&#x27;)</span><br><span class="line">  ]</span><br></pre></td></tr></table></figure>
+<pre><code class="language-mysql">create database BBS_data;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  - 会报错</span><br><span class="line"></span><br><span class="line">    - 解决报错</span><br><span class="line">      - 方法一：打补丁安装pymysql</span><br><span class="line">      - 方法二：直接安装mysqlclient	</span><br><span class="line"></span><br><span class="line">- 创建APP</span><br><span class="line">  - user用户</span><br><span class="line">  - article文章</span><br><span class="line">  - blog个人站点</span><br><span class="line">  - backend管理端</span><br><span class="line">- 创建的APP一定加载到settings.py的INSTALLED_APPS中</span><br><span class="line"></span><br><span class="line">## 【二】配置Django项目的settings</span><br><span class="line"></span><br><span class="line">- 创建一个静态文件&#x27;static&#x27;</span><br><span class="line"></span><br><span class="line">- 配置路径</span><br><span class="line"></span><br><span class="line">- ```python</span><br><span class="line">  STATIC_URL = &#x27;static/&#x27;</span><br><span class="line">  import os</span><br><span class="line">  STATICFILES_DIRS = [</span><br><span class="line">      os.path.join(BASE_DIR, &#x27;static&#x27;)</span><br><span class="line">  ]</span><br></pre></td></tr></table></figure>
 
+
+
+
+
+</code></pre>
 </li>
 </ul>
 </li>
@@ -393,133 +397,7 @@
 <p>配置好的settings，有需要的后面在加</p>
 </li>
 </ul>
-```python
-from pathlib import Path
-
-# 项目的根路径
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Django内部的加密串
-SECRET_KEY = 'django-insecure-dyb3zehb_+p%62xeww6m_&*79^!zz6f9uz9q=8!up*!97tv9!5'
-
-# 开发者模式 档案ctrl + s会重启项目
-# 如果报错就会提示完整的错误信息
-DEBUG = True
-
-# 允许访问域名白名单
-# []其实就是代表所有里卖弄有一个隐藏的*
-ALLOWED_HOSTS = []
-
-# 注册的APP
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'user.apps.UserConfig',
-    "article.apps.ArticleConfig",
-    "blog.apps.BlogConfig",
-    "backend.apps.BackendConfig"
-]
-
-# 中间件
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-# Django默认的路由系统
-ROOT_URLCONF = 'BBS_project.urls'
-
-#
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'article/templates']
-        ,
-        # 这个是能够检索当前APP下的templates文件
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
-
-# WSGI：Web服务器和Web应用程序或框架之间的一种简单而通用的接口
-WSGI_APPLICATION = 'BBS_project.wsgi.application'
-
-
-# 配置数据库
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        # create database BBS_data
-        'NAME': 'BBS_data',
-        'USER': 'root',
-        'PASSWORD': '1234567',
-        'HOST': '127.0.0.1',
-        'PORT': 3306,
-        'CHARSET': 'utf8mb4',
-    }
-}
-
-# 用户认证验证器
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
-
-# Django的语言脚本
-# LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'zh-hans'
-
-# 时区
-# TIME_ZONE = 'UTC'
-TIME_ZONE = 'Asia/Shanghai'
-
-# 是否启用国际化时间
-# 国际化是指让网站能够支持多种语言，包括展示翻译后的文本、格式化日期、数字等以符合不同地区的习惯
-USE_I18N = True
-
-# 控制Django是否使用失去
-# 为True时存储的日期和时间都会以UTC为基准
-# 同时管理数据库的时间
-USE_TZ = True
-
-# 静态文件路径
-STATIC_URL = 'static/'
-import os
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-```
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"></span><br><span class="line"><span class="comment"># 项目的根路径</span></span><br><span class="line">BASE_DIR = Path(__file__).resolve().parent.parent</span><br><span class="line"></span><br><span class="line"><span class="comment"># Django内部的加密串</span></span><br><span class="line">SECRET_KEY = <span class="string">&#x27;django-insecure-dyb3zehb_+p%62xeww6m_&amp;*79^!zz6f9uz9q=8!up*!97tv9!5&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 开发者模式 档案ctrl + s会重启项目</span></span><br><span class="line"><span class="comment"># 如果报错就会提示完整的错误信息</span></span><br><span class="line">DEBUG = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许访问域名白名单</span></span><br><span class="line"><span class="comment"># []其实就是代表所有里卖弄有一个隐藏的*</span></span><br><span class="line">ALLOWED_HOSTS = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># 注册的APP</span></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">&#x27;django.contrib.admin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.auth&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.contenttypes&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.sessions&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.messages&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.staticfiles&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;user.apps.UserConfig&#x27;</span>,</span><br><span class="line">    <span class="string">&quot;article.apps.ArticleConfig&quot;</span>,</span><br><span class="line">    <span class="string">&quot;blog.apps.BlogConfig&quot;</span>,</span><br><span class="line">    <span class="string">&quot;backend.apps.BackendConfig&quot;</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 中间件</span></span><br><span class="line">MIDDLEWARE = [</span><br><span class="line">    <span class="string">&#x27;django.middleware.security.SecurityMiddleware&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.sessions.middleware.SessionMiddleware&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.middleware.common.CommonMiddleware&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.middleware.csrf.CsrfViewMiddleware&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.auth.middleware.AuthenticationMiddleware&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.messages.middleware.MessageMiddleware&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.middleware.clickjacking.XFrameOptionsMiddleware&#x27;</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Django默认的路由系统</span></span><br><span class="line">ROOT_URLCONF = <span class="string">&#x27;BBS_project.urls&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">TEMPLATES = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;BACKEND&#x27;</span>: <span class="string">&#x27;django.template.backends.django.DjangoTemplates&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;DIRS&#x27;</span>: [BASE_DIR / <span class="string">&#x27;article/templates&#x27;</span>]</span><br><span class="line">        ,</span><br><span class="line">        <span class="comment"># 这个是能够检索当前APP下的templates文件</span></span><br><span class="line">        <span class="string">&#x27;APP_DIRS&#x27;</span>: <span class="literal">True</span>,</span><br><span class="line">        <span class="string">&#x27;OPTIONS&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;context_processors&#x27;</span>: [</span><br><span class="line">                <span class="string">&#x27;django.template.context_processors.debug&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;django.template.context_processors.request&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;django.contrib.auth.context_processors.auth&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;django.contrib.messages.context_processors.messages&#x27;</span>,</span><br><span class="line">            ],</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># WSGI：Web服务器和Web应用程序或框架之间的一种简单而通用的接口</span></span><br><span class="line">WSGI_APPLICATION = <span class="string">&#x27;BBS_project.wsgi.application&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置数据库</span></span><br><span class="line">DATABASES = &#123;</span><br><span class="line">    <span class="string">&#x27;default&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;ENGINE&#x27;</span>: <span class="string">&#x27;django.db.backends.mysql&#x27;</span>,</span><br><span class="line">        <span class="comment"># create database BBS_data</span></span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;BBS_data&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;USER&#x27;</span>: <span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;PASSWORD&#x27;</span>: <span class="string">&#x27;1234567&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;HOST&#x27;</span>: <span class="string">&#x27;127.0.0.1&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;PORT&#x27;</span>: <span class="number">3306</span>,</span><br><span class="line">        <span class="string">&#x27;CHARSET&#x27;</span>: <span class="string">&#x27;utf8mb4&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用户认证验证器</span></span><br><span class="line">AUTH_PASSWORD_VALIDATORS = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;django.contrib.auth.password_validation.UserAttributeSimilarityValidator&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;django.contrib.auth.password_validation.MinimumLengthValidator&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;django.contrib.auth.password_validation.CommonPasswordValidator&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;django.contrib.auth.password_validation.NumericPasswordValidator&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Django的语言脚本</span></span><br><span class="line"><span class="comment"># LANGUAGE_CODE = &#x27;en-us&#x27;</span></span><br><span class="line">LANGUAGE_CODE = <span class="string">&#x27;zh-hans&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 时区</span></span><br><span class="line"><span class="comment"># TIME_ZONE = &#x27;UTC&#x27;</span></span><br><span class="line">TIME_ZONE = <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否启用国际化时间</span></span><br><span class="line"><span class="comment"># 国际化是指让网站能够支持多种语言，包括展示翻译后的文本、格式化日期、数字等以符合不同地区的习惯</span></span><br><span class="line">USE_I18N = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 控制Django是否使用失去</span></span><br><span class="line"><span class="comment"># 为True时存储的日期和时间都会以UTC为基准</span></span><br><span class="line"><span class="comment"># 同时管理数据库的时间</span></span><br><span class="line">USE_TZ = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 静态文件路径</span></span><br><span class="line">STATIC_URL = <span class="string">&#x27;static/&#x27;</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">STATICFILES_DIRS = [</span><br><span class="line">    os.path.join(BASE_DIR, <span class="string">&#x27;static&#x27;</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">DEFAULT_AUTO_FIELD = <span class="string">&#x27;django.db.models.BigAutoField&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -542,8 +420,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
       <i class="fa fa-chevron-left"></i> Django原生操作mysql
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/10/15/Ajax%E6%93%8D%E4%BD%9C/" rel="next" title="Ajax操作">
-      Ajax操作 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/15/ATM--SHOPPING%E7%9B%AE%E5%BD%95%E8%A7%A3%E6%9E%90/" rel="next" title="ATM--SHOPPING目录解析">
+      ATM--SHOPPING目录解析 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>

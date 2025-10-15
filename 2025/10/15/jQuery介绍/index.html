@@ -28,7 +28,7 @@
 <meta property="og:description" content="jQuery介绍 【一】什么是jQuery 【1】概括  jQuery是一个轻量级的、兼容多浏览器的JavaScript库 jQuery使用户能够更方便地处理HTML Document、Events、实现动画效果、方便地进行Ajax交互，能够极大地简化JavaScript编程。它的宗旨就是：“Write less, do mor  【2】小结   jQuery是一个第三方的库   jQuery内部">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-15T03:34:56.000Z">
-<meta property="article:modified_time" content="2025-10-15T08:41:50.525Z">
+<meta property="article:modified_time" content="2025-10-15T09:06:32.974Z">
 <meta property="article:author" content="Aurora">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-10-15 11:34:56 / 修改时间：16:41:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:56+08:00">2025-10-15</time>
+              <time title="创建时间：2025-10-15 11:34:56 / 修改时间：17:06:32" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:56+08:00">2025-10-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,11 +246,14 @@
 <ul>
 <li>这样，当浏览器解析到这两个<script>标签时，就会下载并执行对应的类库文件</li>
 </ul>
-```javascript
-<script src="path/to/jquery.js"></script>
-<script src="path/to/plugin.js"></script>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【3】使用类库功能</span><br><span class="line"></span><br><span class="line">- 一旦类库文件被加载和执行，就可以使用其中提供的功能</span><br><span class="line">- 类库会扩展或增强原生 JavaScript 的功能，通过在页面中引入类库文件，我们可以使用类库提供的函数、方法或特性</span><br><span class="line"></span><br><span class="line">比如</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```javascript</span><br><span class="line">$(document).ready(function() &#123;</span><br><span class="line">  // 在文档加载完成后执行一些代码</span><br><span class="line">  // 使用类库提供的函数或方法</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;path/to/jquery.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;path/to/plugin.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="【3】使用类库功能">【3】使用类库功能</h3>
+<ul>
+<li>一旦类库文件被加载和执行，就可以使用其中提供的功能</li>
+<li>类库会扩展或增强原生 JavaScript 的功能，通过在页面中引入类库文件，我们可以使用类库提供的函数、方法或特性</li>
+</ul>
+<p>比如</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="variable language_">document</span>).<span class="title function_">ready</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 在文档加载完成后执行一些代码</span></span><br><span class="line">  <span class="comment">// 使用类库提供的函数或方法</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <ul>
 <li>上述代码示例中，$符号是 jQuery 的别名，通过调用.ready()方法，我们可以确保在文档加载完成后执行传入的函数。</li>
 </ul>
@@ -392,10 +395,12 @@
 <h1>jQuery之引入</h1>
 <h2 id="【一】jQuery基本语法">【一】jQuery基本语法</h2>
 <h3 id="【1】语法">【1】语法</h3>
-```javascript
-jQuery(选择器).action()
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【2】简写语法</span><br><span class="line"></span><br><span class="line">- 讲jQuery换成$</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```javascript</span><br><span class="line">$(选择器).action()</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">jQuery</span>(选择器).<span class="title function_">action</span>()</span><br></pre></td></tr></table></figure>
+<h3 id="【2】简写语法">【2】简写语法</h3>
+<ul>
+<li>讲jQuery换成$</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(选择器).<span class="title function_">action</span>()</span><br></pre></td></tr></table></figure>
 <h2 id="【二】jQuery的引入方式">【二】jQuery的引入方式</h2>
 <h3 id="【1】两种引入方式">【1】两种引入方式</h3>
 <h4 id="（1）方式一：直接创建本地js文件，HTML导入js文件">（1）方式一：直接创建本地js文件，HTML导入js文件</h4>
@@ -406,35 +411,39 @@ jQuery(选择器).action()
 <ul>
 <li>进入官网–&gt;<a target="_blank" rel="noopener" href="https://www.bootcdn.cn/">BootCDN - Bootstrap 中文网开源项目免费 CDN 加速服务</a>–&gt;点击jQuery–&gt;复制链接标签添加到head标签内部–》导入<code>&lt;script&gt;</code></li>
 </ul>
-```javascript
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【三】基础选择器</span><br><span class="line"></span><br><span class="line">### 【1】元素选择器（Element Selector）</span><br><span class="line"></span><br><span class="line">- 标签名字作为选择器</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```javascript</span><br><span class="line">$(&quot;标签名&quot;)</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="【三】基础选择器">【三】基础选择器</h2>
+<h3 id="【1】元素选择器（Element-Selector）">【1】元素选择器（Element Selector）</h3>
+<ul>
+<li>标签名字作为选择器</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;标签名&quot;</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="【2】ID选择器（ID-Selector）">【2】ID选择器（ID Selector）</h3>
 <ul>
 <li>选择用了id选择器的所有标签</li>
 </ul>
-```javascript
-$("#id对应的值")
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【3】类选择器（Class Selector）</span><br><span class="line"></span><br><span class="line">- 选择用了class选择器的所有标签</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```javascript</span><br><span class="line">$(&quot;.类对应的值&quot;)</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;#id对应的值&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="【3】类选择器（Class-Selector）">【3】类选择器（Class Selector）</h3>
+<ul>
+<li>选择用了class选择器的所有标签</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;.类对应的值&quot;</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="【4】属性选择器（Attribute-Selector）">【4】属性选择器（Attribute Selector）</h3>
 <ul>
 <li>元素的属性和属性值进行选择</li>
 </ul>
-```javascript
-$("[标签里的属性]")
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【5】选择器组合（Multiple Selectors）</span><br><span class="line"></span><br><span class="line">- 选择多个选择器，选择器之间用&quot;，&quot;隔开</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```javascript</span><br><span class="line">$(&#x27;p, .myClass&#x27;);</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;[标签里的属性]&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="【5】选择器组合（Multiple-Selectors）">【5】选择器组合（Multiple Selectors）</h3>
+<ul>
+<li>选择多个选择器，选择器之间用&quot;，&quot;隔开</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;p, .myClass&#x27;</span>);</span><br></pre></td></tr></table></figure>
 <h3 id="【6】后代选择器（Descendant-Selector）">【6】后代选择器（Descendant Selector）</h3>
 <ul>
 <li>选择某个元素的后代元素</li>
 <li>比如，选择所有 “myElement” 元素内的段落p标签元素</li>
 </ul>
-```javascript
-$('#myElement p');
-```
-
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;#myElement p&#x27;</span>);</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -453,12 +462,12 @@ $('#myElement p');
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/10/15/python%E9%94%81%E7%9B%B8%E5%85%B3/" rel="prev" title="python锁相关">
-      <i class="fa fa-chevron-left"></i> python锁相关
+    <a href="/2025/10/15/pycharm%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/" rel="prev" title="pycharm安装过程">
+      <i class="fa fa-chevron-left"></i> pycharm安装过程
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/10/15/pycharm%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/" rel="next" title="pycharm安装过程">
-      pycharm安装过程 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/15/MySQL%E8%BF%9B%E9%98%B6%E7%9F%A5%E8%AF%86/" rel="next" title="MySQL进阶知识">
+      MySQL进阶知识 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -518,7 +527,7 @@ $('#myElement p');
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">jQuery介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AFjQuery"><span class="nav-number">1.1.</span> <span class="nav-text">【一】什么是jQuery</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%A6%82%E6%8B%AC"><span class="nav-number">1.1.1.</span> <span class="nav-text">【1】概括</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%B0%8F%E7%BB%93"><span class="nav-number">1.1.2.</span> <span class="nav-text">【2】小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91jQuery%E4%B8%AD%E5%AF%BC%E5%85%A5%E5%BA%93%E5%8F%91%E7%94%9F%E4%BA%86%E9%82%A3%E4%BA%9B%E4%BA%8B%E6%83%85"><span class="nav-number">1.2.</span> <span class="nav-text">【二】jQuery中导入库发生了那些事情</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E8%8E%B7%E5%8F%96%E7%B1%BB%E5%BA%93%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">【1】获取类库文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%AF%BC%E5%85%A5%E7%B1%BB%E5%BA%93%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">【2】导入类库文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E6%80%BB%E7%BB%93"><span class="nav-number">1.2.3.</span> <span class="nav-text">【4】总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%89%E3%80%91jQuery%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.3.</span> <span class="nav-text">【三】jQuery的优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E8%AF%A6%E7%BB%86"><span class="nav-number">1.4.</span> <span class="nav-text">【1】详细</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E7%AE%80%E5%8C%96DOM%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="nav-number">1.4.1.</span> <span class="nav-text">（1）简化DOM操作：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E8%B7%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="nav-number">1.4.2.</span> <span class="nav-text">（2）跨浏览器兼容性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E4%B8%B0%E5%AF%8C%E7%9A%84%E6%8F%92%E4%BB%B6%E7%94%9F%E6%80%81%E7%B3%BB%E7%BB%9F%EF%BC%9A"><span class="nav-number">1.4.3.</span> <span class="nav-text">（3）丰富的插件生态系统：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89AJAX%E6%94%AF%E6%8C%81"><span class="nav-number">1.4.4.</span> <span class="nav-text">（4）AJAX支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%885%EF%BC%89%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C"><span class="nav-number">1.4.5.</span> <span class="nav-text">（5）动画效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%886%EF%BC%89%E6%89%A9%E5%B1%95%E6%80%A7%E4%B8%8E%E5%8F%AF%E5%AE%9A%E5%88%B6%E6%80%A7"><span class="nav-number">1.4.6.</span> <span class="nav-text">（6）扩展性与可定制性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%B0%8F%E7%BB%93-2"><span class="nav-number">1.5.</span> <span class="nav-text">【2】小结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E4%B8%80%E6%AC%BE%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%9A%84JS%E6%A1%86%E6%9E%B6%E3%80%82"><span class="nav-number">1.5.1.</span> <span class="nav-text">（1）一款轻量级的JS框架。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E4%B8%B0%E5%AF%8C%E7%9A%84DOM%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-number">1.5.2.</span> <span class="nav-text">（2）丰富的DOM选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E9%93%BE%E5%BC%8F%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.5.3.</span> <span class="nav-text">（3）链式表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E4%BA%8B%E4%BB%B6%E3%80%81%E6%A0%B7%E5%BC%8F%E3%80%81%E5%8A%A8%E7%94%BB%E6%94%AF%E6%8C%81"><span class="nav-number">1.5.4.</span> <span class="nav-text">（4）事件、样式、动画支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%885%EF%BC%89Ajax%E6%93%8D%E4%BD%9C%E6%94%AF%E6%8C%81"><span class="nav-number">1.5.5.</span> <span class="nav-text">（5）Ajax操作支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%886%EF%BC%89%E8%B7%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9"><span class="nav-number">1.5.6.</span> <span class="nav-text">（6）跨浏览器兼容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%887%EF%BC%89%E6%8F%92%E4%BB%B6%E6%89%A9%E5%B1%95%E5%BC%80%E5%8F%91"><span class="nav-number">1.5.7.</span> <span class="nav-text">（7）插件扩展开发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%9B%9B%E3%80%91jQuery%E5%AD%A6%E4%B9%A0%E5%86%85%E5%AE%B9"><span class="nav-number">1.6.</span> <span class="nav-text">【四】jQuery学习内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%86%85%E5%AE%B9%E6%A6%82%E6%8B%AC"><span class="nav-number">1.6.1.</span> <span class="nav-text">【1】内容概括</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E4%B8%8B%E8%BD%BD%E9%93%BE%E6%8E%A5"><span class="nav-number">1.6.2.</span> <span class="nav-text">【2】下载链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%94%E3%80%91jQuery%E7%9A%84%E7%89%88%E6%9C%AC"><span class="nav-number">1.7.</span> <span class="nav-text">【五】jQuery的版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%911-x"><span class="nav-number">1.8.</span> <span class="nav-text">【1】1.x</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%912-x%EF%BC%9A"><span class="nav-number">1.9.</span> <span class="nav-text">【2】2.x：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%903%E3%80%913-x%EF%BC%9A"><span class="nav-number">1.10.</span> <span class="nav-text">【3】3.x：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E5%85%AD%E3%80%91jQuery%E9%85%8D%E7%BD%AE"><span class="nav-number">1.11.</span> <span class="nav-text">【六】jQuery配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%9F%BA%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%88%86%E5%8F%91%EF%BC%88CDN%EF%BC%89"><span class="nav-number">1.11.1.</span> <span class="nav-text">【1】基于网络分发（CDN）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E5%AE%98%E7%BD%91"><span class="nav-number">1.11.1.1.</span> <span class="nav-text">（1）官网</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%8E%8B%E7%BC%A9"><span class="nav-number">1.11.1.2.</span> <span class="nav-text">（2）压缩</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">jQuery之引入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91jQuery%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">【一】jQuery基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E8%AF%AD%E6%B3%95"><span class="nav-number">2.1.1.</span> <span class="nav-text">【1】语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91jQuery%E7%9A%84%E5%BC%95%E5%85%A5%E6%96%B9%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">【二】jQuery的引入方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%B8%A4%E7%A7%8D%E5%BC%95%E5%85%A5%E6%96%B9%E5%BC%8F"><span class="nav-number">2.2.1.</span> <span class="nav-text">【1】两种引入方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E7%9B%B4%E6%8E%A5%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0js%E6%96%87%E4%BB%B6%EF%BC%8CHTML%E5%AF%BC%E5%85%A5js%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">（1）方式一：直接创建本地js文件，HTML导入js文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E7%9B%B4%E6%8E%A5%E6%B5%8F%E8%A7%88%E8%AE%BF%E9%97%AE%E5%9C%B0%E5%9D%80"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">（2）方式二：直接浏览访问地址</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91ID%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%88ID-Selector%EF%BC%89"><span class="nav-number">2.2.2.</span> <span class="nav-text">【2】ID选择器（ID Selector）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E5%B1%9E%E6%80%A7%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%88Attribute-Selector%EF%BC%89"><span class="nav-number">2.2.3.</span> <span class="nav-text">【4】属性选择器（Attribute Selector）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%906%E3%80%91%E5%90%8E%E4%BB%A3%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%88Descendant-Selector%EF%BC%89"><span class="nav-number">2.2.4.</span> <span class="nav-text">【6】后代选择器（Descendant Selector）</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">jQuery介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AFjQuery"><span class="nav-number">1.1.</span> <span class="nav-text">【一】什么是jQuery</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%A6%82%E6%8B%AC"><span class="nav-number">1.1.1.</span> <span class="nav-text">【1】概括</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%B0%8F%E7%BB%93"><span class="nav-number">1.1.2.</span> <span class="nav-text">【2】小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91jQuery%E4%B8%AD%E5%AF%BC%E5%85%A5%E5%BA%93%E5%8F%91%E7%94%9F%E4%BA%86%E9%82%A3%E4%BA%9B%E4%BA%8B%E6%83%85"><span class="nav-number">1.2.</span> <span class="nav-text">【二】jQuery中导入库发生了那些事情</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E8%8E%B7%E5%8F%96%E7%B1%BB%E5%BA%93%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">【1】获取类库文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%AF%BC%E5%85%A5%E7%B1%BB%E5%BA%93%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">【2】导入类库文件</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

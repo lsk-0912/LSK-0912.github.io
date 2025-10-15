@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="彼岸图网 案例 &#96;&#96;&#96;python # Current username：爬虫  # current date：2024&#x2F;7&#x2F;17 # current time ：19:11 import os.path  import requests from bs4 import BeautifulSoup from fake_useragent import UserAgent   # SpiderIma">
+  <meta name="description" content="彼岸图网 案例 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100">
 <meta property="og:type" content="article">
 <meta property="og:title" content="彼岸图网 案例">
 <meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/%E5%BD%BC%E5%B2%B8%E5%9B%BE%E7%BD%91%20%E6%A1%88%E4%BE%8B/index.html">
 <meta property="og:site_name" content="Aurora博客">
-<meta property="og:description" content="彼岸图网 案例 &#96;&#96;&#96;python # Current username：爬虫  # current date：2024&#x2F;7&#x2F;17 # current time ：19:11 import os.path  import requests from bs4 import BeautifulSoup from fake_useragent import UserAgent   # SpiderIma">
+<meta property="og:description" content="彼岸图网 案例 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-15T03:34:56.000Z">
-<meta property="article:modified_time" content="2025-10-15T08:41:50.621Z">
+<meta property="article:modified_time" content="2025-10-15T09:06:33.069Z">
 <meta property="article:author" content="Aurora">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-10-15 11:34:56 / 修改时间：16:41:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:56+08:00">2025-10-15</time>
+              <time title="创建时间：2025-10-15 11:34:56 / 修改时间：17:06:33" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:56+08:00">2025-10-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -199,191 +199,7 @@
 
       
         <h1>彼岸图网 案例</h1>
-```python
-# Current username：爬虫 
-# current date：2024/7/17
-# current time ：19:11
-import os.path
-
-import requests
-from bs4 import BeautifulSoup
-from fake_useragent import UserAgent
-
-
-# SpiderImage:爬图片
-class SpiderImage(object):
-    def __init__(self):
-        # 目标网址
-        self.target_url = "https://pic.netbian.com"
-        # 定义了HTTP请求的一个请求头（header）
-        self.headers = {
-            'User-Agent': UserAgent().random
-        }
-        # 当前文件路径
-        self.BASE_URL = os.path.dirname(__file__)
-
-    # 创建目标网址
-    def create_target_url(self, original_url, start_numm, end_num):
-        target_url_list = []
-        # 模仿页面：https://pic.netbian.com/4kdongman/index_2.html
-        for page in range(start_numm, end_num):
-            # 等于1的时候就是第一页
-            if page == 1:
-                target_url = original_url
-                target_url_list.append(target_url)
-            else:
-                target_url = f"https://pic.netbian.com/4kdongman/index_{page}.html"
-                target_url_list.append(target_url)
-        return target_url_list
-
-    # 对目标网址发起请求获取页面源码
-    def spider_page_soup(self, target_url=None):
-        if not target_url:
-            # 目标地址
-            target_url = self.target_url
-        # 请求的到响应
-        response = requests.get(url=target_url,
-                                headers=self.headers)
-        # 编码
-        response.encoding = "gbk"
-        # 获得目标地址的页面信息
-        page_text = response.text
-        # 对页面源码生成soup对象
-        soup = BeautifulSoup(page_text, "lxml")
-        return soup
-
-    # 对页面进行分析提取数据
-    # 提取页面上的分类
-    def parse_category(self):
-        # 先拿到页面生成器对象
-        soup = self.spider_page_soup()
-        # 分析代码，提取标签
-        # 取到每一个a标签
-        category_list_obj = soup.find_all('div', class_='classify')[0].find_all("a")
-        # print(category_list_obj)
-        # 对每一个标签进行提取
-        category_data = {}
-        for category_obj in category_list_obj:
-            # print(category_obj)
-            category_name = category_obj.text
-            category_url = category_obj.attrs.get('href')
-            # print(category_name, category_url)
-            # 观察网址我们可以看出，网站也需要拼接，前面是带域名的
-            category_url = self.target_url + category_url
-            # print(target_url)
-            # 将得到的路径存起来
-            category_data[category_name] = category_url
-        return category_data
-
-    # 提取的当前页面上的图片的详情链接
-    def parse_image_detail_url(self, soup=None):
-        # soup没有的话给空值
-        if not soup:
-            soup = self.spider_page_soup()
-        # 观察页面代码，发现图片都在ur标签的li标签里
-        # 我们需要ur下面的li标签
-        li_list = soup.select("#main > div.slist > ul >li")
-        # print(li_list)
-        # 遍历每个里标签
-        img_detail_data = {}
-        for li in li_list:
-            # 我们需要图片的url
-            # #main > div.slist > ul > li:nth-child(1) > a
-            # 路径不完整我需要拼接
-            # 模仿url：https://pic.netbian.com/tupian/34749.html
-            href = self.target_url + li.select(" a")[0].attrs.get("href")
-            # print(title, href)
-            # 我们拿到了图片的详情链接，继续取完整的图片
-            # 我们要获得当前详情页面的soup对象
-            soup = self.spider_page_soup(target_url=href)
-            # 图片的url,缺域名，加上域名
-            img_url = self.target_url + soup.select("#img > img")[0].attrs.get("src")
-            # 拿到图片，地址
-
-            # 我们还需要title，来保存图片
-            img_title = soup.select("#img > img")[0].attrs.get("title")
-            # 图片名字不能带有*，需要去除
-            # 检测到每个图片名字*的索引位置
-            last_index = img_title.find("4k") if img_title.find("4k") != -1 else img_title.find("4K")
-            # 截取
-            img_title = img_title[:last_index]
-            # print(img_title)
-            # 将图片链接和图片的 名字存到字典里
-            img_detail_data[img_title] = img_url
-        return img_detail_data
-
-    # 下载图片
-    # 根据不同的分类去下载，传入category_name
-    def download_image(self, category_name, img_url, img_title):
-        # 对你想下载的图片发起请求
-        response = requests.get(url=img_url)
-        # 拿到图片的响应数据
-        # content = response.content
-        # 图片存放的路径，进行拼接
-        img_dir = os.path.join(self.BASE_URL, "img", str(category_name))
-        # 文件夹不存在自动创建
-        os.makedirs(img_dir, exist_ok=True)
-        # 拼接图片文件路径,记得加图片的后缀
-        img_path = os.path.join(img_dir, img_title + '.png')
-        with open(img_path, "wb") as fp:
-            for data in response.iter_content(1024):
-                fp.write(data)
-        print(f"图片{img_title}下载完成！")
-
-    # 入口
-    def main(self):
-        # 拿到所有的分类
-        img_category = self.parse_category()
-        print(img_category)
-        category_name_data = {}
-        # enumerate对象，它是一个迭代器，包含元组（包含两个元素，索引和值）
-        # start:所以从1开始
-        for index, category_name in enumerate(img_category.keys(), start=1):
-            print(f"当前第{index}个分类：----{category_name}")
-            category_name_data[index] = category_name
-        # 用户选择下载的分类
-        category_id = input("输入你选择的分类id：---》")
-
-        # 获取类名
-        category_name = category_name_data[int(category_id)]
-        # 起始的url
-        original_url = img_category[category_name]
-
-        # 让用户输入想要下载的起始的页码数和结束的页码数
-        start_num = input("输入你要开始下载的起始页码数：----》")
-        end_num = input("输入你要结束下载的页码数：----》")
-
-        # 创建目标地址
-        target_url_list = self.create_target_url(
-            original_url=original_url,
-            start_numm=int(start_num),
-            end_num=int(end_num)
-        )
-
-        # 遍历每一网址，或的每一个soup对象
-        img_detail_data = {}
-        for target_url in target_url_list:
-            try:
-                soup = self.spider_page_soup(target_url=target_url)
-                # 获取到图片的地址和详情标题
-                img_detail_data.update(self.parse_image_detail_url(soup=soup))
-            except Exception as e:
-                continue
-        for img_title, img_url in img_detail_data.items():
-            self.download_image(img_url=img_url, img_title=img_title, category_name=category_name)
-
-        # img_detail_data = self.parse_image_detail_url()
-        # # 拆分，字典
-        # for img_title, img_url in img_detail_data.items():
-        #     self.download_image(img_url, img_title)
-
-
-if __name__ == '__main__':
-    s = SpiderImage()
-    s.main()
-
-```
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Current username：爬虫 </span></span><br><span class="line"><span class="comment"># current date：2024/7/17</span></span><br><span class="line"><span class="comment"># current time ：19:11</span></span><br><span class="line"><span class="keyword">import</span> os.path</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">from</span> fake_useragent <span class="keyword">import</span> UserAgent</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># SpiderImage:爬图片</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SpiderImage</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 目标网址</span></span><br><span class="line">        <span class="variable language_">self</span>.target_url = <span class="string">&quot;https://pic.netbian.com&quot;</span></span><br><span class="line">        <span class="comment"># 定义了HTTP请求的一个请求头（header）</span></span><br><span class="line">        <span class="variable language_">self</span>.headers = &#123;</span><br><span class="line">            <span class="string">&#x27;User-Agent&#x27;</span>: UserAgent().random</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment"># 当前文件路径</span></span><br><span class="line">        <span class="variable language_">self</span>.BASE_URL = os.path.dirname(__file__)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建目标网址</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">create_target_url</span>(<span class="params">self, original_url, start_numm, end_num</span>):</span><br><span class="line">        target_url_list = []</span><br><span class="line">        <span class="comment"># 模仿页面：https://pic.netbian.com/4kdongman/index_2.html</span></span><br><span class="line">        <span class="keyword">for</span> page <span class="keyword">in</span> <span class="built_in">range</span>(start_numm, end_num):</span><br><span class="line">            <span class="comment"># 等于1的时候就是第一页</span></span><br><span class="line">            <span class="keyword">if</span> page == <span class="number">1</span>:</span><br><span class="line">                target_url = original_url</span><br><span class="line">                target_url_list.append(target_url)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                target_url = <span class="string">f&quot;https://pic.netbian.com/4kdongman/index_<span class="subst">&#123;page&#125;</span>.html&quot;</span></span><br><span class="line">                target_url_list.append(target_url)</span><br><span class="line">        <span class="keyword">return</span> target_url_list</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 对目标网址发起请求获取页面源码</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">spider_page_soup</span>(<span class="params">self, target_url=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> target_url:</span><br><span class="line">            <span class="comment"># 目标地址</span></span><br><span class="line">            target_url = <span class="variable language_">self</span>.target_url</span><br><span class="line">        <span class="comment"># 请求的到响应</span></span><br><span class="line">        response = requests.get(url=target_url,</span><br><span class="line">                                headers=<span class="variable language_">self</span>.headers)</span><br><span class="line">        <span class="comment"># 编码</span></span><br><span class="line">        response.encoding = <span class="string">&quot;gbk&quot;</span></span><br><span class="line">        <span class="comment"># 获得目标地址的页面信息</span></span><br><span class="line">        page_text = response.text</span><br><span class="line">        <span class="comment"># 对页面源码生成soup对象</span></span><br><span class="line">        soup = BeautifulSoup(page_text, <span class="string">&quot;lxml&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> soup</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 对页面进行分析提取数据</span></span><br><span class="line">    <span class="comment"># 提取页面上的分类</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">parse_category</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 先拿到页面生成器对象</span></span><br><span class="line">        soup = <span class="variable language_">self</span>.spider_page_soup()</span><br><span class="line">        <span class="comment"># 分析代码，提取标签</span></span><br><span class="line">        <span class="comment"># 取到每一个a标签</span></span><br><span class="line">        category_list_obj = soup.find_all(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&#x27;classify&#x27;</span>)[<span class="number">0</span>].find_all(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">        <span class="comment"># print(category_list_obj)</span></span><br><span class="line">        <span class="comment"># 对每一个标签进行提取</span></span><br><span class="line">        category_data = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> category_obj <span class="keyword">in</span> category_list_obj:</span><br><span class="line">            <span class="comment"># print(category_obj)</span></span><br><span class="line">            category_name = category_obj.text</span><br><span class="line">            category_url = category_obj.attrs.get(<span class="string">&#x27;href&#x27;</span>)</span><br><span class="line">            <span class="comment"># print(category_name, category_url)</span></span><br><span class="line">            <span class="comment"># 观察网址我们可以看出，网站也需要拼接，前面是带域名的</span></span><br><span class="line">            category_url = <span class="variable language_">self</span>.target_url + category_url</span><br><span class="line">            <span class="comment"># print(target_url)</span></span><br><span class="line">            <span class="comment"># 将得到的路径存起来</span></span><br><span class="line">            category_data[category_name] = category_url</span><br><span class="line">        <span class="keyword">return</span> category_data</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 提取的当前页面上的图片的详情链接</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">parse_image_detail_url</span>(<span class="params">self, soup=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="comment"># soup没有的话给空值</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> soup:</span><br><span class="line">            soup = <span class="variable language_">self</span>.spider_page_soup()</span><br><span class="line">        <span class="comment"># 观察页面代码，发现图片都在ur标签的li标签里</span></span><br><span class="line">        <span class="comment"># 我们需要ur下面的li标签</span></span><br><span class="line">        li_list = soup.select(<span class="string">&quot;#main &gt; div.slist &gt; ul &gt;li&quot;</span>)</span><br><span class="line">        <span class="comment"># print(li_list)</span></span><br><span class="line">        <span class="comment"># 遍历每个里标签</span></span><br><span class="line">        img_detail_data = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> li <span class="keyword">in</span> li_list:</span><br><span class="line">            <span class="comment"># 我们需要图片的url</span></span><br><span class="line">            <span class="comment"># #main &gt; div.slist &gt; ul &gt; li:nth-child(1) &gt; a</span></span><br><span class="line">            <span class="comment"># 路径不完整我需要拼接</span></span><br><span class="line">            <span class="comment"># 模仿url：https://pic.netbian.com/tupian/34749.html</span></span><br><span class="line">            href = <span class="variable language_">self</span>.target_url + li.select(<span class="string">&quot; a&quot;</span>)[<span class="number">0</span>].attrs.get(<span class="string">&quot;href&quot;</span>)</span><br><span class="line">            <span class="comment"># print(title, href)</span></span><br><span class="line">            <span class="comment"># 我们拿到了图片的详情链接，继续取完整的图片</span></span><br><span class="line">            <span class="comment"># 我们要获得当前详情页面的soup对象</span></span><br><span class="line">            soup = <span class="variable language_">self</span>.spider_page_soup(target_url=href)</span><br><span class="line">            <span class="comment"># 图片的url,缺域名，加上域名</span></span><br><span class="line">            img_url = <span class="variable language_">self</span>.target_url + soup.select(<span class="string">&quot;#img &gt; img&quot;</span>)[<span class="number">0</span>].attrs.get(<span class="string">&quot;src&quot;</span>)</span><br><span class="line">            <span class="comment"># 拿到图片，地址</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 我们还需要title，来保存图片</span></span><br><span class="line">            img_title = soup.select(<span class="string">&quot;#img &gt; img&quot;</span>)[<span class="number">0</span>].attrs.get(<span class="string">&quot;title&quot;</span>)</span><br><span class="line">            <span class="comment"># 图片名字不能带有*，需要去除</span></span><br><span class="line">            <span class="comment"># 检测到每个图片名字*的索引位置</span></span><br><span class="line">            last_index = img_title.find(<span class="string">&quot;4k&quot;</span>) <span class="keyword">if</span> img_title.find(<span class="string">&quot;4k&quot;</span>) != -<span class="number">1</span> <span class="keyword">else</span> img_title.find(<span class="string">&quot;4K&quot;</span>)</span><br><span class="line">            <span class="comment"># 截取</span></span><br><span class="line">            img_title = img_title[:last_index]</span><br><span class="line">            <span class="comment"># print(img_title)</span></span><br><span class="line">            <span class="comment"># 将图片链接和图片的 名字存到字典里</span></span><br><span class="line">            img_detail_data[img_title] = img_url</span><br><span class="line">        <span class="keyword">return</span> img_detail_data</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 下载图片</span></span><br><span class="line">    <span class="comment"># 根据不同的分类去下载，传入category_name</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">download_image</span>(<span class="params">self, category_name, img_url, img_title</span>):</span><br><span class="line">        <span class="comment"># 对你想下载的图片发起请求</span></span><br><span class="line">        response = requests.get(url=img_url)</span><br><span class="line">        <span class="comment"># 拿到图片的响应数据</span></span><br><span class="line">        <span class="comment"># content = response.content</span></span><br><span class="line">        <span class="comment"># 图片存放的路径，进行拼接</span></span><br><span class="line">        img_dir = os.path.join(<span class="variable language_">self</span>.BASE_URL, <span class="string">&quot;img&quot;</span>, <span class="built_in">str</span>(category_name))</span><br><span class="line">        <span class="comment"># 文件夹不存在自动创建</span></span><br><span class="line">        os.makedirs(img_dir, exist_ok=<span class="literal">True</span>)</span><br><span class="line">        <span class="comment"># 拼接图片文件路径,记得加图片的后缀</span></span><br><span class="line">        img_path = os.path.join(img_dir, img_title + <span class="string">&#x27;.png&#x27;</span>)</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(img_path, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">            <span class="keyword">for</span> data <span class="keyword">in</span> response.iter_content(<span class="number">1024</span>):</span><br><span class="line">                fp.write(data)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;图片<span class="subst">&#123;img_title&#125;</span>下载完成！&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 入口</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 拿到所有的分类</span></span><br><span class="line">        img_category = <span class="variable language_">self</span>.parse_category()</span><br><span class="line">        <span class="built_in">print</span>(img_category)</span><br><span class="line">        category_name_data = &#123;&#125;</span><br><span class="line">        <span class="comment"># enumerate对象，它是一个迭代器，包含元组（包含两个元素，索引和值）</span></span><br><span class="line">        <span class="comment"># start:所以从1开始</span></span><br><span class="line">        <span class="keyword">for</span> index, category_name <span class="keyword">in</span> <span class="built_in">enumerate</span>(img_category.keys(), start=<span class="number">1</span>):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;当前第<span class="subst">&#123;index&#125;</span>个分类：----<span class="subst">&#123;category_name&#125;</span>&quot;</span>)</span><br><span class="line">            category_name_data[index] = category_name</span><br><span class="line">        <span class="comment"># 用户选择下载的分类</span></span><br><span class="line">        category_id = <span class="built_in">input</span>(<span class="string">&quot;输入你选择的分类id：---》&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取类名</span></span><br><span class="line">        category_name = category_name_data[<span class="built_in">int</span>(category_id)]</span><br><span class="line">        <span class="comment"># 起始的url</span></span><br><span class="line">        original_url = img_category[category_name]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 让用户输入想要下载的起始的页码数和结束的页码数</span></span><br><span class="line">        start_num = <span class="built_in">input</span>(<span class="string">&quot;输入你要开始下载的起始页码数：----》&quot;</span>)</span><br><span class="line">        end_num = <span class="built_in">input</span>(<span class="string">&quot;输入你要结束下载的页码数：----》&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 创建目标地址</span></span><br><span class="line">        target_url_list = <span class="variable language_">self</span>.create_target_url(</span><br><span class="line">            original_url=original_url,</span><br><span class="line">            start_numm=<span class="built_in">int</span>(start_num),</span><br><span class="line">            end_num=<span class="built_in">int</span>(end_num)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 遍历每一网址，或的每一个soup对象</span></span><br><span class="line">        img_detail_data = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> target_url <span class="keyword">in</span> target_url_list:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                soup = <span class="variable language_">self</span>.spider_page_soup(target_url=target_url)</span><br><span class="line">                <span class="comment"># 获取到图片的地址和详情标题</span></span><br><span class="line">                img_detail_data.update(<span class="variable language_">self</span>.parse_image_detail_url(soup=soup))</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">for</span> img_title, img_url <span class="keyword">in</span> img_detail_data.items():</span><br><span class="line">            <span class="variable language_">self</span>.download_image(img_url=img_url, img_title=img_title, category_name=category_name)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># img_detail_data = self.parse_image_detail_url()</span></span><br><span class="line">        <span class="comment"># # 拆分，字典</span></span><br><span class="line">        <span class="comment"># for img_title, img_url in img_detail_data.items():</span></span><br><span class="line">        <span class="comment">#     self.download_image(img_url, img_title)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    s = SpiderImage()</span><br><span class="line">    s.main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -402,12 +218,12 @@ if __name__ == '__main__':
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/10/15/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85/" rel="prev" title="微信开发者">
-      <i class="fa fa-chevron-left"></i> 微信开发者
+    <a href="/2025/10/15/%E6%99%BA%E6%85%A7%E7%A4%BE%E5%8C%BA%E9%A1%B9%E7%9B%AE%E4%BA%8C/" rel="prev" title="智慧社区项目二">
+      <i class="fa fa-chevron-left"></i> 智慧社区项目二
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/10/15/%E5%AE%89%E8%A3%85VMware%20Workstation/" rel="next" title="安装VMware Workstation">
-      安装VMware Workstation <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/15/%E4%BA%BA%E8%84%B8%E5%92%8C%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%96%B9%E6%A1%88/" rel="next" title="人脸和语音识别方案">
+      人脸和语音识别方案 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>

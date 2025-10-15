@@ -28,7 +28,7 @@
 <meta property="og:description" content="函数 【一】函数定义  函数就是将我们某一块代码封装起来后可以在某处直接使用的代码块。 前提条件：只有先定函数才能调用  先定义在调用    【二】函数的语法  循环结构有关键字：while，if，else，elif… 函数的关键词就是：def return值 : 定义函数的返回值，return用的时候就写，不用的时候可以不写（可有可无） pass：表示什么都不做  【1】标准函数结构  定义">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
-<meta property="article:modified_time" content="2025-10-15T08:41:50.033Z">
+<meta property="article:modified_time" content="2025-10-15T09:06:32.446Z">
 <meta property="article:author" content="Aurora">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:41:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：17:06:32" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,17 +219,9 @@
 <ul>
 <li>定义</li>
 </ul>
-```python
-'''
-def 函数名（）
-    代码体
-#调用
-函数名（）
-
-'''
-#什么是代码体：代码体可能包含各种语句、表达式、函数、类等
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】定义函数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">#定义</span><br><span class="line">def name():</span><br><span class="line">    print(f&quot;当前用户已登入！&quot;)</span><br><span class="line">#调用（定义完之后使用）</span><br><span class="line">name()#输出：当前用户已登入！</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">def 函数名（）</span></span><br><span class="line"><span class="string">    代码体</span></span><br><span class="line"><span class="string">#调用</span></span><br><span class="line"><span class="string">函数名（）</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment">#什么是代码体：代码体可能包含各种语句、表达式、函数、类等</span></span><br></pre></td></tr></table></figure>
+<h2 id="【2】定义函数">【2】定义函数</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#定义</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">name</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;当前用户已登入！&quot;</span>)</span><br><span class="line"><span class="comment">#调用（定义完之后使用）</span></span><br><span class="line">name()<span class="comment">#输出：当前用户已登入！</span></span><br></pre></td></tr></table></figure>
 <h2 id="【3】函数的内部原理">【3】函数的内部原理</h2>
 <ul>
 <li>在函数定义阶段
@@ -248,19 +240,13 @@ def 函数名（）
 <li>（）里面没有放变量</li>
 <li>函数内部可以直接使用外部头顶上面的参数</li>
 </ul>
-```python
-#方式一 在函数头顶上指定参数
-username = "tom"
-password = "710"
-def login():
-    #函数内部可以做直接使用外部头顶的参数
-    if username == "tom" and password == "710":
-        print("当前用户登入成功！")
-    else:
-        print("当前用户登入失败！")
-login()
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (2)有参函数</span><br><span class="line"></span><br><span class="line">- （）里面放变量</span><br><span class="line">- 函数内部可以直接使用外部头顶上面的参数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">#方式二 有参函数在（）的里面放变量名即可</span><br><span class="line">def login(username,password):</span><br><span class="line">    if username == &quot;tom&quot; and password == &quot;710&quot;:</span><br><span class="line">        print(&quot;当前用户登入成功！&quot;)#调用login(&quot;tom&quot;,&quot;710&quot;)正确的用户名密码</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;当前用户登入失败！&quot;)#调用login(&quot;dream&quot;,&quot;521&quot;)错误的用户名密码</span><br><span class="line">login(&quot;tom&quot;,&quot;710&quot;)</span><br><span class="line"></span><br><span class="line">#（1）按照位置传递参数，参数位置不能随意改变</span><br><span class="line">#用户名在前密码在后login(&quot;tom&quot;,&quot;710&quot;)</span><br><span class="line">#（2）按照关键词传参数，位置可以变动</span><br><span class="line">#login(username=&quot;tom&quot;,password=&quot;710&quot;)</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#方式一 在函数头顶上指定参数</span></span><br><span class="line">username = <span class="string">&quot;tom&quot;</span></span><br><span class="line">password = <span class="string">&quot;710&quot;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="comment">#函数内部可以做直接使用外部头顶的参数</span></span><br><span class="line">    <span class="keyword">if</span> username == <span class="string">&quot;tom&quot;</span> <span class="keyword">and</span> password == <span class="string">&quot;710&quot;</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;当前用户登入成功！&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;当前用户登入失败！&quot;</span>)</span><br><span class="line">login()</span><br></pre></td></tr></table></figure>
+<h3 id="2-有参函数">(2)有参函数</h3>
+<ul>
+<li>（）里面放变量</li>
+<li>函数内部可以直接使用外部头顶上面的参数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#方式二 有参函数在（）的里面放变量名即可</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>(<span class="params">username,password</span>):</span><br><span class="line">    <span class="keyword">if</span> username == <span class="string">&quot;tom&quot;</span> <span class="keyword">and</span> password == <span class="string">&quot;710&quot;</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;当前用户登入成功！&quot;</span>)<span class="comment">#调用login(&quot;tom&quot;,&quot;710&quot;)正确的用户名密码</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;当前用户登入失败！&quot;</span>)<span class="comment">#调用login(&quot;dream&quot;,&quot;521&quot;)错误的用户名密码</span></span><br><span class="line">login(<span class="string">&quot;tom&quot;</span>,<span class="string">&quot;710&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#（1）按照位置传递参数，参数位置不能随意改变</span></span><br><span class="line"><span class="comment">#用户名在前密码在后login(&quot;tom&quot;,&quot;710&quot;)</span></span><br><span class="line"><span class="comment">#（2）按照关键词传参数，位置可以变动</span></span><br><span class="line"><span class="comment">#login(username=&quot;tom&quot;,password=&quot;710&quot;)</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>区分有参函数和无参函数就看（）里面有没有变量名</li>
 <li>无参函数不需要参数传递直接就可以用</li>
@@ -282,159 +268,15 @@ login()
 <ul>
 <li>函数的返回值是元组（ 不懂）</li>
 </ul>
-```python
-def get_user_pwd():#输出填写用户名和密码的信息
-    username = input("请输入用户名 :>>>>> ").strip()
-    password = input("请输入密 码 :>>>>> ").strip()
-    return username, password
-#元组的特性   解压赋值
-
-def login(username, password):
-    if username == 'dream' and password == '521':#判断密码用户名是否正确
-        print(f"登录成功")
-    else:
-        print('登录失败')
-
-def register(username, password):#登入的用户名密码
-    # 模拟打开了文件并写入内容
-    data = f'{username}|{password}'
-    print(data)
-
-    def main():
-        print(f"当前功能如下 : 1 登录 2 注册")
-        func_id = input("请输入功能ID ").strip()
-        func_id = int(func_id)
-        if func_id == 1:
-            username, password = get_user_pwd()
-            login(username=username, password=password)
-        elif func_id == 2:
-            username, password = get_user_pwd()
-            register(username=username, password=password)
-
-    main()
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># [五]文本文件登入系统优化)作业</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 【全局异常捕获】</span><br><span class="line"># 在指定位置添加异常捕获机制</span><br><span class="line"># 如果遇到异常和报错要捕获异常信息并做定制化输出</span><br><span class="line"></span><br><span class="line"># 【总需求】</span><br><span class="line"># 【1】打印功能菜单供用户选择</span><br><span class="line"># 【2】校验功能ID是否存在并且符合数字格式</span><br><span class="line"># 【3】根据指定功能ID进入到指定的功能中</span><br><span class="line"></span><br><span class="line"># 【注册功能】</span><br><span class="line"># 【1】用户输入用户名和密码</span><br><span class="line"># 【2】校验用户名是否存在，如果已经存在则禁止注册，否则允许注册</span><br><span class="line"># 【3】使用文本文件作为数据存储位置</span><br><span class="line"># 【4】用户注册时指定默认锁定状态为未锁定</span><br><span class="line"></span><br><span class="line"># 【登录功能】</span><br><span class="line"># 【1】用户输入用户名和密码</span><br><span class="line"># 【2】校验用户名是否存在，如果不存在则提示注册</span><br><span class="line"># 【3】校验用户状态是否是锁定状态，如果锁定不允许登录并提示管理员解除</span><br><span class="line"># 【4】未锁定用户允许重试输入密码，最大重试次数为3次并提示剩余尝试次数</span><br><span class="line"># 【5】用户输入密码错误次数达最大尝试次数后修改默认锁定状态为锁定</span><br><span class="line"></span><br><span class="line"># 【文件拷贝功能】</span><br><span class="line"># 【1】用户登录成功后允许使用文件拷贝程序</span><br><span class="line"># 【2】用户输入指定的路径(源文件)</span><br><span class="line"># （1）打开文件 (文本文件w 二进制是wb)</span><br><span class="line"># （2）对文件类型做区分</span><br><span class="line"># 【3】用户输入指定的路径(新文件)</span><br><span class="line"># （1）复制当前文件到新位置</span><br><span class="line"># （2）按照指定文件类型赋值新文件(可重命名或者使用原本的文件名)</span><br></pre></td></tr></table></figure>
-
-```python
- get_username_password():
-    username_input = input("请输入用户名 :>>>> ").strip()
-    password_input = input("请输入密 码 :>>>> ").strip()
-    return username_input, password_input
-
-# 保存数据
-def save_data(data, file='user_data.text'):
-    # 打开文件
-    with open(file=file, mode='a', encoding='utf-8') as fp:
-        # 写数据
-        fp.write(data + '\n')
-# 读取数据
-# 第五步 读取用户数据
-def read_data(file='user_data.text'):
-    # 第六步 打开文件 ---> 将文件内容切割 拼成字典
-    try:
-        user_data_dict = {}
-        # 打开文件
-        with open(file=file, mode='r', encoding='utf-8') as fp:
-            for line in fp:
-                username, password, lock = line.strip().split(':')
-                user_data_dict[username] = {
-                    'username': username,
-                    'password': password,
-                    'is_locked': bool(int(lock))
-                }
-        # 第七步 用户文件存在并且已经做好了定制 然后返回给代用的函数使用
-        return user_data_dict
-    except:
-        # 可能会遇到第一次进来文件不存在 直接返回空的字典
-        return {}
-
-# 公共的函数：用来校验当前用户是否存在
-# 第三步 进入到校验用户是否存在的函数中
-def exist_user(username):
-    # 第四步 从文件中读取用户数据
-    # 第八步 从读取数据的函数中获取到了 拼接号的数据字典
-    # {'dream': {'username': 'dream', 'password': '521', 'is_locked': False}}
-    user_data_dict = read_data()
-    # 第九步：从数据字典中获取得到当前用户名所对应的数据 如果有 没有就是 None
-    user_data = user_data_dict.get(username)
-    if not user_data:
-        # None不存在 返回False
-        return False
-    else:
-        # 如果存在则返回 True
-        return True
-
-
-def register():
-    print("当前是注册功能")
-    # 第一步 输入用户名和密码
-    username_input, password_input = get_username_password()
-    # 第二步 先校验当前用户是否存在
-    # 第十步 接收到函数判断出来的结果 是存在True 还是不存在False
-    is_exist = exist_user(username_input)
-    # 第十一步 已经判断出存在了 不让注册
-    if is_exist:
-        return False, f"当前用户 {username_input} 已存在不允许注册"
-    else:
-        # 第十二步 用户不存在 允许注册
-        # 拼成指定的数据格式
-        data = f'{username_input}:{password_input}:0'
-        # 第十三步 调用保存数据的函数方法 保存数据
-        save_data(data)
-        return True, f"当前用户 {username_input} 注册成功!"
-
-def login():
-    print(f"当前是登录功能")
-    return True, f'登录成功'
-
-
-def copy_file():
-    print("当前是文件拷贝功能")
-
-
-# print(type(copy_file))  # <class 'function'>
-# print(id(copy_file))  # 2198084305104
-func_menu = '''
-########################## 功能菜单 ########################## 
-                            1.注册
-                            2.登录
-                            3.文件拷贝
-                            q.退出
-'''
-
-func_dict = {
-    '1': register,
-    '2': login,
-    '3': copy_file
-}
-
-def main():
-    while True:
-        # 【一】打印功能菜单
-        print(func_menu)
-        # 【二】输入功能ID
-        func_id = input("请输入功能ID :>>>> ").strip()
-        if not func_id.isdigit():
-            print(f"当前功能ID不是数字，不合法!")
-
-        func = func_dict.get(func_id)
-        tag, msg = func()
-        if tag:
-            print(msg)
-            break
-        else:
-            print(msg)
-            continue
-
-
-main()
-
-# def login(username='dream'):
-#     if username == 'dream':
-#         print("登录成功")
-#
-# login(username='opp')
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【六】作业</span><br><span class="line"></span><br><span class="line">- 使用函数完善剩下功能</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```pascal</span><br><span class="line"># 【全局异常捕获】</span><br><span class="line"># 在指定位置添加异常捕获机制</span><br><span class="line"># 如果遇到异常和报错要捕获异常信息并做定制化输出</span><br><span class="line"></span><br><span class="line"># 【总需求】</span><br><span class="line"># 【1】打印功能菜单供用户选择</span><br><span class="line"># 【2】校验功能ID是否存在并且符合数字格式</span><br><span class="line"># 【3】根据指定功能ID进入到指定的功能中</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_user_pwd</span>():<span class="comment">#输出填写用户名和密码的信息</span></span><br><span class="line">    username = <span class="built_in">input</span>(<span class="string">&quot;请输入用户名 :&gt;&gt;&gt;&gt;&gt; &quot;</span>).strip()</span><br><span class="line">    password = <span class="built_in">input</span>(<span class="string">&quot;请输入密 码 :&gt;&gt;&gt;&gt;&gt; &quot;</span>).strip()</span><br><span class="line">    <span class="keyword">return</span> username, password</span><br><span class="line"><span class="comment">#元组的特性   解压赋值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>(<span class="params">username, password</span>):</span><br><span class="line">    <span class="keyword">if</span> username == <span class="string">&#x27;dream&#x27;</span> <span class="keyword">and</span> password == <span class="string">&#x27;521&#x27;</span>:<span class="comment">#判断密码用户名是否正确</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;登录成功&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;登录失败&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>(<span class="params">username, password</span>):<span class="comment">#登入的用户名密码</span></span><br><span class="line">    <span class="comment"># 模拟打开了文件并写入内容</span></span><br><span class="line">    data = <span class="string">f&#x27;<span class="subst">&#123;username&#125;</span>|<span class="subst">&#123;password&#125;</span>&#x27;</span></span><br><span class="line">    <span class="built_in">print</span>(data)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;当前功能如下 : 1 登录 2 注册&quot;</span>)</span><br><span class="line">        func_id = <span class="built_in">input</span>(<span class="string">&quot;请输入功能ID &quot;</span>).strip()</span><br><span class="line">        func_id = <span class="built_in">int</span>(func_id)</span><br><span class="line">        <span class="keyword">if</span> func_id == <span class="number">1</span>:</span><br><span class="line">            username, password = get_user_pwd()</span><br><span class="line">            login(username=username, password=password)</span><br><span class="line">        <span class="keyword">elif</span> func_id == <span class="number">2</span>:</span><br><span class="line">            username, password = get_user_pwd()</span><br><span class="line">            register(username=username, password=password)</span><br><span class="line"></span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h1>[五]文本文件登入系统优化)作业</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 【全局异常捕获】</span></span><br><span class="line"><span class="comment"># 在指定位置添加异常捕获机制</span></span><br><span class="line"><span class="comment"># 如果遇到异常和报错要捕获异常信息并做定制化输出</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 【总需求】</span></span><br><span class="line"><span class="comment"># 【1】打印功能菜单供用户选择</span></span><br><span class="line"><span class="comment"># 【2】校验功能ID是否存在并且符合数字格式</span></span><br><span class="line"><span class="comment"># 【3】根据指定功能ID进入到指定的功能中</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 【注册功能】</span></span><br><span class="line"><span class="comment"># 【1】用户输入用户名和密码</span></span><br><span class="line"><span class="comment"># 【2】校验用户名是否存在，如果已经存在则禁止注册，否则允许注册</span></span><br><span class="line"><span class="comment"># 【3】使用文本文件作为数据存储位置</span></span><br><span class="line"><span class="comment"># 【4】用户注册时指定默认锁定状态为未锁定</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 【登录功能】</span></span><br><span class="line"><span class="comment"># 【1】用户输入用户名和密码</span></span><br><span class="line"><span class="comment"># 【2】校验用户名是否存在，如果不存在则提示注册</span></span><br><span class="line"><span class="comment"># 【3】校验用户状态是否是锁定状态，如果锁定不允许登录并提示管理员解除</span></span><br><span class="line"><span class="comment"># 【4】未锁定用户允许重试输入密码，最大重试次数为3次并提示剩余尝试次数</span></span><br><span class="line"><span class="comment"># 【5】用户输入密码错误次数达最大尝试次数后修改默认锁定状态为锁定</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 【文件拷贝功能】</span></span><br><span class="line"><span class="comment"># 【1】用户登录成功后允许使用文件拷贝程序</span></span><br><span class="line"><span class="comment"># 【2】用户输入指定的路径(源文件)</span></span><br><span class="line"><span class="comment"># （1）打开文件 (文本文件w 二进制是wb)</span></span><br><span class="line"><span class="comment"># （2）对文件类型做区分</span></span><br><span class="line"><span class="comment"># 【3】用户输入指定的路径(新文件)</span></span><br><span class="line"><span class="comment"># （1）复制当前文件到新位置</span></span><br><span class="line"><span class="comment"># （2）按照指定文件类型赋值新文件(可重命名或者使用原本的文件名)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"> get_username_password():</span><br><span class="line">    username_input = <span class="built_in">input</span>(<span class="string">&quot;请输入用户名 :&gt;&gt;&gt;&gt; &quot;</span>).strip()</span><br><span class="line">    password_input = <span class="built_in">input</span>(<span class="string">&quot;请输入密 码 :&gt;&gt;&gt;&gt; &quot;</span>).strip()</span><br><span class="line">    <span class="keyword">return</span> username_input, password_input</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存数据</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_data</span>(<span class="params">data, file=<span class="string">&#x27;user_data.text&#x27;</span></span>):</span><br><span class="line">    <span class="comment"># 打开文件</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(file=file, mode=<span class="string">&#x27;a&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">        <span class="comment"># 写数据</span></span><br><span class="line">        fp.write(data + <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="comment"># 读取数据</span></span><br><span class="line"><span class="comment"># 第五步 读取用户数据</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_data</span>(<span class="params">file=<span class="string">&#x27;user_data.text&#x27;</span></span>):</span><br><span class="line">    <span class="comment"># 第六步 打开文件 ---&gt; 将文件内容切割 拼成字典</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        user_data_dict = &#123;&#125;</span><br><span class="line">        <span class="comment"># 打开文件</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(file=file, mode=<span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">            <span class="keyword">for</span> line <span class="keyword">in</span> fp:</span><br><span class="line">                username, password, lock = line.strip().split(<span class="string">&#x27;:&#x27;</span>)</span><br><span class="line">                user_data_dict[username] = &#123;</span><br><span class="line">                    <span class="string">&#x27;username&#x27;</span>: username,</span><br><span class="line">                    <span class="string">&#x27;password&#x27;</span>: password,</span><br><span class="line">                    <span class="string">&#x27;is_locked&#x27;</span>: <span class="built_in">bool</span>(<span class="built_in">int</span>(lock))</span><br><span class="line">                &#125;</span><br><span class="line">        <span class="comment"># 第七步 用户文件存在并且已经做好了定制 然后返回给代用的函数使用</span></span><br><span class="line">        <span class="keyword">return</span> user_data_dict</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="comment"># 可能会遇到第一次进来文件不存在 直接返回空的字典</span></span><br><span class="line">        <span class="keyword">return</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 公共的函数：用来校验当前用户是否存在</span></span><br><span class="line"><span class="comment"># 第三步 进入到校验用户是否存在的函数中</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">exist_user</span>(<span class="params">username</span>):</span><br><span class="line">    <span class="comment"># 第四步 从文件中读取用户数据</span></span><br><span class="line">    <span class="comment"># 第八步 从读取数据的函数中获取到了 拼接号的数据字典</span></span><br><span class="line">    <span class="comment"># &#123;&#x27;dream&#x27;: &#123;&#x27;username&#x27;: &#x27;dream&#x27;, &#x27;password&#x27;: &#x27;521&#x27;, &#x27;is_locked&#x27;: False&#125;&#125;</span></span><br><span class="line">    user_data_dict = read_data()</span><br><span class="line">    <span class="comment"># 第九步：从数据字典中获取得到当前用户名所对应的数据 如果有 没有就是 None</span></span><br><span class="line">    user_data = user_data_dict.get(username)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> user_data:</span><br><span class="line">        <span class="comment"># None不存在 返回False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># 如果存在则返回 True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;当前是注册功能&quot;</span>)</span><br><span class="line">    <span class="comment"># 第一步 输入用户名和密码</span></span><br><span class="line">    username_input, password_input = get_username_password()</span><br><span class="line">    <span class="comment"># 第二步 先校验当前用户是否存在</span></span><br><span class="line">    <span class="comment"># 第十步 接收到函数判断出来的结果 是存在True 还是不存在False</span></span><br><span class="line">    is_exist = exist_user(username_input)</span><br><span class="line">    <span class="comment"># 第十一步 已经判断出存在了 不让注册</span></span><br><span class="line">    <span class="keyword">if</span> is_exist:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span>, <span class="string">f&quot;当前用户 <span class="subst">&#123;username_input&#125;</span> 已存在不允许注册&quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># 第十二步 用户不存在 允许注册</span></span><br><span class="line">        <span class="comment"># 拼成指定的数据格式</span></span><br><span class="line">        data = <span class="string">f&#x27;<span class="subst">&#123;username_input&#125;</span>:<span class="subst">&#123;password_input&#125;</span>:0&#x27;</span></span><br><span class="line">        <span class="comment"># 第十三步 调用保存数据的函数方法 保存数据</span></span><br><span class="line">        save_data(data)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span>, <span class="string">f&quot;当前用户 <span class="subst">&#123;username_input&#125;</span> 注册成功!&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;当前是登录功能&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span>, <span class="string">f&#x27;登录成功&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">copy_file</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;当前是文件拷贝功能&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(type(copy_file))  # &lt;class &#x27;function&#x27;&gt;</span></span><br><span class="line"><span class="comment"># print(id(copy_file))  # 2198084305104</span></span><br><span class="line">func_menu = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">########################## 功能菜单 ########################## </span></span><br><span class="line"><span class="string">                            1.注册</span></span><br><span class="line"><span class="string">                            2.登录</span></span><br><span class="line"><span class="string">                            3.文件拷贝</span></span><br><span class="line"><span class="string">                            q.退出</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">func_dict = &#123;</span><br><span class="line">    <span class="string">&#x27;1&#x27;</span>: register,</span><br><span class="line">    <span class="string">&#x27;2&#x27;</span>: login,</span><br><span class="line">    <span class="string">&#x27;3&#x27;</span>: copy_file</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># 【一】打印功能菜单</span></span><br><span class="line">        <span class="built_in">print</span>(func_menu)</span><br><span class="line">        <span class="comment"># 【二】输入功能ID</span></span><br><span class="line">        func_id = <span class="built_in">input</span>(<span class="string">&quot;请输入功能ID :&gt;&gt;&gt;&gt; &quot;</span>).strip()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> func_id.isdigit():</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;当前功能ID不是数字，不合法!&quot;</span>)</span><br><span class="line"></span><br><span class="line">        func = func_dict.get(func_id)</span><br><span class="line">        tag, msg = func()</span><br><span class="line">        <span class="keyword">if</span> tag:</span><br><span class="line">            <span class="built_in">print</span>(msg)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(msg)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line"></span><br><span class="line"><span class="comment"># def login(username=&#x27;dream&#x27;):</span></span><br><span class="line"><span class="comment">#     if username == &#x27;dream&#x27;:</span></span><br><span class="line"><span class="comment">#         print(&quot;登录成功&quot;)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># login(username=&#x27;opp&#x27;)</span></span><br></pre></td></tr></table></figure>
+<h1>【六】作业</h1>
+<ul>
+<li>使用函数完善剩下功能</li>
+</ul>
+<figure class="highlight pascal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 【全局异常捕获】</span><br><span class="line"># 在指定位置添加异常捕获机制</span><br><span class="line"># 如果遇到异常和报错要捕获异常信息并做定制化输出</span><br><span class="line"></span><br><span class="line"># 【总需求】</span><br><span class="line"># 【<span class="number">1</span>】打印功能菜单供用户选择</span><br><span class="line"># 【<span class="number">2</span>】校验功能ID是否存在并且符合数字格式</span><br><span class="line"># 【<span class="number">3</span>】根据指定功能ID进入到指定的功能中</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -453,12 +295,12 @@ main()
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/10/15/3.2Vue%E7%9A%84%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E5%92%8C%E8%BF%90%E8%A1%8C/" rel="prev" title="3.2Vue的项目创建和运行">
-      <i class="fa fa-chevron-left"></i> 3.2Vue的项目创建和运行
+    <a href="/2025/10/15/3.1vue%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" rel="prev" title="3.1vue的基本使用">
+      <i class="fa fa-chevron-left"></i> 3.1vue的基本使用
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/10/15/3.0session%E5%AF%B9%E8%B1%A1/" rel="next" title="3.0session对象">
-      3.0session对象 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/15/3.0HTML%E8%BF%9B%E9%98%B6/" rel="next" title="3.0HTML进阶">
+      3.0HTML进阶 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -518,7 +360,7 @@ main()
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">【一】函数定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">【二】函数的语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%A0%87%E5%87%86%E5%87%BD%E6%95%B0%E7%BB%93%E6%9E%84"><span class="nav-number">3.1.</span> <span class="nav-text">【1】标准函数结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%87%BD%E6%95%B0%E7%9A%84%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">【3】函数的内部原理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">【三】函数的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%9C%89%E5%8F%82%E5%87%BD%E6%95%B0%EF%BC%8C%E6%97%A0%E5%8F%82%E5%87%BD%E6%95%B0%EF%BC%88%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">【1】有参函数，无参函数（定义函数的时候）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%97%A0%E5%8F%82%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.1.</span> <span class="nav-text">（1）无参函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">【四】有返回值函数和无返回值函数</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">【一】函数定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">【二】函数的语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%A0%87%E5%87%86%E5%87%BD%E6%95%B0%E7%BB%93%E6%9E%84"><span class="nav-number">3.1.</span> <span class="nav-text">【1】标准函数结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">【2】定义函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%87%BD%E6%95%B0%E7%9A%84%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86"><span class="nav-number">3.3.</span> <span class="nav-text">【3】函数的内部原理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">【三】函数的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E6%9C%89%E5%8F%82%E5%87%BD%E6%95%B0%EF%BC%8C%E6%97%A0%E5%8F%82%E5%87%BD%E6%95%B0%EF%BC%88%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">【1】有参函数，无参函数（定义函数的时候）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%97%A0%E5%8F%82%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.1.</span> <span class="nav-text">（1）无参函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%9C%89%E5%8F%82%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.2.</span> <span class="nav-text">(2)有参函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">【四】有返回值函数和无返回值函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">[五]文本文件登入系统优化)作业</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">【六】作业</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

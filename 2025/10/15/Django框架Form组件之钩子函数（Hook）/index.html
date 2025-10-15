@@ -28,7 +28,7 @@
 <meta property="og:description" content="Django框架Form组件之钩子函数（Hook） 【一 】什么是钩子函数   在forms组件中  钩子函数（Hooks）是用来在特定事件发生时执行自定义逻辑的函数。 它们提供了一种创建交互性和动态行为的方式，并可以用于处理表单的各种状态和数据。    钩子函数就是用来将某个或某个单独数据提取出来进行校验的函数   【二】在Form组件类中定义 【1】局部钩子  检验用户名中不能包含nb_  【">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
-<meta property="article:modified_time" content="2025-10-15T08:41:50.491Z">
+<meta property="article:modified_time" content="2025-10-15T09:14:59.000Z">
 <meta property="article:author" content="Aurora">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:41:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：17:14:59" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -231,99 +231,15 @@
 </ul>
 </li>
 </ul>
-```python
-# Current username：practic_form 
-# current date：2024/7/1
-# current time ：20:00
-
-# 引入Django的forms组件
-from django import forms
-
-
-# 创建一个form的组件类
-# 继承form组件类 form.Form
-class LoginForm(forms.Form):
-    # 定义组件类属性
-    # 用户名：名字不能以nb_开头
-    username = forms.CharField(
-        # 最大长度
-        max_length=8,
-        # 最小长度
-        min_length=3,
-        label='用户名'
-    )
-    # 密码
-    password = forms.CharField(
-        # 长度不能小于3
-        min_length=3,
-        label='密码'
-    )
-
-    # 局部狗子
-    # 一定要是clean_你的表单类属性
-    # 走到这里首先你要满足上面规定字段的属性方法
-    def clean_username(self):
-        # print(self.cleaned_data)  # {'username': 'tom'}
-        # 得到的就是你在前端输入的{'username': 'tom'}
-        # 记住了 你用了{'username': 'tom'}就要给它返回出去，不然，在后端后端接收到的username就是None
-        # 一定要把值取出来返回
-        username = self.cleaned_data.get('username')
-        # 进行对用户名的 判断是不是以什么开头startswith
-        if username.startswith('nb_'):
-            # 记录错误信息两种方式
-            # 方式一：主动抛出异常，会被form捕获到
-            # raise Exception('用户名不能以nb_开头')
-            # 方法二：把错误信息添加到error方法中
-            self.add_error(
-                'username', '用户名不能以nb_开头'
-            )
-        # 在局部钩子和全局钩子函数中 拿出来的值要放回去
-        return username
-
-    # 全局钩子clean
-    def clean(self):
-        # print(self.cleaned_data)  # {'username': 'tom', 'password': '111'}
-        # 把所有数据取出来
-        username = self.cleaned_data.get('username')
-        password = self.cleaned_data.get('password')
-        # 检验密码和用户名长度一样不
-        if len(username) != len(password):
-            # 直接抛出异常
-            raise Exception('用户名和密码的长度不一样！')
-            # 添加错误信息就要一个一个添加
-            # self.add_error(
-            #     'username', '用户名和密码的长度不一样')
-            # self.add_error(
-            #     'password', '密码和用户名的长度不一样'
-            # )
-        return self.cleaned_data
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 视图函数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from django.shortcuts import render</span><br><span class="line">from user.userForms import LoginForm</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def index(request):</span><br><span class="line">    form_obj = LoginForm()</span><br><span class="line">    if request.method == &#x27;POST&#x27;:</span><br><span class="line">        # 把所有的值传给它</span><br><span class="line">        form_obj = LoginForm(request.POST)</span><br><span class="line">        # 判断，取反</span><br><span class="line">        if not form_obj.is_valid():</span><br><span class="line">            # 打印错误信息</span><br><span class="line">            print(form_obj.errors)</span><br><span class="line">        # 打印正确信息</span><br><span class="line">        print(form_obj.cleaned_data)</span><br><span class="line">        return render(request, &#x27;index.html&#x27;, locals())</span><br><span class="line">    return render(request, &#x27;index.html&#x27;, locals())</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Current username：practic_form </span></span><br><span class="line"><span class="comment"># current date：2024/7/1</span></span><br><span class="line"><span class="comment"># current time ：20:00</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 引入Django的forms组件</span></span><br><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个form的组件类</span></span><br><span class="line"><span class="comment"># 继承form组件类 form.Form</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LoginForm</span>(forms.Form):</span><br><span class="line">    <span class="comment"># 定义组件类属性</span></span><br><span class="line">    <span class="comment"># 用户名：名字不能以nb_开头</span></span><br><span class="line">    username = forms.CharField(</span><br><span class="line">        <span class="comment"># 最大长度</span></span><br><span class="line">        max_length=<span class="number">8</span>,</span><br><span class="line">        <span class="comment"># 最小长度</span></span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&#x27;用户名&#x27;</span></span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># 密码</span></span><br><span class="line">    password = forms.CharField(</span><br><span class="line">        <span class="comment"># 长度不能小于3</span></span><br><span class="line">        min_length=<span class="number">3</span>,</span><br><span class="line">        label=<span class="string">&#x27;密码&#x27;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 局部狗子</span></span><br><span class="line">    <span class="comment"># 一定要是clean_你的表单类属性</span></span><br><span class="line">    <span class="comment"># 走到这里首先你要满足上面规定字段的属性方法</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">clean_username</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># print(self.cleaned_data)  # &#123;&#x27;username&#x27;: &#x27;tom&#x27;&#125;</span></span><br><span class="line">        <span class="comment"># 得到的就是你在前端输入的&#123;&#x27;username&#x27;: &#x27;tom&#x27;&#125;</span></span><br><span class="line">        <span class="comment"># 记住了 你用了&#123;&#x27;username&#x27;: &#x27;tom&#x27;&#125;就要给它返回出去，不然，在后端后端接收到的username就是None</span></span><br><span class="line">        <span class="comment"># 一定要把值取出来返回</span></span><br><span class="line">        username = <span class="variable language_">self</span>.cleaned_data.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">        <span class="comment"># 进行对用户名的 判断是不是以什么开头startswith</span></span><br><span class="line">        <span class="keyword">if</span> username.startswith(<span class="string">&#x27;nb_&#x27;</span>):</span><br><span class="line">            <span class="comment"># 记录错误信息两种方式</span></span><br><span class="line">            <span class="comment"># 方式一：主动抛出异常，会被form捕获到</span></span><br><span class="line">            <span class="comment"># raise Exception(&#x27;用户名不能以nb_开头&#x27;)</span></span><br><span class="line">            <span class="comment"># 方法二：把错误信息添加到error方法中</span></span><br><span class="line">            <span class="variable language_">self</span>.add_error(</span><br><span class="line">                <span class="string">&#x27;username&#x27;</span>, <span class="string">&#x27;用户名不能以nb_开头&#x27;</span></span><br><span class="line">            )</span><br><span class="line">        <span class="comment"># 在局部钩子和全局钩子函数中 拿出来的值要放回去</span></span><br><span class="line">        <span class="keyword">return</span> username</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 全局钩子clean</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">clean</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># print(self.cleaned_data)  # &#123;&#x27;username&#x27;: &#x27;tom&#x27;, &#x27;password&#x27;: &#x27;111&#x27;&#125;</span></span><br><span class="line">        <span class="comment"># 把所有数据取出来</span></span><br><span class="line">        username = <span class="variable language_">self</span>.cleaned_data.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">        password = <span class="variable language_">self</span>.cleaned_data.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">        <span class="comment"># 检验密码和用户名长度一样不</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(username) != <span class="built_in">len</span>(password):</span><br><span class="line">            <span class="comment"># 直接抛出异常</span></span><br><span class="line">            <span class="keyword">raise</span> Exception(<span class="string">&#x27;用户名和密码的长度不一样！&#x27;</span>)</span><br><span class="line">            <span class="comment"># 添加错误信息就要一个一个添加</span></span><br><span class="line">            <span class="comment"># self.add_error(</span></span><br><span class="line">            <span class="comment">#     &#x27;username&#x27;, &#x27;用户名和密码的长度不一样&#x27;)</span></span><br><span class="line">            <span class="comment"># self.add_error(</span></span><br><span class="line">            <span class="comment">#     &#x27;password&#x27;, &#x27;密码和用户名的长度不一样&#x27;</span></span><br><span class="line">            <span class="comment"># )</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.cleaned_data</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>视图函数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="keyword">from</span> user.userForms <span class="keyword">import</span> LoginForm</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">request</span>):</span><br><span class="line">    form_obj = LoginForm()</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        <span class="comment"># 把所有的值传给它</span></span><br><span class="line">        form_obj = LoginForm(request.POST)</span><br><span class="line">        <span class="comment"># 判断，取反</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> form_obj.is_valid():</span><br><span class="line">            <span class="comment"># 打印错误信息</span></span><br><span class="line">            <span class="built_in">print</span>(form_obj.errors)</span><br><span class="line">        <span class="comment"># 打印正确信息</span></span><br><span class="line">        <span class="built_in">print</span>(form_obj.cleaned_data)</span><br><span class="line">        <span class="keyword">return</span> render(request, <span class="string">&#x27;index.html&#x27;</span>, <span class="built_in">locals</span>())</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;index.html&#x27;</span>, <span class="built_in">locals</span>())</span><br></pre></td></tr></table></figure>
 <ul>
 <li>前端视图层</li>
 </ul>
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-<form action="" method="post">
-    {{ form_obj.as_p }}
-    <p>
-        <input type="submit">
-    </p>
-</form>
-
-</body>
-</html>
-
-```
-
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    &#123;% raw %&#125;&#123;&#123; form_obj.as_p &#125;&#125;&#123;% endraw %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -342,12 +258,12 @@ class LoginForm(forms.Form):
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/10/15/CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E5%92%8CAuth%E6%A8%A1%E5%9D%97/" rel="prev" title="CSRF跨站请求和Auth模块">
-      <i class="fa fa-chevron-left"></i> CSRF跨站请求和Auth模块
+    <a href="/2025/10/15/Ajax%E6%93%8D%E4%BD%9C/" rel="prev" title="Ajax操作">
+      <i class="fa fa-chevron-left"></i> Ajax操作
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/10/15/Django%E5%8E%9F%E7%94%9F%E6%93%8D%E4%BD%9Cmysql/" rel="next" title="Django原生操作mysql">
-      Django原生操作mysql <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/15/9.0Django%E6%A1%86%E6%9E%B6%E4%B9%8B%E6%A8%A1%E6%9D%BF%E5%B1%82/" rel="next" title="9.0Django框架之模板层">
+      9.0Django框架之模板层 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>

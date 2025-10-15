@@ -28,7 +28,7 @@
 <meta property="og:description" content="Scrapy框架安装 【零】安装 方法一   windows系统：pip install scrapy（这个方法一般就会成功）   如果这个方法安装失败：用下面的方法   【二】Windows平台 【1】安装wheel文件   在 Windows 平台上安装 Scrapy 之前    首先需要安装 wheel 文件。wheel 文件是一种 Python 包的分发格式，可以方便地进行安装。 可以通过">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-15T03:34:54.000Z">
-<meta property="article:modified_time" content="2025-10-15T08:41:49.847Z">
+<meta property="article:modified_time" content="2025-10-15T09:06:32.272Z">
 <meta property="article:author" content="Aurora">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-10-15 11:34:54 / 修改时间：16:41:49" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:54+08:00">2025-10-15</time>
+              <time title="创建时间：2025-10-15 11:34:54 / 修改时间：17:06:32" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:54+08:00">2025-10-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -222,19 +222,36 @@
 </ul>
 </li>
 </ul>
-```shell
-pip3 install wheel
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【2】安装 lxml 解析器</span><br><span class="line"></span><br><span class="line">- Scrapy 使用 lxml 解析器来进行 HTML 和 XML 的解析工作。</span><br><span class="line">- 要安装 lxml，可以执行以下命令：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```shell</span><br><span class="line">pip3 install lxml</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install wheel</span><br></pre></td></tr></table></figure>
+<h3 id="【2】安装-lxml-解析器">【2】安装 lxml 解析器</h3>
+<ul>
+<li>Scrapy 使用 lxml 解析器来进行 HTML 和 XML 的解析工作。</li>
+<li>要安装 lxml，可以执行以下命令：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install lxml</span><br></pre></td></tr></table></figure>
 <h3 id="【3】安装-pyopenssl">【3】安装 pyopenssl</h3>
 <ul>
 <li>Scrapy 在进行 HTTPS 请求时，需要使用 pyopenssl 模块来提供 SSL/TLS 支持。</li>
 <li>安装 pyopenssl 可以使用以下命令：</li>
 </ul>
-```shell
-pip3 install pyopenssl
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【4】下载并安装pywin32</span><br><span class="line"></span><br><span class="line">- 下载并安装 pywin32 可以从其官网下载最适合您的版本：https://sourceforge.net/projects/pywin32/files/pywin32/</span><br><span class="line">- 请根据您的操作系统和Python版本选择正确的安装文件进行下载。</span><br><span class="line">- 下载完成后，按照安装向导进行安装。</span><br><span class="line"></span><br><span class="line">### 【5】下载twisted的wheel文件</span><br><span class="line"></span><br><span class="line">- 要安装 Scrapy，需要先下载 twisted 的 wheel 文件。</span><br><span class="line">- 可以从官方网站下载 twisted 的 wheel 文件：http://www.lfd.uci.edu/~gohlke/pythonlibs/#twisted</span><br><span class="line">- 请注意选择与您的Python环境相匹配的 wheel 文件进行下载。</span><br><span class="line"></span><br><span class="line">### 【6】安装twisted</span><br><span class="line"></span><br><span class="line">- 下载完成 twisted 的 wheel 文件后，可以使用以下命令安装 twisted：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```shell</span><br><span class="line">pip3 install 下载目录\Twisted-17.9.0-cp36-cp36m-win_amd**.whl</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install pyopenssl</span><br></pre></td></tr></table></figure>
+<h3 id="【4】下载并安装pywin32">【4】下载并安装pywin32</h3>
+<ul>
+<li>下载并安装 pywin32 可以从其官网下载最适合您的版本：<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/pywin32/files/pywin32/">https://sourceforge.net/projects/pywin32/files/pywin32/</a></li>
+<li>请根据您的操作系统和Python版本选择正确的安装文件进行下载。</li>
+<li>下载完成后，按照安装向导进行安装。</li>
+</ul>
+<h3 id="【5】下载twisted的wheel文件">【5】下载twisted的wheel文件</h3>
+<ul>
+<li>要安装 Scrapy，需要先下载 twisted 的 wheel 文件。</li>
+<li>可以从官方网站下载 twisted 的 wheel 文件：<a target="_blank" rel="noopener" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#twisted">http://www.lfd.uci.edu/~gohlke/pythonlibs/#twisted</a></li>
+<li>请注意选择与您的Python环境相匹配的 wheel 文件进行下载。</li>
+</ul>
+<h3 id="【6】安装twisted">【6】安装twisted</h3>
+<ul>
+<li>下载完成 twisted 的 wheel 文件后，可以使用以下命令安装 twisted：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install 下载目录\Twisted-17.9.0-cp36-cp36m-win_amd**.whl</span><br></pre></td></tr></table></figure>
 <ul>
 <li>将 下载目录 替换为您实际下载 twistedwheel 文件所在的目录</li>
 <li>并根据您的 Python 环境选择正确的文件名进行替换。</li>
@@ -244,10 +261,12 @@ pip3 install pyopenssl
 <li>可以优先尝试这个命令，报错再按照上述安装对应的依赖</li>
 <li>当上述依赖项都安装完成后，可以使用以下命令来安装 Scrapy：</li>
 </ul>
-```shell
-pip3 install scrapy
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【二】Linux平台</span><br><span class="line"></span><br><span class="line">- 在 Linux 平台上安装 Scrapy，可以通过以下命令进行安装：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```shell</span><br><span class="line">pip3 install scrapy</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install scrapy</span><br></pre></td></tr></table></figure>
+<h2 id="【二】Linux平台">【二】Linux平台</h2>
+<ul>
+<li>在 Linux 平台上安装 Scrapy，可以通过以下命令进行安装：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install scrapy</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -266,12 +285,12 @@ pip3 install scrapy
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/10/15/2.0HTML%E5%9F%BA%E7%A1%80%EF%BC%8CHTML%E6%A0%87%E7%AD%BE/" rel="prev" title="2.0HTML基础，HTML标签">
-      <i class="fa fa-chevron-left"></i> 2.0HTML基础，HTML标签
+    <a href="/2025/10/15/2.0Django%E5%AE%89%E8%A3%85/" rel="prev" title="2.0Django安装">
+      <i class="fa fa-chevron-left"></i> 2.0Django安装
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/10/15/2.0Django%E5%AE%89%E8%A3%85/" rel="next" title="2.0Django安装">
-      2.0Django安装 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/15/1.8%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%92%8C%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B/" rel="next" title="1.8三次握手和四次挥手">
+      1.8三次握手和四次挥手 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -331,7 +350,7 @@ pip3 install scrapy
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Scrapy框架安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E9%9B%B6%E3%80%91%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">【零】安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91Windows%E5%B9%B3%E5%8F%B0"><span class="nav-number">1.2.</span> <span class="nav-text">【二】Windows平台</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%AE%89%E8%A3%85wheel%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">【1】安装wheel文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%AE%89%E8%A3%85-pyopenssl"><span class="nav-number">1.2.2.</span> <span class="nav-text">【3】安装 pyopenssl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%907%E3%80%91%E5%AE%89%E8%A3%85scrapy"><span class="nav-number">1.2.3.</span> <span class="nav-text">【7】安装scrapy</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Scrapy框架安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E9%9B%B6%E3%80%91%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">【零】安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91Windows%E5%B9%B3%E5%8F%B0"><span class="nav-number">1.2.</span> <span class="nav-text">【二】Windows平台</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%AE%89%E8%A3%85wheel%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">【1】安装wheel文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%AE%89%E8%A3%85-lxml-%E8%A7%A3%E6%9E%90%E5%99%A8"><span class="nav-number">1.2.2.</span> <span class="nav-text">【2】安装 lxml 解析器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%AE%89%E8%A3%85-pyopenssl"><span class="nav-number">1.2.3.</span> <span class="nav-text">【3】安装 pyopenssl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85pywin32"><span class="nav-number">1.2.4.</span> <span class="nav-text">【4】下载并安装pywin32</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%905%E3%80%91%E4%B8%8B%E8%BD%BDtwisted%E7%9A%84wheel%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.5.</span> <span class="nav-text">【5】下载twisted的wheel文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%906%E3%80%91%E5%AE%89%E8%A3%85twisted"><span class="nav-number">1.2.6.</span> <span class="nav-text">【6】安装twisted</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%907%E3%80%91%E5%AE%89%E8%A3%85scrapy"><span class="nav-number">1.2.7.</span> <span class="nav-text">【7】安装scrapy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91Linux%E5%B9%B3%E5%8F%B0"><span class="nav-number">1.3.</span> <span class="nav-text">【二】Linux平台</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

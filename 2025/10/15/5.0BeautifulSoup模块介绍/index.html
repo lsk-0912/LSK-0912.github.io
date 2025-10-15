@@ -28,7 +28,7 @@
 <meta property="og:description" content="BeautifulSoup模块介绍 【一】BeautifulSoup模块 【1】介绍  BeautifulSoup是python的一个库 主要的功能就是从网页上抓取数据  【2】官方介绍   Beautiful Soup提供一些简单的、python式的函数用来处理导航、搜索、修改分析树等功能   它是一个工具箱，通过解析文档为用户提供需要抓取的数据，因为简单，所以不需要多少代码就可以写出一个完整的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
-<meta property="article:modified_time" content="2025-10-15T08:41:50.292Z">
+<meta property="article:modified_time" content="2025-10-15T09:06:32.703Z">
 <meta property="article:author" content="Aurora">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:41:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：17:06:32" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -234,10 +234,10 @@
 </li>
 </ul>
 <h2 id="【二】安装BeautifulSoup4模块">【二】安装BeautifulSoup4模块</h2>
-```shell
-pip install BeautifulSoup4
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【三】解析器的介绍</span><br><span class="line"></span><br><span class="line">### 【1】导入模块</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from bs4 import BeautifulSoup</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install BeautifulSoup4</span><br></pre></td></tr></table></figure>
+<h2 id="【三】解析器的介绍">【三】解析器的介绍</h2>
+<h3 id="【1】导入模块">【1】导入模块</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br></pre></td></tr></table></figure>
 <h3 id="【2】解析器">【2】解析器</h3>
 <ul>
 <li>能够解析当前页面生成页面的dom对象</li>
@@ -251,49 +251,58 @@ pip install BeautifulSoup4
 <ul>
 <li>不写解析器：就使用默认的解析器<code>html.parser</code></li>
 </ul>
-```python
-soup = BeautifulSoup("页面源码","解析器类型")
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【4】解析器的优缺点</span><br><span class="line"></span><br><span class="line">| 解析器           | 使用方法                                                     | 优势                                                    | 劣势                                            |</span><br><span class="line">| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------- | ----------------------------------------------- |</span><br><span class="line">| Python标准库     | BeautifulSoup(markup, &quot;html.parser&quot;)                         | Python的内置标准库 执行速度适中 文档容错能力强          | Python 2.7.3 or 3.2.2)前 的版本中文档容错能力差 |</span><br><span class="line">| lxml HTML 解析器 | BeautifulSoup(markup, &quot;lxml&quot;)                                | 速度快 文档容错能力强                                   | 需要安装C语言库                                 |</span><br><span class="line">| lxml XML 解析器  | BeautifulSoup(markup, [&quot;lxml&quot;, &quot;xml&quot;]) 或BeautifulSoup(markup, &quot;xml&quot;) | 速度快 唯一支持XML的解析器                              | 需要安装C语言库                                 |</span><br><span class="line">| html5lib         | BeautifulSoup(markup, &quot;html5lib&quot;)                            | 最好的容错性 以浏览器的方式解析文档 生成HTML5格式的文档 | 速度慢 不依赖外部扩展                           |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 【5】生成soup对象</span><br><span class="line"></span><br><span class="line">- 从一个soup对象开始，以下两种方式生成一个soup对象</span><br><span class="line"></span><br><span class="line">#### （1）方式一</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line"></span><br><span class="line"># 指定HTML源码文件，传入文件源码</span><br><span class="line">soup = BeautifulSoup(open(&quot;index.html&quot;))</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soup = BeautifulSoup(<span class="string">&quot;页面源码&quot;</span>,<span class="string">&quot;解析器类型&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="【4】解析器的优缺点">【4】解析器的优缺点</h3>
+<table>
+<thead>
+<tr>
+<th>解析器</th>
+<th>使用方法</th>
+<th>优势</th>
+<th>劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python标准库</td>
+<td>BeautifulSoup(markup, “html.parser”)</td>
+<td>Python的内置标准库 执行速度适中 文档容错能力强</td>
+<td>Python 2.7.3 or 3.2.2)前 的版本中文档容错能力差</td>
+</tr>
+<tr>
+<td>lxml HTML 解析器</td>
+<td>BeautifulSoup(markup, “lxml”)</td>
+<td>速度快 文档容错能力强</td>
+<td>需要安装C语言库</td>
+</tr>
+<tr>
+<td>lxml XML 解析器</td>
+<td>BeautifulSoup(markup, [“lxml”, “xml”]) 或BeautifulSoup(markup, “xml”)</td>
+<td>速度快 唯一支持XML的解析器</td>
+<td>需要安装C语言库</td>
+</tr>
+<tr>
+<td>html5lib</td>
+<td>BeautifulSoup(markup, “html5lib”)</td>
+<td>最好的容错性 以浏览器的方式解析文档 生成HTML5格式的文档</td>
+<td>速度慢 不依赖外部扩展</td>
+</tr>
+</tbody>
+</table>
+<h3 id="【5】生成soup对象">【5】生成soup对象</h3>
+<ul>
+<li>从一个soup对象开始，以下两种方式生成一个soup对象</li>
+</ul>
+<h4 id="（1）方式一">（1）方式一</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定HTML源码文件，传入文件源码</span></span><br><span class="line">soup = BeautifulSoup(<span class="built_in">open</span>(<span class="string">&quot;index.html&quot;</span>))</span><br></pre></td></tr></table></figure>
 <h4 id="2-方式二">(2)方式二</h4>
-````python
-from bs4 import BeautifulSoup
-
-# 直接放入 HTML 源码
-soup = BeautifulSoup("<html>data</html>")
-````
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 直接放入 HTML 源码</span></span><br><span class="line">soup = BeautifulSoup(<span class="string">&quot;&lt;html&gt;data&lt;/html&gt;&quot;</span>)</span><br></pre></td></tr></table></figure>
 <ul>
 <li>构造soup对象时，可以传入解析器参数</li>
 <li>如果不传入的话，会以最好的方式去解析</li>
 </ul>
 <h3 id="【6】使用案例">【6】使用案例</h3>
-```python
-from bs4 import BeautifulSoup
-
-# 读取html页面
-with open("练习.html", "r", encoding="utf") as fp:
-    data = fp.read()
-
-# 要用lxml首先安装
-# pip install lxml
-
-# 生成一个soup解析器对象
-soup = BeautifulSoup(
-    data,"lxml"
-)
-
-# 获取文章的所有文本内容
-text = soup.get_text()
-print(text)
-
-# 获取文章的a标签
-a_tags = soup.find_all("a")
-# 提取每个a标签的href属性
-a_href = [a.get("href") for a in a_tags]
-print(a_href)
-```
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取html页面</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;练习.html&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf&quot;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">    data = fp.read()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 要用lxml首先安装</span></span><br><span class="line"><span class="comment"># pip install lxml</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成一个soup解析器对象</span></span><br><span class="line">soup = BeautifulSoup(</span><br><span class="line">    data,<span class="string">&quot;lxml&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取文章的所有文本内容</span></span><br><span class="line">text = soup.get_text()</span><br><span class="line"><span class="built_in">print</span>(text)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取文章的a标签</span></span><br><span class="line">a_tags = soup.find_all(<span class="string">&quot;a&quot;</span>)</span><br><span class="line"><span class="comment"># 提取每个a标签的href属性</span></span><br><span class="line">a_href = [a.get(<span class="string">&quot;href&quot;</span>) <span class="keyword">for</span> a <span class="keyword">in</span> a_tags]</span><br><span class="line"><span class="built_in">print</span>(a_href)</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -312,12 +321,12 @@ print(a_href)
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/10/15/5.0Django%E8%AF%B7%E6%B1%82%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="prev" title="5.0Django请求生命周期">
-      <i class="fa fa-chevron-left"></i> 5.0Django请求生命周期
+    <a href="/2025/10/15/5.0Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D/" rel="prev" title="5.0Scrapy框架之配置文件介绍">
+      <i class="fa fa-chevron-left"></i> 5.0Scrapy框架之配置文件介绍
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/10/15/5.0BeautifulSoup%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D(1)/" rel="next" title="5.0BeautifulSoup模块介绍(1)">
-      5.0BeautifulSoup模块介绍(1) <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/15/5.0Django%E8%AF%B7%E6%B1%82%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="next" title="5.0Django请求生命周期">
+      5.0Django请求生命周期 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -377,7 +386,7 @@ print(a_href)
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">BeautifulSoup模块介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91BeautifulSoup%E6%A8%A1%E5%9D%97"><span class="nav-number">1.1.</span> <span class="nav-text">【一】BeautifulSoup模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.1.</span> <span class="nav-text">【1】介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%AE%98%E6%96%B9%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.2.</span> <span class="nav-text">【2】官方介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%B0%8F%E7%BB%93"><span class="nav-number">1.1.3.</span> <span class="nav-text">【3】小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E5%AE%89%E8%A3%85BeautifulSoup4%E6%A8%A1%E5%9D%97"><span class="nav-number">1.2.</span> <span class="nav-text">【二】安装BeautifulSoup4模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E8%A7%A3%E6%9E%90%E5%99%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">【2】解析器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.2.</span> <span class="nav-text">【3】使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%96%B9%E5%BC%8F%E4%BA%8C"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">(2)方式二</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%906%E3%80%91%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B"><span class="nav-number">1.2.3.</span> <span class="nav-text">【6】使用案例</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">BeautifulSoup模块介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%80%E3%80%91BeautifulSoup%E6%A8%A1%E5%9D%97"><span class="nav-number">1.1.</span> <span class="nav-text">【一】BeautifulSoup模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.1.</span> <span class="nav-text">【1】介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E5%AE%98%E6%96%B9%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.2.</span> <span class="nav-text">【2】官方介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E5%B0%8F%E7%BB%93"><span class="nav-number">1.1.3.</span> <span class="nav-text">【3】小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%BA%8C%E3%80%91%E5%AE%89%E8%A3%85BeautifulSoup4%E6%A8%A1%E5%9D%97"><span class="nav-number">1.2.</span> <span class="nav-text">【二】安装BeautifulSoup4模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E4%B8%89%E3%80%91%E8%A7%A3%E6%9E%90%E5%99%A8%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.3.</span> <span class="nav-text">【三】解析器的介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%AF%BC%E5%85%A5%E6%A8%A1%E5%9D%97"><span class="nav-number">1.3.1.</span> <span class="nav-text">【1】导入模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%902%E3%80%91%E8%A7%A3%E6%9E%90%E5%99%A8"><span class="nav-number">1.3.2.</span> <span class="nav-text">【2】解析器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%903%E3%80%91%E4%BD%BF%E7%94%A8"><span class="nav-number">1.3.3.</span> <span class="nav-text">【3】使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%904%E3%80%91%E8%A7%A3%E6%9E%90%E5%99%A8%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">1.3.4.</span> <span class="nav-text">【4】解析器的优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%905%E3%80%91%E7%94%9F%E6%88%90soup%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.3.5.</span> <span class="nav-text">【5】生成soup对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%96%B9%E5%BC%8F%E4%B8%80"><span class="nav-number">1.3.5.1.</span> <span class="nav-text">（1）方式一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%96%B9%E5%BC%8F%E4%BA%8C"><span class="nav-number">1.3.5.2.</span> <span class="nav-text">(2)方式二</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%906%E3%80%91%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B"><span class="nav-number">1.3.6.</span> <span class="nav-text">【6】使用案例</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

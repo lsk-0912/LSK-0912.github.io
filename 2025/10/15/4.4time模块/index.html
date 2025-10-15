@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="time模块 【一】表示时间的三种方式  时间戳表示时间  时间戳是指格林威治时间1970年01月01日00时00分00秒（北京时间1970年01月01日08时00分00秒）起至现在的总秒数   元组（struct_time）(年，月，日，时，分，秒，毫秒，微秒) 格式化的时间字符串  xx年-xx月-xx日 时:分:秒    【二】时间转换 【1】导入时间模块 &#96;&#96;&#96;python import">
+  <meta name="description" content="time模块 【一】表示时间的三种方式  时间戳表示时间  时间戳是指格林威治时间1970年01月01日00时00分00秒（北京时间1970年01月01日08时00分00秒）起至现在的总秒数   元组（struct_time）(年，月，日，时，分，秒，毫秒，微秒) 格式化的时间字符串  xx年-xx月-xx日 时:分:秒    【二】时间转换 【1】导入时间模块 1import time 【2】时">
 <meta property="og:type" content="article">
 <meta property="og:title" content="4.4time模块">
 <meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/4.4time%E6%A8%A1%E5%9D%97/index.html">
 <meta property="og:site_name" content="Aurora博客">
-<meta property="og:description" content="time模块 【一】表示时间的三种方式  时间戳表示时间  时间戳是指格林威治时间1970年01月01日00时00分00秒（北京时间1970年01月01日08时00分00秒）起至现在的总秒数   元组（struct_time）(年，月，日，时，分，秒，毫秒，微秒) 格式化的时间字符串  xx年-xx月-xx日 时:分:秒    【二】时间转换 【1】导入时间模块 &#96;&#96;&#96;python import">
+<meta property="og:description" content="time模块 【一】表示时间的三种方式  时间戳表示时间  时间戳是指格林威治时间1970年01月01日00时00分00秒（北京时间1970年01月01日08时00分00秒）起至现在的总秒数   元组（struct_time）(年，月，日，时，分，秒，毫秒，微秒) 格式化的时间字符串  xx年-xx月-xx日 时:分:秒    【二】时间转换 【1】导入时间模块 1import time 【2】时">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="c:%5CUsers%5C86177%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240419160447973.png">
 <meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
-<meta property="article:modified_time" content="2025-10-15T08:41:50.238Z">
+<meta property="article:modified_time" content="2025-10-15T09:06:32.648Z">
 <meta property="article:author" content="Aurora">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -177,7 +177,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:41:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：17:06:32" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,35 +217,36 @@
 </ul>
 <h1>【二】时间转换</h1>
 <h2 id="【1】导入时间模块">【1】导入时间模块</h2>
-```python
-import time
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 【2】时间戳</span><br><span class="line"></span><br><span class="line">### （1）生成时间戳</span><br><span class="line"></span><br><span class="line">- 语句：time.time()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">#例子</span><br><span class="line">变量名 = time_time()</span><br><span class="line">print(变量名)#输出结果是这样的：1713512356.3627634</span><br><span class="line">#去掉多余的小数就直接转int类型</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br></pre></td></tr></table></figure>
+<h2 id="【2】时间戳">【2】时间戳</h2>
+<h3 id="（1）生成时间戳">（1）生成时间戳</h3>
+<ul>
+<li>语句：time.time()</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#例子</span></span><br><span class="line">变量名 = time_time()</span><br><span class="line"><span class="built_in">print</span>(变量名)<span class="comment">#输出结果是这样的：1713512356.3627634</span></span><br><span class="line"><span class="comment">#去掉多余的小数就直接转int类型</span></span><br></pre></td></tr></table></figure>
 <h3 id="（2）时间戳转换为时间元组">（2）时间戳转换为时间元组</h3>
 <ul>
 <li>国际时间：time.gmtime(time.time())</li>
 </ul>
-```python
-变量名 = time.gmtime(time.time())
-print(变量名)#输出结果是这样的：time.struct_time(tm_year=2024, tm_mon=4, tm_mday=19, tm_hour=7, tm_min=42, tm_sec=16, tm_wday=4, tm_yday=110, tm_isdst=0)
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 本地时间time.localtime(time.time())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">变量名 = time.localtime(time.time())</span><br><span class="line">print(变量名)#输出结果是这样的：time.struct_time(tm_year=2024, tm_mon=4, tm_mday=19, tm_hour=15, tm_min=45, tm_sec=53, tm_wday=4, tm_yday=110, tm_isdst=0)</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">变量名 = time.gmtime(time.time())</span><br><span class="line"><span class="built_in">print</span>(变量名)<span class="comment">#输出结果是这样的：time.struct_time(tm_year=2024, tm_mon=4, tm_mday=19, tm_hour=7, tm_min=42, tm_sec=16, tm_wday=4, tm_yday=110, tm_isdst=0)</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>本地时间time.localtime(time.time())</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">变量名 = time.localtime(time.time())</span><br><span class="line"><span class="built_in">print</span>(变量名)<span class="comment">#输出结果是这样的：time.struct_time(tm_year=2024, tm_mon=4, tm_mday=19, tm_hour=15, tm_min=45, tm_sec=53, tm_wday=4, tm_yday=110, tm_isdst=0)</span></span><br></pre></td></tr></table></figure>
 <h3 id="（3）转换为时间字符串">（3）转换为时间字符串</h3>
 <ul>
 <li>转换时间的格式在strftime里面执行的</li>
 </ul>
-```python
-#正常时间
-变量名 = time.strftime('%Y-%m-%d %H:%M:%S')
-print(变量名)#2024-04-19 15:51:18
-#正常时间
-变量名 = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
-print(变量名)#2024-04-19 15:51:18
-#国际时间
-变量名 = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())
-print(变量名)#2024-04-19 07:53:10
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （4）转换为时间元组</span><br><span class="line"></span><br><span class="line">- 从时间元组中获取指定的属性</span><br><span class="line">  - 取出年月日时分秒</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">变量名 = time.localtime()</span><br><span class="line">print(变量名.tm_year)#年</span><br><span class="line">print(变量名.tm_mon)#月</span><br><span class="line">print(变量名.tm_mday)  # 当前日</span><br><span class="line">print(变量名.tm_wday)  # 当前周</span><br><span class="line">print(变量名.tm_yday) #本年过了多少天</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#正常时间</span></span><br><span class="line">变量名 = time.strftime(<span class="string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(变量名)<span class="comment">#2024-04-19 15:51:18</span></span><br><span class="line"><span class="comment">#正常时间</span></span><br><span class="line">变量名 = time.strftime(<span class="string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>, time.localtime())</span><br><span class="line"><span class="built_in">print</span>(变量名)<span class="comment">#2024-04-19 15:51:18</span></span><br><span class="line"><span class="comment">#国际时间</span></span><br><span class="line">变量名 = time.strftime(<span class="string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>, time.gmtime())</span><br><span class="line"><span class="built_in">print</span>(变量名)<span class="comment">#2024-04-19 07:53:10</span></span><br></pre></td></tr></table></figure>
+<h3 id="（4）转换为时间元组">（4）转换为时间元组</h3>
+<ul>
+<li>从时间元组中获取指定的属性
+<ul>
+<li>取出年月日时分秒</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">变量名 = time.localtime()</span><br><span class="line"><span class="built_in">print</span>(变量名.tm_year)<span class="comment">#年</span></span><br><span class="line"><span class="built_in">print</span>(变量名.tm_mon)<span class="comment">#月</span></span><br><span class="line"><span class="built_in">print</span>(变量名.tm_mday)  <span class="comment"># 当前日</span></span><br><span class="line"><span class="built_in">print</span>(变量名.tm_wday)  <span class="comment"># 当前周</span></span><br><span class="line"><span class="built_in">print</span>(变量名.tm_yday) <span class="comment">#本年过了多少天</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>Python中时间日期格式化符号</li>
 </ul>
@@ -255,48 +256,31 @@ print(变量名)#2024-04-19 07:53:10
 <ul>
 <li>time.mktime（）(时间戳–&gt;元组时间戳)</li>
 </ul>
-```python
-import time
-
-time_str = time.time()#生成时间戳：1713513953.0934687
-time_str = time.localtime(time_str)#本地时间
-time_str = time.mktime(time_str)#转换
-print(time_str)#输出结果是这样的：1713513731.0
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### （2）结构化输出时间</span><br><span class="line"></span><br><span class="line">- time.strftime() : 格式化输出当前时间</span><br><span class="line"></span><br><span class="line">- 结构化时间参数若不传，则显示当前时间</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line"># 格式化当前时间</span><br><span class="line">time_str = time.strftime(&quot;%Y-%m-%d %X&quot;)</span><br><span class="line">print(time_str)  # 2024-04-19 16:08:22</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">time_str = time.time()<span class="comment">#生成时间戳：1713513953.0934687</span></span><br><span class="line">time_str = time.localtime(time_str)<span class="comment">#本地时间</span></span><br><span class="line">time_str = time.mktime(time_str)<span class="comment">#转换</span></span><br><span class="line"><span class="built_in">print</span>(time_str)<span class="comment">#输出结果是这样的：1713513731.0</span></span><br></pre></td></tr></table></figure>
+<h3 id="（2）结构化输出时间">（2）结构化输出时间</h3>
+<ul>
+<li>
+<p>time.strftime() : 格式化输出当前时间</p>
+</li>
+<li>
+<p>结构化时间参数若不传，则显示当前时间</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 格式化当前时间</span></span><br><span class="line">time_str = time.strftime(<span class="string">&quot;%Y-%m-%d %X&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(time_str)  <span class="comment"># 2024-04-19 16:08:22</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>格式化当前元组</li>
 </ul>
-```python
-import time
-
-print(time.localtime(time.time()))
-
-# 格式化当前时间元组
-time_local = time.strftime("%Y-%m-%d", time.localtime(time.time()))
-print(time_local)  # 2024-04-19
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### (3)将字符串的时间格式转换为时间元组</span><br><span class="line"></span><br><span class="line">- time.strptime（）(时间字符串--&gt;时间元组)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line"># 格式化当前时间</span><br><span class="line">time_str = time.strftime(&quot;%Y-%m-%d %X&quot;)</span><br><span class="line">print(time_str)  # 2024-04-19 16:08:22</span><br><span class="line"></span><br><span class="line">time_str = time.strptime(&quot;2023-11-24&quot;, &quot;%Y-%m-%d&quot;)#括号里可以改任意时间</span><br><span class="line">print(time_str)  #time.struct_time(tm_year=2023, tm_mon=11, tm_mday=24, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=4, tm_yday=328, tm_isdst=-1)</span><br><span class="line"></span><br><span class="line">time_local = time.strptime(&quot;11/24/2023&quot;, &quot;%m/%d/%Y&quot;)#括号里可以改任意时间</span><br><span class="line">print(time_local)  #time.struct_time(tm_year=2023, tm_mon=11, tm_mday=24, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=4, tm_yday=328, tm_isdst=-1)</span><br><span class="line"></span><br><span class="line">time_local = time.strptime(&quot;11:24:2023&quot;, &quot;%m:%d:%Y&quot;)#括号里可以改任意时间</span><br><span class="line">print(time_local)  #time.struct_time(tm_year=2023, tm_mon=11, tm_mday=24, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=4, tm_yday=328, tm_isdst=-1)</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(time.localtime(time.time()))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 格式化当前时间元组</span></span><br><span class="line">time_local = time.strftime(<span class="string">&quot;%Y-%m-%d&quot;</span>, time.localtime(time.time()))</span><br><span class="line"><span class="built_in">print</span>(time_local)  <span class="comment"># 2024-04-19</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-将字符串的时间格式转换为时间元组">(3)将字符串的时间格式转换为时间元组</h3>
+<ul>
+<li>time.strptime（）(时间字符串–&gt;时间元组)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 格式化当前时间</span></span><br><span class="line">time_str = time.strftime(<span class="string">&quot;%Y-%m-%d %X&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(time_str)  <span class="comment"># 2024-04-19 16:08:22</span></span><br><span class="line"></span><br><span class="line">time_str = time.strptime(<span class="string">&quot;2023-11-24&quot;</span>, <span class="string">&quot;%Y-%m-%d&quot;</span>)<span class="comment">#括号里可以改任意时间</span></span><br><span class="line"><span class="built_in">print</span>(time_str)  <span class="comment">#time.struct_time(tm_year=2023, tm_mon=11, tm_mday=24, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=4, tm_yday=328, tm_isdst=-1)</span></span><br><span class="line"></span><br><span class="line">time_local = time.strptime(<span class="string">&quot;11/24/2023&quot;</span>, <span class="string">&quot;%m/%d/%Y&quot;</span>)<span class="comment">#括号里可以改任意时间</span></span><br><span class="line"><span class="built_in">print</span>(time_local)  <span class="comment">#time.struct_time(tm_year=2023, tm_mon=11, tm_mday=24, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=4, tm_yday=328, tm_isdst=-1)</span></span><br><span class="line"></span><br><span class="line">time_local = time.strptime(<span class="string">&quot;11:24:2023&quot;</span>, <span class="string">&quot;%m:%d:%Y&quot;</span>)<span class="comment">#括号里可以改任意时间</span></span><br><span class="line"><span class="built_in">print</span>(time_local)  <span class="comment">#time.struct_time(tm_year=2023, tm_mon=11, tm_mday=24, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=4, tm_yday=328, tm_isdst=-1)</span></span><br></pre></td></tr></table></figure>
 <h3 id="（4）将时间元组转换为国际时间格斗">（4）将时间元组转换为国际时间格斗</h3>
 <ul>
 <li>time.asctime(结构化时间–&gt; %a %b %d %H:%M:%S %Y串)</li>
 </ul>
-```python
-import time
-
-time_str = time.asctime(time.localtime(time.time()))
-print(time_str)#Fri Apr 19 16:17:31 2024
-
-time_local = time.asctime()
-print(time_local)#Fri Apr 19 16:17:31 2024
-
-time_str = time.ctime(time.time())
-print(time_str)#Fri Apr 19 16:17:31 2024
-
-time_local = time.ctime()
-print(time_local)#Fri Apr 19 16:17:31 2024
-```
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">time_str = time.asctime(time.localtime(time.time()))</span><br><span class="line"><span class="built_in">print</span>(time_str)<span class="comment">#Fri Apr 19 16:17:31 2024</span></span><br><span class="line"></span><br><span class="line">time_local = time.asctime()</span><br><span class="line"><span class="built_in">print</span>(time_local)<span class="comment">#Fri Apr 19 16:17:31 2024</span></span><br><span class="line"></span><br><span class="line">time_str = time.ctime(time.time())</span><br><span class="line"><span class="built_in">print</span>(time_str)<span class="comment">#Fri Apr 19 16:17:31 2024</span></span><br><span class="line"></span><br><span class="line">time_local = time.ctime()</span><br><span class="line"><span class="built_in">print</span>(time_local)<span class="comment">#Fri Apr 19 16:17:31 2024</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>time.ctime（）(时间戳)
 <ul>
@@ -305,16 +289,7 @@ print(time_local)#Fri Apr 19 16:17:31 2024
 </ul>
 </li>
 </ul>
-````python
-import time
-
-time_str = time.ctime(time.time())
-print(time_str)# Fri Apr 19 16:25:41 2024
-
-time_local = time.ctime()
-print(time_local)# Fri Apr 19 16:25:41 2024
-````
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">time_str = time.ctime(time.time())</span><br><span class="line"><span class="built_in">print</span>(time_str)<span class="comment"># Fri Apr 19 16:25:41 2024</span></span><br><span class="line"></span><br><span class="line">time_local = time.ctime()</span><br><span class="line"><span class="built_in">print</span>(time_local)<span class="comment"># Fri Apr 19 16:25:41 2024</span></span><br></pre></td></tr></table></figure>
 <h2 id="【4】总结">【4】总结</h2>
 <ul>
 <li>
@@ -363,12 +338,12 @@ print(time_local)# Fri Apr 19 16:25:41 2024
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/10/15/4.5datetime%E6%A8%A1%E5%9D%97/" rel="prev" title="4.5datetime模块">
-      <i class="fa fa-chevron-left"></i> 4.5datetime模块
+    <a href="/2025/10/15/4.1%E8%BF%AD%E4%BB%A3%E5%99%A8/" rel="prev" title="4.1迭代器">
+      <i class="fa fa-chevron-left"></i> 4.1迭代器
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/10/15/4.2%E7%94%9F%E6%88%90%E5%99%A8/" rel="next" title="4.2生成器">
-      4.2生成器 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/15/4.17pickle%E6%A8%A1%E5%9D%97/" rel="next" title="4.17pickle模块">
+      4.17pickle模块 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -428,7 +403,7 @@ print(time_local)# Fri Apr 19 16:25:41 2024
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">time模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">【一】表示时间的三种方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">【二】时间转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%AF%BC%E5%85%A5%E6%97%B6%E9%97%B4%E6%A8%A1%E5%9D%97"><span class="nav-number">3.1.</span> <span class="nav-text">【1】导入时间模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E6%97%B6%E9%97%B4%E6%88%B3%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%97%B6%E9%97%B4%E5%85%83%E7%BB%84"><span class="nav-number">3.1.1.</span> <span class="nav-text">（2）时间戳转换为时间元组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%97%B6%E9%97%B4%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.1.2.</span> <span class="nav-text">（3）转换为时间字符串</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%903%E3%80%91%E7%BB%93%E6%9E%84%E5%8C%96%E6%97%B6%E9%97%B4"><span class="nav-number">3.2.</span> <span class="nav-text">【3】结构化时间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%97%B6%E9%97%B4%E6%88%B3%E8%BD%AC%E6%8D%A2"><span class="nav-number">3.2.1.</span> <span class="nav-text">（1）时间戳转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E5%B0%86%E6%97%B6%E9%97%B4%E5%85%83%E7%BB%84%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%9B%BD%E9%99%85%E6%97%B6%E9%97%B4%E6%A0%BC%E6%96%97"><span class="nav-number">3.2.2.</span> <span class="nav-text">（4）将时间元组转换为国际时间格斗</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%904%E3%80%91%E6%80%BB%E7%BB%93"><span class="nav-number">3.3.</span> <span class="nav-text">【4】总结</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">time模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">【一】表示时间的三种方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">【二】时间转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%901%E3%80%91%E5%AF%BC%E5%85%A5%E6%97%B6%E9%97%B4%E6%A8%A1%E5%9D%97"><span class="nav-number">3.1.</span> <span class="nav-text">【1】导入时间模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%902%E3%80%91%E6%97%B6%E9%97%B4%E6%88%B3"><span class="nav-number">3.2.</span> <span class="nav-text">【2】时间戳</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E7%94%9F%E6%88%90%E6%97%B6%E9%97%B4%E6%88%B3"><span class="nav-number">3.2.1.</span> <span class="nav-text">（1）生成时间戳</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E6%97%B6%E9%97%B4%E6%88%B3%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%97%B6%E9%97%B4%E5%85%83%E7%BB%84"><span class="nav-number">3.2.2.</span> <span class="nav-text">（2）时间戳转换为时间元组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%97%B6%E9%97%B4%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.2.3.</span> <span class="nav-text">（3）转换为时间字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%97%B6%E9%97%B4%E5%85%83%E7%BB%84"><span class="nav-number">3.2.4.</span> <span class="nav-text">（4）转换为时间元组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%903%E3%80%91%E7%BB%93%E6%9E%84%E5%8C%96%E6%97%B6%E9%97%B4"><span class="nav-number">3.3.</span> <span class="nav-text">【3】结构化时间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%97%B6%E9%97%B4%E6%88%B3%E8%BD%AC%E6%8D%A2"><span class="nav-number">3.3.1.</span> <span class="nav-text">（1）时间戳转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E7%BB%93%E6%9E%84%E5%8C%96%E8%BE%93%E5%87%BA%E6%97%B6%E9%97%B4"><span class="nav-number">3.3.2.</span> <span class="nav-text">（2）结构化输出时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%B0%86%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%97%B6%E9%97%B4%E5%85%83%E7%BB%84"><span class="nav-number">3.3.3.</span> <span class="nav-text">(3)将字符串的时间格式转换为时间元组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E5%B0%86%E6%97%B6%E9%97%B4%E5%85%83%E7%BB%84%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%9B%BD%E9%99%85%E6%97%B6%E9%97%B4%E6%A0%BC%E6%96%97"><span class="nav-number">3.3.4.</span> <span class="nav-text">（4）将时间元组转换为国际时间格斗</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%904%E3%80%91%E6%80%BB%E7%BB%93"><span class="nav-number">3.4.</span> <span class="nav-text">【4】总结</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="【一】迭代器 【1】什么是迭代器  迭代器就是用来迭代取值的工具，而迭代是重复反馈过程的活动 每次迭代得到的返回值结果可就是下一次迭代开始的初始值  【2】可迭代对象 【1】什么是可迭代对象   通过索引的方式进行迭代取值   内置有**__iter**__方法的对象都是可迭代对象   【2】八大数据类型  整数类型–不是  &#96;&#96;&#96;python age_int &#x3D; 18 print(age.__i">
+  <meta name="description" content="【一】迭代器 【1】什么是迭代器  迭代器就是用来迭代取值的工具，而迭代是重复反馈过程的活动 每次迭代得到的返回值结果可就是下一次迭代开始的初始值  【2】可迭代对象 【1】什么是可迭代对象   通过索引的方式进行迭代取值   内置有**__iter**__方法的对象都是可迭代对象   【2】八大数据类型  整数类型–不是  12age_int &#x3D; 18print(age.__iter__)#报错">
 <meta property="og:type" content="article">
 <meta property="og:title" content="4.1迭代器">
 <meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/4.1%E8%BF%AD%E4%BB%A3%E5%99%A8/index.html">
 <meta property="og:site_name" content="Aurora博客">
-<meta property="og:description" content="【一】迭代器 【1】什么是迭代器  迭代器就是用来迭代取值的工具，而迭代是重复反馈过程的活动 每次迭代得到的返回值结果可就是下一次迭代开始的初始值  【2】可迭代对象 【1】什么是可迭代对象   通过索引的方式进行迭代取值   内置有**__iter**__方法的对象都是可迭代对象   【2】八大数据类型  整数类型–不是  &#96;&#96;&#96;python age_int &#x3D; 18 print(age.__i">
+<meta property="og:description" content="【一】迭代器 【1】什么是迭代器  迭代器就是用来迭代取值的工具，而迭代是重复反馈过程的活动 每次迭代得到的返回值结果可就是下一次迭代开始的初始值  【2】可迭代对象 【1】什么是可迭代对象   通过索引的方式进行迭代取值   内置有**__iter**__方法的对象都是可迭代对象   【2】八大数据类型  整数类型–不是  12age_int &#x3D; 18print(age.__iter__)#报错">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
-<meta property="article:modified_time" content="2025-10-15T08:41:50.219Z">
+<meta property="article:modified_time" content="2025-10-15T09:06:32.630Z">
 <meta property="article:author" content="Aurora">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:41:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：17:06:32" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -218,35 +218,35 @@
 <ul>
 <li>整数类型–不是</li>
 </ul>
-```python
-age_int = 18
-print(age.__iter__)#报错：'int' object has no attribute '__iter__'. Did you mean: '__str__'?
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 浮点数类型--不是</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num_float = 18.8</span><br><span class="line">print(num.__iter__)#报错：&#x27;float&#x27; object has no attribute &#x27;__iter__&#x27;. Did you mean: &#x27;__str__&#x27;?</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">age_int = <span class="number">18</span></span><br><span class="line"><span class="built_in">print</span>(age.__iter__)<span class="comment">#报错：&#x27;int&#x27; object has no attribute &#x27;__iter__&#x27;. Did you mean: &#x27;__str__&#x27;?</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>浮点数类型–不是</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">num_float = <span class="number">18.8</span></span><br><span class="line"><span class="built_in">print</span>(num.__iter__)<span class="comment">#报错：&#x27;float&#x27; object has no attribute &#x27;__iter__&#x27;. Did you mean: &#x27;__str__&#x27;?</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>布尔类型–不是</li>
 </ul>
-```python
-bool_is = True
-print(bool_is)#报错：'bool' object has no attribute '__iter__'. Did you mean: '__str__'?
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 字典类型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">dict_is = &#123;&quot;username&quot;:&quot;tom&quot;&#125;</span><br><span class="line">print(dict_is.__iter__)#&lt;method-wrapper &#x27;__iter__&#x27; of dict object at 0x00000242D8C01C00&gt;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bool_is = <span class="literal">True</span></span><br><span class="line"><span class="built_in">print</span>(bool_is)<span class="comment">#报错：&#x27;bool&#x27; object has no attribute &#x27;__iter__&#x27;. Did you mean: &#x27;__str__&#x27;?</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>字典类型</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dict_is = &#123;<span class="string">&quot;username&quot;</span>:<span class="string">&quot;tom&quot;</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(dict_is.__iter__)<span class="comment">#&lt;method-wrapper &#x27;__iter__&#x27; of dict object at 0x00000242D8C01C00&gt;</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>字符串类型</li>
 </ul>
-```python
-str_is = "tom"
-print(str_is.__iter__)#<method-wrapper '__iter__' of str object at 0x00000127085548B0>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 元组类型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">tuple_is = (1,2,3,4,5,6,7,8,9,10)</span><br><span class="line">print(tuple_is.__iter__)#&lt;method-wrapper &#x27;__iter__&#x27; of tuple object at 0x000001FBE40963C0&gt;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str_is = <span class="string">&quot;tom&quot;</span></span><br><span class="line"><span class="built_in">print</span>(str_is.__iter__)<span class="comment">#&lt;method-wrapper &#x27;__iter__&#x27; of str object at 0x00000127085548B0&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>元组类型</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tuple_is = (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>)</span><br><span class="line"><span class="built_in">print</span>(tuple_is.__iter__)<span class="comment">#&lt;method-wrapper &#x27;__iter__&#x27; of tuple object at 0x000001FBE40963C0&gt;</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>列表类型</li>
 </ul>
-```python
-list_is = [1,2,3,4,5,6,7,8,9,10]
-print(list_is.__iter__)#<method-wrapper '__iter__' of list object at 0x000002B62FBC6B40>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 集合类型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">set_is = [1,2,3,4,5,6,7,8,9,10]</span><br><span class="line">print(set_is.__iter__)#&lt;method-wrapper &#x27;__iter__&#x27; of list object at 0x000002C234D46B40&gt;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list_is = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>]</span><br><span class="line"><span class="built_in">print</span>(list_is.__iter__)<span class="comment">#&lt;method-wrapper &#x27;__iter__&#x27; of list object at 0x000002B62FBC6B40&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>集合类型</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set_is = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>]</span><br><span class="line"><span class="built_in">print</span>(set_is.__iter__)<span class="comment">#&lt;method-wrapper &#x27;__iter__&#x27; of list object at 0x000002C234D46B40&gt;</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>总结
 <ul>
@@ -267,42 +267,38 @@ print(list_is.__iter__)#<method-wrapper '__iter__' of list object at 0x000002B62
 <ul>
 <li>字符串</li>
 </ul>
-```python
-name = 'dream'
-name_iter = name.__iter__() # <str_iterator object at 0x0000027750011340>
-print(name_iter)
-print(name_iter.__next__()) # d
-print(name_iter.__next__()) # r
-print(name_iter.__next__()) # e
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 字典</span><br><span class="line">  - 取到的是键</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">user_dict = &#123;&#x27;name&#x27;:&#x27;zhangsan&#x27;&#125;</span><br><span class="line">user_dict_iter = iter(user_dict)</span><br><span class="line">print(user_dict_iter.__next__())#name</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&#x27;dream&#x27;</span></span><br><span class="line">name_iter = name.__iter__() <span class="comment"># &lt;str_iterator object at 0x0000027750011340&gt;</span></span><br><span class="line"><span class="built_in">print</span>(name_iter)</span><br><span class="line"><span class="built_in">print</span>(name_iter.__next__()) <span class="comment"># d</span></span><br><span class="line"><span class="built_in">print</span>(name_iter.__next__()) <span class="comment"># r</span></span><br><span class="line"><span class="built_in">print</span>(name_iter.__next__()) <span class="comment"># e</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>字典
+<ul>
+<li>取到的是键</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">user_dict = &#123;<span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;zhangsan&#x27;</span>&#125;</span><br><span class="line">user_dict_iter = <span class="built_in">iter</span>(user_dict)</span><br><span class="line"><span class="built_in">print</span>(user_dict_iter.__next__())<span class="comment">#name</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>列表</li>
 </ul>
-```python
-num_list = [1,2,3]
-num_list_iter = iter(num_list)
-print(next(num_list_iter))#1
-print(next(num_list_iter))#2
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 元组</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">num_tuple = (1,2,3)</span><br><span class="line">num_tuple_iter = iter(num_tuple)</span><br><span class="line">print(num_tuple_iter.__next__())#1</span><br><span class="line">print(num_tuple_iter.__next__())#2</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">num_list = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">num_list_iter = <span class="built_in">iter</span>(num_list)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(num_list_iter))<span class="comment">#1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(num_list_iter))<span class="comment">#2</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>元组</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">num_tuple = (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">num_tuple_iter = <span class="built_in">iter</span>(num_tuple)</span><br><span class="line"><span class="built_in">print</span>(num_tuple_iter.__next__())<span class="comment">#1</span></span><br><span class="line"><span class="built_in">print</span>(num_tuple_iter.__next__())<span class="comment">#2</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>集合、</li>
 </ul>
-```python
-num_set = {1,2,3}
-num_set_iter = iter(num_set)
-print(num_set_iter.__next__())#1
-print(num_set_iter.__next__())#2
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 生成可迭代对象的两种方式</span><br><span class="line"></span><br><span class="line">[1]第一种__iter__（）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">name = &#x27;dream&#x27;</span><br><span class="line">name_iter = name.__iter__()</span><br><span class="line">print(name_iter) #  &lt;str_iterator object at 0x0000023D04091340&gt;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">num_set = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;</span><br><span class="line">num_set_iter = <span class="built_in">iter</span>(num_set)</span><br><span class="line"><span class="built_in">print</span>(num_set_iter.__next__())<span class="comment">#1</span></span><br><span class="line"><span class="built_in">print</span>(num_set_iter.__next__())<span class="comment">#2</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>生成可迭代对象的两种方式</li>
+</ul>
+<p>[1]第一种__iter__（）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&#x27;dream&#x27;</span></span><br><span class="line">name_iter = name.__iter__()</span><br><span class="line"><span class="built_in">print</span>(name_iter) <span class="comment">#  &lt;str_iterator object at 0x0000023D04091340&gt;</span></span><br></pre></td></tr></table></figure>
 <p>[2]第二种iter(数据)</p>
-```python
-name = 'dream'
-name_iter = iter(name)
-print(iter(name)) #<str_iterator object at 0x0000023D04091340>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% endraw %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- 迭代器对象迭代的方法有两种</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% raw %&#125;```python</span><br><span class="line">name = &#x27;dream&#x27;</span><br><span class="line">name_iter = name.__iter__()</span><br><span class="line">print(name_iter)</span><br><span class="line">一种</span><br><span class="line">print(name_iter.__next__()) #d</span><br><span class="line">二种</span><br><span class="line">print(next(name_iter))  # r</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&#x27;dream&#x27;</span></span><br><span class="line">name_iter = <span class="built_in">iter</span>(name)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">iter</span>(name)) <span class="comment">#&lt;str_iterator object at 0x0000023D04091340&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>迭代器对象迭代的方法有两种</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&#x27;dream&#x27;</span></span><br><span class="line">name_iter = name.__iter__()</span><br><span class="line"><span class="built_in">print</span>(name_iter)</span><br><span class="line">一种</span><br><span class="line"><span class="built_in">print</span>(name_iter.__next__()) <span class="comment">#d</span></span><br><span class="line">二种</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(name_iter))  <span class="comment"># r</span></span><br></pre></td></tr></table></figure>
 <h3 id="【3】总结">【3】总结</h3>
 <ul>
 <li>具有 <strong>iter</strong>() 和 <strong>next</strong>() 的对象就是迭代器对象</li>
@@ -325,15 +321,7 @@ print(iter(name)) #<str_iterator object at 0x0000023D04091340>
 <li>调用 next 取值的前提是 已经生成并且得到了一个迭代器对象.<strong>iter</strong></li>
 <li>迭代同一个对象只能重新创建</li>
 </ul>
-```python
-name = 'dr'
-name_iter = name.__iter__()
-print(next(name_iter))#d
-print(next(name_iter))#r
-name_iter = name.__iter__()
-print(next(name_iter))#d
-```
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&#x27;dr&#x27;</span></span><br><span class="line">name_iter = name.__iter__()</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(name_iter))<span class="comment">#d</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(name_iter))<span class="comment">#r</span></span><br><span class="line">name_iter = name.__iter__()</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(name_iter))<span class="comment">#d</span></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -352,12 +340,12 @@ print(next(name_iter))#d
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/10/15/4.17pickle%E6%A8%A1%E5%9D%97/" rel="prev" title="4.17pickle模块">
-      <i class="fa fa-chevron-left"></i> 4.17pickle模块
+    <a href="/2025/10/15/4.5datetime%E6%A8%A1%E5%9D%97/" rel="prev" title="4.5datetime模块">
+      <i class="fa fa-chevron-left"></i> 4.5datetime模块
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/10/15/4.15%E9%97%AD%E5%8C%85%E5%87%BD%E6%95%B0/" rel="next" title="4.15闭包函数">
-      4.15闭包函数 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/15/4.4time%E6%A8%A1%E5%9D%97/" rel="next" title="4.4time模块">
+      4.4time模块 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>

@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Scrapy框架之配置文件介绍 &#96;&#96;&#96;python  from fake_useragent import UserAgent  # 当前项目的项目名字 BOT_NAME &#x3D; &quot;SpiderNews&quot;  # 当前爬虫项目所在的位置 SPIDER_MODULES &#x3D; [&quot;SpiderNews.spiders&quot;] # 当前爬虫项目所在的位置 NEWSPIDER_MODULE &#x3D; &quot;SpiderNews">
+  <meta name="description" content="Scrapy框架之配置文件介绍 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596f">
 <meta property="og:type" content="article">
 <meta property="og:title" content="5.0Scrapy框架之配置文件介绍">
 <meta property="og:url" content="https://aurora-lsk.asia/2025/10/15/5.0Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D/index.html">
 <meta property="og:site_name" content="Aurora博客">
-<meta property="og:description" content="Scrapy框架之配置文件介绍 &#96;&#96;&#96;python  from fake_useragent import UserAgent  # 当前项目的项目名字 BOT_NAME &#x3D; &quot;SpiderNews&quot;  # 当前爬虫项目所在的位置 SPIDER_MODULES &#x3D; [&quot;SpiderNews.spiders&quot;] # 当前爬虫项目所在的位置 NEWSPIDER_MODULE &#x3D; &quot;SpiderNews">
+<meta property="og:description" content="Scrapy框架之配置文件介绍 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596f">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-15T03:34:55.000Z">
-<meta property="article:modified_time" content="2025-10-15T08:41:50.310Z">
+<meta property="article:modified_time" content="2025-10-15T09:06:32.721Z">
 <meta property="article:author" content="Aurora">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：16:41:50" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
+              <time title="创建时间：2025-10-15 11:34:55 / 修改时间：17:06:32" itemprop="dateCreated datePublished" datetime="2025-10-15T11:34:55+08:00">2025-10-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -199,105 +199,7 @@
 
       
         <h1>Scrapy框架之配置文件介绍</h1>
-```python
-
-from fake_useragent import UserAgent
-
-# 当前项目的项目名字
-BOT_NAME = "SpiderNews"
-
-# 当前爬虫项目所在的位置
-SPIDER_MODULES = ["SpiderNews.spiders"]
-# 当前爬虫项目所在的位置
-NEWSPIDER_MODULE = "SpiderNews.spiders"
-
-# 指定那个日志级别，达到了你设置的日志级别才会显示日志
-# 指定输出日志的类型：
-LOG_LEVEL = "WARNING"
-
-# 自定义请求头
-# 我们也可以写成：
-USER_AGENT = UserAgent().random
-#USER_AGENT = "SpiderNews (+http://www.yourdomain.com)"
-
-# Obey robots.txt rules
-# 是否遵循robots.txt协议
-ROBOTSTXT_OBEY = False
-
-# 最大请求数量
-#CONCURRENT_REQUESTS = 32
-
-
-# 下载延迟，如果下载三秒中还没反应，会直接抛出异常
-#DOWNLOAD_DELAY = 3
-
-# 并发请求的最大数量
-#CONCURRENT_REQUESTS_PER_DOMAIN = 16
-# 并发请求的ip最大数量
-#CONCURRENT_REQUESTS_PER_IP = 16
-
-# 是否启用cookie
-#COOKIES_ENABLED = False
-
-# 禁用控制台输出
-#TELNETCONSOLE_ENABLED = False
-
-# 默认的请求头参数
-#DEFAULT_REQUEST_HEADERS = {
-#    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-#    "Accept-Language": "en",
-#}
-
-# 是否启用爬虫中间件
-#SPIDER_MIDDLEWARES = {
-#    "SpiderNews.middlewares.SpidernewsSpiderMiddleware": 543,
-#}
-
-# 是否启用下载器中间件
-#DOWNLOADER_MIDDLEWARES = {
-#    "SpiderNews.middlewares.SpidernewsDownloaderMiddleware": 543,
-#}
-
-# 调度引擎
-#EXTENSIONS = {
-#    "scrapy.extensions.telnet.TelnetConsole": None,
-#}
-
-# 管道类
-ITEM_PIPELINES = {
-    # 项目默认的处理类，没有任何操作
-   "SpiderNews.pipelines.SpidernewsPipeline": 300,
-    # 自己写的注册的处理类，后面你的数字越小优先级越高，根据优先级一次执行管道处理类
-   "SpiderNews.pipelines.BoKeYuanPipeline": 300,
-}
-
-# 自动限速
-#AUTOTHROTTLE_ENABLED = True
-# 下载延迟
-#AUTOTHROTTLE_START_DELAY = 5
-# 最大并发数延迟
-#AUTOTHROTTLE_MAX_DELAY = 60
-# The average number of requests Scrapy should be sending in parallel to
-# each remote server
-#AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
-# Enable showing throttling stats for every response received:
-#AUTOTHROTTLE_DEBUG = False
-
-# Enable and configure HTTP caching (disabled by default)
-# See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-#HTTPCACHE_ENABLED = True
-#HTTPCACHE_EXPIRATION_SECS = 0
-#HTTPCACHE_DIR = "httpcache"
-#HTTPCACHE_IGNORE_HTTP_CODES = []
-#HTTPCACHE_STORAGE = "scrapy.extensions.httpcache.FilesystemCacheStorage"
-
-# Set settings whose default value is deprecated to a future-proof value
-REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
-TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
-FEED_EXPORT_ENCODING = "utf-8"
-
-```
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> fake_useragent <span class="keyword">import</span> UserAgent</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当前项目的项目名字</span></span><br><span class="line">BOT_NAME = <span class="string">&quot;SpiderNews&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 当前爬虫项目所在的位置</span></span><br><span class="line">SPIDER_MODULES = [<span class="string">&quot;SpiderNews.spiders&quot;</span>]</span><br><span class="line"><span class="comment"># 当前爬虫项目所在的位置</span></span><br><span class="line">NEWSPIDER_MODULE = <span class="string">&quot;SpiderNews.spiders&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定那个日志级别，达到了你设置的日志级别才会显示日志</span></span><br><span class="line"><span class="comment"># 指定输出日志的类型：</span></span><br><span class="line">LOG_LEVEL = <span class="string">&quot;WARNING&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 自定义请求头</span></span><br><span class="line"><span class="comment"># 我们也可以写成：</span></span><br><span class="line">USER_AGENT = UserAgent().random</span><br><span class="line"><span class="comment">#USER_AGENT = &quot;SpiderNews (+http://www.yourdomain.com)&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Obey robots.txt rules</span></span><br><span class="line"><span class="comment"># 是否遵循robots.txt协议</span></span><br><span class="line">ROBOTSTXT_OBEY = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最大请求数量</span></span><br><span class="line"><span class="comment">#CONCURRENT_REQUESTS = 32</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载延迟，如果下载三秒中还没反应，会直接抛出异常</span></span><br><span class="line"><span class="comment">#DOWNLOAD_DELAY = 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 并发请求的最大数量</span></span><br><span class="line"><span class="comment">#CONCURRENT_REQUESTS_PER_DOMAIN = 16</span></span><br><span class="line"><span class="comment"># 并发请求的ip最大数量</span></span><br><span class="line"><span class="comment">#CONCURRENT_REQUESTS_PER_IP = 16</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否启用cookie</span></span><br><span class="line"><span class="comment">#COOKIES_ENABLED = False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用控制台输出</span></span><br><span class="line"><span class="comment">#TELNETCONSOLE_ENABLED = False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认的请求头参数</span></span><br><span class="line"><span class="comment">#DEFAULT_REQUEST_HEADERS = &#123;</span></span><br><span class="line"><span class="comment">#    &quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&quot;,</span></span><br><span class="line"><span class="comment">#    &quot;Accept-Language&quot;: &quot;en&quot;,</span></span><br><span class="line"><span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否启用爬虫中间件</span></span><br><span class="line"><span class="comment">#SPIDER_MIDDLEWARES = &#123;</span></span><br><span class="line"><span class="comment">#    &quot;SpiderNews.middlewares.SpidernewsSpiderMiddleware&quot;: 543,</span></span><br><span class="line"><span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否启用下载器中间件</span></span><br><span class="line"><span class="comment">#DOWNLOADER_MIDDLEWARES = &#123;</span></span><br><span class="line"><span class="comment">#    &quot;SpiderNews.middlewares.SpidernewsDownloaderMiddleware&quot;: 543,</span></span><br><span class="line"><span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 调度引擎</span></span><br><span class="line"><span class="comment">#EXTENSIONS = &#123;</span></span><br><span class="line"><span class="comment">#    &quot;scrapy.extensions.telnet.TelnetConsole&quot;: None,</span></span><br><span class="line"><span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 管道类</span></span><br><span class="line">ITEM_PIPELINES = &#123;</span><br><span class="line">    <span class="comment"># 项目默认的处理类，没有任何操作</span></span><br><span class="line">   <span class="string">&quot;SpiderNews.pipelines.SpidernewsPipeline&quot;</span>: <span class="number">300</span>,</span><br><span class="line">    <span class="comment"># 自己写的注册的处理类，后面你的数字越小优先级越高，根据优先级一次执行管道处理类</span></span><br><span class="line">   <span class="string">&quot;SpiderNews.pipelines.BoKeYuanPipeline&quot;</span>: <span class="number">300</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自动限速</span></span><br><span class="line"><span class="comment">#AUTOTHROTTLE_ENABLED = True</span></span><br><span class="line"><span class="comment"># 下载延迟</span></span><br><span class="line"><span class="comment">#AUTOTHROTTLE_START_DELAY = 5</span></span><br><span class="line"><span class="comment"># 最大并发数延迟</span></span><br><span class="line"><span class="comment">#AUTOTHROTTLE_MAX_DELAY = 60</span></span><br><span class="line"><span class="comment"># The average number of requests Scrapy should be sending in parallel to</span></span><br><span class="line"><span class="comment"># each remote server</span></span><br><span class="line"><span class="comment">#AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0</span></span><br><span class="line"><span class="comment"># Enable showing throttling stats for every response received:</span></span><br><span class="line"><span class="comment">#AUTOTHROTTLE_DEBUG = False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Enable and configure HTTP caching (disabled by default)</span></span><br><span class="line"><span class="comment"># See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings</span></span><br><span class="line"><span class="comment">#HTTPCACHE_ENABLED = True</span></span><br><span class="line"><span class="comment">#HTTPCACHE_EXPIRATION_SECS = 0</span></span><br><span class="line"><span class="comment">#HTTPCACHE_DIR = &quot;httpcache&quot;</span></span><br><span class="line"><span class="comment">#HTTPCACHE_IGNORE_HTTP_CODES = []</span></span><br><span class="line"><span class="comment">#HTTPCACHE_STORAGE = &quot;scrapy.extensions.httpcache.FilesystemCacheStorage&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set settings whose default value is deprecated to a future-proof value</span></span><br><span class="line">REQUEST_FINGERPRINTER_IMPLEMENTATION = <span class="string">&quot;2.7&quot;</span></span><br><span class="line">TWISTED_REACTOR = <span class="string">&quot;twisted.internet.asyncioreactor.AsyncioSelectorReactor&quot;</span></span><br><span class="line">FEED_EXPORT_ENCODING = <span class="string">&quot;utf-8&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -316,12 +218,12 @@ FEED_EXPORT_ENCODING = "utf-8"
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/10/15/5.0MySQL%E4%B9%8B%E8%BF%87%E6%BB%A4%E6%9D%A1%E4%BB%B6/" rel="prev" title="5.0MySQL之过滤条件">
-      <i class="fa fa-chevron-left"></i> 5.0MySQL之过滤条件
+    <a href="/2025/10/15/5.11%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%8C%E5%B0%81%E8%A3%85/" rel="prev" title="5.11面向对象，封装">
+      <i class="fa fa-chevron-left"></i> 5.11面向对象，封装
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/10/15/5.0Django%E8%AF%B7%E6%B1%82%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="next" title="5.0Django请求生命周期">
-      5.0Django请求生命周期 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/15/5.0BeautifulSoup%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/" rel="next" title="5.0BeautifulSoup模块介绍">
+      5.0BeautifulSoup模块介绍 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
