@@ -43,7 +43,7 @@
   };
 </script>
 
-  <title>Aurora博客</title>
+  <title></title>
   
 
 
@@ -115,6 +115,11 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/page-about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
@@ -141,127 +146,189 @@
         <div class="content-wrap">
           
 
-          <div class="content index landing-home">
+          <div class="content index posts-expand">
             
+  <!-- CNBlogs 风格：Feed 头部 + Tabs -->
+  <section class="feed-header">
+    <div class="feed-title"><i class="fa fa-fire"></i> 技术精选 · 今日更新</div>
+    <nav class="feed-tabs">
+      <a class="tab active" href="/">全部</a>
+      <a class="tab" href="/archives/">最新</a>
+      <a class="tab" href="/categories/">分类</a>
+      <a class="tab" href="/tags/">标签</a>
+    </nav>
+  </section>
 
-  <style>
-    :root {
-      --bg: #0b1022;
-      --surface: #0f162e;
-      --neon1: #00f3ff;
-      --neon2: #8b00ff;
-      --text: #e8f6ff;
-      --muted: #93a0b3;
-    }
-
-    /* 场景容器：星空 + 霓虹雾霭 + 未来感网格地面 */
-    .landing-scene {
-      position: relative;
-      overflow: hidden;
-      border-radius: 14px;
-      padding: 70px 28px 90px;
-      background: radial-gradient(1200px 600px at 10% 10%, #0d1327 0, #0d1327 60%, #080b18 100%);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
-    }
-    /* 星屑层 */
-    .landing-scene::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        radial-gradient(#fff 1px, transparent 2px),
-        radial-gradient(#fff 1px, transparent 2px);
-      background-size: 3px 3px, 4px 4px;
-      background-position: 0 0, 20px 30px;
-      opacity: .08;
-      animation: starDrift 60s linear infinite;
-    }
-    /* 霓虹雾霭层 */
-    .landing-scene::after {
-      content: '';
-      position: absolute; inset: -40% -10% -40% -10%;
-      background: conic-gradient(from 0deg at 50% 50%, var(--neon1), var(--neon2), var(--neon1));
-      filter: blur(90px) saturate(120%);
-      opacity: .25;
-      transform: translateZ(0);
-      pointer-events: none;
-    }
-
-    @keyframes starDrift {
-      0%   { background-position: 0 0, 20px 30px; }
-      100% { background-position: -3000px -2000px, -1500px -1200px; }
-    }
-
-    /* 地面网格（赛博感） */
-    .grid-floor {
-      position: absolute; left: 0; right: 0; bottom: -35%; height: 360px;
-      background-image:
-        linear-gradient(var(--neon1)20, transparent 20),
-        linear-gradient(90deg, var(--neon1)20, transparent 20);
-      background-size: 42px 42px, 42px 42px;
-      opacity: .18;
-      transform: perspective(900px) rotateX(60deg) scale(1.2);
-      animation: gridScroll 12s linear infinite;
-      filter: drop-shadow(0 0 12px rgba(0,243,255,.25));
-    }
-    @keyframes gridScroll {
-      from { background-position: 0 0, 0 0; }
-      to   { background-position: 0 42px, 42px 0; }
-    }
-
-    /* Hero 内容 */
-    .landing-hero { position: relative; z-index: 2; text-align: center; color: var(--text); }
-    .landing-hero h1 {
-      font-size: 2.6rem; margin: 0 0 12px;
-      letter-spacing: .5px;
-      text-shadow: 0 0 6px rgba(0,243,255,.6), 0 0 16px rgba(139,0,255,.35);
-    }
-    .landing-hero p { font-size: 1.05rem; color: var(--muted); margin: 0 0 24px; }
-    .landing-cta { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-    .landing-cta a { text-decoration: none; }
-    .landing-cta .btn-primary {
-      padding: 10px 18px; border-radius: 10px;
-      background: linear-gradient(90deg, var(--neon1), var(--neon2));
-      color: #021019; font-weight: 600;
-      box-shadow: 0 0 22px rgba(0,243,255,.35), inset 0 0 8px rgba(255,255,255,.25);
-    }
-    .landing-cta .btn-secondary {
-      padding: 10px 18px; border-radius: 10px;
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(8px);
-    }
-
-    .landing-section { margin-top: 28px; }
-    .landing-section h2 { font-size: 1.3rem; margin-bottom: 12px; }
-    .landing-section h2::after {
-      content: ''; display: inline-block; width: 36px; height: 10px; margin-left: 8px;
-      background: linear-gradient(90deg, var(--neon1), var(--neon2));
-      filter: blur(.6px); opacity: .6; border-radius: 12px;
-    }
-    .landing-more { text-align: center; margin-top: 10px; }
-    .landing-more a { text-decoration: none; color: var(--neon1); }
-
-    /* 最近列表（霓虹点阵风） */
-    .recent-list { display: grid; grid-template-columns: 1fr; gap: 6px; }
-    .recent-item {
-      padding: 12px 14px; border-radius: 10px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow: 0 0 14px rgba(0,0,0,.05);
-    }
-    .recent-title { font-size: 1.05rem; margin: 0 0 4px; }
-    .recent-title a { text-decoration: none; color: inherit; }
-    .recent-meta { color: #7f8aa3; font-size: .88rem; }
-  </style>
-
-  <section class="landing-scene">
+  <!-- CNBlogs 风格：文章列表（前 20 条） -->
+  <section class="feed-list-wrap">
+    <ul class="feed-list">
+          <li class="feed-item">
+            <div class="feed-item-main">
+              <h3 class="title"><a href="/2025/10/15/1.0MySQL%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B,%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE/">1.0MySQL安装教程,数据库配置</a></h3>
+              <div class="meta">
+                <span class="date"><i class="fa fa-calendar"></i>2025-10-15</span>
+                  <span class="category"><i class="fa fa-folder-open"></i>Blog</span>
+                  <span class="tags"><i class="fa fa-tags"></i>1 标签</span>
+              </div>
+            </div>
+            <div class="feed-item-actions">
+              <a class="btn-read" href="/2025/10/15/1.0MySQL%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B,%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE/">阅读</a>
+            </div>
+          </li>
+          <li class="feed-item">
+            <div class="feed-item-main">
+              <h3 class="title"><a href="/2025/10/15/1.0Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E4%BB%8B%E7%BB%8D/">1.0Scrapy框架之介绍</a></h3>
+              <div class="meta">
+                <span class="date"><i class="fa fa-calendar"></i>2025-10-15</span>
+                  <span class="category"><i class="fa fa-folder-open"></i>Blog</span>
+                  <span class="tags"><i class="fa fa-tags"></i>1 标签</span>
+              </div>
+            </div>
+            <div class="feed-item-actions">
+              <a class="btn-read" href="/2025/10/15/1.0Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E4%BB%8B%E7%BB%8D/">阅读</a>
+            </div>
+          </li>
+          <li class="feed-item">
+            <div class="feed-item-main">
+              <h3 class="title"><a href="/2025/10/15/1.0reids/">1.0reids</a></h3>
+              <div class="meta">
+                <span class="date"><i class="fa fa-calendar"></i>2025-10-15</span>
+                  <span class="category"><i class="fa fa-folder-open"></i>Blog</span>
+                  <span class="tags"><i class="fa fa-tags"></i>1 标签</span>
+              </div>
+            </div>
+            <div class="feed-item-actions">
+              <a class="btn-read" href="/2025/10/15/1.0reids/">阅读</a>
+            </div>
+          </li>
+          <li class="feed-item">
+            <div class="feed-item-main">
+              <h3 class="title"><a href="/2025/10/15/1.0vue%E7%9A%84%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95%EF%BC%8C%E6%8C%87%E4%BB%A4/">1.0vue的模板语法，指令</a></h3>
+              <div class="meta">
+                <span class="date"><i class="fa fa-calendar"></i>2025-10-15</span>
+                  <span class="category"><i class="fa fa-folder-open"></i>Blog</span>
+                  <span class="tags"><i class="fa fa-tags"></i>1 标签</span>
+              </div>
+            </div>
+            <div class="feed-item-actions">
+              <a class="btn-read" href="/2025/10/15/1.0vue%E7%9A%84%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95%EF%BC%8C%E6%8C%87%E4%BB%A4/">阅读</a>
+            </div>
+          </li>
+          <li class="feed-item">
+            <div class="feed-item-main">
+              <h3 class="title"><a href="/2025/10/15/1.0cs%E6%A8%A1%E5%9D%97%E5%92%8Cbs%E6%A8%A1%E5%9D%97/">1.0cs模块和bs模块</a></h3>
+              <div class="meta">
+                <span class="date"><i class="fa fa-calendar"></i>2025-10-15</span>
+                  <span class="category"><i class="fa fa-folder-open"></i>Blog</span>
+                  <span class="tags"><i class="fa fa-tags"></i>1 标签</span>
+              </div>
+            </div>
+            <div class="feed-item-actions">
+              <a class="btn-read" href="/2025/10/15/1.0cs%E6%A8%A1%E5%9D%97%E5%92%8Cbs%E6%A8%A1%E5%9D%97/">阅读</a>
+            </div>
+          </li>
+          <li class="feed-item">
+            <div class="feed-item-main">
+              <h3 class="title"><a href="/2025/10/15/JavaScript%E4%B9%8B%E5%AF%B9%E8%B1%A1/">JavaScript之对象</a></h3>
+              <div class="meta">
+                <span class="date"><i class="fa fa-calendar"></i>2025-10-15</span>
+                  <span class="category"><i class="fa fa-folder-open"></i>Blog</span>
+                  <span class="tags"><i class="fa fa-tags"></i>1 标签</span>
+              </div>
+            </div>
+            <div class="feed-item-actions">
+              <a class="btn-read" href="/2025/10/15/JavaScript%E4%B9%8B%E5%AF%B9%E8%B1%A1/">阅读</a>
+            </div>
+          </li>
+          <li class="feed-item">
+            <div class="feed-item-main">
+              <h3 class="title"><a href="/2025/10/15/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/">Linux虚拟机安装</a></h3>
+              <div class="meta">
+                <span class="date"><i class="fa fa-calendar"></i>2025-10-15</span>
+                  <span class="category"><i class="fa fa-folder-open"></i>Blog</span>
+                  <span class="tags"><i class="fa fa-tags"></i>1 标签</span>
+              </div>
+            </div>
+            <div class="feed-item-actions">
+              <a class="btn-read" href="/2025/10/15/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/">阅读</a>
+            </div>
+          </li>
+          <li class="feed-item">
+            <div class="feed-item-main">
+              <h3 class="title"><a href="/2025/10/15/MySQL%E7%BB%83%E4%B9%A0%E9%A2%98/">MySQL练习题</a></h3>
+              <div class="meta">
+                <span class="date"><i class="fa fa-calendar"></i>2025-10-15</span>
+                  <span class="category"><i class="fa fa-folder-open"></i>Blog</span>
+                  <span class="tags"><i class="fa fa-tags"></i>1 标签</span>
+              </div>
+            </div>
+            <div class="feed-item-actions">
+              <a class="btn-read" href="/2025/10/15/MySQL%E7%BB%83%E4%B9%A0%E9%A2%98/">阅读</a>
+            </div>
+          </li>
+          <li class="feed-item">
+            <div class="feed-item-main">
+              <h3 class="title"><a href="/2025/10/15/PE8%E8%A7%84%E8%8C%83/">PE8规范</a></h3>
+              <div class="meta">
+                <span class="date"><i class="fa fa-calendar"></i>2025-10-15</span>
+                  <span class="category"><i class="fa fa-folder-open"></i>Blog</span>
+                  <span class="tags"><i class="fa fa-tags"></i>1 标签</span>
+              </div>
+            </div>
+            <div class="feed-item-actions">
+              <a class="btn-read" href="/2025/10/15/PE8%E8%A7%84%E8%8C%83/">阅读</a>
+            </div>
+          </li>
+          <li class="feed-item">
+            <div class="feed-item-main">
+              <h3 class="title"><a href="/2025/10/15/RBAC%E6%9D%83%E9%99%90%E7%B3%BB%E7%BB%9F/">RBAC权限系统</a></h3>
+              <div class="meta">
+                <span class="date"><i class="fa fa-calendar"></i>2025-10-15</span>
+                  <span class="category"><i class="fa fa-folder-open"></i>Blog</span>
+                  <span class="tags"><i class="fa fa-tags"></i>1 标签</span>
+              </div>
+            </div>
+            <div class="feed-item-actions">
+              <a class="btn-read" href="/2025/10/15/RBAC%E6%9D%83%E9%99%90%E7%B3%BB%E7%BB%9F/">阅读</a>
+            </div>
+          </li>
+    </ul>
+  </section>
+  <div class="landing-scene">
+    <!-- 新增：可选首页横幅背景图（图片放 source/images/hero.jpg） -->
+    <div class="landing-bg">
+      <img src="/images/hero.jpg" alt="Hero Banner"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.18;pointer-events:none;border-radius:18px;">
+    </div>
     <div class="landing-hero">
       <h1>欢迎来到我的博客</h1>
       <p>记录技术笔记、项目经验与个人思考。</p>
       <div class="landing-cta">
         <a class="btn-primary" href="/archives/">浏览全部文章</a>
         <a class="btn-secondary" href="/categories/">按分类查看</a>
+      </div>
+      <!-- 新增：快速入口 -->
+      <div class="landing-quick">
+        <a class="quick-item" href="/categories/"><i class="fa fa-folder-open"></i><span>分类</span></a>
+        <a class="quick-item" href="/tags/"><i class="fa fa-tags"></i><span>标签</span></a>
+        <a class="quick-item" href="/about/">
+          <i class="fa fa-user"></i><span>关于</span>
+        </a>
+      </div>
+    </div>
+    <!-- 新增：首页统计卡片 -->
+    <div class="landing-stats">
+      <div class="stat">
+        <div class="count">194</div>
+        <div class="name">文章</div>
+      </div>
+      <div class="stat">
+        <div class="count">1</div>
+        <div class="name">分类</div>
+      </div>
+      <div class="stat">
+        <div class="count">1</div>
+        <div class="name">标签</div>
       </div>
     </div>
     <div class="grid-floor"></div>
@@ -280,17 +347,6 @@
     <div class="recent-list">
           <article class="recent-item" itemscope itemtype="http://schema.org/Article">
             <h3 class="recent-title">
-              <a href="/2025/10/15/1.0Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E4%BB%8B%E7%BB%8D/" itemprop="url">
-                <span itemprop="name">1.0Scrapy框架之介绍</span>
-              </a>
-            </h3>
-            <div class="recent-meta">
-              <time itemprop="dateCreated" datetime="2025-10-15T11:34:56+08:00">2025-10-15</time>
-                · Blog
-            </div>
-          </article>
-          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
-            <h3 class="recent-title">
               <a href="/2025/10/15/1.0MySQL%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B,%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE/" itemprop="url">
                 <span itemprop="name">1.0MySQL安装教程,数据库配置</span>
               </a>
@@ -302,8 +358,8 @@
           </article>
           <article class="recent-item" itemscope itemtype="http://schema.org/Article">
             <h3 class="recent-title">
-              <a href="/2025/10/15/1.0cs%E6%A8%A1%E5%9D%97%E5%92%8Cbs%E6%A8%A1%E5%9D%97/" itemprop="url">
-                <span itemprop="name">1.0cs模块和bs模块</span>
+              <a href="/2025/10/15/1.0Scrapy%E6%A1%86%E6%9E%B6%E4%B9%8B%E4%BB%8B%E7%BB%8D/" itemprop="url">
+                <span itemprop="name">1.0Scrapy框架之介绍</span>
               </a>
             </h3>
             <div class="recent-meta">
@@ -335,8 +391,8 @@
           </article>
           <article class="recent-item" itemscope itemtype="http://schema.org/Article">
             <h3 class="recent-title">
-              <a href="/2025/10/15/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/" itemprop="url">
-                <span itemprop="name">Linux虚拟机安装</span>
+              <a href="/2025/10/15/1.0cs%E6%A8%A1%E5%9D%97%E5%92%8Cbs%E6%A8%A1%E5%9D%97/" itemprop="url">
+                <span itemprop="name">1.0cs模块和bs模块</span>
               </a>
             </h3>
             <div class="recent-meta">
@@ -357,8 +413,19 @@
           </article>
           <article class="recent-item" itemscope itemtype="http://schema.org/Article">
             <h3 class="recent-title">
-              <a href="/2025/10/15/PE8%E8%A7%84%E8%8C%83/" itemprop="url">
-                <span itemprop="name">PE8规范</span>
+              <a href="/2025/10/15/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/" itemprop="url">
+                <span itemprop="name">Linux虚拟机安装</span>
+              </a>
+            </h3>
+            <div class="recent-meta">
+              <time itemprop="dateCreated" datetime="2025-10-15T11:34:56+08:00">2025-10-15</time>
+                · Blog
+            </div>
+          </article>
+          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
+            <h3 class="recent-title">
+              <a href="/2025/10/15/MySQL%E7%BB%83%E4%B9%A0%E9%A2%98/" itemprop="url">
+                <span itemprop="name">MySQL练习题</span>
               </a>
             </h3>
             <div class="recent-meta">
