@@ -1168,7 +1168,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #987fff;
+  background: #ff9dff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -3202,6 +3202,25 @@ ul.breadcrumb li + li:last-child {
 .menu .menu-item a:hover,
 .sub-menu .menu-item a:hover {
   background: rgba(30,144,255,0.18);
+}
+/* 顶部留白改为蓝色，并让侧栏贴齐顶部 */
+.sidebar {
+  margin-top: 0;
+  background: #e6f0ff;
+  border: 1px solid #d1ddff;
+}
+/* 菜单项默认底色改浅蓝（可选） */
+.menu .menu-item a {
+  background: #eef4ff;
+  border-radius: 10px;
+}
+/* 激活与悬停态更深一点蓝（可选） */
+.menu .menu-item-active a,
+.menu .menu-item a:hover {
+  background: #d9e5ff;
+}
+.site-meta .brand .site-title {
+  color: #000 !important;
 }
 @-moz-keyframes auroraFlow {
   0%, 100% {
