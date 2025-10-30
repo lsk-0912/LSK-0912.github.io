@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ff9ab3"/>
+      <stop offset="100%" stop-color="#b29bff"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="#f6f7fb"/>
+  <circle cx="300" cy="200" r="120" fill="url(#g1)" opacity="0.85"/>
+  <text x="300" y="210" text-anchor="middle" font-size="28" fill="#ffffff" font-family="'Segoe UI', Arial">小影 · 1</text>
+</svg>
+

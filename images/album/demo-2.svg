@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <defs>
+    <linearGradient id="g2" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ffd1e8"/>
+      <stop offset="100%" stop-color="#c8d1ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="#ffffff"/>
+  <rect x="90" y="70" width="420" height="260" rx="18" fill="url(#g2)"/>
+  <text x="300" y="210" text-anchor="middle" font-size="28" fill="#5b6170" font-family="'Segoe UI', Arial">回忆 · 2</text>
+</svg>
+

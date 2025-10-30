@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <defs>
+    <radialGradient id="g3" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#ffe4ec"/>
+      <stop offset="100%" stop-color="#eef2ff"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="400" fill="#f7f8fc"/>
+  <path d="M300 140 C 280 100, 210 110, 210 170 C 210 220, 300 280, 300 280 C 300 280, 390 220, 390 170 C 390 110, 320 100, 300 140 Z" fill="url(#g3)"/>
+  <text x="300" y="220" text-anchor="middle" font-size="26" fill="#6b7280" font-family="'Segoe UI', Arial">Sweet · 3</text>
+</svg>
+
