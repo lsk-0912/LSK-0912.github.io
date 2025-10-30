@@ -1169,7 +1169,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #1737ff;
+  background: #ff9df1;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -3046,6 +3046,86 @@ embed {
 .landing-section {
   margin-top: 64px;
 }
+.album-lightbox {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  background: rgba(29,36,48,0.92);
+  backdrop-filter: blur(3px);
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.19s;
+  animation: fadeInLightbox 0.16s;
+}
+.album-lightbox[style*='display: block'],
+.album-lightbox:not([style*='display: none']) {
+  display: flex !important;
+}
+.album-lightbox-img {
+  display: block;
+  max-width: 94vw;
+  max-height: 84vh;
+  margin: 0 auto;
+  border-radius: 18px;
+  box-shadow: 0 12px 48px rgba(90,46,85,0.376);
+  background: #fff;
+}
+.album-lightbox-close {
+  position: absolute;
+  right: 30px;
+  top: 28px;
+  color: #fff;
+  font-size: 2.3rem;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0 13px;
+  z-index: 4;
+}
+.album-lightbox-prev,
+.album-lightbox-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 2.9rem;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  user-select: none;
+  z-index: 3;
+  padding: 6px 14px;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.09);
+  transition: background 0.18s;
+}
+.album-lightbox-prev:hover,
+.album-lightbox-next:hover {
+  background: rgba(255,143,179,0.18);
+}
+.album-lightbox-prev {
+  left: 32px;
+}
+.album-lightbox-next {
+  right: 32px;
+}
+@media (max-width: 600px) {
+  .album-lightbox-img {
+    max-width: 99vw;
+    max-height: 72vh;
+  }
+  .album-lightbox-close {
+    right: 14px;
+    top: 14px;
+    font-size: 2rem;
+  }
+  .album-lightbox-prev,
+  .album-lightbox-next {
+    font-size: 2.1rem;
+    padding: 4px 9px;
+    left: 10px;
+    right: 10px;
+  }
+}
 @-moz-keyframes auroraFlow {
   0%, 100% {
     background-position: 0% 50%;
@@ -3076,5 +3156,37 @@ embed {
   }
   50% {
     background-position: 100% 50%;
+  }
+}
+@-moz-keyframes fadeInLightbox {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeInLightbox {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadeInLightbox {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeInLightbox {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

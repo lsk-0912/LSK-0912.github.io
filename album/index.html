@@ -160,57 +160,93 @@
 
           <div class="content page posts-expand">
             
-<section class="album-hero">
-  <h1>回忆相册</h1>
-  <p>把我们喜欢的每一张照片，都放在这里慢慢看。</p>
-  <a class="album-back" href="/">← 返回首页</a>
-  <div class="album-actions">
-    <button id="album-refresh" class="btn">刷新</button>
-  </div>
-</section>
+<style>
+  /* 基础网格布局 */
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .album-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+  /* 手机端自适应：单列或双列缩略图 */
+  @media (max-width: 900px) {
+    .album-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .album-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .album-hero h1 {
+      font-size: 1.5em;
+    }
+    .album-hero p {
+      font-size: 1em;
+    }
+    .album-actions {
+      margin-bottom: 12px;
+    }
+  }
+</style>
+<div class="page posts-expand album-page">
+  <section class="album-hero">
+    <h1>回忆相册</h1>
+    <p>把我们喜欢的每一张照片，都放在这里慢慢看。</p>
+    <a class="album-back" href="/">← 返回首页</a>
+    <div class="album-actions">
+      <button id="album-refresh" class="btn">刷新</button>
+    </div>
+  </section>
 
-<section class="album-grid" id="album-grid" aria-live="polite">
-  <!-- 图片将通过脚本注入 -->
-</section>
+  <section class="album-grid" id="album-grid" aria-live="polite"></section>
 
-<template id="album-item-tpl">
-  <figure class="album-item">
-    <img loading="lazy" alt="memory" />
-  </figure>
+  <template id="album-item-tpl">
+    <figure class="album-item">
+      <img loading="lazy" alt="memory" />
+    </figure>
   </template>
+</div>
 
 <script>
-(function(){
+(function () {
   const grid = document.getElementById('album-grid');
   const tpl = document.getElementById('album-item-tpl');
   const refreshBtn = document.getElementById('album-refresh');
   const manifestUrl = '/images/album/index.json';
 
-  function renderImages(list){
+  function renderImages(list) {
+    if (!grid) return;
     grid.innerHTML = '';
-    list.forEach(function(src){
-      const node = tpl.content.cloneNode(true);
-      const img = node.querySelector('img');
+    list.forEach(function (src) {
+      var node = tpl.content.cloneNode(true);
+      var img = node.querySelector('img');
       img.src = src;
       img.alt = '回忆 · ' + src.split('/').pop();
       grid.appendChild(node);
     });
   }
-
-  function fetchManifest(){
-    return fetch(manifestUrl, {cache:'no-cache'})
-      .then(function(res){return res.json();});
+  function fetchManifest() {
+    return fetch(manifestUrl, { cache: 'no-cache' }).then(res => res.json());
   }
-
-  function init(){
-    fetchManifest().then(function(json){
+  function init() {
+    fetchManifest().then(function (json) {
       renderImages(json && json.images ? json.images : []);
-    }).catch(function(){
-      // 兜底：若拉取失败，显示占位
-      renderImages(['/images/album/demo-1.svg','/images/album/demo-2.svg','/images/album/demo-3.svg']);
+    }).catch(function () {
+      renderImages([
+        '/images/album/demo-1.svg',
+        '/images/album/demo-2.svg',
+        '/images/album/demo-3.svg'
+      ]);
     });
   }
-
   refreshBtn && refreshBtn.addEventListener('click', init);
   init();
 })();
