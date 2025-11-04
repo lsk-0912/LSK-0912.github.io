@@ -20,13 +20,15 @@
     var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"remove","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="永远爱你的阿坤 · 记录我们的点滴与心动瞬间">
+  <meta name="description" content="title: 反馈与联系 date: 2025-11-04 00:00:00 有想法、建议或遇到问题？欢迎告诉我：  邮箱：填写你的邮箱地址 GitHub Issues：如果此站点托管在 GitHub，可直接在仓库提交 Issue 私信：也可通过社交主页联系我  建议描述模板：  你在做什么场景？ 期望我帮你完成什么？ 截图或复现步骤（可选）  谢谢你的支持，我会尽快回复～">
 <meta property="og:type" content="website">
-<meta property="og:title" content="小影公主の专属花园">
-<meta property="og:url" content="https://aurora-lsk.asia/index.html">
+<meta property="og:title" content="联系我">
+<meta property="og:url" content="https://aurora-lsk.asia/feedback/index.html">
 <meta property="og:site_name" content="小影公主の专属花园">
-<meta property="og:description" content="永远爱你的阿坤 · 记录我们的点滴与心动瞬间">
+<meta property="og:description" content="title: 反馈与联系 date: 2025-11-04 00:00:00 有想法、建议或遇到问题？欢迎告诉我：  邮箱：填写你的邮箱地址 GitHub Issues：如果此站点托管在 GitHub，可直接在仓库提交 Issue 私信：也可通过社交主页联系我  建议描述模板：  你在做什么场景？ 期望我帮你完成什么？ 截图或复现步骤（可选）  谢谢你的支持，我会尽快回复～">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-04T10:09:35.854Z">
 <meta property="article:author" content="阿坤 ❤ 小影">
 <meta property="article:tag" content="公主">
 <meta property="article:tag" content="小影">
@@ -37,14 +39,14 @@
 <meta property="article:tag" content="生活">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://aurora-lsk.asia/">
+<link rel="canonical" href="https://aurora-lsk.asia/feedback/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
+    isHome : false,
     isPost : false,
     lang   : 'zh-CN'
   };
@@ -245,132 +247,157 @@
       <div class="main-inner">
         <div class="content-wrap">
           
+  
+  
 
-          <div class="content index posts-expand">
+          <div class="content page posts-expand">
             
-  
-  
+<style>
+  .mail-wrap{ max-width: 820px; margin: 0 auto; padding: 10px 0 120px; }
+  .card{ background: var(--card-bg,#fff); border:1px solid var(--card-border,#ebe9f5); border-radius:16px; box-shadow:0 14px 28px rgba(0,0,0,.06); overflow:hidden; }
+  .card-head{ padding:16px; border-bottom:1px solid #f2f2f7; display:flex; align-items:center; justify-content:space-between; }
+  .card-body{ padding:16px; }
+  .field{ margin: 10px 0; }
+  .field label{ display:block; font-weight:600; margin-bottom:6px; }
+  .input, .textarea{ width:100%; border:1.5px solid #e5e7eb; border-radius:12px; background:#fff; font-size:15px; transition:border-color .2s, box-shadow .2s; }
+  .input{ height:42px; padding:0 12px; }
+  .textarea{ min-height:120px; padding:10px 12px; resize:vertical; }
+  .input:focus, .textarea:focus{ outline:none; border-color:#818cf8; box-shadow:0 0 0 3px rgba(129,140,248,.18); }
+  .row{ display:flex; gap:10px; justify-content:space-between; align-items:center; }
+  .btn{ height:42px; padding:0 18px; border-radius:12px; border:1px solid #7c3aed; background:linear-gradient(180deg,#ff7bd5,#7c3aed); color:#fff; cursor:pointer; box-shadow:0 10px 22px rgba(124,58,237,.25); }
+  .muted{ color:#6b7280; font-size:13px; }
+  .tabs{ display:flex; gap:8px; }
+  .tab-btn{ height:34px; padding:0 12px; border-radius:10px; background:var(--pill-bg,#f7f5ff); border:1px solid var(--card-border,#ebe9f5); cursor:pointer; }
+  .tab-btn.active{ color:#fff; background:linear-gradient(180deg,#ff7bd5,#7c3aed); border-color:transparent; }
+  .hidden{ display:none; }
+  .inbox-empty{ color:#666; font-size:14px; }
+  .mail-item{ border-bottom:1px solid #f1f1f1; padding:12px 0; }
+  .mail-item .from{ font-weight:600; }
+</style>
 
-  <!-- CNBlogs 风格：文章列表（前 20 条） -->
-  <section class="feed-list-wrap">
-    <ul class="feed-list">
-          <li class="feed-item">
-            <div class="feed-item-main">
-              <h3 class="title"><a href="/2025/10/29/%E4%B8%93%E5%B1%9E%E5%B0%8F%E5%BD%B1%E7%9A%84%E5%A4%87%E5%BF%98%E5%BD%95/">小影备忘录</a></h3>
-              <div class="meta">
-                <span class="date"><i class="fa fa-calendar"></i>2025-10-29</span>
-                  <span class="category"><i class="fa fa-folder-open"></i>爱</span>
-                  <span class="tags"><i class="fa fa-tags"></i>1 标签</span>
-              </div>
-            </div>
-            <div class="feed-item-actions">
-              <a class="btn-read" href="/2025/10/29/%E4%B8%93%E5%B1%9E%E5%B0%8F%E5%BD%B1%E7%9A%84%E5%A4%87%E5%BF%98%E5%BD%95/">阅读</a>
-            </div>
-          </li>
-    </ul>
-  </section>
-
-  
-  <div class="landing-scene">
-    <div class="landing-hero">
-      <h1>欢迎来到小影公主の专属花园</h1>
-      <p>把每一次心动与小确幸，认真收藏。</p>
-      <div class="hero-actions">
-        <a class="btn-main" href="/album/">进入回忆相册</a>
-        <a class="btn-main btn-alt" href="/page-about/">关于小影</a>
+<div class="mail-wrap">
+  <div class="card">
+    <div class="card-head">
+      <div>
+        <h1 style="margin:0 0 4px">联系我</h1>
+        <div class="muted">通过邮箱发送消息（使用第三方服务）</div>
       </div>
-      <section class="fold-card" id="home-fold">
-        <header class="fold-head">
-          <h3 class="fold-title"><i class="fa fa-magic"></i> 快捷入口</h3>
-          <button class="fold-toggle" id="home-fold-toggle" aria-expanded="true">收起</button>
-        </header>
-        <div class="fold-body" id="home-fold-body">
-          <div class="quick-card">
-            <a class="quick-item" href="/categories/"><i class="fa fa-folder-open"></i><span>主题</span></a>
-            <a class="quick-item" href="/tags/"><i class="fa fa-tags"></i><span>心情</span></a>
-            <a class="quick-item" href="/page-about/"><i class="fa fa-heart"></i><span>给小影的一封信</span></a>
-          </div>
+      <div class="tabs">
+        <button id="tab-send" class="tab-btn active">发送</button>
+        
+      </div>
+    </div>
 
-          <div class="metric-card-wrap">
-            <div class="metric-card">
-              <div class="metric-count">1</div>
-              <div class="metric-label">文章</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-count">1</div>
-              <div class="metric-label">分类</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-count">1</div>
-              <div class="metric-label">标签</div>
-            </div>
-          </div>
+    <div class="card-body">
+      <section id="pane-send">
+        <div class="field">
+          <label for="mail_name">称呼</label>
+          <input id="mail_name" class="input" type="text" placeholder="怎么称呼你" />
+        </div>
+        <div class="field">
+          <label for="mail_email">邮箱</label>
+          <input id="mail_email" class="input" type="email" placeholder="你的邮箱，便于回复" />
+        </div>
+        <div class="field">
+          <label for="mail_msg">内容</label>
+          <textarea id="mail_msg" class="textarea" placeholder="想对我说的话..."></textarea>
+        </div>
+        <div class="row">
+          <span id="mail_state" class="muted">未发送</span>
+          <button id="mail_btn" class="btn">发送</button>
         </div>
       </section>
+
+      
     </div>
-    <div class="grid-floor"></div>
   </div>
 
-  <section class="landing-section">
-    <h2>最近更新</h2>
-    <style>
-      /* 折叠卡片样式（首页） */
-      .fold-card{ border:1px solid var(--card-border); border-radius:16px; background:var(--card-bg); box-shadow:0 12px 26px rgba(0,0,0,.06); margin-top:14px; }
-      .fold-head{ display:flex; align-items:center; justify-content:space-between; padding:12px 14px; }
-      .fold-title{ margin:0; font-size:16px; font-weight:700; }
-      .fold-toggle{ height:34px; padding:0 12px; border-radius:10px; border:1px solid var(--card-border); background:var(--pill-bg); cursor:pointer; }
-      .fold-body{ overflow:hidden; transition:max-height .25s ease, padding .2s ease; padding:12px 14px 16px; }
-      .fold-body.collapsed{ max-height:0; padding:0 14px; }
+  <p class="muted" style="margin-top:10px">提示：表单通过 EmailJS 发送到你的邮箱；如需在此页展示收件内容，请在配置中设置 <code>mail.inbox_endpoint</code>（一个返回 JSON 的服务）。</p>
+</div>
 
-      .recent-list { display: grid; grid-template-columns: 1fr; gap: 8px; }
-      .recent-item { padding: 12px 0; border-bottom: 1px solid #eee; }
-      .recent-title { font-size: 1.05rem; margin: 0 0 6px; }
-      .recent-title a { text-decoration: none; color: inherit; }
-      .recent-meta { color: #888; font-size: .9rem; }
-    </style>
+<script>
+(function(){
+  var sendTab = document.getElementById('tab-send');
+  var inboxTab = document.getElementById('tab-inbox');
+  var paneSend = document.getElementById('pane-send');
+  var paneInbox = document.getElementById('pane-inbox');
+  function activate(which){
+    if(!sendTab) return;
+    if(which==='inbox' && paneInbox){
+      sendTab.classList.remove('active');
+      inboxTab && inboxTab.classList.add('active');
+      paneSend.classList.add('hidden');
+      paneInbox.classList.remove('hidden');
+    }else{
+      sendTab.classList.add('active');
+      inboxTab && inboxTab.classList.remove('active');
+      paneSend.classList.remove('hidden');
+      paneInbox && paneInbox.classList.add('hidden');
+    }
+  }
+  inboxTab && inboxTab.addEventListener('click', function(){ activate('inbox'); loadInbox(); });
+  sendTab && sendTab.addEventListener('click', function(){ activate('send'); });
 
-    <script>
-    (function(){
-      var body = document.getElementById('home-fold-body');
-      var btn = document.getElementById('home-fold-toggle');
-      if(!body || !btn) return;
-      var KEY = 'home_fold_collapsed_v1';
-      function setState(collapsed){
-        if(collapsed){ body.classList.add('collapsed'); btn.textContent = '展开'; btn.setAttribute('aria-expanded','false'); body.style.maxHeight = '0px'; }
-        else { body.classList.remove('collapsed'); btn.textContent = '收起'; btn.setAttribute('aria-expanded','true'); body.style.maxHeight = body.scrollHeight + 'px'; }
-      }
-      // 初始化
-      var saved = localStorage.getItem(KEY) === '1';
-      setState(saved);
-      // 自适应内容高度
-      if(!saved){ body.style.maxHeight = body.scrollHeight + 'px'; }
-      btn.addEventListener('click', function(){
-        var will = !body.classList.contains('collapsed');
-        setState(will);
-        try{ localStorage.setItem(KEY, will ? '1':'0'); }catch(_){ }
-      });
-      window.addEventListener('resize', function(){ if(!body.classList.contains('collapsed')){ body.style.maxHeight = body.scrollHeight + 'px'; } });
-    })();
-    </script>
+  // EmailJS 发送
+  var btn = document.getElementById('mail_btn');
+  var state = document.getElementById('mail_state');
+  function setState(text, cls){ state.textContent = text; state.className = 'muted ' + (cls||''); }
 
-    <div class="recent-list">
-          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
-            <h3 class="recent-title">
-              <a href="/2025/10/29/%E4%B8%93%E5%B1%9E%E5%B0%8F%E5%BD%B1%E7%9A%84%E5%A4%87%E5%BF%98%E5%BD%95/" itemprop="url">
-                <span itemprop="name">小影备忘录</span>
-              </a>
-            </h3>
-            <div class="recent-meta">
-              <time itemprop="dateCreated" datetime="2025-10-29T21:34:56+08:00">2025-10-29</time>
-                · 爱
-            </div>
-          </article>
-    </div>
-    <div class="landing-more">
-      <a href="/archives/">查看全部文章 →</a>
-    </div>
-  </section>
-  
+  function ensureEmailJS(){
+    if(window.emailjs) return Promise.resolve();
+    return new Promise(function(resolve){
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js';
+      s.onload = resolve; document.head.appendChild(s);
+    });
+  }
+
+  var CFG = {
+    serviceId: '',
+    templateId: '',
+    publicKey: ''
+  };
+  // 若未配置，给出明显提示
+  if(!CFG.publicKey || !CFG.serviceId || !CFG.templateId){
+    setState('未配置：请在 themes/next/_config.yml 填写 mail.publicKey / serviceId / templateId', 'danger');
+  }
+
+  btn && btn.addEventListener('click', function(){
+    if(!CFG.publicKey || !CFG.serviceId || !CFG.templateId){
+      setState('发送失败：未配置 EmailJS（publicKey / serviceId / templateId）。', 'danger');
+      return;
+    }
+    var name = document.getElementById('mail_name').value.trim();
+    var email = document.getElementById('mail_email').value.trim();
+    var msg = document.getElementById('mail_msg').value.trim();
+    if(!msg){ setState('内容不能为空','danger'); return; }
+    setState('发送中...'); btn.disabled = true;
+    ensureEmailJS().then(function(){
+      try{ emailjs.init(CFG.publicKey); }catch(_){ }
+      var payload = { from_name: name||'访客', reply_to: email||'', message: msg };
+      return emailjs.send(CFG.serviceId, CFG.templateId, payload);
+    }).then(function(){ setState('已发送，感谢你的来信！','success'); btn.disabled=false; document.getElementById('mail_msg').value=''; })
+      .catch(function(e){ setState('发送失败：'+e,'danger'); btn.disabled=false; });
+  });
+
+  // 收件箱（可选：从自定义端点读取）
+  function loadInbox(){
+    var endpoint = '';
+    if(!endpoint){ return; }
+    var box = document.getElementById('inbox_list');
+    box.innerHTML = '<div class="muted">加载中...</div>';
+    fetch(endpoint, { cache: 'no-cache' }).then(function(r){ return r.json(); }).then(function(list){
+      if(!Array.isArray(list) || !list.length){ box.innerHTML = '<div class="inbox-empty">暂无内容</div>'; return; }
+      box.innerHTML = list.map(function(it){
+        var from = it.from || it.sender || '未知';
+        var date = it.date || it.time || '';
+        var text = it.text || it.subject || '';
+        return '<div class="mail-item"><div class="from">'+from+'</div><div class="muted">'+date+'</div><div>'+text+'</div></div>';
+      }).join('');
+    }).catch(function(){ box.innerHTML = '<div class="inbox-empty">加载失败，请稍后重试</div>'; });
+  }
+})();
+</script>
 
           </div>
           

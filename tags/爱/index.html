@@ -51,6 +51,73 @@
 </script>
 
   <title>标签: 爱 | 小影公主の专属花园</title>
+  <style id="unify-theme">
+    :root{
+      --brand-1:#ff7bd5; /* pink */
+      --brand-2:#7c3aed; /* purple */
+      --text-strong:#111827;
+      --muted:#6b7280;
+      --card-bg:#ffffff;
+      --card-border:#ebe9f5;
+      --pill-bg:#f7f5ff;
+    }
+    /* 顶部主菜单：更紧凑、中文不换行、统一高度 */
+    .site-nav .main-menu.menu{ display:flex; flex-wrap:wrap; gap:14px; }
+    .site-nav .main-menu.menu > li{ list-style:none; }
+    .site-nav .main-menu.menu > li > a{
+      display:inline-flex; align-items:center; gap:8px;
+      min-height:44px; padding:8px 16px; border-radius:14px;
+      background:var(--pill-bg); border:1px solid var(--card-border);
+      color:var(--text-strong); text-decoration:none; white-space:nowrap; font-size:15px; font-weight:600;
+      transition:all .18s ease; box-shadow:0 6px 16px rgba(124,58,237,.08);
+    }
+    .site-nav .main-menu.menu > li > a:hover{
+      color:#fff; border-color:transparent;
+      background:linear-gradient(180deg,var(--brand-1),var(--brand-2));
+      box-shadow:0 12px 26px rgba(124,58,237,.25); transform: translateY(-1px);
+    }
+    /* 统一按钮 */
+    .btn, .btn-main, .btn-read{
+      display:inline-flex; align-items:center; justify-content:center;
+      height:42px; padding:0 18px; border-radius:12px;
+      border:1px solid var(--brand-2);
+      color:#fff; text-decoration:none;
+      background:linear-gradient(180deg,var(--brand-1),var(--brand-2));
+      box-shadow:0 10px 22px rgba(124,58,237,.22);
+      transition:transform .06s ease, box-shadow .2s ease, opacity .2s ease;
+    }
+    .btn:hover, .btn-main:hover, .btn-read:hover{ opacity:.95; transform:translateY(-1px); }
+    .btn-main.btn-alt{ background:linear-gradient(180deg,#ffffff,#fafaff); color:var(--text-strong); border:1px solid var(--card-border); }
+    .btn-main.btn-alt:hover{ background:#ffffff; box-shadow:0 10px 22px rgba(0,0,0,.06); }
+
+    /* 统一卡片/区块视觉 */
+    .login-card, .quick-card, .metric-card, .album-card, .feed-item, .landing-hero{
+      background:var(--card-bg); border:1px solid var(--card-border); border-radius:16px;
+      box-shadow:0 14px 28px rgba(0,0,0,.06);
+    }
+    /* 首页英雄与快捷按钮统一 */
+    .landing-hero{ padding:24px; }
+    .quick-card{ display:flex; gap:14px; padding:14px; }
+    .quick-card .quick-item{ flex:1; display:flex; align-items:center; justify-content:center; gap:8px; height:54px;
+      background:var(--pill-bg); border:1px solid var(--card-border); border-radius:12px; color:var(--text-strong); text-decoration:none; transition:all .2s ease; }
+    .quick-card .quick-item:hover{ color:#fff; background:linear-gradient(180deg,var(--brand-1),var(--brand-2)); border-color:transparent; box-shadow:0 10px 22px rgba(124,58,237,.22); }
+    .metric-card-wrap{ display:flex; gap:16px; margin-top:14px; }
+    .metric-card{ padding:16px; text-align:center; }
+    .metric-card .metric-count{ font-size:28px; font-weight:700; background:linear-gradient(180deg,var(--brand-1),var(--brand-2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .metric-card .metric-label{ color:var(--muted); }
+    /* 列表阅读按钮统一 */
+    .feed-item{ display:flex; align-items:flex-start; justify-content:space-between; padding:16px; }
+    .feed-item .btn-read{ height:36px; padding:0 14px; }
+    /* 二级子菜单统一（去掉大背景，改胶囊项） */
+    ul.sub-menu.menu{ display:flex; gap:12px; align-items:center; justify-content:center; padding:10px; margin:10px 0 20px; border-radius:16px; background:transparent; border:none; box-shadow:none; }
+    ul.sub-menu.menu .menu-item-banner{ display:none; }
+    /* 首页头部与标签页统一为胶囊 */
+    .feed-header{ display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border:1px solid var(--card-border); border-radius:16px; background:var(--card-bg); box-shadow:0 12px 26px rgba(0,0,0,.06); }
+    .feed-header .feed-title{ font-weight:700; }
+    .feed-tabs{ display:flex; gap:10px; }
+    .feed-tabs .tab{ display:inline-flex; padding:8px 12px; border-radius:12px; background:var(--pill-bg); border:1px solid var(--card-border); color:var(--text-strong); text-decoration:none; }
+    .feed-tabs .tab:hover, .feed-tabs .tab.active{ color:#fff; border-color:transparent; background:linear-gradient(180deg,var(--brand-1),var(--brand-2)); }
+  </style>
   
 
 
@@ -128,9 +195,29 @@
     <a href="/page-about/" rel="section"><i class="fa fa-heart fa-fw"></i>关于</a>
 
   </li>
-        <li class="menu-item menu-item-menstrual">
+        <li class="menu-item menu-item-经期">
 
-    <a href="/menstrual/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>menstrual</a>
+    <a href="/menstrual/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>经期</a>
+
+  </li>
+        <li class="menu-item menu-item-工具">
+
+    <a href="/tools/" rel="section"><i class="fa fa-wrench fa-fw"></i>工具</a>
+
+  </li>
+        <li class="menu-item menu-item-隐私">
+
+    <a href="/privacy/" rel="section"><i class="fa fa-user-shield fa-fw"></i>隐私</a>
+
+  </li>
+        <li class="menu-item menu-item-反馈">
+
+    <a href="/feedback/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>反馈</a>
+
+  </li>
+        <li class="menu-item menu-item-登录">
+
+    <a href="/login/" rel="section"><i class="fa fa-sign-in-alt fa-fw"></i>登录</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -378,6 +465,54 @@
 })();
 </script>
 
+<script>
+(function(){
+  // 轻量鉴权工具：可在任意页面脚本中调用 window.AuthGuard
+  var SESS_KEY = 'auth_session_v1';
+  function now(){ return Math.floor(Date.now()/1000); }
+  function getSession(){ try{ var raw = localStorage.getItem(SESS_KEY); if(!raw) return null; var s = JSON.parse(raw); if(s && s.exp && s.exp>0 && now()>s.exp){ localStorage.removeItem(SESS_KEY); return null; } return s; }catch(_){ return null; } }
+  function isAuthed(){ return !!getSession(); }
+  function logout(){ try{ localStorage.removeItem(SESS_KEY); }catch(_){} }
+  function requireOrRedirect(){ if(!isAuthed()){ location.href = '/login/?from='+ encodeURIComponent(location.pathname+location.search); return false; } return true; }
+  window.AuthGuard = { isAuthed:isAuthed, logout:logout, require: requireOrRedirect };
+})();
+</script>
 
+
+  <script>
+  (function(){
+    var LOGIN_PATH = '/login/';
+    var TOKEN_KEY = 'site_auth_token_v1';
+    function isAuthed(){ try{ return localStorage.getItem(TOKEN_KEY) === '1'; }catch(_){ return false; } }
+    function onLogout(){ try{ localStorage.removeItem(TOKEN_KEY); }catch(_){ } location.href = LOGIN_PATH; }
+
+    // 路由拦截：未登录则只能访问登录页
+    var path = location.pathname;
+    if (path.indexOf(LOGIN_PATH) !== 0 && !isAuthed()) {
+      location.replace(LOGIN_PATH);
+      return;
+    }
+    if (path.indexOf(LOGIN_PATH) === 0 && isAuthed()) {
+      // 已登录访问登录页时跳回首页
+      location.replace('/');
+      return;
+    }
+
+    // 顶部添加登出按钮（仅非登录页显示）
+    if (path.indexOf(LOGIN_PATH) !== 0) {
+      var menu = document.querySelector('.site-nav ul.main-menu.menu');
+      if (menu) {
+        var li = document.createElement('li');
+        li.className = 'menu-item';
+        var a = document.createElement('a');
+        a.href = 'javascript:void(0)';
+        a.textContent = '退出';
+        a.addEventListener('click', onLogout);
+        li.appendChild(a);
+        menu.appendChild(li);
+      }
+    }
+  })();
+  </script>
 </body>
 </html>

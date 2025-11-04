@@ -53,6 +53,73 @@
 </script>
 
   <title></title>
+  <style id="unify-theme">
+    :root{
+      --brand-1:#ff7bd5; /* pink */
+      --brand-2:#7c3aed; /* purple */
+      --text-strong:#111827;
+      --muted:#6b7280;
+      --card-bg:#ffffff;
+      --card-border:#ebe9f5;
+      --pill-bg:#f7f5ff;
+    }
+    /* 顶部主菜单：更紧凑、中文不换行、统一高度 */
+    .site-nav .main-menu.menu{ display:flex; flex-wrap:wrap; gap:14px; }
+    .site-nav .main-menu.menu > li{ list-style:none; }
+    .site-nav .main-menu.menu > li > a{
+      display:inline-flex; align-items:center; gap:8px;
+      min-height:44px; padding:8px 16px; border-radius:14px;
+      background:var(--pill-bg); border:1px solid var(--card-border);
+      color:var(--text-strong); text-decoration:none; white-space:nowrap; font-size:15px; font-weight:600;
+      transition:all .18s ease; box-shadow:0 6px 16px rgba(124,58,237,.08);
+    }
+    .site-nav .main-menu.menu > li > a:hover{
+      color:#fff; border-color:transparent;
+      background:linear-gradient(180deg,var(--brand-1),var(--brand-2));
+      box-shadow:0 12px 26px rgba(124,58,237,.25); transform: translateY(-1px);
+    }
+    /* 统一按钮 */
+    .btn, .btn-main, .btn-read{
+      display:inline-flex; align-items:center; justify-content:center;
+      height:42px; padding:0 18px; border-radius:12px;
+      border:1px solid var(--brand-2);
+      color:#fff; text-decoration:none;
+      background:linear-gradient(180deg,var(--brand-1),var(--brand-2));
+      box-shadow:0 10px 22px rgba(124,58,237,.22);
+      transition:transform .06s ease, box-shadow .2s ease, opacity .2s ease;
+    }
+    .btn:hover, .btn-main:hover, .btn-read:hover{ opacity:.95; transform:translateY(-1px); }
+    .btn-main.btn-alt{ background:linear-gradient(180deg,#ffffff,#fafaff); color:var(--text-strong); border:1px solid var(--card-border); }
+    .btn-main.btn-alt:hover{ background:#ffffff; box-shadow:0 10px 22px rgba(0,0,0,.06); }
+
+    /* 统一卡片/区块视觉 */
+    .login-card, .quick-card, .metric-card, .album-card, .feed-item, .landing-hero{
+      background:var(--card-bg); border:1px solid var(--card-border); border-radius:16px;
+      box-shadow:0 14px 28px rgba(0,0,0,.06);
+    }
+    /* 首页英雄与快捷按钮统一 */
+    .landing-hero{ padding:24px; }
+    .quick-card{ display:flex; gap:14px; padding:14px; }
+    .quick-card .quick-item{ flex:1; display:flex; align-items:center; justify-content:center; gap:8px; height:54px;
+      background:var(--pill-bg); border:1px solid var(--card-border); border-radius:12px; color:var(--text-strong); text-decoration:none; transition:all .2s ease; }
+    .quick-card .quick-item:hover{ color:#fff; background:linear-gradient(180deg,var(--brand-1),var(--brand-2)); border-color:transparent; box-shadow:0 10px 22px rgba(124,58,237,.22); }
+    .metric-card-wrap{ display:flex; gap:16px; margin-top:14px; }
+    .metric-card{ padding:16px; text-align:center; }
+    .metric-card .metric-count{ font-size:28px; font-weight:700; background:linear-gradient(180deg,var(--brand-1),var(--brand-2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .metric-card .metric-label{ color:var(--muted); }
+    /* 列表阅读按钮统一 */
+    .feed-item{ display:flex; align-items:flex-start; justify-content:space-between; padding:16px; }
+    .feed-item .btn-read{ height:36px; padding:0 14px; }
+    /* 二级子菜单统一（去掉大背景，改胶囊项） */
+    ul.sub-menu.menu{ display:flex; gap:12px; align-items:center; justify-content:center; padding:10px; margin:10px 0 20px; border-radius:16px; background:transparent; border:none; box-shadow:none; }
+    ul.sub-menu.menu .menu-item-banner{ display:none; }
+    /* 首页头部与标签页统一为胶囊 */
+    .feed-header{ display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border:1px solid var(--card-border); border-radius:16px; background:var(--card-bg); box-shadow:0 12px 26px rgba(0,0,0,.06); }
+    .feed-header .feed-title{ font-weight:700; }
+    .feed-tabs{ display:flex; gap:10px; }
+    .feed-tabs .tab{ display:inline-flex; padding:8px 12px; border-radius:12px; background:var(--pill-bg); border:1px solid var(--card-border); color:var(--text-strong); text-decoration:none; }
+    .feed-tabs .tab:hover, .feed-tabs .tab.active{ color:#fff; border-color:transparent; background:linear-gradient(180deg,var(--brand-1),var(--brand-2)); }
+  </style>
   
 
 
@@ -130,9 +197,29 @@
     <a href="/page-about/" rel="section"><i class="fa fa-heart fa-fw"></i>关于</a>
 
   </li>
-        <li class="menu-item menu-item-menstrual">
+        <li class="menu-item menu-item-经期">
 
-    <a href="/menstrual/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>menstrual</a>
+    <a href="/menstrual/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>经期</a>
+
+  </li>
+        <li class="menu-item menu-item-工具">
+
+    <a href="/tools/" rel="section"><i class="fa fa-wrench fa-fw"></i>工具</a>
+
+  </li>
+        <li class="menu-item menu-item-隐私">
+
+    <a href="/privacy/" rel="section"><i class="fa fa-user-shield fa-fw"></i>隐私</a>
+
+  </li>
+        <li class="menu-item menu-item-反馈">
+
+    <a href="/feedback/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>反馈</a>
+
+  </li>
+        <li class="menu-item menu-item-登录">
+
+    <a href="/login/" rel="section"><i class="fa fa-sign-in-alt fa-fw"></i>登录</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -245,7 +332,6 @@
   }
   .menstrual-actions .btn:hover { filter: brightness(1.05); box-shadow: 0 10px 22px rgba(124,58,237,.3); }
   .menstrual-actions .btn:active { transform: translateY(1px); }
-  }
   .menstrual-summary {
     margin-top: 16px;
     padding: 14px;
@@ -336,6 +422,22 @@
     .calendar { grid-template-columns: 1fr; }
     .summary-grid { grid-template-columns: repeat(2, 1fr); }
   }
+  /* 更激进的移动端适配：在小屏上表单竖排、按钮占满 */
+  @media (max-width: 560px) {
+    .menstrual-form { grid-template-columns: 1fr; gap: 10px; }
+    .menstrual-actions .btn { width: 100%; }
+  }
+
+  /* 左下角视图筛选小组件 */
+  .view-filter { position: fixed; left: 14px; bottom: 84px; z-index: 29; display:flex; gap: 10px; align-items:center; }
+  .vf-chip { display:inline-flex; align-items:center; gap:8px; height: 36px; padding: 0 12px; border-radius: 999px; border:1px solid #e5e7eb; background: rgba(255,255,255,.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 8px 18px rgba(0,0,0,.06); color:#444; cursor:pointer; transition: background .2s ease, box-shadow .2s ease, transform .08s ease; }
+  .vf-chip .dot { border-radius: 999px; }
+  .vf-chip[aria-pressed="true"] { border-color:#c7d2fe; background: linear-gradient(180deg,#ffffff,#f5f7ff); box-shadow:0 10px 22px rgba(99,102,241,.18); }
+  .vf-chip:active { transform: translateY(1px); }
+
+  /* 根据日历容器的隐藏类控制显示 */
+  #calendar.hide-ovulation .cell.ovulation { display:none; }
+  #calendar.hide-fertile .cell.fertile { display:none; }
 </style>
 <div class="page posts-expand menstrual-page">
   <section class="menstrual-hero">
@@ -390,6 +492,18 @@
 
   <section id="calendar" class="calendar" aria-live="polite"></section>
 
+  <!-- 视图筛选：排卵日/易孕期 开关 -->
+  <div class="view-filter" role="group" aria-label="视图筛选">
+    <button id="vf-ovulation" class="vf-chip" aria-pressed="true">
+      <i class="dot ovulation" style="width:10px;height:10px"></i>
+      <span>排卵日</span>
+    </button>
+    <button id="vf-fertile" class="vf-chip" aria-pressed="true">
+      <i class="dot fertile" style="width:10px;height:10px"></i>
+      <span>易孕期</span>
+    </button>
+  </div>
+
   <section class="ai-assistant" aria-label="女性健康顾问">
     <button id="ai-toggle" class="ai-toggle" aria-label="打开女性健康顾问">
       <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 3c-4.97 0-9 3.582-9 8 0 2.52 1.33 4.77 3.42 6.23-.05.63-.27 1.94-1.22 3.39 0 0 2.04-.39 3.77-1.86.96.27 1.99.41 3.03.41 4.97 0 9-3.58 9-8s-4.03-8-9-8z"/></svg>
@@ -425,8 +539,11 @@
   var fertileRangeEl = $('fertileRange');
   var daysLeftEl = $('daysLeft');
   var calendarEl = document.getElementById('calendar');
+  var vfOvu = document.getElementById('vf-ovulation');
+  var vfFer = document.getElementById('vf-fertile');
 
   var KEY = 'menstrual_prefs_v1';
+  var FILTER_KEY = 'menstrual_view_filter_v1';
 
   function fmt(d) {
     var y = d.getFullYear();
@@ -562,6 +679,18 @@
       cycleInput.value = '28';
       lenInput.value = '5';
     }
+
+    // 读取视图筛选偏好
+    try {
+      var raw = localStorage.getItem(FILTER_KEY);
+      var v = raw ? JSON.parse(raw) : { ovulation: true, fertile: true };
+      if (vfOvu) vfOvu.setAttribute('aria-pressed', v.ovulation ? 'true' : 'false');
+      if (vfFer) vfFer.setAttribute('aria-pressed', v.fertile ? 'true' : 'false');
+      if (calendarEl) {
+        calendarEl.classList.toggle('hide-ovulation', !v.ovulation);
+        calendarEl.classList.toggle('hide-fertile', !v.fertile);
+      }
+    } catch(_) {}
   }
 
   saveBtn && saveBtn.addEventListener('click', function () {
@@ -573,6 +702,24 @@
   });
 
   init();
+  // 视图筛选交互
+  function saveFilter(){
+    if(!vfOvu || !vfFer) return;
+    var v = { ovulation: vfOvu.getAttribute('aria-pressed') === 'true', fertile: vfFer.getAttribute('aria-pressed') === 'true' };
+    try { localStorage.setItem(FILTER_KEY, JSON.stringify(v)); } catch(_) {}
+  }
+  vfOvu && vfOvu.addEventListener('click', function(){
+    var cur = vfOvu.getAttribute('aria-pressed') === 'true';
+    vfOvu.setAttribute('aria-pressed', cur ? 'false' : 'true');
+    calendarEl && calendarEl.classList.toggle('hide-ovulation', cur);
+    saveFilter();
+  });
+  vfFer && vfFer.addEventListener('click', function(){
+    var cur = vfFer.getAttribute('aria-pressed') === 'true';
+    vfFer.setAttribute('aria-pressed', cur ? 'false' : 'true');
+    calendarEl && calendarEl.classList.toggle('hide-fertile', cur);
+    saveFilter();
+  });
 })();
 </script>
 
@@ -909,6 +1056,54 @@
 })();
 </script>
 
+<script>
+(function(){
+  // 轻量鉴权工具：可在任意页面脚本中调用 window.AuthGuard
+  var SESS_KEY = 'auth_session_v1';
+  function now(){ return Math.floor(Date.now()/1000); }
+  function getSession(){ try{ var raw = localStorage.getItem(SESS_KEY); if(!raw) return null; var s = JSON.parse(raw); if(s && s.exp && s.exp>0 && now()>s.exp){ localStorage.removeItem(SESS_KEY); return null; } return s; }catch(_){ return null; } }
+  function isAuthed(){ return !!getSession(); }
+  function logout(){ try{ localStorage.removeItem(SESS_KEY); }catch(_){} }
+  function requireOrRedirect(){ if(!isAuthed()){ location.href = '/login/?from='+ encodeURIComponent(location.pathname+location.search); return false; } return true; }
+  window.AuthGuard = { isAuthed:isAuthed, logout:logout, require: requireOrRedirect };
+})();
+</script>
 
+
+  <script>
+  (function(){
+    var LOGIN_PATH = '/login/';
+    var TOKEN_KEY = 'site_auth_token_v1';
+    function isAuthed(){ try{ return localStorage.getItem(TOKEN_KEY) === '1'; }catch(_){ return false; } }
+    function onLogout(){ try{ localStorage.removeItem(TOKEN_KEY); }catch(_){ } location.href = LOGIN_PATH; }
+
+    // 路由拦截：未登录则只能访问登录页
+    var path = location.pathname;
+    if (path.indexOf(LOGIN_PATH) !== 0 && !isAuthed()) {
+      location.replace(LOGIN_PATH);
+      return;
+    }
+    if (path.indexOf(LOGIN_PATH) === 0 && isAuthed()) {
+      // 已登录访问登录页时跳回首页
+      location.replace('/');
+      return;
+    }
+
+    // 顶部添加登出按钮（仅非登录页显示）
+    if (path.indexOf(LOGIN_PATH) !== 0) {
+      var menu = document.querySelector('.site-nav ul.main-menu.menu');
+      if (menu) {
+        var li = document.createElement('li');
+        li.className = 'menu-item';
+        var a = document.createElement('a');
+        a.href = 'javascript:void(0)';
+        a.textContent = '退出';
+        a.addEventListener('click', onLogout);
+        li.appendChild(a);
+        menu.appendChild(li);
+      }
+    }
+  })();
+  </script>
 </body>
 </html>
