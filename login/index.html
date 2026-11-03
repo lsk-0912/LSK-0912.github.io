@@ -274,7 +274,7 @@
   <div class="login-card">
     <div class="login-head">
       <h1>登录</h1>
-      <div class="login-sub">固定账号密码登录：用户名 lsk-lmy，密码 710912。</div>
+      <div class="login-sub">欢迎来到小影公主的专属花园 🌸</div>
     </div>
     <div class="login-body">
       <div id="stateBox" class="muted-box">请输入账号密码</div>
@@ -294,7 +294,14 @@
       <div id="msg" class="tips"></div>
     </div>
   </div>
-  <p class="tips" style="margin-top:10px">说明：登录信息仅保存在当前浏览器，不会上传服务器。</p>
+  <div style="margin-top:16px; padding:12px 14px; background:#fef3c7; border:1px solid #fbbf24; border-radius:10px;">
+    <p style="margin:0 0 6px; color:#92400e; font-size:13px; font-weight:600;">🔒 安全提示</p>
+    <p style="margin:0; color:#92400e; font-size:12px; line-height:1.5;">
+      这是一个静态网站的客户端认证，仅用于基础访问控制。<br>
+      认证信息保存在浏览器本地，不会上传服务器。<br>
+      此方式<strong>不能替代</strong>真正的服务器端身份验证。
+    </p>
+  </div>
 </div>
 
 <script>
@@ -306,44 +313,93 @@
   var remember = $('remember');
   var usernameEl = $('login-username');
   var pass = $('login-password');
-  var TOKEN_KEY = 'site_auth_token_v1';
-  var EXP_KEY = TOKEN_KEY + ':exp';
+  
+  // 统一使用 auth_session_v1，与全局 AuthGuard 保持一致
+  var SESS_KEY = 'auth_session_v1';
+  
+  // 🔒 安全说明：静态网站的客户端认证仅用于基础访问控制
+  // 这不能替代真正的服务器端身份验证
+  // 敏感数据应该由后端服务保护
+  
+  // 网站管理员可以在这里设置访问凭据（仅作为基础门槛）
   var LOGIN_USER = 'lsk-lmy';
   var LOGIN_PASS = '710912';
 
   function now(){ return Math.floor(Date.now()/1000); }
   function setMsg(text, cls){ msg.className = cls || 'tips'; msg.textContent = text || ''; }
+  
   function saveSession(days){
     try{
-      localStorage.setItem(TOKEN_KEY, '1');
-      if(days>0){ localStorage.setItem(EXP_KEY, String(now()+days*86400)); }
-      else { localStorage.removeItem(EXP_KEY); }
+      var session = {
+        user: LOGIN_USER,
+        exp: days > 0 ? now() + (days * 86400) : 0,
+        timestamp: now()
+      };
+      localStorage.setItem(SESS_KEY, JSON.stringify(session));
+      
+      // 为了兼容性，也设置旧的token
+      localStorage.setItem('site_auth_token_v1', '1');
+      if(days > 0){
+        localStorage.setItem('site_auth_token_v1:exp', String(now() + days*86400));
+      } else {
+        localStorage.removeItem('site_auth_token_v1:exp');
+      }
     }catch(_){ }
   }
-  function isExpired(){ try{ var e = parseInt(localStorage.getItem(EXP_KEY)||'0',10); return e>0 && now()>e; }catch(_){ return false; } }
+  
+  function getSession(){
+    try{
+      var raw = localStorage.getItem(SESS_KEY);
+      if(!raw) return null;
+      var s = JSON.parse(raw);
+      if(s && s.exp && s.exp > 0 && now() > s.exp){
+        localStorage.removeItem(SESS_KEY);
+        localStorage.removeItem('site_auth_token_v1');
+        return null;
+      }
+      return s;
+    }catch(_){ return null; }
+  }
 
   function onAction(){
     var u = (usernameEl.value||'').trim();
     var p = pass.value;
-    if(u!==LOGIN_USER){ setMsg('用户名不正确。', 'danger'); return; }
-    if(p!==LOGIN_PASS){ setMsg('密码不正确。', 'danger'); return; }
+    
+    if(!u || !p){
+      setMsg('请输入用户名和密码', 'danger');
+      return;
+    }
+    
+    if(u !== LOGIN_USER){
+      setMsg('用户名不正确', 'danger');
+      return;
+    }
+    
+    if(p !== LOGIN_PASS){
+      setMsg('密码不正确', 'danger');
+      return;
+    }
+    
     saveSession(remember.checked ? 7 : 0);
     setMsg('登录成功，正在进入…', 'success');
     setTimeout(function(){ location.href = '/'; }, 200);
   }
 
   function init(){
-    try{
-      if(localStorage.getItem(TOKEN_KEY)==='1' && !isExpired()){
-        stateBox.textContent = '已登录。';
-      } else {
-        stateBox.textContent = '请输入账号密码';
-      }
-    }catch(_){ stateBox.textContent = '请输入账号密码'; }
+    var session = getSession();
+    if(session){
+      stateBox.textContent = '✅ 已登录（' + (session.user || '用户') + '）';
+      stateBox.style.background = '#f0fdf4';
+      stateBox.style.color = '#166534';
+    } else {
+      stateBox.textContent = '请输入账号密码访问';
+    }
   }
 
   btn && btn.addEventListener('click', onAction);
   pass && pass.addEventListener('keydown', function(e){ if(e.key==='Enter'){ onAction(); }});
+  usernameEl && usernameEl.addEventListener('keydown', function(e){ if(e.key==='Enter'){ pass.focus(); }});
+  
   init();
 })();
 </script>

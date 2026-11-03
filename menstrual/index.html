@@ -514,8 +514,8 @@
         <span class="ai-sub">仅回答女性生理相关问题</span>
       </div>
       <div class="ai-key">
-        <input id="ai-key-input" type="password" placeholder="已内置密钥，无需填写" disabled />
-        <button id="ai-save-key" class="btn" style="display:none">保存</button>
+        <input id="ai-key-input" type="password" placeholder="请粘贴您的智谱 AI 密钥" />
+        <button id="ai-save-key" class="btn">保存</button>
       </div>
       <div id="ai-messages" class="ai-messages" aria-live="polite"></div>
       <div class="ai-input">
@@ -772,7 +772,11 @@
   var input = document.getElementById('ai-text');
   var sendBtn = document.getElementById('ai-send');
   var KEY = 'zhipu_api_key_local';
-  var HARDCODED_KEY = '4c25685fd58342b6a56ebb5917f4109e.rSftjTMMtPeWZXhA';
+  
+  // 🔒 安全说明：API密钥已移除
+  // 如需使用AI功能，请访问 https://open.bigmodel.cn/ 获取您自己的API密钥
+  // 然后在下方输入框中粘贴并保存
+  var HARDCODED_KEY = '';  // 已清空硬编码密钥，保护隐私安全
 
   function row(me){
     var wrap = document.createElement('div');
@@ -841,7 +845,14 @@
   function send(){
     var text = (input.value || '').trim();
     if(!text) return;
-    var apiKey = HARDCODED_KEY;
+    
+    // 获取用户保存的API密钥
+    var apiKey = loadKey() || HARDCODED_KEY;
+    if(!apiKey){
+      addMsg('⚠️ 请先在上方输入并保存您的智谱 AI 密钥。获取地址：https://open.bigmodel.cn/', true);
+      return;
+    }
+    
     // 展开面板（若未展开）
     if(panel && panel.hasAttribute('hidden')) panel.removeAttribute('hidden');
     addMsg(text, true);
@@ -861,7 +872,7 @@
       },
       body: JSON.stringify(payload)
     }).then(function(res){
-      if(!res.ok) throw new Error('请求失败：' + res.status);
+      if(!res.ok) throw new Error('请求失败 ' + res.status + (res.status === 401 ? '（密钥无效）' : ''));
       return res.json();
     }).then(function(json){
       var content = (json && json.choices && json.choices[0] && json.choices[0].message && json.choices[0].message.content) || '抱歉，暂时没有得到回答。';
@@ -869,7 +880,11 @@
       addMsg(content, false);
     }).catch(function(err){
       if(thinkingRow && thinkingRow.parentNode){ thinkingRow.parentNode.removeChild(thinkingRow); }
-      addMsg('请求出错：' + (err && err.message ? err.message : err), false);
+      var errMsg = '请求出错：' + (err && err.message ? err.message : err);
+      if(errMsg.indexOf('401') > -1 || errMsg.indexOf('密钥') > -1){
+        errMsg += '\n\n请检查您的 API 密钥是否正确。';
+      }
+      addMsg(errMsg, false);
     });
   }
 
@@ -877,12 +892,40 @@
     var hidden = panel.hasAttribute('hidden');
     if(hidden) panel.removeAttribute('hidden'); else panel.setAttribute('hidden','');
   });
-  // 保存按钮被隐藏，不再需要保存
+  
+  // 保存API密钥
+  saveKeyBtn && saveKeyBtn.addEventListener('click', function(){
+    var key = keyInput.value.trim();
+    if(!key){
+      alert('请输入 API 密钥');
+      return;
+    }
+    saveKey(key);
+    alert('✅ 密钥已保存到本地（仅在当前浏览器有效）');
+    keyInput.value = '******** 已保存 ********';
+    keyInput.type = 'password';
+  });
+  
   sendBtn && sendBtn.addEventListener('click', send);
   input && input.addEventListener('keydown', function(e){ if((e.ctrlKey || e.metaKey) && e.key==='Enter'){ send(); }});
 
   // init
-  keyInput.value = '******** 已内置 ********';
+  var savedKey = loadKey();
+  if(savedKey){
+    keyInput.value = '******** 已保存 ********';
+    keyInput.type = 'password';
+  } else {
+    keyInput.value = '';
+    keyInput.placeholder = '请粘贴您的智谱 AI 密钥（从 https://open.bigmodel.cn/ 获取）';
+  }
+  
+  // 点击输入框时切换为可编辑状态
+  keyInput.addEventListener('focus', function(){
+    if(keyInput.value === '******** 已保存 ********'){
+      keyInput.value = loadKey() || '';
+      keyInput.type = 'text';
+    }
+  });
 })();
 </script>
 
