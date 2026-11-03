@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<<<<<<< HEAD
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
   <meta name="theme-color" content="#7c3aed">
@@ -50,7 +49,6 @@
       padding: 0 20px;
     }
     
-    /* Header & Navigation */
     .header {
       background: #fff;
       border-bottom: 1px solid var(--card-border);
@@ -112,7 +110,6 @@
       transform: translateY(-1px);
     }
     
-    /* Hero Section */
     .hero {
       background: linear-gradient(135deg, var(--brand-2) 0%, #a855f7 50%, var(--brand-1) 100%);
       color: white;
@@ -134,7 +131,6 @@
       margin-bottom: 32px;
     }
     
-    /* Quick Links */
     .quick-links {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -191,7 +187,6 @@
       color: var(--brand-2);
     }
     
-    /* Recent Notes Section */
     .section {
       margin-bottom: 48px;
     }
@@ -289,7 +284,13 @@
       margin-left: 16px;
     }
     
-    /* Footer */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+    
     .footer {
       background: #fff;
       border-top: 1px solid var(--card-border);
@@ -304,7 +305,6 @@
       text-decoration: none;
     }
     
-    /* Stats */
     .stats {
       display: flex;
       justify-content: center;
@@ -389,15 +389,15 @@
         
         <div class="stats">
           <div class="stat-item">
-            <span class="stat-number">12</span>
+            <span class="stat-number">1</span>
             <span class="stat-label">工作笔记</span>
           </div>
           <div class="stat-item">
-            <span class="stat-number">8</span>
+            <span class="stat-number">0</span>
             <span class="stat-label">生活随笔</span>
           </div>
           <div class="stat-item">
-            <span class="stat-number">20</span>
+            <span class="stat-number">1</span>
             <span class="stat-label">总计文章</span>
           </div>
         </div>
@@ -410,14 +410,14 @@
           <div class="icon">💼</div>
           <h3>工作</h3>
           <p>项目规划、技术方案、团队协作与职场思考</p>
-          <span class="count">12 篇笔记</span>
+          <span class="count">1 篇笔记</span>
         </a>
         
         <a href="/life/" class="quick-card">
           <div class="icon">🌱</div>
           <h3>生活</h3>
           <p>日常感悟、读书笔记、兴趣爱好与生活记录</p>
-          <span class="count">8 篇笔记</span>
+          <span class="count">暂无笔记</span>
         </a>
       </div>
 
@@ -435,55 +435,11 @@
             <div class="note-content">
               <span class="note-tag">工作</span>
               <h3 class="note-title">
-                <a href="/work/2026/11/project-planning-methodology/">项目规划方法论</a>
+                <a href="/work/daily-2026-11-03.html">工作日志 2026-11-03</a>
               </h3>
-              <p class="note-excerpt">关于如何进行有效项目规划的一些思考和实践...</p>
+              <p class="note-excerpt">newapi2.0 迁移项目 (11/3-11/20)；B端豆包生视频功能发布</p>
             </div>
-            <div class="note-meta">2026-11-01</div>
-          </div>
-          
-          <div class="note-item">
-            <div class="note-content">
-              <span class="note-tag">工作</span>
-              <h3 class="note-title">
-                <a href="/work/2026/10/team-meeting-summary/">团队会议纪要 - 2026/10/28</a>
-              </h3>
-              <p class="note-excerpt">本周团队会议讨论了关于新项目的五个关键问题...</p>
-            </div>
-            <div class="note-meta">2026-10-28</div>
-          </div>
-          
-          <div class="note-item">
-            <div class="note-content">
-              <span class="note-tag">生活</span>
-              <h3 class="note-title">
-                <a href="/life/2026/10/autumn-reading-notes/">秋日读书笔记</a>
-              </h3>
-              <p class="note-excerpt">最近读完的几本书带来了很多启发，记录一下主要收获...</p>
-            </div>
-            <div class="note-meta">2026-10-25</div>
-          </div>
-          
-          <div class="note-item">
-            <div class="note-content">
-              <span class="note-tag">工作</span>
-              <h3 class="note-title">
-                <a href="/work/2026/10/code-review-best-practices/">代码审查最佳实践</a>
-              </h3>
-              <p class="note-excerpt">总结团队在代码审查方面的经验和改进建议...</p>
-            </div>
-            <div class="note-meta">2026-10-20</div>
-          </div>
-          
-          <div class="note-item">
-            <div class="note-content">
-              <span class="note-tag">生活</span>
-              <h3 class="note-title">
-                <a href="/life/2026/10/weekend-hiking/">周末登山记</a>
-              </h3>
-              <p class="note-excerpt">难得的好天气，和朋友一起去爬山，收获了美景和好心情...</p>
-            </div>
-            <div class="note-meta">2026-10-15</div>
+            <div class="note-meta">2026-11-03</div>
           </div>
         </div>
       </section>
@@ -498,125 +454,5 @@
       </p>
     </div>
   </footer>
-=======
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="个人知识库 - 记录工作与生活的点滴">
-    <title>个人知识库</title>
-    <link rel="stylesheet" href="/assets/css/main.css">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <a href="/">📚 知识库</a>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="/" class="active">首页</a></li>
-                <li><a href="/work/">工作</a></li>
-                <li><a href="/life/">生活</a></li>
-                <li><a href="/archives/">归档</a></li>
-                <li><a href="/about/">关于</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <header class="hero">
-        <div class="container">
-            <h1>个人知识库</h1>
-            <p class="subtitle">记录工作与生活的点滴智慧</p>
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="搜索笔记..." autocomplete="off">
-                <div id="search-results" class="search-results"></div>
-            </div>
-        </div>
-    </header>
-
-    <main class="container">
-        <section class="section">
-            <div class="cards-grid">
-                <div class="card card-primary">
-                    <div class="card-icon">💼</div>
-                    <h2>工作</h2>
-                    <p>项目笔记、会议记录、技术文档</p>
-                    <a href="/work/" class="btn btn-primary">进入工作区</a>
-                </div>
-
-                <div class="card card-secondary">
-                    <div class="card-icon">🌱</div>
-                    <h2>生活</h2>
-                    <p>个人笔记、生活感悟、实用工具</p>
-                    <a href="/life/" class="btn btn-secondary">进入生活区</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">最近更新</h2>
-            <div class="recent-notes" id="recent-notes">
-                <article class="note-card">
-                    <div class="note-meta">
-                        <span class="note-tag work">工作</span>
-                        <time>2026-11-01</time>
-                    </div>
-                    <h3><a href="/work/project-planning.html">项目规划方法论</a></h3>
-                    <p>关于如何进行有效项目规划的一些思考和实践...</p>
-                </article>
-
-                <article class="note-card">
-                    <div class="note-meta">
-                        <span class="note-tag work">工作</span>
-                        <time>2026-10-28</time>
-                    </div>
-                    <h3><a href="/work/meeting-20261028.html">团队会议纪要 - 2026/10/28</a></h3>
-                    <p>本周团队同步会议的关键决策和行动项...</p>
-                </article>
-
-                <article class="note-card">
-                    <div class="note-meta">
-                        <span class="note-tag life">生活</span>
-                        <time>2026-10-25</time>
-                    </div>
-                    <h3><a href="/life/reading-notes.html">阅读笔记：深度工作</a></h3>
-                    <p>关于提升专注力和工作效率的一些感悟...</p>
-                </article>
-
-                <article class="note-card">
-                    <div class="note-meta">
-                        <span class="note-tag life">生活</span>
-                        <time>2026-10-20</time>
-                    </div>
-                    <h3><a href="/life/life-tools.html">个人效率工具箱</a></h3>
-                    <p>整理的一些提升个人效率的工具和方法...</p>
-                </article>
-            </div>
-        </section>
-
-        <section class="section stats">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">12</div>
-                    <div class="stat-label">工作笔记</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">8</div>
-                    <div class="stat-label">生活笔记</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">20</div>
-                    <div class="stat-label">总计</div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 个人知识库. 持续记录，持续成长。</p>
-        </div>
-    </footer>
-
-    <script src="/assets/js/main.js"></script>
->>>>>>> origin/main
 </body>
 </html>

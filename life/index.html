@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<<<<<<< HEAD
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
   <meta name="theme-color" content="#7c3aed">
@@ -45,7 +44,6 @@
       padding: 0 20px;
     }
     
-    /* Header & Navigation */
     .header {
       background: #fff;
       border-bottom: 1px solid var(--card-border);
@@ -107,7 +105,6 @@
       transform: translateY(-1px);
     }
     
-    /* Hero Section */
     .hero {
       background: linear-gradient(135deg, var(--brand-2) 0%, #a855f7 50%, var(--brand-1) 100%);
       color: white;
@@ -133,108 +130,29 @@
       opacity: 0.95;
     }
     
-    /* Timeline */
-    .timeline {
-      position: relative;
-      padding: 20px 0;
+    .empty-state {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--muted);
     }
     
-    .timeline-year {
+    .empty-state .icon {
+      font-size: 72px;
+      margin-bottom: 24px;
+      opacity: 0.5;
+    }
+    
+    .empty-state h2 {
       font-size: 24px;
-      font-weight: 700;
       color: var(--text-strong);
-      margin: 32px 0 24px 0;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      margin-bottom: 12px;
     }
     
-    .timeline-year::before {
-      content: '';
-      width: 12px;
-      height: 12px;
-      background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
-      border-radius: 50%;
-      display: inline-block;
+    .empty-state p {
+      font-size: 16px;
+      line-height: 1.6;
     }
     
-    .timeline-month {
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--muted);
-      margin: 24px 0 16px 0;
-      padding-left: 24px;
-    }
-    
-    .note-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding-left: 24px;
-    }
-    
-    .note-item {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 20px;
-      transition: all 0.2s ease;
-      display: flex;
-      justify-content: space-between;
-      align-items: start;
-    }
-    
-    .note-item:hover {
-      border-color: var(--brand-2);
-      box-shadow: 0 4px 12px rgba(124,58,237,0.12);
-      transform: translateX(4px);
-    }
-    
-    .note-content {
-      flex: 1;
-    }
-    
-    .note-tag {
-      display: inline-block;
-      padding: 4px 10px;
-      background: #fef3c7;
-      color: #d97706;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-    
-    .note-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-strong);
-      margin-bottom: 8px;
-    }
-    
-    .note-title a {
-      color: inherit;
-      text-decoration: none;
-    }
-    
-    .note-title a:hover {
-      color: var(--brand-2);
-    }
-    
-    .note-excerpt {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-    
-    .note-meta {
-      color: var(--muted);
-      font-size: 14px;
-      white-space: nowrap;
-      margin-left: 16px;
-    }
-    
-    /* Footer */
     .footer {
       background: #fff;
       border-top: 1px solid var(--card-border);
@@ -256,15 +174,6 @@
       
       .hero h1 {
         font-size: 32px;
-      }
-      
-      .note-item {
-        flex-direction: column;
-      }
-      
-      .note-meta {
-        margin-left: 0;
-        margin-top: 8px;
       }
     }
   </style>
@@ -300,100 +209,10 @@
     </section>
 
     <div class="container">
-      <div class="timeline">
-        <div class="timeline-year">2026 年 10 月</div>
-        <div class="note-list">
-          <div class="note-item">
-            <div class="note-content">
-              <span class="note-tag">生活</span>
-              <h3 class="note-title">
-                <a href="#">秋日读书笔记</a>
-              </h3>
-              <p class="note-excerpt">最近读完的几本书带来了很多启发，记录一下主要收获...</p>
-            </div>
-            <div class="note-meta">2026-10-25</div>
-          </div>
-          
-          <div class="note-item">
-            <div class="note-content">
-              <span class="note-tag">生活</span>
-              <h3 class="note-title">
-                <a href="#">周末登山记</a>
-              </h3>
-              <p class="note-excerpt">难得的好天气，和朋友一起去爬山，收获了美景和好心情...</p>
-            </div>
-            <div class="note-meta">2026-10-15</div>
-          </div>
-          
-          <div class="note-item">
-            <div class="note-content">
-              <span class="note-tag">生活</span>
-              <h3 class="note-title">
-                <a href="#">咖啡馆下午茶</a>
-              </h3>
-              <p class="note-excerpt">发现了一家很棒的咖啡馆，环境舒适，咖啡很香...</p>
-            </div>
-            <div class="note-meta">2026-10-08</div>
-          </div>
-        </div>
-
-        <div class="timeline-year">2026 年 9 月</div>
-        <div class="note-list">
-          <div class="note-item">
-            <div class="note-content">
-              <span class="note-tag">生活</span>
-              <h3 class="note-title">
-                <a href="#">摄影练习心得</a>
-              </h3>
-              <p class="note-excerpt">学习摄影一个月，分享一些初学者心得和作品...</p>
-            </div>
-            <div class="note-meta">2026-09-28</div>
-          </div>
-          
-          <div class="note-item">
-            <div class="note-content">
-              <span class="note-tag">生活</span>
-              <h3 class="note-title">
-                <a href="#">《活着》读后感</a>
-              </h3>
-              <p class="note-excerpt">重读余华的《活着》，有了不同于以往的理解...</p>
-            </div>
-            <div class="note-meta">2026-09-20</div>
-          </div>
-          
-          <div class="note-item">
-            <div class="note-content">
-              <span class="note-tag">生活</span>
-              <h3 class="note-title">
-                <a href="#">健身计划启动</a>
-              </h3>
-              <p class="note-excerpt">制定了新的健身计划，希望能坚持下去...</p>
-            </div>
-            <div class="note-meta">2026-09-15</div>
-          </div>
-          
-          <div class="note-item">
-            <div class="note-content">
-              <span class="note-tag">生活</span>
-              <h3 class="note-title">
-                <a href="#">中秋赏月</a>
-              </h3>
-              <p class="note-excerpt">今年的中秋月亮特别圆，记录下这个美好的夜晚...</p>
-            </div>
-            <div class="note-meta">2026-09-10</div>
-          </div>
-          
-          <div class="note-item">
-            <div class="note-content">
-              <span class="note-tag">生活</span>
-              <h3 class="note-title">
-                <a href="#">烹饪日记：第一次做蛋糕</a>
-              </h3>
-              <p class="note-excerpt">尝试自己做蛋糕，虽然不太完美但很有成就感...</p>
-            </div>
-            <div class="note-meta">2026-09-05</div>
-          </div>
-        </div>
+      <div class="empty-state">
+        <div class="icon">📝</div>
+        <h2>暂无笔记</h2>
+        <p>生活随笔正在积累中，敬请期待...</p>
       </div>
     </div>
   </main>
@@ -406,110 +225,5 @@
       </p>
     </div>
   </footer>
-=======
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="生活笔记 - 个人感悟、阅读笔记、实用工具">
-    <title>生活 - 个人知识库</title>
-    <link rel="stylesheet" href="/assets/css/main.css">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <a href="/">📚 知识库</a>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="/">首页</a></li>
-                <li><a href="/work/">工作</a></li>
-                <li><a href="/life/" class="active">生活</a></li>
-                <li><a href="/archives/">归档</a></li>
-                <li><a href="/about/">关于</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <header class="hero">
-        <div class="container">
-            <h1>🌱 生活笔记</h1>
-            <p class="subtitle">个人感悟 · 阅读笔记 · 实用工具</p>
-        </div>
-    </header>
-
-    <main class="container">
-        <section class="section">
-            <div class="category-filter">
-                <button class="category-btn active" data-category="all">全部</button>
-                <button class="category-btn" data-category="reading">阅读笔记</button>
-                <button class="category-btn" data-category="reflection">个人感悟</button>
-                <button class="category-btn" data-category="tools">实用工具</button>
-            </div>
-
-            <div class="notes-list">
-                <article class="note-card" data-category="reading">
-                    <div class="note-meta">
-                        <span class="note-tag life">阅读笔记</span>
-                        <time>2026-10-25</time>
-                    </div>
-                    <h3><a href="/life/reading-notes.html">阅读笔记：深度工作</a></h3>
-                    <p>关于提升专注力和工作效率的一些感悟，深度工作的价值和实践方法，以及如何在现代社会保持专注。</p>
-                </article>
-
-                <article class="note-card" data-category="tools">
-                    <div class="note-meta">
-                        <span class="note-tag life">实用工具</span>
-                        <time>2026-10-20</time>
-                    </div>
-                    <h3><a href="/life/life-tools.html">个人效率工具箱</a></h3>
-                    <p>整理的一些提升个人效率的工具和方法，包括时间管理工具、笔记软件、自动化脚本等实用资源。</p>
-                </article>
-
-                <article class="note-card" data-category="reflection">
-                    <div class="note-meta">
-                        <span class="note-tag life">个人感悟</span>
-                        <time>2026-10-18</time>
-                    </div>
-                    <h3><a href="/life/time-management.html">时间管理的艺术</a></h3>
-                    <p>关于如何更好地管理时间和精力的一些思考，包括优先级设定、番茄工作法、精力管理等实践经验。</p>
-                </article>
-
-                <article class="note-card" data-category="tools">
-                    <div class="note-meta">
-                        <span class="note-tag life">实用工具</span>
-                        <time>2026-10-15</time>
-                    </div>
-                    <h3><a href="/life/health-guide.html">健康管理指南</a></h3>
-                    <p>个人健康管理的一些心得，包括运动计划、饮食建议、作息规律、心理健康等方面的实用建议。</p>
-                </article>
-
-                <article class="note-card" data-category="reading">
-                    <div class="note-meta">
-                        <span class="note-tag life">阅读笔记</span>
-                        <time>2026-10-12</time>
-                    </div>
-                    <h3><a href="/life/reading-principles.html">阅读笔记：原则</a></h3>
-                    <p>Ray Dalio 的《原则》读后感，关于工作原则、生活原则的一些启发和个人思考。</p>
-                </article>
-
-                <article class="note-card" data-category="reflection">
-                    <div class="note-meta">
-                        <span class="note-tag life">个人感悟</span>
-                        <time>2026-10-08</time>
-                    </div>
-                    <h3><a href="/life/learning-reflection.html">持续学习的重要性</a></h3>
-                    <p>在快速变化的时代，保持持续学习能力的重要性，以及如何建立有效的学习体系和习惯。</p>
-                </article>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 个人知识库. 持续记录，持续成长。</p>
-        </div>
-    </footer>
-
-    <script src="/assets/js/main.js"></script>
->>>>>>> origin/main
 </body>
 </html>
