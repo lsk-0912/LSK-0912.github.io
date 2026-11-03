@@ -1,595 +1,123 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 8.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"remove","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
-
-  <meta name="description" content="永远爱你的阿坤 · 记录我们的点滴与心动瞬间">
-<meta property="og:type" content="website">
-<meta property="og:title" content="小影公主の专属花园">
-<meta property="og:url" content="https://aurora-lsk.asia/index.html">
-<meta property="og:site_name" content="小影公主の专属花园">
-<meta property="og:description" content="永远爱你的阿坤 · 记录我们的点滴与心动瞬间">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:author" content="阿坤 ❤ 小影">
-<meta property="article:tag" content="公主">
-<meta property="article:tag" content="小影">
-<meta property="article:tag" content="摄影">
-<meta property="article:tag" content="旅行">
-<meta property="article:tag" content="日记">
-<meta property="article:tag" content="爱情">
-<meta property="article:tag" content="生活">
-<meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="https://aurora-lsk.asia/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : true,
-    isPost : false,
-    lang   : 'zh-CN'
-  };
-</script>
-
-  <title></title>
-  <style id="unify-theme">
-    :root{
-      --brand-1:#ff7bd5; /* pink */
-      --brand-2:#7c3aed; /* purple */
-      --text-strong:#111827;
-      --muted:#6b7280;
-      --card-bg:#ffffff;
-      --card-border:#ebe9f5;
-      --pill-bg:#f7f5ff;
-    }
-    /* 顶部主菜单：更紧凑、中文不换行、统一高度 */
-    .site-nav .main-menu.menu{ display:flex; flex-wrap:wrap; gap:14px; }
-    .site-nav .main-menu.menu > li{ list-style:none; }
-    .site-nav .main-menu.menu > li > a{
-      display:inline-flex; align-items:center; gap:8px;
-      min-height:44px; padding:8px 16px; border-radius:14px;
-      background:var(--pill-bg); border:1px solid var(--card-border);
-      color:var(--text-strong); text-decoration:none; white-space:nowrap; font-size:15px; font-weight:600;
-      transition:all .18s ease; box-shadow:0 6px 16px rgba(124,58,237,.08);
-    }
-    .site-nav .main-menu.menu > li > a:hover{
-      color:#fff; border-color:transparent;
-      background:linear-gradient(180deg,var(--brand-1),var(--brand-2));
-      box-shadow:0 12px 26px rgba(124,58,237,.25); transform: translateY(-1px);
-    }
-    /* 统一按钮 */
-    .btn, .btn-main, .btn-read{
-      display:inline-flex; align-items:center; justify-content:center;
-      height:42px; padding:0 18px; border-radius:12px;
-      border:1px solid var(--brand-2);
-      color:#fff; text-decoration:none;
-      background:linear-gradient(180deg,var(--brand-1),var(--brand-2));
-      box-shadow:0 10px 22px rgba(124,58,237,.22);
-      transition:transform .06s ease, box-shadow .2s ease, opacity .2s ease;
-    }
-    .btn:hover, .btn-main:hover, .btn-read:hover{ opacity:.95; transform:translateY(-1px); }
-    .btn-main.btn-alt{ background:linear-gradient(180deg,#ffffff,#fafaff); color:var(--text-strong); border:1px solid var(--card-border); }
-    .btn-main.btn-alt:hover{ background:#ffffff; box-shadow:0 10px 22px rgba(0,0,0,.06); }
-
-    /* 统一卡片/区块视觉 */
-    .login-card, .quick-card, .metric-card, .album-card, .feed-item, .landing-hero{
-      background:var(--card-bg); border:1px solid var(--card-border); border-radius:16px;
-      box-shadow:0 14px 28px rgba(0,0,0,.06);
-    }
-    /* 首页英雄与快捷按钮统一 */
-    .landing-hero{ padding:24px; }
-    .quick-card{ display:flex; gap:14px; padding:14px; }
-    .quick-card .quick-item{ flex:1; display:flex; align-items:center; justify-content:center; gap:8px; height:54px;
-      background:var(--pill-bg); border:1px solid var(--card-border); border-radius:12px; color:var(--text-strong); text-decoration:none; transition:all .2s ease; }
-    .quick-card .quick-item:hover{ color:#fff; background:linear-gradient(180deg,var(--brand-1),var(--brand-2)); border-color:transparent; box-shadow:0 10px 22px rgba(124,58,237,.22); }
-    .metric-card-wrap{ display:flex; gap:16px; margin-top:14px; }
-    .metric-card{ padding:16px; text-align:center; }
-    .metric-card .metric-count{ font-size:28px; font-weight:700; background:linear-gradient(180deg,var(--brand-1),var(--brand-2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .metric-card .metric-label{ color:var(--muted); }
-    /* 列表阅读按钮统一 */
-    .feed-item{ display:flex; align-items:flex-start; justify-content:space-between; padding:16px; }
-    .feed-item .btn-read{ height:36px; padding:0 14px; }
-    /* 二级子菜单统一（去掉大背景，改胶囊项） */
-    ul.sub-menu.menu{ display:flex; gap:12px; align-items:center; justify-content:center; padding:10px; margin:10px 0 20px; border-radius:16px; background:transparent; border:none; box-shadow:none; }
-    ul.sub-menu.menu .menu-item-banner{ display:none; }
-    /* 首页头部与标签页统一为胶囊 */
-    .feed-header{ display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border:1px solid var(--card-border); border-radius:16px; background:var(--card-bg); box-shadow:0 12px 26px rgba(0,0,0,.06); }
-    .feed-header .feed-title{ font-weight:700; }
-    .feed-tabs{ display:flex; gap:10px; }
-    .feed-tabs .tab{ display:inline-flex; padding:8px 12px; border-radius:12px; background:var(--pill-bg); border:1px solid var(--card-border); color:var(--text-strong); text-decoration:none; }
-    .feed-tabs .tab:hover, .feed-tabs .tab.active{ color:#fff; border-color:transparent; background:linear-gradient(180deg,var(--brand-1),var(--brand-2)); }
-  </style>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="个人知识库 - 记录工作与生活的点滴">
+    <title>个人知识库</title>
+    <link rel="stylesheet" href="/assets/css/main.css">
 </head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="/">📚 知识库</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="active">首页</a></li>
+                <li><a href="/work/">工作</a></li>
+                <li><a href="/life/">生活</a></li>
+                <li><a href="/archives/">归档</a></li>
+                <li><a href="/about/">关于</a></li>
+            </ul>
+        </div>
+    </nav>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">小影公主の专属花园</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-      <p class="site-subtitle" itemprop="description">爱与记录的小宇宙</p>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/page-about/" rel="section"><i class="fa fa-heart fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-经期">
-
-    <a href="/menstrual/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>经期</a>
-
-  </li>
-        <li class="menu-item menu-item-工具">
-
-    <a href="/tools/" rel="section"><i class="fa fa-wrench fa-fw"></i>工具</a>
-
-  </li>
-        <li class="menu-item menu-item-隐私">
-
-    <a href="/privacy/" rel="section"><i class="fa fa-user-shield fa-fw"></i>隐私</a>
-
-  </li>
-        <li class="menu-item menu-item-反馈">
-
-    <a href="/feedback/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>反馈</a>
-
-  </li>
-        <li class="menu-item menu-item-登录">
-
-    <a href="/login/" rel="section"><i class="fa fa-sign-in-alt fa-fw"></i>登录</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-  </ul>
-</nav>
-
-
-
-
-</div>
+    <header class="hero">
+        <div class="container">
+            <h1>个人知识库</h1>
+            <p class="subtitle">记录工作与生活的点滴智慧</p>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="搜索笔记..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+        </div>
     </header>
 
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+    <main class="container">
+        <section class="section">
+            <div class="cards-grid">
+                <div class="card card-primary">
+                    <div class="card-icon">💼</div>
+                    <h2>工作</h2>
+                    <p>项目笔记、会议记录、技术文档</p>
+                    <a href="/work/" class="btn btn-primary">进入工作区</a>
+                </div>
 
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content index posts-expand">
-            
-  
-  
-
-  <!-- CNBlogs 风格：文章列表（前 20 条） -->
-  <section class="feed-list-wrap">
-    <ul class="feed-list">
-          <li class="feed-item">
-            <div class="feed-item-main">
-              <h3 class="title"><a href="/2025/10/29/%E4%B8%93%E5%B1%9E%E5%B0%8F%E5%BD%B1%E7%9A%84%E5%A4%87%E5%BF%98%E5%BD%95/">小影备忘录</a></h3>
-              <div class="meta">
-                <span class="date"><i class="fa fa-calendar"></i>2025-10-29</span>
-                  <span class="category"><i class="fa fa-folder-open"></i>爱</span>
-                  <span class="tags"><i class="fa fa-tags"></i>1 标签</span>
-              </div>
+                <div class="card card-secondary">
+                    <div class="card-icon">🌱</div>
+                    <h2>生活</h2>
+                    <p>个人笔记、生活感悟、实用工具</p>
+                    <a href="/life/" class="btn btn-secondary">进入生活区</a>
+                </div>
             </div>
-            <div class="feed-item-actions">
-              <a class="btn-read" href="/2025/10/29/%E4%B8%93%E5%B1%9E%E5%B0%8F%E5%BD%B1%E7%9A%84%E5%A4%87%E5%BF%98%E5%BD%95/">阅读</a>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">最近更新</h2>
+            <div class="recent-notes" id="recent-notes">
+                <article class="note-card">
+                    <div class="note-meta">
+                        <span class="note-tag work">工作</span>
+                        <time>2026-11-01</time>
+                    </div>
+                    <h3><a href="/work/project-planning.html">项目规划方法论</a></h3>
+                    <p>关于如何进行有效项目规划的一些思考和实践...</p>
+                </article>
+
+                <article class="note-card">
+                    <div class="note-meta">
+                        <span class="note-tag work">工作</span>
+                        <time>2026-10-28</time>
+                    </div>
+                    <h3><a href="/work/meeting-20261028.html">团队会议纪要 - 2026/10/28</a></h3>
+                    <p>本周团队同步会议的关键决策和行动项...</p>
+                </article>
+
+                <article class="note-card">
+                    <div class="note-meta">
+                        <span class="note-tag life">生活</span>
+                        <time>2026-10-25</time>
+                    </div>
+                    <h3><a href="/life/reading-notes.html">阅读笔记：深度工作</a></h3>
+                    <p>关于提升专注力和工作效率的一些感悟...</p>
+                </article>
+
+                <article class="note-card">
+                    <div class="note-meta">
+                        <span class="note-tag life">生活</span>
+                        <time>2026-10-20</time>
+                    </div>
+                    <h3><a href="/life/life-tools.html">个人效率工具箱</a></h3>
+                    <p>整理的一些提升个人效率的工具和方法...</p>
+                </article>
             </div>
-          </li>
-    </ul>
-  </section>
+        </section>
 
-  
-  <div class="landing-scene">
-    <div class="landing-hero">
-      <h1>欢迎来到小影公主の专属花园</h1>
-      <p>把每一次心动与小确幸，认真收藏。</p>
-      <div class="hero-actions">
-        <a class="btn-main" href="/album/">进入回忆相册</a>
-        <a class="btn-main btn-alt" href="/page-about/">关于小影</a>
-      </div>
-      <section class="fold-card" id="home-fold">
-        <header class="fold-head">
-          <h3 class="fold-title"><i class="fa fa-magic"></i> 快捷入口</h3>
-          <button class="fold-toggle" id="home-fold-toggle" aria-expanded="true">收起</button>
-        </header>
-        <div class="fold-body" id="home-fold-body">
-          <div class="quick-card">
-            <a class="quick-item" href="/categories/"><i class="fa fa-folder-open"></i><span>主题</span></a>
-            <a class="quick-item" href="/tags/"><i class="fa fa-tags"></i><span>心情</span></a>
-            <a class="quick-item" href="/page-about/"><i class="fa fa-heart"></i><span>给小影的一封信</span></a>
-          </div>
-
-          <div class="metric-card-wrap">
-            <div class="metric-card">
-              <div class="metric-count">1</div>
-              <div class="metric-label">文章</div>
+        <section class="section stats">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">工作笔记</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">生活笔记</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">20</div>
+                    <div class="stat-label">总计</div>
+                </div>
             </div>
-            <div class="metric-card">
-              <div class="metric-count">1</div>
-              <div class="metric-label">分类</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-count">1</div>
-              <div class="metric-label">标签</div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-    <div class="grid-floor"></div>
-  </div>
-
-  <section class="landing-section">
-    <h2>最近更新</h2>
-    <style>
-      /* 折叠卡片样式（首页） */
-      .fold-card{ border:1px solid var(--card-border); border-radius:16px; background:var(--card-bg); box-shadow:0 12px 26px rgba(0,0,0,.06); margin-top:14px; }
-      .fold-head{ display:flex; align-items:center; justify-content:space-between; padding:12px 14px; }
-      .fold-title{ margin:0; font-size:16px; font-weight:700; }
-      .fold-toggle{ height:34px; padding:0 12px; border-radius:10px; border:1px solid var(--card-border); background:var(--pill-bg); cursor:pointer; }
-      .fold-body{ overflow:hidden; transition:max-height .25s ease, padding .2s ease; padding:12px 14px 16px; }
-      .fold-body.collapsed{ max-height:0; padding:0 14px; }
-
-      .recent-list { display: grid; grid-template-columns: 1fr; gap: 8px; }
-      .recent-item { padding: 12px 0; border-bottom: 1px solid #eee; }
-      .recent-title { font-size: 1.05rem; margin: 0 0 6px; }
-      .recent-title a { text-decoration: none; color: inherit; }
-      .recent-meta { color: #888; font-size: .9rem; }
-    </style>
-
-    <script>
-    (function(){
-      var body = document.getElementById('home-fold-body');
-      var btn = document.getElementById('home-fold-toggle');
-      if(!body || !btn) return;
-      var KEY = 'home_fold_collapsed_v1';
-      function setState(collapsed){
-        if(collapsed){ body.classList.add('collapsed'); btn.textContent = '展开'; btn.setAttribute('aria-expanded','false'); body.style.maxHeight = '0px'; }
-        else { body.classList.remove('collapsed'); btn.textContent = '收起'; btn.setAttribute('aria-expanded','true'); body.style.maxHeight = body.scrollHeight + 'px'; }
-      }
-      // 初始化
-      var saved = localStorage.getItem(KEY) === '1';
-      setState(saved);
-      // 自适应内容高度
-      if(!saved){ body.style.maxHeight = body.scrollHeight + 'px'; }
-      btn.addEventListener('click', function(){
-        var will = !body.classList.contains('collapsed');
-        setState(will);
-        try{ localStorage.setItem(KEY, will ? '1':'0'); }catch(_){ }
-      });
-      window.addEventListener('resize', function(){ if(!body.classList.contains('collapsed')){ body.style.maxHeight = body.scrollHeight + 'px'; } });
-    })();
-    </script>
-
-    <div class="recent-list">
-          <article class="recent-item" itemscope itemtype="http://schema.org/Article">
-            <h3 class="recent-title">
-              <a href="/2025/10/29/%E4%B8%93%E5%B1%9E%E5%B0%8F%E5%BD%B1%E7%9A%84%E5%A4%87%E5%BF%98%E5%BD%95/" itemprop="url">
-                <span itemprop="name">小影备忘录</span>
-              </a>
-            </h3>
-            <div class="recent-meta">
-              <time itemprop="dateCreated" datetime="2025-10-29T21:34:56+08:00">2025-10-29</time>
-                · 爱
-            </div>
-          </article>
-    </div>
-    <div class="landing-more">
-      <a href="/archives/">查看全部文章 →</a>
-    </div>
-  </section>
-  
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-      </div>
+        </section>
     </main>
 
     <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2025</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">阿坤 ❤ 小影</span>
-</div>
-  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
+        <div class="container">
+            <p>&copy; 2026 个人知识库. 持续记录，持续成长。</p>
+        </div>
     </footer>
-  </div>
 
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-<script>
-// 未完成页面拦截：同域链接点击时先探测是否存在
-(function () {
-  function isSameOrigin(href) {
-    try {
-      var url = new URL(href, window.location.href);
-      return url.origin === window.location.origin;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  function isHashLink(href) {
-    return href && href.trim().charAt(0) === '#';
-  }
-
-  function showPendingDialog() {
-    window.alert('此功能还没有开发，敬请期待呀~');
-  }
-
-  document.addEventListener('click', function (e) {
-    var target = e.target;
-    while (target && target.tagName !== 'A') {
-      target = target.parentElement;
-    }
-    if (!target) return;
-
-    var href = target.getAttribute('href');
-    if (!href || isHashLink(href) || target.hasAttribute('download') || target.getAttribute('target') === '_blank') {
-      return;
-    }
-    if (!isSameOrigin(href)) {
-      return; // 外链不拦截
-    }
-
-    // 允许开发者跳过拦截
-    if (target.dataset && target.dataset.skipPending === 'true') {
-      return;
-    }
-
-    e.preventDefault();
-
-    var url = new URL(href, window.location.href);
-    var timeoutId = null;
-    var timedOut = false;
-
-    function navigate() {
-      window.location.href = url.href;
-    }
-
-    // 超时兜底：2.5s 内未得到成功响应则视为未就绪
-    timeoutId = setTimeout(function () {
-      timedOut = true;
-      showPendingDialog();
-    }, 2500);
-
-    fetch(url.href, { method: 'HEAD', cache: 'no-cache' })
-      .then(function (res) {
-        if (timeoutId) clearTimeout(timeoutId);
-        if (res && res.ok) {
-          navigate();
-        } else {
-          showPendingDialog();
-        }
-      })
-      .catch(function () {
-        if (timeoutId) clearTimeout(timeoutId);
-        showPendingDialog();
-      });
-  }, false);
-})();
-</script>
-
-<script>
-(function(){
-  // 轻量鉴权工具：可在任意页面脚本中调用 window.AuthGuard
-  var SESS_KEY = 'auth_session_v1';
-  function now(){ return Math.floor(Date.now()/1000); }
-  function getSession(){ try{ var raw = localStorage.getItem(SESS_KEY); if(!raw) return null; var s = JSON.parse(raw); if(s && s.exp && s.exp>0 && now()>s.exp){ localStorage.removeItem(SESS_KEY); return null; } return s; }catch(_){ return null; } }
-  function isAuthed(){ return !!getSession(); }
-  function logout(){ try{ localStorage.removeItem(SESS_KEY); }catch(_){} }
-  function requireOrRedirect(){ if(!isAuthed()){ location.href = '/login/?from='+ encodeURIComponent(location.pathname+location.search); return false; } return true; }
-  window.AuthGuard = { isAuthed:isAuthed, logout:logout, require: requireOrRedirect };
-})();
-</script>
-
-
-  <script>
-  (function(){
-    var LOGIN_PATH = '/login/';
-    var TOKEN_KEY = 'site_auth_token_v1';
-    function isAuthed(){ try{ return localStorage.getItem(TOKEN_KEY) === '1'; }catch(_){ return false; } }
-    function onLogout(){ try{ localStorage.removeItem(TOKEN_KEY); }catch(_){ } location.href = LOGIN_PATH; }
-
-    // 路由拦截：未登录则只能访问登录页
-    var path = location.pathname;
-    if (path.indexOf(LOGIN_PATH) !== 0 && !isAuthed()) {
-      location.replace(LOGIN_PATH);
-      return;
-    }
-    if (path.indexOf(LOGIN_PATH) === 0 && isAuthed()) {
-      // 已登录访问登录页时跳回首页
-      location.replace('/');
-      return;
-    }
-
-    // 顶部添加登出按钮（仅非登录页显示）
-    if (path.indexOf(LOGIN_PATH) !== 0) {
-      var menu = document.querySelector('.site-nav ul.main-menu.menu');
-      if (menu) {
-        var li = document.createElement('li');
-        li.className = 'menu-item';
-        var a = document.createElement('a');
-        a.href = 'javascript:void(0)';
-        a.textContent = '退出';
-        a.addEventListener('click', onLogout);
-        li.appendChild(a);
-        menu.appendChild(li);
-      }
-    }
-  })();
-  </script>
+    <script src="/assets/js/main.js"></script>
 </body>
 </html>
