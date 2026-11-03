@@ -2,516 +2,504 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 8.0.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+  <meta name="theme-color" content="#7c3aed">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"aurora-lsk.asia","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"remove","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
-
-  <meta name="description" content="永远爱你的阿坤 · 记录我们的点滴与心动瞬间">
-<meta property="og:type" content="website">
-<meta property="og:title" content="小影公主の专属花园">
-<meta property="og:url" content="https://aurora-lsk.asia/archives/index.html">
-<meta property="og:site_name" content="小影公主の专属花园">
-<meta property="og:description" content="永远爱你的阿坤 · 记录我们的点滴与心动瞬间">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:author" content="阿坤 ❤ 小影">
-<meta property="article:tag" content="公主">
-<meta property="article:tag" content="小影">
-<meta property="article:tag" content="摄影">
-<meta property="article:tag" content="旅行">
-<meta property="article:tag" content="日记">
-<meta property="article:tag" content="爱情">
-<meta property="article:tag" content="生活">
-<meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="https://aurora-lsk.asia/archives/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : false,
-    lang   : 'zh-CN'
-  };
-</script>
-
-  <title>归档 | 小影公主の专属花园</title>
-  <style id="unify-theme">
-    :root{
-      --brand-1:#ff7bd5; /* pink */
-      --brand-2:#7c3aed; /* purple */
-      --text-strong:#111827;
-      --muted:#6b7280;
-      --card-bg:#ffffff;
-      --card-border:#ebe9f5;
-      --pill-bg:#f7f5ff;
-    }
-    /* 顶部主菜单：更紧凑、中文不换行、统一高度 */
-    .site-nav .main-menu.menu{ display:flex; flex-wrap:wrap; gap:14px; }
-    .site-nav .main-menu.menu > li{ list-style:none; }
-    .site-nav .main-menu.menu > li > a{
-      display:inline-flex; align-items:center; gap:8px;
-      min-height:44px; padding:8px 16px; border-radius:14px;
-      background:var(--pill-bg); border:1px solid var(--card-border);
-      color:var(--text-strong); text-decoration:none; white-space:nowrap; font-size:15px; font-weight:600;
-      transition:all .18s ease; box-shadow:0 6px 16px rgba(124,58,237,.08);
-    }
-    .site-nav .main-menu.menu > li > a:hover{
-      color:#fff; border-color:transparent;
-      background:linear-gradient(180deg,var(--brand-1),var(--brand-2));
-      box-shadow:0 12px 26px rgba(124,58,237,.25); transform: translateY(-1px);
-    }
-    /* 统一按钮 */
-    .btn, .btn-main, .btn-read{
-      display:inline-flex; align-items:center; justify-content:center;
-      height:42px; padding:0 18px; border-radius:12px;
-      border:1px solid var(--brand-2);
-      color:#fff; text-decoration:none;
-      background:linear-gradient(180deg,var(--brand-1),var(--brand-2));
-      box-shadow:0 10px 22px rgba(124,58,237,.22);
-      transition:transform .06s ease, box-shadow .2s ease, opacity .2s ease;
-    }
-    .btn:hover, .btn-main:hover, .btn-read:hover{ opacity:.95; transform:translateY(-1px); }
-    .btn-main.btn-alt{ background:linear-gradient(180deg,#ffffff,#fafaff); color:var(--text-strong); border:1px solid var(--card-border); }
-    .btn-main.btn-alt:hover{ background:#ffffff; box-shadow:0 10px 22px rgba(0,0,0,.06); }
-
-    /* 统一卡片/区块视觉 */
-    .login-card, .quick-card, .metric-card, .album-card, .feed-item, .landing-hero{
-      background:var(--card-bg); border:1px solid var(--card-border); border-radius:16px;
-      box-shadow:0 14px 28px rgba(0,0,0,.06);
-    }
-    /* 首页英雄与快捷按钮统一 */
-    .landing-hero{ padding:24px; }
-    .quick-card{ display:flex; gap:14px; padding:14px; }
-    .quick-card .quick-item{ flex:1; display:flex; align-items:center; justify-content:center; gap:8px; height:54px;
-      background:var(--pill-bg); border:1px solid var(--card-border); border-radius:12px; color:var(--text-strong); text-decoration:none; transition:all .2s ease; }
-    .quick-card .quick-item:hover{ color:#fff; background:linear-gradient(180deg,var(--brand-1),var(--brand-2)); border-color:transparent; box-shadow:0 10px 22px rgba(124,58,237,.22); }
-    .metric-card-wrap{ display:flex; gap:16px; margin-top:14px; }
-    .metric-card{ padding:16px; text-align:center; }
-    .metric-card .metric-count{ font-size:28px; font-weight:700; background:linear-gradient(180deg,var(--brand-1),var(--brand-2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .metric-card .metric-label{ color:var(--muted); }
-    /* 列表阅读按钮统一 */
-    .feed-item{ display:flex; align-items:flex-start; justify-content:space-between; padding:16px; }
-    .feed-item .btn-read{ height:36px; padding:0 14px; }
-    /* 二级子菜单统一（去掉大背景，改胶囊项） */
-    ul.sub-menu.menu{ display:flex; gap:12px; align-items:center; justify-content:center; padding:10px; margin:10px 0 20px; border-radius:16px; background:transparent; border:none; box-shadow:none; }
-    ul.sub-menu.menu .menu-item-banner{ display:none; }
-    /* 首页头部与标签页统一为胶囊 */
-    .feed-header{ display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border:1px solid var(--card-border); border-radius:16px; background:var(--card-bg); box-shadow:0 12px 26px rgba(0,0,0,.06); }
-    .feed-header .feed-title{ font-weight:700; }
-    .feed-tabs{ display:flex; gap:10px; }
-    .feed-tabs .tab{ display:inline-flex; padding:8px 12px; border-radius:12px; background:var(--pill-bg); border:1px solid var(--card-border); color:var(--text-strong); text-decoration:none; }
-    .feed-tabs .tab:hover, .feed-tabs .tab.active{ color:#fff; border-color:transparent; background:linear-gradient(180deg,var(--brand-1),var(--brand-2)); }
-  </style>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   
-
-
-
-
-
-
-  <noscript>
+  <meta name="description" content="归档 · 按时间顺序浏览所有笔记">
+  <title>归档 - 知识库</title>
   <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">小影公主の专属花园</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-      <p class="site-subtitle" itemprop="description">爱与记录的小宇宙</p>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/page-about/" rel="section"><i class="fa fa-heart fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-经期">
-
-    <a href="/menstrual/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>经期</a>
-
-  </li>
-        <li class="menu-item menu-item-工具">
-
-    <a href="/tools/" rel="section"><i class="fa fa-wrench fa-fw"></i>工具</a>
-
-  </li>
-        <li class="menu-item menu-item-隐私">
-
-    <a href="/privacy/" rel="section"><i class="fa fa-user-shield fa-fw"></i>隐私</a>
-
-  </li>
-        <li class="menu-item menu-item-反馈">
-
-    <a href="/feedback/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>反馈</a>
-
-  </li>
-        <li class="menu-item menu-item-登录">
-
-    <a href="/login/" rel="section"><i class="fa fa-sign-in-alt fa-fw"></i>登录</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-  </ul>
-</nav>
-
-
-
-
-</div>
-    </header>
-
+    :root {
+      --brand-1: #ff7bd5;
+      --brand-2: #7c3aed;
+      --text-strong: #111827;
+      --text-normal: #374151;
+      --muted: #6b7280;
+      --card-bg: #ffffff;
+      --card-border: #ebe9f5;
+      --pill-bg: #f7f5ff;
+      --bg-base: #fafafa;
+    }
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content archive">
-            
-
-  
-  
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 1 篇日志。 继续努力。</span>
-      </div>
-
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-normal);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Header & Navigation */
+    .header {
+      background: #fff;
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .site-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text-strong);
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    .site-brand .icon {
+      font-size: 24px;
+    }
+    
+    .main-menu {
+      display: flex;
+      gap: 12px;
+      list-style: none;
+    }
+    
+    .main-menu li a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 12px;
+      background: var(--pill-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-strong);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    
+    .main-menu li a:hover,
+    .main-menu li a.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(180deg, var(--brand-1), var(--brand-2));
+      box-shadow: 0 8px 16px rgba(124,58,237,0.25);
+      transform: translateY(-1px);
+    }
+    
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--brand-2) 0%, #a855f7 50%, var(--brand-1) 100%);
+      color: white;
+      padding: 60px 0;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    
+    .hero-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+    
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    
+    .hero p {
+      font-size: 16px;
+      opacity: 0.95;
+    }
+    
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding: 20px 0;
+    }
+    
+    .timeline-year {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-strong);
+      margin: 32px 0 24px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .timeline-year::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+      border-radius: 50%;
+      display: inline-block;
+    }
+    
+    .timeline-month {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 24px 0 16px 0;
+      padding-left: 24px;
+    }
+    
+    .note-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-left: 24px;
+    }
+    
+    .note-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.2s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+    }
+    
+    .note-item:hover {
+      border-color: var(--brand-2);
+      box-shadow: 0 4px 12px rgba(124,58,237,0.12);
+      transform: translateX(4px);
+    }
+    
+    .note-content {
+      flex: 1;
+    }
+    
+    .note-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: var(--pill-bg);
+      color: var(--brand-2);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .note-tag.life {
+      background: #fef3c7;
+      color: #d97706;
+    }
+    
+    .note-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-strong);
+      margin-bottom: 8px;
+    }
+    
+    .note-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    .note-title a:hover {
+      color: var(--brand-2);
+    }
+    
+    .note-excerpt {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    
+    .note-meta {
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+      margin-left: 16px;
+    }
+    
+    /* Footer */
+    .footer {
+      background: #fff;
+      border-top: 1px solid var(--card-border);
+      padding: 32px 0;
+      margin-top: 64px;
+      text-align: center;
+      color: var(--muted);
+    }
+    
+    .footer a {
+      color: var(--brand-2);
+      text-decoration: none;
+    }
+    
+    @media (max-width: 768px) {
+      .main-menu {
+        flex-wrap: wrap;
+      }
       
-    <div class="collection-year">
-      <span class="collection-header">2025</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2025-10-29T21:34:56+08:00"
-              content="2025-10-29">
-          10-29
-        </time>
+      .hero h1 {
+        font-size: 32px;
+      }
+      
+      .note-item {
+        flex-direction: column;
+      }
+      
+      .note-meta {
+        margin-left: 0;
+        margin-top: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="site-brand">
+          <span class="icon">📚</span>
+          <span>知识库</span>
+        </a>
+        <nav>
+          <ul class="main-menu">
+            <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+            <li><a href="/work/"><i class="fa fa-briefcase"></i> 工作</a></li>
+            <li><a href="/life/"><i class="fa fa-coffee"></i> 生活</a></li>
+            <li><a href="/archives/" class="active"><i class="fa fa-archive"></i> 归档</a></li>
+            <li><a href="/about/"><i class="fa fa-user"></i> 关于</a></li>
+          </ul>
+        </nav>
       </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2025/10/29/%E4%B8%93%E5%B1%9E%E5%B0%8F%E5%BD%B1%E7%9A%84%E5%A4%87%E5%BF%98%E5%BD%95/" itemprop="url">
-            <span itemprop="name">小影备忘录</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-
     </div>
-  </div>
-  
-  
-  
+  </header>
 
-  
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-icon">📁</div>
+        <h1>归档</h1>
+        <p>按时间顺序浏览所有笔记</p>
+      </div>
+    </section>
 
+    <div class="container">
+      <div class="timeline">
+        <div class="timeline-year">2026 年 11 月</div>
+        <div class="note-list">
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">工作</span>
+              <h3 class="note-title">
+                <a href="#">项目规划方法论</a>
+              </h3>
+              <p class="note-excerpt">关于如何进行有效项目规划的一些思考和实践...</p>
+            </div>
+            <div class="note-meta">2026-11-01</div>
+          </div>
+        </div>
 
-
+        <div class="timeline-year">2026 年 10 月</div>
+        <div class="note-list">
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">工作</span>
+              <h3 class="note-title">
+                <a href="#">团队会议纪要 - 2026/10/28</a>
+              </h3>
+              <p class="note-excerpt">本周团队会议讨论了关于新项目的五个关键问题...</p>
+            </div>
+            <div class="note-meta">2026-10-28</div>
           </div>
           
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag life">生活</span>
+              <h3 class="note-title">
+                <a href="#">秋日读书笔记</a>
+              </h3>
+              <p class="note-excerpt">最近读完的几本书带来了很多启发，记录一下主要收获...</p>
+            </div>
+            <div class="note-meta">2026-10-25</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">工作</span>
+              <h3 class="note-title">
+                <a href="#">代码审查最佳实践</a>
+              </h3>
+              <p class="note-excerpt">总结团队在代码审查方面的经验和改进建议...</p>
+            </div>
+            <div class="note-meta">2026-10-20</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag life">生活</span>
+              <h3 class="note-title">
+                <a href="#">周末登山记</a>
+              </h3>
+              <p class="note-excerpt">难得的好天气，和朋友一起去爬山，收获了美景和好心情...</p>
+            </div>
+            <div class="note-meta">2026-10-15</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">工作</span>
+              <h3 class="note-title">
+                <a href="#">微服务架构设计思考</a>
+              </h3>
+              <p class="note-excerpt">在实际项目中应用微服务架构的经验总结...</p>
+            </div>
+            <div class="note-meta">2026-10-15</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag life">生活</span>
+              <h3 class="note-title">
+                <a href="#">咖啡馆下午茶</a>
+              </h3>
+              <p class="note-excerpt">发现了一家很棒的咖啡馆，环境舒适，咖啡很香...</p>
+            </div>
+            <div class="note-meta">2026-10-08</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">工作</span>
+              <h3 class="note-title">
+                <a href="#">性能优化实战记录</a>
+              </h3>
+              <p class="note-excerpt">记录一次系统性能瓶颈排查和优化的全过程...</p>
+            </div>
+            <div class="note-meta">2026-10-08</div>
+          </div>
+        </div>
 
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
+        <div class="timeline-year">2026 年 9 月</div>
+        <div class="note-list">
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag life">生活</span>
+              <h3 class="note-title">
+                <a href="#">摄影练习心得</a>
+              </h3>
+              <p class="note-excerpt">学习摄影一个月，分享一些初学者心得和作品...</p>
+            </div>
+            <div class="note-meta">2026-09-28</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">工作</span>
+              <h3 class="note-title">
+                <a href="#">技术债务管理策略</a>
+              </h3>
+              <p class="note-excerpt">如何平衡新功能开发和技术债务偿还的思考...</p>
+            </div>
+            <div class="note-meta">2026-09-25</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag life">生活</span>
+              <h3 class="note-title">
+                <a href="#">《活着》读后感</a>
+              </h3>
+              <p class="note-excerpt">重读余华的《活着》，有了不同于以往的理解...</p>
+            </div>
+            <div class="note-meta">2026-09-20</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">工作</span>
+              <h3 class="note-title">
+                <a href="#">敏捷开发实践总结</a>
+              </h3>
+              <p class="note-excerpt">团队实施敏捷开发一年来的经验和教训...</p>
+            </div>
+            <div class="note-meta">2026-09-18</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag life">生活</span>
+              <h3 class="note-title">
+                <a href="#">健身计划启动</a>
+              </h3>
+              <p class="note-excerpt">制定了新的健身计划，希望能坚持下去...</p>
+            </div>
+            <div class="note-meta">2026-09-15</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">工作</span>
+              <h3 class="note-title">
+                <a href="#">数据库设计原则</a>
+              </h3>
+              <p class="note-excerpt">分享在数据库设计中需要注意的关键原则...</p>
+            </div>
+            <div class="note-meta">2026-09-10</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag life">生活</span>
+              <h3 class="note-title">
+                <a href="#">中秋赏月</a>
+              </h3>
+              <p class="note-excerpt">今年的中秋月亮特别圆，记录下这个美好的夜晚...</p>
+            </div>
+            <div class="note-meta">2026-09-10</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag life">生活</span>
+              <h3 class="note-title">
+                <a href="#">烹饪日记：第一次做蛋糕</a>
+              </h3>
+              <p class="note-excerpt">尝试自己做蛋糕，虽然不太完美但很有成就感...</p>
+            </div>
+            <div class="note-meta">2026-09-05</div>
+          </div>
         </div>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2025</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">阿坤 ❤ 小影</span>
-</div>
-  <div class="powered-by">由 <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">lsk-0912</a> & <a href="https://github.com/lsk-0912" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-<script>
-// 未完成页面拦截：同域链接点击时先探测是否存在
-(function () {
-  function isSameOrigin(href) {
-    try {
-      var url = new URL(href, window.location.href);
-      return url.origin === window.location.origin;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  function isHashLink(href) {
-    return href && href.trim().charAt(0) === '#';
-  }
-
-  function showPendingDialog() {
-    window.alert('此功能还没有开发，敬请期待呀~');
-  }
-
-  document.addEventListener('click', function (e) {
-    var target = e.target;
-    while (target && target.tagName !== 'A') {
-      target = target.parentElement;
-    }
-    if (!target) return;
-
-    var href = target.getAttribute('href');
-    if (!href || isHashLink(href) || target.hasAttribute('download') || target.getAttribute('target') === '_blank') {
-      return;
-    }
-    if (!isSameOrigin(href)) {
-      return; // 外链不拦截
-    }
-
-    // 允许开发者跳过拦截
-    if (target.dataset && target.dataset.skipPending === 'true') {
-      return;
-    }
-
-    e.preventDefault();
-
-    var url = new URL(href, window.location.href);
-    var timeoutId = null;
-    var timedOut = false;
-
-    function navigate() {
-      window.location.href = url.href;
-    }
-
-    // 超时兜底：2.5s 内未得到成功响应则视为未就绪
-    timeoutId = setTimeout(function () {
-      timedOut = true;
-      showPendingDialog();
-    }, 2500);
-
-    fetch(url.href, { method: 'HEAD', cache: 'no-cache' })
-      .then(function (res) {
-        if (timeoutId) clearTimeout(timeoutId);
-        if (res && res.ok) {
-          navigate();
-        } else {
-          showPendingDialog();
-        }
-      })
-      .catch(function () {
-        if (timeoutId) clearTimeout(timeoutId);
-        showPendingDialog();
-      });
-  }, false);
-})();
-</script>
-
-<script>
-(function(){
-  // 轻量鉴权工具：可在任意页面脚本中调用 window.AuthGuard
-  var SESS_KEY = 'auth_session_v1';
-  function now(){ return Math.floor(Date.now()/1000); }
-  function getSession(){ try{ var raw = localStorage.getItem(SESS_KEY); if(!raw) return null; var s = JSON.parse(raw); if(s && s.exp && s.exp>0 && now()>s.exp){ localStorage.removeItem(SESS_KEY); return null; } return s; }catch(_){ return null; } }
-  function isAuthed(){ return !!getSession(); }
-  function logout(){ try{ localStorage.removeItem(SESS_KEY); }catch(_){} }
-  function requireOrRedirect(){ if(!isAuthed()){ location.href = '/login/?from='+ encodeURIComponent(location.pathname+location.search); return false; } return true; }
-  window.AuthGuard = { isAuthed:isAuthed, logout:logout, require: requireOrRedirect };
-})();
-</script>
-
-
-  <script>
-  (function(){
-    var LOGIN_PATH = '/login/';
-    var TOKEN_KEY = 'site_auth_token_v1';
-    function isAuthed(){ try{ return localStorage.getItem(TOKEN_KEY) === '1'; }catch(_){ return false; } }
-    function onLogout(){ try{ localStorage.removeItem(TOKEN_KEY); }catch(_){ } location.href = LOGIN_PATH; }
-
-    // 路由拦截：未登录则只能访问登录页
-    var path = location.pathname;
-    if (path.indexOf(LOGIN_PATH) !== 0 && !isAuthed()) {
-      location.replace(LOGIN_PATH);
-      return;
-    }
-    if (path.indexOf(LOGIN_PATH) === 0 && isAuthed()) {
-      // 已登录访问登录页时跳回首页
-      location.replace('/');
-      return;
-    }
-
-    // 顶部添加登出按钮（仅非登录页显示）
-    if (path.indexOf(LOGIN_PATH) !== 0) {
-      var menu = document.querySelector('.site-nav ul.main-menu.menu');
-      if (menu) {
-        var li = document.createElement('li');
-        li.className = 'menu-item';
-        var a = document.createElement('a');
-        a.href = 'javascript:void(0)';
-        a.textContent = '退出';
-        a.addEventListener('click', onLogout);
-        li.appendChild(a);
-        menu.appendChild(li);
-      }
-    }
-  })();
-  </script>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 知识库 · 持续更新中</p>
+      <p style="margin-top: 8px;">
+        <a href="https://github.com/lsk-0912" target="_blank">GitHub</a>
+      </p>
+    </div>
+  </footer>
 </body>
 </html>
