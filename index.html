@@ -1,6 +1,504 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<<<<<<< HEAD
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+  <meta name="theme-color" content="#7c3aed">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <meta name="description" content="个人知识库 · 记录工作与生活的点滴">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="知识库">
+  <meta property="og:description" content="个人知识库 · 记录工作与生活的点滴">
+  <meta property="og:locale" content="zh_CN">
+  
+  <title>知识库 - 首页</title>
+  <style>
+    :root {
+      --brand-1: #ff7bd5;
+      --brand-2: #7c3aed;
+      --text-strong: #111827;
+      --text-normal: #374151;
+      --muted: #6b7280;
+      --card-bg: #ffffff;
+      --card-border: #ebe9f5;
+      --pill-bg: #f7f5ff;
+      --bg-base: #fafafa;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-normal);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Header & Navigation */
+    .header {
+      background: #fff;
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .site-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text-strong);
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    .site-brand .icon {
+      font-size: 24px;
+    }
+    
+    .main-menu {
+      display: flex;
+      gap: 12px;
+      list-style: none;
+    }
+    
+    .main-menu li a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 12px;
+      background: var(--pill-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-strong);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    
+    .main-menu li a:hover,
+    .main-menu li a.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(180deg, var(--brand-1), var(--brand-2));
+      box-shadow: 0 8px 16px rgba(124,58,237,0.25);
+      transform: translateY(-1px);
+    }
+    
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--brand-2) 0%, #a855f7 50%, var(--brand-1) 100%);
+      color: white;
+      padding: 80px 0;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    
+    .hero p {
+      font-size: 18px;
+      opacity: 0.95;
+      margin-bottom: 32px;
+    }
+    
+    /* Quick Links */
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: var(--text-normal);
+    }
+    
+    .quick-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(124,58,237,0.15);
+      border-color: var(--brand-2);
+    }
+    
+    .quick-card .icon {
+      font-size: 36px;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .quick-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-strong);
+    }
+    
+    .quick-card p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    
+    .quick-card .count {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 4px 12px;
+      background: var(--pill-bg);
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--brand-2);
+    }
+    
+    /* Recent Notes Section */
+    .section {
+      margin-bottom: 48px;
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-strong);
+    }
+    
+    .view-all {
+      color: var(--brand-2);
+      text-decoration: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s ease;
+    }
+    
+    .view-all:hover {
+      gap: 8px;
+    }
+    
+    .note-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .note-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.2s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+    }
+    
+    .note-item:hover {
+      border-color: var(--brand-2);
+      box-shadow: 0 4px 12px rgba(124,58,237,0.12);
+    }
+    
+    .note-content {
+      flex: 1;
+    }
+    
+    .note-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: var(--pill-bg);
+      color: var(--brand-2);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .note-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-strong);
+      margin-bottom: 8px;
+    }
+    
+    .note-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    .note-title a:hover {
+      color: var(--brand-2);
+    }
+    
+    .note-excerpt {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    
+    .note-meta {
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+      margin-left: 16px;
+    }
+    
+    /* Footer */
+    .footer {
+      background: #fff;
+      border-top: 1px solid var(--card-border);
+      padding: 32px 0;
+      margin-top: 64px;
+      text-align: center;
+      color: var(--muted);
+    }
+    
+    .footer a {
+      color: var(--brand-2);
+      text-decoration: none;
+    }
+    
+    /* Stats */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      margin: 32px 0;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 36px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      margin-bottom: 4px;
+    }
+    
+    .stat-label {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    
+    @media (max-width: 768px) {
+      .main-menu {
+        flex-wrap: wrap;
+      }
+      
+      .hero h1 {
+        font-size: 32px;
+      }
+      
+      .quick-links {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats {
+        gap: 24px;
+      }
+      
+      .note-item {
+        flex-direction: column;
+      }
+      
+      .note-meta {
+        margin-left: 0;
+        margin-top: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="site-brand">
+          <span class="icon">📚</span>
+          <span>知识库</span>
+        </a>
+        <nav>
+          <ul class="main-menu">
+            <li><a href="/" class="active"><i class="fa fa-home"></i> 首页</a></li>
+            <li><a href="/work/"><i class="fa fa-briefcase"></i> 工作</a></li>
+            <li><a href="/life/"><i class="fa fa-coffee"></i> 生活</a></li>
+            <li><a href="/archives/"><i class="fa fa-archive"></i> 归档</a></li>
+            <li><a href="/about/"><i class="fa fa-user"></i> 关于</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>📖 个人知识库</h1>
+        <p>记录工作心得、生活感悟与技术探索的私人空间</p>
+        
+        <div class="stats">
+          <div class="stat-item">
+            <span class="stat-number">12</span>
+            <span class="stat-label">工作笔记</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">8</span>
+            <span class="stat-label">生活随笔</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">20</span>
+            <span class="stat-label">总计文章</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="quick-links">
+        <a href="/work/" class="quick-card">
+          <div class="icon">💼</div>
+          <h3>工作</h3>
+          <p>项目规划、技术方案、团队协作与职场思考</p>
+          <span class="count">12 篇笔记</span>
+        </a>
+        
+        <a href="/life/" class="quick-card">
+          <div class="icon">🌱</div>
+          <h3>生活</h3>
+          <p>日常感悟、读书笔记、兴趣爱好与生活记录</p>
+          <span class="count">8 篇笔记</span>
+        </a>
+      </div>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">最近更新</h2>
+          <a href="/archives/" class="view-all">
+            查看全部
+            <i class="fa fa-arrow-right"></i>
+          </a>
+        </div>
+        
+        <div class="note-list">
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">工作</span>
+              <h3 class="note-title">
+                <a href="/work/2026/11/project-planning-methodology/">项目规划方法论</a>
+              </h3>
+              <p class="note-excerpt">关于如何进行有效项目规划的一些思考和实践...</p>
+            </div>
+            <div class="note-meta">2026-11-01</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">工作</span>
+              <h3 class="note-title">
+                <a href="/work/2026/10/team-meeting-summary/">团队会议纪要 - 2026/10/28</a>
+              </h3>
+              <p class="note-excerpt">本周团队会议讨论了关于新项目的五个关键问题...</p>
+            </div>
+            <div class="note-meta">2026-10-28</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">生活</span>
+              <h3 class="note-title">
+                <a href="/life/2026/10/autumn-reading-notes/">秋日读书笔记</a>
+              </h3>
+              <p class="note-excerpt">最近读完的几本书带来了很多启发，记录一下主要收获...</p>
+            </div>
+            <div class="note-meta">2026-10-25</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">工作</span>
+              <h3 class="note-title">
+                <a href="/work/2026/10/code-review-best-practices/">代码审查最佳实践</a>
+              </h3>
+              <p class="note-excerpt">总结团队在代码审查方面的经验和改进建议...</p>
+            </div>
+            <div class="note-meta">2026-10-20</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">生活</span>
+              <h3 class="note-title">
+                <a href="/life/2026/10/weekend-hiking/">周末登山记</a>
+              </h3>
+              <p class="note-excerpt">难得的好天气，和朋友一起去爬山，收获了美景和好心情...</p>
+            </div>
+            <div class="note-meta">2026-10-15</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 知识库 · 持续更新中</p>
+      <p style="margin-top: 8px;">
+        <a href="https://github.com/lsk-0912" target="_blank">GitHub</a>
+      </p>
+    </div>
+  </footer>
+=======
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="个人知识库 - 记录工作与生活的点滴">
@@ -119,5 +617,6 @@
     </footer>
 
     <script src="/assets/js/main.js"></script>
+>>>>>>> origin/main
 </body>
 </html>

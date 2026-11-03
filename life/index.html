@@ -1,6 +1,412 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<<<<<<< HEAD
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+  <meta name="theme-color" content="#7c3aed">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <meta name="description" content="生活随笔 · 日常感悟、读书笔记与兴趣爱好">
+  <title>生活 - 知识库</title>
+  <style>
+    :root {
+      --brand-1: #ff7bd5;
+      --brand-2: #7c3aed;
+      --text-strong: #111827;
+      --text-normal: #374151;
+      --muted: #6b7280;
+      --card-bg: #ffffff;
+      --card-border: #ebe9f5;
+      --pill-bg: #f7f5ff;
+      --bg-base: #fafafa;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-normal);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Header & Navigation */
+    .header {
+      background: #fff;
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .site-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text-strong);
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    .site-brand .icon {
+      font-size: 24px;
+    }
+    
+    .main-menu {
+      display: flex;
+      gap: 12px;
+      list-style: none;
+    }
+    
+    .main-menu li a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 12px;
+      background: var(--pill-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-strong);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    
+    .main-menu li a:hover,
+    .main-menu li a.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(180deg, var(--brand-1), var(--brand-2));
+      box-shadow: 0 8px 16px rgba(124,58,237,0.25);
+      transform: translateY(-1px);
+    }
+    
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--brand-2) 0%, #a855f7 50%, var(--brand-1) 100%);
+      color: white;
+      padding: 60px 0;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    
+    .hero-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+    
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    
+    .hero p {
+      font-size: 16px;
+      opacity: 0.95;
+    }
+    
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding: 20px 0;
+    }
+    
+    .timeline-year {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-strong);
+      margin: 32px 0 24px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .timeline-year::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+      border-radius: 50%;
+      display: inline-block;
+    }
+    
+    .timeline-month {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 24px 0 16px 0;
+      padding-left: 24px;
+    }
+    
+    .note-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-left: 24px;
+    }
+    
+    .note-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.2s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+    }
+    
+    .note-item:hover {
+      border-color: var(--brand-2);
+      box-shadow: 0 4px 12px rgba(124,58,237,0.12);
+      transform: translateX(4px);
+    }
+    
+    .note-content {
+      flex: 1;
+    }
+    
+    .note-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #fef3c7;
+      color: #d97706;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .note-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-strong);
+      margin-bottom: 8px;
+    }
+    
+    .note-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    .note-title a:hover {
+      color: var(--brand-2);
+    }
+    
+    .note-excerpt {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    
+    .note-meta {
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+      margin-left: 16px;
+    }
+    
+    /* Footer */
+    .footer {
+      background: #fff;
+      border-top: 1px solid var(--card-border);
+      padding: 32px 0;
+      margin-top: 64px;
+      text-align: center;
+      color: var(--muted);
+    }
+    
+    .footer a {
+      color: var(--brand-2);
+      text-decoration: none;
+    }
+    
+    @media (max-width: 768px) {
+      .main-menu {
+        flex-wrap: wrap;
+      }
+      
+      .hero h1 {
+        font-size: 32px;
+      }
+      
+      .note-item {
+        flex-direction: column;
+      }
+      
+      .note-meta {
+        margin-left: 0;
+        margin-top: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="site-brand">
+          <span class="icon">📚</span>
+          <span>知识库</span>
+        </a>
+        <nav>
+          <ul class="main-menu">
+            <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+            <li><a href="/work/"><i class="fa fa-briefcase"></i> 工作</a></li>
+            <li><a href="/life/" class="active"><i class="fa fa-coffee"></i> 生活</a></li>
+            <li><a href="/archives/"><i class="fa fa-archive"></i> 归档</a></li>
+            <li><a href="/about/"><i class="fa fa-user"></i> 关于</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-icon">🌱</div>
+        <h1>生活</h1>
+        <p>日常感悟、读书笔记、兴趣爱好与生活记录</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="timeline">
+        <div class="timeline-year">2026 年 10 月</div>
+        <div class="note-list">
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">生活</span>
+              <h3 class="note-title">
+                <a href="#">秋日读书笔记</a>
+              </h3>
+              <p class="note-excerpt">最近读完的几本书带来了很多启发，记录一下主要收获...</p>
+            </div>
+            <div class="note-meta">2026-10-25</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">生活</span>
+              <h3 class="note-title">
+                <a href="#">周末登山记</a>
+              </h3>
+              <p class="note-excerpt">难得的好天气，和朋友一起去爬山，收获了美景和好心情...</p>
+            </div>
+            <div class="note-meta">2026-10-15</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">生活</span>
+              <h3 class="note-title">
+                <a href="#">咖啡馆下午茶</a>
+              </h3>
+              <p class="note-excerpt">发现了一家很棒的咖啡馆，环境舒适，咖啡很香...</p>
+            </div>
+            <div class="note-meta">2026-10-08</div>
+          </div>
+        </div>
+
+        <div class="timeline-year">2026 年 9 月</div>
+        <div class="note-list">
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">生活</span>
+              <h3 class="note-title">
+                <a href="#">摄影练习心得</a>
+              </h3>
+              <p class="note-excerpt">学习摄影一个月，分享一些初学者心得和作品...</p>
+            </div>
+            <div class="note-meta">2026-09-28</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">生活</span>
+              <h3 class="note-title">
+                <a href="#">《活着》读后感</a>
+              </h3>
+              <p class="note-excerpt">重读余华的《活着》，有了不同于以往的理解...</p>
+            </div>
+            <div class="note-meta">2026-09-20</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">生活</span>
+              <h3 class="note-title">
+                <a href="#">健身计划启动</a>
+              </h3>
+              <p class="note-excerpt">制定了新的健身计划，希望能坚持下去...</p>
+            </div>
+            <div class="note-meta">2026-09-15</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">生活</span>
+              <h3 class="note-title">
+                <a href="#">中秋赏月</a>
+              </h3>
+              <p class="note-excerpt">今年的中秋月亮特别圆，记录下这个美好的夜晚...</p>
+            </div>
+            <div class="note-meta">2026-09-10</div>
+          </div>
+          
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">生活</span>
+              <h3 class="note-title">
+                <a href="#">烹饪日记：第一次做蛋糕</a>
+              </h3>
+              <p class="note-excerpt">尝试自己做蛋糕，虽然不太完美但很有成就感...</p>
+            </div>
+            <div class="note-meta">2026-09-05</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 知识库 · 持续更新中</p>
+      <p style="margin-top: 8px;">
+        <a href="https://github.com/lsk-0912" target="_blank">GitHub</a>
+      </p>
+    </div>
+  </footer>
+=======
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="生活笔记 - 个人感悟、阅读笔记、实用工具">
@@ -104,5 +510,6 @@
     </footer>
 
     <script src="/assets/js/main.js"></script>
+>>>>>>> origin/main
 </body>
 </html>
