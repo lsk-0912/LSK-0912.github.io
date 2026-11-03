@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="苏州经典景区、山峰与徒步路线指南">
+    <title>苏州经典景区与徒步路线 - 个人知识库</title>
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <style>
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .image-item {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px var(--shadow);
+            transition: transform 0.3s;
+        }
+        
+        .image-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px var(--shadow-lg);
+        }
+        
+        .image-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .image-caption {
+            padding: 1rem;
+            background: var(--bg);
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-align: center;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        
+        .trail-card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid var(--border);
+        }
+        
+        .trail-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .trail-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin: 0.75rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .trail-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .difficulty-easy { color: #10b981; font-weight: 600; }
+        .difficulty-medium { color: #f59e0b; font-weight: 600; }
+        .difficulty-hard { color: #ef4444; font-weight: 600; }
+        
+        .price-note {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+        
+        .wikimedia-credit {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 2rem;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .trail-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="/">📚 知识库</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/">首页</a></li>
+                <li><a href="/work/">工作</a></li>
+                <li><a href="/life/" class="active">生活</a></li>
+                <li><a href="/archives/">归档</a></li>
+                <li><a href="/about/">关于</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container" style="padding-top: 2rem;">
+        <article>
+            <div class="content-header">
+                <h1>🏞️ 苏州经典景区与徒步路线指南</h1>
+                <div class="content-meta">
+                    <span>📅 2026-11-03</span>
+                    <span>🏷️ 旅行攻略</span>
+                    <span>📚 生活</span>
+                    <span>🌄 户外徒步</span>
+                </div>
+            </div>
+
+            <div class="content-body">
+                <p>苏州不仅以精致的古典园林闻名天下，周边的山峰和徒步路线也是户外爱好者的好去处。本文整理了苏州必游的经典景区、周边名山以及热门徒步路线，供大家参考。</p>
+
+                <!-- 经典景区部分 -->
+                <h2>一、经典景区</h2>
+                
+                <h3>🏛️ 1. 拙政园</h3>
+                <p><strong>为什么要去：</strong>中国四大名园之一，江南园林的代表作。园林布局精妙，移步换景，小中见大，体现了明代园林艺术的精髓。春季赏花、夏日观荷、秋看红叶、冬品寒梅，四季皆有美景。</p>
+                <p class="price-note">💰 门票约 70-90 元（旺季价格可能调整）</p>
+                
+                <h3>🌳 2. 留园</h3>
+                <p><strong>为什么要去：</strong>与拙政园齐名的苏州名园，以建筑布局精巧、奇石众多而著称。园内"冠云峰"为太湖石中的极品，整个园林将山水、田园、山林、庭园四种景观完美融合。</p>
+                <p class="price-note">💰 门票约 55 元</p>
+
+                <h3>🗼 3. 虎丘</h3>
+                <p><strong>为什么要去：</strong>"到苏州不游虎丘，乃憾事也"。虎丘山虽然不高，但历史悠久，有"吴中第一名胜"之称。最著名的是云岩寺塔（虎丘斜塔），被誉为"东方比萨斜塔"，已有千年历史。</p>
+                <p class="price-note">💰 门票约 70 元</p>
+
+                <h3>🔔 4. 寒山寺</h3>
+                <p><strong>为什么要去：</strong>因唐代诗人张继的《枫桥夜泊》而闻名天下："姑苏城外寒山寺，夜半钟声到客船"。寺院古朴清幽，每年新年的钟声祈福活动吸引无数游客。</p>
+                <p class="price-note">💰 门票约 20 元</p>
+
+                <h3>🚣 5. 周庄 / 同里古镇</h3>
+                <p><strong>为什么要去：</strong>江南水乡的代表，小桥流水人家的典型风貌。周庄被誉为"中国第一水乡"，保存了大量明清建筑；同里则更为清净，更适合深度游玩。坐船穿梭于水巷之间，感受江南水乡的韵味。</p>
+                <p class="price-note">💰 周庄门票约 100 元，同里门票约 100 元</p>
+
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="/assets/images/suzhou/zhuozhengyuan_3e78.jpg" alt="拙政园水景与亭廊">
+                        <div class="image-caption">拙政园水景与亭廊</div>
+                    </div>
+                    <div class="image-item">
+                        <img src="/assets/images/suzhou/liuyuan_0d08.jpg" alt="留园庭院与建筑">
+                        <div class="image-caption">留园庭院与建筑</div>
+                    </div>
+                    <div class="image-item">
+                        <img src="/assets/images/suzhou/huqiu_77a8.jpg" alt="虎丘云岩寺塔（虎丘斜塔）">
+                        <div class="image-caption">虎丘云岩寺塔（虎丘斜塔）</div>
+                    </div>
+                    <div class="image-item">
+                        <img src="/assets/images/suzhou/hanshansi_6523.jpg" alt="寒山寺山门与殿宇">
+                        <div class="image-caption">寒山寺山门与殿宇</div>
+                    </div>
+                    <div class="image-item">
+                        <img src="/assets/images/suzhou/zhouzhuang_c37a.jpg" alt="周庄古镇水巷与乌篷船">
+                        <div class="image-caption">周庄古镇水巷与乌篷船</div>
+                    </div>
+                    <div class="image-item">
+                        <img src="/assets/images/suzhou/tongli_bb6d.jpg" alt="同里古镇水乡街巷">
+                        <div class="image-caption">同里古镇水乡街巷</div>
+                    </div>
+                </div>
+
+                <!-- 山峰部分 -->
+                <h2>二、苏州周边名山</h2>
+
+                <h3>🍁 1. 天平山</h3>
+                <p><strong>海拔：</strong>约 201 米</p>
+                <p><strong>特色亮点：</strong>苏州秋色之最，被誉为"天平红枫甲天下"。每年秋季（11月中下旬），漫山红叶层林尽染，是苏州最佳赏枫地。山上有范仲淹纪念馆，人文景观丰富。春季可赏花，夏日避暑，秋看红枫，冬观雪景。</p>
+                <p class="price-note">💰 门票约 30 元（红枫节期间可能调整）</p>
+
+                <h3>⛰️ 2. 灵岩山</h3>
+                <p><strong>海拔：</strong>约 182 米</p>
+                <p><strong>特色亮点：</strong>历史文化名山，山上有著名的灵岩寺，相传为吴王夫差为西施所建。山势虽不高，但景色秀美，是苏州市民周末爬山的首选。山上多奇石和古迹，登顶可俯瞰苏州城景。</p>
+                <p class="price-note">💰 灵岩山风景区门票约 1 元（象征性收费）</p>
+
+                <h3>🏔️ 3. 穹窿山</h3>
+                <p><strong>海拔：</strong>约 341.7 米（苏州最高峰）</p>
+                <p><strong>特色亮点：</strong>苏州第一高峰，相传为《孙子兵法》的诞生地。山势雄伟，植被茂密，有"苏州小黄山"之称。登顶后视野开阔，可远眺太湖和苏州全貌。山上有孙武苑、朱买臣读书台等历史遗迹。</p>
+                <p class="price-note">💰 门票约 80 元</p>
+
+                <h3>🌸 4. 上方山</h3>
+                <p><strong>海拔：</strong>约 150 米</p>
+                <p><strong>特色亮点：</strong>又名"石佛山"，山上有千年古刹楞伽寺和巨型摩崖石刻。春季是上方山最美的季节，桃花盛开时如同桃花源般美丽。森林公园内植被丰富，适合休闲徒步和亲子游。</p>
+                <p class="price-note">💰 上方山森林公园门票约 45 元</p>
+
+                <h3>🗻 5. 阳山</h3>
+                <p><strong>海拔：</strong>约 170 米</p>
+                <p><strong>特色亮点：</strong>以桃花而闻名，有"十里桃花"的美称。阳山不仅有自然风光，还有著名的"阳山温泉"。山中有阳山碑材，是明成祖为其父朱元璋所开采的巨型石材，被称为"天下第一碑材"。</p>
+                <p class="price-note">💰 部分区域免费开放</p>
+
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="/assets/images/suzhou/tianpingshan_d936.jpg" alt="天平山红枫秋色">
+                        <div class="image-caption">天平山红枫秋色</div>
+                    </div>
+                    <div class="image-item">
+                        <img src="/assets/images/suzhou/qionglongshan_fe9b.jpg" alt="穹窿山山顶远眺">
+                        <div class="image-caption">穹窿山山顶远眺</div>
+                    </div>
+                </div>
+
+                <!-- 徒步路线部分 -->
+                <h2>三、热门徒步路线</h2>
+
+                <div class="trail-card">
+                    <h4>🥾 1. 灵岩山主线</h4>
+                    <div class="trail-meta">
+                        <span>📏 距离：约 3-4 公里</span>
+                        <span>⏱️ 时间：1.5-2 小时</span>
+                        <span class="difficulty-easy">难度：★☆☆☆☆ 简单</span>
+                    </div>
+                    <p><strong>路线概况：</strong>灵岩山景区入口 → 灵岩寺 → 山顶观景台 → 原路返回或下山环线</p>
+                    <p><strong>特点与建议：</strong>台阶完善，适合初学者和家庭出游。建议早晨或傍晚前往，避开人流高峰。山顶可以俯瞰木渎古镇和太湖。</p>
+                </div>
+
+                <div class="trail-card">
+                    <h4>⛰️ 2. 天平山 - 卓笔峰路线</h4>
+                    <div class="trail-meta">
+                        <span>📏 距离：约 4-5 公里</span>
+                        <span>⏱️ 时间：2-3 小时</span>
+                        <span class="difficulty-easy">难度：★★☆☆☆ 简单</span>
+                    </div>
+                    <p><strong>路线概况：</strong>天平山景区 → 半山亭 → 天平山顶 → 卓笔峰 → 白云泉 → 下山</p>
+                    <p><strong>特点与建议：</strong>秋季赏枫的经典路线，11月中下旬最佳。卓笔峰是天平山制高点，景色极佳。注意秋季红枫节期间人流较多，建议工作日前往。</p>
+                </div>
+
+                <div class="trail-card">
+                    <h4>🌳 3. 上方山桃花源徒步</h4>
+                    <div class="trail-meta">
+                        <span>📏 距离：约 5-6 公里</span>
+                        <span>⏱️ 时间：2.5-3 小时</span>
+                        <span class="difficulty-easy">难度：★★☆☆☆ 简单</span>
+                    </div>
+                    <p><strong>路线概况：</strong>上方山森林公园北门 → 楞伽寺 → 石佛 → 森林步道 → 桃花涧 → 南门</p>
+                    <p><strong>特点与建议：</strong>春季（3-4月）最美，满山桃花盛开。森林步道平缓，空气清新，适合休闲徒步。可以带小朋友一起游玩，沿途有多个休息点。</p>
+                </div>
+
+                <div class="trail-card">
+                    <h4>🚶 4. 灵岩山-天平山连穿</h4>
+                    <div class="trail-meta">
+                        <span>📏 距离：约 8-10 公里</span>
+                        <span>⏱️ 时间：4-5 小时</span>
+                        <span class="difficulty-medium">难度：★★★☆☆ 中等</span>
+                    </div>
+                    <p><strong>路线概况：</strong>灵岩山景区 → 灵岩山顶 → 山脊线 → 天平山 → 下山至景区</p>
+                    <p><strong>特点与建议：</strong>苏州经典徒步线路，两山相连，风景优美。建议从灵岩山出发，顺路到天平山。部分路段为山脊野路，需要一定体力。秋季最佳，可同时欣赏两山秋景。携带足够饮水和干粮，中途补给点较少。</p>
+                </div>
+
+                <div class="trail-card">
+                    <h4>⛰️ 5. 穹窿山登顶路线</h4>
+                    <div class="trail-meta">
+                        <span>📏 距离：约 8-12 公里</span>
+                        <span>⏱️ 时间：4-6 小时</span>
+                        <span class="difficulty-medium">难度：★★★☆☆ 中等</span>
+                    </div>
+                    <p><strong>路线概况：</strong>穹窿山景区入口 → 孙武苑 → 主峰登山道 → 穹窿山顶（341.7米）→ 环线下山</p>
+                    <p><strong>特点与建议：</strong>苏州最高峰，登顶有成就感。山路较陡，需要一定体力。山顶视野开阔，天气好时可以看到太湖和苏州城区。建议春秋季节前往，夏季注意防暑。</p>
+                </div>
+
+                <div class="trail-card">
+                    <h4>🏃 6. 灵白线穿越</h4>
+                    <div class="trail-meta">
+                        <span>📏 距离：约 15-20 公里</span>
+                        <span>⏱️ 时间：6-8 小时</span>
+                        <span class="difficulty-hard">难度：★★★★☆ 较难</span>
+                    </div>
+                    <p><strong>路线概况：</strong>灵岩山 → 天平山 → 观音山 → 白马涧 → 终点</p>
+                    <p><strong>特点与建议：</strong>苏州最经典的长距离徒步线路之一，串联多座山峰。全程体力消耗较大，建议有一定户外经验者参加。最好结伴而行，携带充足补给。春秋季最适合，避开夏季高温和冬季寒冷。建议清晨出发，预留充足时间。</p>
+                </div>
+
+                <!-- 安全提示 -->
+                <h2>四、安全提示与注意事项</h2>
+                
+                <div class="highlight-box">
+                    <h3>⚠️ 徒步安全须知</h3>
+                    <ul>
+                        <li><strong>提前规划：</strong>了解路线难度，根据自身体力选择合适的路线，查看天气预报，避开恶劣天气。</li>
+                        <li><strong>结伴同行：</strong>尤其是中高难度路线，建议至少2-3人结伴，相互照应。</strong></li>
+                        <li><strong>装备齐全：</strong>穿着舒适的登山鞋，携带足够的饮用水（每人至少1-2升），准备简单食物补充能量，夏季注意防晒（帽子、防晒霜），冬季注意保暖。</li>
+                        <li><strong>通讯畅通：</strong>确保手机有电，携带充电宝。提前告知家人或朋友行程安排。</li>
+                        <li><strong>遵守规则：</strong>不要偏离标记路线，不要攀爬未开放区域。保护环境，不乱扔垃圾，不破坏植被。</li>
+                        <li><strong>体力分配：</strong>注意控制节奏，不要一开始就过快。感觉不适及时休息或下撤，不要勉强。</li>
+                        <li><strong>紧急联系：</strong>遇到紧急情况立即拨打 110 或 120，说明所在位置。</li>
+                    </ul>
+                </div>
+
+                <h2>五、实用信息总结</h2>
+                
+                <h3>🚗 交通建议</h3>
+                <ul>
+                    <li><strong>市内景区：</strong>拙政园、留园、虎丘、寒山寺等可乘坐地铁或公交到达，交通便利。</li>
+                    <li><strong>周边山峰：</strong>天平山、灵岩山可乘公交或自驾；穹窿山、上方山建议自驾或打车前往。</li>
+                    <li><strong>古镇：</strong>周庄、同里有直达班车，也可自驾或参加一日游。</li>
+                </ul>
+
+                <h3>⏰ 最佳游玩季节</h3>
+                <ul>
+                    <li><strong>春季（3-5月）：</strong>园林花开，桃花盛放，气候宜人，适合游览园林和上方山、阳山赏桃花。</li>
+                    <li><strong>秋季（9-11月）：</strong>天高气爽，天平山红枫最美，是徒步登山的最佳季节。</li>
+                    <li><strong>夏季：</strong>较热，适合清晨或傍晚徒步，或选择室内园林参观。</li>
+                    <li><strong>冬季：</strong>人少清净，园林雪景别有韵味，但山区较冷，徒步需注意保暖。</li>
+                </ul>
+
+                <h3>📝 小贴士</h3>
+                <ul>
+                    <li>苏州园林建议请讲解员或使用语音导览，更能体会园林文化和历史故事。</li>
+                    <li>徒步路线中，灵白线和灵岩-天平连穿较为热门，周末可能会遇到驴友团队。</li>
+                    <li>穹窿山虽然是最高峰，但由于景区管理，某些路段可能不对外开放，出发前建议电话咨询景区。</li>
+                    <li>门票价格仅供参考，实际价格可能因季节、活动而调整，建议提前在景区官方平台查询。</li>
+                    <li>水乡古镇节假日人流较多，建议工作日前往，体验更佳。</li>
+                </ul>
+
+                <div class="wikimedia-credit">
+                    <p>📷 本文图片来源于 <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a>，均为知识共享许可协议（CC BY-SA 或 CC BY）授权。感谢摄影师们的精彩作品。</p>
+                </div>
+
+                <hr style="margin: 2rem 0; border: none; border-top: 1px solid var(--border);">
+
+                <p style="color: var(--text-light); font-size: 0.95rem; text-align: center;">
+                    希望这份指南能帮助您更好地探索苏州的美景！无论是漫步古典园林，还是登山徒步，苏州都有无限的魅力等待您去发现。🌟
+                </p>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 个人知识库. 持续记录，持续成长。</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>
