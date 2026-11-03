@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="苏州经典景区、周边名山与徒步路线整理：拙政园、留园、虎丘、寒山寺、周庄/同里，以及天平、灵岩、穹窿、上方、阳山。">
+  <title>苏州经典景区与徒步路线 - 知识库</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <style>
+    :root {
+      --brand-1: #ff7bd5;
+      --brand-2: #7c3aed;
+      --text-strong: #111827;
+      --text-normal: #374151;
+      --muted: #6b7280;
+      --card-bg: #ffffff;
+      --card-border: #ebe9f5;
+      --pill-bg: #f7f5ff;
+      --bg-base: #fafafa;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-normal);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text-strong);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .site-brand .icon {
+      font-size: 24px;
+    }
+
+    .main-menu {
+      display: flex;
+      gap: 12px;
+      list-style: none;
+    }
+
+    .main-menu li a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 12px;
+      background: var(--pill-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-strong);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .main-menu li a:hover,
+    .main-menu li a.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(180deg, var(--brand-1), var(--brand-2));
+      box-shadow: 0 8px 16px rgba(124,58,237,0.25);
+      transform: translateY(-1px);
+    }
+
+    .article {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 48px;
+      margin: 32px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    .article-header {
+      text-align: center;
+      padding-bottom: 32px;
+      border-bottom: 2px solid var(--card-border);
+      margin-bottom: 32px;
+    }
+
+    .article-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text-strong);
+      margin-bottom: 16px;
+    }
+
+    .article-meta {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+
+    .article-content {
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .article-content h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-strong);
+      margin: 32px 0 16px 0;
+      padding-left: 12px;
+      border-left: 4px solid var(--brand-2);
+    }
+
+    .article-content h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-strong);
+      margin: 28px 0 12px 0;
+    }
+
+    .article-content p {
+      margin: 12px 0;
+    }
+
+    .article-content ul, .article-content ol {
+      margin: 16px 0;
+      padding-left: 32px;
+    }
+
+    .article-content li {
+      margin: 8px 0;
+    }
+
+    .article-content strong {
+      color: var(--text-strong);
+      font-weight: 600;
+    }
+
+    .spot-figure {
+      margin: 16px 0 24px;
+    }
+
+    .spot-figure img {
+      width: 100%;
+      max-height: 420px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .spot-figure figcaption {
+      margin-top: 8px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .trail-card {
+      background: var(--pill-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 16px 0;
+    }
+
+    .trail-card h3 {
+      margin-top: 0;
+    }
+
+    .trail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 20px;
+      margin: 8px 0 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .difficulty-easy { color: #059669; font-weight: 700; }
+    .difficulty-medium { color: #d97706; font-weight: 700; }
+    .difficulty-hard { color: #dc2626; font-weight: 700; }
+
+    .safety-box {
+      background: #fff7ed;
+      border-left: 4px solid #f59e0b;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 16px 0 24px;
+    }
+
+    .safety-box h3 {
+      margin-top: 0;
+    }
+
+    .credit {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid var(--card-border);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .credit a {
+      color: var(--brand-2);
+    }
+
+    .footer {
+      background: #fff;
+      border-top: 1px solid var(--card-border);
+      padding: 32px 0;
+      margin-top: 64px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .footer a {
+      color: var(--brand-2);
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .article {
+        padding: 32px 24px;
+      }
+
+      .article-title {
+        font-size: 24px;
+      }
+
+      .main-menu {
+        flex-wrap: wrap;
+      }
+
+      .spot-figure img {
+        max-height: 260px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="site-brand">
+          <span class="icon">📚</span>
+          <span>知识库</span>
+        </a>
+        <nav>
+          <ul class="main-menu">
+            <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+            <li><a href="/work/"><i class="fa fa-briefcase"></i> 工作</a></li>
+            <li><a href="/life/" class="active"><i class="fa fa-coffee"></i> 生活</a></li>
+            <li><a href="/archives/"><i class="fa fa-archive"></i> 归档</a></li>
+            <li><a href="/about/"><i class="fa fa-user"></i> 关于</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="article">
+      <header class="article-header">
+        <h1 class="article-title">苏州经典景区与徒步路线</h1>
+        <div class="article-meta">
+          <span><i class="fa fa-calendar"></i> 2026年11月3日</span>
+          <span><i class="fa fa-folder"></i> 生活</span>
+          <span><i class="fa fa-tag"></i> 出行笔记</span>
+        </div>
+      </header>
+
+      <div class="article-content">
+        <p>苏州不只是园林城市。古城内外有拙政园、留园、虎丘、寒山寺，往南可去周庄、同里；西郊则是天平、灵岩、穹窿、上方、阳山一线的丘陵。下面按「经典景区 / 周边名山 / 徒步路线 / 安全」四块整理一份自用备忘，门票与开放时间以景区当日公示为准。</p>
+
+        <h2>一、经典景区</h2>
+
+        <h3>拙政园</h3>
+        <p>苏州最大的古典园林，也是江南园林的代表。以水为中心，远香堂、小飞虹、枇杷园一带移步换景。春花、夏荷、秋叶、冬梅都能看，建议预留 2–3 小时，旺季尽量早点进园。</p>
+        <figure class="spot-figure">
+          <img src="../assets/images/suzhou/zhuozhengyuan.jpg" alt="拙政园水景与亭廊">
+          <figcaption>拙政园水景与亭廊</figcaption>
+        </figure>
+
+        <h3>留园</h3>
+        <p>以建筑空间的开合变化见长，廊、厅、石、院层层套叠。园中冠云峰是太湖石名品。体量小于拙政园，认真走完大约 1.5–2 小时，适合和拙政园错开同一天的节奏。</p>
+        <figure class="spot-figure">
+          <img src="../assets/images/suzhou/liuyuan.jpg" alt="留园庭院与建筑">
+          <figcaption>留园庭院与建筑</figcaption>
+        </figure>
+
+        <h3>虎丘</h3>
+        <p>「到苏州不游虎丘，乃憾事也。」山不高，但云岩寺塔（虎丘斜塔）、剑池、千人石都是吴地标志。从山门到塔院有连续台阶，算一次轻松的景区徒步，约 1.5–2.5 小时。</p>
+        <figure class="spot-figure">
+          <img src="../assets/images/suzhou/huqiu.jpg" alt="虎丘云岩寺塔（虎丘斜塔）">
+          <figcaption>虎丘云岩寺塔（虎丘斜塔）</figcaption>
+        </figure>
+
+        <h3>寒山寺</h3>
+        <p>因张继《枫桥夜泊》闻名。寺院本身不大，和枫桥、铁铃关连看大约 1 小时。夜半听钟多是旅游项目，白天更适合看殿宇和普明宝塔。</p>
+        <figure class="spot-figure">
+          <img src="../assets/images/suzhou/hanshansi.jpg" alt="寒山寺山门与殿宇">
+          <figcaption>寒山寺山门与殿宇</figcaption>
+        </figure>
+
+        <h3>周庄 / 同里</h3>
+        <p>周庄水巷更完整，双桥、沈厅是招牌，坐船看柳与乌篷船最有画面感，建议半天到一天。同里相对安静，退思园值得细看，街巷生活气息更重，也适合半天到一天。节假日两镇都容易拥挤，工作日体验更好。</p>
+        <figure class="spot-figure">
+          <img src="../assets/images/suzhou/zhouzhuang.jpg" alt="周庄古镇水巷与乌篷船">
+          <figcaption>周庄古镇水巷与乌篷船</figcaption>
+        </figure>
+        <figure class="spot-figure">
+          <img src="../assets/images/suzhou/tongli.jpg" alt="同里古镇水乡街巷">
+          <figcaption>同里古镇水乡街巷</figcaption>
+        </figure>
+
+        <h2>二、周边名山</h2>
+
+        <h3>天平山</h3>
+        <p>海拔约 201 米，红枫、怪石、清泉并称三绝，秋季是苏州最稳的赏枫点。一线天、白云泉、范仲淹相关遗迹都在景区内。登顶轻松，适合入门。</p>
+        <figure class="spot-figure">
+          <img src="../assets/images/suzhou/tianpingshan.jpg" alt="天平山红枫秋色">
+          <figcaption>天平山红枫秋色</figcaption>
+        </figure>
+
+        <h3>灵岩山</h3>
+        <p>海拔约 182 米，紧邻木渎。灵岩寺、吴王井、西施相关传说是主线，石板步道规整，大约 1–2 小时可登顶。常作为周末爬山或「灵岩—天平」联走的起点。</p>
+
+        <h3>穹窿山</h3>
+        <p>主峰约 341.7 米，苏州最高峰。孙武苑、上真观、大茅峰（吴中之巅）是常见打卡。景区内有公路和步道，也可走登山道登顶；晴天可远眺太湖方向。</p>
+        <figure class="spot-figure">
+          <img src="../assets/images/suzhou/qionglongshan.jpg" alt="穹窿山山顶远眺">
+          <figcaption>穹窿山山顶远眺</figcaption>
+        </figure>
+
+        <h3>上方山</h3>
+        <p>海拔约 90 余米，依附石湖景区，坡度缓，楞伽寺、石佛、环湖步道适合亲子和半日休闲。春季花景较多，爬山本身负担很小。</p>
+
+        <h3>阳山</h3>
+        <p>主峰箭阙峰海拔约 338.2 米，苏州第二高峰，现多指大阳山国家森林公园一带。桃花、碑材、山林步道是记忆点；土石路偏多、局部偏陡，人比天平、灵岩少，更像一次正经登顶。</p>
+
+        <h2>三、徒步路线（难度 / 时间）</h2>
+
+        <div class="trail-card">
+          <h3>灵岩山主线</h3>
+          <div class="trail-meta">
+            <span>距离：约 3–4 公里</span>
+            <span>时间：1.5–2 小时</span>
+            <span class="difficulty-easy">难度：轻松</span>
+          </div>
+          <p>景区入口 → 灵岩寺 → 山顶观景 → 原路或环线下山。台阶完善，适合入门和家庭。早晨或傍晚人少，下山后可接木渎古镇。</p>
+        </div>
+
+        <div class="trail-card">
+          <h3>天平山 · 卓笔峰</h3>
+          <div class="trail-meta">
+            <span>距离：约 4–5 公里</span>
+            <span>时间：2–3 小时</span>
+            <span class="difficulty-easy">难度：轻松</span>
+          </div>
+          <p>天平山景区 → 半山亭 → 山顶 / 卓笔峰 → 白云泉下山。秋季红枫节人很多，尽量避开周末正午。一线天路段注意脚下。</p>
+        </div>
+
+        <div class="trail-card">
+          <h3>上方山 · 石湖</h3>
+          <div class="trail-meta">
+            <span>距离：约 5–6 公里</span>
+            <span>时间：2–3 小时</span>
+            <span class="difficulty-easy">难度：轻松</span>
+          </div>
+          <p>森林公园 / 石湖一侧进 → 楞伽寺、石佛 → 林间步道，可加一段环湖。爬升很小，更像郊游。春季花期和秋季桂花都合适。</p>
+        </div>
+
+        <div class="trail-card">
+          <h3>穹窿山登顶</h3>
+          <div class="trail-meta">
+            <span>距离：约 8–12 公里（视进山点）</span>
+            <span>时间：3–5 小时</span>
+            <span class="difficulty-medium">难度：中等</span>
+          </div>
+          <p>孙武苑 / 景区步道 → 主峰登山道 → 大茅峰「吴中之巅」→ 环线或原路。山路比灵岩陡，夏季闷热，春秋最合适。部分路段以景区开放为准。</p>
+        </div>
+
+        <div class="trail-card">
+          <h3>阳山（箭阙峰）</h3>
+          <div class="trail-meta">
+            <span>距离：约 8–10 公里</span>
+            <span>时间：3–5 小时</span>
+            <span class="difficulty-medium">难度：中等</span>
+          </div>
+          <p>大阳山森林公园步道登顶。土石混合、局部坡度明显，游客较少。新手不建议雨天单独走；晴天视野可看高新区一带。</p>
+        </div>
+
+        <div class="trail-card">
+          <h3>灵岩—天平联走</h3>
+          <div class="trail-meta">
+            <span>距离：约 8–10 公里</span>
+            <span>时间：4–5 小时</span>
+            <span class="difficulty-medium">难度：中等</span>
+          </div>
+          <p>灵岩山 → 山脊方向 → 天平山下山。苏州西郊最常见的半日线。部分连接段是山路而非景区台阶，需要看标记、带够水。</p>
+        </div>
+
+        <div class="trail-card">
+          <h3>灵白线（灵岩 → 白马涧）</h3>
+          <div class="trail-meta">
+            <span>距离：约 10–15 公里（视具体走法）</span>
+            <span>时间：5–7 小时</span>
+            <span class="difficulty-hard">难度：中等偏难</span>
+          </div>
+          <p>灵岩山 → 天平山 → 观音山方向 → 白马涧。串联几座西郊山，体力消耗明显，适合有徒步经验、结伴、清晨出发。不要按景区观光的节奏去估时。</p>
+        </div>
+
+        <h2>四、安全提示</h2>
+        <div class="safety-box">
+          <h3>出门前先看天气和体力</h3>
+          <ul>
+            <li>苏州丘陵不高，但夏季湿热、雨后石板和土路都滑。不走未标记野路，不在暴雨、雷电天硬闯山脊。</li>
+            <li>中等及以上路线至少两人同行，报备大致下山时间；手机电量和饮用水按每人 1–2 升准备。</li>
+            <li>穿防滑鞋，红枫季和节假日人流大，一线天、台阶处避免拥挤推挤。</li>
+            <li>山区局部信号不稳。遇伤病或迷路，优先下撤到有路、有人处，紧急情况拨打 110 / 120 并说清所在山名和最近入口。</li>
+            <li>园林和水乡是观光，山路是徒步：不要把穹窿、阳山、灵白线当成「随便走走」。</li>
+          </ul>
+        </div>
+
+        <h2>怎么排行程</h2>
+        <ul>
+          <li><strong>半天园林：</strong>拙政园或留园二选一，再加虎丘或寒山寺。</li>
+          <li><strong>一天水乡：</strong>周庄、同里只去一座，比两座连赶更舒服。</li>
+          <li><strong>入门爬山：</strong>灵岩或天平；秋季优先天平。</li>
+          <li><strong>想登顶：</strong>穹窿山或阳山，预留半天以上。</li>
+          <li><strong>想走透：</strong>灵岩—天平联走，或完整灵白线。</li>
+        </ul>
+
+        <p class="credit">
+          图片来自 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">Wikimedia Commons</a>，授权分别为 CC BY / CC BY-SA。作者：Windmemories、Another Believer、Chainwit.、螺钉、Kristoffer Trolle、Jakub Hałun、Makecat。
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 知识库 · 持续更新中</p>
+      <p style="margin-top: 8px;">
+        <a href="https://github.com/lsk-0912" target="_blank">GitHub</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
