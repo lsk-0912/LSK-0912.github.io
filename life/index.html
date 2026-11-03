@@ -1,108 +1,229 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="生活笔记 - 个人感悟、阅读笔记、实用工具">
-    <title>生活 - 个人知识库</title>
-    <link rel="stylesheet" href="/assets/css/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+  <meta name="theme-color" content="#7c3aed">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <meta name="description" content="生活随笔 · 日常感悟、读书笔记与兴趣爱好">
+  <title>生活 - 知识库</title>
+  <style>
+    :root {
+      --brand-1: #ff7bd5;
+      --brand-2: #7c3aed;
+      --text-strong: #111827;
+      --text-normal: #374151;
+      --muted: #6b7280;
+      --card-bg: #ffffff;
+      --card-border: #ebe9f5;
+      --pill-bg: #f7f5ff;
+      --bg-base: #fafafa;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-normal);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .header {
+      background: #fff;
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .site-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text-strong);
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    .site-brand .icon {
+      font-size: 24px;
+    }
+    
+    .main-menu {
+      display: flex;
+      gap: 12px;
+      list-style: none;
+    }
+    
+    .main-menu li a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 12px;
+      background: var(--pill-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-strong);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    
+    .main-menu li a:hover,
+    .main-menu li a.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(180deg, var(--brand-1), var(--brand-2));
+      box-shadow: 0 8px 16px rgba(124,58,237,0.25);
+      transform: translateY(-1px);
+    }
+    
+    .hero {
+      background: linear-gradient(135deg, var(--brand-2) 0%, #a855f7 50%, var(--brand-1) 100%);
+      color: white;
+      padding: 60px 0;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    
+    .hero-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+    
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    
+    .hero p {
+      font-size: 16px;
+      opacity: 0.95;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--muted);
+    }
+    
+    .empty-state .icon {
+      font-size: 72px;
+      margin-bottom: 24px;
+      opacity: 0.5;
+    }
+    
+    .empty-state h2 {
+      font-size: 24px;
+      color: var(--text-strong);
+      margin-bottom: 12px;
+    }
+    
+    .empty-state p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    
+    .footer {
+      background: #fff;
+      border-top: 1px solid var(--card-border);
+      padding: 32px 0;
+      margin-top: 64px;
+      text-align: center;
+      color: var(--muted);
+    }
+    
+    .footer a {
+      color: var(--brand-2);
+      text-decoration: none;
+    }
+    
+    @media (max-width: 768px) {
+      .main-menu {
+        flex-wrap: wrap;
+      }
+      
+      .hero h1 {
+        font-size: 32px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <a href="/">📚 知识库</a>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="/">首页</a></li>
-                <li><a href="/work/">工作</a></li>
-                <li><a href="/life/" class="active">生活</a></li>
-                <li><a href="/archives/">归档</a></li>
-                <li><a href="/about/">关于</a></li>
-            </ul>
-        </div>
-    </nav>
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="site-brand">
+          <span class="icon">📚</span>
+          <span>知识库</span>
+        </a>
+        <nav>
+          <ul class="main-menu">
+            <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+            <li><a href="/work/"><i class="fa fa-briefcase"></i> 工作</a></li>
+            <li><a href="/life/" class="active"><i class="fa fa-coffee"></i> 生活</a></li>
+            <li><a href="/archives/"><i class="fa fa-archive"></i> 归档</a></li>
+            <li><a href="/about/"><i class="fa fa-user"></i> 关于</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
 
-    <header class="hero">
-        <div class="container">
-            <h1>🌱 生活笔记</h1>
-            <p class="subtitle">个人感悟 · 阅读笔记 · 实用工具</p>
-        </div>
-    </header>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-icon">🌱</div>
+        <h1>生活</h1>
+        <p>日常感悟、读书笔记、兴趣爱好与生活记录</p>
+      </div>
+    </section>
 
-    <main class="container">
-        <section class="section">
-            <div class="category-filter">
-                <button class="category-btn active" data-category="all">全部</button>
-                <button class="category-btn" data-category="reading">阅读笔记</button>
-                <button class="category-btn" data-category="reflection">个人感悟</button>
-                <button class="category-btn" data-category="tools">实用工具</button>
-            </div>
+    <div class="container">
+      <div class="empty-state">
+        <div class="icon">📝</div>
+        <h2>暂无笔记</h2>
+        <p>生活随笔正在积累中，敬请期待...</p>
+      </div>
+    </div>
+  </main>
 
-            <div class="notes-list">
-                <article class="note-card" data-category="reading">
-                    <div class="note-meta">
-                        <span class="note-tag life">阅读笔记</span>
-                        <time>2026-10-25</time>
-                    </div>
-                    <h3><a href="/life/reading-notes.html">阅读笔记：深度工作</a></h3>
-                    <p>关于提升专注力和工作效率的一些感悟，深度工作的价值和实践方法，以及如何在现代社会保持专注。</p>
-                </article>
-
-                <article class="note-card" data-category="tools">
-                    <div class="note-meta">
-                        <span class="note-tag life">实用工具</span>
-                        <time>2026-10-20</time>
-                    </div>
-                    <h3><a href="/life/life-tools.html">个人效率工具箱</a></h3>
-                    <p>整理的一些提升个人效率的工具和方法，包括时间管理工具、笔记软件、自动化脚本等实用资源。</p>
-                </article>
-
-                <article class="note-card" data-category="reflection">
-                    <div class="note-meta">
-                        <span class="note-tag life">个人感悟</span>
-                        <time>2026-10-18</time>
-                    </div>
-                    <h3><a href="/life/time-management.html">时间管理的艺术</a></h3>
-                    <p>关于如何更好地管理时间和精力的一些思考，包括优先级设定、番茄工作法、精力管理等实践经验。</p>
-                </article>
-
-                <article class="note-card" data-category="tools">
-                    <div class="note-meta">
-                        <span class="note-tag life">实用工具</span>
-                        <time>2026-10-15</time>
-                    </div>
-                    <h3><a href="/life/health-guide.html">健康管理指南</a></h3>
-                    <p>个人健康管理的一些心得，包括运动计划、饮食建议、作息规律、心理健康等方面的实用建议。</p>
-                </article>
-
-                <article class="note-card" data-category="reading">
-                    <div class="note-meta">
-                        <span class="note-tag life">阅读笔记</span>
-                        <time>2026-10-12</time>
-                    </div>
-                    <h3><a href="/life/reading-principles.html">阅读笔记：原则</a></h3>
-                    <p>Ray Dalio 的《原则》读后感，关于工作原则、生活原则的一些启发和个人思考。</p>
-                </article>
-
-                <article class="note-card" data-category="reflection">
-                    <div class="note-meta">
-                        <span class="note-tag life">个人感悟</span>
-                        <time>2026-10-08</time>
-                    </div>
-                    <h3><a href="/life/learning-reflection.html">持续学习的重要性</a></h3>
-                    <p>在快速变化的时代，保持持续学习能力的重要性，以及如何建立有效的学习体系和习惯。</p>
-                </article>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 个人知识库. 持续记录，持续成长。</p>
-        </div>
-    </footer>
-
-    <script src="/assets/js/main.js"></script>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 知识库 · 持续更新中</p>
+      <p style="margin-top: 8px;">
+        <a href="https://github.com/lsk-0912" target="_blank">GitHub</a>
+      </p>
+    </div>
+  </footer>
 </body>
 </html>

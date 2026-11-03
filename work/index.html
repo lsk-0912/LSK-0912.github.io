@@ -1,117 +1,325 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="工作笔记 - 项目管理、会议记录、技术文档">
-    <title>工作 - 个人知识库</title>
-    <link rel="stylesheet" href="/assets/css/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+  <meta name="theme-color" content="#7c3aed">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <meta name="description" content="工作笔记 · 项目规划、技术方案与团队协作">
+  <title>工作 - 知识库</title>
+  <style>
+    :root {
+      --brand-1: #ff7bd5;
+      --brand-2: #7c3aed;
+      --text-strong: #111827;
+      --text-normal: #374151;
+      --muted: #6b7280;
+      --card-bg: #ffffff;
+      --card-border: #ebe9f5;
+      --pill-bg: #f7f5ff;
+      --bg-base: #fafafa;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-normal);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .header {
+      background: #fff;
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .site-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text-strong);
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    .site-brand .icon {
+      font-size: 24px;
+    }
+    
+    .main-menu {
+      display: flex;
+      gap: 12px;
+      list-style: none;
+    }
+    
+    .main-menu li a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 12px;
+      background: var(--pill-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-strong);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    
+    .main-menu li a:hover,
+    .main-menu li a.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(180deg, var(--brand-1), var(--brand-2));
+      box-shadow: 0 8px 16px rgba(124,58,237,0.25);
+      transform: translateY(-1px);
+    }
+    
+    .hero {
+      background: linear-gradient(135deg, var(--brand-2) 0%, #a855f7 50%, var(--brand-1) 100%);
+      color: white;
+      padding: 60px 0;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    
+    .hero-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+    
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    
+    .hero p {
+      font-size: 16px;
+      opacity: 0.95;
+    }
+    
+    .timeline {
+      position: relative;
+      padding: 20px 0;
+    }
+    
+    .timeline-year {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-strong);
+      margin: 32px 0 24px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .timeline-year::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+      border-radius: 50%;
+      display: inline-block;
+    }
+    
+    .timeline-month {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 24px 0 16px 0;
+      padding-left: 24px;
+    }
+    
+    .note-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-left: 24px;
+    }
+    
+    .note-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.2s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+    }
+    
+    .note-item:hover {
+      border-color: var(--brand-2);
+      box-shadow: 0 4px 12px rgba(124,58,237,0.12);
+      transform: translateX(4px);
+    }
+    
+    .note-content {
+      flex: 1;
+    }
+    
+    .note-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: var(--pill-bg);
+      color: var(--brand-2);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .note-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-strong);
+      margin-bottom: 8px;
+    }
+    
+    .note-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    .note-title a:hover {
+      color: var(--brand-2);
+    }
+    
+    .note-excerpt {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    
+    .note-meta {
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+      margin-left: 16px;
+    }
+    
+    .footer {
+      background: #fff;
+      border-top: 1px solid var(--card-border);
+      padding: 32px 0;
+      margin-top: 64px;
+      text-align: center;
+      color: var(--muted);
+    }
+    
+    .footer a {
+      color: var(--brand-2);
+      text-decoration: none;
+    }
+    
+    @media (max-width: 768px) {
+      .main-menu {
+        flex-wrap: wrap;
+      }
+      
+      .hero h1 {
+        font-size: 32px;
+      }
+      
+      .note-item {
+        flex-direction: column;
+      }
+      
+      .note-meta {
+        margin-left: 0;
+        margin-top: 8px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <a href="/">📚 知识库</a>
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="site-brand">
+          <span class="icon">📚</span>
+          <span>知识库</span>
+        </a>
+        <nav>
+          <ul class="main-menu">
+            <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+            <li><a href="/work/" class="active"><i class="fa fa-briefcase"></i> 工作</a></li>
+            <li><a href="/life/"><i class="fa fa-coffee"></i> 生活</a></li>
+            <li><a href="/archives/"><i class="fa fa-archive"></i> 归档</a></li>
+            <li><a href="/about/"><i class="fa fa-user"></i> 关于</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-icon">💼</div>
+        <h1>工作</h1>
+        <p>项目规划、技术方案、团队协作与职场思考</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="timeline">
+        <div class="timeline-year">2026 年 11 月</div>
+        <div class="note-list">
+          <div class="note-item">
+            <div class="note-content">
+              <span class="note-tag">工作</span>
+              <h3 class="note-title">
+                <a href="/work/daily-2026-11-03.html">工作日志 2026-11-03</a>
+              </h3>
+              <p class="note-excerpt">newapi2.0 迁移项目 (11/3-11/20)；B端豆包生视频功能发布</p>
             </div>
-            <ul class="nav-menu">
-                <li><a href="/">首页</a></li>
-                <li><a href="/work/" class="active">工作</a></li>
-                <li><a href="/life/">生活</a></li>
-                <li><a href="/archives/">归档</a></li>
-                <li><a href="/about/">关于</a></li>
-            </ul>
+            <div class="note-meta">2026-11-03</div>
+          </div>
         </div>
-    </nav>
+      </div>
+    </div>
+  </main>
 
-    <header class="hero">
-        <div class="container">
-            <h1>💼 工作笔记</h1>
-            <p class="subtitle">项目管理 · 会议记录 · 技术文档</p>
-        </div>
-    </header>
-
-    <main class="container">
-        <section class="section">
-            <div class="category-filter">
-                <button class="category-btn active" data-category="all">全部</button>
-                <button class="category-btn" data-category="project">项目管理</button>
-                <button class="category-btn" data-category="meeting">会议记录</button>
-                <button class="category-btn" data-category="tech">技术文档</button>
-            </div>
-
-            <div class="notes-list">
-                <article class="note-card" data-category="meeting">
-                    <div class="note-meta">
-                        <span class="note-tag work">工作日志</span>
-                        <time>2026-11-03</time>
-                    </div>
-                    <h3><a href="/work/daily-2026-11-03.html">工作日志 - 2026/11/03</a></h3>
-                    <p>近期工作安排：动画工厂 AI 信息迁移至 newapi2.0（11/03-11/20），明日发布 B 端动画工厂「豆包生视频」版本。</p>
-                </article>
-
-                <article class="note-card" data-category="project">
-                    <div class="note-meta">
-                        <span class="note-tag work">项目管理</span>
-                        <time>2026-11-01</time>
-                    </div>
-                    <h3><a href="/work/project-planning.html">项目规划方法论</a></h3>
-                    <p>关于如何进行有效项目规划的一些思考和实践，包括目标设定、资源分配、风险管理等方面的经验总结。</p>
-                </article>
-
-                <article class="note-card" data-category="meeting">
-                    <div class="note-meta">
-                        <span class="note-tag work">会议记录</span>
-                        <time>2026-10-28</time>
-                    </div>
-                    <h3><a href="/work/meeting-20261028.html">团队会议纪要 - 2026/10/28</a></h3>
-                    <p>本周团队同步会议的关键决策和行动项，包括项目进度更新、资源调配、下周重点任务安排。</p>
-                </article>
-
-                <article class="note-card" data-category="tech">
-                    <div class="note-meta">
-                        <span class="note-tag work">技术文档</span>
-                        <time>2026-10-26</time>
-                    </div>
-                    <h3><a href="/work/architecture-design.html">技术架构设计文档</a></h3>
-                    <p>系统架构设计的核心原则和最佳实践，包括微服务架构、数据库设计、API 设计等技术选型考虑。</p>
-                </article>
-
-                <article class="note-card" data-category="meeting">
-                    <div class="note-meta">
-                        <span class="note-tag work">会议记录</span>
-                        <time>2026-10-22</time>
-                    </div>
-                    <h3><a href="/work/meeting-20261022.html">产品评审会议记录</a></h3>
-                    <p>新产品功能评审会议的讨论要点和决策结果，包括功能优先级、技术可行性、上线时间表。</p>
-                </article>
-
-                <article class="note-card" data-category="project">
-                    <div class="note-meta">
-                        <span class="note-tag work">项目管理</span>
-                        <time>2026-10-18</time>
-                    </div>
-                    <h3><a href="/work/risk-management.html">项目风险管理指南</a></h3>
-                    <p>项目执行过程中常见的风险类型及应对策略，包括技术风险、资源风险、时间风险等方面。</p>
-                </article>
-
-                <article class="note-card" data-category="tech">
-                    <div class="note-meta">
-                        <span class="note-tag work">技术文档</span>
-                        <time>2026-10-15</time>
-                    </div>
-                    <h3><a href="/work/code-review-guidelines.html">代码评审指南</a></h3>
-                    <p>团队代码评审的标准和流程，包括代码质量标准、评审重点、常见问题及解决方案。</p>
-                </article>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 个人知识库. 持续记录，持续成长。</p>
-        </div>
-    </footer>
-
-    <script src="/assets/js/main.js"></script>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 知识库 · 持续更新中</p>
+      <p style="margin-top: 8px;">
+        <a href="https://github.com/lsk-0912" target="_blank">GitHub</a>
+      </p>
+    </div>
+  </footer>
 </body>
 </html>

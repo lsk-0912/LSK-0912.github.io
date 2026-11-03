@@ -1,95 +1,338 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="关于本知识库">
-    <title>关于 - 个人知识库</title>
-    <link rel="stylesheet" href="/assets/css/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+  <meta name="theme-color" content="#7c3aed">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <meta name="description" content="关于本站 · 一个记录工作与生活的个人知识库">
+  <title>关于 - 知识库</title>
+  <style>
+    :root {
+      --brand-1: #ff7bd5;
+      --brand-2: #7c3aed;
+      --text-strong: #111827;
+      --text-normal: #374151;
+      --muted: #6b7280;
+      --card-bg: #ffffff;
+      --card-border: #ebe9f5;
+      --pill-bg: #f7f5ff;
+      --bg-base: #fafafa;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-normal);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .header {
+      background: #fff;
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .site-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text-strong);
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    .site-brand .icon {
+      font-size: 24px;
+    }
+    
+    .main-menu {
+      display: flex;
+      gap: 12px;
+      list-style: none;
+    }
+    
+    .main-menu li a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 12px;
+      background: var(--pill-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-strong);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    
+    .main-menu li a:hover,
+    .main-menu li a.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(180deg, var(--brand-1), var(--brand-2));
+      box-shadow: 0 8px 16px rgba(124,58,237,0.25);
+      transform: translateY(-1px);
+    }
+    
+    .hero {
+      background: linear-gradient(135deg, var(--brand-2) 0%, #a855f7 50%, var(--brand-1) 100%);
+      color: white;
+      padding: 60px 0;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    
+    .hero-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+    
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    
+    .hero p {
+      font-size: 16px;
+      opacity: 0.95;
+    }
+    
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px 64px;
+    }
+    
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 32px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    
+    .card h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-strong);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .card h2::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: linear-gradient(180deg, var(--brand-1), var(--brand-2));
+      border-radius: 2px;
+    }
+    
+    .card p {
+      color: var(--text-normal);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+    
+    .card ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .card ul li {
+      padding: 8px 0;
+      padding-left: 24px;
+      position: relative;
+      color: var(--text-normal);
+    }
+    
+    .card ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--brand-2);
+      font-weight: bold;
+    }
+    
+    .contact-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+    
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: var(--pill-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      color: var(--text-strong);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    
+    .contact-link:hover {
+      color: #fff;
+      background: linear-gradient(180deg, var(--brand-1), var(--brand-2));
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(124,58,237,0.2);
+      transform: translateY(-2px);
+    }
+    
+    .footer {
+      background: #fff;
+      border-top: 1px solid var(--card-border);
+      padding: 32px 0;
+      margin-top: 64px;
+      text-align: center;
+      color: var(--muted);
+    }
+    
+    .footer a {
+      color: var(--brand-2);
+      text-decoration: none;
+    }
+    
+    @media (max-width: 768px) {
+      .main-menu {
+        flex-wrap: wrap;
+      }
+      
+      .hero h1 {
+        font-size: 32px;
+      }
+      
+      .card {
+        padding: 24px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <a href="/">📚 知识库</a>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="/">首页</a></li>
-                <li><a href="/work/">工作</a></li>
-                <li><a href="/life/">生活</a></li>
-                <li><a href="/archives/">归档</a></li>
-                <li><a href="/about/" class="active">关于</a></li>
-            </ul>
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="site-brand">
+          <span class="icon">📚</span>
+          <span>知识库</span>
+        </a>
+        <nav>
+          <ul class="main-menu">
+            <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+            <li><a href="/work/"><i class="fa fa-briefcase"></i> 工作</a></li>
+            <li><a href="/life/"><i class="fa fa-coffee"></i> 生活</a></li>
+            <li><a href="/archives/"><i class="fa fa-archive"></i> 归档</a></li>
+            <li><a href="/about/" class="active"><i class="fa fa-user"></i> 关于</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-icon">👋</div>
+        <h1>关于</h1>
+        <p>欢迎来到我的个人知识库</p>
+      </div>
+    </section>
+
+    <div class="content">
+      <div class="card">
+        <h2>关于本站</h2>
+        <p>这是一个记录工作心得、生活感悟与技术探索的个人知识库。</p>
+        <p>在这里，我会分享：</p>
+        <ul>
+          <li>工作中的项目规划、技术方案和团队协作经验</li>
+          <li>日常生活中的感悟、读书笔记和兴趣爱好</li>
+          <li>技术学习的心得体会和实践总结</li>
+          <li>对工作和生活的思考与记录</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>关于我</h2>
+        <p>一个热爱学习、喜欢记录的技术从业者。</p>
+        <p>相信知识的力量，也相信持续积累的价值。通过建立这个知识库，希望能够：</p>
+        <ul>
+          <li>系统地整理和沉淀自己的经验</li>
+          <li>形成自己的知识体系</li>
+          <li>记录成长的轨迹</li>
+          <li>与他人分享有价值的内容</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>技术栈</h2>
+        <p>本站使用的技术：</p>
+        <ul>
+          <li>静态网站生成</li>
+          <li>响应式设计</li>
+          <li>现代 CSS 布局</li>
+          <li>GitHub Pages 托管</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>联系方式</h2>
+        <p>欢迎交流与讨论：</p>
+        <div class="contact-links">
+          <a href="https://github.com/lsk-0912" target="_blank" class="contact-link">
+            <i class="fab fa-github"></i>
+            GitHub
+          </a>
         </div>
-    </nav>
+      </div>
+    </div>
+  </main>
 
-    <header class="hero">
-        <div class="container">
-            <h1>💡 关于本知识库</h1>
-            <p class="subtitle">记录、整理、分享知识</p>
-        </div>
-    </header>
-
-    <main class="container">
-        <section class="section">
-            <div class="content-body">
-                <h2>📖 知识库简介</h2>
-                <p>这是一个个人知识管理系统，用于记录和整理工作与生活中的各类笔记、文档和心得体会。</p>
-                <p>通过系统化的知识管理，帮助自己更好地积累经验、沉淀思考、提升效率。</p>
-
-                <h2>🎯 建立目的</h2>
-                <ul>
-                    <li><strong>知识沉淀</strong>：将零散的经验和思考系统化地记录下来</li>
-                    <li><strong>快速检索</strong>：通过搜索和分类快速找到需要的信息</li>
-                    <li><strong>持续改进</strong>：通过回顾和总结不断优化工作和生活方式</li>
-                    <li><strong>长期积累</strong>：建立个人的知识资产，形成持续增长的价值</li>
-                </ul>
-
-                <h2>📂 内容分类</h2>
-                <h3>工作板块</h3>
-                <ul>
-                    <li><strong>项目管理</strong>：项目规划、风险管理、团队协作相关内容</li>
-                    <li><strong>会议记录</strong>：重要会议的讨论要点和决策记录</li>
-                    <li><strong>技术文档</strong>：技术架构、代码规范、最佳实践等</li>
-                </ul>
-
-                <h3>生活板块</h3>
-                <ul>
-                    <li><strong>阅读笔记</strong>：书籍、文章的读书笔记和思考</li>
-                    <li><strong>个人感悟</strong>：生活感悟、思考总结、经验分享</li>
-                    <li><strong>实用工具</strong>：提升效率的工具、方法、资源整理</li>
-                </ul>
-
-                <h2>🔍 使用方法</h2>
-                <ul>
-                    <li><strong>浏览</strong>：通过导航栏访问不同分类的内容</li>
-                    <li><strong>搜索</strong>：使用首页搜索框快速查找相关笔记</li>
-                    <li><strong>归档</strong>：在归档页面按时间顺序浏览所有内容</li>
-                    <li><strong>筛选</strong>：在各板块使用分类标签进行内容筛选</li>
-                </ul>
-
-                <h2>🚀 技术实现</h2>
-                <p>本知识库采用纯静态 HTML/CSS/JavaScript 实现，部署在 GitHub Pages 上。</p>
-                <ul>
-                    <li>简洁现代的设计风格</li>
-                    <li>响应式布局，支持多种设备访问</li>
-                    <li>本地搜索功能，无需后端支持</li>
-                    <li>快速加载，流畅体验</li>
-                </ul>
-
-                <h2>📝 更新计划</h2>
-                <p>本知识库将持续更新，记录工作和生活中的新思考、新经验。</p>
-                <p>每一篇笔记都是成长的印记，每一次总结都是进步的台阶。</p>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 个人知识库. 持续记录，持续成长。</p>
-        </div>
-    </footer>
-
-    <script src="/assets/js/main.js"></script>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 知识库 · 持续更新中</p>
+      <p style="margin-top: 8px;">
+        <a href="https://github.com/lsk-0912" target="_blank">GitHub</a>
+      </p>
+    </div>
+  </footer>
 </body>
 </html>
