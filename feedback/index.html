@@ -352,32 +352,72 @@
     });
   }
 
+  // EmailJS 配置（网站管理员可在此处填写真实密钥）
+  // 填写步骤：
+  // 1. 前往 https://www.emailjs.com/ 注册账号
+  // 2. 创建邮件服务和模板
+  // 3. 将下方三个字段替换为你的真实配置
   var CFG = {
-    serviceId: '',
-    templateId: '',
-    publicKey: ''
+    serviceId: '',      // 示例: 'service_abc123'
+    templateId: '',     // 示例: 'template_xyz789'
+    publicKey: ''       // 示例: 'user_ABC123XYZ789'
   };
-  // 若未配置，给出明显提示
-  if(!CFG.publicKey || !CFG.serviceId || !CFG.templateId){
-    setState('未配置：请在 themes/next/_config.yml 填写 mail.publicKey / serviceId / templateId', 'danger');
+
+  var isConfigured = CFG.publicKey && CFG.serviceId && CFG.templateId;
+  
+  // 未配置时显示提示和mailto fallback
+  if(!isConfigured){
+    setState('⚙️ EmailJS 未配置，将使用邮件客户端发送（需要你的设备已安装邮件应用）', 'muted');
+  } else {
+    setState('✉️ 准备就绪，可以发送消息', 'success');
   }
 
   btn && btn.addEventListener('click', function(){
-    if(!CFG.publicKey || !CFG.serviceId || !CFG.templateId){
-      setState('发送失败：未配置 EmailJS（publicKey / serviceId / templateId）。', 'danger');
-      return;
-    }
     var name = document.getElementById('mail_name').value.trim();
     var email = document.getElementById('mail_email').value.trim();
     var msg = document.getElementById('mail_msg').value.trim();
-    if(!msg){ setState('内容不能为空','danger'); return; }
-    setState('发送中...'); btn.disabled = true;
+    
+    if(!msg){ 
+      setState('❌ 内容不能为空','danger'); 
+      return; 
+    }
+
+    // 如果未配置EmailJS，使用mailto fallback
+    if(!isConfigured){
+      var subject = encodeURIComponent('来自 ' + (name || '访客') + ' 的留言');
+      var body = encodeURIComponent(
+        '发件人：' + (name || '访客') + '\n' +
+        '回复邮箱：' + (email || '未提供') + '\n\n' +
+        '留言内容：\n' + msg
+      );
+      // 这里填写网站管理员的邮箱地址
+      var mailtoLink = 'mailto:your-email@example.com?subject=' + subject + '&body=' + body;
+      
+      setState('📧 正在打开邮件客户端...', 'muted');
+      window.location.href = mailtoLink;
+      
+      setTimeout(function(){
+        setState('💡 如果邮件客户端未打开，请手动发送邮件到 your-email@example.com', 'muted');
+      }, 1000);
+      return;
+    }
+
+    // 使用EmailJS发送
+    setState('发送中...'); 
+    btn.disabled = true;
     ensureEmailJS().then(function(){
       try{ emailjs.init(CFG.publicKey); }catch(_){ }
       var payload = { from_name: name||'访客', reply_to: email||'', message: msg };
       return emailjs.send(CFG.serviceId, CFG.templateId, payload);
-    }).then(function(){ setState('已发送，感谢你的来信！','success'); btn.disabled=false; document.getElementById('mail_msg').value=''; })
-      .catch(function(e){ setState('发送失败：'+e,'danger'); btn.disabled=false; });
+    }).then(function(){ 
+      setState('✅ 已发送，感谢你的来信！','success'); 
+      btn.disabled=false; 
+      document.getElementById('mail_msg').value=''; 
+    })
+    .catch(function(e){ 
+      setState('❌ 发送失败：'+e,'danger'); 
+      btn.disabled=false; 
+    });
   });
 
   // 收件箱（可选：从自定义端点读取）
