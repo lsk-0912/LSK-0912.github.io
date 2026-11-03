@@ -6,46 +6,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // 示例搜索数据（实际使用时可以从 JSON 文件加载）
     const searchData = [
         {
-            title: '项目规划方法论',
-            url: '/work/project-planning.html',
-            excerpt: '关于如何进行有效项目规划的一些思考和实践，包括目标设定、资源分配、风险管理等方面...',
-            category: 'work',
-            date: '2026-11-01'
-        },
-        {
-            title: '团队会议纪要 - 2026/10/28',
-            url: '/work/meeting-20261028.html',
-            excerpt: '本周团队同步会议的关键决策和行动项，包括项目进度更新、资源调配、下周重点任务...',
-            category: 'work',
-            date: '2026-10-28'
-        },
-        {
-            title: '技术架构设计文档',
-            url: '/work/architecture-design.html',
-            excerpt: '系统架构设计的核心原则和最佳实践，包括微服务架构、数据库设计、API 设计等...',
-            category: 'work',
-            date: '2026-10-26'
-        },
-        {
-            title: '阅读笔记：深度工作',
-            url: '/life/reading-notes.html',
-            excerpt: '关于提升专注力和工作效率的一些感悟，深度工作的价值和实践方法...',
+            title: '苏州经典景区与徒步路线',
+            url: '/life/suzhou-scenic-hiking.html',
+            excerpt: '拙政园、留园、虎丘、寒山寺、周庄/同里，以及天平、灵岩、穹窿、上方、阳山的路线难度与时间',
             category: 'life',
-            date: '2026-10-25'
+            date: '2026-11-03'
         },
         {
-            title: '个人效率工具箱',
-            url: '/life/life-tools.html',
-            excerpt: '整理的一些提升个人效率的工具和方法，包括时间管理、笔记工具、自动化脚本等...',
-            category: 'life',
-            date: '2026-10-20'
-        },
-        {
-            title: '健康管理指南',
-            url: '/life/health-guide.html',
-            excerpt: '个人健康管理的一些心得，包括运动计划、饮食建议、作息规律等...',
-            category: 'life',
-            date: '2026-10-15'
+            title: '工作日志 2026-11-03',
+            url: '/work/daily-2026-11-03.html',
+            excerpt: 'newapi2.0 迁移项目 (11/3-11/20)；B端豆包生视频功能发布',
+            category: 'work',
+            date: '2026-11-03'
         }
     ];
 
