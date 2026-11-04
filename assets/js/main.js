@@ -6,6 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // 示例搜索数据（实际使用时可以从 JSON 文件加载）
     const searchData = [
         {
+            title: 'Python 生产服务日志检测实践',
+            url: '/work/python-prod-log-detection.html',
+            excerpt: '结构化日志规范、异常检测与告警思路，以及采集/检索/APM 工具清单',
+            category: 'work',
+            date: '2026-11-04'
+        },
+        {
             title: '苏州经典景区与徒步路线',
             url: '/life/suzhou-scenic-hiking.html',
             excerpt: '拙政园、留园、虎丘、寒山寺、周庄/同里，以及天平、灵岩、穹窿、上方、阳山的路线难度与时间',

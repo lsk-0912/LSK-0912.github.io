@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Python 生产服务日志检测实践：结构化日志、异常检测与工具清单">
+  <title>Python 生产服务日志检测实践 - 知识库</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <style>
+    :root {
+      --brand-1: #ff7bd5;
+      --brand-2: #7c3aed;
+      --text-strong: #111827;
+      --text-normal: #374151;
+      --muted: #6b7280;
+      --card-bg: #ffffff;
+      --card-border: #ebe9f5;
+      --pill-bg: #f7f5ff;
+      --bg-base: #fafafa;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-normal);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text-strong);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .site-brand .icon {
+      font-size: 24px;
+    }
+
+    .main-menu {
+      display: flex;
+      gap: 12px;
+      list-style: none;
+    }
+
+    .main-menu li a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 12px;
+      background: var(--pill-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-strong);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .main-menu li a:hover,
+    .main-menu li a.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(180deg, var(--brand-1), var(--brand-2));
+      box-shadow: 0 8px 16px rgba(124,58,237,0.25);
+      transform: translateY(-1px);
+    }
+
+    .article {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 48px;
+      margin: 32px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    .article-header {
+      text-align: center;
+      padding-bottom: 32px;
+      border-bottom: 2px solid var(--card-border);
+      margin-bottom: 32px;
+    }
+
+    .article-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text-strong);
+      margin-bottom: 16px;
+    }
+
+    .article-meta {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .article-content {
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .article-content h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-strong);
+      margin: 32px 0 16px 0;
+      padding-left: 12px;
+      border-left: 4px solid var(--brand-2);
+    }
+
+    .article-content h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-strong);
+      margin: 28px 0 12px 0;
+    }
+
+    .article-content p {
+      margin: 12px 0;
+    }
+
+    .article-content ul, .article-content ol {
+      margin: 16px 0;
+      padding-left: 32px;
+    }
+
+    .article-content li {
+      margin: 8px 0;
+    }
+
+    .article-content strong {
+      color: var(--text-strong);
+      font-weight: 600;
+    }
+
+    .article-content a {
+      color: var(--brand-2);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .article-content a:hover {
+      color: var(--brand-1);
+      text-decoration: underline;
+    }
+
+    .article-content pre {
+      background: #1e1b2e;
+      color: #f3e8ff;
+      padding: 16px 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      font-size: 13.5px;
+      line-height: 1.65;
+      margin: 16px 0;
+      border: 1px solid #3b2f5e;
+    }
+
+    .article-content pre code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 13.5px;
+      background: none;
+      padding: 0;
+      color: inherit;
+    }
+
+    .article-content code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 0.92em;
+      background: var(--pill-bg);
+      color: var(--brand-2);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .article-content pre code {
+      background: none;
+      color: inherit;
+      padding: 0;
+      border-radius: 0;
+    }
+
+    .note-box {
+      background: var(--pill-bg);
+      border-left: 4px solid var(--brand-2);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0 24px;
+    }
+
+    .footer {
+      background: #fff;
+      border-top: 1px solid var(--card-border);
+      padding: 32px 0;
+      margin-top: 64px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .footer a {
+      color: var(--brand-2);
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .article {
+        padding: 32px 24px;
+      }
+
+      .article-title {
+        font-size: 24px;
+      }
+
+      .main-menu {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="site-brand">
+          <span class="icon">📚</span>
+          <span>知识库</span>
+        </a>
+        <nav>
+          <ul class="main-menu">
+            <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+            <li><a href="/work/" class="active"><i class="fa fa-briefcase"></i> 工作</a></li>
+            <li><a href="/life/"><i class="fa fa-coffee"></i> 生活</a></li>
+            <li><a href="/archives/"><i class="fa fa-archive"></i> 归档</a></li>
+            <li><a href="/about/"><i class="fa fa-user"></i> 关于</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="article">
+      <header class="article-header">
+        <h1 class="article-title">Python 生产服务日志检测实践</h1>
+        <div class="article-meta">
+          <span><i class="fa fa-calendar"></i> 2026年11月4日</span>
+          <span><i class="fa fa-folder"></i> 工作</span>
+        </div>
+      </header>
+
+      <div class="article-content">
+        <p>做 Python / AI 应用服务时，日志往往是最先能回答「线上出了什么」的数据源。本文整理一套可落地的做法：先把日志写成可检索的结构化字段，再做异常检测与告警，最后按规模选择采集和检索工具。检测在这里侧重异常发现，而不是单纯把日志存起来。</p>
+
+        <h2>为什么要做生产日志检测</h2>
+        <p>生产环境里，用户先于你发现问题的成本很高。日志检测的目标是把「有人反馈了才去翻机器」改成「阈值触发后带着上下文去定位」。</p>
+        <ul>
+          <li><strong>故障早发现</strong>：错误率、超时、连接失败会先于工单出现。早几分钟发现，往往能把影响从整段高峰缩到一次发布回滚窗口。</li>
+          <li><strong>SLA 可核对</strong>：可用性、P99 延迟、失败率需要可复算的证据。日志是请求级事实，指标是聚合视图，两者要对得上。</li>
+          <li><strong>安全审计</strong>：登录失败突增、越权接口、异常 Token 使用，通常先从访问日志和鉴权日志露头。没有结构化字段，事后追查会变成全文检索碰运气。</li>
+          <li><strong>容量与错误率</strong>：QPS 爬升、慢查询变多、下游超时变密，是扩容或降级的信号。只看 CPU 而不看错误构成，很容易把容量问题和代码缺陷混在一起。</li>
+        </ul>
+        <p>对 AI 应用尤其明显：模型调用超时、token 超限、工具调用失败往往不是进程崩溃，而是业务错误码缓慢恶化。没有日志侧检测，仪表盘上的「服务还活着」会掩盖「功能已经不可用」。</p>
+
+        <h2>日志规范建议</h2>
+        <p>检测规则能写多准，取决于日志字段稳不稳。建议默认输出 JSON 一行一条，避免多行 Traceback 把采集器拆散；异常堆栈放进独立字段，而不是直接打印到标准输出后指望人工眼扫。</p>
+
+        <h3>必填字段</h3>
+        <p>每条业务日志至少带上下面这些键，名称固定，不要今天写 <code>traceId</code>、明天写 <code>trace_id</code>：</p>
+        <ul>
+          <li><code>timestamp</code>：ISO 8601，带时区，例如 <code>2026-11-04T10:15:30+08:00</code>。</li>
+          <li><code>level</code>：<code>DEBUG</code> / <code>INFO</code> / <code>WARNING</code> / <code>ERROR</code> / <code>CRITICAL</code>。</li>
+          <li><code>service</code>：服务名，和部署单元一致，便于多服务共用一个索引。</li>
+          <li><code>trace_id</code>：一次分布式调用的追踪标识，由网关或 OpenTelemetry 注入。</li>
+          <li><code>request_id</code>：单次 HTTP / RPC 请求标识，方便只捞这一跳。</li>
+          <li><code>message</code>：给人读的短句，不要把整段 JSON 再塞进这个字段。</li>
+        </ul>
+        <p>建议再补 <code>env</code>、<code>host</code>、<code>path</code>、<code>status</code>、<code>latency_ms</code>、<code>error_code</code>。AI 服务还可以加 <code>model</code>、<code>provider</code>、<code>token_in</code> / <code>token_out</code>，但不要记录完整 prompt 或用户原文。</p>
+
+        <h3>级别约定</h3>
+        <ul>
+          <li><code>INFO</code>：请求开始/结束、关键业务状态变更。高频路径控制字段，不要每个循环都打。</li>
+          <li><code>WARNING</code>：可重试的下游抖动、降级生效、接近配额。它表示「还能扛，但要盯」。</li>
+          <li><code>ERROR</code>：这次请求失败，调用方已经或即将感知到。必须带 <code>error_code</code> 和异常类型。</li>
+          <li><code>CRITICAL</code>：进程无法继续提供核心能力，例如配置缺失、主存储不可达、证书过期。</li>
+        </ul>
+        <p>不要把预期内的 404、参数校验失败打成 <code>ERROR</code>，否则错误率告警会被噪声淹没。业务失败用稳定的 <code>error_code</code>，系统失败才升到 <code>ERROR</code>。</p>
+
+        <h3>敏感信息脱敏</h3>
+        <p>日志会进采集器、对象存储和值班群。Token、手机号、身份证必须在写出前处理，而不是指望检索平台事后打码。</p>
+<pre><code>import re
+
+TOKEN_RE = re.compile(r"(?i)(bearer\s+|token=)[A-Za-z0-9._\-]+")
+PHONE_RE = re.compile(r"1[3-9]\d{9}")
+ID_CARD_RE = re.compile(r"\b\d{17}[\dXx]\b")
+
+def redact(text: str) -> str:
+    text = TOKEN_RE.sub(r"\1***", text)
+    text = PHONE_RE.sub(lambda m: m.group(0)[:3] + "****" + m.group(0)[-4:], text)
+    text = ID_CARD_RE.sub(lambda m: m.group(0)[:4] + "**********" + m.group(0)[-4:], text)
+    return text
+</code></pre>
+        <p>更稳妥的做法是白名单字段：只序列化允许输出的键。Authorization 头、Cookie、私钥、完整 prompt 直接丢弃。脱敏规则要覆盖 <code>message</code>、异常字符串和额外 context，漏一个字段就等于没做。</p>
+
+        <h2>Python 采集与写出</h2>
+        <p>标准库 <code>logging</code> 足够支撑大多数服务。需要稳定 JSON 字段时，用 <a href="https://www.structlog.org/" target="_blank" rel="noopener">structlog</a> 或 <code>python-json-logger</code>。三者可以并存：业务代码走 structlog，第三方库仍由标准 <code>logging</code> 接管。</p>
+
+        <h3>结构化 logger 配置片段</h3>
+        <p>下面这段把标准 logging 配成 JSON 行输出，并强制带上服务名。生产里优先打到 stdout，交给 sidecar / Agent 采集，而不是让每个 worker 自己轮转文件。</p>
+<pre><code>import json
+import logging
+import os
+from datetime import datetime, timezone
+
+class JsonFormatter(logging.Formatter):
+    def format(self, record: logging.LogRecord) -> str:
+        payload = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "level": record.levelname,
+            "service": os.getenv("SERVICE_NAME", "demo-api"),
+            "trace_id": getattr(record, "trace_id", "-"),
+            "request_id": getattr(record, "request_id", "-"),
+            "message": record.getMessage(),
+            "logger": record.name,
+        }
+        if record.exc_info:
+            payload["exc_info"] = self.formatException(record.exc_info)
+        return json.dumps(payload, ensure_ascii=False)
+
+def setup_logging() -> logging.Logger:
+    handler = logging.StreamHandler()
+    handler.setFormatter(JsonFormatter())
+    root = logging.getLogger()
+    root.handlers.clear()
+    root.addHandler(handler)
+    root.setLevel(logging.INFO)
+    return logging.getLogger("app")
+
+logger = setup_logging()
+logger.info(
+    "模型调用完成",
+    extra={"trace_id": "tr_8f2", "request_id": "req_19c"},
+)
+</code></pre>
+
+        <h3>structlog 的常见接法</h3>
+        <p>structlog 适合把 <code>trace_id</code> 绑到上下文，避免每个调用都传 <code>extra</code>。官方文档见 <a href="https://www.structlog.org/" target="_blank" rel="noopener">structlog.org</a>。</p>
+<pre><code>import structlog
+
+structlog.configure(
+    processors=[
+        structlog.contextvars.merge_contextvars,
+        structlog.processors.add_log_level,
+        structlog.processors.TimeStamper(fmt="iso"),
+        structlog.processors.JSONRenderer(ensure_ascii=False),
+    ]
+)
+log = structlog.get_logger("app")
+
+# 在中间件里绑定一次，后续自动带上
+structlog.contextvars.bind_contextvars(
+    service="demo-api",
+    trace_id="tr_8f2",
+    request_id="req_19c",
+)
+log.warning("下游超时，准备重试", provider="llm-a", latency_ms=3200)
+</code></pre>
+
+        <h3>多进程 / 多 worker 注意</h3>
+        <p>Gunicorn 的 sync / gthread worker、Uvicorn 的多进程模式，都是多个解释器各写各的。直接用 <code>FileHandler</code> 或 <code>TimedRotatingFileHandler</code> 指向同一文件，会出现交叉写入、轮转抢锁、部分行截断。更稳的选择：</p>
+        <ul>
+          <li>每个进程只写 stdout / stderr，由进程管理器或 Filebeat / Fluent Bit 采集。</li>
+          <li>必须写文件时，按 <code>worker_id</code> 或 PID 拆文件，或者经 <code>QueueHandler</code> + 独立 listener 进程串行落盘。</li>
+          <li>不要在 preload 之后再改 root logger 的可变全局状态，子进程会继承半初始化的 handler。</li>
+        </ul>
+
+        <h3>异步服务注意</h3>
+        <p>asyncio / FastAPI 里，<code>logging</code> 的 emit 默认是同步的。把日志写到慢磁盘或远端 HTTP，会堵住事件循环。异步服务应把 handler 留在内存队列或 stdout；重试、告警投递放到后台任务。也不要在 <code>access_log</code> 里同步序列化超大请求体。Uvicorn 的访问日志和业务 JSON 日志建议分开，避免一种格式污染另一种解析。</p>
+
+        <h2>常见检测手段</h2>
+        <p>「检测」不是把所有 ERROR 推到群里，而是用少量可行动的规则覆盖高价值故障模式。</p>
+
+        <h3>错误率、超时、5xx、业务错误码突增</h3>
+        <p>以请求总数为分母。只看 ERROR 绝对数，会在流量高峰误报、在低峰漏报。建议同时盯：</p>
+        <ul>
+          <li>HTTP 5xx 占比、网关超时占比。</li>
+          <li>下游超时（LLM、向量库、对象存储）按 <code>provider</code> 分组。</li>
+          <li>稳定业务错误码，例如 <code>MODEL_OVERLOADED</code>、<code>QUOTA_EXCEEDED</code> 在 5 到 15 分钟窗口内的倍数变化。</li>
+        </ul>
+        <p>突增检测比静态阈值更抗流量波动：当前窗口对比前一个窗口或同比同时段。静态阈值适合「5xx 超过 2% 持续 5 分钟」这种 SLA 红线。</p>
+
+        <h3>关键字 / 正则匹配</h3>
+        <p>结构化日志还没铺开时，正则仍是兜底。常见高信号词：<code>ERROR</code>、<code>Traceback</code>、<code>OOM</code>、<code>MemoryError</code>、<code>Connection refused</code>、<code>Too many open files</code>、<code>SSL: CERTIFICATE_VERIFY_FAILED</code>。对 Python 服务再加 <code>CancelledError</code> 刷屏、<code>Event loop is closed</code>。</p>
+        <p>正则适合「进程已经在喊救命」的情况，不适合统计失败率。堆栈中的 <code>Error</code> 子串很容易误匹配，匹配后最好再按 <code>level</code> 或异常类型过滤。</p>
+
+        <h3>指标衍生</h3>
+        <p>从日志聚合出 QPS、P99、<code>failed / total</code>，可以补上 APM 还没覆盖的内部路径。做法是在请求结束日志里带 <code>latency_ms</code> 和 <code>status</code>，采集端按时间桶计算。注意采样：DEBUG 被关掉后，如果结束日志也没了，衍生指标会一起失真。请求级 INFO 应视为指标源，而不是可随意关闭的调试输出。</p>
+
+        <h3>健康检查日志与探活区分</h3>
+        <p>负载均衡和 K8s 探活会打出大量 <code>GET /health</code> 或 <code>GET /ready</code>。这些请求不应计入业务 QPS，也不应触发「流量骤降」告警。处理方式：</p>
+        <ul>
+          <li>探活接口单独 logger，或字段 <code>route_kind=health</code>。</li>
+          <li>访问日志过滤器直接丢弃探活成功记录，失败仍保留。</li>
+          <li>告警查询默认 <code>path != /health</code>。</li>
+        </ul>
+        <p>探活失败本身是信号，但要和业务 5xx 分开告警，否则值班会分不清是实例挂了还是某个模型路由挂了。</p>
+
+        <h2>轻量自建检测示例</h2>
+        <p>小规模单机服务、或平台告警还没接上时，可以用一个短脚本做兜底：读 stdin / 轮询文件 → 解析 JSON 或走正则 → 在滑动窗口里计数 → 超阈值后调用 webhook。生产环境仍应优先接现成平台；自建脚本没有持久化、没有抑制、也没有值班排班，只适合过渡。</p>
+        <p>下面的脚本从标准输入读 JSON 行，统计 5 分钟窗口内的 ERROR，超过阈值就调用一个本地占位函数。Webhook 地址从环境变量读取，代码里不要写真实 URL 或密钥。</p>
+<pre><code>#!/usr/bin/env python3
+"""从 stdin 读取 JSON 日志，窗口内 ERROR 超阈值则告警。"""
+
+import json
+import os
+import sys
+import time
+from collections import deque
+
+WINDOW_SEC = 300
+ERROR_THRESHOLD = 20
+# 仅作占位，真实地址放环境变量，例如 DINGTALK_WEBHOOK
+WEBHOOK_URL = os.getenv("ALERT_WEBHOOK_URL", "")
+
+recent_errors = deque()
+
+
+def notify(count: int, sample: dict) -> None:
+    title = f"[alert] {WINDOW_SEC}s 内 ERROR={count}"
+    body = {
+        "title": title,
+        "service": sample.get("service"),
+        "trace_id": sample.get("trace_id"),
+        "message": sample.get("message"),
+    }
+    if not WEBHOOK_URL:
+        print("ALERT_STUB", json.dumps(body, ensure_ascii=False))
+        return
+    # 这里接钉钉 / 飞书自定义机器人即可，注意加签与频率限制
+    print("ALERT_WOULD_POST", WEBHOOK_URL.split("?")[0], title)
+
+
+def ingest(line: str, now: float) -> None:
+    try:
+        item = json.loads(line)
+    except json.JSONDecodeError:
+        if "Traceback" in line or "Connection refused" in line:
+            item = {"level": "ERROR", "message": line[:200], "service": "unknown"}
+        else:
+            return
+
+    if str(item.get("level", "")).upper() != "ERROR":
+        return
+
+    recent_errors.append((now, item))
+    while recent_errors and now - recent_errors[0][0] > WINDOW_SEC:
+        recent_errors.popleft()
+
+    if len(recent_errors) == ERROR_THRESHOLD:
+        notify(len(recent_errors), item)
+
+
+def main() -> None:
+    for raw in sys.stdin:
+        ingest(raw.strip(), time.time())
+
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+        <p>本地可以这样试：<code>tail -F /var/log/app.json | python detect.py</code>。加文件轮询时用 inode + offset，避免 logrotate 后从头重放；多进程拆文件就要对每个文件各跟一条。告警务必做冷却，例如同一规则 10 分钟只发一次，否则窗口滑动会连打。</p>
+        <div class="note-box">
+          自建脚本适合一台机器、一个服务、一种失败模式。服务一多，就要把解析、计数、通知拆开，最终会重造一套简陋监控。到了这个临界点，应换成 Loki / Elasticsearch / 云监控，而不是继续加正则。
+        </div>
+
+        <h2>好用的工具清单</h2>
+        <p>按职责选型，避免「一个进程既采集又告警又画图」。下面只列常见、文档公开的工具，链接指向官网或官方文档。</p>
+
+        <h3>采集 / Agent</h3>
+        <ul>
+          <li><a href="https://www.elastic.co/beats/filebeat" target="_blank" rel="noopener">Filebeat</a>：收文件、stdout 和部分云日志，送进 Elasticsearch 或 Logstash，配置面相对小。</li>
+          <li><a href="https://fluentbit.io/" target="_blank" rel="noopener">Fluent Bit</a>：占用低，适合 sidecar；Lua / 过滤器可以做初步脱敏和字段改名。</li>
+          <li><a href="https://vector.dev/" target="_blank" rel="noopener">Vector</a>：用配置语言做路由和变换，适合把同一份日志同时送给检索和指标后端。</li>
+          <li><a href="https://grafana.com/docs/loki/latest/send-data/promtail/" target="_blank" rel="noopener">Promtail</a>：Loki 的传统 Agent，按标签抓文件。新项目也可以评估 Grafana Alloy，但现有 Loki 栈里 Promtail 仍很常见。</li>
+        </ul>
+
+        <h3>存储 / 检索</h3>
+        <ul>
+          <li><strong>ELK（Elasticsearch + Kibana）</strong>：全文检索和灵活聚合强，运维成本也高。产品入口见 <a href="https://www.elastic.co/elasticsearch" target="_blank" rel="noopener">Elasticsearch</a>。</li>
+          <li><a href="https://opensearch.org/" target="_blank" rel="noopener">OpenSearch</a>：检索体验接近 ES，适合已经熟悉 Kibana 查询、又希望走开源发行的团队。</li>
+          <li><a href="https://grafana.com/oss/loki/" target="_blank" rel="noopener">Loki + Grafana</a>：按标签索引，存储更便宜，查询习惯接近 PromQL。标签要克制，高基数 <code>trace_id</code> 不要当 label。</li>
+          <li><a href="https://www.graylog.org/" target="_blank" rel="noopener">Graylog</a>：自带告警和流规则，中小团队想少拼组件时可以看。</li>
+        </ul>
+
+        <h3>APM / 可观测</h3>
+        <ul>
+          <li><a href="https://opentelemetry.io/docs/languages/python/" target="_blank" rel="noopener">OpenTelemetry Python SDK</a>：统一 trace / metrics / logs 的上下文。先把 <code>trace_id</code> 打进日志，收益通常大于先上全量自动埋点。</li>
+          <li><a href="https://docs.sentry.io/platforms/python/" target="_blank" rel="noopener">Sentry Python</a>：错误聚合、发布版本对照、现场变量。它补的是「这类异常出现过多少次」，不能替代访问日志。</li>
+          <li>Datadog、New Relic 等商业方案把 APM、日志、基础设施放在同一套查询里，适合已经在为值班效率付钱的团队；自建栈则用 OTel 导出，避免业务代码绑死厂商 SDK。</li>
+        </ul>
+
+        <h3>本地 / 运维</h3>
+        <ul>
+          <li><a href="https://jqlang.github.io/jq/" target="_blank" rel="noopener">jq</a>：切 JSON 字段、算粗计数，排障时比把日志贴进编辑器快。</li>
+          <li><a href="https://lnav.org/" target="_blank" rel="noopener">lnav</a>：多文件时间线、SQL 式过滤，看轮转后的一堆 <code>.log.1</code> 很方便。</li>
+          <li>multitail：同时跟多个服务的文本日志；和 <code>grep</code> / <a href="https://github.com/BurntSushi/ripgrep" target="_blank" rel="noopener">ripgrep</a> 搭配做关键字兜底。</li>
+          <li><code>journalctl</code>：服务由 systemd 托管时，先确认应用有没有把日志送到 journal，再决定还要不要 Filebeat 扫文件。</li>
+        </ul>
+
+        <h3>Python 库</h3>
+        <ul>
+          <li><a href="https://www.structlog.org/" target="_blank" rel="noopener">structlog</a>：上下文绑定和处理器链清晰，适合中间件注入 <code>trace_id</code>。</li>
+          <li><code>python-json-logger</code>：在现有 <code>logging</code> 上换成 JSON formatter，改动面小。</li>
+          <li><a href="https://docs.python.org/3/library/logging.handlers.html" target="_blank" rel="noopener">logging.handlers</a>：单进程文件轮转用 <code>TimedRotatingFileHandler</code>；多进程不要共用一个文件 handler。</li>
+          <li><a href="https://python-watchdog.readthedocs.io/en/stable/" target="_blank" rel="noopener">watchdog</a>：监听目录里新日志或轮转事件，适合本地检测脚本，不适合当作生产采集器。</li>
+          <li><a href="https://tenacity.readthedocs.io/" target="_blank" rel="noopener">tenacity</a>：重试时用 <code>before_sleep</code> 打 WARNING，带上尝试次数和下游名称，避免重试默默耗尽预算。</li>
+        </ul>
+
+        <h2>落地建议</h2>
+        <ol>
+          <li><strong>先规范格式</strong>：统一 JSON 字段和级别，把探活、访问、业务错误分开。格式不稳，后面的采集和告警都会反复返工。</li>
+          <li><strong>再接采集</strong>：stdout → Agent → 检索平台。应用进程尽量不直接打远程 HTTP 日志。</li>
+          <li><strong>最后写告警</strong>：每条告警对应一个可执行动作，例如回滚、扩容、切供应商、查某条 <code>trace_id</code>。没有动作的告警不要建。</li>
+          <li><strong>防风暴</strong>：同一规则做冷却和聚合；发布窗口允许临时静音；避免「一条 Traceback 拆成 40 条群消息」。</li>
+          <li><strong>保留串联字段</strong>：<code>trace_id</code> 从网关传到 worker、工具调用和模型客户端。排障路径应是告警 → 一条 trace → 相关日志和 span，而不是按关键字在全库碰运气。</li>
+        </ol>
+        <p>对 AI 应用，额外建议把「模型成功但结果不可用」做成业务错误码，而不是只打一句 <code>INFO 生成完成</code>。内容安全拒绝、空结果、工具调用失败都要能被窗口计数看到。</p>
+
+        <h2>参考 / 延伸</h2>
+        <ul>
+          <li>Python 标准库：<a href="https://docs.python.org/3/library/logging.html" target="_blank" rel="noopener">logging</a>、<a href="https://docs.python.org/3/library/logging.handlers.html" target="_blank" rel="noopener">logging.handlers</a></li>
+          <li>结构化日志：<a href="https://www.structlog.org/" target="_blank" rel="noopener">structlog</a></li>
+          <li>采集与检索：<a href="https://www.elastic.co/beats/filebeat" target="_blank" rel="noopener">Filebeat</a>、<a href="https://grafana.com/oss/loki/" target="_blank" rel="noopener">Loki</a>、<a href="https://opentelemetry.io/docs/languages/python/" target="_blank" rel="noopener">OpenTelemetry Python</a></li>
+          <li>错误追踪：<a href="https://docs.sentry.io/platforms/python/" target="_blank" rel="noopener">Sentry for Python</a></li>
+        </ul>
+        <p>字段稳定之后，检测规则才会便宜。先让每条日志能被机器读懂，再谈窗口、阈值和值班。</p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 知识库 · 持续更新中</p>
+      <p style="margin-top: 8px;">
+        <a href="https://github.com/lsk-0912" target="_blank">GitHub</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
