@@ -6,6 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // 示例搜索数据（实际使用时可以从 JSON 文件加载）
     const searchData = [
         {
+            title: '工作日志 2026-11-04',
+            url: '/work/daily-2026-11-04.html',
+            excerpt: 'svc_doubao 发布备注：.env 必须配置 FLASHVSR_TASK_TIMEOUT=7200',
+            category: 'work',
+            date: '2026-11-04'
+        },
+        {
             title: 'Python 生产服务日志检测实践',
             url: '/work/python-prod-log-detection.html',
             excerpt: '结构化日志规范、异常检测与告警思路，以及采集/检索/APM 工具清单',
