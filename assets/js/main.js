@@ -6,6 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // 示例搜索数据（实际使用时可以从 JSON 文件加载）
     const searchData = [
         {
+            title: '工作日志 2026-11-05',
+            url: '/work/daily-2026-11-05.html',
+            excerpt: 'svc_doubao 明日（2026-11-06）发布：任务收藏；夜间生视频',
+            category: 'work',
+            date: '2026-11-05'
+        },
+        {
             title: '工作日志 2026-11-04',
             url: '/work/daily-2026-11-04.html',
             excerpt: 'svc_doubao 发布备注：.env 必须配置 FLASHVSR_TASK_TIMEOUT=7200',
