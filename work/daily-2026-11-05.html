@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="工作日志 - 2026年11月5日 · svc_doubao 明日发布计划">
+  <title>工作日志 2026-11-05 - 知识库</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <style>
+    :root {
+      --brand-1: #ff7bd5;
+      --brand-2: #7c3aed;
+      --text-strong: #111827;
+      --text-normal: #374151;
+      --muted: #6b7280;
+      --card-bg: #ffffff;
+      --card-border: #ebe9f5;
+      --pill-bg: #f7f5ff;
+      --bg-base: #fafafa;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-normal);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .header {
+      background: #fff;
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .site-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text-strong);
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    .site-brand .icon {
+      font-size: 24px;
+    }
+    
+    .main-menu {
+      display: flex;
+      gap: 12px;
+      list-style: none;
+    }
+    
+    .main-menu li a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 12px;
+      background: var(--pill-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-strong);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    
+    .main-menu li a:hover,
+    .main-menu li a.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(180deg, var(--brand-1), var(--brand-2));
+      box-shadow: 0 8px 16px rgba(124,58,237,0.25);
+      transform: translateY(-1px);
+    }
+    
+    .article {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 48px;
+      margin: 32px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    
+    .article-header {
+      text-align: center;
+      padding-bottom: 32px;
+      border-bottom: 2px solid var(--card-border);
+      margin-bottom: 32px;
+    }
+    
+    .article-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text-strong);
+      margin-bottom: 16px;
+    }
+    
+    .article-meta {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    
+    .article-content {
+      font-size: 16px;
+      line-height: 1.8;
+    }
+    
+    .article-content h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-strong);
+      margin: 32px 0 16px 0;
+      padding-left: 12px;
+      border-left: 4px solid var(--brand-2);
+    }
+
+    .article-content p {
+      margin: 12px 0;
+    }
+    
+    .article-content ul, .article-content ol {
+      margin: 16px 0;
+      padding-left: 32px;
+    }
+    
+    .article-content li {
+      margin: 8px 0;
+    }
+    
+    .article-content strong {
+      color: var(--text-strong);
+      font-weight: 600;
+    }
+
+    .article-content a {
+      color: var(--brand-2);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .article-content a:hover {
+      color: var(--brand-1);
+      text-decoration: underline;
+    }
+
+    .article-content code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 0.92em;
+      background: var(--pill-bg);
+      color: var(--brand-2);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .article-content pre {
+      background: #1e1b2e;
+      color: #f3e8ff;
+      padding: 16px 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      font-size: 13.5px;
+      line-height: 1.65;
+      margin: 16px 0;
+      border: 1px solid #3b2f5e;
+    }
+
+    .article-content pre code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 13.5px;
+      background: none;
+      padding: 0;
+      color: inherit;
+    }
+    
+    .footer {
+      background: #fff;
+      border-top: 1px solid var(--card-border);
+      padding: 32px 0;
+      margin-top: 64px;
+      text-align: center;
+      color: var(--muted);
+    }
+    
+    .footer a {
+      color: var(--brand-2);
+      text-decoration: none;
+    }
+    
+    @media (max-width: 768px) {
+      .article {
+        padding: 32px 24px;
+      }
+      
+      .article-title {
+        font-size: 24px;
+      }
+      
+      .main-menu {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="site-brand">
+          <span class="icon">📚</span>
+          <span>知识库</span>
+        </a>
+        <nav>
+          <ul class="main-menu">
+            <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+            <li><a href="/work/" class="active"><i class="fa fa-briefcase"></i> 工作</a></li>
+            <li><a href="/life/"><i class="fa fa-coffee"></i> 生活</a></li>
+            <li><a href="/archives/"><i class="fa fa-archive"></i> 归档</a></li>
+            <li><a href="/about/"><i class="fa fa-user"></i> 关于</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="article">
+      <header class="article-header">
+        <h1 class="article-title">工作日志 2026-11-05</h1>
+        <div class="article-meta">
+          <span><i class="fa fa-calendar"></i> 2026年11月5日</span>
+          <span><i class="fa fa-folder"></i> 工作</span>
+        </div>
+      </header>
+
+      <div class="article-content">
+        <h2>明日发布计划（2026-11-06）</h2>
+        <ul>
+          <li>
+            <strong>项目</strong>：<code>svc_doubao</code>
+          </li>
+          <li>
+            <strong>主要更新</strong>：任务收藏；夜间生视频
+          </li>
+        </ul>
+
+        <h2>发布注意</h2>
+        <p>发布 <code>svc_doubao</code> 时，<code>.env</code> 必须包含 <code>FLASHVSR_TASK_TIMEOUT=7200</code>（单位：秒）。该项已记录在 <a href="/work/daily-2026-11-04.html#flashvsr-timeout">2026-11-04 工作日志</a>，发布前请按该页核对，本页不另增检查项。</p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 知识库 · 持续更新中</p>
+      <p style="margin-top: 8px;">
+        <a href="https://github.com/lsk-0912" target="_blank">GitHub</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
